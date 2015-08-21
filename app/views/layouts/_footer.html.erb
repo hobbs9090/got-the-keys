@@ -1,0 +1,23 @@
+<footer class="row">
+  <div class="large-12 columns">
+    <hr/>
+    <div class="row">
+      <div class="large-3 columns">
+        <p>&copy; 2015 <%= render "layouts/gotthekeys" %></p>
+      </div>
+      <div class="large-9 columns">
+        <ul class="inline-list right">
+          <li><%= link_to t('legal.title'), legal_index_path %></li>
+          <li><%= link_to t('cookie_policy.title'), cookie_policy_index_path %></li>
+          <li><%= link_to t('how_it_works.title'), how_it_works_path %></li>
+          <li><%= link_to t('about_us.title'), about_us_path %></li>
+          <li><%= link_to t('contact_us.title'), contact_us_path %></li>
+          <li><%= link_to t('blog.title'), blog_index_path %></li>
+          <li><a href="#" class="fc-webicon rss small"></a></li>
+          <li><a href="#" class="fc-webicon facebook small"></a></li>
+          <li><a href="#" class="fc-webicon twitter small"></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="large-12 columns">
+    <div class="slideshow-wrapper">
+      <div class="preloader"></div>
+      <ul data-orbit data-options="bullets:false;">
+        <li>
+          <%= hero_1_image %>
+        </li>
+        <li>
+          <%= hero_2_image %>
+        </li>
+        <li>
+          <%= hero_3_image %>
+        </li>
+      </ul>
+      <hr>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-4 columns">
+    <%= welcome_image %>
+  </div>
+  <div class="large-8 columns">
+    <h4><%= t('welcome.welcome_message') %></h4>
+
+    <div class="row">
+      <div class="large-6 columns">
+        <p>
+          <span data-tooltip data-options="disable-for-touch:true" class="has-tip" title="<%= t('welcome.tool_tip_content') %>"><%= t('welcome.tool_tip') %></span><%= t('welcome.paragraph_1') %>
+        </p>
+      </div>
+      <div class="large-6 columns">
+        <p><%= t('welcome.paragraph_2') %></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-8 columns">
+    <h4><%= t('welcome.try_today') %></h4>
+
+    <p><%= t('welcome.paragraph_3') %></p>
+
+    <p><%= t('welcome.paragraph_4') %></p>
+
+  </div>
+  <div class="large-4 columns">
+    <%= welcome_image %>
+  </div>
+</div>

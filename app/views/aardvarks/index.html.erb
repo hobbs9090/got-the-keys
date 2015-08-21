@@ -1,0 +1,25 @@
+<h1>Listing aardvarks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @aardvarks.each do |aardvark| %>
+      <tr>
+        <td><%= link_to 'Show', aardvark %></td>
+        <td><%= link_to 'Edit', edit_aardvark_path(aardvark) %></td>
+        <td><%= link_to 'Destroy', aardvark, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Aardvark', new_aardvark_path %>

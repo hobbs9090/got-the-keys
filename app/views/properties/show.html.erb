@@ -1,0 +1,57 @@
+<% title "#{t('properties.edit_property_details_for')} #{@property.address_line_1}" %>
+
+<div class="row">
+
+  <div class="large-9 columns" role="content">
+
+    <article id="property">
+
+      <header>
+        <h4><%= @property.address_line_1 %></h4>
+      </header>
+
+      <%= medium_image_for(@property) %>
+
+      <ul class="vcard">
+        <li><%= @property.address_line_1 %></li>
+        <li><%= @property.address_line_2 %></li>
+        <li><%= @property.town_city %></li>
+        <li><%= @property.county %></li>
+        <li><%= @property.postcode %></li>
+        <li><%= @property.country %></li>
+      </ul>
+
+      <h3><%= t('helpers.label.property.property_description') %></h3>
+
+      <p>
+        <%= @property.property_description %>
+      </p>
+
+      <h3><%= t('helpers.label.property.bedrooms') %></h3>
+
+      <p>
+        <%= format_bedrooms(@property) %>
+      </p>
+
+      <h3><%= t('helpers.label.property.sale_status') %></h3>
+
+      <p>
+        <%= @property.sale_status %>
+      </p>
+
+      <h3><%= t('helpers.label.property.asking_price') %></h3>
+
+      <p>
+        <%= format_price(@property) %>
+      </p>
+      <% if locale == :zh %>
+          <h6><%= format_renminbi(@property) %></h6>
+      <% end %>
+
+    </article>
+
+  </div>
+
+  <%= render "properties/property_sidebar" %>
+
+</div>

@@ -1,0 +1,133 @@
+# Additional translations at https://github.com/plataformatec/devise/wiki/I18n
+
+zh:
+  errors:
+    messages:
+      expired: "您已过期，请重新申请"
+      not_found: "没有找到"
+      already_confirmed: "已经激活，请重新登录."
+      not_locked: "未锁定"
+      not_saved:
+        one: "因为 1 个错误导致此 %{resource}保存失败:"
+        other: "因为 %{count}个错误导致此 %{resource}保存失败:"
+
+  devise:
+    failure:
+      already_authenticated: '您已经登录.'
+      unauthenticated: '继续操作前请注册或者登录.'
+      unconfirmed: '继续操作前请先激活您的帐号.'
+      locked: '您的帐号已被锁定.'
+      invalid: '邮箱或密码错误'
+      invalid_token: '认证码无效.'
+      timeout: '您已登录超时，请重新登录.'
+      inactive: '您还没有激活帐户.'
+      not_found_in_database: "电子邮件地址或密码无效"
+    sessions:
+      signed_in: '登录成功.'
+      signed_out: '退出成功.'
+    passwords:
+      send_instructions: '稍后你将收到帐号激活的电子邮件'
+      updated: '您的密码已修改成功，您现在已登录.'
+      updated_not_active: '您的密码已修改成功.'
+      send_paranoid_instructions: '如果您的邮箱存在于我们的数据库中，您将收到一封找回密码的邮件.'
+    confirmations:
+      send_instructions: '稍后你将收到帐号激活的电子邮件'
+      send_paranoid_instructions: '如果您的邮箱存在于我们的数据库中，您将收到一封激活账号的邮件.'
+      confirmed: '您的帐号已经激活，您现在已登录.'
+    registrations:
+      signed_up: '欢迎您！您已注册成功.'
+      inactive_signed_up: '你已经签署了成功。然而，我们也可以不签你的，因为您的帐户 %{reason}.'
+      updated: '帐号资料更新成功.'
+      update_needs_confirmation: '您更改了邮箱地址，我们需要验证您的新邮箱地址，请查看您的邮箱，点击激活链接来验证您的新邮箱地址.'
+      destroyed: '再见！您的帐户已成功注销。我们希望很快可以再见到您.'
+      signed_up_but_unconfirmed: '带有激活链接的信息已经发送到你的邮箱。请打开此链接来激活你的帐号'
+      signed_up_but_inactive: '虽然您已经注册成功，但因为你的帐号还未激活，所以你暂时无法登录'
+      signed_up_but_locked: '虽然您已经注册成功，但因为你的帐号已被锁定，所以你暂时无法登录'
+    unlocks:
+      send_instructions: '稍后你将收到帐号激活的电子邮件'
+      unlocked: '您的帐号已成功解锁，您现在已登录.'
+      send_paranoid_instructions: '如果您的邮箱存在于我们的数据库中，您将收到一封解锁账号的邮件.'
+    omniauth_callbacks:
+      success: '成功地从 %{kind}获得授权.'
+      failure: '因为 %{reason}，所以您无法从 %{kind}获得授权.'
+    mailer:
+      confirmation_instructions:
+        subject: "确认指令"
+        welcome: "欢迎 "
+        paragraph_1: "您可以通过下面的链接确认您的帐户："
+        confirm_my_account: "确认我的帐户"
+      reset_password_instructions:
+        subject: "重设密码的说明"
+        hello: "你好"
+        paragraph_1: "有人曾要求更改密码的链接，并通过下面的链接，你可以做到这一点。"
+        change_my_password: "更改我的密码"
+        paragraph_2: "如果你没有要求，请忽略此电子邮件。"
+        paragraph_3: "您的密码将不会改变，直到你访问上面的链接，创建一个新的。"
+      unlock_instructions:
+        subject: "解锁指令"
+        hello: "Hello "
+        paragraph_1: "您的帐号已被锁定由于过量不成功的登录尝试。"
+        paragraph_2: "点击下面的链接到您的帐户解锁"
+        unlock_my_account: "解开我的帐户"
+    views:
+      commons:
+        sidebar:
+          title: "操作面版"
+      links:
+        sign_in: "登录"
+        sign_up: "报名"
+        sign_in_as_member: "注册成为会员？"
+        sign_in_as_admin?: "以管理员身份登录？"
+        sign_in_as_admin: "以管理员身份登录"
+        forget_pass: '忘记密码?'
+        resend_confirmation: "没有收到确认指令？"
+        resend_unlock: "没有收到解锁指令？"
+        register: "注册"
+        omni_auth: "用%{provider}登录"
+      confirmations:
+        new:
+          title: '重新发送确认指令'
+          submit: '重发确认邮件'
+      passwords:
+        edit:
+          title: '修改密码'
+          submit: '改变'
+          new_password: "新密码"
+          confirm_new_password: "确认新密码"
+          cancel_my_account: "取消我的帐户"
+        new:
+          title: '忘记密码'
+          submit: '发送重置邮件'
+      registrations:
+        edit:
+          title: '更改注册信息'
+          password: '修改密码'
+          submit: '修改'
+          change_pass_tip: "如果你不想改变，留空"
+          cancel_my_account: "取消我的帐户"
+        new:
+          title: '注册'
+          submit: '注册'
+          why_so_much: "为什么你需要知道这么多关于我的吗？"
+          paragraph_1: "你在做一些工作，我们不断降低成本"
+          paragraph_2: "部分是你适合你的时间管理收看。您可以通过网站和电子邮件管理。没有更多的等待代理商回电话，或者错过观看的机会。"
+          paragraph_3: "为了做到这一点，我们需要确保我们有正确的电子邮件和联系方式。这就是为什么我们要求你这么多的信息，并通过点击我们发送给您的电子邮件上的链接，要求您确认您正确的电子邮件。"
+          paragraph_4: "请记住，我们是不同于任何其他的地产代理。有没有签署合同，并可以在任何时候删除您的帐户，点击大红色的删除按钮，粉扑......它不见了。我们立即从我们的数据库中删除您。就是这么简单。真是令人耳目一新。"
+        binding:
+          title: '绑定'
+          submit: '绑定'
+      sessions:
+        new:
+          title: '登录'
+          submit: '登录'
+          remember_me: '记住我'
+      unlocks:
+        new:
+          title: '重发解锁指令'
+          submit: '重发解锁邮件'
+    navigation:
+      sign_in: '登录'
+      sign_up: '注册'
+      sign_out: '退出'
+      change_password: '修改密码'
+      change_registration: '修改登记'

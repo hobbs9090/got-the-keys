@@ -1,0 +1,11 @@
+<div class="row">
+
+  <div class="large-12 columns">
+
+    <% flash.each do |key, value| %>
+        <%= content_tag(:p, value, :class => "flash #{key}") %>
+    <% end %>
+
+  </div>
+
+</div>

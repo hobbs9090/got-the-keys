@@ -1,0 +1,134 @@
+# Additional translations at https://github.com/plataformatec/devise/wiki/I18n
+
+en:
+  errors:
+    messages:
+      expired: "has expired, please request a new one"
+      not_found: "not found"
+      already_confirmed: "was already confirmed, please try signing in"
+      not_locked: "was not locked"
+      not_saved:
+        one: "1 error prohibited this %{resource} from being saved:"
+        other: "%{count} errors prohibited this %{resource} from being saved:"
+
+  devise:
+    failure:
+      already_authenticated: 'You are already signed in.'
+      unauthenticated: 'You need to sign in or register before continuing.'
+      unconfirmed: 'You have to confirm your account before continuing.'
+      locked: 'Your account is locked.'
+      invalid: 'Invalid email or password.'
+      invalid_token: 'Invalid authentication token.'
+      timeout: 'Your session expired, please sign in again to continue.'
+      inactive: 'Your account was not activated yet.'
+    sessions:
+      signed_in: 'Signed in successfully.'
+      signed_out: 'Signed out successfully.'
+    passwords:
+      send_instructions: 'You will receive an email with instructions about how to reset your password in a few minutes.'
+      updated: 'Your password was changed successfully. You are now signed in.'
+      updated_not_active: 'Your password was changed successfully.'
+      send_paranoid_instructions: "If your e-mail exists on our database, you will receive a password recovery link on your e-mail"
+    confirmations:
+      send_instructions: 'You will receive an email with instructions about how to confirm your account in a few minutes.'
+      send_paranoid_instructions: 'If your e-mail exists on our database, you will receive an email with instructions about how to confirm your account in a few minutes.'
+      confirmed: 'Your account was successfully confirmed. You are now signed in.'
+    registrations:
+      signed_up: 'Welcome! You have signed up successfully.'
+      inactive_signed_up: 'You have signed up successfully. However, we could not sign you in because your account is %{reason}.'
+      updated: 'You updated your account successfully.'
+      destroyed: 'Bye! Your account was successfully cancelled. We hope to see you again soon.'
+      reasons:
+        inactive: 'inactive'
+        unconfirmed: 'unconfirmed'
+        locked: 'locked'
+    unlocks:
+      send_instructions: 'You will receive an email with instructions about how to unlock your account in a few minutes.'
+      unlocked: 'Your account was successfully unlocked. You are now signed in.'
+      send_paranoid_instructions: 'If your account exists, you will receive an email with instructions about how to unlock it in a few minutes.'
+    omniauth_callbacks:
+      success: 'Successfully authorized from %{kind} account.'
+      failure: 'Could not authorize you from %{kind} because "%{reason}".'
+    mailer:
+      confirmation_instructions:
+        subject: 'Confirmation instructions'
+        welcome: "Welcome "
+        paragraph_1: "You can confirm your account through the link below:"
+        confirm_my_account: "Confirm my account"
+      reset_password_instructions:
+        subject: 'Reset password instructions'
+        hello: "Hello"
+        paragraph_1: "Someone has requested a link to change your password, and you can do this through the link below."
+        change_my_password: "Change my password"
+        paragraph_2: "If you didn't request this, please ignore this email."
+        paragraph_3: "Your password won't change until you access the link above and create a new one."
+      unlock_instructions:
+        subject: 'Unlock Instructions'
+        hello: "Hello "
+        paragraph_1: "Your account has been locked due to an excessive amount of unsuccessful sign in attempts."
+        paragraph_2: "Click the link below to unlock your account"
+        unlock_my_account: "Unlock my account"
+    views:
+      commons:
+        sidebar:
+          title: 'Operation panel'
+      links:
+        sign_in: 'Sign in'
+        sign_up: 'Sign up'
+        sign_in_as_member: "Sign in as member?"
+        sign_in_as_admin?: "Sign in as administrator?"
+        sign_in_as_admin: "Sign in as Administrator"
+        forget_pass: 'Forgot your password?'
+        resend_confirmation: "Didn't receive confirmation instructions?"
+        resend_unlock: "Didn't receive unlock instructions?"
+        register: "Register"
+        omni_auth: "Use %{provider} sign in"
+      confirmations:
+        new:
+          title: 'Resend confirmation instructions'
+          submit: 'Resend confirmation email'
+      passwords:
+        edit:
+          title: 'Change Password'
+          submit: 'Change'
+          new_password: "New password"
+          confirm_new_password: "Confirm new password"
+          cancel_my_account: "Cancel my account"
+        new:
+          title: 'Forgot Password'
+          submit: 'Send reset message'
+      registrations:
+        edit:
+          title: 'Change Registration Information'
+          password: 'Change Password'
+          submit: 'Submit'
+          change_pass_tip: "If you do not want to change, leave blank"
+          update: "Update"
+          are_you_sure: "Are you sure?"
+          cancel_my_account: "Cancel my account"
+        new:
+          title: 'Registration'
+          submit: 'Registration'
+          why_so_much: "Why do you need to know so much about me?"
+          paragraph_1: "By you doing some of the work we keep the costs down"
+          paragraph_2: "Part of that is you managing the viewings at times that suit you. You manage this via the website and email. No more waiting on agents to return calls, or missed opportunities for a viewing."
+          paragraph_3: "In order to do this we need to be sure we have your correct email and contact details. This is why we ask you for so much information and require you to confirm your correct email by clicking a link on the email we send you."
+          paragraph_4: "Remember, we're different from any other estate agents. There is no contract to sign and you can delete your account at any time by clicking the big red Delete button and puff...it's gone. We remove you from our database immediately. It's that simple. How refreshing."
+        binding:
+          title: 'Binding'
+          submit: 'Binding'
+      sessions:
+        new:
+          title: 'Sign in'
+          submit: 'Sign in'
+          remember_me: 'Remember me'
+      unlocks:
+        new:
+          title: 'Resend unlock instructions'
+          submit: 'Unlock message retransmission'
+    navigation:
+      sign_in: 'Sign in'
+      sign_up: 'Sign up'
+      sign_out: 'Sign out'
+      change_password: 'Change password'
+      change_registration: 'Change registration'

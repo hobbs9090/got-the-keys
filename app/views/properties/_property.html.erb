@@ -1,0 +1,32 @@
+<ul id="properties">
+  <% @properties.each do |property| %>
+      <li>
+        <article class="property">
+          <header>
+            <h4><%= link_to property.address_line_1, property %></h4>
+          </header>
+          <%= small_image_for(property) %>
+          <p>
+            <%= truncate(property.property_description, length: 150, separator: ' ') %>
+          </p>
+          <table>
+            <tr>
+              <th><%= t('bedrooms') %></th>
+              <td><%= format_bedrooms(property) %></td>
+            </tr>
+          </table>
+          <table>
+            <tr>
+              <th><%= t('properties.price') %></th>
+              <td><%= format_price(property) %>
+                <% if locale == :zh %>
+                    <h6><%= format_renminbi(property) %></h6>
+                <% end %>
+                </tr>
+          </table>
+          <footer>
+          </footer>
+        </article>
+      </li>
+  <% end %>
+</ul>

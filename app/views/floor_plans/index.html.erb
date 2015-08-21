@@ -1,0 +1,15 @@
+<% title "#{@property.address_line_1} - #{t('floor_plans.title')}" %>
+
+<div class="row">
+
+  <div class="large-9 columns" role="content">
+
+    <h4><%= t('floor_plans.floor_plans_for') %> <%= link_to(@property.address_line_1, @property) %></h4>
+
+    <%= render "shared/under_construction" %>
+
+  </div>
+
+  <%= render "properties/property_sidebar" %>
+
+</div>

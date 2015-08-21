@@ -1,0 +1,35 @@
+<% title "New Viewing Time for #{@property.address_line_1}" %>
+
+<div class="row">
+
+  <div class="large-9 columns" role="content">
+
+    <h4><%= t('viewing_times.add_viewing_times_for') %> <%= link_to(@property.address_line_1, @property) %></h4>
+
+    <%= render "shared/under_construction" %>
+
+    <%= form_for [@property, @viewing_time] do |f| %>
+        <%= render "shared/errors", object: @viewing_time %>
+        <fieldset>
+          <ol>
+            <li class="required">
+              <%= f.label :start_time %>
+              <%= f.datetime_select :start_time, autofocus: true, :minute_step => 15 %>
+            </li>
+            <li class="required">
+              <%= f.label :end_time %>
+              <%= f.datetime_select :end_time, :minute_step => 15 %>
+            </li>
+          </ol>
+          <p>
+            <%= f.submit 'Update' %>
+            <%= link_to "Cancel", @property, class: 'button' %>
+          </p>
+        </fieldset>
+    <% end %>
+
+  </div>
+
+  <%= render "properties/property_sidebar" %>
+
+</div>

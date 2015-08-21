@@ -1,0 +1,2 @@
+module AardvarksHelper
+end

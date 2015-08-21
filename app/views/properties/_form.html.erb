@@ -1,0 +1,57 @@
+<%= form_for(@property) do |f| %>
+    <%= render "shared/errors", object: @property %>
+    <fieldset>
+      <ol>
+        <li class="required">
+          <%= f.label :address_line_1 %>
+          <%= f.text_field :address_line_1, autofocus: true %>
+        </li>
+        <li>
+          <%= f.label :address_line_2 %>
+          <%= f.text_field :address_line_2 %>
+        <li class="required">
+          <%= f.label :town_city %>
+          <%= f.text_field :town_city %>
+        </li>
+        <li class="required">
+          <%= f.label :county %>
+          <%= f.text_field :county %>
+        </li>
+        <li class="required">
+          <%= f.label :postcode %>
+          <%= f.text_field :postcode %>
+        </li>
+        <li class="required">
+          <%= f.label :country %>
+          <%= f.text_field :country %>
+        </li>
+        <li class="required">
+          <%= f.label :property_description %>
+          <%= f.text_area :property_description, cols: 70, rows: 12 %>
+        </li>
+        <li class="required">
+          <%= f.label :bedrooms %>
+          <%= f.text_field :bedrooms %>
+        </li>
+        <li class="required">
+          <%= f.label :image_file_name %>
+          <%= f.text_field :image_file_name %>
+        </li>
+        <li class="required">
+          <%= f.label :sale_status %>
+          <%= f.select :sale_status, Property::SALE_STATUS, prompt: t('properties.pick_one') %>
+        </li>
+        <li class="required">
+          <%= f.label :asking_price %>
+          <%= f.text_field :asking_price %>
+        </li>
+      </ol>
+      <p>
+        <%= f.submit %>
+        <%= link_to t('helpers.label.property.cancel'), properties_path, class: 'button' %>
+        <% unless current_page?(controller: 'properties', action: 'new') %>
+            <%= link_to t('helpers.label.property.delete_property'), @property, class: 'button alert', method: :delete, data: {confirm: t('helpers.label.property.are_you_sure')} %>
+        <% end %>
+      </p>
+    </fieldset>
+<% end %>

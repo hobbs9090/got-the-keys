@@ -1,0 +1,14 @@
+<h5 class="title"><a href="#panel2"><%= t('for_rent.header') %></a></h5>
+
+<div class="content" data-slug="panel1">
+  <form>
+    <div class="row collapse">
+      <div class="large-12 columns">
+        <%= form_tag(searches_path) do %>
+            <%= text_field_tag :q, nil, :placeholder => t('search.postcode_or_area') %>
+            <%= button_tag(t('search.title'), class: "radius button") %>
+        <% end %>
+      </div>
+    </div>
+  </form>
+</div>

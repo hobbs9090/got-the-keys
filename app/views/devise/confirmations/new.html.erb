@@ -1,0 +1,34 @@
+<% title t(:resend_confirmation_instructions) %>
+
+<div class="row">
+
+  <!-- Resend confirmation instructions -->
+
+  <div class="large-9 columns">
+
+    <h4><%= t('devise.views.confirmations.new.title') %></h4>
+
+    <%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => {:method => :post}) do |f| %>
+        <%= devise_error_messages! %>
+        <fieldset>
+          <ol>
+            <li class="required">
+              <%= f.label :email %>
+              <%= f.email_field :email, :autofocus => true %>
+            </li>
+          </ol>
+          <p>
+            <%= f.submit t('devise.views.confirmations.new.submit') %>
+          </p>
+        </fieldset>
+    <% end %>
+
+    <%= render :partial => "devise/shared/links" %>
+
+  </div>
+
+  <!-- End Resend confirmation instructions -->
+
+  <%= render "layouts/sidebar" %>
+
+</div>
