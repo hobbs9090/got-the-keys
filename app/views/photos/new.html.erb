@@ -1,0 +1,15 @@
+<% title "New Photos for #{@property.address_line_1}" %>
+
+<div class="row">
+
+  <div class="large-9 columns" role="content">
+
+    <h4><%= t('photos.add_photos_of') %> <%= link_to(@property.address_line_1, @property) %></h4>
+
+    <%= render "shared/under_construction" %>
+
+  </div>
+
+  <%= render "properties/property_sidebar" %>
+
+</div>

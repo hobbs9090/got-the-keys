@@ -1,0 +1,370 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different location, set it with `I18n.location`:
+#
+#     I18n.location = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+zh:
+  studio_flat: "小单间"
+  total: "总"
+  bedrooms: "卧室"
+  bedroom: "卧室"
+  under_construction: "正在建设中"
+
+  activerecord:
+    models:
+      property: "财产"
+      user: "用户"
+    attributes:
+      property:
+        address_line_1: "地址行1"
+        town_city: "镇或城市"
+        county: "县"
+        postcode: "邮编"
+        country: "国家"
+        property_description: "物业介绍"
+        bedrooms: "卧室"
+        sale_status: "销售情况"
+        asking_price: "售价"
+      user:
+        first_name: "鉴于名称"
+        last_name: "姓"
+        mobile_number: "手机号码"
+        email: "电子邮件"
+        password: "密码"
+        terms_of_service: "服务条款"
+
+# ActiveRecord Errors
+  errors:
+    oops: "糟糕"
+    the: "该"
+    could_not_be_saved: "不能保存"
+    please_correct_the_following: "请更正以下"
+    error: "错误"
+
+  menu:
+    welcome: "欢迎"
+    logged_in_as: "作为记录"
+    logged_in_as_admin: "以管理员身份登录"
+    my_property_details: "我的楼盘详情"
+    edit_details: "编辑详细信息"
+    account_details: "帐户明细"
+    add_property: "添加属性"
+    user_profile: "用户配置文件"
+    coffeescripts: "咖啡脚本"
+    appointments: "约会"
+    account_billing: "帐户帐单"
+    manage_account: "管理帐户"
+    administration: "管理"
+    language_preference: "语言偏好"
+    description: "描述"
+    photos: "照片"
+    floor_plans: "楼层平面图"
+    location: "位置"
+    viewing_times: "查看时报"
+    register: "注册"
+    sign_in: "登录"
+    logout: "退出"
+
+  gotthekeys:
+    gotthekeys: "得到该键"
+    got: "得到"
+    the: "该"
+    keys: "键"
+
+# Controllers
+  # Properties Controller
+  not_authorised: "你是不是法定编辑页面"
+  successfully_updated: "物业已成功更新！"
+  successfully_created: "物业成功创建！"
+  successfully_deleted: "物业成功删除！"
+
+# Sidebar adverts
+# Advert #1
+  need_help: "楼宇买卖需要帮助？"
+  preferred_list: "向我们介绍一下我们的律师，测量师及按揭经纪的首选名单。"
+  read_more: "阅读更多"
+
+# Advert #2
+  estate_future: " 是未来地产代理。为什么要支付一定的费用10,000英镑卖一个典型的伦敦的家！我们无法理解它。这就是为什么我们创建GotTheKeys.com所以现在你可以告诉提摩太Foxtons他妈的！"
+
+# Form Helpers
+  helpers:
+    label:
+      user:
+        first_name: "鉴于名称"
+        last_name: "姓"
+        mobile_number: "手机号码"
+        email: "电子邮件"
+        password: "密码"
+        password_confirmation: "确认密码"
+        terms_of_service: "服务条款"
+        remember_me: "记住我"
+      admin:
+        email: "用户名"
+        password: "密码"
+        password_confirmation: "确认密码"
+        remember_me: "记住我"
+      property:
+        address_line_1: "地址行1"
+        address_line_2: "地址行2"
+        town_city: "镇或城市"
+        county: "县"
+        postcode: "邮编"
+        country: "国家"
+        property_description: "物业介绍"
+        bedrooms: "卧室"
+        image_file_name: "图像文件名"
+        sale_status: "销售情况"
+        asking_price: "售价"
+        update_property: "更新物业"
+        delete_property: "删除属性"
+        cancel: "取消"
+        are_you_sure: "你确定吗？"
+
+# Sides
+  side:
+    section: "部分"
+
+  button:
+    submit: "提交"
+
+# Admin Pages
+# Members
+  members:
+    title: "会员"
+    sale_or_rental: "出售或出租物业的会员"
+    total: "总"
+    member_username: "会员用户名)"
+    num: "物业数目"
+    properties_for_sale: "出售物业"
+    total_selling_value: "总销售价值"
+    properties_for_rent: "出租物业"
+    total_rental_value: "总租值"
+
+# User
+  user:
+    user_details_for: "用户详细信息"
+    name: "名"
+    email: "电子邮件"
+    mobile: "移动"
+    member_since: "成为会员的日期"
+    ago: "ago(zh)"
+    property: "财产"
+    property_details: "房产详细信息"
+    appointments: "约会"
+    no_appointments: "没有约会"
+
+# Statistics
+  statistics:
+    title: "统计"
+    property_totals: "物业总计"
+    total_number_users: "用户数"
+    num_english_users: "英语用户"
+    num_chinese_users: "中国用户"
+    total_value_properties: "书总物业价值 "
+    total_num_properties: "物业数目"
+    num_properties_sale: "待售物业总数 "
+    num_properties_rent: "出租物业总数 "
+    property_sizes: "物业尺寸"
+    bed: "卧室"
+    site_statistics: "网站流量统计"
+    active_users_today: "今天活跃用户"
+    properties_added_today: "今天加入属性"
+    new_members_today: "今天的新成员"
+    tbc: "正在建设中"
+
+# CoffeeScript
+  coffeescript:
+    title: "咖啡脚本测试页"
+    blurb: "这是一个测试页面，用于实验咖啡脚本"
+
+#  Charts:
+  charts:
+    english_vs_chinese: "英语与中文"
+    language: "语"
+    english: "英语"
+    chinese: "中国的"
+    sale_vs_rent: "出售与出租"
+    sale: "卖"
+    rent: "租"
+    bed: "床"
+    country: "国家"
+    popularity: "声望(zh)"
+    united_kingdom: "联合王国"
+    china: "中国"
+
+# Accounts Billing
+  account_billing:
+    title: "帐户帐单"
+    heading: "帐户帐单"
+
+# Member Area
+# Welcome
+  welcome:
+    title: "家"
+    welcome_message: "的英语内容"
+    tool_tip: "培根存有"
+    tool_tip_content: "工具提示是真棒，你应该完全使用它们！"
+    try_today: "今天尝试"
+    paragraph_1: "谁是这样一个优势，查克的愿望是没有火腿。但是的魅力，痛则不通了很大的努力，在猪猪肉干肉片。这猪排骨站在查找故障。布丹迭代打破一些咸牛肉。这猪排骨站在查找故障。布丹迭代打破一些咸牛肉。"
+    paragraph_2: "猪肉鸡腿 火鸡。三尖 的猪排英寸猪排骨肉丸腊肉法无五花肉肉饼牛。咸牛肉必须遵守球头 魁布雷绍拉面颊。排骨C微量的腊肠 熏。咸牛肉必须遵守球头，：魁布雷绍拉面颊。排骨C微量的腊肠 熏。"
+    paragraph_3: "谁是这样一个优势，查克的愿望是没有火腿。但是的魅力，痛则不通了很大的努力，在猪猪肉干肉片。这猪排骨站在查找故障。布丹迭代打破一些咸牛肉。"
+    paragraph_4: "查克的愿望是没有火腿。但是的魅力，痛则不通了很大的努力，在猪猪肉干肉片。这猪排骨站在查找故障。布丹迭代打破一些咸牛肉 查克的愿望是没有火腿。但是的魅力，痛则不通了很大的努力，在猪猪肉干肉片。这猪排骨站在查找故障。布丹迭代打破一些咸牛肉"
+
+# Legal
+  legal:
+    title: "法律"
+    header: "法律"
+    blurb: "律师让我们进来，他们把这个有点气味，并付出了太多太多"
+    paragraph_1: "培根概念悲坐阿梅特萨拉米火腿跗关节干肉片球头鼓槌牛腩培根丸子短里脊。鹿肉尾夹头猪排，昂杜耶球头牛肉排骨侧翼石香肠腊肉。萨拉米昂杜耶五花肉排骨侧翼牛。萨拉米牛腩火鸡波兰熏肠。鹿肉香肠猪肉里脊夹头短里脊，牛火腿火腿熏面颊。火腿跗关节生涩三尖，膘猪培根汉堡肩地面一轮。三尖火鸡，火腿丸子牛腩排骨克尔夹头牛鸡肉火腿跗关节布丹肉饼面颊。"
+    paragraph_2: "地面轮熏猪肉里脊肉里脊肉生涩。肉干排骨干肉片，火腿的跗关节火腿猪肉。的肉干猪肉，肉饼，香肠猪咸牛肉火鸡短里脊。舌火腿猪肉里脊，地圆排骨鹿肉波兰熏肠牛柳。"
+    paragraph_3: "的汉堡布雷绍拉火鸡丁骨牛排，腊肠猪扒火腿跗关节牛肉肋骨。臀部肉丸鹿肉干肉片，排骨猪里脊柄克尔咸牛肉牛肉。奶牛腊肠的面颊短里脊汉堡膘。排骨五花肉肩熏鸡腿香肠，咸牛肉火腿跗关节布雷绍拉的。猪菲力牛排牛肠球小费。牛眼肌地面圆形，香肠猪肉里脊猪牛肉球头火鸡布丹。"
+    paragraph_4: "腊肠猪扒火腿跗关节牛肉排骨。臀部肉丸鹿肉干肉片，排骨猪里脊柄克尔咸牛肉牛肉。奶牛腊肠的面颊短里脊汉堡膘。排骨五花肉肩熏鸡腿香肠，咸牛肉火腿跗关节布雷绍拉的。猪菲力牛排牛肠球小费。牛眼肌地面圆形，香肠猪肉里脊猪牛肉球头火鸡圆熏猪肉里脊肉里脊肉干。肉干排骨干肉片，火腿的跗关节火腿猪肉。的肉干猪肉，肉饼，香肠猪咸牛肉火鸡短里脊。舌火腿猪肉里脊，地圆排骨鹿肉波兰熏肠牛柳。"
+    paragraph_5: "火腿球头菲力牛排昂杜耶法兰克福鸡臀香肠肉丸。菲力牛排肉饼地面轮火腿（昂杜耶）跗关节猪肉。风干牛肉短里脊的丸子头汉堡包猪。土耳其鹿肉夹头，舌的膘尾猪干腌牛肉柄波兰熏肠火腿眼肌火腿三尖。臀部腊肉五花肉肉饼肩：短腰部丸子波兰熏肠猪肉里脊舌风干牛肉牛腩咸牛肉火腿面颊。牛肉肋骨克尔短肋五花肉腌牛肉膘猪排舌干肉片布丹牛柳牛腩肉饼培根。"
+
+# Cookie Policy
+  cookie_policy:
+    title: "政策"
+    header: "政策"
+    blurb: "律师让我们进来，他们把这个有点气味，并付出了太多太多"
+    paragraph_1: "培根概念悲坐阿梅特萨拉米火腿跗关节干肉片球头鼓槌牛腩培根丸子短里脊。鹿肉尾夹头猪排，昂杜耶球头牛肉排骨侧翼石香肠腊肉。萨拉米昂杜耶五花肉排骨侧翼牛。萨拉米牛腩火鸡波兰熏肠。鹿肉香肠猪肉里脊夹头短里脊，牛火腿火腿熏面颊。火腿跗关节生涩三尖，膘猪培根汉堡肩地面一轮。三尖火鸡，火腿丸子牛腩排骨克尔夹头牛鸡肉火腿跗关节布丹肉饼面颊。"
+    paragraph_2: "地面轮熏猪肉里脊肉里脊肉生涩。肉干排骨干肉片，火腿的跗关节火腿猪肉。的肉干猪肉，肉饼，香肠猪咸牛肉火鸡短里脊。舌火腿猪肉里脊，地圆排骨鹿肉波兰熏肠牛柳。"
+    paragraph_3:  "腊肠猪扒火腿跗关节牛肉排骨。臀部肉丸鹿肉干肉片，排骨猪里脊柄克尔咸牛肉牛肉。奶牛腊肠的面颊短里脊汉堡膘。排骨五花肉肩熏鸡腿香肠，咸牛肉火腿跗关节布雷绍拉的。猪菲力牛排牛肠球小费。牛眼肌地面圆形，香肠猪肉里脊猪牛肉球头火鸡圆熏猪肉里脊肉里脊肉干。肉干排骨干肉片，火腿的跗关节火腿猪肉。的肉干猪肉，肉饼，香肠猪咸牛肉火鸡短里脊。舌火腿猪肉里脊，地圆排骨鹿肉波兰熏肠牛柳。腊肠猪扒火腿跗关节牛肉排骨。臀部肉丸鹿肉干肉片，排骨猪里脊柄克尔咸牛肉牛肉。奶牛腊肠的面颊短里脊汉堡膘。排骨五花肉肩熏鸡腿香肠，咸牛肉火腿跗关节布雷绍拉的。猪菲力牛排牛肠球小费。牛眼肌地面圆形，香肠猪肉里脊猪牛肉球头火鸡圆熏猪肉里脊肉里脊肉干。肉干排骨干肉片，火腿的跗关节火腿猪肉。的肉干猪肉，肉饼，香肠猪咸牛肉火鸡短里脊。舌火腿猪肉里脊，地圆排骨鹿肉波兰熏肠牛柳。"
+
+# How It Works
+  how_it_works:
+    title: "它是如何工作"
+    next: "下"
+    close: "关闭"
+    panel_title_1: "您节省"
+    panel_body_1: "通过做一些工作，为您节省正常成本。面板任意板任意高度。"
+    panel_title_2: "我怎样珍惜我的财产？"
+    panel_body_2: "使用土地注册处的数据，我们可以估算出你的财产价值的基础上的真正的购房者支付的价格，而不是率性的地产代理。"
+    panel_body_2_part_1: "通过使用 "
+    land_registry: "土地注册处"
+    panel_body_2_part_2: " 数据，我们可以估算你的财产价值的基础上的真正的购房者支付的价格，而不是率性的地产代理。而这一切都是实时在线完成的，所以没有等待。"
+    data_feeds: "数据，我们可以估算你的财产价值的基础上的真正的购房者支付的价格，而不是率性的地产代理。"
+    panel_title_3: "面板标题"
+    panel_body_3: "这是一个三列的网格面板任意高度。任意面板任意高度。"
+    panel_title_4: "面板标题"
+    panel_body_4: "这是一个六列的网格面板任意高度。培根概念悲坐阿梅特萨拉米火腿跗关节干肉片球头鼓槌牛腩培根丸子短里脊。这是一个三列的网格面板任意高度。"
+    panel_title_5: "面板标题"
+    panel_body_5: "这是一个四列的网格面板具有任意的高度。培根概念悲坐阿梅特腊肠。这是一个三列的网格面高度。"
+    panel_title_6: "面板标题"
+    panel_body_6: "这是一个六列的网格面板任意高度。培根概念悲坐阿梅特萨拉米火腿跗关节干肉片球头鼓槌牛腩培根丸子短里脊。这是一个三列的网格面板任意高度。"
+    panel_title_7: "面板标题"
+    panel_body_7: "这是一个三列的网格面板任意高度网格面板任。坐阿梅特腊肠。"
+    panel_title_8: "面板标题"
+    panel_body_8: "这是一个三列的网格面板任意高度。意高格面板任意高度。"
+    manage_account: "说明"
+    manage_account_body: "通过“管理帐户”菜单中，您可以管理您的所有属性和帐户细节。"
+    numero1: "省钱！"
+    numero1_body: "没有人知道你的财产比你更好！那么，为什么让别人周围显示准买家？我们可以帮你一些简单的想法，提出你的家在尽可能最好的方式。"
+    numero2: "管理收看"
+    numero2_body: "买家和畅销书在那套房他们有没有必要使用一个地产代理之间去收看。您现在的位置控制。"
+    numero3: "信息"
+    numero3_body: "您可以直接接受的人，电子邮件，电话，或通过我们的竞价系统。"
+    numero4: "田土转易"
+    numero4_body: "正如与地产代理，在时机成熟时安排购买您需要指示律师完成法律工作。但是，你将不必支付一笔额外的一分钱！"
+
+# About Us
+  about_us:
+    title: "关于我们"
+    header: "这是所有关于我们"
+    blurb: "通过做一些工作，可以节省的正常成本"
+    paragraph_1: "如果您使用的是代理吗？"
+    paragraph_2: "如果你是营销你的家，自己的以及用人地产代理，你需要知道你的合同与该机构的条款。 “独家代理”意味着你将支付代理人的佣金，只有当他们找到买家，为您的家庭，但同意“独家销售权”，到头来你会付给他们，即使你找到买家。有灰色地带，但是。如果你找到一个买家，私下谁原来是书本上您指定的地产代理，他们不得不为他们的营销活动的结果证明销售工作。但是，如果买家看到的结果，地产代理登录你的房子以外，代理商找出敲你的门，他们付款的情况下强得多。"
+    paragraph_3: "火腿球头菲力牛排昂杜耶法兰克福鸡臀香肠肉丸。菲力牛排肉饼地面轮火腿（昂杜耶）跗关节猪肉。风干牛肉短里脊的丸子头汉堡包猪。土耳其鹿肉夹头，舌的膘尾猪干腌牛肉柄波兰熏肠火腿眼肌火腿三尖。臀部腊肉五花肉肉饼肩：短腰部丸子波兰熏肠猪肉里脊舌风干牛肉牛腩咸牛肉火腿面颊。牛肉肋骨克尔短肋五花肉腌牛肉膘猪排舌干肉片布丹牛柳牛腩肉饼培根。"
+
+# Contact Us
+  contact_us:
+    title: "联系我们"
+    get_in_touch: "取得联系！"
+    paragraph_1: "我们很乐意听到你的。您可以接触到我们作为一个整体，我们的真棒团队成员之一将送还给你，如果你有一个具体的问题，我们的工作人员。我们喜欢收到电子邮件整天整天 "
+    all_day: "整天"
+    contact_our_company: "联系本公司"
+    specific_person: "特定人"
+    your_name: "你的名字"
+    jane_smith: "简·史密斯"
+    your_email: "您的电子邮件地址"
+    jane_smith_email: "简·史密斯@smithco.com"
+    whats_up: "什么事"
+    map: "地图"
+    view_map: "浏览地图"
+    where_we_are: "我们在哪里"
+    view_larger_map: "查看大图"
+
+# Blog
+  blog:
+    title: "博客"
+    blog_post_title: "博客文章标题"
+    blog_post_header: "约翰·史密斯2012年8月12日写的。"
+    written_by: "撰稿 "
+    john_smith: "约翰·史密斯"
+    blog_date: " 2012年8月12日。"
+    paragraph_1: "不能培根火腿谁是这样一个优势，夹头的愿望。但是的魅力，痛则不通了很大的努力，在猪猪肉干肉片。，痛则不通了很大的努力，这猪排骨站在查找故障。"
+    paragraph_2: "布丹必须遵守球必须遵守球的必须遵守球臀咸牛肉。咸牛肉必须遵守球必须遵守球头, 魁布雷绍拉面颊。排骨必须遵守球a排骨必须遵守球a微量的腊肠熏微量的腊肠熏"
+    paragraph_3: "猪肉鸡腿火鸡。三尖的猪排英寸猪排骨肉丸腊肉五花肉肉饼牛。咸牛肉必须遵守球头，：魁布雷绍拉面颊。排骨微量的腊肠d熏。咸牛肉必须遵守球头，：魁布雷绍拉面颊。排骨微量的腊肠熏"
+    paragraph_4: "猪肉鸡腿火鸡。三尖的猪排英寸猪排骨肉丸腊肉五花肉肉饼牛。咸牛肉必英寸猪排英寸猪排须遵守球头：魁布雷绍拉面颊。排骨C微量的腊肠熏。"
+
+# Properties
+  properties:
+    title: "所有属性"
+    edit_property_details_for: "编辑属性的详细信息"
+    add_property_details: "房产详细信息"
+    bedrooms: "卧室"
+    bedroom: "卧室"
+    pick_one: "选择一个"
+
+  for_sale:
+    title: "出售"
+    header: "出售"
+
+  for_rent:
+    title: "出租"
+    header: "出租"
+
+  search:
+    title: "搜索"
+    search_for_properties: "物业搜索"
+    postcode_or_area: "邮编或地区"
+    results: "结果"
+
+  photos:
+    title: "照片"
+    heading: "照片"
+    photos_of: "照片"
+    add_photos_of: "添加照片"
+
+  floor_plans:
+    title: "楼层平面图"
+    heading: "楼层平面图"
+    floor_plans_for: "楼计划"
+    add_floor_plans_for: "添加楼层平面图"
+
+  location:
+    title: "位置"
+    heading: "位置"
+    location_details_for: "地点详情"
+
+  viewing_times:
+    title: "查看时报"
+    heading: "查看时报"
+    viewing_times_for: "观看时间"
+    add_viewing_times_for: "新增查看时报"

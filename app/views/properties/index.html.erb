@@ -1,0 +1,22 @@
+<% title t('properties.title') %>
+
+<div class="row">
+
+  <div class="large-9 columns" role="content">
+
+    <h4><%= t('properties.title') %>
+      <small><%= t(:total) %>
+        : <%= number_with_delimiter(@total_properties, :delimiter => ',') %></small>
+    </h4>
+
+    <%= paginate @properties %>
+
+    <%= render "properties/property" %>
+
+    <%= paginate @properties %>
+
+  </div>
+
+  <%= render "layouts/sidebar" %>
+
+</div>

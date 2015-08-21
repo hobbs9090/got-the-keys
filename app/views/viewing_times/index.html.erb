@@ -1,0 +1,26 @@
+<% title "#{@property.address_line_1} - #{t('viewing_times.title')}" %>
+
+<div class="row">
+
+  <div class="large-9 columns" role="content">
+
+    <h4><%= t('viewing_times.viewing_times_for') %> <%= link_to(@property.address_line_1, @property) %></h4>
+
+    <ol>
+      <% @viewing_times.each do |viewing_time| %>
+          <li>
+            <span><strong>From</strong> <%= format_time(viewing_time.start_time) %></span> <strong>To</strong>
+            <span><%= format_time(viewing_time.end_time) %></span>
+          </li>
+      <% end %>
+    </ol>
+
+    <p>
+      <%= link_to 'Book Appointment', new_property_appointment_path(@property), class: 'button' %>
+    </p>
+
+  </div>
+
+  <%= render "properties/property_sidebar" %>
+
+</div>

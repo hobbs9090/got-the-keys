@@ -1,0 +1,21 @@
+<% title t('for_sale.title') %>
+
+<div class="row">
+
+  <div class="large-9 columns" role="content">
+
+    <h4><%= t('for_sale.header') %>
+      <small><%= t(:total) %>: <%= number_with_delimiter(@total_for_sale, :delimiter => ',') %></small>
+    </h4>
+
+    <%= paginate @properties %>
+
+    <%= render "properties/property" %>
+
+    <%= paginate @properties %>
+
+  </div>
+
+  <%= render "layouts/sidebar" %>
+
+</div>

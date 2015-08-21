@@ -1,0 +1,74 @@
+<% title t('devise.views.registrations.new.title') %>
+
+<div class="row">
+
+  <div class="large-9 columns">
+
+    <h4><%= t('devise.views.registrations.new.title') %></h4>
+
+    <p><a href="#" data-reveal-id="myModal"><%= t('devise.views.registrations.new.why_so_much') %></a></p>
+
+    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+        <%= devise_error_messages! %>
+        <fieldset>
+          <ol>
+            <li class="required">
+              <%= f.label :first_name %>
+              <%= f.text_field :first_name, :autofocus => true %>
+            </li>
+            <li class="required">
+              <%= f.label :last_name %>
+              <%= f.text_field :last_name %>
+            </li>
+            <li class="required">
+              <%= f.label :mobile_number %>
+              <%= f.text_field :mobile_number %>
+            </li>
+            <li class="required">
+              <%= f.label :email %>
+              <%= f.email_field :email %>
+            </li>
+            <li class="required">
+              <%= f.label :language %>
+              <%= f.select :language, LANGUAGES, prompt: t('properties.pick_one') %>
+            </li>
+            <li class="required">
+              <%= f.label :password %>
+              <%= f.password_field :password %>
+            </li>
+            <li class="required">
+              <%= f.label :password_confirmation %>
+              <%= f.password_field :password_confirmation %>
+            </li>
+            <li class="required">
+              <%= f.label :terms_of_service %>
+              <%= f.check_box :terms_of_service %>
+            </li>
+          </ol>
+          <p>
+            <%= f.submit t('devise.views.links.register') %>
+          </p>
+        </fieldset>
+    <% end %>
+
+    <%= render :partial => "devise/shared/links" %>
+
+  </div>
+
+  <%= render "layouts/sidebar" %>
+
+  <div id="myModal" class="reveal-modal">
+    <h3><%= render "layouts/gotthekeys" %></h3>
+    <h4><%= t('devise.views.registrations.new.why_so_much') %></h4>
+
+    <p class="lead"><%= t('devise.views.registrations.new.paragraph_1') %></p>
+
+    <p><%= t('devise.views.registrations.new.paragraph_2') %></p>
+
+    <p><%= t('devise.views.registrations.new.paragraph_3') %></p>
+
+    <p><%= t('devise.views.registrations.new.paragraph_4') %></p>
+    <a class="close-reveal-modal">&#215;</a>
+  </div>
+
+</div>

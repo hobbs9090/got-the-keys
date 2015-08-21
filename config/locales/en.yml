@@ -1,0 +1,370 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different location, set it with `I18n.location`:
+#
+#     I18n.location = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  studio_flat: "Studio Flat"
+  total: "Total"
+  bedrooms: "Bedrooms"
+  bedroom: "bedroom"
+  under_construction: "Under Construction"
+
+  activerecord:
+    models:
+      property: "Property"
+      user: "User"
+    attributes:
+      property:
+        address_line_1: "Address line 1"
+        town_city: "Town or City"
+        county: "County"
+        postcode: "Postcode"
+        country: "Country"
+        property_description: "Property description"
+        bedrooms: "Bedrooms"
+        sale_status: "Sale status"
+        asking_price: "Asking price"
+      user:
+        first_name: "Given Name"
+        last_name: "Family Name"
+        mobile_number: "Mobile Number"
+        email: "Email"
+        password: "Password"
+        terms_of_service: "Terms of Service"
+
+# ActiveRecord Errors
+  errors:
+    oops: "Oops"
+    the: "The"
+    could_not_be_saved: "could not be saved"
+    please_correct_the_following: "Please correct the following"
+    error: "error"
+
+  menu:
+    welcome: "Welcome"
+    logged_in_as: "Logged in as"
+    logged_in_as_admin: "Logged in as Administrator"
+    my_property_details: "My Property Details"
+    edit_details: "Edit Details"
+    account_details: "Account Details"
+    add_property: "Add Property"
+    user_profile: "User Profile"
+    coffeescripts: "CoffeeScripts"
+    appointments: "Appointments"
+    account_billing: "Account Billing"
+    manage_account: "Manage Account"
+    administration: "Administration"
+    language_preference: "Language Preference"
+    description: "Description"
+    photos: "Photos"
+    floor_plans: "Floor Plans"
+    location: "Location"
+    viewing_times: "Viewing Times"
+    register: "Register"
+    sign_in: "Sign in"
+    logout: "Logout"
+
+  gotthekeys:
+    gotthekeys: "GotTheKeys"
+    got: "got"
+    the: "the"
+    keys: "keys"
+
+# Controllers
+  # Properties Controller
+  not_authorised: "YOU ARE NOT AUTHORISED TO EDIT THE PAGE"
+  successfully_updated: "Property successfully updated!"
+  successfully_created: "Property successfully created!"
+  successfully_deleted: "Property successfully deleted!"
+
+# Sidebar adverts
+# Advert #1
+  need_help: "Need help with conveyancing?"
+  preferred_list: "Ask us about our preferred list of solicitors, surveyors and mortgage brokers."
+  read_more: "Read more"
+
+# Advert #2
+  estate_future: " is the Estate Agent of the future. Why pay a fee of £10,000 to sell a typical London home! We couldn't understand it. That's why we created GotTheKeys.com so now you can tell Timothy from Foxtons to fuck off!"
+
+# Form Helpers
+  helpers:
+    label:
+      user:
+        first_name: "Given Name"
+        last_name: "Family Name"
+        mobile_number: "Mobile Number"
+        email: "Email"
+        password: "Password"
+        password_confirmation: "Password confirmation"
+        terms_of_service: "Terms of Service"
+        remember_me: "Remember me"
+      admin:
+        email: "Username"
+        password: "Password"
+        password_confirmation: "Password confirmation"
+        remember_me: "Remember me"
+      property:
+        address_line_1: "Address line 1"
+        address_line_2: "Address line 2"
+        town_city: "Town or City"
+        county: "County"
+        postcode: "Postcode"
+        country: "Country"
+        property_description: "Property description"
+        bedrooms: "Bedrooms"
+        image_file_name: "Image file name"
+        sale_status: "Sale status"
+        asking_price: "Asking price"
+        update_property: "Update Property"
+        delete_property: "Delete Property"
+        cancel: "Cancel"
+        are_you_sure: "Are you sure?"
+
+# Sides
+  side:
+    section: "Section"
+
+  button:
+    submit: "Submit"
+
+# Admin Pages
+# Members
+  members:
+    title: "Members"
+    sale_or_rental: "Members with Properties for Sale or Rental"
+    total: "Total"
+    member_username: "Member Username"
+    num: "Number of Properties"
+    properties_for_sale: "Properties for Sale"
+    total_selling_value: "Total Selling Value"
+    properties_for_rent: "Properties for Rent"
+    total_rental_value: "Total Rental Value"
+
+# User
+  user:
+    user_details_for: "User details for"
+    name: "Name"
+    email: "Email"
+    mobile: "Mobile"
+    member_since: "Member since"
+    ago: "ago"
+    property: "Property"
+    property_details: "Property Details"
+    appointments: "Appointments"
+    no_appointments: "No Appointments"
+
+# Statistics
+  statistics:
+    title: "Statistics"
+    property_totals: "Property Totals"
+    total_number_users: "Number of users"
+    num_english_users: "English users"
+    num_chinese_users: "Chinese users"
+    total_value_properties: "Value of properties"
+    total_num_properties: "Number of properties"
+    num_properties_sale: "Number for sale"
+    num_properties_rent: "Number for rent"
+    property_sizes: "Property Sizes"
+    bed: "bed"
+    site_statistics: "Website Statistics"
+    active_users_today: "Active users today"
+    properties_added_today: "Properties added today"
+    new_members_today: "New members today"
+    tbc: "tbc"
+
+# CoffeeScript
+  coffeescript:
+    title: "CoffeeScript Test Page"
+    blurb: "This is a test page used for experiments in CoffeeScript"
+
+#  Charts:
+  charts:
+    english_vs_chinese: "English vs Chinese"
+    language: "Language"
+    english: "English"
+    chinese: "Chinese"
+    sale_vs_rent: "For Sale vs For Rent"
+    sale: "Sale"
+    rent: "Rent"
+    bed: "bed"
+    country: "Country"
+    popularity: "Popularity"
+    united_kingdom: "United Kingdom"
+    china: "China"
+
+# Accounts Billing
+  account_billing:
+    title: "Account Billing"
+    heading: "Account Billing"
+
+# Member Area
+# Welcome
+  welcome:
+    title: "Home"
+    welcome_message: "Welcome"
+    tool_tip: "Bacon ipsum"
+    tool_tip_content: "Tooltips are awesome, you should totally use them!"
+    try_today: "Try Today"
+    paragraph_1: " dolor sit amet nulla ham qui sint exercitation eiusmod commodo, chuck duis velit. Aute in reprehenderit, dolore aliqua non est magna in labore pig pork biltong. Eiusmod swine spare ribs reprehenderit culpa. Boudin aliqua adipisicing rump corned beef."
+    paragraph_2: "Pork drumstick turkey fugiat. Tri-tip elit turducken pork chop in. Swine short ribs meatball irure bacon nulla pork belly cupidatat meatloaf cow. Nulla corned beef sunt ball tip, qui bresaola enim jowl. Capicola short ribs minim salami nulla nostrud pastrami."
+    paragraph_3: "Bacon ipsum dolor sit amet nulla ham qui sint exercitation eiusmod commodo, chuck duis velit. Aute in reprehenderit, dolore aliqua non est magna in labore pig pork biltong. Eiusmod swine spare ribs reprehenderit culpa. Boudin aliqua adipisicing rump corned beef."
+    paragraph_4: "Pork drumstick turkey fugiat. Tri-tip elit turducken pork chop in. Swine short ribs meatball irure bacon nulla pork belly cupidatat meatloaf cow. Nulla corned beef sunt ball tip, qui bresaola enim jowl. Capicola short ribs minim salami nulla nostrud pastrami."
+
+# Legal
+  legal:
+    title: "Legal"
+    header: "Legal"
+    blurb: "The lawyers made us put this bit in. They smell and are paid too much"
+    paragraph_1: "Bacon ipsum dolor sit amet salami ham hock biltong ball tip drumstick sirloin pancetta meatball short loin. Venison tail chuck pork chop, andouille ball tip beef ribs flank boudin bacon. Salami andouille pork belly short ribs flank cow. Salami sirloin turkey kielbasa. Sausage venison pork loin leberkas chuck short loin, cow ham prosciutto pastrami jowl. Ham hock jerky tri-tip, fatback hamburger shoulder swine pancetta ground round. Tri-tip prosciutto meatball turkey, brisket spare ribs shankle chuck cow chicken ham hock boudin meatloaf jowl."
+    paragraph_2: "Ground round pastrami pork loin tenderloin jerky. Jerky spare ribs biltong, ham hock ham capicola pork. Jerky turducken pork, meatloaf sausage capicola swine corned beef turkey short loin. Tongue prosciutto pork loin, ground round spare ribs venison kielbasa strip steak."
+    paragraph_3: "Hamburger bresaola turkey t-bone, leberkas salami pork chop ham hock beef ribs. Rump biltong meatball venison, short ribs pork loin shank shankle corned beef beef. Cow salami jowl short loin hamburger fatback. Short ribs pork belly shoulder pastrami drumstick salami corned beef ham hock bresaola. Swine filet mignon cow sausage ball tip. Cow ribeye ground round, sausage pork loin pig beef ball tip turkey boudin."
+    paragraph_4: "Leberkas salami pork chop ham hock beef ribs. Rump biltong meatball venison, short ribs pork loin shank shankle corned beef beef. Cow salami jowl short loin hamburger fatback. Short ribs pork belly shoulder pastrami drumstick salami corned beef ham hock bresaola. Swine filet mignon cow sausage ball tip. Cow ribeye ground round, sausage pork loin pig beef ball tip turkey boudin.Ground round pastrami pork loin tenderloin jerky. Jerky spare ribs biltong, ham hock ham capicola pork. Jerky turducken pork, meatloaf sausage capicola swine corned beef turkey short loin. Tongue prosciutto pork loin, ground round spare ribs venison kielbasa strip steak."
+    paragraph_5: "Prosciutto ball tip filet mignon andouille frankfurter chicken rump sausage meatball. Filet mignon meatloaf ground round andouille ham hock pork. Bresaola short loin meatball chuck hamburger pig. Turkey venison chuck, tongue fatback tail swine jerky corned beef shank kielbasa prosciutto ribeye ham tri-tip. Rump bacon pork belly meatloaf shoulder short loin meatball kielbasa pork loin tongue bresaola brisket corned beef jowl prosciutto. Beef ribs shankle short ribs pork belly corned beef fatback pork chop tongue biltong boudin strip steak sirloin meatloaf pancetta."
+
+# Cookie Policy
+  cookie_policy:
+    title: "Cookie Policy"
+    header: "Cookie Policy"
+    blurb: "The lawyers made us put this bit in. They smell and are paid too much"
+    paragraph_1: "Bacon ipsum dolor sit amet salami ham hock biltong ball tip drumstick sirloin pancetta meatball short loin. Venison tail chuck pork chop, andouille ball tip beef ribs flank boudin bacon. Salami andouille pork belly short ribs flank cow. Salami sirloin turkey kielbasa. Sausage venison pork loin leberkas chuck short loin, cow ham prosciutto pastrami jowl. Ham hock jerky tri-tip, fatback hamburger shoulder swine pancetta ground round. Tri-tip prosciutto meatball turkey, brisket spare ribs shankle chuck cow chicken ham hock boudin meatloaf jowl."
+    paragraph_2: "Ground round pastrami pork loin tenderloin jerky. Jerky spare ribs biltong, ham hock ham capicola pork. Jerky turducken pork, meatloaf sausage capicola swine corned beef turkey short loin. Tongue prosciutto pork loin, ground round spare ribs venison kielbasa strip steak."
+    paragraph_3:  "Prosciutto ball tip filet mignon andouille frankfurter chicken rump sausage meatball. Filet mignon meatloaf ground round andouille ham hock pork. Bresaola short loin meatball chuck hamburger pig. Turkey venison chuck, tongue fatback tail swine jerky corned beef shank kielbasa prosciutto ribeye ham tri-tip. Rump bacon pork belly meatloaf shoulder short loin meatball kielbasa pork loin tongue bresaola brisket corned beef jowl prosciutto. Beef ribs shankle short ribs pork belly corned beef fatback pork chop tongue biltong boudin strip steak sirloin meatloaf pancetta."
+
+# How It Works
+  how_it_works:
+    title: "How It Works"
+    next: "Next"
+    close: "Close"
+    panel_title_1: "You Save"
+    panel_body_1: "By doing some of the work, you save on the normal costs."
+    panel_title_2: "How do I value my property?"
+    panel_body_2: "By using Land Registry data we can estimate the value of your property based on the prices real buyers paid and not the whims of an estate agent."
+    panel_body_2_part_1: "By using "
+    land_registry: "Land Registry"
+    panel_body_2_part_2: " data we can estimate the value of your property based on the prices real buyers paid and not the whims of an estate agent."
+    data_feeds: "Data feeds will soon be available with a 7 day delay. So you'll be able to see exactly what people paid for property in your area as soon as the sale completes. What's hot and what's not. We can tell you."
+    panel_title_3: "Panel Title"
+    panel_body_3: "This is a three columns grid panel with an arbitrary height."
+    panel_title_4: "Panel Title"
+    panel_body_4: "This is a six columns grid panel with an arbitrary height. Bacon ipsum dolor sit amet salami ham hock biltong ball tip drumstick sirloin pancetta meatball short loin."
+    panel_title_5: "Panel Title"
+    panel_body_5: "This is a four columns grid panel with an arbitrary height. Bacon ipsum dolor sit amet salami."
+    panel_title_6: "Panel Title"
+    panel_body_6: "This is a six columns grid panel with an arbitrary height. Bacon ipsum dolor sit amet salami ham hock biltong ball tip drumstick sirloin pancetta meatball short loin."
+    panel_title_7: "Panel Title"
+    panel_body_7: "This is a three columns grid panel with an arbitrary height."
+    panel_title_8: "Panel Title"
+    panel_body_8: "This is a three columns grid panel with an arbitrary height."
+    manage_account: "Instructions"
+    manage_account_body: "You can manage all your properties and account details through the Manage Account menu."
+    numero1: "Save!"
+    numero1_body: "Nobody knows your property better than you do! So why let someone else show prospective buyers around? And we can help you with some simple ideas to present your home in the best way possible."
+    numero2: "Manage viewings"
+    numero2_body: "Buyers and seller book viewings at times that suite them so there is no need to use an estate agent as a go between. You are in control."
+    numero3: "Offers"
+    numero3_body: "You can make and accept offers directly in person, email, telephone, or via our bidding system."
+    numero4: "Conveyancing"
+    numero4_body: "Just as with an estate agents, when the time comes to arrange a purchase you need to instruct a solicitor to complete the legal work. But you won't have to pay us a penny extra!"
+
+# About Us
+  about_us:
+    title: "About Us"
+    all_about_us: "It's All About Us"
+    blurb: "By doing some of the work, you save on the normal costs"
+    paragraph_1: "What If You're Using An Estate Agent Too?"
+    paragraph_2: "If you are marketing your home yourself as well as employing an estate agent, you need to be aware of the terms of your contract with the agency. 'Sole agency' means you'll pay the agent's commission ONLY if they find a buyer for your home, but agree to 'sole selling rights' and you'll end up paying them even if you find the buyer. There are grey areas, however. If you find a buyer privately who turns out to be on the books of the estate agents you appointed, they'd have a job proving the sale was as a result of their marketing activity. However, if a buyer knocks at your door as a result of seeing the estate agency sign outside your house and the agents find out, their case for payment is much stronger."
+    paragraph_3: "Prosciutto ball tip filet mignon andouille frankfurter chicken rump sausage meatball. Filet mignon meatloaf ground round andouille ham hock pork. Bresaola short loin meatball chuck hamburger pig. Turkey venison chuck, tongue fatback tail swine jerky corned beef shank kielbasa prosciutto ribeye ham tri-tip. Rump bacon pork belly meatloaf shoulder short loin meatball kielbasa pork loin tongue bresaola brisket corned beef jowl prosciutto. Beef ribs shankle short ribs pork belly corned beef fatback pork chop tongue biltong boudin strip steak sirloin meatloaf pancetta."
+
+# Contact Us
+  contact_us:
+    title: "Contact Us"
+    get_in_touch: "Get in Touch!"
+    paragraph_1: "We'd love to hear from you. You can either reach out to us as a whole and one of our awesome team members will get back to you, or if you have a specific question reach out to one of our staff. We love getting email all day all day "
+    all_day: "all day"
+    contact_our_company: "Contact Our Company"
+    specific_person: "Specific Person"
+    your_name: "Your Name"
+    jane_smith: "Jane Smith"
+    your_email: "Your Email"
+    jane_smith_email: "jane.smith@smithco.com"
+    whats_up: "What's up"
+    map: "Map"
+    view_map: "View Map"
+    where_we_are: "Where We Are"
+    view_larger_map: "View Larger Map"
+
+# Blog
+  blog:
+    title: "Blog"
+    blog_post_title: "Blog Post Title"
+    blog_post_header: "Written by John Smith on August 12, 2012."
+    written_by: "Written by "
+    john_smith: "John Smith"
+    blog_date: " on August 12, 2012."
+    paragraph_1: "Bacon ipsum dolor sit amet nulla ham qui sint exercitation eiusmod commodo, chuck duis velit. Aute in reprehenderit, dolore aliqua non est magna in labore pig pork biltong. Eiusmod swine spare ribs reprehenderit culpa."
+    paragraph_2: "Boudin aliqua adipisicing rump corned beef. Nulla corned beef sunt ball tip, qui bresaola enim jowl. Capicola short ribs minim salami nulla nostrud pastrami."
+    paragraph_3: "Pork drumstick turkey fugiat. Tri-tip elit turducken pork chop in. Swine short ribs meatball irure bacon nulla pork belly cupidatat meatloaf cow. Nulla corned beef sunt ball tip, qui bresaola enim jowl. Capicola short ribs minim salami nulla nostrud pastrami. Nulla corned beef sunt ball tip, qui bresaola enim jowl. Capicola short ribs minim salami nulla nostrud pastrami."
+    paragraph_4: "Pork drumstick turkey fugiat. Tri-tip elit turducken pork chop in. Swine short ribs meatball irure bacon nulla pork belly cupidatat meatloaf cow. Nulla corned beef sunt ball tip, qui bresaola enim jowl. Capicola short ribs minim salami nulla nostrud pastrami."
+
+# Properties
+  properties:
+    title: "All Properties"
+    edit_property_details_for: "Edit Property Details for "
+    add_property_details: "Add Property Details"
+    bedrooms: "Bedrooms"
+    bedroom: "bedroom"
+    pick_one: "Pick one"
+
+  for_sale:
+    title: "For Sale"
+    header: "For Sale"
+
+  for_rent:
+    title: "For Rent"
+    header: "For Rent"
+
+  search:
+    title: "Search"
+    search_for_properties: "Search for Properties"
+    postcode_or_area: "Postcode or area"
+    results: "Results"
+
+  photos:
+    title: "Photos"
+    heading: "Photos"
+    photos_of: "Photos of"
+    add_photos_of: "Add Photos of"
+
+  floor_plans:
+    title: "Floor Plans"
+    heading: "Floor Plans"
+    floor_plans_for: "Floor plans for"
+    add_floor_plans_for: "Add Floor plans for"
+
+  location:
+    title: "Location"
+    heading: "Location"
+    location_details_for: "Location Details for"
+
+  viewing_times:
+    title: "Viewing Times"
+    heading: "Viewing Times"
+    viewing_times_for: "Viewing times for"
+    add_viewing_times_for: "Add Viewing Times for"

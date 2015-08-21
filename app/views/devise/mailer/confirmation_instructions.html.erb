@@ -1,0 +1,7 @@
+<h2><%= render "layouts/gotthekeys" %></h2>
+
+<p><%= t('devise.mailer.confirmation_instructions.welcome') %><%= @resource.email %>!</p>
+
+<p><%= t('devise.mailer.confirmation_instructions.paragraph_1') %></p>
+
+<p><%= link_to t('devise.mailer.confirmation_instructions.confirm_my_account'), confirmation_url(@resource, :confirmation_token => @token) %></p>

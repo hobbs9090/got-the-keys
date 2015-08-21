@@ -1,0 +1,31 @@
+<% title t('devise.views.passwords.new.title') %>
+
+<div class="row">
+
+  <!-- Forgot your password -->
+
+  <div class="large-9 columns">
+
+    <h4><%= t('devise.views.passwords.new.title') %></h4>
+
+    <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => {:method => :post}) do |f| %>
+        <%= devise_error_messages! %>
+        <fieldset>
+          <ol>
+            <li><%= f.label :email %>
+              <%= f.email_field :email, :autofocus => true %>
+            </li>
+          </ol>
+          <p><%= f.submit t('devise.views.passwords.new.submit') %></p>
+        </fieldset>
+    <% end %>
+
+    <%= render :partial => "devise/shared/links" %>
+
+  </div>
+
+  <!-- End Forgot your password -->
+
+  <%= render "layouts/sidebar" %>
+
+</div>

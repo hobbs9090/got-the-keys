@@ -1,0 +1,30 @@
+<% title t('devise.views.unlocks.new.title') %>
+
+<div class="row">
+
+  <div class="large-9 columns">
+
+    <h4><%= t('devise.views.unlocks.new.title') %></h4>
+
+    <%= form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => {:method => :post}) do |f| %>
+        <%= devise_error_messages! %>
+        <fieldset>
+          <ol>
+            <li>
+              <%= f.label :email %>
+              <%= f.email_field :email, :autofocus => true %>
+            </li>
+          </ol>
+          <p>
+            <%= f.submit  t('devise.views.unlocks.new.submit') %>
+          </p>
+        </fieldset>
+    <% end %>
+
+    <%= render :partial => "devise/shared/links" %>
+
+  </div>
+
+  <%= render "layouts/sidebar" %>
+
+</div>

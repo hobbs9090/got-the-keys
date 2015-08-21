@@ -1,0 +1,63 @@
+<h5><%= t('statistics.property_sizes') %></h5>
+<table width=100%>
+  <tr>
+    <th width=65%></th>
+    <th width=35%><%= t(:total) %></th>
+  </tr>
+  <tr>
+    <td>
+      <%= t('studio_flat') %>
+    </td>
+    <td>
+      <%= number_with_delimiter(@total_0_bedrooms, :delimiter => ',') %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      1 <%= t('statistics.bed') %>
+    </td>
+    <td>
+      <%= number_with_delimiter(@total_1_bedrooms, :delimiter => ',') %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      2 <%= t('statistics.bed') %>
+    </td>
+    <td>
+      <%= number_with_delimiter(@total_2_bedrooms, :delimiter => ',') %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      3 <%= t('statistics.bed') %>
+    </td>
+    <td>
+      <%= number_with_delimiter(@total_3_bedrooms, :delimiter => ',') %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      4 <%= t('statistics.bed') %>
+    </td>
+    <td>
+      <%= number_with_delimiter(@total_4_bedrooms, :delimiter => ',') %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      5 <%= t('statistics.bed') %>
+    </td>
+    <td>
+      <%= number_with_delimiter(@total_5_bedrooms, :delimiter => ',') %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      6+ <%= t('statistics.bed') %>
+    </td>
+    <td>
+      <%= number_with_delimiter(@total_6_plus_bedrooms, :delimiter => ',') %>
+    </td>
+  </tr>
+</table>

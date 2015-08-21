@@ -1,0 +1,73 @@
+<% title "#{t('user.user_details_for')} #{@user.first_name.capitalize} #{@user.last_name.capitalize}" %>
+
+<div class="row">
+
+  <div class="large-12 columns">
+    <div class="panel">
+
+      <div class="row">
+
+        <div class="large-12 columns">
+
+          <p>
+            <h4><%= "#{@user.first_name.capitalize} #{@user.last_name.capitalize}" %></h4>
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="large-6 columns">
+
+          <p><strong><%= t('user.email') %>:</strong>  <%= @user.email %></p>
+
+          <p><strong><%= t('user.mobile') %>:</strong>  <%= @user.mobile_number %></p>
+
+        </div>
+
+        <div class="large-6 columns">
+
+          <p><strong><%= t('user.member_since') %>
+            :</strong>  <%= "#{format_date(@user.created_at)} (#{time_ago_in_words(@user.created_at)} #{ t('user.ago')})" %></p>
+
+        </div>
+
+      </div>
+
+      <% if @user.properties.exists? %>
+
+          <table width=100%>
+            <tr>
+              <th width=30%><%= t('user.property') %></th>
+              <th width=70%><%= t('user.appointments') %></th>
+            </tr>
+
+            <% @user.properties.each do |property| %>
+                <tr>
+                  <td>
+
+                    <ul class="vcard">
+                      <li><%= property.address_line_1 %></li>
+                      <li><%= property.address_line_2 %></li>
+                      <li><%= property.town_city %></li>
+                      <li><%= property.county %></li>
+                      <li><%= property.postcode %></li>
+                      <li><%= property.country %></li>
+                    </ul>
+
+                  </td>
+                  <td><%= t('user.no_appointments') %></td>
+                </tr>
+            <% end %>
+
+          </table>
+
+      <% end %>
+
+    </div>
+  </div>
+
+
+</div>

@@ -1,0 +1,141 @@
+<% title t('how_it_works.title') %>
+
+<div class="row">
+
+  <div id="numero1" class="large-3 columns">
+    <div class="panel">
+      <h5><%= t('how_it_works.panel_title_1') %></h5>
+
+      <p data-joyride><%= t('how_it_works.panel_body_1') %></p>
+    </div>
+  </div>
+  <div class="large-6 columns">
+    <div class="panel">
+      <h5><%= t('how_it_works.panel_title_2') %></h5>
+      <p><%= t('how_it_works.panel_body_2_part_1') %><a href="#" data-dropdown="drop1"><%= t('how_it_works.land_registry') %></a><%= t('how_it_works.panel_body_2_part_2') %></p>
+    </div>
+  </div>
+  <div class="large-3  columns">
+    <div class="panel">
+      <h5><%= t('how_it_works.panel_title_3') %></h5>
+
+      <p><%= t('how_it_works.panel_body_3') %></p>
+    </div>
+  </div>
+
+</div>
+
+<div class="row">
+
+  <div class="large-6 columns">
+    <div class="panel">
+      <h5><%= t('how_it_works.panel_title_4') %></h5>
+
+      <p><%= t('how_it_works.panel_body_4') %></p>
+    </div>
+  </div>
+  <div class="large-2 columns">
+    <div id="numero2" class="panel">
+      <p>
+        <%= square_image %>
+      </p>
+    </div>
+  </div>
+  <div class="large-4 columns">
+    <div class="panel">
+      <h5><%= t('how_it_works.panel_title_5') %></h5>
+
+      <p><%= t('how_it_works.panel_body_5') %></p>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="row">
+
+  <div class="large-4 columns">
+    <div class="panel">
+      <p>
+        <%= world_image %>
+      </p>
+    </div>
+  </div>
+  <div class="large-4 columns">
+    <div class="panel">
+      <p>
+        <%= world_image %>
+      </p>
+    </div>
+  </div>
+  <div class="large-4 columns">
+    <div class="panel">
+      <p>
+        <%= world_image %>
+      </p>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="row">
+
+  <div  id="numero3" class="large-6 columns">
+    <div class="panel">
+      <h5><%= t('how_it_works.panel_title_6') %></h5>
+
+      <p><%= t('how_it_works.panel_body_6') %></p>
+    </div>
+  </div>
+  <div  id="numero4" class="large-3 columns">
+    <div class="panel">
+      <h5><%= t('how_it_works.panel_title_7') %></h5>
+
+      <p><%= t('how_it_works.panel_body_7') %></p>
+    </div>
+  </div>
+  <div class="large-3 columns">
+    <div class="panel">
+      <h5><%= t('how_it_works.panel_title_8') %></h5>
+
+      <p><%= t('how_it_works.panel_body_8') %></p>
+    </div>
+  </div>
+
+</div>
+
+<!-- End Grid Section -->
+
+<!-- Dropdowns -->
+<ul id="drop1" class="f-dropdown content" data-dropdown-content>
+  <p><%= t('how_it_works.data_feeds') %></p>
+</ul>
+
+<!-- At the bottom of your page but inside of the body tag -->
+<ol class="joyride-list" data-joyride>
+  <li data-id="manage-account" data-text="<%= t('how_it_works.next') %>" data-options="tipLocation:right;tipAnimation:fade">
+    <h4><%= t('how_it_works.manage_account') %></h4>
+    <p><%= t('how_it_works.manage_account_body') %></p>
+  </li>
+  <li data-id="numero1" data-text="<%= t('how_it_works.next') %>" data-options="tipLocation:top;tipAnimation:fade">
+    <h4><%= t('how_it_works.numero1') %></h4>
+    <p><%= t('how_it_works.numero1_body') %></p>
+  </li>
+  <li data-id="numero2" data-button="<%= t('how_it_works.next') %>" data-options="tipLocation:top;tipAnimation:fade">
+    <h4><%= t('how_it_works.numero2') %></h4>
+    <p><%= t('how_it_works.numero2_body') %></p>
+  </li>
+  <li data-id="numero3" data-button="<%= t('how_it_works.next') %>" data-options="tipLocation:top;tipAnimation:fade">
+    <h4><%= t('how_it_works.numero3') %></h4>
+    <p><%= t('how_it_works.numero3_body') %></p>
+  </li>
+  <li data-id="numero4" data-button="<%= t('how_it_works.close') %>" data-options="tipLocation:top;tipAnimation:fade">
+    <h4><%= t('how_it_works.numero4') %></h4>
+    <p><%= t('how_it_works.numero4_body') %></p>
+  </li>
+</ol>
+
+<script type="text/javascript">
+    $(document).foundation('joyride', 'start');
+</script>

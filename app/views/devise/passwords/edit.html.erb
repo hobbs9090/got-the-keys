@@ -1,0 +1,39 @@
+<% title t('devise.views.passwords.edit.title') %>
+
+<div class="row">
+
+  <!-- Change your password -->
+
+  <div class="large-9 columns">
+
+    <h4><%= t('devise.views.passwords.edit.title') %></h4>
+
+    <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => {:method => :put}) do |f| %>
+        <%= devise_error_messages! %>
+        <fieldset>
+          <ol>
+            <%= f.hidden_field :reset_password_token %>
+
+            <li class="required">
+              <%= f.label :password, t('devise.views.passwords.edit.new_password') %>
+              <%= f.password_field :password, :autofocus => true %>
+            </li>
+
+            <li class="required">
+              <%= f.label :password_confirmation, t('devise.views.passwords.edit.confirm_new_password') %>
+              <%= f.password_field :password_confirmation %>
+            </li>
+          </ol>
+          <div><%= f.submit t('devise.views.passwords.edit.submit') %></div>
+        </fieldset>
+    <% end %>
+
+    <%= render :partial => "devise/shared/links" %>
+
+  </div>
+
+  <!-- End Change your password -->
+
+  <%= render "layouts/sidebar" %>
+
+</div>

@@ -1,0 +1,59 @@
+<% title t('blog.title') %>
+
+<div class="row">
+
+  <div class="large-9 columns" role="content">
+
+    <article>
+
+      <h3><a href="#"><%= t('blog.blog_post_title') %></a></h3>
+      <h6><%= t('blog.written_by') %><a href="#"><%= t('blog.john_smith') %></a><%= t('blog.blog_date') %></h6>
+
+      <div class="row">
+        <div class="large-6 columns">
+          <p><%= t('blog.paragraph_1') %></p>
+
+          <p><%= t('blog.paragraph_2') %></p>
+        </div>
+        <div class="large-6 columns">
+          <%= world_image %>
+        </div>
+      </div>
+
+      <p><%= t('blog.paragraph_3') %></p>
+
+      <p><%= t('blog.paragraph_4') %></p>
+
+    </article>
+
+    <hr/>
+
+    <article>
+
+      <h3><a href="#"><%= t('blog.blog_post_title') %></a></h3>
+      <h6><%= t('blog.written_by') %><a href="#"><%= t('blog.john_smith') %></a><%= t('blog.blog_date') %></h6>
+
+      <div class="row">
+        <div class="large-6 columns">
+
+          <p><%= t('blog.paragraph_1') %></p>
+
+          <p><%= t('blog.paragraph_2') %></p>
+
+        </div>
+        <div class="large-6 columns">
+          <%= world_image %>
+        </div>
+      </div>
+
+      <p><%= t('blog.paragraph_3') %></p>
+
+      <p><%= t('blog.paragraph_4') %></p>
+
+    </article>
+
+  </div>
+
+  <%= render "layouts/sidebar" %>
+
+</div>

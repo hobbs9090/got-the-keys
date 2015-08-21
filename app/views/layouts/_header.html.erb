@@ -1,0 +1,106 @@
+<div class="contain-to-grid">
+  <nav class="top-bar">
+    <ul class="title-area">
+      <!-- Title Area -->
+      <% if user_signed_in? %>
+          <li class="name">
+            <h1 style="color: #ffffff; "><%= t('menu.welcome') %> <%= current_user.first_name.capitalize %> <small>(<%= current_user.email %>)</small></h1>
+          </li>
+      <% elsif admin_signed_in? %>
+          <li class="name">
+            <h1 style="color: white; "><%= t('menu.logged_in_as_admin') %> <small>(<%= current_admin.email %>))</small></h1>
+          </li>
+      <% end %>
+      <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+      <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+    </ul>
+
+    <section class="top-bar-section">
+
+      <!-- Left Nav Section -->
+      <ul class="left">
+      </ul>
+
+      <!-- Right Nav Section -->
+
+      <ul class="right">
+        <% if user_signed_in? %>
+            <li id="manage-account" class="has-dropdown"><a href="#"><%= t('menu.manage_account') %></a>
+              <ul class="dropdown">
+                <% if current_user.properties.count > 0 %>
+                    <li><label><%= t('menu.my_property_details') %></label></li>
+                    <% current_user.properties.each do |property| %>
+                        <% unless property.address_line_1.nil? %>
+                            <li class="has-dropdown"><%= link_to property.address_line_1, property_path(property) %>
+                              <ul class="dropdown">
+                                <li><label><%= t('menu.edit_details') %></label></li>
+                                <li><%= link_to t('menu.description'), edit_property_path(property), :id => "description" %></li>
+                                <li><%= link_to t('menu.photos'), new_property_photo_path(property) %></li>
+                                <li><%= link_to t('menu.floor_plans'), new_property_floor_plan_path(property) %></li>
+                                <li><%= link_to t('menu.viewing_times'), new_property_viewing_time_path(property) %></li>
+                              </ul>
+                            </li>
+                        <% end %>
+                    <% end %>
+                <% end %>
+                <li class="divider"></li>
+                <li><label><%= t('menu.account_details') %></label></li>
+                <li><%= link_to t('menu.add_property'), new_user_property_path(current_user) %></li>
+                <li><%= link_to t('menu.user_profile'), edit_user_registration_path(current_user) %></li>
+                <li><%= link_to t('menu.appointments'), "#" %></li>
+                <li><%= link_to t('menu.account_billing'), "#" %></a></li>
+                <li class="divider"></li>
+                <li><label><%= t('menu.language_preference') %></label></li>
+                <%= render "layouts/english" %>
+                <%= render "layouts/chinese" %>
+              </ul>
+            </li>
+            <li class="divider"></li>
+            <li class="has-form"><%= link_to t('menu.logout'), destroy_user_session_path, method: :delete, :class => "button alert" %></li>
+        <% elsif admin_signed_in? %>
+            <li></li>
+            <li class="divider hide-for-small"></li>
+            <li class="has-dropdown"><a href="#"><%= t('menu.manage_account') %></a>
+              <ul class="dropdown">
+                <li><label><%= t('menu.administration') %></label></li>
+                <li><%= link_to t('members.title'), members_path %></li>
+                <li><%= link_to t('statistics.title'), statistics_path %></li>
+                <li><%= link_to t('menu.coffeescripts'), coffee_index_path %></li>
+                <li><%= link_to t('account_billing.title'), root_path %></li>
+                <li class="divider"></li>
+                <li><label><%= t('menu.language_preference') %></label></li>
+                <%= render "layouts/english" %>
+                <%= render "layouts/chinese" %>
+              </ul>
+            </li>
+            <li class="divider"></li>
+            <li class="has-form"><%= link_to t('menu.logout'), destroy_user_session_path, method: :delete, :class => "button alert" %></li>
+        <% else %>
+            <li class="has-form"><%= link_to t('menu.register'), new_user_registration_path, :id => "register" %></li>
+            <li class="divider"></li>
+            <li class="has-form"><%= link_to t('menu.sign_in'), new_user_session_path, :class => "button", :id => "sign_in" %></li>
+        <% end %>
+      </ul>
+    </section>
+  </nav>
+
+</div>
+
+<div class="row">
+
+  <div class="large-3 columns">
+    <h1><%= render "layouts/gotthekeys" %></h1>
+  </div>
+
+  <div class="large-9 columns">
+    <ul class="button-group right">
+      <li><%= link_to t('welcome.title'), root_path, class: 'button' %></li>
+      <li><%= link_to t('properties.title'), properties_path, class: 'button' %></li>
+      <li><%= link_to t('for_sale.title'), for_sale_index_path, class: 'button' %></li>
+      <li><%= link_to t('for_rent.title'), for_rent_index_path, class: 'button' %></li>
+      <li><%= link_to t('search.title'), searches_path, class: 'button' %></li>
+    </ul>
+  </div>
+
+</div>
+

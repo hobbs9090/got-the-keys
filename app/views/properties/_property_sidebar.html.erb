@@ -1,0 +1,24 @@
+<aside class="large-3 columns">
+
+  <% unless current_page?(controller: 'properties', action: 'new') %>
+
+      <h5><%= t('user.property_details') %></h5>
+      <ul class="side-nav">
+        <li><%= link_to t('photos.title'), property_photos_path(@property) %></li>
+        <li><%= link_to t('floor_plans.title'), property_floor_plans_path(@property) %></li>
+        <li><%= link_to t('location.title'), location_path(@property) %></li>
+        <li><%= link_to t('viewing_times.title'), property_viewing_times_path(@property) %></li>
+      </ul>
+
+  <% end %>
+
+  <div class="panel">
+    <h5><%= render "layouts/gotthekeys" %></h5>
+
+    <p><%= t(:need_help) %></p>
+
+    <p><%= t(:preferred_list) %></p>
+    <%= link_to t(:read_more), root_path %>
+  </div>
+
+</aside>
