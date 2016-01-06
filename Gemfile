@@ -9,7 +9,7 @@ gem 'sqlite3'
 gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
-gem "compass-rails", github: "Compass/compass-rails", branch: "master"
+gem 'compass-rails'
 gem 'zurb-foundation'
 
 # Use jquery as the JavaScript library
