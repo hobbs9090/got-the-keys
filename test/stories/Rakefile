@@ -2,9 +2,14 @@ require 'rubygems'
 require 'cucumber'
 require 'cucumber/rake/task'
 
-Cucumber::Rake::Task.new(:features) do |t|
+Cucumber::Rake::Task.new(:local) do |t|
   t.profile = 'default'
   t.cucumber_opts = "-f html --out results/test_report.html"
 end
 
-task :default => :features
+Cucumber::Rake::Task.new(:prod) do |t|
+  t.profile = 'prod'
+  t.cucumber_opts = "-f html --out results/test_report.html"
+end
+
+task :default => :local
