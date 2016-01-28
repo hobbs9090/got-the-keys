@@ -1,5 +1,5 @@
 class Homepage < BasePage
-  page_url "http://localhost:3001"
+  page_url FigNewton.base_url
 
 
 end
