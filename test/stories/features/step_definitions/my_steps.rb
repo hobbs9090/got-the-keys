@@ -3,5 +3,5 @@ Given(/^I am on homepage$/) do
 end
 
 Then(/^page is viewable$/) do
-
+  @current_page.assert_page_title
 end
