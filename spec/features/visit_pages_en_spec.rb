@@ -15,8 +15,8 @@ describe "Viewing Properties page" do
   it "shows page" do
     visit properties_url
 
-    expect(page).to have_title("All Properties")
-    expect(page).to have_text("All Properties")
+    expect(page).to have_title("Properties")
+    expect(page).to have_text("Properties")
   end
 end
 
