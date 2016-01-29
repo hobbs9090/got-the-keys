@@ -1,8 +1,8 @@
 class BasePage
   include PageObject
 
-  def assert_page_title(title)
-    # @browser.title.should == "#{title} | #{FigNewton.site_title}"
+  def assert_page_title
+    self.has_expected_title?
   end
 
 end
