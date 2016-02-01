@@ -4,11 +4,15 @@
       <!-- Title Area -->
       <% if user_signed_in? %>
           <li class="name">
-            <h1 style="color: #ffffff; "><%= t('menu.welcome') %> <%= current_user.first_name.capitalize %> <small>(<%= current_user.email %>)</small></h1>
+            <h1 style="color: #ffffff; "><%= t('menu.welcome') %> <%= current_user.first_name.capitalize %>
+              <small>(<%= current_user.email %>)</small>
+            </h1>
           </li>
       <% elsif admin_signed_in? %>
           <li class="name">
-            <h1 style="color: white; "><%= t('menu.logged_in_as_admin') %> <small>(<%= current_admin.email %>))</small></h1>
+            <h1 style="color: white; "><%= t('menu.logged_in_as_admin') %>
+              <small>(<%= current_admin.email %>))</small>
+            </h1>
           </li>
       <% end %>
       <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
