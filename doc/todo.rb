@@ -12,10 +12,10 @@
 # First Name, Surname, and full address details (matching criteria for property address)
 
 # Responsive Layout Bugs
-# Disappearing 'Register' and 'Sign In' buttons in menu
-# GotTheKeys title getting covered by buttons
+# TODO Disappearing 'Register' and 'Sign In' buttons in menu
+# TODO GotTheKeys title getting covered by buttons
 # TODO lack of space after 'Welcome' in title
-# Menu not working after first use (without a page refresh)
-# Form on Contact Us page
-# Google Map in modal
+# TODO Menu not working after first use (without a page refresh)
+# TODO Form on Contact Us page
+# TODO Google Map in modal
 

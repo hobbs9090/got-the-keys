@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 property1 = Property.create!(address_line_1: "Little Orchard",
                              address_line_2: "Buckham Thorns Road",

@@ -62,12 +62,12 @@ gem 'letter_opener'
 # Performance profiler
 #gem 'rack-mini-profiler'
 
-# group :test, :development do
+group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'populator'
   gem 'faker'
-# end
+end
 
 group :test do
   gem 'cucumber-rails', :require => false
