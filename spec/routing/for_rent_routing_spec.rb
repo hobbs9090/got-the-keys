@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe ForRentController do
   describe "routing" do
