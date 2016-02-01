@@ -12,8 +12,12 @@ module SharedHelper
     image_tag("hero_3.jpg")
   end
 
-  def welcome_image
-    image_tag("placeholder_beach@2x.jpg")
+  def welcome_image_1
+    image_tag("welcome_1.jpg")
+  end
+
+  def welcome_image_2
+    image_tag("welcome_2.jpg")
   end
 
   def world_image
