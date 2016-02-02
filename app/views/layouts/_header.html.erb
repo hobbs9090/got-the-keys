@@ -78,10 +78,8 @@
             <li class="divider"></li>
             <li class="has-form"><%= link_to t('menu.logout'), destroy_user_session_path, method: :delete, :class => "button alert" %></li>
         <% else %>
-            <lu id="no_user">
-              <li><%= link_to t('menu.register'), new_user_registration_path, :id => "register" %></li>
-              <li class="has-form"><%= link_to t('menu.sign_in'), new_user_session_path, :class => "button", :id => "sign_in" %></li>
-            </lu>
+            <li><%= link_to t('menu.register'), new_user_registration_path, :id => "register" %></li>
+            <li class="has-form"><%= link_to t('menu.sign_in'), new_user_session_path, :class => "button", :id => "sign_in" %></li>
         <% end %>
       </ul>
     </section>
