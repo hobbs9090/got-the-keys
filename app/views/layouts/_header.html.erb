@@ -11,7 +11,7 @@
       <% elsif admin_signed_in? %>
           <li class="name">
             <h1 style="color: white; "><%= t('menu.logged_in_as_admin') %>
-              <small>(<%= current_admin.email %>))</small>
+              <small>(<%= current_admin.email %>)</small>
             </h1>
           </li>
       <% end %>
@@ -62,9 +62,7 @@
             <li class="divider"></li>
             <li class="has-form"><%= link_to t('menu.logout'), destroy_user_session_path, method: :delete, :class => "button alert" %></li>
         <% elsif admin_signed_in? %>
-            <li></li>
-            <li class="divider hide-for-small"></li>
-            <li class="has-dropdown"><a href="#"><%= t('menu.manage_account') %></a>
+            <li id="manage-admin" class="has-dropdown"><a href="#"><%= t('menu.manage_account') %></a>
               <ul class="dropdown">
                 <li><label><%= t('menu.administration') %></label></li>
                 <li><%= link_to t('members.title'), members_path %></li>
@@ -80,8 +78,10 @@
             <li class="divider"></li>
             <li class="has-form"><%= link_to t('menu.logout'), destroy_user_session_path, method: :delete, :class => "button alert" %></li>
         <% else %>
-            <li class="has-form"><%= link_to t('menu.register'), new_user_registration_path, :id => "register" %></li>
-            <li class="has-form"><%= link_to t('menu.sign_in'), new_user_session_path, :class => "button", :id => "sign_in" %></li>
+            <lu id="no_user">
+              <li><%= link_to t('menu.register'), new_user_registration_path, :id => "register" %></li>
+              <li class="has-form"><%= link_to t('menu.sign_in'), new_user_session_path, :class => "button", :id => "sign_in" %></li>
+            </lu>
         <% end %>
       </ul>
     </section>
