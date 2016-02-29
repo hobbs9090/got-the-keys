@@ -6,19 +6,19 @@
 .fc-webicon.large { width: 48px; height: 48px; -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; }
 
 /* RSS */
-.no-svg .fc-webicon.rss { background: url("icons/fc-webicon-rss-m.png"); }
-.no-svg .fc-webicon.rss.large { background: url("icons/fc-webicon-rss.png"); }
-.no-svg .fc-webicon.rss.small { background: url("icons/fc-webicon-rss-s.png"); }
-.svg .fc-webicon.rss { background: url("icons/fc-webicon-rss.svg"); }
+.no-svg .fc-webicon.rss { background: image_url("icons/fc-webicon-rss-m.png"); }
+.no-svg .fc-webicon.rss.large { background: image-url("icons/fc-webicon-rss.png"); }
+.no-svg .fc-webicon.rss.small { background: image-url("icons/fc-webicon-rss-s.png"); }
+.svg .fc-webicon.rss { background: image-url("icons/fc-webicon-rss.svg"); }
 
 /* Facebook */
-.no-svg .fc-webicon.facebook { background: url("icons/fc-webicon-facebook-m.png"); }
-.no-svg .fc-webicon.facebook.large { background: url("icons/fc-webicon-facebook.png"); }
-.no-svg .fc-webicon.facebook.small { background: url("icons/fc-webicon-facebook-s.png"); }
-.svg .fc-webicon.facebook { background: url("icons/fc-webicon-facebook.svg"); }
+.no-svg .fc-webicon.facebook { background: image-url("icons/fc-webicon-facebook-m.png"); }
+.no-svg .fc-webicon.facebook.large { background: image-url("icons/fc-webicon-facebook.png"); }
+.no-svg .fc-webicon.facebook.small { background: image-url("icons/fc-webicon-facebook-s.png"); }
+.svg .fc-webicon.facebook { background: image-url("icons/fc-webicon-facebook.svg"); }
 
 /* Twitter */
-.no-svg .fc-webicon.twitter { background: url("icons/fc-webicon-twitter-m.png"); }
-.no-svg .fc-webicon.twitter.large { background: url("icons/fc-webicon-twitter.png"); }
-.no-svg .fc-webicon.twitter.small { background: url("icons/fc-webicon-twitter-s.png"); }
-.svg .fc-webicon.twitter { background: url("icons/fc-webicon-twitter.svg"); }
+.no-svg .fc-webicon.twitter { background: image-url("icons/fc-webicon-twitter-m.png"); }
+.no-svg .fc-webicon.twitter.large { background: image-url("icons/fc-webicon-twitter.png"); }
+.no-svg .fc-webicon.twitter.small { background: image-url("icons/fc-webicon-twitter-s.png"); }
+.svg .fc-webicon.twitter { background: image-url("icons/fc-webicon-twitter.svg"); }
