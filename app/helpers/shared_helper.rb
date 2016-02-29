@@ -28,10 +28,6 @@ module SharedHelper
     image_tag("placeholder_face@2x.jpg")
   end
 
-  def warren_image
-    image_tag("warren_face@2x.jpg")
-  end
-
   def steven_image
     image_tag("steven_face@2x.jpg")
   end

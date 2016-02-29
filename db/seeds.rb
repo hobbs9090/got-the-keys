@@ -10,11 +10,6 @@ Admin.create!([
                         email: "steven@gotthekeys.com",
                       password: "secret",
                       language: "en"
-                  },
-                  {
-                      email: "warren@gotthekeys.com",
-                      password: "secret",
-                      language: "en"
                   }
               ])
 
