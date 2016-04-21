@@ -31,7 +31,7 @@ production:
   database: got_the_keys
   pool: 5
   username: postgres
-  password: browne
+  password: orchard72
 
 cucumber:
   <<: *test
