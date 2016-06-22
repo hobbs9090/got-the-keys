@@ -25,7 +25,7 @@ test: &test
 #  timeout: 5000
 
 production:
-  host: 192.168.0.72
+  host: 192.168.0.75
   adapter: postgresql
   encoding: unicode
   database: got_the_keys
