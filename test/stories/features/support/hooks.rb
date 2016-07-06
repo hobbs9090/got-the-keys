@@ -1,7 +1,7 @@
 require 'watir-webdriver'
 
 Before do
-  @browser = Watir::Browser.new :firefox
+  @browser = Watir::Browser.new :chrome
   @browser.window.resize_to(1020, 1800)
 end
 

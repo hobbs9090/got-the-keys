@@ -7,7 +7,12 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 Admin.create!([
                   {
-                        email: "steven@gotthekeys.com",
+                      email: "steven@gotthekeys.com",
+                      password: "secret",
+                      language: "en"
+                  },
+                  {
+                      email: "stevenhobbs@meeane.co.uk",
                       password: "secret",
                       language: "en"
                   }
@@ -542,7 +547,7 @@ Property.create!([
                      },
                      {
                          address_line_1: "19 Northdown Road",
-                         address_line_2:  "Kemsing",
+                         address_line_2: "Kemsing",
                          town_city: "Sevenoaks",
                          county: "Kent",
                          postcode: "TN15 6SD",
