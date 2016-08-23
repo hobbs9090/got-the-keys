@@ -18,14 +18,8 @@ test: &test
   pool: 5
   timeout: 5000
 
-#production:
-#  adapter: sqlite3
-#  database: db/development.sqlite3
-#  pool: 5
-#  timeout: 5000
-
 production:
-  host: 192.168.0.75
+  host: localhost
   adapter: postgresql
   encoding: unicode
   database: got_the_keys
