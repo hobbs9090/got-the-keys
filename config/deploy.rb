@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock '3.4.1'
+lock '3.9.1'
 
 # Application config
 set :application, 'got_the_keys'
