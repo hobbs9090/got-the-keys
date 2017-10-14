@@ -11,8 +11,8 @@ class ApplicationController < ActionController::Base
 
   def update_sanitized_params
     # TODO devise_parameter_sanitizer.sanitize OR devise_parameter_sanitizer.for?
-    devise_parameter_sanitizer.for(:sign_up) {|u| u.permit(:first_name, :last_name, :mobile_number, :email, :password, :password_confirmation, :language, :terms_of_service)}
-    devise_parameter_sanitizer.for(:update) {|u| u.permit(:first_name, :last_name, :mobile_number, :email, :password, :password_confirmation, :language)}
+    devise_parameter_sanitizer.permit(:sign_up) {|u| u.permit(:first_name, :last_name, :mobile_number, :email, :password, :password_confirmation, :language, :terms_of_service)}
+    devise_parameter_sanitizer.permit(:update) {|u| u.permit(:first_name, :last_name, :mobile_number, :email, :password, :password_confirmation, :language)}
   end
 
   private
