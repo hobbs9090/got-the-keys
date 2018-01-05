@@ -3,7 +3,7 @@ require 'rails_helper'
 describe MembersController do
 
   before (:each) do
-    @admin = FactoryGirl.create(:admin)
+    @admin = FactoryBot.create(:admin)
     sign_in @admin
   end
 

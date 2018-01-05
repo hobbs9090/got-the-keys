@@ -4,7 +4,7 @@
 # describe "For Chinese language user" do
 #
 #   before (:each) do
-#     # @user = FactoryGirl.create(:user)
+#     # @user = FactoryBot.create(:user)
 #     I18n.locale = :zh
 #   end
 #
