@@ -19,19 +19,13 @@ test: &test
   timeout: 5000
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
+  host: localhost
+  adapter: postgresql
+  encoding: unicode
+  database: got_the_keys
   pool: 5
-  timeout: 5000
-
-#production:
-#  host: localhost
-#  adapter: postgresql
-#  encoding: unicode
-#  database: got_the_keys
-#  pool: 5
-#  username: postgres
-#  password: orchard72
+  username: postgres
+  password: orchard72
 
 cucumber:
   <<: *test
