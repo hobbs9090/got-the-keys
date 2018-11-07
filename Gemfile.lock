@@ -296,6 +296,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt-ruby (~> 3.0.0)
+  capistrano
   capistrano-passenger
   capistrano-rails
   capistrano-rvm
