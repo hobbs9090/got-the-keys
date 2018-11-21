@@ -74,6 +74,6 @@ group :test do
 end
 
 group :production do
-  gem 'pg'
+  #gem 'pg' removed and replaced with SQlite until issues with pg fixed.
   gem 'passenger'
 end
