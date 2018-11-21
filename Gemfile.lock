@@ -186,8 +186,8 @@ GEM
     passenger (5.3.7)
       rack
       rake (>= 0.8.1)
-    pg (0.19.0)
-    pg (0.19.0-x64-mingw32)
+    pg (1.1.3)
+    pg (1.1.3-x64-mingw32)
     populator (1.0.0)
     protected_attributes (1.1.4)
       activemodel (>= 4.0.1, < 5.0)
@@ -309,7 +309,7 @@ DEPENDENCIES
   kaminari
   letter_opener
   passenger
-  pg (~> 0.15)
+  pg
   populator
   protected_attributes
   rails
