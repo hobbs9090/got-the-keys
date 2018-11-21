@@ -48,7 +48,6 @@ gem 'ruby-prof'
 
 # Use Capistrano for deployment
 gem 'capistrano'
-gem 'capistrano-rvm'
 gem 'capistrano-rails'
 gem 'capistrano-passenger'
 
@@ -75,6 +74,6 @@ group :test do
 end
 
 group :production do
-  gem 'pg', '~> 0.15'
+  gem 'pg'
   gem 'passenger'
 end
