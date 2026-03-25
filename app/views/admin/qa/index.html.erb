@@ -13,6 +13,10 @@
   <article class="admin-panel">
     <h2>Diagnostics</h2>
     <dl class="detail-list">
+      <div>
+        <dt>App version</dt>
+        <dd data-testid="qa-app-version"><%= full_app_version %></dd>
+      </div>
       <% @diagnostics.each do |label, value| %>
         <div>
           <dt><%= label.to_s.humanize %></dt>

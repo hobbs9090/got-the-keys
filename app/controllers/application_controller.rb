@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   before_action :set_user_language
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  helper AppVersionHelper
   helper_method :available_languages, :booking_configuration, :chinese_locale?,
                 :cookie_consent_choice, :cookie_consent_pending?, :cookie_consent_all?,
                 :cookie_consent_essential_only?

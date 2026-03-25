@@ -89,10 +89,13 @@ jobs:
         id: deploy_meta
         run: |
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "short_sha=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
           echo "ref=deploy/$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: Deploy exact tested commit
         env:
           DEPLOY_SHA: ${{ steps.deploy_meta.outputs.sha }}
           DEPLOY_REF: ${{ steps.deploy_meta.outputs.ref }}
+          APP_BUILD_SHA: ${{ steps.deploy_meta.outputs.short_sha }}
+          APP_BUILD_NUMBER: ${{ github.run_number }}
         run: bin/deploy_staging

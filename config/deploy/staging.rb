@@ -1,3 +1,9 @@
+version_env = {
+  "APP_VERSION" => ENV["APP_VERSION"],
+  "APP_BUILD_SHA" => ENV["APP_BUILD_SHA"],
+  "APP_BUILD_NUMBER" => ENV["APP_BUILD_NUMBER"]
+}.reject { |_key, value| value.nil? || value.empty? }
+
 server ENV.fetch("DEPLOY_HOST", "192.168.2.204"),
        user: ENV.fetch("DEPLOY_USER", "deploy"),
        roles: %w[app db web]
@@ -9,4 +15,4 @@ set :default_env, {
   "APP_HOST" => ENV.fetch("APP_HOST", "stevenhobbs.co.uk"),
   "RAILS_SERVE_STATIC_FILES" => "1",
   "SECRET_KEY_BASE_DUMMY" => "1"
-}
+}.merge(version_env)
