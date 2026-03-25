@@ -3,7 +3,7 @@ lock '3.11.0'
 
 # Application config
 set :application, 'got_the_keys'
-set :repo_url, 'git@github.com:hobbs9090/foundation.git'
+set :repo_url, 'git@github.com:hobbs9090/rails_got_the_keys.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
