@@ -16,6 +16,7 @@
     <title><%= content_for?(:title) ? yield(:title) : t('gotthekeys.gotthekeys') %></title>
     <%= favicon_link_tag 'favicon.ico' %>
 
+    <%= javascript_include_tag "custom.modernizr" %>
     <%= stylesheet_link_tag "application", media: "all", "data-turbo-track" => "reload" %>
     <%= csrf_meta_tags %>
   </head>

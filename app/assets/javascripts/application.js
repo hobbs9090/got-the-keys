@@ -13,4 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require foundation
-$(document).foundation();
+
+$(function() {
+  $(document).foundation();
+
+  if ($(".joyride-list[data-joyride]").length) {
+    $(document).foundation("joyride", "start");
+  }
+});
