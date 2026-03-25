@@ -32,6 +32,8 @@ group :development do
   gem 'capistrano-passenger', '~> 0.2.1'
   gem 'capistrano-rails', '~> 1.7'
   gem 'letter_opener', '~> 1.10'
+  gem 'ruby-lsp', require: false
+  gem 'ruby-lsp-rails', require: false
 end
 
 group :test do
