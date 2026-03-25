@@ -4,11 +4,11 @@ describe ForRentController do
   describe "routing" do
 
     it "routes to #index" do
-      get("/for_rent").should route_to("for_rent#index")
+      expect(get: "/for_rent").to route_to("for_rent#index")
     end
 
     it "routes to #show" do
-      get("/properties/1").should route_to("properties#show", :id => "1")
+      expect(get: "/properties/1").to route_to("properties#show", :id => "1")
     end
 
   end

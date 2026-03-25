@@ -5,7 +5,6 @@ class Admin < ActiveRecord::Base
   # TODO validate these symbols in LANGUAGES
   validates :language, inclusion: {in: LANGUAGES}
 
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :language
+  # Strong parameters in controller
 
 end

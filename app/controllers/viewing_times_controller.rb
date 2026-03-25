@@ -1,8 +1,8 @@
 class ViewingTimesController < ApplicationController
 
-  before_action :authenticate_user!
-
   before_action :set_property
+  before_action :authenticate_user!
+  before_action :authorize_property_owner!, only: [:new, :create]
 
   def index
     @viewing_times = @property.viewing_times
@@ -30,6 +30,12 @@ class ViewingTimesController < ApplicationController
 
   def set_property
     @property = Property.find(params[:property_id])
+  end
+
+  def authorize_property_owner!
+    return if @property.user == current_user
+
+    redirect_to root_path, alert: t(:not_authorised)
   end
 
 end

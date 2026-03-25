@@ -4,9 +4,9 @@ describe PropertiesController do
 
   describe "GET 'index'" do
     it "returns http success" do
-      get 'index'
+      get :index
 
-      response.should be_success
+      expect(response).to have_http_status(:ok)
     end
   end
 
