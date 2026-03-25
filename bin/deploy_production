@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT_DIR"
+
+SHARED_RUBY_BIN="${SHARED_RUBY_BIN:-/home/steven/.rbenv/versions/3.4.7/bin}"
+if [ -x "$SHARED_RUBY_BIN/ruby" ]; then
+  PATH="$SHARED_RUBY_BIN:$PATH"
+fi
+
+DEPLOY_SHA="${DEPLOY_SHA:-$(git rev-parse HEAD)}"
+DEPLOY_REF="${DEPLOY_REF:-deploy/${DEPLOY_SHA}}"
+DEPLOY_USER="${DEPLOY_USER:-steven}"
+DEPLOY_HOST="${DEPLOY_HOST:-127.0.0.1}"
+DEPLOY_TO="${DEPLOY_TO:-/var/www/stevenhobbs.co.uk}"
+APP_HOST="${APP_HOST:-stevenhobbs.co.uk}"
+DEPLOY_REPO_URL="${DEPLOY_REPO_URL:-/home/steven/git/rails_got_the_keys.git}"
+DEPLOY_MIRROR_URL="${DEPLOY_MIRROR_URL:-ssh://${DEPLOY_USER}@${DEPLOY_HOST}/home/steven/git/rails_got_the_keys.git}"
+DEPLOY_MIRROR_REMOTE="${DEPLOY_MIRROR_REMOTE:-deploy-mirror}"
+
+echo "Deploying ${DEPLOY_SHA} via ${DEPLOY_MIRROR_URL}"
+ruby -v
+bundle -v
+
+if git remote get-url "$DEPLOY_MIRROR_REMOTE" >/dev/null 2>&1; then
+  git remote set-url "$DEPLOY_MIRROR_REMOTE" "$DEPLOY_MIRROR_URL"
+else
+  git remote add "$DEPLOY_MIRROR_REMOTE" "$DEPLOY_MIRROR_URL"
+fi
+
+git push --force "$DEPLOY_MIRROR_REMOTE" "${DEPLOY_SHA}:refs/heads/${DEPLOY_REF}"
+
+export DEPLOY_USER DEPLOY_HOST DEPLOY_TO APP_HOST DEPLOY_REPO_URL
+export DEPLOY_BRANCH="$DEPLOY_REF"
+
+bundle exec cap production deploy:check
+bundle exec cap production deploy

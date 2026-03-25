@@ -188,6 +188,30 @@ The deploy now:
 - installs npm dependencies before asset precompile
 - restarts Passenger with `tmp/restart.txt`
 
+## GitHub Actions Deployment
+
+This repo now supports a split CI/CD flow:
+
+- `.github/workflows/ci.yml` runs tests on GitHub-hosted runners
+- `.github/workflows/deploy-production.yml` deploys to production only after `CI` succeeds on `master`
+- manual production deploys are also available through `workflow_dispatch`
+
+The production deploy job is pinned to the self-hosted runner labels:
+
+- `self-hosted`
+- `Linux`
+- `X64`
+- `nirvana`
+
+The deploy workflow:
+
+1. checks out the exact tested commit
+2. uses the shared Ruby at `/home/steven/.rbenv/versions/3.4.7/bin`
+3. pushes that exact commit into the server-local bare mirror
+4. deploys the mirrored ref with `bin/deploy_production`
+
+The self-hosted runner uses a dedicated localhost-only SSH key to reach `steven@127.0.0.1` for mirror updates and Capistrano SSH sessions. That key should remain restricted to local source addresses only.
+
 ## SQLite Notes
 
 If you are staying on SQLite in production:
