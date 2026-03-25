@@ -8,7 +8,7 @@ describe "For English language user" do
       visit root_url
 
       expect(page).to have_title("GotTheKeys")
-      expect(page).to have_text("Welcome")
+      expect(page).to have_text("Sell Or Let With More Control")
     end
   end
 
@@ -58,7 +58,7 @@ describe "For English language user" do
       visit legal_index_path
 
       expect(page).to have_title("Legal")
-      expect(page).to have_text("Legal The lawyers made us put this bit in. They smell and are paid too much")
+      expect(page).to have_text("A plain-English summary of the key terms and responsibilities that apply when you use the site.")
     end
   end
 
@@ -68,7 +68,7 @@ describe "For English language user" do
       visit cookie_policy_index_url
 
       expect(page).to have_title("Cookie Policy")
-      expect(page).to have_text("Cookie Policy The lawyers made us put this bit in. They smell and are paid too much")
+      expect(page).to have_text("How we use cookies and similar technologies to keep the site working properly.")
     end
   end
 
@@ -77,8 +77,8 @@ describe "For English language user" do
     it "shows page" do
       visit how_it_works_url
 
-      expect(page).to have_text("How It Works")
-      expect(page).to have_text("By doing some of the work, you save on the normal costs.")
+      expect(page).to have_title("How It Works")
+      expect(page).to have_text("Keep more control over the sale or let and reduce the cost of marketing")
     end
   end
 
@@ -88,7 +88,7 @@ describe "For English language user" do
       visit about_us_url
 
       expect(page).to have_title("About Us")
-      expect(page).to have_text("By doing some of the work, you save on the normal costs")
+      expect(page).to have_text("We built the service for owners who want clearer costs, better control, and a more direct route to serious enquiries.")
     end
   end
 
@@ -108,7 +108,7 @@ describe "For English language user" do
       visit blog_index_url
 
       expect(page).to have_title("Blog")
-      expect(page).to have_text("Blog Post Title")
+      expect(page).to have_text("Five Small Listing Improvements That Generate Better Enquiries")
     end
   end
 

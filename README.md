@@ -24,6 +24,7 @@ GotTheKeys is a small Rails property-listing application that has been modernize
 - Foundation Sites `6.9.0`
 - `jsbundling-rails` with `esbuild`
 - `cssbundling-rails` with `sass`
+- optional OpenAI enrichment via the official `openai-ruby` SDK
 - RSpec, Capybara, Factory Bot, Faker
 - Cucumber and Database Cleaner plumbing for acceptance-style testing
 
@@ -35,7 +36,8 @@ GotTheKeys is a small Rails property-listing application that has been modernize
 - [`config/routes.rb`](/Users/steven/Source/GitHub/rails_got_the_keys/config/routes.rb): main route map for the site.
 - [`spec/`](/Users/steven/Source/GitHub/rails_got_the_keys/spec): RSpec model, controller, request, routing, and feature specs.
 - [`features/`](/Users/steven/Source/GitHub/rails_got_the_keys/features): Cucumber support is wired up here, though no active `.feature` scenarios are committed yet.
-- [`lib/tasks/populate.rake`](/Users/steven/Source/GitHub/rails_got_the_keys/lib/tasks/populate.rake): synthetic data generator for demo or load-style test data.
+- [`lib/tasks/populate.rake`](/Users/steven/Source/GitHub/rails_got_the_keys/lib/tasks/populate.rake): AI-capable demo data generator for larger datasets.
+- [`app/services/demo_data/`](/Users/steven/Source/GitHub/rails_got_the_keys/app/services/demo_data): shared seeding and enrichment services used by both `db:seed` and `db:populate`.
 - [`.github/workflows/ci.yml`](/Users/steven/Source/GitHub/rails_got_the_keys/.github/workflows/ci.yml): CI pipeline.
 
 ## Prerequisites
@@ -137,9 +139,43 @@ bin/rails db:prepare
 
 That is the safest command for both development and test databases.
 
-### Generating Synthetic Demo Data
+### Generated Demo Data
 
-This repo includes a populate task that creates random users and properties:
+Both `db:seed` and `db:populate` now use the same shared demo-data pipeline:
+
+- a local blueprint generator creates plausible UK property addresses, towns, counties, bedroom counts, and base prices
+- an optional OpenAI enrichment step rewrites the listing copy and fine-tunes asking prices in structured JSON
+- if no OpenAI API key is present, the generator still works entirely offline
+
+### Quick Start: Seed A Small Demo Environment
+
+Use `db:seed` when you want a compact, ready-to-explore local environment with known logins:
+
+```bash
+bin/rails db:seed
+```
+
+By default this creates:
+
+- two admin accounts
+- four seller accounts with known email addresses
+- a generated portfolio of demo properties attached to those sellers
+
+The seeded seller credentials are:
+
+- `seller01@acme.com` / `********`
+- `seller02@acme.com` / `********`
+- `seller03@acme.com` / `********`
+- `seller04@acme.com` / `********`
+
+The admin credentials are:
+
+- `steven@gotthekeys.com` / `********`
+- `stevenhobbs@meeane.co.uk` / `********`
+
+### Quick Start: Generate A Larger Dataset
+
+Use `db:populate` when you want a larger volume of generated data:
 
 ```bash
 bin/rails db:populate
@@ -151,25 +187,91 @@ Use that when you want:
 - more realistic pagination/search behavior
 - a larger acceptance-test dataset
 
-The populate task is intentionally synthetic. It is better for exercising flows and volume than for deterministic login credentials.
+By default, `db:populate` creates a fresh batch of generated users plus a larger property portfolio. It is better for exercising volume and listing diversity than for deterministic login credentials.
+
+### AI Enrichment Modes
+
+The demo-data generator supports three AI modes:
+
+- `SEED_AI_MODE=auto`
+  This is the default. If `OPENAI_API_KEY` is set, the generator uses OpenAI to enrich descriptions and tune prices. If no key is present, it silently falls back to local generation.
+- `SEED_AI_MODE=on`
+  Forces OpenAI enrichment and raises an error if `OPENAI_API_KEY` is missing.
+- `SEED_AI_MODE=off`
+  Disables OpenAI entirely and uses the local generator only.
+
+Example with AI explicitly enabled:
+
+```bash
+OPENAI_API_KEY=your_key_here \
+SEED_AI_MODE=on \
+OPENAI_SEED_MODEL=gpt-5-mini \
+bin/rails db:populate
+```
+
+Example with a smaller AI-enriched seed run:
+
+```bash
+OPENAI_API_KEY=your_key_here \
+SEED_AI_MODE=on \
+OPENAI_SEED_MODEL=gpt-5-mini \
+SEED_PROPERTIES=12 \
+bin/rails db:seed
+```
+
+### Generator Environment Variables
+
+Useful knobs for both `db:seed` and `db:populate`:
+
+- `SEED_AI_MODE`
+  `auto`, `on`, or `off`
+- `OPENAI_API_KEY`
+  enables the OpenAI enrichment step
+- `OPENAI_SEED_MODEL`
+  defaults to `gpt-5-mini`
+- `OPENAI_SEED_BATCH_SIZE`
+  controls how many properties are sent to OpenAI per request
+- `SEED_PROPERTIES`
+  total generated properties
+- `SEED_USERS`
+  number of generated users for `db:populate`
+- `SEED_PASSWORD`
+  password for generated users in `db:populate`
+
+Example large run tuned for acceptance-test volume:
+
+```bash
+OPENAI_API_KEY=your_key_here \
+SEED_AI_MODE=on \
+OPENAI_SEED_MODEL=gpt-5-mini \
+SEED_USERS=30 \
+SEED_PROPERTIES=120 \
+OPENAI_SEED_BATCH_SIZE=10 \
+bin/rails db:populate
+```
 
 ### Seed Data
 
-A legacy [`db/seeds.rb`](/Users/steven/Source/GitHub/rails_got_the_keys/db/seeds.rb) file also exists in the repo. Treat it as historical/demo data rather than the primary setup path. For repeatable local setup, this README recommends `db:prepare` and `db:populate`.
+A supported [`db/seeds.rb`](/Users/steven/Source/GitHub/rails_got_the_keys/db/seeds.rb) file exists and now uses the same shared generator services as `db:populate`. Use it when you want a smaller, known-credentials demo environment.
 
-If you do want the historical sample data, load it with:
+Run it with:
 
 ```bash
 bin/rails db:seed
 ```
 
-That file creates:
+Re-running `db:seed` refreshes the generated properties attached to the seed sellers so you do not accumulate duplicates for those accounts.
 
-- two admin accounts
-- multiple seller accounts
-- a large fixed property dataset
+### How The AI Step Works
 
-The current sample credentials in [`db/seeds.rb`](/Users/steven/Source/GitHub/rails_got_the_keys/db/seeds.rb) use password `secret`. Because this is legacy demo data, it is best suited to local manual exploration rather than deterministic automated tests.
+When AI enrichment is enabled:
+
+- the local generator first creates structured property blueprints
+- those blueprints are sent to OpenAI using the Responses API through the official Ruby SDK
+- the request uses a strict JSON schema so the model returns machine-readable price and description updates
+- the app then merges the enriched values back into the local blueprints before writing records to the database
+
+This design keeps the seed task useful even without network access, while still letting you opt into richer listing copy and more market-aware prices when you have an API key available.
 
 ### Creating Deterministic Local Accounts
 
