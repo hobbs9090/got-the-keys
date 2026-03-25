@@ -32,6 +32,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_user_language
-    I18n.locale = current_user&.language || current_admin&.language || I18n.default_locale
+    preferred_language = current_user&.language || current_admin&.language || session[:language]
+    I18n.locale = available_languages.include?(preferred_language.to_s) ? preferred_language : I18n.default_locale
   end
 end

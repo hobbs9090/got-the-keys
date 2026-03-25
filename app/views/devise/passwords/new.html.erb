@@ -8,12 +8,13 @@
 
     <h4><%= t('devise.views.passwords.new.title') %></h4>
 
-    <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => {:method => :post}) do |f| %>
+    <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post, data: { turbo: false } }) do |f| %>
         <%= devise_error_messages! %>
         <fieldset>
           <ol>
-            <li><%= f.label :email %>
-              <%= f.email_field :email, :autofocus => true %>
+            <li><%= f.label :email, nil, **form_label_options(resource, :email) %>
+              <%= f.email_field :email, autofocus: true, required: true, autocomplete: "email", **form_control_options(resource, :email) %>
+              <%= field_error_messages(resource, :email) %>
             </li>
           </ol>
           <p><%= f.submit t('devise.views.passwords.new.submit') %></p>

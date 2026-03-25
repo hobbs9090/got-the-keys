@@ -53,7 +53,7 @@ describe "A user" do
 
     expect(user.valid?).to be false
     expect(user.errors[:language].any?).to be true
-    expect(user.errors[:language].first).to eq("is not included in the list")
+    expect(user.errors[:language].first).to eq("can't be blank")
   end
 
   it "requires language values of 'en' or 'zh'" do
@@ -98,6 +98,13 @@ describe "A user" do
 
     expect(user.valid?).to be true
     expect(user.errors[:password].any?).to be false
+  end
+
+  it "rejects an invalid mobile number" do
+    user = User.new(user_attributes(mobile_number: "abc"))
+
+    expect(user.valid?).to be false
+    expect(user.errors[:mobile_number]).to include("must be a valid phone number")
   end
 
 end

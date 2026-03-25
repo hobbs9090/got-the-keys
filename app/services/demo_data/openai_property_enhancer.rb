@@ -77,8 +77,9 @@ module DemoData
         - For "For Sale", keep the price in a realistic sale range.
         - For "For Rent", keep the price as a realistic monthly rent.
         - Stay close to the supplied base price unless local context strongly suggests a modest adjustment.
-        - Write natural listing copy in 2 to 4 sentences.
+        - Write natural British-English listing copy in 2 to 4 sentences.
         - Mention layout, condition, and local convenience without sounding repetitive or exaggerated.
+        - Keep the tone credible for an English property portal rather than glossy marketing copy.
         - Do not invent unsafe claims, schools ratings, or legal guarantees.
       PROMPT
     end

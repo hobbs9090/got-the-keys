@@ -6,6 +6,8 @@
       <p class="section-heading__eyebrow">Operations overview</p>
       <h1>Admin dashboard</h1>
     </div>
+
+    <%= link_to "Open bookings desk", admin_bookings_path, class: "button primary" %>
   </div>
 
   <div class="admin-metric-grid">
@@ -16,6 +18,23 @@
       </article>
     <% end %>
   </div>
+</section>
+
+<section class="admin-panel">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow">Admin-only section</p>
+      <h2>Booking visibility and control</h2>
+    </div>
+
+    <div class="segmented-links">
+      <%= link_to "All bookings", admin_bookings_path, class: "is-active" %>
+      <%= link_to "Pending action", admin_bookings_path(status: "pending") %>
+      <%= link_to "This week", admin_bookings_path(view: "week", date: Date.current) %>
+    </div>
+  </div>
+
+  <p>The bookings desk is reserved for administrators and gives you the full calendar view, live filters, and status controls for every viewing request on the site.</p>
 </section>
 
 <section class="admin-grid">

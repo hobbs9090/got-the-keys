@@ -121,6 +121,32 @@ bin/rails server
 
 This repo now has two distinct data paths:
 
+### Restoring Or Rebuilding The Development Database
+
+Development uses SQLite, so the main local database lives at:
+
+- `db/development.sqlite3`
+
+If you want to rebuild from scratch and you do not need the current local data, stop the Rails server first and run:
+
+```bash
+rm -f db/development.sqlite3 db/development.sqlite3-shm db/development.sqlite3-wal
+bin/rails db:prepare
+bin/rails db:seed
+```
+
+That recreates the database, loads the current schema, and restores the default deterministic `baseline` demo scenario.
+
+If you already made your own SQLite backup, restore it with the server stopped:
+
+```bash
+cp /path/to/your/development.sqlite3 db/development.sqlite3
+rm -f db/development.sqlite3-shm db/development.sqlite3-wal
+bin/rails db:prepare
+```
+
+If your backup also includes matching `-shm` and `-wal` files, copy those back at the same time instead of deleting them.
+
 ### 1. Deterministic Scenario Seeding
 
 Use `db:seed` for repeatable demo and QA environments:
@@ -130,6 +156,8 @@ bin/rails db:seed
 ```
 
 By default this loads the `baseline` scenario from `db/demo_scenarios/baseline.yml`.
+
+Important: the scenario loader resets the current demo dataset before loading the selected scenario. That means `db:seed` replaces the current admins, sellers, properties, appointments, and booking configuration for the development database.
 
 You can load a different bundled scenario:
 
@@ -150,6 +178,29 @@ Scenario timestamps use relative anchors such as:
 
 That keeps the scenarios deterministic when loaded while stopping them from going stale as the real calendar moves on.
 
+### 1a. Fresh Sevenoaks / Westerham Catalogue
+
+If you want the current hand-curated local catalogue instead of the YAML demo scenarios, run:
+
+```bash
+bin/rails runner script/refresh_sevenoaks_westerham_catalogue.rb
+```
+
+By default that replaces the property-related records with:
+
+- `50` houses for sale
+- `50` houses for rent
+- all focused on `Sevenoaks` and `Westerham`
+- made-up local-style addresses
+
+Useful overrides:
+
+```bash
+SALE_COUNT=60 RENT_COUNT=40 bin/rails runner script/refresh_sevenoaks_westerham_catalogue.rb
+```
+
+This script clears property-side records and rebuilds the catalogue, but it keeps the broader app shell in place and updates the active demo data marker to `custom_sevenoaks_westerham_catalogue`.
+
 ### 2. AI-Assisted Catalogue Population
 
 Use `db:populate` when you want a broader generated catalogue:
@@ -159,6 +210,8 @@ bin/rails db:populate
 ```
 
 That path still uses the shared `DemoData::Populator` service and optional OpenAI enrichment.
+
+Important: `db:populate` adds data. It does not clear existing rows first. If you want a genuinely fresh generated catalogue, rebuild the development database first or reseed/reset before running it.
 
 Useful environment variables:
 
@@ -180,6 +233,26 @@ SEED_USERS=30 \
 SEED_PROPERTIES=120 \
 bin/rails db:populate
 ```
+
+### Property Images And Placeholder Strategy
+
+For now, prefer lightweight local placeholder artwork over batch AI image generation for every listing.
+
+- If `property.image_file_name` is blank, the app now falls back to the built-in SVG placeholder `property_placeholder_listing.svg`.
+- SVG placeholders are the recommended default for development and demos because bulk AI-generated listing images are optional and can become expensive quickly.
+- If you do want to generate listing images, preview the prompts first:
+
+```bash
+LIMIT=5 bin/rails runner script/preview_property_image_prompts.rb
+```
+
+- Generate real property images only when needed:
+
+```bash
+OPENAI_API_KEY=your_key_here bin/rails runner script/generate_property_images.rb
+```
+
+The image-generation script writes files into `app/assets/images/` and updates each property record’s `image_file_name`.
 
 ## Bundled Demo Scenarios
 
@@ -334,6 +407,14 @@ bin/rails db:prepare
 
 # load deterministic demo data
 bin/rails db:seed
+
+# rebuild the local development database and restore baseline
+rm -f db/development.sqlite3 db/development.sqlite3-shm db/development.sqlite3-wal
+bin/rails db:prepare
+bin/rails db:seed
+
+# refresh to the current Sevenoaks / Westerham catalogue
+bin/rails runner script/refresh_sevenoaks_westerham_catalogue.rb
 
 # run the app
 npm run build

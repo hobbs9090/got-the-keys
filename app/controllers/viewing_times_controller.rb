@@ -19,7 +19,7 @@ class ViewingTimesController < ApplicationController
       redirect_to property_viewing_times_path(@property),
                   notice: 'Available viewing times have been updated!'
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 

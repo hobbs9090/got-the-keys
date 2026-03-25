@@ -10,6 +10,11 @@ class PropertiesController < ApplicationController
     @properties = Property.filter(@filters).page(params[:page])
     @available_towns = Property.order(:town_city).distinct.pluck(:town_city)
     @total_properties = @properties.total_count
+    @catalogue_totals = {
+      all: Property.cached_all_properties_total,
+      for_sale: Property.cached_for_sale_total,
+      for_rent: Property.cached_for_rent_total
+    }
   end
 
   def show
@@ -23,7 +28,7 @@ class PropertiesController < ApplicationController
     if @property.update(property_params)
       redirect_to @property, notice: t(:successfully_updated)
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -36,7 +41,7 @@ class PropertiesController < ApplicationController
     if @property.save
       redirect_to @property, notice: t(:successfully_created)
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 

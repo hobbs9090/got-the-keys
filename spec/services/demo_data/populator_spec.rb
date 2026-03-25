@@ -29,4 +29,14 @@ RSpec.describe DemoData::Populator do
   ensure
     ENV['OPENAI_API_KEY'] = climate_value if climate_value.present?
   end
+
+  it 'creates English-focused seller accounts when generating users' do
+    result = described_class.new(user_count: 4, property_count: 0, ai_mode: :off).populate!
+    generated_users = User.order(:id).last(4)
+
+    expect(result[:users_used]).to eq(4)
+    expect(generated_users.pluck(:language).uniq).to eq(['en'])
+    expect(generated_users.map(&:email)).to all(match(/\A[a-z]+(?:\.[a-z]+)+@(?:gmail|outlook|icloud|btinternet)\.example\z/))
+    expect(generated_users.map(&:mobile_number)).to all(match(/\A07700 \d{6}\z/))
+  end
 end

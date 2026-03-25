@@ -21,28 +21,36 @@
     <% if @available_slots.any? %>
       <%= form_with model: [@property, @appointment], class: "stacked-form", data: { testid: "appointment-form" } do |f| %>
         <div>
-          <%= f.label :customer_name, "Full name" %>
-          <%= f.text_field :customer_name, required: true, autocomplete: "name" %>
+          <%= f.label :customer_name, "Full name", **form_label_options(@appointment, :customer_name) %>
+          <%= f.text_field :customer_name, required: true, autocomplete: "name", maxlength: 100, **form_control_options(@appointment, :customer_name) %>
+          <%= field_error_messages(@appointment, :customer_name) %>
         </div>
 
         <div>
-          <%= f.label :customer_email, "Email address" %>
-          <%= f.email_field :customer_email, required: true, autocomplete: "email" %>
+          <%= f.label :customer_email, "Email address", **form_label_options(@appointment, :customer_email) %>
+          <%= f.email_field :customer_email, required: true, autocomplete: "email", **form_control_options(@appointment, :customer_email) %>
+          <%= field_error_messages(@appointment, :customer_email) %>
         </div>
 
         <div>
-          <%= f.label :customer_phone, "Phone number" %>
-          <%= f.telephone_field :customer_phone, autocomplete: "tel" %>
+          <%= f.label :customer_phone, "Phone number", **form_label_options(@appointment, :customer_phone) %>
+          <%= f.telephone_field :customer_phone, required: true, autocomplete: "tel", maxlength: 20, **form_control_options(@appointment, :customer_phone) %>
+          <%= field_error_messages(@appointment, :customer_phone) %>
         </div>
 
         <div>
-          <%= f.label :requested_time, "Preferred slot" %>
-          <%= f.select :requested_time, options_for_select(@available_slots.map { |slot| [slot.label, slot.starts_at.iso8601] }, @appointment.requested_time&.iso8601), {}, data: { testid: "requested-time-select" } %>
+          <%= f.label :requested_time, "Preferred slot", **form_label_options(@appointment, :requested_time) %>
+          <%= f.select :requested_time,
+                       options_for_select(@available_slots.map { |slot| [slot.label, slot.starts_at.iso8601] }, @appointment.requested_time&.iso8601),
+                       { prompt: "Choose a slot" },
+                       form_control_options(@appointment, :requested_time, data: { testid: "requested-time-select" }) %>
+          <%= field_error_messages(@appointment, :requested_time) %>
         </div>
 
         <div>
-          <%= f.label :notes, "Anything we should know?" %>
-          <%= f.text_area :notes, rows: 4, placeholder: "Accessibility needs, arrival notes, or questions for the team." %>
+          <%= f.label :notes, "Anything we should know?", **form_label_options(@appointment, :notes) %>
+          <%= f.text_area :notes, rows: 4, maxlength: 2000, placeholder: "Accessibility needs, arrival notes, or questions for the team.", **form_control_options(@appointment, :notes) %>
+          <%= field_error_messages(@appointment, :notes) %>
         </div>
 
         <div class="form-actions">

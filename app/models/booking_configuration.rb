@@ -2,11 +2,13 @@ class BookingConfiguration < ApplicationRecord
   DEFAULT_OPEN_WEEKDAYS = %w[1 2 3 4 5 6].freeze
   CLOCK_FORMAT = /\A\d{2}:\d{2}\z/
 
-  validates :slot_duration_minutes, numericality: { greater_than_or_equal_to: 15, less_than_or_equal_to: 240 }
-  validates :lead_time_hours, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 336 }
-  validates :buffer_minutes, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 180 }
-  validates :office_opens_at, :office_closes_at, format: { with: CLOCK_FORMAT }
+  validates :slot_duration_minutes, :lead_time_hours, :buffer_minutes, :office_opens_at, :office_closes_at, presence: true
+  validates :slot_duration_minutes, numericality: { only_integer: true, greater_than_or_equal_to: 15, less_than_or_equal_to: 240 }, allow_blank: true
+  validates :lead_time_hours, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 336 }, allow_blank: true
+  validates :buffer_minutes, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 180 }, allow_blank: true
+  validates :office_opens_at, :office_closes_at, format: { with: CLOCK_FORMAT, message: "must use 24-hour HH:MM format" }, allow_blank: true
   validate :office_hours_in_order
+  validate :open_weekdays_present
 
   class << self
     def current
@@ -38,7 +40,7 @@ class BookingConfiguration < ApplicationRecord
         .sort
         .join(",")
 
-    super(normalized.presence || DEFAULT_OPEN_WEEKDAYS.join(","))
+    super(normalized)
   end
 
   def open_weekday_numbers
@@ -60,6 +62,12 @@ class BookingConfiguration < ApplicationRecord
     return if parse_clock(Date.current, office_opens_at) < parse_clock(Date.current, office_closes_at)
 
     errors.add(:office_closes_at, "must be later than the opening time")
+  end
+
+  def open_weekdays_present
+    return if open_weekday_numbers.any?
+
+    errors.add(:open_weekdays, "must include at least one day")
   end
 
   def parse_clock(date, value)

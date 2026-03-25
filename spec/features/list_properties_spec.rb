@@ -26,7 +26,7 @@ describe "Viewing the list of properties for rent" do
         property_description: "A beautifully presented semi close to all local amenities and transport links.",
         bedrooms: 2,
         sale_status: "For Rent",
-        asking_price: 180000.00
+        asking_price: 180000
       )
     )
 

@@ -3,6 +3,51 @@ module DemoData
     DEFAULT_USER_COUNT = 20
     DEFAULT_PROPERTY_COUNT = 40
     DEFAULT_BATCH_SIZE = 8
+    ENGLISH_FIRST_NAMES = %w[
+      Charlotte
+      Oliver
+      Amelia
+      George
+      Sophie
+      Thomas
+      Emily
+      James
+      Lucy
+      Henry
+      Grace
+      Daniel
+      Alice
+      William
+      Hannah
+      Edward
+      Ruby
+      Samuel
+      Katie
+      Matthew
+    ].freeze
+    ENGLISH_LAST_NAMES = %w[
+      Hughes
+      Bennett
+      Carter
+      Dawson
+      Mercer
+      Collins
+      Turner
+      Harrison
+      Whitmore
+      Fletcher
+      Parker
+      Lawson
+      Reed
+      Cooper
+      Barrett
+      Hayes
+      Foster
+      Chambers
+      Webb
+      Morgan
+    ].freeze
+    SAFE_EMAIL_DOMAINS = %w[gmail.example outlook.example icloud.example btinternet.example].freeze
 
     def self.ai_mode_from_env(value)
       normalized = value.to_s.strip.downcase
@@ -41,6 +86,7 @@ module DemoData
       @logger = logger
       @blueprint_generator = blueprint_generator
       @enhancer = enhancer
+      @generated_user_count = 0
     end
 
     def populate!
@@ -79,12 +125,15 @@ module DemoData
     end
 
     def create_user
+      sequence = next_user_sequence
+      first_name, last_name = generated_name_for(sequence)
+
       User.create!(
-        first_name: Faker::Name.first_name,
-        last_name: Faker::Name.last_name,
-        language: AppSettings.available_languages.sample,
-        mobile_number: ['07595 123456', '07955 654321', '07955 123123', '+44 7887 112233'].sample,
-        email: Faker::Internet.unique.email,
+        first_name: first_name,
+        last_name: last_name,
+        language: 'en',
+        mobile_number: generated_mobile_number_for(sequence),
+        email: generated_email_for(first_name:, last_name:, sequence:),
         password: password,
         password_confirmation: password,
         terms_of_service: true
@@ -123,6 +172,31 @@ module DemoData
 
     def property_attributes(attributes)
       attributes.except(:prompt_context)
+    end
+
+    def next_user_sequence
+      sequence = @generated_user_count
+      @generated_user_count += 1
+      sequence
+    end
+
+    def generated_name_for(sequence)
+      first_name = ENGLISH_FIRST_NAMES.fetch(sequence % ENGLISH_FIRST_NAMES.length)
+      last_name = ENGLISH_LAST_NAMES.fetch((sequence / ENGLISH_FIRST_NAMES.length + sequence) % ENGLISH_LAST_NAMES.length)
+
+      [first_name, last_name]
+    end
+
+    def generated_email_for(first_name:, last_name:, sequence:)
+      base = "#{first_name}.#{last_name}".parameterize(separator: '.')
+      suffix = sequence >= ENGLISH_FIRST_NAMES.length ? sequence / ENGLISH_FIRST_NAMES.length + 1 : nil
+      domain = SAFE_EMAIL_DOMAINS.fetch(sequence % SAFE_EMAIL_DOMAINS.length)
+
+      "#{base}#{suffix}@#{domain}"
+    end
+
+    def generated_mobile_number_for(sequence)
+      "07700 #{format('%06d', 900_100 + sequence)}"
     end
   end
 end

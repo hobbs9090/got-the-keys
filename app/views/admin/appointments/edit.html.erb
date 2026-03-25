@@ -14,40 +14,49 @@
     <%= form_with model: [:admin, @appointment], class: "stacked-form", data: { testid: "admin-appointment-edit-form" } do |f| %>
       <div class="form-grid">
         <div>
-          <%= f.label :customer_name, "Customer name" %>
-          <%= f.text_field :customer_name %>
+          <%= f.label :customer_name, "Customer name", **form_label_options(@appointment, :customer_name) %>
+          <%= f.text_field :customer_name, required: true, maxlength: 100, **form_control_options(@appointment, :customer_name) %>
+          <%= field_error_messages(@appointment, :customer_name) %>
         </div>
         <div>
-          <%= f.label :customer_email, "Customer email" %>
-          <%= f.email_field :customer_email %>
+          <%= f.label :customer_email, "Customer email", **form_label_options(@appointment, :customer_email) %>
+          <%= f.email_field :customer_email, required: true, **form_control_options(@appointment, :customer_email) %>
+          <%= field_error_messages(@appointment, :customer_email) %>
         </div>
         <div>
-          <%= f.label :customer_phone, "Customer phone" %>
-          <%= f.telephone_field :customer_phone %>
+          <%= f.label :customer_phone, "Customer phone", **form_label_options(@appointment, :customer_phone) %>
+          <%= f.telephone_field :customer_phone, required: true, maxlength: 20, **form_control_options(@appointment, :customer_phone) %>
+          <%= field_error_messages(@appointment, :customer_phone) %>
         </div>
         <div>
-          <%= f.label :duration_minutes, "Duration (minutes)" %>
-          <%= f.number_field :duration_minutes, min: 15, step: 15 %>
+          <%= f.label :duration_minutes, "Duration (minutes)", **form_label_options(@appointment, :duration_minutes) %>
+          <%= f.number_field :duration_minutes, min: 15, max: 240, step: 15, required: true, **form_control_options(@appointment, :duration_minutes) %>
+          <%= field_error_messages(@appointment, :duration_minutes) %>
         </div>
         <div>
-          <%= f.label :requested_time, "Requested time" %>
-          <%= f.datetime_local_field :requested_time %>
+          <%= f.label :requested_time, "Requested time", **form_label_options(@appointment, :requested_time) %>
+          <%= f.datetime_local_field :requested_time, required: true, **form_control_options(@appointment, :requested_time) %>
+          <%= field_error_messages(@appointment, :requested_time) %>
         </div>
         <div>
-          <%= f.label :scheduled_at, "Confirmed slot" %>
-          <%= f.datetime_local_field :scheduled_at %>
+          <%= f.label :scheduled_at, "Confirmed slot", **form_label_options(@appointment, :scheduled_at) %>
+          <%= f.datetime_local_field :scheduled_at, required: true, **form_control_options(@appointment, :scheduled_at) %>
+          <%= field_error_messages(@appointment, :scheduled_at) %>
         </div>
         <div>
-          <%= f.label :status %>
-          <%= f.select :status, Appointment::STATUSES.map { |status| [status.humanize, status] } %>
+          <%= f.label :status, nil, **form_label_options(@appointment, :status) %>
+          <%= f.select :status, Appointment::STATUSES.map { |status| [status.humanize, status] }, {}, form_control_options(@appointment, :status) %>
+          <%= field_error_messages(@appointment, :status) %>
         </div>
         <div class="form-grid__full">
-          <%= f.label :notes, "Customer notes" %>
-          <%= f.text_area :notes, rows: 4 %>
+          <%= f.label :notes, "Customer notes", **form_label_options(@appointment, :notes) %>
+          <%= f.text_area :notes, rows: 4, maxlength: 2000, **form_control_options(@appointment, :notes) %>
+          <%= field_error_messages(@appointment, :notes) %>
         </div>
         <div class="form-grid__full">
-          <%= f.label :internal_notes, "Internal notes" %>
-          <%= f.text_area :internal_notes, rows: 5 %>
+          <%= f.label :internal_notes, "Internal notes", **form_label_options(@appointment, :internal_notes) %>
+          <%= f.text_area :internal_notes, rows: 5, maxlength: 2000, **form_control_options(@appointment, :internal_notes) %>
+          <%= field_error_messages(@appointment, :internal_notes) %>
         </div>
       </div>
 

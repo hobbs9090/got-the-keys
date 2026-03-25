@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  PHONE_FORMAT = /\A\+?[0-9().\-\s]{7,20}\z/.freeze
+
   has_many :properties, dependent: :destroy
 
   after_initialize :set_defaults, if: :new_record?
@@ -6,7 +8,9 @@ class User < ApplicationRecord
   validates :first_name, :last_name, :mobile_number, presence: true
   validates :terms_of_service, acceptance: true
   validates :first_name, :last_name, length: { maximum: 50 }
-  validates :language, inclusion: { in: AppSettings.available_languages }
+  validates :mobile_number, format: { with: PHONE_FORMAT, message: "must be a valid phone number" }, allow_blank: true
+  validates :language, presence: true
+  validates :language, inclusion: { in: AppSettings.available_languages }, allow_blank: true
 
   devise :database_authenticatable, :lockable, :registerable,
          :recoverable, :rememberable, :timeoutable, :trackable, :validatable

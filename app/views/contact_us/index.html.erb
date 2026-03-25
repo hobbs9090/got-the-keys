@@ -1,78 +1,180 @@
 <% title t('contact_us.title') %>
 <% map_locale = chinese_locale? ? 'zh' : 'en' %>
 <% map_query = "https://maps.google.co.uk/maps?q=TN16+1ET&hl=#{map_locale}&sll=51.528642,-0.101599&sspn=0.733045,1.115112&hnear=Westerham+TN16+1ET,+United+Kingdom&t=m&ie=UTF8&hq=&ll=51.269595,0.06772&spn=0.01611,0.023947&z=14&iwloc=A" %>
+<% contact_people = [
+  { email: 'zoe@serenity.bc.reb', name: 'Steven Hobbs', role: t('contact_us.roles.founder_support'), art: 'contact_avatar_ai_1.svg' },
+  { email: 'jayne@serenity.bc.reb', name: 'Susie Sykes', role: t('contact_us.roles.listings'), art: 'contact_avatar_ai_2.svg' },
+  { email: 'doc@serenity.bc.reb', name: 'Jacob Sparrowhawk', role: t('contact_us.roles.viewings'), art: 'contact_avatar_ai_3.svg' },
+  { email: 'doc@serenity.bc.reb', name: 'Toby Sykes', role: t('contact_us.roles.accounts'), art: 'contact_avatar_ai_1.svg' },
+  { email: 'doc@serenity.bc.reb', name: 'Rebecca Sykes', role: t('contact_us.roles.onboarding'), art: 'contact_avatar_ai_2.svg' },
+  { email: 'killyouwithmymind@serenity.bc.reb', name: 'River Tam', role: t('contact_us.roles.escalations'), art: 'contact_avatar_ai_3.svg' },
+  { email: 'inara@guild.comp.all', name: 'Inarra Serra', role: t('contact_us.roles.partnerships'), art: 'contact_avatar_ai_2.svg' }
+] %>
 
-<div class="row">
-  <div class="large-9 columns">
-    <div class="contact-card">
-      <div class="callout primary">
-        <h3><%= t('contact_us.get_in_touch') %></h3>
-        <p><%= t('contact_us.paragraph_1') %><em><%= t('contact_us.all_day') %></em>.</p>
-      </div>
+<section class="page-hero contact-hero">
+  <div class="contact-hero__content">
+    <div class="page-hero__brand">
+      <%= render "layouts/gotthekeys", class_name: "marketing-wordmark--hero", decorative: true, width: 248 %>
+    </div>
+    <p class="page-hero__eyebrow"><%= t('contact_us.title') %></p>
+    <h1><%= t('contact_us.get_in_touch') %></h1>
+    <p><%= t('contact_us.paragraph_1') %><em><%= t('contact_us.all_day') %></em>.</p>
 
-      <ul class="tabs" data-responsive-accordion-tabs="tabs medium-accordion large-tabs" id="contact-tabs">
-        <li class="tabs-title is-active"><a href="#contact-company" aria-selected="true"><%= t('contact_us.contact_our_company') %></a></li>
-        <li class="tabs-title"><a href="#contact-people"><%= t('contact_us.specific_person') %></a></li>
-      </ul>
+    <div class="contact-hero__pills">
+      <span class="badge badge--neutral"><%= t('contact_us.hero_badge') %></span>
+      <span class="contact-hero__hint"><%= t('contact_us.hero_support_hint') %></span>
+    </div>
+  </div>
 
-      <div class="tabs-content" data-tabs-content="contact-tabs">
-        <div class="tabs-panel is-active" id="contact-company">
-          <form>
-            <div class="row">
-              <div class="large-6 columns">
-                <label for="yourName"><%= t('contact_us.your_name') %></label>
-                <input type="text" id="yourName" placeholder="<%= t('contact_us.jane_smith') %>">
-              </div>
-              <div class="large-6 columns">
-                <label for="yourEmail"><%= t('contact_us.your_email') %></label>
-                <input type="text" id="yourEmail" placeholder="<%= t('contact_us.jane_smith_email') %>">
-              </div>
-            </div>
-            <label for="contactMessage"><%= t('contact_us.whats_up') %></label>
-            <textarea id="contactMessage" rows="5"></textarea>
-            <button type="submit" class="button"><%= t('button.submit') %></button>
-          </form>
+  <div class="site-card contact-hero__art">
+    <%= image_tag 'contact_hero_ai.svg', alt: '', class: 'contact-hero__image' %>
+
+    <div class="contact-hero__art-meta">
+      <span class="badge badge--neutral"><%= t('contact_us.hero_badge') %></span>
+      <strong><%= contact_people.size %></strong>
+      <span><%= t('contact_us.summary_count') %></span>
+      <p><%= t('contact_us.hero_stat_note') %></p>
+    </div>
+  </div>
+</section>
+
+<nav class="contact-jump-nav" aria-label="<%= t('contact_us.jump_nav_label') %>">
+  <a href="#contact-general-enquiry" class="contact-jump-tab">
+    <span class="contact-jump-tab__index">01</span>
+    <span class="contact-jump-tab__label"><%= t('contact_us.jump_tab_enquiry') %></span>
+  </a>
+  <a href="#contact-team-directory" class="contact-jump-tab">
+    <span class="contact-jump-tab__index">02</span>
+    <span class="contact-jump-tab__label"><%= t('contact_us.jump_tab_people') %></span>
+  </a>
+  <a href="#contact-location" class="contact-jump-tab">
+    <span class="contact-jump-tab__index">03</span>
+    <span class="contact-jump-tab__label"><%= t('contact_us.jump_tab_map') %></span>
+  </a>
+</nav>
+
+<section class="contact-layout">
+  <div class="contact-primary">
+    <section class="site-card contact-form-card" id="contact-general-enquiry">
+      <div class="contact-form-card__panel">
+        <div class="contact-section-heading">
+          <div>
+            <p class="section-heading__eyebrow"><%= t('contact_us.contact_our_company') %></p>
+            <h2><%= t('contact_us.form_title') %></h2>
+          </div>
+          <span class="badge badge--neutral"><%= t('contact_us.response_label') %></span>
         </div>
 
-        <div class="tabs-panel" id="contact-people">
-          <div class="row">
-            <% [
-              ['zoe@serenity.bc.reb', steven_image, 'Steven Hobbs'],
-              ['jayne@serenity.bc.reb', face_image, 'Susie Sykes'],
-              ['doc@serenity.bc.reb', face_image, 'Jacob Sparrowhawk'],
-              ['doc@serenity.bc.reb', face_image, 'Toby Sykes'],
-              ['doc@serenity.bc.reb', face_image, 'Rebecca Sykes'],
-              ['killyouwithmymind@serenity.bc.reb', face_image, 'River Tam'],
-              ['inara@guild.comp.all', face_image, 'Inarra Serra']
-            ].each do |email, avatar, name| %>
-              <div class="small-6 medium-4 large-3 columns">
-                <div class="site-card">
-                  <a href="mailto:<%= email %>" class="contact-person">
-                    <%= avatar %>
-                    <span><%= name %></span>
-                  </a>
-                </div>
-              </div>
-            <% end %>
+        <p class="contact-form-card__intro"><%= t('contact_us.form_intro') %></p>
+
+        <ul class="contact-feature-list no-bullet">
+          <li>
+            <strong><%= t('contact_us.feature_1_title') %></strong>
+            <span><%= t('contact_us.feature_1_body') %></span>
+          </li>
+          <li>
+            <strong><%= t('contact_us.feature_2_title') %></strong>
+            <span><%= t('contact_us.feature_2_body') %></span>
+          </li>
+          <li>
+            <strong><%= t('contact_us.feature_3_title') %></strong>
+            <span><%= t('contact_us.feature_3_body') %></span>
+          </li>
+        </ul>
+
+        <div class="contact-form-card__art">
+          <%= image_tag 'contact_concierge_ai.svg', alt: '', class: 'contact-form-card__art-image' %>
+        </div>
+      </div>
+
+      <form class="stacked-form contact-form">
+        <div>
+          <p class="section-heading__eyebrow"><%= t('contact_us.response_label') %></p>
+          <h3><%= t('contact_us.form_surface_title') %></h3>
+        </div>
+        <div class="contact-form__grid">
+          <div>
+            <label for="yourName"><%= t('contact_us.your_name') %></label>
+            <input type="text" id="yourName" placeholder="<%= t('contact_us.jane_smith') %>">
+          </div>
+
+          <div>
+            <label for="yourEmail"><%= t('contact_us.your_email') %></label>
+            <input type="email" id="yourEmail" placeholder="<%= t('contact_us.jane_smith_email') %>">
           </div>
         </div>
+
+        <div>
+          <label for="contactMessage"><%= t('contact_us.whats_up') %></label>
+          <textarea id="contactMessage" rows="6" placeholder="<%= t('contact_us.message_placeholder') %>"></textarea>
+        </div>
+
+        <div class="form-actions">
+          <p class="contact-form__note"><%= t('contact_us.form_note') %></p>
+          <button type="submit" class="button primary"><%= t('button.submit') %></button>
+        </div>
+      </form>
+    </section>
+
+    <section class="site-card contact-directory-card" id="contact-team-directory">
+      <div class="contact-section-heading">
+        <div>
+          <p class="section-heading__eyebrow"><%= t('contact_us.specific_person') %></p>
+          <h2><%= t('contact_us.directory_title') %></h2>
+        </div>
+        <span class="badge badge--neutral"><%= t('contact_us.directory_badge') %></span>
       </div>
-    </div>
+
+      <p class="contact-directory-card__intro"><%= t('contact_us.directory_intro') %></p>
+
+      <div class="contact-people-grid">
+        <% contact_people.each do |person| %>
+          <a href="mailto:<%= person[:email] %>" class="contact-person-card">
+            <div class="contact-person-card__media">
+              <%= image_tag person[:art], alt: '', class: 'contact-person-card__image', loading: 'lazy' %>
+              <span class="badge badge--neutral contact-person-card__badge"><%= person[:role] %></span>
+            </div>
+
+            <div class="contact-person-card__body">
+              <strong><%= person[:name] %></strong>
+              <span><%= person[:email] %></span>
+            </div>
+          </a>
+        <% end %>
+      </div>
+    </section>
   </div>
 
-  <div class="large-3 columns">
-    <div class="panel">
-      <h5><%= t('contact_us.map') %></h5>
-      <iframe width="100%" height="260" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="<%= "#{map_query}&output=embed" %>"></iframe>
-      <p><%= button_tag t('contact_us.view_map'), type: 'button', class: 'button small expanded', data: { open: 'map-modal' } %></p>
-      <p>
-        GotTheKeys Limited,<br>
-        123 Awesome Road,<br>
-        Limpsfield, TN16 4AB
-      </p>
-    </div>
-  </div>
-</div>
+  <aside class="contact-sidebar">
+    <section class="site-card contact-map-card" id="contact-location">
+      <div class="contact-section-heading">
+        <div>
+          <p class="section-heading__eyebrow"><%= t('contact_us.map') %></p>
+          <h2><%= t('contact_us.where_we_are') %></h2>
+        </div>
+        <span class="badge badge--neutral"><%= t('contact_us.map_badge') %></span>
+      </div>
+
+      <p class="contact-map-card__intro"><%= t('contact_us.map_intro') %></p>
+
+      <div class="contact-map-card__frame">
+        <iframe width="100%" height="260" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="<%= "#{map_query}&output=embed" %>"></iframe>
+      </div>
+
+      <div class="contact-map-card__details">
+        <p><strong>GotTheKeys Limited</strong><br>123 Awesome Road,<br>Limpsfield, TN16 4AB</p>
+      </div>
+
+      <%= button_tag t('contact_us.view_map'), type: 'button', class: 'button secondary hollow expanded', data: { open: 'map-modal' } %>
+    </section>
+
+    <section class="callout contact-note-card">
+      <p class="section-heading__eyebrow"><%= t('contact_us.note_badge') %></p>
+      <h3><%= t('contact_us.note_title') %></h3>
+      <p><%= t('contact_us.note_body') %></p>
+    </section>
+  </aside>
+</section>
 
 <div class="reveal large" id="map-modal" data-reveal>
   <h4><%= t('contact_us.where_we_are') %></h4>

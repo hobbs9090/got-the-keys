@@ -1,3 +1,6 @@
-<span class="brand-word brand-word--primary"><%= t('gotthekeys.got') %></span>
-<span class="brand-word brand-word--neutral"><%= t('gotthekeys.the') %></span>
-<span class="brand-word brand-word--primary"><%= t('gotthekeys.keys') %></span>
+<%= marketing_wordmark_tag(
+  class_name: local_assigns.fetch(:class_name, "marketing-wordmark--inline"),
+  alt: local_assigns[:alt],
+  decorative: local_assigns.fetch(:decorative, false),
+  width: local_assigns.fetch(:width, 180)
+) %>

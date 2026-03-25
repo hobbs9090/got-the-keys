@@ -14,16 +14,16 @@ admins:
     password_confirmation: secret
     language: en
 users:
-  - first_name: Matt
-    last_name: Will
-    mobile_number: "07595 998877"
-    email: seller03@acme.com
+  - first_name: Matthew
+    last_name: Wells
+    mobile_number: "07700 900103"
+    email: matthew.wells@icloud.example
     password: secret
     password_confirmation: secret
     language: en
 properties:
   - key: westerham_quiet_cottage
-    owner_email: seller03@acme.com
+    owner_email: matthew.wells@icloud.example
     address_line_1: 6 Lime Hill
     address_line_2: ""
     town_city: Westerham
@@ -39,7 +39,7 @@ properties:
     asking_price: 485000
     featured: false
   - key: reigate_modern_flat
-    owner_email: seller03@acme.com
+    owner_email: matthew.wells@icloud.example
     address_line_1: Flat 5, 12 Priory Court
     address_line_2: ""
     town_city: Reigate

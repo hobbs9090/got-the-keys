@@ -21,11 +21,19 @@ RSpec.describe "Admin appointments" do
     sign_in admin
   end
 
-  it "shows the appointment book" do
-    get admin_appointments_path
+  it "shows the admin-only bookings desk" do
+    get admin_bookings_path
 
     expect(response).to have_http_status(:ok)
-    expect(response.body).to include("Appointment book")
+    expect(response.body).to include("Bookings desk")
+  end
+
+  it "redirects non-admin visitors away from the bookings desk" do
+    sign_out admin
+
+    get admin_bookings_path
+
+    expect(response).to redirect_to(new_admin_session_path)
   end
 
   it "allows an admin to confirm a pending appointment" do
