@@ -51,6 +51,19 @@ module ApplicationHelper
     end
   end
 
+  def pixel_density_image_tag(source, retina_source: nil, **options)
+    image_options = options.dup
+
+    if retina_source.present?
+      image_options[:srcset] = [
+        "#{path_to_image(source)} 1x",
+        "#{path_to_image(retina_source)} 2x"
+      ].join(", ")
+    end
+
+    image_tag(source, **image_options)
+  end
+
   def form_control_options(object, attribute, classes: nil, **options)
     has_error = object.present? && object.errors[attribute].present?
     merged_classes = [classes, ("is-invalid-input" if has_error)].compact.join(" ").presence

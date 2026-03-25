@@ -1,14 +1,14 @@
 module SharedHelper
   def hero_1_image
-    image_tag('hero_1.jpg')
+    pixel_density_image_tag('hero_1.jpg', retina_source: 'hero_1@2x.jpg')
   end
 
   def hero_2_image
-    image_tag('hero_2.jpg')
+    pixel_density_image_tag('hero_2.jpg', retina_source: 'hero_2@2x.jpg')
   end
 
   def hero_3_image
-    image_tag('hero_3.jpg')
+    pixel_density_image_tag('hero_3.jpg', retina_source: 'hero_3@2x.jpg')
   end
 
   def welcome_image_1
@@ -20,15 +20,15 @@ module SharedHelper
   end
 
   def world_image
-    image_tag('placeholder_world@2x.jpg')
+    pixel_density_image_tag('placeholder_world.jpg', retina_source: 'placeholder_world@2x.jpg')
   end
 
   def face_image
-    image_tag('placeholder_face@2x.jpg')
+    pixel_density_image_tag('placeholder_face.jpg', retina_source: 'placeholder_face@2x.jpg')
   end
 
   def steven_image
-    image_tag('steven_face@2x.jpg')
+    pixel_density_image_tag('steven_face.jpg', retina_source: 'steven_face@2x.jpg')
   end
 
   def square_image

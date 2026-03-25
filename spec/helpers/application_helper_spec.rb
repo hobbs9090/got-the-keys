@@ -1,0 +1,202 @@
+require 'rails_helper'
+
+RSpec.describe ApplicationHelper, type: :helper do
+  describe "app version helpers" do
+    let(:version_config) { Rails.configuration.x.got_the_keys }
+
+    around do |example|
+      original_values = {
+        version: version_config.version,
+        build_sha: version_config.build_sha,
+        build_number: version_config.build_number
+      }
+
+      example.run
+    ensure
+      version_config.version = original_values[:version]
+      version_config.build_sha = original_values[:build_sha]
+      version_config.build_number = original_values[:build_number]
+    end
+
+    it "formats the public app version from the semantic version" do
+      version_config.version = "2.4.0"
+
+      expect(helper.public_app_version).to eq("v2.4.0")
+    end
+
+    it "includes build metadata in the full app version when present" do
+      version_config.version = "2.4.0"
+      version_config.build_sha = "abc1234"
+      version_config.build_number = "42"
+
+      expect(helper.full_app_version).to eq("v2.4.0+abc1234.42")
+    end
+
+    it "omits blank build metadata cleanly" do
+      version_config.version = "2.4.0"
+      version_config.build_sha = nil
+      version_config.build_number = ""
+
+      expect(helper.full_app_version).to eq("v2.4.0")
+    end
+  end
+
+  describe "#title" do
+    it "stores the page title and returns a heading" do
+      markup = helper.title("Dashboard", class: "page-title")
+
+      expect(view.view_flow.get(:title).to_s).to eq("Dashboard")
+      expect(markup).to include('<h1 class="page-title">Dashboard</h1>')
+    end
+  end
+
+  describe "#appointment_status_badge_class" do
+    it "maps known statuses to badge classes" do
+      expect(helper.appointment_status_badge_class(:confirmed)).to eq("badge badge--success")
+      expect(helper.appointment_status_badge_class("no_show")).to eq("badge badge--danger")
+    end
+
+    it "falls back to the default badge class for unknown statuses" do
+      expect(helper.appointment_status_badge_class(:unknown)).to eq("badge")
+    end
+  end
+
+  describe "#formatted_date_time" do
+    it "returns a localized long timestamp for present values" do
+      value = Time.zone.local(2026, 3, 30, 15, 45)
+
+      expect(helper.formatted_date_time(value)).to eq(I18n.l(value, format: :long))
+    end
+
+    it "returns nil for blank values" do
+      expect(helper.formatted_date_time(nil)).to be_nil
+    end
+  end
+
+  describe "#admin_nav_link_to" do
+    it "adds the active class when the current page matches" do
+      allow(helper).to receive(:current_page?).with("/admin/dashboard").and_return(true)
+
+      markup = helper.admin_nav_link_to("Dashboard", "/admin/dashboard", class: "side-nav__link")
+
+      expect(markup).to include('class="side-nav__link is-active"')
+    end
+
+    it "honors an explicit active override" do
+      allow(helper).to receive(:current_page?).and_return(false)
+
+      markup = helper.admin_nav_link_to("Appointments", "/admin/appointments", active: true)
+
+      expect(markup).to include('class="is-active"')
+    end
+  end
+
+  describe "#marketing_wordmark_tag" do
+    it "renders the translated alt text and default asset" do
+      markup = helper.marketing_wordmark_tag(class_name: "brand-lockup")
+
+      expect(markup).to match(%r{src="/assets/gotthekeys-wordmark-green-[^"]+\.svg"})
+      expect(markup).to include('alt="GotTheKeys"')
+      expect(markup).to include('class="marketing-wordmark brand-lockup"')
+    end
+
+    it "renders decorative variants with presentation attributes" do
+      markup = helper.marketing_wordmark_tag(decorative: true, variant: :dark)
+
+      expect(markup).to match(%r{src="/assets/gotthekeys-wordmark-green-dark-[^"]+\.svg"})
+      expect(markup).to include('alt=""')
+      expect(markup).to include('aria-hidden="true"')
+      expect(markup).to include('role="presentation"')
+    end
+  end
+
+  describe "#marketing_wordmark_asset_name" do
+    it "returns the dark asset for the dark variant" do
+      expect(helper.marketing_wordmark_asset_name(:dark)).to eq("gotthekeys-wordmark-green-dark.svg")
+    end
+
+    it "returns the default asset for all other variants" do
+      expect(helper.marketing_wordmark_asset_name(:default)).to eq("gotthekeys-wordmark-green.svg")
+      expect(helper.marketing_wordmark_asset_name(:light)).to eq("gotthekeys-wordmark-green.svg")
+    end
+  end
+
+  describe "#pixel_density_image_tag" do
+    it "includes a 1x and 2x srcset when a retina asset is provided" do
+      markup = helper.pixel_density_image_tag("placeholder_world.jpg", retina_source: "placeholder_world@2x.jpg")
+
+      expect(markup).to match(%r{src="/assets/placeholder_world-[^"]+\.jpg"})
+      expect(markup).to match(
+        %r{srcset="/assets/placeholder_world-[^"]+\.jpg 1x, /assets/placeholder_world@2x-[^"]+\.jpg 2x"}
+      )
+    end
+
+    it "renders a standard image without srcset when no retina asset is provided" do
+      markup = helper.pixel_density_image_tag("hero_1.jpg")
+
+      expect(markup).to match(%r{src="/assets/hero_1-[^"]+\.jpg"})
+      expect(markup).not_to include("srcset=")
+    end
+  end
+
+  describe "#form_control_options" do
+    it "adds invalid classes and aria metadata when the field has errors" do
+      property = Property.new
+      property.errors.add(:address_line_1, "can't be blank")
+
+      options = helper.form_control_options(
+        property,
+        :address_line_1,
+        classes: "text-input",
+        aria: { label: "Address line 1" }
+      )
+
+      expect(options[:class]).to eq("text-input is-invalid-input")
+      expect(options[:aria]).to eq(
+        label: "Address line 1",
+        invalid: true,
+        describedby: "property_address_line_1_error"
+      )
+    end
+
+    it "leaves clean fields unchanged" do
+      property = Property.new
+
+      expect(helper.form_control_options(property, :address_line_1, classes: "text-input")).to eq(class: "text-input")
+    end
+  end
+
+  describe "#form_label_options" do
+    it "adds the invalid label class when the field has errors" do
+      property = Property.new
+      property.errors.add(:address_line_1, "can't be blank")
+
+      expect(helper.form_label_options(property, :address_line_1, classes: "form-label")).to eq(
+        class: "form-label is-invalid-label"
+      )
+    end
+  end
+
+  describe "#field_error_messages" do
+    it "renders the full message and field error id" do
+      property = Property.new
+      property.errors.add(:address_line_1, "can't be blank")
+
+      markup = helper.field_error_messages(property, :address_line_1)
+
+      expect(markup).to include("Address line 1 can&#39;t be blank")
+      expect(markup).to include('class="form-error is-visible"')
+      expect(markup).to include('id="property_address_line_1_error"')
+    end
+
+    it "returns nil when there are no field errors" do
+      expect(helper.field_error_messages(Property.new, :address_line_1)).to be_nil
+    end
+  end
+
+  describe "#field_error_id" do
+    it "builds a predictable error element id" do
+      expect(helper.field_error_id(Property.new, :address_line_1)).to eq("property_address_line_1_error")
+    end
+  end
+end
