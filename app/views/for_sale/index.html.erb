@@ -1,21 +1,24 @@
 <% title t('for_sale.title') %>
 
-<div class="row">
-
-  <div class="large-9 columns" role="content">
-
-    <h4><%= t('for_sale.header') %>
-      <small><%= t(:total) %>: <%= number_with_delimiter(@total_for_sale, :delimiter => ',') %></small>
-    </h4>
-
-    <%= paginate @properties %>
-
-    <%= render "properties/property" %>
-
-    <%= paginate @properties %>
-
+<section class="page-hero">
+  <div>
+    <p class="page-hero__eyebrow">For sale</p>
+    <h1>Homes available to buy</h1>
+    <p>Use the filters to find stock by area, bedrooms, and price, then move into the booking flow from the listing details page.</p>
   </div>
 
-  <%= render "layouts/sidebar" %>
+  <div class="page-hero__meta">
+    <strong><%= number_with_delimiter(@total_for_sale, delimiter: ",") %></strong>
+    <span>sale listings</span>
+  </div>
+</section>
 
-</div>
+<section class="page-section">
+  <%= render "properties/filters", url: for_sale_index_path, selected_sale_status: Property::SALE_STATUSES[:for_sale], show_status_select: false %>
+</section>
+
+<section class="page-section">
+  <%= paginate @properties %>
+  <%= render "properties/property" %>
+  <%= paginate @properties %>
+</section>

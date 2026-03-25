@@ -1,0 +1,17 @@
+en:
+  date:
+    formats:
+      calendar_day: "%a %d %b"
+  time:
+    formats:
+      long: "%A, %d %B %Y at %H:%M"
+      time_only: "%H:%M"
+
+zh:
+  date:
+    formats:
+      calendar_day: "%m月%d日"
+  time:
+    formats:
+      long: "%Y年%m月%d日 %H:%M"
+      time_only: "%H:%M"

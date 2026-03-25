@@ -10,6 +10,7 @@ module GotTheKeys
     config.autoload_lib(ignore: %w[assets tasks])
 
     config.i18n.default_locale = :en
+    config.i18n.fallbacks = { zh: :en }
     config.filter_parameters += %i[password password_confirmation]
     config.x.got_the_keys.available_languages = %w[en zh].freeze
     config.x.got_the_keys.exchange_rate_gbp_to_cny = 9.368

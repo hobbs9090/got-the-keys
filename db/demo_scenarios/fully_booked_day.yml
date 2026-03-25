@@ -1,0 +1,142 @@
+key: fully_booked_day
+name: Fully Booked Day
+description: A scenario built for conflict and availability testing, with one property fully booked from opening through to the afternoon.
+booking_configuration:
+  slot_duration_minutes: 60
+  lead_time_hours: 2
+  buffer_minutes: 0
+  office_opens_at: "09:00"
+  office_closes_at: "17:00"
+  open_weekdays: [1, 2, 3, 4, 5]
+admins:
+  - email: steven@gotthekeys.com
+    password: secret
+    password_confirmation: secret
+    language: en
+users:
+  - first_name: Steven
+    last_name: Sykes
+    mobile_number: "07595 123456"
+    email: seller01@acme.com
+    password: secret
+    password_confirmation: secret
+    language: en
+  - first_name: Lia
+    last_name: McClure
+    mobile_number: "07595 334455"
+    email: seller04@acme.com
+    password: secret
+    password_confirmation: secret
+    language: en
+properties:
+  - key: bromley_show_home
+    owner_email: seller01@acme.com
+    address_line_1: 28 Orchard Avenue
+    address_line_2: ""
+    town_city: Bromley
+    county: Greater London
+    postcode: BR1 4LG
+    country: United Kingdom
+    property_type: Semi-detached house
+    listing_tagline: A polished family home with a fully booked viewing day
+    property_description: A carefully staged family house with a broad kitchen extension, generous rear garden, and an easy run into Bromley South. This scenario intentionally publishes a completely full day of confirmed viewings.
+    bedrooms: 4
+    bathrooms: 2
+    sale_status: For Sale
+    asking_price: 745000
+    featured: true
+  - key: canterbury_empty_backup
+    owner_email: seller04@acme.com
+    address_line_1: Flat 2, 16 Kings Street
+    address_line_2: ""
+    town_city: Canterbury
+    county: Kent
+    postcode: CT1 2AJ
+    country: United Kingdom
+    property_type: Apartment
+    listing_tagline: Secondary listing with lighter traffic
+    property_description: A compact city apartment with smart finishes and strong walkability, included here as a contrast to the fully booked lead property.
+    bedrooms: 1
+    bathrooms: 1
+    sale_status: For Rent
+    asking_price: 1250
+    featured: false
+availability_windows:
+  - property_key: bromley_show_home
+    starts_at: "today+13d 09:00"
+    ends_at: "today+13d 17:00"
+    kind: open
+    label: Fully booked open day
+appointments:
+  - property_key: bromley_show_home
+    assigned_admin_email: steven@gotthekeys.com
+    customer_name: Alice Morgan
+    customer_email: alice.morgan@example.com
+    customer_phone: "07700 910001"
+    requested_time: "today+13d 09:00"
+    scheduled_at: "today+13d 09:00"
+    duration_minutes: 60
+    status: confirmed
+  - property_key: bromley_show_home
+    assigned_admin_email: steven@gotthekeys.com
+    customer_name: Ben Storey
+    customer_email: ben.storey@example.com
+    customer_phone: "07700 910002"
+    requested_time: "today+13d 10:00"
+    scheduled_at: "today+13d 10:00"
+    duration_minutes: 60
+    status: confirmed
+  - property_key: bromley_show_home
+    assigned_admin_email: steven@gotthekeys.com
+    customer_name: Chloe White
+    customer_email: chloe.white@example.com
+    customer_phone: "07700 910003"
+    requested_time: "today+13d 11:00"
+    scheduled_at: "today+13d 11:00"
+    duration_minutes: 60
+    status: confirmed
+  - property_key: bromley_show_home
+    assigned_admin_email: steven@gotthekeys.com
+    customer_name: David Thomas
+    customer_email: david.thomas@example.com
+    customer_phone: "07700 910004"
+    requested_time: "today+13d 12:00"
+    scheduled_at: "today+13d 12:00"
+    duration_minutes: 60
+    status: confirmed
+  - property_key: bromley_show_home
+    assigned_admin_email: steven@gotthekeys.com
+    customer_name: Ella James
+    customer_email: ella.james@example.com
+    customer_phone: "07700 910005"
+    requested_time: "today+13d 13:00"
+    scheduled_at: "today+13d 13:00"
+    duration_minutes: 60
+    status: confirmed
+  - property_key: bromley_show_home
+    assigned_admin_email: steven@gotthekeys.com
+    customer_name: Farah Green
+    customer_email: farah.green@example.com
+    customer_phone: "07700 910006"
+    requested_time: "today+13d 14:00"
+    scheduled_at: "today+13d 14:00"
+    duration_minutes: 60
+    status: confirmed
+  - property_key: bromley_show_home
+    assigned_admin_email: steven@gotthekeys.com
+    customer_name: George Shaw
+    customer_email: george.shaw@example.com
+    customer_phone: "07700 910007"
+    requested_time: "today+13d 15:00"
+    scheduled_at: "today+13d 15:00"
+    duration_minutes: 60
+    status: confirmed
+  - property_key: canterbury_empty_backup
+    assigned_admin_email: steven@gotthekeys.com
+    customer_name: Hannah Wells
+    customer_email: hannah.wells@example.com
+    customer_phone: "07700 910008"
+    requested_time: "today+14d 10:00"
+    scheduled_at: "today+14d 10:00"
+    duration_minutes: 60
+    status: pending

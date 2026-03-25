@@ -6,6 +6,30 @@ GotTheKeys::Application.routes.draw do
 
   devise_for :admins, except: [:update, :destroy, :new, :create, :show, :edit]
 
+  namespace :admin do
+    root 'dashboard#index'
+
+    resource :dashboard, only: :show, controller: :dashboard
+    resource :booking_configuration, only: [:show, :update]
+    resource :qa, only: :show, controller: :qa
+    resources :appointments, only: [:index, :show, :edit, :update] do
+      patch :transition, on: :member
+    end
+    resources :properties, only: [:index, :show, :edit, :update]
+    resources :users, only: [:index, :show]
+    resources :notification_logs, only: :index
+    resources :demo_scenarios, only: [:index, :show], path: 'demo-data' do
+      post :apply, on: :member
+      collection do
+        post :restore_baseline
+        get :import
+        post :preview_import
+        post :apply_import
+        get :export
+      end
+    end
+  end
+
   resources :members, only: [:index]
 
   resources :statistics, only: [:index]
@@ -18,7 +42,10 @@ GotTheKeys::Application.routes.draw do
     resources :photos, only: [:index, :new]
     resources :floor_plans, only: [:index, :new]
     resources :viewing_times, only: [:index, :new, :create]
+    resources :appointments, only: [:new, :create]
   end
+
+  resources :appointments, only: [:show], param: :public_reference
 
   resources :for_sale, only: [:index]
 

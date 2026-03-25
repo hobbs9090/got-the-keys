@@ -1,11 +1,12 @@
 <footer class="site-footer">
-  <div class="row site-footer__inner">
-    <div class="large-4 columns">
+  <div class="site-footer__inner">
+    <div class="site-footer__intro">
       <p class="site-footer__brand">&copy; 2015 <%= render "layouts/gotthekeys" %></p>
+      <p class="site-footer__copy">Modern property discovery, appointment booking, and deterministic QA scenarios in one server-rendered Rails application.</p>
     </div>
 
-    <div class="large-8 columns">
-      <ul class="menu align-right site-footer__links">
+    <div class="site-footer__meta">
+      <ul class="menu site-footer__links">
         <li><%= link_to t('legal.title'), legal_index_path %></li>
         <li><%= link_to t('cookie_policy.title'), cookie_policy_index_path %></li>
         <li><%= link_to t('how_it_works.title'), how_it_works_path %></li>
@@ -14,11 +15,7 @@
         <li><%= link_to t('blog.title'), blog_index_path %></li>
       </ul>
 
-      <ul class="menu align-right site-footer__social">
-        <li><a href="#" class="badge secondary">RSS</a></li>
-        <li><a href="#" class="badge secondary">Facebook</a></li>
-        <li><a href="#" class="badge secondary">Twitter</a></li>
-      </ul>
+      <p class="site-footer__small">Built for realistic demos, acceptance testing, and training in AI-driven browser automation.</p>
     </div>
   </div>
 </footer>

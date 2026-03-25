@@ -1,0 +1,107 @@
+module DemoData
+  class ScenarioExporter
+    def export
+      property_keys = {}
+
+      payload = {
+        key: BookingConfiguration.current.active_demo_scenario_key.presence || "exported_snapshot",
+        name: "Exported Snapshot",
+        description: "Generated from the current application dataset on #{Time.current.iso8601}. Passwords are normalized to 'secret' on export.",
+        booking_configuration: export_configuration,
+        admins: Admin.order(:email).map { |admin| export_admin(admin) },
+        users: User.order(:email).map { |user| export_user(user) },
+        properties: Property.order(:id).map { |property| export_property(property, property_keys) },
+        availability_windows: AvailabilityWindow.order(:starts_at).map { |window| export_window(window, property_keys) },
+        appointments: Appointment.order(:scheduled_at, :created_at).map { |appointment| export_appointment(appointment, property_keys) }
+      }
+
+      YAML.dump(payload.deep_stringify_keys)
+    end
+
+    private
+
+    def export_configuration
+      configuration = BookingConfiguration.current
+
+      {
+        slot_duration_minutes: configuration.slot_duration_minutes,
+        lead_time_hours: configuration.lead_time_hours,
+        buffer_minutes: configuration.buffer_minutes,
+        office_opens_at: configuration.office_opens_at,
+        office_closes_at: configuration.office_closes_at,
+        open_weekdays: configuration.open_weekday_numbers
+      }
+    end
+
+    def export_admin(admin)
+      {
+        email: admin.email,
+        password: "secret",
+        password_confirmation: "secret",
+        language: admin.language
+      }
+    end
+
+    def export_user(user)
+      {
+        first_name: user.first_name,
+        last_name: user.last_name,
+        mobile_number: user.mobile_number,
+        email: user.email,
+        password: "secret",
+        password_confirmation: "secret",
+        language: user.language
+      }
+    end
+
+    def export_property(property, property_keys)
+      key = property_keys[property.id] ||= "#{property.address_line_1.to_s.parameterize.presence || 'property'}-#{property.id}"
+
+      {
+        key:,
+        owner_email: property.user.email,
+        address_line_1: property.address_line_1,
+        address_line_2: property.address_line_2,
+        town_city: property.town_city,
+        county: property.county,
+        postcode: property.postcode,
+        country: property.country,
+        property_description: property.property_description,
+        bedrooms: property.bedrooms,
+        bathrooms: property.bathrooms,
+        property_type: property.property_type,
+        listing_tagline: property.listing_tagline,
+        sale_status: property.sale_status,
+        asking_price: property.asking_price,
+        featured: property.featured
+      }
+    end
+
+    def export_window(window, property_keys)
+      {
+        property_key: property_keys.fetch(window.property_id),
+        starts_at: window.starts_at.iso8601,
+        ends_at: window.ends_at.iso8601,
+        kind: window.kind,
+        label: window.label,
+        notes: window.notes
+      }
+    end
+
+    def export_appointment(appointment, property_keys)
+      {
+        property_key: property_keys.fetch(appointment.property_id),
+        assigned_admin_email: appointment.admin&.email,
+        customer_name: appointment.customer_name,
+        customer_email: appointment.customer_email,
+        customer_phone: appointment.customer_phone,
+        requested_time: appointment.requested_time.iso8601,
+        scheduled_at: appointment.scheduled_at.iso8601,
+        duration_minutes: appointment.duration_minutes,
+        status: appointment.status,
+        notes: appointment.notes,
+        internal_notes: appointment.internal_notes
+      }
+    end
+  end
+end

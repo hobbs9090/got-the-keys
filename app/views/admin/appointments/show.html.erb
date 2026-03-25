@@ -1,0 +1,97 @@
+<% title "Appointment #{@appointment.public_reference}" %>
+
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow">Appointment details</p>
+      <h1><%= @appointment.public_reference %></h1>
+    </div>
+
+    <div class="section-heading__actions">
+      <span class="<%= appointment_status_badge_class(@appointment.status) %>"><%= @appointment.display_status %></span>
+      <%= link_to "Edit", edit_admin_appointment_path(@appointment), class: "button primary hollow" %>
+    </div>
+  </div>
+</section>
+
+<section class="admin-grid">
+  <article class="admin-panel">
+    <h2>Summary</h2>
+    <dl class="detail-list">
+      <div>
+        <dt>Property</dt>
+        <dd><%= link_to @appointment.property.address_line_1, admin_property_path(@appointment.property) %></dd>
+      </div>
+      <div>
+        <dt>Customer</dt>
+        <dd><%= @appointment.customer_name %></dd>
+      </div>
+      <div>
+        <dt>Email</dt>
+        <dd><%= @appointment.customer_email %></dd>
+      </div>
+      <div>
+        <dt>Phone</dt>
+        <dd><%= @appointment.customer_phone.presence || "Not supplied" %></dd>
+      </div>
+      <div>
+        <dt>Requested slot</dt>
+        <dd><%= formatted_date_time(@appointment.requested_time) %></dd>
+      </div>
+      <div>
+        <dt>Current slot</dt>
+        <dd><%= formatted_date_time(@appointment.scheduled_at) %></dd>
+      </div>
+    </dl>
+
+    <div class="admin-inline-actions">
+      <%= button_to "Confirm", transition_admin_appointment_path(@appointment, status: "confirmed"), method: :patch, class: "button success hollow" unless @appointment.status == "confirmed" %>
+      <%= button_to "Complete", transition_admin_appointment_path(@appointment, status: "completed"), method: :patch, class: "button primary hollow" unless @appointment.status == "completed" %>
+      <%= button_to "No show", transition_admin_appointment_path(@appointment, status: "no_show"), method: :patch, class: "button warning hollow" unless @appointment.status == "no_show" %>
+      <%= button_to "Cancel", transition_admin_appointment_path(@appointment, status: "cancelled"), method: :patch, class: "button alert hollow" unless @appointment.status == "cancelled" %>
+    </div>
+  </article>
+
+  <article class="admin-panel">
+    <h2>Notes</h2>
+    <p><strong>Customer notes</strong></p>
+    <p><%= @appointment.notes.presence || "No customer notes supplied." %></p>
+
+    <p><strong>Internal notes</strong></p>
+    <p><%= @appointment.internal_notes.presence || "No internal notes yet." %></p>
+  </article>
+</section>
+
+<section class="admin-grid">
+  <article class="admin-panel">
+    <h2>Audit trail</h2>
+    <ol class="timeline">
+      <% @appointment.timeline.each do |event| %>
+        <li>
+          <strong><%= event.event_type.tr("_", " ").humanize %></strong>
+          <span><%= formatted_date_time(event.occurred_at) %></span>
+          <p><%= event.message %></p>
+        </li>
+      <% end %>
+    </ol>
+  </article>
+
+  <article class="admin-panel">
+    <h2>Customer history</h2>
+    <% if @customer_history.any? %>
+      <div class="admin-list">
+        <% @customer_history.each do |appointment| %>
+          <div class="admin-list__item">
+            <div>
+              <%= link_to appointment.public_reference, admin_appointment_path(appointment) %>
+              <p><%= appointment.property.address_line_1 %> · <%= formatted_date_time(appointment.scheduled_at) %></p>
+            </div>
+            <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="empty-copy">No other bookings found for this customer.</p>
+    <% end %>
+  </article>
+</section>

@@ -1,0 +1,54 @@
+<% title "Booking rules" %>
+
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow">Booking configuration</p>
+      <h1>Booking rules</h1>
+    </div>
+  </div>
+
+  <article class="admin-panel">
+    <%= render "shared/errors", object: @booking_configuration %>
+
+    <%= form_with model: [:admin, @booking_configuration], url: admin_booking_configuration_path, class: "stacked-form" do |f| %>
+      <div class="form-grid">
+        <div>
+          <%= f.label :slot_duration_minutes, "Slot duration (minutes)" %>
+          <%= f.number_field :slot_duration_minutes, min: 15, step: 15 %>
+        </div>
+        <div>
+          <%= f.label :lead_time_hours, "Lead time (hours)" %>
+          <%= f.number_field :lead_time_hours, min: 0, step: 1 %>
+        </div>
+        <div>
+          <%= f.label :buffer_minutes, "Buffer between bookings (minutes)" %>
+          <%= f.number_field :buffer_minutes, min: 0, step: 5 %>
+        </div>
+        <div>
+          <%= f.label :office_opens_at, "Office opens at" %>
+          <%= f.text_field :office_opens_at, placeholder: "09:00" %>
+        </div>
+        <div>
+          <%= f.label :office_closes_at, "Office closes at" %>
+          <%= f.text_field :office_closes_at, placeholder: "18:00" %>
+        </div>
+        <div class="form-grid__full">
+          <%= f.label :open_weekdays, "Open weekdays" %>
+          <div class="checkbox-row">
+            <% [["Sun", 0], ["Mon", 1], ["Tue", 2], ["Wed", 3], ["Thu", 4], ["Fri", 5], ["Sat", 6]].each do |label, value| %>
+              <label class="checkbox-pill">
+                <%= check_box_tag "booking_configuration[open_weekdays][]", value, @booking_configuration.open_weekday_numbers.include?(value) %>
+                <span><%= label %></span>
+              </label>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <%= f.submit "Save booking rules", class: "button primary" %>
+      </div>
+    <% end %>
+  </article>
+</section>

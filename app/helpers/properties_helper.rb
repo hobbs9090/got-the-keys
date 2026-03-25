@@ -7,17 +7,17 @@ module PropertiesHelper
 
   def small_image_for(property)
     if property.image_file_name.blank?
-      property_image_small
+      property_image_small(class_name: 'property-card__image')
     else
-      image_tag(property.image_file_name)
+      image_tag(property.image_file_name, class: 'property-card__image', alt: property.headline)
     end
   end
 
   def medium_image_for(property)
     if property.image_file_name.blank?
-      property_image_medium
+      property_image_medium(class_name: 'property-hero__image')
     else
-      image_tag(property.image_file_name)
+      image_tag(property.image_file_name, class: 'property-hero__image', alt: property.headline)
     end
   end
 
@@ -39,6 +39,12 @@ module PropertiesHelper
       unit: '¥',
       precision: 0
     )
+  end
+
+  def property_card_classes(property)
+    classes = ['property-card']
+    classes << 'property-card--featured' if property.featured?
+    classes.join(' ')
   end
 
 end

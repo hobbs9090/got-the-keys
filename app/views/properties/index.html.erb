@@ -1,22 +1,24 @@
 <% title t('properties.title') %>
 
-<div class="row">
-
-  <div class="large-9 columns" role="content">
-
-    <h4><%= t('properties.title') %>
-      <small><%= t(:total) %>
-        : <%= number_with_delimiter(@total_properties, :delimiter => ',') %></small>
-    </h4>
-
-    <%= paginate @properties %>
-
-    <%= render "properties/property" %>
-
-    <%= paginate @properties %>
-
+<section class="page-hero">
+  <div>
+    <p class="page-hero__eyebrow">Property catalogue</p>
+    <h1>Browse modern listings with live booking availability</h1>
+    <p>Search by area, price, and bedroom count, then book a viewing from each property page.</p>
   </div>
 
-  <%= render "layouts/sidebar" %>
+  <div class="page-hero__meta">
+    <strong><%= number_with_delimiter(@total_properties, delimiter: ",") %></strong>
+    <span>matching properties</span>
+  </div>
+</section>
 
-</div>
+<section class="page-section">
+  <%= render "properties/filters", url: properties_path, selected_sale_status: params[:sale_status], show_status_select: true %>
+</section>
+
+<section class="page-section">
+  <%= paginate @properties %>
+  <%= render "properties/property" %>
+  <%= paginate @properties %>
+</section>

@@ -1,0 +1,12 @@
+<nav class="admin-nav" aria-label="Admin">
+  <ul class="vertical menu admin-nav__menu">
+    <li><%= admin_nav_link_to "Dashboard", admin_root_path, data: { testid: "admin-dashboard-link" } %></li>
+    <li><%= admin_nav_link_to "Appointments", admin_appointments_path, data: { testid: "admin-appointments-link" } %></li>
+    <li><%= admin_nav_link_to "Properties", admin_properties_path, data: { testid: "admin-properties-link" } %></li>
+    <li><%= admin_nav_link_to "Sellers", admin_users_path, data: { testid: "admin-users-link" } %></li>
+    <li><%= admin_nav_link_to "Demo Data", admin_demo_scenarios_path, data: { testid: "admin-demo-data-link" } %></li>
+    <li><%= admin_nav_link_to "QA Guide", admin_qa_path, data: { testid: "admin-qa-link" } %></li>
+    <li><%= admin_nav_link_to "Notifications", admin_notification_logs_path, data: { testid: "admin-notifications-link" } %></li>
+    <li><%= admin_nav_link_to "Booking Rules", admin_booking_configuration_path, data: { testid: "admin-booking-rules-link" } %></li>
+  </ul>
+</nav>

@@ -1,0 +1,27 @@
+<% title "Import demo scenario" %>
+
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow">Demo data import</p>
+      <h1>Preview an imported scenario before applying it</h1>
+    </div>
+  </div>
+
+  <article class="admin-panel">
+    <%= form_with url: preview_import_admin_demo_scenarios_path, method: :post, class: "stacked-form", local: true, multipart: true do |f| %>
+      <div>
+        <%= label_tag "demo_import_scenario_file", "Upload YAML file" %>
+        <%= file_field_tag "demo_import[scenario_file]", accept: ".yml,.yaml" %>
+      </div>
+      <div>
+        <%= label_tag :scenario_yaml, "Or paste YAML" %>
+        <%= text_area_tag :scenario_yaml, nil, rows: 18, placeholder: "key: imported_scenario\nname: Imported Scenario\n..." %>
+      </div>
+      <div class="form-actions">
+        <%= button_tag "Preview import", class: "button primary" %>
+        <%= link_to "Back", admin_demo_scenarios_path, class: "button hollow secondary" %>
+      </div>
+    <% end %>
+  </article>
+</section>

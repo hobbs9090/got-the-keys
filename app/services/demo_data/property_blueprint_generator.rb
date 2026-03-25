@@ -139,6 +139,7 @@ module DemoData
       area = AREA_CATALOG.sample(random: random)
       bedrooms = weighted_pick(BEDROOM_WEIGHTS.fetch(sale_status))
       property_type = property_type_for(sale_status)
+      bathrooms = [1, [bedrooms - 1, 1].max, bedrooms].min
       features = FEATURE_BANK.sample(3, random: random)
 
       address_line_1, address_line_2 = address_for(property_type, index)
@@ -151,6 +152,8 @@ module DemoData
         county: area.fetch(:county),
         postcode: postcode_for(area),
         country: 'United Kingdom',
+        property_type: property_type.titleize,
+        listing_tagline: tagline_for(property_type:, area:, features:),
         property_description: description_for(
           property_type: property_type,
           area: area,
@@ -159,8 +162,10 @@ module DemoData
           features: features
         ),
         bedrooms: bedrooms,
+        bathrooms: bathrooms,
         sale_status: sale_status,
         asking_price: base_price,
+        featured: index % 6 == 0,
         prompt_context: {
           property_type: property_type,
           nearby: area.fetch(:nearby),
@@ -240,6 +245,10 @@ module DemoData
       "#{property_type.capitalize} in #{area.fetch(:town_city)} offering #{bedroom_label}, #{features[0]}, and #{features[1]}. " \
         "The home is well placed for #{area.fetch(:nearby).first} and #{area.fetch(:nearby).last}, with #{features[2]} adding day-to-day practicality. " \
         "A strong option for #{audience} looking for a well-connected address in #{area.fetch(:county)}."
+    end
+
+    def tagline_for(property_type:, area:, features:)
+      "#{property_type.capitalize} near #{area.fetch(:nearby).first} with #{features.first.sub(/\Aa /, '')}"
     end
   end
 end

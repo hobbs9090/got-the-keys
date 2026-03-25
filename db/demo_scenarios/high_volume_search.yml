@@ -1,0 +1,224 @@
+key: high_volume_search
+name: High Volume Search
+description: A broader catalogue intentionally sized to trigger pagination, sorting checks, and larger search result sets in the public UI.
+booking_configuration:
+  slot_duration_minutes: 45
+  lead_time_hours: 4
+  buffer_minutes: 15
+  office_opens_at: "09:00"
+  office_closes_at: "18:00"
+  open_weekdays: [1, 2, 3, 4, 5, 6]
+admins:
+  - email: steven@gotthekeys.com
+    password: secret
+    password_confirmation: secret
+    language: en
+users:
+  - first_name: Steven
+    last_name: Sykes
+    mobile_number: "07595 123456"
+    email: seller01@acme.com
+    password: secret
+    password_confirmation: secret
+    language: en
+  - first_name: Maurice
+    last_name: DuBuque
+    mobile_number: "07595 223344"
+    email: seller02@acme.com
+    password: secret
+    password_confirmation: secret
+    language: zh
+  - first_name: Matt
+    last_name: Will
+    mobile_number: "07595 998877"
+    email: seller03@acme.com
+    password: secret
+    password_confirmation: secret
+    language: en
+  - first_name: Lia
+    last_name: McClure
+    mobile_number: "07595 334455"
+    email: seller04@acme.com
+    password: secret
+    password_confirmation: secret
+    language: en
+properties:
+  - key: sevenoaks_cedar_road
+    owner_email: seller01@acme.com
+    address_line_1: 12 Cedar Road
+    address_line_2: Riverhead
+    town_city: Sevenoaks
+    county: Kent
+    postcode: TN13 2AD
+    country: United Kingdom
+    property_type: Detached house
+    listing_tagline: Quiet family space near the station
+    property_description: A spacious detached home with flowing reception rooms, a landscaped garden, and easy access to commuter rail links. It is tuned for broader search and sorting exercises.
+    bedrooms: 4
+    bathrooms: 2
+    sale_status: For Sale
+    asking_price: 825000
+    featured: true
+  - key: sevenoaks_station_apartment
+    owner_email: seller02@acme.com
+    address_line_1: Flat 7, 84 Station Road
+    address_line_2: ""
+    town_city: Sevenoaks
+    county: Kent
+    postcode: TN13 1HP
+    country: United Kingdom
+    property_type: Apartment
+    listing_tagline: Sleek one-bed close to fast trains
+    property_description: A crisp apartment with a private balcony, integrated appliances, and reliable storage. It is useful for testing smaller result cards against larger family homes.
+    bedrooms: 1
+    bathrooms: 1
+    sale_status: For Sale
+    asking_price: 345000
+    featured: false
+  - key: tunbridge_townhouse
+    owner_email: seller03@acme.com
+    address_line_1: 23 Mountfield Gardens
+    address_line_2: ""
+    town_city: Tunbridge Wells
+    county: Kent
+    postcode: TN2 5LD
+    country: United Kingdom
+    property_type: Townhouse
+    listing_tagline: Flexible family layout with garden studio
+    property_description: A generous townhouse with a garden studio, separate utility room, and quick access to schools and rail connections. It adds depth to bedroom and price filtering.
+    bedrooms: 5
+    bathrooms: 3
+    sale_status: For Sale
+    asking_price: 910000
+    featured: true
+  - key: tunbridge_rental_flat
+    owner_email: seller04@acme.com
+    address_line_1: Flat 4, 11 Calverley Road
+    address_line_2: ""
+    town_city: Tunbridge Wells
+    county: Kent
+    postcode: TN1 2XD
+    country: United Kingdom
+    property_type: Rental flat
+    listing_tagline: Central rental stock with quick move-in appeal
+    property_description: A tidy rental flat with neutral finishes, an efficient layout, and a walkable central address. It helps exercise sale-vs-rent filters in the search UI.
+    bedrooms: 2
+    bathrooms: 1
+    sale_status: For Rent
+    asking_price: 1495
+    featured: false
+  - key: canterbury_quayside_house
+    owner_email: seller01@acme.com
+    address_line_1: 41 Meadow Lane
+    address_line_2: ""
+    town_city: Canterbury
+    county: Kent
+    postcode: CT1 3QW
+    country: United Kingdom
+    property_type: Terraced house
+    listing_tagline: City-fringe family house with bright kitchen diner
+    property_description: A comfortable terrace with a stylish kitchen diner, improved insulation, and a rear garden. It broadens regional coverage for search and pagination checks.
+    bedrooms: 3
+    bathrooms: 2
+    sale_status: For Sale
+    asking_price: 498000
+    featured: false
+  - key: bromley_park_flat
+    owner_email: seller02@acme.com
+    address_line_1: Apartment 9, 2 Park Crescent
+    address_line_2: ""
+    town_city: Bromley
+    county: Greater London
+    postcode: BR1 3ZZ
+    country: United Kingdom
+    property_type: Apartment
+    listing_tagline: Smart London-edge apartment with parking
+    property_description: A bright apartment with secure entry, lift access, and allocated parking. It gives the catalogue a different price point and urban profile.
+    bedrooms: 2
+    bathrooms: 2
+    sale_status: For Sale
+    asking_price: 465000
+    featured: false
+  - key: croydon_duplex_rental
+    owner_email: seller03@acme.com
+    address_line_1: Duplex 6, 88 George Street
+    address_line_2: ""
+    town_city: Croydon
+    county: Greater London
+    postcode: CR0 2EU
+    country: United Kingdom
+    property_type: Duplex apartment
+    listing_tagline: Duplex rental close to tram and rail links
+    property_description: A duplex apartment with a strong open-plan living room, practical storage, and convenient transport links. It is ideal for list-page scanning and rental sorting.
+    bedrooms: 2
+    bathrooms: 2
+    sale_status: For Rent
+    asking_price: 1895
+    featured: false
+  - key: guildford_hillside_home
+    owner_email: seller04@acme.com
+    address_line_1: 15 Holly Drive
+    address_line_2: ""
+    town_city: Guildford
+    county: Surrey
+    postcode: GU2 4PW
+    country: United Kingdom
+    property_type: Detached house
+    listing_tagline: Elevated family home near green space
+    property_description: A substantial detached house with a vaulted family room, utility space, and direct access to nearby walking routes. It works well for testing featured card styling.
+    bedrooms: 4
+    bathrooms: 3
+    sale_status: For Sale
+    asking_price: 975000
+    featured: true
+  - key: reigate_balcony_flat
+    owner_email: seller01@acme.com
+    address_line_1: Flat 8, 5 Queens Court
+    address_line_2: ""
+    town_city: Reigate
+    county: Surrey
+    postcode: RH2 0PF
+    country: United Kingdom
+    property_type: Balcony flat
+    listing_tagline: Compact modern flat with outdoor space
+    property_description: A compact but polished flat with a balcony, modern fittings, and easy access to independent cafés. It is useful for small-home search and sort scenarios.
+    bedrooms: 1
+    bathrooms: 1
+    sale_status: For Rent
+    asking_price: 1425
+    featured: false
+  - key: westerham_green_cottage
+    owner_email: seller02@acme.com
+    address_line_1: 3 Orchard Close
+    address_line_2: ""
+    town_city: Westerham
+    county: Kent
+    postcode: TN16 1PR
+    country: United Kingdom
+    property_type: Cottage
+    listing_tagline: Character home with village-centre charm
+    property_description: A character cottage with improved glazing, a modern bathroom, and smart built-in joinery. It adds visual variety and richer rural location testing.
+    bedrooms: 2
+    bathrooms: 1
+    sale_status: For Sale
+    asking_price: 525000
+    featured: false
+appointments:
+  - property_key: sevenoaks_cedar_road
+    assigned_admin_email: steven@gotthekeys.com
+    customer_name: Ruby Owen
+    customer_email: ruby.owen@example.com
+    customer_phone: "07700 930001"
+    requested_time: "today+20d 10:00"
+    scheduled_at: "today+20d 10:00"
+    duration_minutes: 45
+    status: confirmed
+  - property_key: tunbridge_rental_flat
+    assigned_admin_email: steven@gotthekeys.com
+    customer_name: Jack Flynn
+    customer_email: jack.flynn@example.com
+    customer_phone: "07700 930002"
+    requested_time: "today+20d 11:00"
+    scheduled_at: "today+20d 11:00"
+    duration_minutes: 45
+    status: pending

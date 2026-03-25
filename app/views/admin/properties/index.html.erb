@@ -1,0 +1,29 @@
+<% title "Admin properties" %>
+
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow">Catalogue management</p>
+      <h1>Properties</h1>
+    </div>
+  </div>
+
+  <div class="property-grid">
+    <% @properties.each do |property| %>
+      <article class="<%= property_card_classes(property) %>">
+        <div class="property-card__body">
+          <p class="property-card__eyebrow"><%= property.user.full_name.presence || property.user.email %></p>
+          <h3><%= property.address_line_1 %></h3>
+          <p><%= property.headline %></p>
+          <p><%= format_price(property) %> · <%= format_bedrooms(property) %></p>
+        </div>
+        <footer class="property-card__footer">
+          <span><%= pluralize(property.appointments.count, "appointment") %></span>
+          <%= link_to "Open", admin_property_path(property), class: "button primary hollow" %>
+        </footer>
+      </article>
+    <% end %>
+  </div>
+
+  <%= paginate @properties %>
+</section>

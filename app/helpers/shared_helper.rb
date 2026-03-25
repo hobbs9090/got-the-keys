@@ -39,12 +39,12 @@ module SharedHelper
     image_tag('under_construction.svg', size: '80x80', class: 'under_construction')
   end
 
-  def property_image_small
-    image_tag('placeholder_beach@2x.jpg', size: '160')
+  def property_image_small(class_name: nil)
+    image_tag('placeholder_beach@2x.jpg', size: '160', class: class_name, alt: 'Property placeholder image')
   end
 
-  def property_image_medium
-    image_tag('placeholder_beach@2x.jpg', size: '250')
+  def property_image_medium(class_name: nil)
+    image_tag('placeholder_beach@2x.jpg', size: '250', class: class_name, alt: 'Property placeholder image')
   end
 
   def format_time(time)

@@ -1,5 +1,16 @@
-<div class="row">
-  <div class="large-12 columns">
+<section class="landing-hero">
+  <div class="landing-hero__content">
+    <p class="landing-hero__eyebrow">Modern property discovery and appointment booking</p>
+    <h1>Give buyers and tenants a polished website while giving QA teams a deterministic automation harness.</h1>
+    <p class="landing-hero__copy"><%= t('welcome.paragraph_1') %> <%= t('welcome.paragraph_2') %></p>
+
+    <div class="landing-hero__actions">
+      <%= link_to "Browse properties", properties_path, class: "button primary large", data: { testid: "browse-properties-link" } %>
+      <%= link_to "Open admin workspace", admin_root_path, class: "button secondary hollow large" if admin_signed_in? %>
+    </div>
+  </div>
+
+  <div class="landing-hero__visual">
     <div class="orbit site-hero" role="region" aria-label="<%= t('welcome.title') %>" data-orbit data-auto-play="true">
       <ul class="orbit-container">
         <button class="orbit-previous" aria-label="Previous slide" type="button">
@@ -19,46 +30,51 @@
       </nav>
     </div>
   </div>
-</div>
+</section>
 
-<div class="row">
-  <div class="large-4 columns">
-    <div class="site-card">
-      <%= welcome_image_1 %>
+<section class="metric-strip">
+  <% @site_metrics.each do |label, value| %>
+    <article class="metric-card">
+      <strong><%= number_with_delimiter(value, delimiter: ",") %></strong>
+      <span><%= label.to_s.humanize %></span>
+    </article>
+  <% end %>
+</section>
+
+<section class="page-section">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow">Featured listings</p>
+      <h2>Credible, responsive property cards with booking hooks built in</h2>
     </div>
+    <%= link_to "See the full catalogue", properties_path, class: "button hollow secondary" %>
   </div>
 
-  <div class="large-8 columns">
-    <div class="panel site-intro">
-      <h4><%= t('welcome.welcome_message') %></h4>
+  <%= render "properties/property", properties: @featured_properties %>
+</section>
 
-      <div class="row">
-        <div class="large-6 columns">
-          <p>
-            <span data-tooltip class="has-tip top" tabindex="1" title="<%= t('welcome.tool_tip_content') %>"><%= t('welcome.tool_tip') %></span>
-            <%= t('welcome.paragraph_1') %>
-          </p>
-        </div>
-        <div class="large-6 columns">
-          <p><%= t('welcome.paragraph_2') %></p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<section class="insight-grid">
+  <article class="insight-card">
+    <h3>Why teams use it</h3>
+    <p><%= t('welcome.paragraph_3') %></p>
+    <p><%= t('welcome.paragraph_4') %></p>
+  </article>
 
-<div class="row">
-  <div class="large-8 columns">
-    <div class="panel site-intro">
-      <h4><%= t('welcome.try_today') %></h4>
-      <p><%= t('welcome.paragraph_3') %></p>
-      <p><%= t('welcome.paragraph_4') %></p>
-    </div>
-  </div>
+  <article class="insight-card">
+    <h3>Built for QA training</h3>
+    <ul>
+      <li>Stable semantic selectors on the critical booking and admin controls.</li>
+      <li>Deterministic demo scenarios for happy paths, conflicts, empty states, and high-volume searches.</li>
+      <li>Visible audit trails and notification logs that make status transitions easy to verify.</li>
+    </ul>
+  </article>
 
-  <div class="large-4 columns">
-    <div class="site-card">
-      <%= welcome_image_2 %>
-    </div>
-  </div>
-</div>
+  <article class="insight-card">
+    <h3>Shared-host friendly</h3>
+    <ul>
+      <li>Server-rendered Rails under Apache + Passenger.</li>
+      <li>No Redis, Sidekiq, Docker, or always-on worker assumptions.</li>
+      <li>Progressive enhancement with Foundation, Turbo, and conventional forms.</li>
+    </ul>
+  </article>
+</section>

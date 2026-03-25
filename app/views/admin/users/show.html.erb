@@ -1,0 +1,49 @@
+<% title "Seller #{@user.full_name.presence || @user.email}" %>
+
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow">Seller profile</p>
+      <h1><%= @user.full_name.presence || @user.email %></h1>
+    </div>
+  </div>
+</section>
+
+<section class="admin-grid">
+  <article class="admin-panel">
+    <h2>Account details</h2>
+    <dl class="detail-list">
+      <div>
+        <dt>Email</dt>
+        <dd><%= @user.email %></dd>
+      </div>
+      <div>
+        <dt>Mobile</dt>
+        <dd><%= @user.mobile_number %></dd>
+      </div>
+      <div>
+        <dt>Properties</dt>
+        <dd><%= pluralize(@user.properties.count, "listing") %></dd>
+      </div>
+    </dl>
+  </article>
+
+  <article class="admin-panel">
+    <h2>Recent booking activity</h2>
+    <% if @appointments.any? %>
+      <div class="admin-list">
+        <% @appointments.each do |appointment| %>
+          <div class="admin-list__item">
+            <div>
+              <%= link_to appointment.public_reference, admin_appointment_path(appointment) %>
+              <p><%= appointment.property.address_line_1 %> · <%= appointment.customer_name %></p>
+            </div>
+            <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="empty-copy">No appointment activity on this seller’s properties yet.</p>
+    <% end %>
+  </article>
+</section>

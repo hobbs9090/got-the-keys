@@ -1,25 +1,24 @@
 <% title t('search.title') %>
 
-<div class="row">
-
-  <div class="large-9 columns">
-
-    <h4><%= t('search.search_for_properties') %></h4>
-
-    <div class="row">
-      <%= render "searches/simple_search" %>
-    </div>
-
-    <p class="search-results-meta"><%= t('search.results') %>: <%= number_with_delimiter(@number_search_results.count, delimiter: ',') %></p>
-
-    <%= paginate @properties %>
-
-    <%= render "properties/property" %>
-
-    <%= paginate @properties %>
-
+<section class="page-hero">
+  <div>
+    <p class="page-hero__eyebrow">Property search</p>
+    <h1>Search listings and booking availability together</h1>
+    <p>Find realistic happy paths, empty states, and pagination scenarios for QA automation practice.</p>
   </div>
 
-  <%= render "layouts/sidebar" %>
+  <div class="page-hero__meta">
+    <strong><%= number_with_delimiter(@number_search_results.count, delimiter: ",") %></strong>
+    <span>results</span>
+  </div>
+</section>
 
-</div>
+<section class="page-section">
+  <%= render "searches/simple_search" %>
+</section>
+
+<section class="page-section">
+  <%= paginate @properties %>
+  <%= render "properties/property" %>
+  <%= paginate @properties %>
+</section>

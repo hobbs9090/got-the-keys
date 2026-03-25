@@ -1,0 +1,22 @@
+<% title "Admin sellers" %>
+
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow">Customer and seller management</p>
+      <h1>Sellers</h1>
+    </div>
+  </div>
+
+  <div class="admin-list">
+    <% @users.each do |user| %>
+      <div class="admin-list__item">
+        <div>
+          <%= link_to user.full_name.presence || user.email, admin_user_path(user) %>
+          <p><%= user.email %> · <%= pluralize(user.properties.count, "property") %></p>
+        </div>
+        <span class="badge badge--neutral"><%= user.language.upcase %></span>
+      </div>
+    <% end %>
+  </div>
+</section>

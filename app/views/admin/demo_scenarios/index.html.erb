@@ -1,0 +1,58 @@
+<% title "Demo data management" %>
+
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow">Deterministic QA harness</p>
+      <h1>Demo data management</h1>
+    </div>
+
+    <div class="section-heading__actions">
+      <%= button_to "Restore baseline", restore_baseline_admin_demo_scenarios_path, method: :post, class: "button warning" %>
+      <%= link_to "Import scenario", import_admin_demo_scenarios_path, class: "button hollow secondary" %>
+      <%= link_to "Export current data", export_admin_demo_scenarios_path, class: "button hollow primary" %>
+    </div>
+  </div>
+</section>
+
+<section class="admin-grid">
+  <article class="admin-panel">
+    <h2>Diagnostics</h2>
+    <dl class="detail-list">
+      <% @diagnostics.each do |label, value| %>
+        <div>
+          <dt><%= label.to_s.humanize %></dt>
+          <dd><%= value.is_a?(Time) ? formatted_date_time(value) : value %></dd>
+        </div>
+      <% end %>
+    </dl>
+  </article>
+
+  <article class="admin-panel">
+    <h2>Last demo action</h2>
+    <% if @latest_run.present? %>
+      <p><strong><%= @latest_run.action_type.humanize %></strong> on <%= formatted_date_time(@latest_run.created_at) %></p>
+      <pre class="code-block"><%= JSON.pretty_generate(@latest_run.summary_data || {}) %></pre>
+    <% else %>
+      <p class="empty-copy">No resets, imports, or exports have been recorded yet.</p>
+    <% end %>
+  </article>
+</section>
+
+<section class="admin-grid">
+  <% @scenarios.each do |scenario| %>
+    <article class="admin-panel">
+      <h2><%= scenario.fetch(:name) %></h2>
+      <p><%= scenario.fetch(:description) %></p>
+      <ul class="detail-inline-list">
+        <li><strong><%= scenario.fetch(:property_count) %></strong> properties</li>
+        <li><strong><%= scenario.fetch(:appointment_count) %></strong> bookings</li>
+        <li><strong><%= scenario.fetch(:user_count) %></strong> sellers</li>
+      </ul>
+      <div class="admin-inline-actions">
+        <%= link_to "Preview", admin_demo_scenario_path(scenario.fetch(:key)), class: "button hollow secondary" %>
+        <%= button_to "Apply", apply_admin_demo_scenario_path(scenario.fetch(:key)), method: :post, class: "button primary" %>
+      </div>
+    </article>
+  <% end %>
+</section>

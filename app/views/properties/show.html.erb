@@ -1,57 +1,78 @@
 <% title "#{t('properties.edit_property_details_for')} #{@property.address_line_1}" %>
 
-<div class="row">
-
-  <div class="large-9 columns" role="content">
-
-    <article id="property">
-
-      <header>
-        <h4><%= @property.address_line_1 %></h4>
-      </header>
-
-      <%= medium_image_for(@property) %>
-
-      <ul class="vcard">
-        <li><%= @property.address_line_1 %></li>
-        <li><%= @property.address_line_2 %></li>
-        <li><%= @property.town_city %></li>
-        <li><%= @property.county %></li>
-        <li><%= @property.postcode %></li>
-        <li><%= @property.country %></li>
-      </ul>
-
-      <h3><%= t('helpers.label.property.property_description') %></h3>
-
-      <p>
-        <%= @property.property_description %>
-      </p>
-
-      <h3><%= t('helpers.label.property.bedrooms') %></h3>
-
-      <p>
-        <%= format_bedrooms(@property) %>
-      </p>
-
-      <h3><%= t('helpers.label.property.sale_status') %></h3>
-
-      <p>
-        <%= @property.sale_status %>
-      </p>
-
-      <h3><%= t('helpers.label.property.asking_price') %></h3>
-
-      <p>
-        <%= format_price(@property) %>
-      </p>
-      <% if chinese_locale? %>
-        <div class="property-price-secondary"><%= format_renminbi(@property) %></div>
+<section class="property-hero" data-testid="property-showcase">
+  <div class="property-hero__content">
+    <div class="property-hero__labels">
+      <span class="badge <%= @property.sale_status == Property::SALE_STATUSES[:for_sale] ? 'badge--accent' : 'badge--success' %>"><%= @property.sale_status %></span>
+      <% if @property.featured? %>
+        <span class="badge badge--warning">Featured</span>
       <% end %>
+    </div>
 
-    </article>
+    <p class="property-hero__eyebrow"><%= @property.property_type %> in <%= @property.location_line %></p>
+    <h1><%= @property.address_line_1 %></h1>
+    <p class="property-hero__headline"><%= @property.headline %></p>
 
+    <div class="property-hero__price">
+      <strong><%= format_price(@property) %></strong>
+      <% if chinese_locale? %>
+        <span><%= format_renminbi(@property) %></span>
+      <% end %>
+    </div>
+
+    <dl class="property-hero__meta">
+      <div>
+        <dt>Bedrooms</dt>
+        <dd><%= format_bedrooms(@property) %></dd>
+      </div>
+      <div>
+        <dt>Bathrooms</dt>
+        <dd><%= pluralize(@property.bathrooms, "bathroom") %></dd>
+      </div>
+      <div>
+        <dt>Postcode</dt>
+        <dd><%= @property.postcode %></dd>
+      </div>
+    </dl>
   </div>
 
-  <%= render "properties/property_sidebar" %>
+  <div class="property-hero__media">
+    <%= medium_image_for(@property) %>
+  </div>
+</section>
 
-</div>
+<section class="property-layout">
+  <article class="property-panel">
+    <h2>Overview</h2>
+    <p><%= @property.property_description %></p>
+
+    <div class="property-address">
+      <h3>Address</h3>
+      <p><%= [@property.address_line_1, @property.address_line_2, @property.town_city, @property.county, @property.postcode, @property.country].reject(&:blank?).join(", ") %></p>
+    </div>
+  </article>
+
+  <aside class="property-booking-panel" data-testid="booking-panel">
+    <h2>Book a viewing</h2>
+    <p>Pick a published slot to create a booking request. Admins can later confirm, reschedule, or cancel it from the appointment book.</p>
+
+    <% if @available_slots.any? %>
+      <ul class="slot-list">
+        <% @available_slots.each do |slot| %>
+          <li>
+            <%= link_to new_property_appointment_path(@property, slot: slot.starts_at.iso8601), class: "slot-list__link", data: { testid: "slot-option-#{slot.starts_at.to_i}" } do %>
+              <strong><%= formatted_date_time(slot.starts_at) %></strong>
+              <span><%= l(slot.ends_at, format: :time_only) %> finish</span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+      <%= link_to "Request a viewing", new_property_appointment_path(@property), class: "button primary expanded", data: { testid: "book-viewing-cta" } %>
+    <% else %>
+      <div class="empty-state">
+        <h3>No public slots available</h3>
+        <p>This is a useful QA edge case for testing empty booking states and fallback contact flows.</p>
+      </div>
+    <% end %>
+  </aside>
+</section>

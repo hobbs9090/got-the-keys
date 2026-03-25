@@ -1,0 +1,89 @@
+<% title "Appointment book" %>
+
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow">Booking management</p>
+      <h1>Appointment book</h1>
+    </div>
+
+    <div class="segmented-links">
+      <% %w[agenda day week month].each do |mode| %>
+        <%= link_to mode.titleize, admin_appointments_path(request.query_parameters.merge(view: mode)), class: ("is-active" if @view_mode == mode) %>
+      <% end %>
+    </div>
+  </div>
+
+  <%= form_with url: admin_appointments_path, method: :get, class: "admin-filter-form", local: true do %>
+    <%= hidden_field_tag :view, @view_mode %>
+    <div>
+      <%= label_tag :date, "Anchor date" %>
+      <%= date_field_tag :date, @anchor_date %>
+    </div>
+    <div>
+      <%= label_tag :property_id, "Property" %>
+      <%= select_tag :property_id, options_from_collection_for_select(@properties, :id, :address_line_1, params[:property_id]), include_blank: "All properties" %>
+    </div>
+    <div>
+      <%= label_tag :status, "Status" %>
+      <%= select_tag :status, options_for_select(@statuses.map { |status| [status.humanize, status] }, params[:status]), include_blank: "All statuses" %>
+    </div>
+    <div>
+      <%= label_tag :admin_id, "Assigned admin" %>
+      <%= select_tag :admin_id, options_from_collection_for_select(@admins, :id, :email, params[:admin_id]), include_blank: "Anyone" %>
+    </div>
+    <div>
+      <%= label_tag :customer_email, "Customer email" %>
+      <%= text_field_tag :customer_email, params[:customer_email], placeholder: "customer@example.com" %>
+    </div>
+    <div class="admin-filter-form__actions">
+      <%= button_tag "Apply", class: "button primary" %>
+      <%= link_to "Reset", admin_appointments_path(view: @view_mode), class: "button hollow secondary" %>
+    </div>
+  <% end %>
+</section>
+
+<% if @view_mode == "agenda" %>
+  <section class="admin-section">
+    <% @appointments_by_day.each do |date, appointments| %>
+      <article class="admin-panel">
+        <h2><%= l(date, format: :long) %></h2>
+        <div class="admin-list">
+          <% appointments.each do |appointment| %>
+            <div class="admin-list__item" data-testid="admin-appointment-row">
+              <div>
+                <%= link_to appointment.customer_name, admin_appointment_path(appointment) %>
+                <p><%= appointment.property.address_line_1 %> · <%= formatted_date_time(appointment.scheduled_at) %></p>
+              </div>
+
+              <div class="admin-inline-actions">
+                <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+                <%= button_to "Confirm", transition_admin_appointment_path(appointment, status: "confirmed"), method: :patch, class: "button tiny success hollow" unless appointment.status == "confirmed" %>
+                <%= button_to "Cancel", transition_admin_appointment_path(appointment, status: "cancelled"), method: :patch, class: "button tiny alert hollow" unless appointment.status == "cancelled" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </article>
+    <% end %>
+  </section>
+<% else %>
+  <section class="admin-calendar-grid admin-calendar-grid--<%= @view_mode %>">
+    <% @calendar_days.each do |day| %>
+      <article class="admin-calendar-day">
+        <header>
+          <strong><%= l(day, format: :calendar_day) %></strong>
+          <span><%= @appointments_by_day.fetch(day, []).count %> bookings</span>
+        </header>
+        <div class="admin-calendar-day__body">
+          <% @appointments_by_day.fetch(day, []).first(@view_mode == "month" ? 4 : 12).each do |appointment| %>
+            <%= link_to admin_appointment_path(appointment), class: "calendar-entry #{appointment.status}" do %>
+              <strong><%= l(appointment.scheduled_at, format: :time_only) %></strong>
+              <span><%= appointment.customer_name %></span>
+            <% end %>
+          <% end %>
+        </div>
+      </article>
+    <% end %>
+  </section>
+<% end %>

@@ -1,0 +1,18 @@
+<p>Hello <%= @appointment.customer_name %>,</p>
+
+<p>Your viewing for <strong><%= @property.address_line_1 %></strong> has been updated.</p>
+
+<ul>
+  <li>Reference: <%= @appointment.public_reference %></li>
+  <li>Status: <%= @appointment.display_status %></li>
+  <li>Requested slot: <%= l(@appointment.requested_time, format: :long) %></li>
+  <li>Current slot: <%= l(@appointment.scheduled_at, format: :long) %></li>
+</ul>
+
+<% if @appointment.notes.present? %>
+  <p>Your notes: <%= @appointment.notes %></p>
+<% end %>
+
+<p>You can revisit the appointment at any time using the secure appointment link sent after booking.</p>
+
+<p>Thank you,<br>GotTheKeys</p>

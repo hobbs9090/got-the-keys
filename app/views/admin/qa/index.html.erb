@@ -1,0 +1,68 @@
+<% title "QA guide" %>
+
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow">Automation training harness</p>
+      <h1>QA guide</h1>
+    </div>
+  </div>
+</section>
+
+<section class="admin-grid">
+  <article class="admin-panel">
+    <h2>Diagnostics</h2>
+    <dl class="detail-list">
+      <% @diagnostics.each do |label, value| %>
+        <div>
+          <dt><%= label.to_s.humanize %></dt>
+          <dd><%= value.is_a?(DemoScenarioRun) ? "#{value.action_type.humanize} at #{formatted_date_time(value.created_at)}" : value %></dd>
+        </div>
+      <% end %>
+    </dl>
+  </article>
+
+  <article class="admin-panel">
+    <h2>Known credentials</h2>
+    <div class="code-block">
+      <% Array(@baseline[:admins]).each do |admin| %>
+        admin: <%= admin[:email] %> / <%= admin[:password] || "secret" %>
+      <% end %>
+
+      <% Array(@baseline[:users]).each do |user| %>
+        seller: <%= user[:email] %> / <%= user[:password] || "secret" %>
+      <% end %>
+    </div>
+  </article>
+</section>
+
+<section class="admin-grid">
+  <article class="admin-panel">
+    <h2>Recommended training journeys</h2>
+    <ol class="timeline">
+      <% @training_journeys.each do |journey| %>
+        <li><p><%= journey %></p></li>
+      <% end %>
+    </ol>
+  </article>
+
+  <article class="admin-panel">
+    <h2>Automation-friendly selectors</h2>
+    <ul class="detail-inline-list">
+      <li>`data-testid="property-card"` on listing cards</li>
+      <li>`data-testid="book-viewing-cta"` on property booking CTA</li>
+      <li>`data-testid="appointment-form"` on the public booking form</li>
+      <li>`data-testid="admin-appointment-row"` on agenda rows</li>
+      <li>`data-testid="active-demo-scenario"` on the admin shell</li>
+    </ul>
+  </article>
+</section>
+
+<section class="admin-panel">
+  <h2>Available scenarios</h2>
+  <div class="detail-inline-list">
+    <% @scenarios.each do |scenario| %>
+      <li><strong><%= scenario[:name] %></strong>: <%= scenario[:description] %></li>
+    <% end %>
+  </div>
+</section>

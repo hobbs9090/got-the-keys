@@ -1,0 +1,61 @@
+<% title "Book a viewing for #{@property.address_line_1}" %>
+
+<section class="page-hero">
+  <div>
+    <p class="page-hero__eyebrow">Viewing request</p>
+    <h1>Book a viewing for <%= @property.address_line_1 %></h1>
+    <p>Choose a published slot, add your contact details, and create a request that staff can confirm, reschedule, or cancel from the admin appointment book.</p>
+  </div>
+</section>
+
+<section class="property-layout">
+  <article class="property-panel">
+    <h2><%= @property.headline %></h2>
+    <p><%= @property.property_description %></p>
+    <p><strong><%= format_price(@property) %></strong> · <%= format_bedrooms(@property) %> · <%= pluralize(@property.bathrooms, "bathroom") %></p>
+  </article>
+
+  <aside class="property-booking-panel">
+    <%= render "shared/errors", object: @appointment %>
+
+    <% if @available_slots.any? %>
+      <%= form_with model: [@property, @appointment], class: "stacked-form", data: { testid: "appointment-form" } do |f| %>
+        <div>
+          <%= f.label :customer_name, "Full name" %>
+          <%= f.text_field :customer_name, required: true, autocomplete: "name" %>
+        </div>
+
+        <div>
+          <%= f.label :customer_email, "Email address" %>
+          <%= f.email_field :customer_email, required: true, autocomplete: "email" %>
+        </div>
+
+        <div>
+          <%= f.label :customer_phone, "Phone number" %>
+          <%= f.telephone_field :customer_phone, autocomplete: "tel" %>
+        </div>
+
+        <div>
+          <%= f.label :requested_time, "Preferred slot" %>
+          <%= f.select :requested_time, options_for_select(@available_slots.map { |slot| [slot.label, slot.starts_at.iso8601] }, @appointment.requested_time&.iso8601), {}, data: { testid: "requested-time-select" } %>
+        </div>
+
+        <div>
+          <%= f.label :notes, "Anything we should know?" %>
+          <%= f.text_area :notes, rows: 4, placeholder: "Accessibility needs, arrival notes, or questions for the team." %>
+        </div>
+
+        <div class="form-actions">
+          <%= f.submit "Submit request", class: "button primary expanded" %>
+          <%= link_to "Back to property", property_path(@property), class: "button hollow secondary expanded" %>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="empty-state">
+        <h2>No slots published</h2>
+        <p>This property currently has no public viewing availability. That is intentional in some QA scenarios, so the empty state is surfaced clearly.</p>
+        <%= link_to "Back to property", property_path(@property), class: "button hollow secondary expanded" %>
+      </div>
+    <% end %>
+  </aside>
+</section>
