@@ -12,11 +12,11 @@
 
 ActiveRecord::Schema[8.1].define(version: 2026_03_25_121500) do
   create_table "admins", force: :cascade do |t|
-    t.datetime "created_at"
+    t.datetime "created_at", precision: nil
     t.string "email"
     t.string "encrypted_password"
     t.string "language"
-    t.datetime "updated_at"
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "appointment_events", force: :cascade do |t|
@@ -98,10 +98,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_25_121500) do
   end
 
   create_table "floor_plans", force: :cascade do |t|
-    t.datetime "created_at"
+    t.datetime "created_at", precision: nil
     t.string "floor_plans"
     t.integer "property_id"
-    t.datetime "updated_at"
+    t.datetime "updated_at", precision: nil
     t.index ["property_id"], name: "index_floor_plans_on_property_id"
   end
 
@@ -121,10 +121,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_25_121500) do
   end
 
   create_table "photos", force: :cascade do |t|
-    t.datetime "created_at"
+    t.datetime "created_at", precision: nil
     t.string "image_filename"
     t.integer "property_id"
-    t.datetime "updated_at"
+    t.datetime "updated_at", precision: nil
     t.index ["property_id"], name: "index_photos_on_property_id"
   end
 
@@ -136,7 +136,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_25_121500) do
     t.integer "bedrooms"
     t.string "country"
     t.string "county"
-    t.datetime "created_at"
+    t.datetime "created_at", precision: nil
     t.boolean "featured", default: false, null: false
     t.string "image_file_name"
     t.string "listing_tagline"
@@ -145,7 +145,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_25_121500) do
     t.string "property_type", default: "House", null: false
     t.string "sale_status"
     t.string "town_city"
-    t.datetime "updated_at"
+    t.datetime "updated_at", precision: nil
     t.integer "user_id"
     t.index ["bedrooms"], name: "index_properties_on_bedrooms"
     t.index ["featured"], name: "index_properties_on_featured"
@@ -154,11 +154,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_25_121500) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.datetime "confirmation_sent_at"
+    t.datetime "confirmation_sent_at", precision: nil
     t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "created_at"
-    t.datetime "current_sign_in_at"
+    t.datetime "confirmed_at", precision: nil
+    t.datetime "created_at", precision: nil
+    t.datetime "current_sign_in_at", precision: nil
     t.string "current_sign_in_ip"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -166,29 +166,29 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_25_121500) do
     t.string "first_name"
     t.string "language"
     t.string "last_name"
-    t.datetime "last_sign_in_at"
+    t.datetime "last_sign_in_at", precision: nil
     t.string "last_sign_in_ip"
-    t.datetime "locked_at"
+    t.datetime "locked_at", precision: nil
     t.string "mobile_number"
     t.integer "properties_count"
-    t.datetime "remember_created_at"
-    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at", precision: nil
+    t.datetime "reset_password_sent_at", precision: nil
     t.string "reset_password_token"
     t.integer "sign_in_count", default: 0
     t.string "unconfirmed_email"
     t.string "unlock_token"
-    t.datetime "updated_at"
+    t.datetime "updated_at", precision: nil
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   create_table "viewing_times", force: :cascade do |t|
-    t.datetime "created_at"
-    t.datetime "end_time"
+    t.datetime "created_at", precision: nil
+    t.datetime "end_time", precision: nil
     t.integer "property_id"
-    t.datetime "start_time"
-    t.datetime "updated_at"
+    t.datetime "start_time", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["property_id"], name: "index_viewing_times_on_property_id"
   end
 

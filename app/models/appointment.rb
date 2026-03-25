@@ -1,6 +1,7 @@
 class Appointment < ApplicationRecord
   STATUSES = %w[pending confirmed rescheduled cancelled completed no_show].freeze
   ACTIVE_STATUSES = %w[pending confirmed rescheduled].freeze
+  PHONE_FORMAT = /\A\+?[0-9().\-\s]{7,20}\z/.freeze
 
   belongs_to :property
   belongs_to :admin, optional: true
@@ -11,10 +12,13 @@ class Appointment < ApplicationRecord
   before_validation :apply_defaults
   before_validation :synchronize_requested_and_scheduled_times
 
-  validates :customer_name, :customer_email, :requested_time, :scheduled_at, :duration_minutes, :status, :public_reference, :access_token, presence: true
-  validates :customer_email, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :customer_name, :customer_email, :customer_phone, :requested_time, :scheduled_at, :duration_minutes, :status, :public_reference, :access_token, presence: true
+  validates :customer_name, length: { maximum: 100 }
+  validates :customer_email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
+  validates :customer_phone, format: { with: PHONE_FORMAT, message: "must be a valid phone number" }, allow_blank: true
   validates :status, inclusion: { in: STATUSES }
-  validates :duration_minutes, numericality: { greater_than_or_equal_to: 15, less_than_or_equal_to: 240 }
+  validates :duration_minutes, numericality: { only_integer: true, greater_than_or_equal_to: 15, less_than_or_equal_to: 240 }, allow_blank: true
+  validates :notes, :internal_notes, length: { maximum: 2000 }, allow_blank: true
   validate :slot_available_for_active_bookings, if: :needs_slot_validation?
 
   scope :chronological, -> { order(:scheduled_at, :created_at) }

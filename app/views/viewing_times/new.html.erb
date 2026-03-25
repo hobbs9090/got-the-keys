@@ -13,12 +13,14 @@
         <fieldset>
           <ol>
             <li class="required">
-              <%= f.label :start_time %>
+              <%= f.label :start_time, nil, **form_label_options(@viewing_time, :start_time) %>
               <%= f.datetime_select :start_time, autofocus: true, minute_step: 15 %>
+              <%= field_error_messages(@viewing_time, :start_time) %>
             </li>
             <li class="required">
-              <%= f.label :end_time %>
+              <%= f.label :end_time, nil, **form_label_options(@viewing_time, :end_time) %>
               <%= f.datetime_select :end_time, minute_step: 15 %>
+              <%= field_error_messages(@viewing_time, :end_time) %>
             </li>
           </ol>
           <p>

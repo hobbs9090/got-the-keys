@@ -25,6 +25,13 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(User.count).to eq(4)
     expect(Property.count).to eq(4)
     expect(Appointment.count).to eq(6)
+    expect(User.pluck(:language).uniq).to eq(["en"])
+    expect(User.order(:email).pluck(:email)).to match_array([
+      "charlotte.hughes@gmail.example",
+      "daniel.mercer@outlook.example",
+      "lucy.mcclure@btinternet.example",
+      "matthew.wells@icloud.example"
+    ])
   end
 
   it "exports the current dataset as YAML" do

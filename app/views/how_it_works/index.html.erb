@@ -1,127 +1,256 @@
 <% title t('how_it_works.title') %>
 
-<div class="row">
-  <div id="numero1" class="large-3 columns">
-    <div class="site-process panel">
-      <h5><%= t('how_it_works.panel_title_1') %></h5>
-      <p><%= t('how_it_works.panel_body_1') %></p>
+<%
+process_stages = [
+  { step: '01', title: t('how_it_works.stage_1_title'), body: t('how_it_works.stage_1_body') },
+  { step: '02', title: t('how_it_works.stage_2_title'), body: t('how_it_works.stage_2_body') },
+  { step: '03', title: t('how_it_works.stage_3_title'), body: t('how_it_works.stage_3_body') },
+  { step: '04', title: t('how_it_works.stage_4_title'), body: t('how_it_works.stage_4_body') }
+]
+
+marketing_cards = [
+  { title: t('how_it_works.marketing_card_1_title'), body: t('how_it_works.marketing_card_1_body') },
+  { title: t('how_it_works.marketing_card_2_title'), body: t('how_it_works.marketing_card_2_body') },
+  { title: t('how_it_works.marketing_card_3_title'), body: t('how_it_works.marketing_card_3_body') },
+  { title: t('how_it_works.marketing_card_4_title'), body: t('how_it_works.marketing_card_4_body') }
+]
+
+hero_points = [
+  t('how_it_works.hero_point_1'),
+  t('how_it_works.hero_point_2'),
+  t('how_it_works.hero_point_3')
+]
+
+publish_checks = [
+  t('how_it_works.publish_check_1'),
+  t('how_it_works.publish_check_2'),
+  t('how_it_works.publish_check_3'),
+  t('how_it_works.publish_check_4'),
+  t('how_it_works.publish_check_5')
+]
+
+playbook_steps = [
+  {
+    title: t('how_it_works.playbook_step_1_title'),
+    body: t('how_it_works.playbook_step_1_body'),
+    points: [
+      t('how_it_works.playbook_step_1_point_1'),
+      t('how_it_works.playbook_step_1_point_2'),
+      t('how_it_works.playbook_step_1_point_3')
+    ]
+  },
+  {
+    title: t('how_it_works.playbook_step_2_title'),
+    body: t('how_it_works.playbook_step_2_body'),
+    points: [
+      t('how_it_works.playbook_step_2_point_1'),
+      t('how_it_works.playbook_step_2_point_2'),
+      t('how_it_works.playbook_step_2_point_3')
+    ]
+  },
+  {
+    title: t('how_it_works.playbook_step_3_title'),
+    body: t('how_it_works.playbook_step_3_body'),
+    points: [
+      t('how_it_works.playbook_step_3_point_1'),
+      t('how_it_works.playbook_step_3_point_2'),
+      t('how_it_works.playbook_step_3_point_3')
+    ]
+  },
+  {
+    title: t('how_it_works.playbook_step_4_title'),
+    body: t('how_it_works.playbook_step_4_body'),
+    points: [
+      t('how_it_works.playbook_step_4_point_1'),
+      t('how_it_works.playbook_step_4_point_2'),
+      t('how_it_works.playbook_step_4_point_3')
+    ]
+  }
+]
+
+timeline_steps = [
+  { badge: t('how_it_works.timeline_1_badge'), title: t('how_it_works.timeline_1_title'), body: t('how_it_works.timeline_1_body') },
+  { badge: t('how_it_works.timeline_2_badge'), title: t('how_it_works.timeline_2_title'), body: t('how_it_works.timeline_2_body') },
+  { badge: t('how_it_works.timeline_3_badge'), title: t('how_it_works.timeline_3_title'), body: t('how_it_works.timeline_3_body') },
+  { badge: t('how_it_works.timeline_4_badge'), title: t('how_it_works.timeline_4_title'), body: t('how_it_works.timeline_4_body') },
+  { badge: t('how_it_works.timeline_5_badge'), title: t('how_it_works.timeline_5_title'), body: t('how_it_works.timeline_5_body') }
+]
+%>
+
+<section class="page-hero how-hero">
+  <div class="how-hero__content">
+    <div class="page-hero__brand">
+      <%= render "layouts/gotthekeys", class_name: "marketing-wordmark--hero", decorative: true, width: 248 %>
+    </div>
+    <p class="page-hero__eyebrow"><%= t('how_it_works.title') %></p>
+    <h1><%= t('how_it_works.hero_title') %></h1>
+    <p class="how-hero__copy"><%= t('how_it_works.hero_body') %></p>
+
+    <div class="how-hero__actions">
+      <%= link_to t('how_it_works.primary_cta'), new_user_registration_path, class: 'button primary large' %>
+      <%= link_to t('how_it_works.secondary_cta'), '#marketing-playbook', class: 'button secondary hollow large' %>
     </div>
   </div>
 
-  <div class="large-6 columns">
-    <div class="site-process panel">
-      <h5><%= t('how_it_works.panel_title_2') %></h5>
-      <p>
-        <%= t('how_it_works.panel_body_2_part_1') %>
-        <button type="button" class="button clear tiny" data-toggle="land-registry-note"><%= t('how_it_works.land_registry') %></button>
-        <%= t('how_it_works.panel_body_2_part_2') %>
-      </p>
-      <div class="dropdown-pane bottom" id="land-registry-note" data-dropdown data-auto-focus="true">
-        <p><%= t('how_it_works.data_feeds') %></p>
+  <aside class="site-card how-hero__panel">
+    <span class="badge badge--neutral"><%= t('how_it_works.hero_badge') %></span>
+    <h2><%= t('how_it_works.hero_panel_title') %></h2>
+    <p><%= t('how_it_works.hero_panel_body') %></p>
+
+    <ul class="how-hero__checklist no-bullet">
+      <% hero_points.each do |point| %>
+        <li><%= point %></li>
+      <% end %>
+    </ul>
+  </aside>
+</section>
+
+<nav class="how-jump-nav" aria-label="<%= t('how_it_works.jump_nav_label') %>">
+  <a href="#how-process" class="how-jump-tab">
+    <span class="how-jump-tab__index">01</span>
+    <span class="how-jump-tab__label"><%= t('how_it_works.jump_tab_process') %></span>
+  </a>
+  <a href="#marketing-playbook" class="how-jump-tab">
+    <span class="how-jump-tab__index">02</span>
+    <span class="how-jump-tab__label"><%= t('how_it_works.jump_tab_marketing') %></span>
+  </a>
+  <a href="#viewings-and-offers" class="how-jump-tab">
+    <span class="how-jump-tab__index">03</span>
+    <span class="how-jump-tab__label"><%= t('how_it_works.jump_tab_viewings') %></span>
+  </a>
+  <a href="#after-agreement" class="how-jump-tab">
+    <span class="how-jump-tab__index">04</span>
+    <span class="how-jump-tab__label"><%= t('how_it_works.jump_tab_finish') %></span>
+  </a>
+</nav>
+
+<section class="page-section how-section" id="how-process">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow"><%= t('how_it_works.process_eyebrow') %></p>
+      <h2><%= t('how_it_works.process_title') %></h2>
+    </div>
+    <p class="how-section__intro"><%= t('how_it_works.process_intro') %></p>
+  </div>
+
+  <div class="how-process-grid">
+    <% process_stages.each do |stage| %>
+      <article class="site-card how-stage-card">
+        <span class="how-stage-card__step"><%= stage[:step] %></span>
+        <h3><%= stage[:title] %></h3>
+        <p><%= stage[:body] %></p>
+      </article>
+    <% end %>
+  </div>
+</section>
+
+<section class="page-section how-section" id="marketing-playbook">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow"><%= t('how_it_works.marketing_eyebrow') %></p>
+      <h2><%= t('how_it_works.marketing_title') %></h2>
+    </div>
+    <p class="how-section__intro"><%= t('how_it_works.marketing_intro') %></p>
+  </div>
+
+  <div class="how-marketing-layout">
+    <div class="how-marketing-main">
+      <div class="how-marketing-grid">
+        <% marketing_cards.each do |card| %>
+          <article class="site-card how-marketing-card">
+            <h3><%= card[:title] %></h3>
+            <p><%= card[:body] %></p>
+          </article>
+        <% end %>
       </div>
     </div>
-  </div>
 
-  <div class="large-3 columns">
-    <div class="site-process panel">
-      <h5><%= t('how_it_works.panel_title_3') %></h5>
-      <p><%= t('how_it_works.panel_body_3') %></p>
+    <aside class="how-marketing-sidebar">
+      <section class="callout how-callout">
+        <p class="section-heading__eyebrow"><%= t('how_it_works.pricing_badge') %></p>
+        <h3><%= t('how_it_works.pricing_title') %></h3>
+        <p><%= t('how_it_works.pricing_body') %></p>
+      </section>
+
+      <section class="site-card how-checklist-card">
+        <p class="section-heading__eyebrow"><%= t('how_it_works.publish_badge') %></p>
+        <h3><%= t('how_it_works.publish_title') %></h3>
+
+        <ul class="how-checklist no-bullet">
+          <% publish_checks.each do |check| %>
+            <li><%= check %></li>
+          <% end %>
+        </ul>
+      </section>
+
+      <section class="site-card how-note-card">
+        <p class="section-heading__eyebrow"><%= t('how_it_works.agency_note_badge') %></p>
+        <h3><%= t('how_it_works.agency_note_title') %></h3>
+        <p><%= t('how_it_works.agency_note_body') %></p>
+      </section>
+    </aside>
+  </div>
+</section>
+
+<section class="page-section how-section">
+  <article class="site-card how-playbook-card">
+    <div class="section-heading">
+      <div>
+        <p class="section-heading__eyebrow"><%= t('how_it_works.playbook_eyebrow') %></p>
+        <h2><%= t('how_it_works.playbook_title') %></h2>
+      </div>
+      <p class="how-section__intro"><%= t('how_it_works.playbook_intro') %></p>
     </div>
-  </div>
-</div>
 
-<div class="row">
-  <div class="large-6 columns">
-    <div class="site-process panel">
-      <h5><%= t('how_it_works.panel_title_4') %></h5>
-      <p><%= t('how_it_works.panel_body_4') %></p>
-    </div>
-  </div>
+    <div class="insight-accordion">
+      <% playbook_steps.each_with_index do |step, index| %>
+        <details class="insight-accordion__item" <%= 'open' if index.zero? %>>
+          <summary><%= step[:title] %></summary>
 
-  <div class="large-2 columns">
-    <div id="numero2" class="site-card">
-      <%= square_image %>
-    </div>
-  </div>
+          <div class="insight-accordion__content">
+            <p><%= step[:body] %></p>
 
-  <div class="large-4 columns">
-    <div class="site-process panel">
-      <h5><%= t('how_it_works.panel_title_5') %></h5>
-      <p><%= t('how_it_works.panel_body_5') %></p>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="large-4 columns">
-    <div class="site-card"><%= world_image %></div>
-  </div>
-  <div class="large-4 columns">
-    <div class="site-card"><%= world_image %></div>
-  </div>
-  <div class="large-4 columns">
-    <div class="site-card"><%= world_image %></div>
-  </div>
-</div>
-
-<div class="row">
-  <div id="numero3" class="large-6 columns">
-    <div class="site-process panel">
-      <h5><%= t('how_it_works.panel_title_6') %></h5>
-      <p><%= t('how_it_works.panel_body_6') %></p>
-    </div>
-  </div>
-
-  <div id="numero4" class="large-3 columns">
-    <div class="site-process panel">
-      <h5><%= t('how_it_works.panel_title_7') %></h5>
-      <p><%= t('how_it_works.panel_body_7') %></p>
-    </div>
-  </div>
-
-  <div class="large-3 columns">
-    <div class="site-process panel">
-      <h5><%= t('how_it_works.panel_title_8') %></h5>
-      <p><%= t('how_it_works.panel_body_8') %></p>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="large-12 columns">
-    <div class="site-tour panel">
-      <ul class="accordion" data-accordion data-allow-all-closed="true">
-        <li class="accordion-item is-active" data-accordion-item>
-          <a href="#tour-step-account" class="accordion-title"><%= t('how_it_works.manage_account') %></a>
-          <div class="accordion-content" data-tab-content id="tour-step-account">
-            <p><%= t('how_it_works.manage_account_body') %></p>
+            <ul>
+              <% step[:points].each do |point| %>
+                <li><%= point %></li>
+              <% end %>
+            </ul>
           </div>
-        </li>
-        <li class="accordion-item" data-accordion-item>
-          <a href="#tour-step-1" class="accordion-title"><%= t('how_it_works.numero1') %></a>
-          <div class="accordion-content" data-tab-content id="tour-step-1">
-            <p><%= t('how_it_works.numero1_body') %></p>
-          </div>
-        </li>
-        <li class="accordion-item" data-accordion-item>
-          <a href="#tour-step-2" class="accordion-title"><%= t('how_it_works.numero2') %></a>
-          <div class="accordion-content" data-tab-content id="tour-step-2">
-            <p><%= t('how_it_works.numero2_body') %></p>
-          </div>
-        </li>
-        <li class="accordion-item" data-accordion-item>
-          <a href="#tour-step-3" class="accordion-title"><%= t('how_it_works.numero3') %></a>
-          <div class="accordion-content" data-tab-content id="tour-step-3">
-            <p><%= t('how_it_works.numero3_body') %></p>
-          </div>
-        </li>
-        <li class="accordion-item" data-accordion-item>
-          <a href="#tour-step-4" class="accordion-title"><%= t('how_it_works.numero4') %></a>
-          <div class="accordion-content" data-tab-content id="tour-step-4">
-            <p><%= t('how_it_works.numero4_body') %></p>
-          </div>
-        </li>
-      </ul>
+        </details>
+      <% end %>
     </div>
+  </article>
+</section>
+
+<section class="page-section how-section" id="viewings-and-offers">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow"><%= t('how_it_works.timeline_eyebrow') %></p>
+      <h2><%= t('how_it_works.timeline_title') %></h2>
+    </div>
+    <p class="how-section__intro"><%= t('how_it_works.timeline_intro') %></p>
   </div>
-</div>
+
+  <div class="how-timeline">
+    <% timeline_steps.each do |step| %>
+      <article class="site-card how-timeline-card">
+        <span class="how-timeline-card__badge"><%= step[:badge] %></span>
+        <h3><%= step[:title] %></h3>
+        <p><%= step[:body] %></p>
+      </article>
+    <% end %>
+  </div>
+</section>
+
+<section class="site-card how-finish-card" id="after-agreement">
+  <div>
+    <p class="section-heading__eyebrow"><%= t('how_it_works.finish_eyebrow') %></p>
+    <h2><%= t('how_it_works.finish_title') %></h2>
+    <p><%= t('how_it_works.finish_body') %></p>
+  </div>
+
+  <div class="how-finish-actions">
+    <%= link_to t('how_it_works.finish_primary_cta'), new_user_registration_path, class: 'button primary' %>
+    <%= link_to t('how_it_works.finish_secondary_cta'), contact_us_path, class: 'button secondary hollow' %>
+  </div>
+</section>

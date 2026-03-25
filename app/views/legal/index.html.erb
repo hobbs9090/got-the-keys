@@ -1,35 +1,129 @@
 <% title t('legal.title') %>
 
-<div class="row">
+<% legal_sections = [
+  {
+    id: "legal-purpose",
+    tab: t("legal.sections.scope.tab"),
+    eyebrow: t("legal.sections.scope.eyebrow"),
+    title: t("legal.sections.scope.title"),
+    body: t("legal.paragraph_1")
+  },
+  {
+    id: "legal-responsibilities",
+    tab: t("legal.sections.responsibilities.tab"),
+    eyebrow: t("legal.sections.responsibilities.eyebrow"),
+    title: t("legal.sections.responsibilities.title"),
+    body: t("legal.paragraph_2")
+  },
+  {
+    id: "legal-availability",
+    tab: t("legal.sections.availability.tab"),
+    eyebrow: t("legal.sections.availability.eyebrow"),
+    title: t("legal.sections.availability.title"),
+    body: t("legal.paragraph_3")
+  },
+  {
+    id: "legal-content",
+    tab: t("legal.sections.content.tab"),
+    eyebrow: t("legal.sections.content.eyebrow"),
+    title: t("legal.sections.content.title"),
+    body: t("legal.paragraph_4")
+  },
+  {
+    id: "legal-advice",
+    tab: t("legal.sections.advice.tab"),
+    eyebrow: t("legal.sections.advice.eyebrow"),
+    title: t("legal.sections.advice.title"),
+    body: t("legal.paragraph_5")
+  }
+] %>
 
-  <div class="large-9 push-3 columns">
-
-    <h3><%= t('legal.header') %>
-      <small><%= t('legal.blurb') %></small>
-    </h3>
-
-    <p><%= t('legal.paragraph_1') %></p>
-
-    <p><%= t('legal.paragraph_2') %></p>
-
-    <p><%= t('legal.paragraph_3') %></p>
-
-    <p><%= t('legal.paragraph_4') %></p>
-
-    <p><%= t('legal.paragraph_5') %></p>
-
+<section class="page-hero legal-hero">
+  <div>
+    <div class="page-hero__brand">
+      <%= render "layouts/gotthekeys", class_name: "marketing-wordmark--hero", decorative: true, width: 248 %>
+    </div>
+    <p class="page-hero__eyebrow"><%= t("legal.title") %></p>
+    <h1><%= t("legal.header") %></h1>
+    <p><%= t("legal.blurb") %></p>
   </div>
 
-  <div class="large-3 pull-9 columns">
-
-    <ul class="side-nav">
-      <li><a href="#"><%= t('side.section') %> 1</a></li>
-      <li><a href="#"><%= t('side.section') %> 2</a></li>
-      <li><a href="#"><%= t('side.section') %> 3</a></li>
-    </ul>
-
-    <p><%= world_image %></p>
-
+  <div class="page-hero__meta legal-hero__meta">
+    <span class="badge badge--neutral"><%= t("legal.summary_badge") %></span>
+    <strong><%= legal_sections.size %></strong>
+    <span><%= t("legal.summary_count") %></span>
   </div>
+</section>
 
-</div>
+<section class="legal-layout">
+  <aside class="legal-sidebar">
+    <div class="callout legal-callout">
+      <p class="section-heading__eyebrow"><%= t("legal.quick_guide_label") %></p>
+      <h3><%= t("legal.quick_guide_title") %></h3>
+      <p><%= t("legal.quick_guide_body") %></p>
+
+      <ul class="legal-checklist no-bullet">
+        <li>
+          <div>
+            <strong><%= t("legal.quick_guide_item_1_title") %></strong>
+            <span><%= t("legal.quick_guide_item_1_body") %></span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong><%= t("legal.quick_guide_item_2_title") %></strong>
+            <span><%= t("legal.quick_guide_item_2_body") %></span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong><%= t("legal.quick_guide_item_3_title") %></strong>
+            <span><%= t("legal.quick_guide_item_3_body") %></span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="site-card legal-support-card">
+      <div class="legal-support-card__visual">
+        <%= world_image %>
+      </div>
+
+      <div>
+        <p class="section-heading__eyebrow"><%= t("contact_us.title") %></p>
+        <h3><%= t("legal.contact_title") %></h3>
+        <p><%= t("legal.contact_body") %></p>
+      </div>
+
+      <%= link_to t("legal.contact_action"), contact_us_path, class: "button secondary hollow expanded" %>
+    </div>
+  </aside>
+
+  <div class="legal-content">
+    <nav class="legal-topic-nav" aria-label="<%= t("legal.title") %>">
+      <ul class="tabs legal-tabs">
+        <% legal_sections.each_with_index do |section, index| %>
+          <li class="tabs-title">
+            <a href="#<%= section[:id] %>">
+              <span class="badge badge--neutral"><%= format("%02d", index + 1) %></span>
+              <%= section[:tab] %>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </nav>
+
+    <div class="legal-topic-grid">
+      <% legal_sections.each_with_index do |section, index| %>
+        <section class="callout legal-topic-card" id="<%= section[:id] %>">
+          <div class="legal-topic-card__header">
+            <span class="badge badge--neutral"><%= format("%02d", index + 1) %></span>
+            <p class="section-heading__eyebrow"><%= section[:eyebrow] %></p>
+          </div>
+          <h2><%= section[:title] %></h2>
+          <p><%= section[:body] %></p>
+        </section>
+      <% end %>
+    </div>
+  </div>
+</section>

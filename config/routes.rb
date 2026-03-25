@@ -10,6 +10,7 @@ GotTheKeys::Application.routes.draw do
     root 'dashboard#index'
 
     resource :dashboard, only: :show, controller: :dashboard
+    get :bookings, to: 'appointments#index'
     resource :booking_configuration, only: [:show, :update]
     resource :qa, only: :show, controller: :qa
     resources :appointments, only: [:index, :show, :edit, :update] do
@@ -70,5 +71,6 @@ GotTheKeys::Application.routes.draw do
   resources :contact_us, only: [:index]
 
   resources :blog, only: [:index]
+  get '/baits', to: redirect('/blog', status: 302)
 
 end

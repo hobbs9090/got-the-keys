@@ -23,16 +23,17 @@ class Property < ApplicationRecord
   validates :address_line_1, :address_line_2, :town_city, :county, :postcode,
             :country, length: { maximum: 50 }
   validates :listing_tagline, length: { maximum: 120 }, allow_blank: true
-  validates :property_description, length: { minimum: 25 }
-  validates :asking_price, :bedrooms, numericality: { greater_than_or_equal_to: 0 }
-  validates :bathrooms, numericality: { greater_than_or_equal_to: 1 }
+  validates :property_description, length: { minimum: 25, maximum: 5000 }, allow_blank: true
+  validates :asking_price, :bedrooms, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_blank: true
+  validates :bathrooms, presence: true
+  validates :bathrooms, numericality: { only_integer: true, greater_than_or_equal_to: 1 }, allow_blank: true
   validates :image_file_name,
             allow_blank: true,
             format: {
-              with: /\w+\.(gif|jpg|png)\z/i,
-              message: 'must reference a GIF, JPG, or PNG image'
+              with: /\w+\.(gif|jpg|png|svg)\z/i,
+              message: 'must reference a GIF, JPG, PNG, or SVG image'
             }
-  validates :sale_status, inclusion: { in: SALE_STATUS }
+  validates :sale_status, inclusion: { in: SALE_STATUS }, allow_blank: true
 
   scope :for_sale, -> { where(sale_status: SALE_STATUSES[:for_sale]) }
   scope :for_rent, -> { where(sale_status: SALE_STATUSES[:for_rent]) }

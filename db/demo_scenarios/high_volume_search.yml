@@ -14,37 +14,37 @@ admins:
     password_confirmation: secret
     language: en
 users:
-  - first_name: Steven
-    last_name: Sykes
-    mobile_number: "07595 123456"
-    email: seller01@acme.com
+  - first_name: Charlotte
+    last_name: Hughes
+    mobile_number: "07700 900101"
+    email: charlotte.hughes@gmail.example
     password: secret
     password_confirmation: secret
     language: en
-  - first_name: Maurice
-    last_name: DuBuque
-    mobile_number: "07595 223344"
-    email: seller02@acme.com
-    password: secret
-    password_confirmation: secret
-    language: zh
-  - first_name: Matt
-    last_name: Will
-    mobile_number: "07595 998877"
-    email: seller03@acme.com
+  - first_name: Daniel
+    last_name: Mercer
+    mobile_number: "07700 900102"
+    email: daniel.mercer@outlook.example
     password: secret
     password_confirmation: secret
     language: en
-  - first_name: Lia
+  - first_name: Matthew
+    last_name: Wells
+    mobile_number: "07700 900103"
+    email: matthew.wells@icloud.example
+    password: secret
+    password_confirmation: secret
+    language: en
+  - first_name: Lucy
     last_name: McClure
-    mobile_number: "07595 334455"
-    email: seller04@acme.com
+    mobile_number: "07700 900104"
+    email: lucy.mcclure@btinternet.example
     password: secret
     password_confirmation: secret
     language: en
 properties:
   - key: sevenoaks_cedar_road
-    owner_email: seller01@acme.com
+    owner_email: charlotte.hughes@gmail.example
     address_line_1: 12 Cedar Road
     address_line_2: Riverhead
     town_city: Sevenoaks
@@ -60,7 +60,7 @@ properties:
     asking_price: 825000
     featured: true
   - key: sevenoaks_station_apartment
-    owner_email: seller02@acme.com
+    owner_email: daniel.mercer@outlook.example
     address_line_1: Flat 7, 84 Station Road
     address_line_2: ""
     town_city: Sevenoaks
@@ -76,7 +76,7 @@ properties:
     asking_price: 345000
     featured: false
   - key: tunbridge_townhouse
-    owner_email: seller03@acme.com
+    owner_email: matthew.wells@icloud.example
     address_line_1: 23 Mountfield Gardens
     address_line_2: ""
     town_city: Tunbridge Wells
@@ -92,7 +92,7 @@ properties:
     asking_price: 910000
     featured: true
   - key: tunbridge_rental_flat
-    owner_email: seller04@acme.com
+    owner_email: lucy.mcclure@btinternet.example
     address_line_1: Flat 4, 11 Calverley Road
     address_line_2: ""
     town_city: Tunbridge Wells
@@ -108,7 +108,7 @@ properties:
     asking_price: 1495
     featured: false
   - key: canterbury_quayside_house
-    owner_email: seller01@acme.com
+    owner_email: charlotte.hughes@gmail.example
     address_line_1: 41 Meadow Lane
     address_line_2: ""
     town_city: Canterbury
@@ -124,7 +124,7 @@ properties:
     asking_price: 498000
     featured: false
   - key: bromley_park_flat
-    owner_email: seller02@acme.com
+    owner_email: daniel.mercer@outlook.example
     address_line_1: Apartment 9, 2 Park Crescent
     address_line_2: ""
     town_city: Bromley
@@ -140,7 +140,7 @@ properties:
     asking_price: 465000
     featured: false
   - key: croydon_duplex_rental
-    owner_email: seller03@acme.com
+    owner_email: matthew.wells@icloud.example
     address_line_1: Duplex 6, 88 George Street
     address_line_2: ""
     town_city: Croydon
@@ -156,7 +156,7 @@ properties:
     asking_price: 1895
     featured: false
   - key: guildford_hillside_home
-    owner_email: seller04@acme.com
+    owner_email: lucy.mcclure@btinternet.example
     address_line_1: 15 Holly Drive
     address_line_2: ""
     town_city: Guildford
@@ -172,7 +172,7 @@ properties:
     asking_price: 975000
     featured: true
   - key: reigate_balcony_flat
-    owner_email: seller01@acme.com
+    owner_email: charlotte.hughes@gmail.example
     address_line_1: Flat 8, 5 Queens Court
     address_line_2: ""
     town_city: Reigate
@@ -188,7 +188,7 @@ properties:
     asking_price: 1425
     featured: false
   - key: westerham_green_cottage
-    owner_email: seller02@acme.com
+    owner_email: daniel.mercer@outlook.example
     address_line_1: 3 Orchard Close
     address_line_2: ""
     town_city: Westerham

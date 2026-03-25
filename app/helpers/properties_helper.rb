@@ -47,4 +47,34 @@ module PropertiesHelper
     classes.join(' ')
   end
 
+  def property_sort_label(sort)
+    case sort
+    when 'price_low'
+      'Price: low to high'
+    when 'price_high'
+      'Price: high to low'
+    when 'bedrooms_high'
+      'Bedrooms first'
+    when 'newest'
+      'Newest first'
+    else
+      'Recommended'
+    end
+  end
+
+  def property_filter_chip_labels(filters)
+    filters = filters.to_h.symbolize_keys
+    chips = []
+    chips << filters[:sale_status] if filters[:sale_status].present?
+    chips << "Search: #{filters[:q]}" if filters[:q].present?
+    chips << filters[:town_city] if filters[:town_city].present?
+    chips << "#{filters[:min_bedrooms]}+ bedrooms" if filters[:min_bedrooms].present?
+    chips << "From #{number_to_currency(filters[:min_price], unit: '£', precision: 0)}" if filters[:min_price].present?
+    chips << "Up to #{number_to_currency(filters[:max_price], unit: '£', precision: 0)}" if filters[:max_price].present?
+
+    sort = filters[:sort].presence
+    chips << property_sort_label(sort) if sort.present? && sort != 'recommended'
+    chips
+  end
+
 end

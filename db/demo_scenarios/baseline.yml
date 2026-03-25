@@ -18,37 +18,37 @@ admins:
     password_confirmation: secret
     language: en
 users:
-  - first_name: Steven
-    last_name: Sykes
-    mobile_number: "07595 123456"
-    email: seller01@acme.com
+  - first_name: Charlotte
+    last_name: Hughes
+    mobile_number: "07700 900101"
+    email: charlotte.hughes@gmail.example
     password: secret
     password_confirmation: secret
     language: en
-  - first_name: Maurice
-    last_name: DuBuque
-    mobile_number: "07595 223344"
-    email: seller02@acme.com
-    password: secret
-    password_confirmation: secret
-    language: zh
-  - first_name: Matt
-    last_name: Will
-    mobile_number: "07595 998877"
-    email: seller03@acme.com
+  - first_name: Daniel
+    last_name: Mercer
+    mobile_number: "07700 900102"
+    email: daniel.mercer@outlook.example
     password: secret
     password_confirmation: secret
     language: en
-  - first_name: Lia
+  - first_name: Matthew
+    last_name: Wells
+    mobile_number: "07700 900103"
+    email: matthew.wells@icloud.example
+    password: secret
+    password_confirmation: secret
+    language: en
+  - first_name: Lucy
     last_name: McClure
-    mobile_number: "07595 334455"
-    email: seller04@acme.com
+    mobile_number: "07700 900104"
+    email: lucy.mcclure@btinternet.example
     password: secret
     password_confirmation: secret
     language: en
 properties:
   - key: sevenoaks_family_home
-    owner_email: seller01@acme.com
+    owner_email: charlotte.hughes@gmail.example
     address_line_1: 18 Cedar Road
     address_line_2: Riverhead
     town_city: Sevenoaks
@@ -64,7 +64,7 @@ properties:
     asking_price: 865000
     featured: true
   - key: tunbridge_garden_flat
-    owner_email: seller02@acme.com
+    owner_email: daniel.mercer@outlook.example
     address_line_1: Flat 3, 44 Mount Ephraim
     address_line_2: ""
     town_city: Tunbridge Wells
@@ -80,7 +80,7 @@ properties:
     asking_price: 435000
     featured: true
   - key: guildford_townhouse
-    owner_email: seller03@acme.com
+    owner_email: matthew.wells@icloud.example
     address_line_1: 72 Quarry Street
     address_line_2: ""
     town_city: Guildford
@@ -96,7 +96,7 @@ properties:
     asking_price: 675000
     featured: false
   - key: croydon_rental_loft
-    owner_email: seller04@acme.com
+    owner_email: lucy.mcclure@btinternet.example
     address_line_1: Apartment 11, 9 Park Lane
     address_line_2: ""
     town_city: Croydon

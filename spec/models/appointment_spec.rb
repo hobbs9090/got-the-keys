@@ -77,4 +77,28 @@ RSpec.describe Appointment do
     expect(appointment.appointment_events.count).to eq(2)
     expect(appointment.appointment_events.order(:created_at).last.event_type).to eq("confirmed")
   end
+
+  it "requires a customer phone number" do
+    appointment = property.appointments.new(
+      customer_name: "Mia Hart",
+      customer_email: "mia.hart@example.com",
+      customer_phone: "",
+      requested_time: next_open_slot(hour: 13)
+    )
+
+    expect(appointment).not_to be_valid
+    expect(appointment.errors[:customer_phone]).to include("can't be blank")
+  end
+
+  it "rejects an invalid customer phone number" do
+    appointment = property.appointments.new(
+      customer_name: "Mia Hart",
+      customer_email: "mia.hart@example.com",
+      customer_phone: "invalid-number",
+      requested_time: next_open_slot(hour: 13)
+    )
+
+    expect(appointment).not_to be_valid
+    expect(appointment.errors[:customer_phone]).to include("must be a valid phone number")
+  end
 end

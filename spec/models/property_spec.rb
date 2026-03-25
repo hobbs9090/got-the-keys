@@ -88,6 +88,13 @@ describe "A property" do
     end
   end
 
+  it "requires bathrooms" do
+    property = build_property(bathrooms: nil)
+
+    expect(property.valid?).to be false
+    expect(property.errors[:bathrooms]).to include("can't be blank")
+  end
+
   it "accepts Sale Status values of 'For Sale' or 'For Rent'" do
     sale_status = ['For Sale', 'For Rent']
     sale_status.each do |sale_status|
@@ -107,5 +114,19 @@ describe "A property" do
       expect(property.errors[:sale_status].any?).to be true
       expect(property.errors[:sale_status].first).to eq("is not included in the list")
     end
+  end
+
+  it "accepts svg image filenames for lightweight placeholder artwork" do
+    property = build_property(image_file_name: "property_placeholder_listing.svg")
+
+    expect(property.valid?).to be true
+    expect(property.errors[:image_file_name]).to be_empty
+  end
+
+  it "rejects unsupported image filename extensions" do
+    property = build_property(image_file_name: "property_placeholder_listing.webp")
+
+    expect(property.valid?).to be false
+    expect(property.errors[:image_file_name]).to include("must reference a GIF, JPG, PNG, or SVG image")
   end
 end

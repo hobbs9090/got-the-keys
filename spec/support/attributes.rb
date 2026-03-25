@@ -9,7 +9,7 @@ def property_attributes(overrides = {})
       property_description: "A spacious detached family house recently extended for the current owners.",
       bedrooms: 4,
       sale_status: "For Sale",
-      asking_price: 600000.00,
+      asking_price: 600000,
       user_id: 1
   }.merge(overrides)
 end

@@ -2,17 +2,15 @@
   <div class="site-header__inner">
     <%= link_to root_path, class: "site-brand", data: { testid: "home-link" } do %>
       <span class="site-brand__eyebrow">Property and Booking Platform</span>
-      <span class="site-brand__wordmark"><%= render "layouts/gotthekeys" %></span>
+      <span class="site-brand__wordmark"><%= render "layouts/gotthekeys", class_name: "marketing-wordmark--header", width: 228 %></span>
     <% end %>
 
     <nav class="site-nav" aria-label="Primary" data-testid="site-nav">
-      <%= link_to "Home", root_path, class: ("is-active" if current_page?(root_path)) %>
-      <%= link_to "Properties", properties_path, class: ("is-active" if controller_name == "properties") %>
-      <%= link_to "For sale", for_sale_index_path, class: ("is-active" if controller_name == "for_sale") %>
-      <%= link_to "For rent", for_rent_index_path, class: ("is-active" if controller_name == "for_rent") %>
-      <%= link_to "Search", searches_path, class: ("is-active" if controller_name == "searches") %>
-      <%= link_to "About", about_us_path %>
-      <%= link_to "Contact", contact_us_path %>
+      <%= link_to t('welcome.title'), root_path, class: ("is-active" if current_page?(root_path)) %>
+      <%= link_to t('properties.title'), properties_path, class: ("is-active" if controller_name == "properties") %>
+      <%= link_to t('for_sale.title'), for_sale_index_path, class: ("is-active" if controller_name == "for_sale") %>
+      <%= link_to t('for_rent.title'), for_rent_index_path, class: ("is-active" if controller_name == "for_rent") %>
+      <%= link_to t('search.title'), searches_path, class: ("is-active" if controller_name == "searches") %>
     </nav>
 
     <div class="site-header__actions">
@@ -22,7 +20,7 @@
       </div>
 
       <% if admin_signed_in? %>
-        <%= link_to "Admin", admin_root_path, class: "button secondary hollow", data: { testid: "admin-entry-link" } %>
+        <%= link_to "Bookings", admin_bookings_path, class: "button primary", data: { testid: "admin-bookings-entry-link" } %>
         <%= link_to "Sign out", destroy_admin_session_path, class: "button alert hollow", data: { turbo_method: :delete } %>
       <% elsif user_signed_in? %>
         <%= link_to "Add property", new_property_path, class: "button primary", data: { testid: "add-property-link" } %>

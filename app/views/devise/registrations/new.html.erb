@@ -6,41 +6,49 @@
 
     <p><%= button_tag t('devise.views.registrations.new.why_so_much'), type: 'button', class: 'button clear', data: { open: 'registration-explainer' } %></p>
 
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { data: { turbo: false } }) do |f| %>
       <%= devise_error_messages! %>
       <fieldset>
         <ol>
           <li class="required">
-            <%= f.label :first_name %>
-            <%= f.text_field :first_name, autofocus: true %>
+            <%= f.label :first_name, nil, **form_label_options(resource, :first_name) %>
+            <%= f.text_field :first_name, autofocus: true, required: true, maxlength: 50, autocomplete: "given-name", **form_control_options(resource, :first_name) %>
+            <%= field_error_messages(resource, :first_name) %>
           </li>
           <li class="required">
-            <%= f.label :last_name %>
-            <%= f.text_field :last_name %>
+            <%= f.label :last_name, nil, **form_label_options(resource, :last_name) %>
+            <%= f.text_field :last_name, required: true, maxlength: 50, autocomplete: "family-name", **form_control_options(resource, :last_name) %>
+            <%= field_error_messages(resource, :last_name) %>
           </li>
           <li class="required">
-            <%= f.label :mobile_number %>
-            <%= f.text_field :mobile_number %>
+            <%= f.label :mobile_number, nil, **form_label_options(resource, :mobile_number) %>
+            <%= f.text_field :mobile_number, required: true, maxlength: 20, autocomplete: "tel", **form_control_options(resource, :mobile_number) %>
+            <%= field_error_messages(resource, :mobile_number) %>
           </li>
           <li class="required">
-            <%= f.label :email %>
-            <%= f.email_field :email %>
+            <%= f.label :email, nil, **form_label_options(resource, :email) %>
+            <%= f.email_field :email, required: true, autocomplete: "email", **form_control_options(resource, :email) %>
+            <%= field_error_messages(resource, :email) %>
           </li>
           <li class="required">
-            <%= f.label :language %>
-            <%= f.select :language, available_languages, prompt: t('properties.pick_one') %>
+            <%= f.label :language, nil, **form_label_options(resource, :language) %>
+            <%= f.select :language, available_languages, { prompt: t('properties.pick_one') }, form_control_options(resource, :language) %>
+            <%= field_error_messages(resource, :language) %>
           </li>
           <li class="required">
-            <%= f.label :password %>
-            <%= f.password_field :password %>
+            <%= f.label :password, nil, **form_label_options(resource, :password) %>
+            <%= f.password_field :password, required: true, minlength: 6, autocomplete: "new-password", **form_control_options(resource, :password) %>
+            <%= field_error_messages(resource, :password) %>
           </li>
           <li class="required">
-            <%= f.label :password_confirmation %>
-            <%= f.password_field :password_confirmation %>
+            <%= f.label :password_confirmation, nil, **form_label_options(resource, :password_confirmation) %>
+            <%= f.password_field :password_confirmation, required: true, minlength: 6, autocomplete: "new-password", **form_control_options(resource, :password_confirmation) %>
+            <%= field_error_messages(resource, :password_confirmation) %>
           </li>
           <li class="required">
-            <%= f.label :terms_of_service %>
+            <%= f.label :terms_of_service, nil, **form_label_options(resource, :terms_of_service) %>
             <%= f.check_box :terms_of_service %>
+            <%= field_error_messages(resource, :terms_of_service) %>
           </li>
         </ol>
         <p>

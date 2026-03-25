@@ -1,24 +1,106 @@
 <% title t('properties.title') %>
+<% active_filter_labels = property_filter_chip_labels(@filters) %>
+<% current_scope = @filters[:sale_status].presence %>
 
-<section class="page-hero">
+<section class="page-hero property-catalogue-hero">
   <div>
+    <div class="page-hero__brand">
+      <%= render "layouts/gotthekeys", class_name: "marketing-wordmark--hero", decorative: true, width: 248 %>
+    </div>
     <p class="page-hero__eyebrow">Property catalogue</p>
     <h1>Browse modern listings with live booking availability</h1>
     <p>Search by area, price, and bedroom count, then book a viewing from each property page.</p>
   </div>
 
-  <div class="page-hero__meta">
+  <div class="page-hero__meta property-catalogue-hero__meta">
+    <span class="badge badge--neutral"><%= active_filter_labels.any? ? pluralize(active_filter_labels.count, "active filter") : "Catalogue overview" %></span>
     <strong><%= number_with_delimiter(@total_properties, delimiter: ",") %></strong>
     <span>matching properties</span>
   </div>
 </section>
 
-<section class="page-section">
-  <%= render "properties/filters", url: properties_path, selected_sale_status: params[:sale_status], show_status_select: true %>
-</section>
+<section class="property-catalogue">
+  <aside class="property-catalogue__sidebar">
+    <section class="site-card property-catalogue__browse">
+      <p class="section-heading__eyebrow">Browse</p>
+      <h2>Move between catalogue views</h2>
+      <p>Use the full catalogue here, or jump straight into sale-only or rent-only stock when you already know the lane you want.</p>
 
-<section class="page-section">
-  <%= paginate @properties %>
-  <%= render "properties/property" %>
-  <%= paginate @properties %>
+      <div class="segmented-links property-catalogue__scope-links">
+        <%= link_to "All listings", properties_path, class: ("is-active" if current_scope.blank?) %>
+        <%= link_to "For sale", for_sale_index_path, class: ("is-active" if current_scope == Property::SALE_STATUSES[:for_sale]) %>
+        <%= link_to "For rent", for_rent_index_path, class: ("is-active" if current_scope == Property::SALE_STATUSES[:for_rent]) %>
+      </div>
+
+      <dl class="property-catalogue__totals">
+        <div>
+          <dt>All</dt>
+          <dd><%= number_with_delimiter(@catalogue_totals[:all], delimiter: ",") %></dd>
+        </div>
+        <div>
+          <dt>For sale</dt>
+          <dd><%= number_with_delimiter(@catalogue_totals[:for_sale], delimiter: ",") %></dd>
+        </div>
+        <div>
+          <dt>For rent</dt>
+          <dd><%= number_with_delimiter(@catalogue_totals[:for_rent], delimiter: ",") %></dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="site-card property-catalogue__filters">
+      <div class="property-results-panel__head">
+        <div>
+          <p class="section-heading__eyebrow">Refine search</p>
+          <h2>Filter the catalogue</h2>
+        </div>
+
+        <% if active_filter_labels.any? %>
+          <span class="badge badge--accent"><%= pluralize(active_filter_labels.count, "active filter") %></span>
+        <% end %>
+      </div>
+
+      <p class="property-catalogue__sidebar-copy">Narrow the list by listing type, area, town, bedrooms, and budget, then reset everything with one tap if you want to start over.</p>
+
+      <%= render "properties/filters", url: properties_path, selected_sale_status: params[:sale_status], show_status_select: true %>
+    </section>
+  </aside>
+
+  <div class="property-catalogue__content">
+    <section class="site-card property-results-panel">
+      <div class="property-results-panel__head">
+        <div>
+          <p class="section-heading__eyebrow">Live results</p>
+          <h2><%= pluralize(@total_properties, "property") %> ready to explore</h2>
+        </div>
+
+        <div class="property-results-panel__meta">
+          <span class="badge badge--neutral"><%= property_sort_label(@filters[:sort].presence || "recommended") %></span>
+          <% if active_filter_labels.any? %>
+            <%= link_to "Clear all", properties_path, class: "button secondary hollow" %>
+          <% end %>
+        </div>
+      </div>
+
+      <% if active_filter_labels.any? %>
+        <div class="property-results-panel__chips">
+          <% active_filter_labels.each do |label| %>
+            <span class="badge badge--neutral"><%= label %></span>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="property-results-panel__empty-copy">Showing the full catalogue. Use the filter panel to narrow by location, price, and bedroom count.</p>
+      <% end %>
+
+      <div class="property-results-panel__pagination">
+        <%= paginate @properties %>
+      </div>
+    </section>
+
+    <%= render "properties/property" %>
+
+    <div class="property-results-panel__footer">
+      <%= paginate @properties %>
+    </div>
+  </div>
 </section>
