@@ -2,12 +2,29 @@
 
 This app is intended to deploy cleanly to a conventional Apache + Passenger shared host without Redis, Sidekiq, Docker, or any always-on worker.
 
+## Current Target
+
+This repo is now configured with these production defaults:
+
+- host: `192.168.2.204`
+- deploy root: `/var/www/stevenhobbs.co.uk`
+- Capistrano stage: `production`
+
+That means the Apache virtual host should point at the Capistrano `current/public` path, not the deploy root itself:
+
+- `DocumentRoot /var/www/stevenhobbs.co.uk/current/public`
+- `PassengerAppRoot /var/www/stevenhobbs.co.uk/current`
+
+If the existing virtual host currently uses `/var/www/stevenhobbs.co.uk` directly as its document root, update that before the first Rails deploy.
+
 ## Assumptions
 
 - Apache is already available on the host.
 - Passenger is installed and enabled for Apache.
 - Ruby `3.4.x` is available on the server.
 - Bundler is available.
+- the deploy user can SSH to `192.168.2.204` and write to `/var/www/stevenhobbs.co.uk`
+- the server can fetch `git@github.com:hobbs9090/rails_got_the_keys.git`, or you will deploy from a reachable mirror
 - The host can run SQLite or another relational database supported by Active Record.
 - You can either build frontend assets on the server or upload prebuilt assets during deployment.
 
@@ -41,8 +58,15 @@ If `SMTP_ADDRESS` is not set, production mail falls back to file delivery in `tm
 
 ## One-Time Server Preparation
 
-1. Upload or clone the repo to the app root.
-2. Install Ruby gems:
+1. Create the app root and shared writable paths:
+
+```bash
+mkdir -p /var/www/stevenhobbs.co.uk/shared/{log,tmp/pids,tmp/cache,tmp/sockets,storage}
+```
+
+2. Make sure the deploy user owns that tree or can write to it.
+3. Make sure the server can clone the repo over SSH from GitHub.
+4. Install Ruby gems:
 
 ```bash
 bundle config set deployment 'true'
@@ -50,7 +74,7 @@ bundle config set without 'development test'
 bundle install
 ```
 
-3. Install Node dependencies and build frontend assets:
+5. Install Node dependencies and build frontend assets:
 
 ```bash
 npm install
@@ -58,7 +82,7 @@ npm run build
 RAILS_ENV=production bundle exec rails assets:precompile
 ```
 
-4. Prepare the database:
+6. Prepare the database:
 
 ```bash
 RAILS_ENV=production bundle exec rails db:migrate
@@ -79,28 +103,60 @@ Example Apache snippet:
 
 ```apache
 <VirtualHost *:80>
-  ServerName example.com
-  DocumentRoot /home/youruser/apps/rails_got_the_keys/public
+  ServerName stevenhobbs.co.uk
+  DocumentRoot /var/www/stevenhobbs.co.uk/current/public
 
-  <Directory /home/youruser/apps/rails_got_the_keys/public>
+  <Directory /var/www/stevenhobbs.co.uk/current/public>
     Require all granted
     Options -MultiViews
   </Directory>
 
   PassengerEnabled on
-  PassengerAppRoot /home/youruser/apps/rails_got_the_keys
-  PassengerRuby /home/youruser/.rubies/ruby-3.4.7/bin/ruby
+  PassengerAppRoot /var/www/stevenhobbs.co.uk/current
+  PassengerRuby /path/to/ruby-3.4.7/bin/ruby
   PassengerAppEnv production
 </VirtualHost>
 ```
 
-Adapt paths to the actual Nirvana account layout.
+Adapt only the Ruby path if needed. The document root and app root should match the Capistrano layout above.
+
+## Capistrano Deploys
+
+The `production` stage defaults to:
+
+- host `192.168.2.204`
+- deploy root `/var/www/stevenhobbs.co.uk`
+- branch `master`
+
+Run a deploy with:
+
+```bash
+cd /Users/steven/Source/GitHub/rails_got_the_keys
+DEPLOY_USER=your_ssh_user bundle exec cap production deploy
+```
+
+Optional overrides:
+
+```bash
+DEPLOY_USER=your_ssh_user \
+DEPLOY_HOST=192.168.2.204 \
+DEPLOY_TO=/var/www/stevenhobbs.co.uk \
+DEPLOY_BRANCH=master \
+bundle exec cap production deploy
+```
+
+The deploy now:
+
+- reuses shared `storage/`, `log/`, `tmp/`, `vendor/bundle/`, and `node_modules/`
+- installs npm dependencies before asset precompile
+- restarts Passenger with `tmp/restart.txt`
 
 ## SQLite Notes
 
 If you are staying on SQLite in production:
 
-- make sure the `db/` directory is writable by the app user
+- the production database now lives at `storage/production.sqlite3` by default
+- make sure the `storage/` directory is writable by the app user
 - make sure `tmp/` is writable for caching, restarts, and mail fallback
 - back up the `.sqlite3` file before major changes
 
@@ -129,7 +185,8 @@ touch tmp/restart.txt
 If you use SQLite:
 
 ```bash
-cp db/production.sqlite3 backups/production-$(date +%F).sqlite3
+mkdir -p backups
+cp storage/production.sqlite3 backups/production-$(date +%F).sqlite3
 ```
 
 ### Demo Dataset Export

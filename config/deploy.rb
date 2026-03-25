@@ -3,7 +3,9 @@ lock '3.20.0'
 
 # Application config
 set :application, 'got_the_keys'
-set :repo_url, 'git@github.com:hobbs9090/rails_got_the_keys.git'
+set :repo_url, ENV.fetch('DEPLOY_REPO_URL', 'git@github.com:hobbs9090/rails_got_the_keys.git')
+set :branch, ENV.fetch('DEPLOY_BRANCH', 'master')
+set :ssh_options, forward_agent: true
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -26,11 +28,19 @@ set :repo_url, 'git@github.com:hobbs9090/rails_got_the_keys.git'
 # Default value for :linked_files is []
 # set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
 
-# Default value for linked_dirs is []
-# set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
+# Persist writable and generated paths across releases.
+append :linked_dirs,
+       'log',
+       'tmp/pids',
+       'tmp/cache',
+       'tmp/sockets',
+       'storage',
+       'vendor/bundle',
+       'node_modules'
 
 set :passenger_in_gemfile, true
-set :passenger_restart_with_touch, false
+set :passenger_restart_with_touch, true
+set :bundle_without, %w[development test].join(' ')
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -39,7 +49,6 @@ set :passenger_restart_with_touch, false
 set :keep_releases, 3
 
 namespace :deploy do
-
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
       # Here we can do anything such as:
