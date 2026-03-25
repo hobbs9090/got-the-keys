@@ -35,6 +35,9 @@ describe "For English language user" do
 
       expect(page).to have_title("For Sale")
       expect(page).to have_text("Homes available to buy")
+      within(".page-hero") do
+        expect(page).to have_no_css(".page-hero__brand")
+      end
     end
   end
 
@@ -45,6 +48,9 @@ describe "For English language user" do
 
       expect(page).to have_title("For Rent")
       expect(page).to have_text("Homes available to rent")
+      within(".page-hero") do
+        expect(page).to have_no_css(".page-hero__brand")
+      end
     end
   end
 
