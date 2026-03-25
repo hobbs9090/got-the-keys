@@ -1,14 +1,9 @@
-<h5 class="title"><a href="#panel1"><%= t('for_sale.header') %></a></h5>
-
-<div class="content" data-slug="panel1">
-  <form>
-    <div class="row collapse">
-      <div class="large-12 columns">
-        <%= form_tag(searches_path) do %>
-            <%= text_field_tag :q, nil, :placeholder => t('search.postcode_or_area') %>
-            <%= button_tag(t('search.title'), class: "radius button") %>
-        <% end %>
-      </div>
+<%= form_with url: searches_path, method: :get, class: 'search-form' do %>
+  <%= hidden_field_tag :sale_status, Property::SALE_STATUSES[:for_sale] %>
+  <div class="input-group">
+    <%= text_field_tag :q, params[:q], class: 'input-group-field', placeholder: t('search.postcode_or_area') %>
+    <div class="input-group-button">
+      <%= button_tag t('search.title'), class: "button" %>
     </div>
-  </form>
-</div>
+  </div>
+<% end %>

@@ -1,93 +1,84 @@
 <% title t('contact_us.title') %>
+<% map_locale = chinese_locale? ? 'zh' : 'en' %>
+<% map_query = "https://maps.google.co.uk/maps?q=TN16+1ET&hl=#{map_locale}&sll=51.528642,-0.101599&sspn=0.733045,1.115112&hnear=Westerham+TN16+1ET,+United+Kingdom&t=m&ie=UTF8&hq=&ll=51.269595,0.06772&spn=0.01611,0.023947&z=14&iwloc=A" %>
 
 <div class="row">
-
   <div class="large-9 columns">
+    <div class="contact-card">
+      <div class="callout primary">
+        <h3><%= t('contact_us.get_in_touch') %></h3>
+        <p><%= t('contact_us.paragraph_1') %><em><%= t('contact_us.all_day') %></em>.</p>
+      </div>
 
-    <h3><%= t('contact_us.get_in_touch') %></h3>
+      <ul class="tabs" data-responsive-accordion-tabs="tabs medium-accordion large-tabs" id="contact-tabs">
+        <li class="tabs-title is-active"><a href="#contact-company" aria-selected="true"><%= t('contact_us.contact_our_company') %></a></li>
+        <li class="tabs-title"><a href="#contact-people"><%= t('contact_us.specific_person') %></a></li>
+      </ul>
 
-    <p><%= t('contact_us.paragraph_1') %><em><%= t('contact_us.all_day') %></em>.</p>
-
-    <div class="section-container tabs" data-section>
-      <section class="section">
-        <h5 class="title"><a href="#panel1"><%= t('contact_us.contact_our_company') %></a></h5>
-
-        <div class="content" data-slug="panel1">
+      <div class="tabs-content" data-tabs-content="contact-tabs">
+        <div class="tabs-panel is-active" id="contact-company">
           <form>
-            <div class="row collapse">
-              <div class="large-2 columns">
-                <label class="inline"><%= t('contact_us.your_name') %></label>
-              </div>
-              <div class="large-10 columns">
+            <div class="row">
+              <div class="large-6 columns">
+                <label for="yourName"><%= t('contact_us.your_name') %></label>
                 <input type="text" id="yourName" placeholder="<%= t('contact_us.jane_smith') %>">
               </div>
-            </div>
-            <div class="row collapse">
-              <div class="large-2 columns">
-                <label class="inline"><%= t('contact_us.your_email') %></label>
-              </div>
-              <div class="large-10 columns">
+              <div class="large-6 columns">
+                <label for="yourEmail"><%= t('contact_us.your_email') %></label>
                 <input type="text" id="yourEmail" placeholder="<%= t('contact_us.jane_smith_email') %>">
               </div>
             </div>
-            <label><%= t('contact_us.whats_up') %></label>
-            <textarea rows="4"></textarea>
-            <button type="submit" class="radius button"><%= t('button.submit') %></button>
+            <label for="contactMessage"><%= t('contact_us.whats_up') %></label>
+            <textarea id="contactMessage" rows="5"></textarea>
+            <button type="submit" class="button"><%= t('button.submit') %></button>
           </form>
         </div>
-      </section>
-      <section class="section">
-        <h5 class="title"><a href="#panel2"><%= t('contact_us.specific_person') %></a></h5>
 
-        <div class="content" data-slug="panel2">
-          <ul class="large-block-grid-5">
-            <li><a href="mailto:zoe@serenity.bc.reb"><%= steven_image %>Steven Hobbs</a></li>
-            <li><a href="mailto:jayne@serenity.bc.reb"><%= face_image %>Susie Sykes</a></li>
-            <li><a href="mailto:doc@serenity.bc.reb"><%= face_image %>Jacob Sparrowhawk</a></li>
-            <li><a href="mailto:doc@serenity.bc.reb"><%= face_image %>Toby Sykes</a></li>
-            <li><a href="mailto:doc@serenity.bc.reb"><%= face_image %>Rebecca Sykes</a></li>
-            <li><a href="mailto:killyouwithmymind@serenity.bc.reb"><%= face_image %>River Tam</a></li>
-            <li><a href="mailto:inara@guild.comp.all"><%= face_image %>Inarra Serra</a></li>
-          </ul>
+        <div class="tabs-panel" id="contact-people">
+          <div class="row">
+            <% [
+              ['zoe@serenity.bc.reb', steven_image, 'Steven Hobbs'],
+              ['jayne@serenity.bc.reb', face_image, 'Susie Sykes'],
+              ['doc@serenity.bc.reb', face_image, 'Jacob Sparrowhawk'],
+              ['doc@serenity.bc.reb', face_image, 'Toby Sykes'],
+              ['doc@serenity.bc.reb', face_image, 'Rebecca Sykes'],
+              ['killyouwithmymind@serenity.bc.reb', face_image, 'River Tam'],
+              ['inara@guild.comp.all', face_image, 'Inarra Serra']
+            ].each do |email, avatar, name| %>
+              <div class="small-6 medium-4 large-3 columns">
+                <div class="site-card">
+                  <a href="mailto:<%= email %>" class="contact-person">
+                    <%= avatar %>
+                    <span><%= name %></span>
+                  </a>
+                </div>
+              </div>
+            <% end %>
+          </div>
         </div>
-      </section>
+      </div>
     </div>
   </div>
 
   <div class="large-3 columns">
-    <h5><%= t('contact_us.map') %></h5>
-
-    <p>
-      <% if locale == :zh %>
-          <iframe width="225" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps?q=TN16+1ET&amp;hl=zh&amp;sll=51.528642,-0.101599&amp;sspn=0.733045,1.115112&amp;hnear=Westerham+TN16+1ET,+United+Kingdom&amp;t=m&amp;ie=UTF8&amp;hq=&amp;ll=51.269595,0.06772&amp;spn=0.01611,0.023947&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe>
-          <a href="" data-reveal-id="mapModal"><%= t('contact_us.view_map') %></a>
-      <% else %>
-          <iframe width="225" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps?q=TN16+1ET&amp;hl=en&amp;sll=51.528642,-0.101599&amp;sspn=0.733045,1.115112&amp;hnear=Westerham+TN16+1ET,+United+Kingdom&amp;t=m&amp;ie=UTF8&amp;hq=&amp;ll=51.269595,0.06772&amp;spn=0.01611,0.023947&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe>
-          <a href="" data-reveal-id="mapModal">
-          </br>
-          <%= t('contact_us.view_map') %></a>
-      <% end %>
-    </p>
-    <p>
-      GotTheKeys Limited,<br/>
-      123 Awesome Road,<br/>
-      Limpsfield, TN16 4AB
-    </p>
+    <div class="panel">
+      <h5><%= t('contact_us.map') %></h5>
+      <iframe width="100%" height="260" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="<%= "#{map_query}&output=embed" %>"></iframe>
+      <p><%= button_tag t('contact_us.view_map'), type: 'button', class: 'button small expanded', data: { open: 'map-modal' } %></p>
+      <p>
+        GotTheKeys Limited,<br>
+        123 Awesome Road,<br>
+        Limpsfield, TN16 4AB
+      </p>
+    </div>
   </div>
 </div>
 
-<div class="reveal-modal" id="mapModal">
+<div class="reveal large" id="map-modal" data-reveal>
   <h4><%= t('contact_us.where_we_are') %></h4>
-
-  <p>
-    <% if locale == :zh %>
-        <iframe width="800" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps?q=TN16+1ET&amp;hl=zh&amp;sll=51.528642,-0.101599&amp;sspn=0.733045,1.115112&amp;hnear=Westerham+TN16+1ET,+United+Kingdom&amp;t=m&amp;ie=UTF8&amp;hq=&amp;ll=51.269595,0.06772&amp;spn=0.01611,0.023947&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe>
-        <br/><a href="https://maps.google.co.uk/maps?q=TN16+1ET&amp;hl=en&amp;sll=51.528642,-0.101599&amp;sspn=0.733045,1.115112&amp;hnear=Westerham+TN16+1ET,+United+Kingdom&amp;t=m&amp;ie=UTF8&amp;hq=&amp;ll=51.269595,0.06772&amp;spn=0.01611,0.023947&amp;z=14&amp;iwloc=A&amp;source=embed" style="color:#0000FF;text-align:left"><%= t('contact_us.view_larger_map') %></a>
-    <% else %>
-        <iframe width="800" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps?q=TN16+1ET&amp;hl=en&amp;sll=51.528642,-0.101599&amp;sspn=0.733045,1.115112&amp;hnear=Westerham+TN16+1ET,+United+Kingdom&amp;t=m&amp;ie=UTF8&amp;hq=&amp;ll=51.269595,0.06772&amp;spn=0.01611,0.023947&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe>
-        <br/><a href="https://maps.google.co.uk/maps?q=TN16+1ET&amp;hl=en&amp;sll=51.528642,-0.101599&amp;sspn=0.733045,1.115112&amp;hnear=Westerham+TN16+1ET,+United+Kingdom&amp;t=m&amp;ie=UTF8&amp;hq=&amp;ll=51.269595,0.06772&amp;spn=0.01611,0.023947&amp;z=14&amp;iwloc=A&amp;source=embed" style="color:#0000FF;text-align:left"><%= t('contact_us.view_larger_map') %></a>
-    <% end %>
-  </p>
-
-  <a href="#" class="close-reveal-modal">&times;</a>
+  <iframe width="100%" height="520" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="<%= "#{map_query}&output=embed" %>"></iframe>
+  <p><%= link_to t('contact_us.view_larger_map'), "#{map_query}&source=embed", target: '_blank', rel: 'noreferrer' %></p>
+  <button class="close-button" data-close aria-label="Close modal" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>

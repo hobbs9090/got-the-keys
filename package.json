@@ -1,0 +1,22 @@
+{
+  "name": "rails_got_the_keys",
+  "private": true,
+  "scripts": {
+    "build": "npm run build:css && npm run build:js",
+    "build:css": "sass --no-source-map --silence-deprecation=import,global-builtin,color-functions,if-function --load-path=node_modules app/assets/stylesheets/application.scss:app/assets/builds/application.css",
+    "build:js": "esbuild app/javascript/application.js --bundle --sourcemap --format=iife --outfile=app/assets/builds/application.js",
+    "watch:css": "npm run build:css -- --watch",
+    "watch:js": "npm run build:js -- --watch"
+  },
+  "dependencies": {
+    "@hotwired/turbo-rails": "8.0.23",
+    "foundation-sites": "6.9.0",
+    "jquery": "3.7.1",
+    "motion-ui": "2.0.8",
+    "what-input": "5.2.12"
+  },
+  "devDependencies": {
+    "esbuild": "0.27.4",
+    "sass": "1.98.0"
+  }
+}

@@ -4,21 +4,13 @@
 
   <div class="large-9 columns">
 
-  <h4><%= t('search.search_for_properties') %></h4>
+    <h4><%= t('search.search_for_properties') %></h4>
 
     <div class="row">
-
       <%= render "searches/simple_search" %>
-
     </div>
 
-    <div class="row">
-      <div class="large-12 columns">
-        <%= form_tag searches_path %>
-      </div>
-    </div>
-
-   <p><strong><%= t('search.results') %>: <%= number_with_delimiter(@number_search_results.count, :delimiter => ',') %></strong></p>
+    <p class="search-results-meta"><%= t('search.results') %>: <%= number_with_delimiter(@number_search_results.count, delimiter: ',') %></p>
 
     <%= paginate @properties %>
 

@@ -1,27 +1,30 @@
 # GotTheKeys
 
-GotTheKeys is a demo Rails web app for property listings (sale and rental).
+GotTheKeys is a demo Rails property-listing app modernized onto Rails 8.1 and Foundation Sites 6.9.
 
 ## Prerequisites
 
 - Ruby 3.4.7
 - Bundler 2.x
+- Node.js 22+
 - SQLite3
 
 ## Local setup
 
 ```bash
-# from project root
 rbenv install 3.4.7 # optional
 rbenv local 3.4.7
 bundle config set path 'vendor/bundle'
 bundle install
+npm install
 bundle exec rails db:prepare
+npm run build
 ```
 
-## Run app
+## Run the app
 
 ```bash
+npm run build
 bundle exec rails s
 ```
 
@@ -30,16 +33,24 @@ Open http://localhost:3000
 ## Tests
 
 ```bash
+npm run build
 bundle exec rspec
 bundle exec cucumber
 ```
 
 ## CI
 
-This repository includes GitHub Actions workflow in `.github/workflows/ci.yml` to run tests automatically on push and pull requests.
+GitHub Actions installs both Ruby and Node dependencies, builds the frontend assets, prepares the database, and runs the RSpec and Cucumber suites on pushes and pull requests.
 
-## Upgrade notes
+## Current stack
 
-- Current target runtime is Rails 7.1 on Ruby 3.4.7.
-- The app still contains some legacy UI/code patterns from the original Rails 4 era, but the boot/test setup is now aligned with the modern runtime.
-- Add `rubocop`, `bundle-audit`, and security hardening before using the app in production.
+- Rails 8.1.x
+- Ruby 3.4.7
+- Foundation Sites 6.9
+- npm-managed frontend bundling with `esbuild` and `sass`
+
+## Notes
+
+- The app now uses `jsbundling-rails` and `cssbundling-rails` conventions, with build artifacts emitted into `app/assets/builds`.
+- Legacy Foundation 4 assets and patterns have been replaced by current Foundation components such as modern Orbit, Reveal, Tabs, Accordion, and responsive top-bar navigation.
+- Before production deployment, set `APP_HOST`, `RAILS_SERVE_STATIC_FILES`, and any SSL/mailer environment variables expected by your platform.

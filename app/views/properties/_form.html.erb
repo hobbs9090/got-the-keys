@@ -1,4 +1,4 @@
-<%= form_for(@property) do |f| %>
+<%= form_with model: @property do |f| %>
     <%= render "shared/errors", object: @property %>
     <fieldset>
       <ol>
@@ -9,6 +9,7 @@
         <li>
           <%= f.label :address_line_2 %>
           <%= f.text_field :address_line_2 %>
+        </li>
         <li class="required">
           <%= f.label :town_city %>
           <%= f.text_field :town_city %>
@@ -50,7 +51,10 @@
         <%= f.submit %>
         <%= link_to t('helpers.label.property.cancel'), properties_path, class: 'button' %>
         <% unless current_page?(controller: 'properties', action: 'new') %>
-            <%= link_to t('helpers.label.property.delete_property'), @property, class: 'button alert', method: :delete, data: {confirm: t('helpers.label.property.are_you_sure')} %>
+          <%= link_to t('helpers.label.property.delete_property'),
+                      @property,
+                      class: 'button alert',
+                      data: { turbo_method: :delete, turbo_confirm: t('helpers.label.property.are_you_sure') } %>
         <% end %>
       </p>
     </fieldset>

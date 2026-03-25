@@ -1,7 +1,14 @@
-@import "foundation_and_overrides";
-@import "fc-webicons";
+@import "foundation-sites/scss/foundation";
+@import "motion-ui/motion-ui";
+
+@include foundation-everything;
+@include motion-ui-transitions;
+@include motion-ui-animations;
+
+@import "colors";
 @import "forms";
 @import "header";
+@import "layout";
 @import "properties";
 @import "responsive-tables";
 @import "statistics";

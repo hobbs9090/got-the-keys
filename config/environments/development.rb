@@ -1,49 +1,30 @@
-Foundation::Application.configure do
-  # Settings specified here will take precedence over those in config/application.rb.
+require 'active_support/core_ext/integer/time'
 
-  # In the development environment your application's code is reloaded on
-  # every request. This slows down response time but is perfect for development
-  # since you don't have to restart the web server when you make code changes.
-  config.cache_classes = false
-
-  # Do not eager load code on boot.
+GotTheKeys::Application.configure do
+  config.enable_reloading = true
   config.eager_load = false
+  config.consider_all_requests_local = true
+  config.server_timing = true
 
-  # Show full error reports and disable caching.
-  config.consider_all_requests_local       = true
-  config.action_controller.perform_caching = true
+  if Rails.root.join('tmp/caching-dev.txt').exist?
+    config.action_controller.perform_caching = true
+    config.action_controller.enable_fragment_cache_logging = true
+    config.public_file_server.headers = {
+      'Cache-Control' => "public, max-age=#{2.days.to_i}"
+    }
+  else
+    config.action_controller.perform_caching = false
+    config.cache_store = :null_store
+  end
 
-  # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = true
-
-  # For development only
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
-  ## Change mail delivery to either :smtp, :sendmail, :file, :test
-  #config.action_mailer.delivery_method = :smtp
-  #config.action_mailer.smtp_settings = {
-  #    address: "smtp.gmail.com",
-  #    port: 587,
-  #    domain: "meeane.co.uk",
-  #    authentication: "plain",
-  #    enable_starttls_auto: true,
-  #    user_name: ENV["stevenhobbs"],
-  #    password: ENV["yus7ba89"]
-  #}
-
-  # Config for Devise Mailer
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-
-
-  # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
-
-  # Raise an error on page load if there are pending migrations
   config.active_record.migration_error = :page_load
-
-  # Debug mode disables concatenation and preprocessing of assets.
-  # This option may cause significant delays in view rendering with a large
-  # number of complex assets.
-  config.assets.debug = true
-
+  config.active_record.verbose_query_logs = true
+  config.action_view.annotate_rendered_view_with_filenames = true
+  config.assets.quiet = true
 end

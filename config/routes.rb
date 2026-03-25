@@ -1,4 +1,4 @@
-Foundation::Application.routes.draw do
+GotTheKeys::Application.routes.draw do
 
   root 'welcome#index'
 

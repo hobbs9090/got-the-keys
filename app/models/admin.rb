@@ -1,10 +1,6 @@
-class Admin < ActiveRecord::Base
+class Admin < ApplicationRecord
 
   devise :database_authenticatable, :timeoutable
 
-  # TODO validate these symbols in LANGUAGES
-  validates :language, inclusion: {in: LANGUAGES}
-
-  # Strong parameters in controller
-
+  validates :language, inclusion: { in: AppSettings.available_languages }
 end

@@ -1,8 +1,20 @@
-<div class="section-container tabs" data-section>
-  <section class="section">
+<% for_sale_active = @sale_status != Property::SALE_STATUSES[:for_rent] %>
+
+<ul class="tabs" data-responsive-accordion-tabs="tabs medium-accordion large-tabs" id="property-search-tabs">
+  <li class="tabs-title <%= 'is-active' if for_sale_active %>">
+    <a href="#search-for-sale" <%= 'aria-selected="true"' if for_sale_active %>><%= t('for_sale.header') %></a>
+  </li>
+  <li class="tabs-title <%= 'is-active' unless for_sale_active %>">
+    <a href="#search-for-rent" <%= 'aria-selected="true"' unless for_sale_active %>><%= t('for_rent.header') %></a>
+  </li>
+</ul>
+
+<div class="tabs-content" data-tabs-content="property-search-tabs">
+  <div class="tabs-panel <%= 'is-active' if for_sale_active %>" id="search-for-sale">
     <%= render "shared/for_sale_search" %>
-  </section>
-  <section class="section">
+  </div>
+
+  <div class="tabs-panel <%= 'is-active' unless for_sale_active %>" id="search-for-rent">
     <%= render "shared/for_rent_search" %>
-  </section>
+  </div>
 </div>

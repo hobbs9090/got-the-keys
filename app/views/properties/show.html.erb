@@ -44,8 +44,8 @@
       <p>
         <%= format_price(@property) %>
       </p>
-      <% if locale == :zh %>
-          <h6><%= format_renminbi(@property) %></h6>
+      <% if chinese_locale? %>
+        <div class="property-price-secondary"><%= format_renminbi(@property) %></div>
       <% end %>
 
     </article>
