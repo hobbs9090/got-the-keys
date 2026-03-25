@@ -1,0 +1,30 @@
+<% return unless cookie_consent_pending? %>
+<% return if current_page?(cookie_policy_index_path) %>
+
+<section class="cookie-banner" aria-label="<%= t('cookie_policy.banner_title') %>" role="dialog" aria-live="polite">
+  <div class="cookie-banner__inner">
+    <div class="cookie-banner__copy">
+      <p class="cookie-banner__eyebrow"><%= t("cookie_policy.banner_eyebrow") %></p>
+      <h2><%= t("cookie_policy.banner_title") %></h2>
+      <p><%= t("cookie_policy.banner_body") %></p>
+
+      <ul class="cookie-banner__list no-bullet">
+        <li>
+          <strong><%= t("cookie_policy.essential_title") %></strong>
+          <span><%= t("cookie_policy.essential_body") %></span>
+        </li>
+        <li>
+          <strong><%= t("cookie_policy.optional_title") %></strong>
+          <span><%= t("cookie_policy.optional_body") %></span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="cookie-banner__actions">
+      <%= render "cookie_policy/preferences_actions", return_to: request.fullpath, class_name: "cookie-preferences__actions--stacked" %>
+      <p class="cookie-banner__hint">
+        <%= t("cookie_policy.banner_hint_html", policy_path: cookie_policy_index_path(anchor: "cookie-preferences")) %>
+      </p>
+    </div>
+  </div>
+</section>

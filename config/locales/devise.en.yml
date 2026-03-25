@@ -87,6 +87,14 @@ en:
         new:
           title: 'Resend confirmation instructions'
           submit: 'Resend confirmation email'
+          hero_badge: "Account confirmation"
+          hero_title: "Resend your confirmation email"
+          hero_intro: "If your sign-up confirmation expired or never arrived, we can send a fresh link."
+          paragraph_1: "Use the same email address you registered with so we can issue a new confirmation message."
+          paragraph_2: "Already confirmed or trying to sign back in? The links on the right will point you to the quickest next step."
+          form_badge: "Confirm access"
+          form_intro: "Enter your email address and we will resend your account confirmation instructions."
+          support_note: "Check your inbox and spam folder after submitting. If you already confirmed your account, you can sign in instead."
       passwords:
         edit:
           title: 'Change Password'
@@ -94,9 +102,26 @@ en:
           new_password: "New password"
           confirm_new_password: "Confirm new password"
           cancel_my_account: "Cancel my account"
+          hero_badge: "Password update"
+          hero_title: "Choose a new password"
+          hero_intro: "Set a fresh password for your account and we will get you back toward sign-in."
+          paragraph_1: "Pick something secure and easy for you to manage, then confirm it below so both entries match."
+          paragraph_2: "Once saved, the old password stops working immediately. If this link expires, request a new reset email."
+          form_badge: "New password"
+          form_intro: "Enter your new password below, then confirm it to finish updating your account."
+          support_note: "Use at least six characters. If this link no longer works, request a fresh reset email from the recovery page."
+          request_new_link: "Request a fresh reset link"
         new:
           title: 'Forgot Password'
           submit: 'Send reset message'
+          hero_badge: "Password recovery"
+          hero_title: "Reset your password"
+          hero_intro: "We can send a secure reset link so you can get back into your seller dashboard."
+          paragraph_1: "Use the email address attached to your account and we will send reset instructions in a few minutes."
+          paragraph_2: "If you are still waiting for an older message, request a new one here and use the most recent email you receive."
+          form_badge: "Recovery email"
+          form_intro: "Enter your account email and we will send your password reset instructions."
+          support_note: "For security, only the latest reset email will be useful. If you remember your password, you can sign in instead."
       registrations:
         edit:
           title: 'Change Registration Information'
@@ -106,9 +131,25 @@ en:
           update: "Update"
           are_you_sure: "Are you sure?"
           cancel_my_account: "Cancel my account"
+          hero_badge: "Account settings"
+          hero_title: "Update your seller profile"
+          hero_intro: "Keep your contact details and login settings current so viewings and account updates reach the right place."
+          paragraph_1: "This is the information your dashboard uses when property activity, booking confirmations, and account notices move."
+          paragraph_2: "Signed in as %{email}. Update only what needs changing, and leave the new password blank if you want to keep your current one."
+          form_badge: "Your details"
+          form_intro: "Review your personal details, contact information, and password settings below."
+          password_hint: "Leave blank if you do not want to change it."
+          current_password_hint: "We need your current password to confirm these changes."
+          support_note: "Save changes once everything looks right. We use your current password as a final check before updating the account."
+          danger_body: "If you no longer want to use GotTheKeys, you can permanently remove your account here. This action cannot be undone."
+          cancel_action: "Delete this account"
         new:
           title: 'Registration'
           submit: 'Registration'
+          hero_title: "Create your seller account"
+          setup_badge: "Account setup"
+          form_intro: "Use the form below to tell us who you are and where we should send account and viewing updates."
+          read_more: "Read more"
           why_so_much: "Why do you need to know so much about me?"
           paragraph_1: "By you doing some of the work we keep the costs down"
           paragraph_2: "Part of that is you managing the viewings at times that suit you. You manage this via the website and email. No more waiting on agents to return calls, or missed opportunities for a viewing."
@@ -122,10 +163,27 @@ en:
           title: 'Sign in'
           submit: 'Sign in'
           remember_me: 'Remember me'
+          hero_badge: "Member access"
+          hero_title: "Pick up where you left off"
+          hero_intro: "Sign in to manage your listings, confirm viewings, and keep booking updates moving."
+          paragraph_1: "Your dashboard keeps your property details, viewing times, and booking responses in one place, without the usual back-and-forth."
+          paragraph_2: "New here, or coming back after a while? Create your account first, or use the recovery links below to reset your password and get straight back in."
+          create_account: "Create an account"
+          form_badge: "Welcome back"
+          form_intro: "Use your email address and password to get back into your seller dashboard."
+          support_note: "Use the links below if you need to reset your password, unlock your account, or switch to the admin sign-in."
       unlocks:
         new:
           title: 'Resend unlock instructions'
           submit: 'Unlock message retransmission'
+          hero_badge: "Account unlock"
+          hero_title: "Unlock your account"
+          hero_intro: "Too many sign-in attempts can temporarily lock your account. We can send an unlock link to your email."
+          paragraph_1: "Enter the email address tied to your account and we will send fresh unlock instructions."
+          paragraph_2: "Once you unlock the account, you can sign in again with your usual email and password."
+          form_badge: "Unlock email"
+          form_intro: "Use your account email and we will resend your unlock instructions."
+          support_note: "If you remember your password but your account is locked, this unlock email is the fastest way back in."
     navigation:
       sign_in: 'Sign in'
       sign_up: 'Sign up'

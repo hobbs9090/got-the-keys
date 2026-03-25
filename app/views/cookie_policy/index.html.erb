@@ -1,30 +1,89 @@
-<% title t('cookie_policy.title') %>
+<% title t("cookie_policy.title") %>
 
-<div class="row">
-
-  <div class="large-9 push-3 columns">
-
-    <h3><%= t('cookie_policy.header') %>
-      <small><%= t('cookie_policy.blurb') %></small>
-    </h3>
-
-    <p><%= t('cookie_policy.paragraph_1') %></p>
-
-    <p><%= t('cookie_policy.paragraph_2') %></p>
-
-    <p><%= t('cookie_policy.paragraph_3') %></p>
-
+<section class="page-hero cookie-policy-hero">
+  <div>
+    <div class="page-hero__brand">
+      <%= render "layouts/gotthekeys", class_name: "marketing-wordmark--hero", decorative: true, width: 248 %>
+    </div>
+    <p class="page-hero__eyebrow"><%= t("cookie_policy.hero_eyebrow") %></p>
+    <h1><%= t("cookie_policy.header") %></h1>
+    <p><%= t("cookie_policy.hero_body") %></p>
   </div>
 
-  <div class="large-3 pull-9 columns">
+  <aside class="site-card cookie-policy-status">
+    <span class="<%= cookie_consent_status_badge_class %>"><%= cookie_consent_status_label %></span>
+    <h2><%= t("cookie_policy.status_title") %></h2>
+    <p><%= t("cookie_policy.status_body") %></p>
+  </aside>
+</section>
 
-    <ul class="side-nav">
-      <li><a href="#"><%= t('side.section') %> 1</a></li>
-      <li><a href="#"><%= t('side.section') %> 2</a></li>
-    </ul>
+<section class="cookie-policy-layout">
+  <div class="cookie-policy-main">
+    <article class="site-card cookie-policy-card cookie-policy-card--settings" id="cookie-preferences">
+      <p class="section-heading__eyebrow"><%= t("cookie_policy.settings_eyebrow") %></p>
+      <h2><%= t("cookie_policy.settings_title") %></h2>
+      <p><%= t("cookie_policy.settings_body") %></p>
 
-    <p><%= world_image %></p>
+      <%= render "cookie_policy/preferences_actions",
+                 return_to: cookie_policy_index_path(anchor: "cookie-preferences"),
+                 class_name: "cookie-preferences__actions--inline" %>
 
+      <p class="cookie-policy-card__hint"><%= t("cookie_policy.settings_note") %></p>
+    </article>
+
+    <div class="cookie-policy-grid">
+      <article class="site-card cookie-policy-card">
+        <p class="section-heading__eyebrow"><%= t("cookie_policy.card_essential_eyebrow") %></p>
+        <h2><%= t("cookie_policy.essential_title") %></h2>
+        <p><%= t("cookie_policy.card_essential_body") %></p>
+      </article>
+
+      <article class="site-card cookie-policy-card">
+        <p class="section-heading__eyebrow"><%= t("cookie_policy.card_preference_eyebrow") %></p>
+        <h2><%= t("cookie_policy.preference_title") %></h2>
+        <p><%= t("cookie_policy.card_preference_body") %></p>
+      </article>
+
+      <article class="site-card cookie-policy-card">
+        <p class="section-heading__eyebrow"><%= t("cookie_policy.card_optional_eyebrow") %></p>
+        <h2><%= t("cookie_policy.optional_title") %></h2>
+        <p><%= t("cookie_policy.card_optional_body") %></p>
+      </article>
+    </div>
   </div>
 
-</div>
+  <aside class="cookie-policy-sidebar">
+    <article class="site-card cookie-policy-card cookie-policy-card--summary">
+      <p class="section-heading__eyebrow"><%= t("cookie_policy.summary_eyebrow") %></p>
+      <h2><%= t("cookie_policy.summary_title") %></h2>
+
+      <ul class="legal-checklist no-bullet">
+        <li>
+          <div>
+            <strong><%= t("cookie_policy.summary_item_1_title") %></strong>
+            <span><%= t("cookie_policy.summary_item_1_body") %></span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong><%= t("cookie_policy.summary_item_2_title") %></strong>
+            <span><%= t("cookie_policy.summary_item_2_body") %></span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong><%= t("cookie_policy.summary_item_3_title") %></strong>
+            <span><%= t("cookie_policy.summary_item_3_body") %></span>
+          </div>
+        </li>
+      </ul>
+    </article>
+
+    <article class="site-card cookie-policy-card">
+      <p class="section-heading__eyebrow"><%= t("cookie_policy.browser_eyebrow") %></p>
+      <h2><%= t("cookie_policy.browser_title") %></h2>
+      <p><%= t("cookie_policy.browser_body") %></p>
+      <p class="cookie-policy-card__hint"><%= t("cookie_policy.browser_note") %></p>
+    </article>
+  </aside>
+</section>

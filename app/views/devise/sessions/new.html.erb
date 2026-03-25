@@ -1,36 +1,67 @@
-<%= render :partial => "devise/shared/sign_in_title" %>
+<% session_title = request.fullpath.match(/^\/admins/) ? t('devise.views.links.sign_in_as_admin') : t('devise.views.sessions.new.title') %>
+<% title session_title %>
 
-<div class="row">
+<section class="auth-shell auth-shell--signin">
+  <aside class="site-card auth-panel auth-panel--signin">
+    <%= render "layouts/gotthekeys", class_name: "marketing-wordmark--hero", width: 240 %>
+    <p class="section-heading__eyebrow"><%= t('devise.views.sessions.new.hero_badge') %></p>
+    <h1><%= t('devise.views.sessions.new.hero_title') %></h1>
+    <p class="auth-panel__lead"><%= t('devise.views.sessions.new.hero_intro') %></p>
+    <p><%= t('devise.views.sessions.new.paragraph_1') %></p>
 
-  <div class="large-9 columns centered">
+    <div class="auth-panel__callout">
+      <p><%= t('devise.views.sessions.new.paragraph_2') %></p>
+      <% if devise_mapping.registerable? %>
+        <%= link_to t('devise.views.sessions.new.create_account'), new_registration_path(resource_name), class: "button secondary hollow" %>
+      <% else %>
+        <%= link_to t('devise.views.links.sign_in_as_member'), new_user_session_path, class: "button secondary hollow" %>
+      <% end %>
+    </div>
+  </aside>
 
-    <%= render :partial => "devise/shared/sign_in_message" %>
+  <section class="site-card auth-form-card auth-form-card--signin">
+    <div class="auth-form-card__header">
+      <div>
+        <p class="section-heading__eyebrow"><%= t('devise.views.sessions.new.form_badge') %></p>
+        <h2><%= session_title %></h2>
+      </div>
+      <p class="auth-form-card__intro"><%= t('devise.views.sessions.new.form_intro') %></p>
+    </div>
 
-    <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { data: { turbo: false } }) do |f| %>
-        <fieldset>
-          <ol>
-            <li class="required">
-              <%= f.label :email %>
-              <%= f.email_field :email, autofocus: true, required: true, autocomplete: "email" %>
-            </li>
-            <li class="required">
-              <%= f.label :password %>
-              <%= f.password_field :password, required: true, autocomplete: "current-password" %>
-            </li>
-            <% if devise_mapping.rememberable? -%>
-                <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-            <% end -%>
-          </ol>
-          <p>
-            <%= f.submit t('devise.views.sessions.new.submit') %>
-          </p>
-        </fieldset>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "stacked-form auth-form", data: { turbo: false } }) do |f| %>
+      <%= devise_error_messages! %>
+
+      <div class="auth-form__stack">
+        <div>
+          <%= f.label :email, nil, **form_label_options(resource, :email) %>
+          <%= f.email_field :email, autofocus: true, required: true, autocomplete: "email", **form_control_options(resource, :email) %>
+          <%= field_error_messages(resource, :email) %>
+        </div>
+
+        <div>
+          <%= f.label :password, nil, **form_label_options(resource, :password) %>
+          <%= f.password_field :password, required: true, autocomplete: "current-password", **form_control_options(resource, :password) %>
+          <%= field_error_messages(resource, :password) %>
+        </div>
+
+        <% if devise_mapping.rememberable? %>
+          <div class="auth-form__checkbox auth-form__checkbox--compact">
+            <%= f.check_box :remember_me %>
+            <div>
+              <%= f.label :remember_me, t('devise.views.sessions.new.remember_me'), class: "checkbox-label" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="form-actions auth-form__actions">
+        <p class="auth-form__note"><%= t('devise.views.sessions.new.support_note') %></p>
+        <%= f.submit t('devise.views.sessions.new.submit'), class: "button primary large auth-form__submit" %>
+      </div>
     <% end %>
 
-    <%= render :partial => "devise/shared/links" %>
-
-  </div>
-
-  <%= render "layouts/sidebar" %>
-
-</div>
+    <div class="auth-form-card__links">
+      <%= render partial: "devise/shared/links" %>
+    </div>
+  </section>
+</section>

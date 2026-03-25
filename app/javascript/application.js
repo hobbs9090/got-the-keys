@@ -9,7 +9,19 @@ window.$ = $;
 window.jQuery = $;
 window.Foundation = Foundation;
 
+const clearNonEssentialInputPersistence = () => {
+  if (document.body?.dataset.whatpersist !== "false") return;
+
+  try {
+    window.sessionStorage.removeItem("what-input");
+    window.sessionStorage.removeItem("what-intent");
+  } catch (error) {
+    // Ignore storage access errors in restricted browser contexts.
+  }
+};
+
 const bootFoundation = () => {
+  clearNonEssentialInputPersistence();
   $(document).foundation();
   reflowResponsiveTables($);
 };

@@ -1,32 +1,47 @@
 <% title t('devise.views.passwords.new.title') %>
 
-<div class="row">
+<section class="auth-shell auth-shell--compact">
+  <aside class="site-card auth-panel auth-panel--support">
+    <%= render "layouts/gotthekeys", class_name: "marketing-wordmark--hero", width: 240 %>
+    <p class="section-heading__eyebrow"><%= t('devise.views.passwords.new.hero_badge') %></p>
+    <h1><%= t('devise.views.passwords.new.hero_title') %></h1>
+    <p class="auth-panel__lead"><%= t('devise.views.passwords.new.hero_intro') %></p>
+    <p><%= t('devise.views.passwords.new.paragraph_1') %></p>
 
-  <!-- Forgot your password -->
+    <div class="auth-panel__callout">
+      <p><%= t('devise.views.passwords.new.paragraph_2') %></p>
+      <%= link_to t('devise.views.links.sign_in'), new_session_path(resource_name), class: "button secondary hollow" %>
+    </div>
+  </aside>
 
-  <div class="large-9 columns">
+  <section class="site-card auth-form-card auth-form-card--compact">
+    <div class="auth-form-card__header">
+      <div>
+        <p class="section-heading__eyebrow"><%= t('devise.views.passwords.new.form_badge') %></p>
+        <h2><%= t('devise.views.passwords.new.title') %></h2>
+      </div>
+      <p class="auth-form-card__intro"><%= t('devise.views.passwords.new.form_intro') %></p>
+    </div>
 
-    <h4><%= t('devise.views.passwords.new.title') %></h4>
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: "stacked-form auth-form", data: { turbo: false } }) do |f| %>
+      <%= devise_error_messages! %>
 
-    <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post, data: { turbo: false } }) do |f| %>
-        <%= devise_error_messages! %>
-        <fieldset>
-          <ol>
-            <li><%= f.label :email, nil, **form_label_options(resource, :email) %>
-              <%= f.email_field :email, autofocus: true, required: true, autocomplete: "email", **form_control_options(resource, :email) %>
-              <%= field_error_messages(resource, :email) %>
-            </li>
-          </ol>
-          <p><%= f.submit t('devise.views.passwords.new.submit') %></p>
-        </fieldset>
+      <div class="auth-form__stack">
+        <div>
+          <%= f.label :email, nil, **form_label_options(resource, :email) %>
+          <%= f.email_field :email, autofocus: true, required: true, autocomplete: "email", **form_control_options(resource, :email) %>
+          <%= field_error_messages(resource, :email) %>
+        </div>
+      </div>
+
+      <div class="form-actions auth-form__actions">
+        <p class="auth-form__note"><%= t('devise.views.passwords.new.support_note') %></p>
+        <%= f.submit t('devise.views.passwords.new.submit'), class: "button primary large auth-form__submit" %>
+      </div>
     <% end %>
 
-    <%= render :partial => "devise/shared/links" %>
-
-  </div>
-
-  <!-- End Forgot your password -->
-
-  <%= render "layouts/sidebar" %>
-
-</div>
+    <div class="auth-form-card__links">
+      <%= render partial: "devise/shared/links" %>
+    </div>
+  </section>
+</section>

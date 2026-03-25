@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="favicon-sky" x1="32" y1="0" x2="32" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EEF6FF"/>
+      <stop offset="1" stop-color="#F8FBFF"/>
+    </linearGradient>
+    <linearGradient id="favicon-ground" x1="32" y1="40" x2="32" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#DFF4E6"/>
+      <stop offset="1" stop-color="#F4FBF6"/>
+    </linearGradient>
+    <linearGradient id="favicon-card" x1="10" y1="8" x2="54" y2="48" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#F4F8FC"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#favicon-sky)"/>
+  <rect y="40" width="64" height="24" fill="url(#favicon-ground)"/>
+  <circle cx="49" cy="14" r="5" fill="#D8F2E0"/>
+  <circle cx="12" cy="15" r="3" fill="#DDEBFF"/>
+  <path d="M12 49C16.1 43.9 22.3 41 28.8 41H35.2C41.7 41 47.9 43.9 52 49" stroke="#C7D7EA" stroke-width="3.5" stroke-linecap="round"/>
+  <rect x="10" y="8" width="44" height="40" rx="7" fill="url(#favicon-card)" stroke="#D7E3EF" stroke-width="2"/>
+  <path d="M18 28L32 18L46 28" stroke="#173155" stroke-width="3.75" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M20.5 27V40.5H43.5V27" stroke="#173155" stroke-width="3.25" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M28 40.5V33.75C28 32.7835 28.7835 32 29.75 32H34.25C35.2165 32 36 32.7835 36 33.75V40.5" fill="#E9F3FF" stroke="#173155" stroke-width="3.25" stroke-linejoin="round"/>
+  <rect x="24" y="31.75" width="3.8" height="5.6" rx="1.2" fill="#E7F6EC" stroke="#173155" stroke-width="2.5"/>
+  <rect x="36.2" y="31.75" width="3.8" height="5.6" rx="1.2" fill="#E7F6EC" stroke="#173155" stroke-width="2.5"/>
+  <path d="M15 43.5H49" stroke="#173155" stroke-width="2.75" stroke-linecap="round"/>
+  <rect x="13.5" y="40.8" width="6.6" height="2.3" rx="1.15" fill="#22C55E" opacity="0.22"/>
+  <rect x="43.9" y="40.8" width="6.6" height="2.3" rx="1.15" fill="#22C55E" opacity="0.22"/>
+</svg>

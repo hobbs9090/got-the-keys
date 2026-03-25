@@ -88,6 +88,14 @@ zh:
         new:
           title: '重新发送确认指令'
           submit: '重发确认邮件'
+          hero_badge: "账户确认"
+          hero_title: "重新发送确认邮件"
+          hero_intro: "如果您的注册确认邮件已过期或一直未到，我们可以重新发送一封新的。"
+          paragraph_1: "请输入您注册时使用的邮箱地址，我们会重新发送确认说明。"
+          paragraph_2: "如果您的账户其实已经确认，或您只是想重新登录，右侧链接会带您到更合适的下一步。"
+          form_badge: "确认访问"
+          form_intro: "输入您的邮箱地址，我们会重新发送账户确认说明。"
+          support_note: "提交后请检查收件箱和垃圾邮件文件夹。如果您的账户已经确认，您也可以直接登录。"
       passwords:
         edit:
           title: '修改密码'
@@ -95,9 +103,26 @@ zh:
           new_password: "新密码"
           confirm_new_password: "确认新密码"
           cancel_my_account: "取消我的帐户"
+          hero_badge: "密码更新"
+          hero_title: "设置新的密码"
+          hero_intro: "为您的账户设置一个新密码，然后继续返回登录流程。"
+          paragraph_1: "请选择一个安全且方便记忆的新密码，并在下方再次确认，确保两次输入一致。"
+          paragraph_2: "保存后，旧密码会立即失效。如果此链接已过期，请重新申请一封重置邮件。"
+          form_badge: "新密码"
+          form_intro: "请在下方输入您的新密码，并再次确认以完成更新。"
+          support_note: "请至少使用六码字符。如果此链接已失效，请从找回密码页面重新申请。"
+          request_new_link: "重新申请重置链接"
         new:
           title: '忘记密码'
           submit: '发送重置邮件'
+          hero_badge: "密码找回"
+          hero_title: "重置您的密码"
+          hero_intro: "我们可以向您发送一个安全的重置链接，帮助您重新进入业主控制面板。"
+          paragraph_1: "请输入与账户关联的邮箱地址，我们会在几分钟内发送重置说明。"
+          paragraph_2: "如果您还在等待之前的邮件，也可以在这里重新申请，并以最新收到的邮件为准。"
+          form_badge: "重置邮件"
+          form_intro: "输入您的账户邮箱，我们会发送密码重置说明。"
+          support_note: "出于安全考虑，只有最新的一封重置邮件有效。如果您已经想起密码，也可以直接登录。"
       registrations:
         edit:
           title: '更改注册信息'
@@ -105,9 +130,25 @@ zh:
           submit: '修改'
           change_pass_tip: "如果你不想改变，留空"
           cancel_my_account: "取消我的帐户"
+          hero_badge: "账户设置"
+          hero_title: "更新您的业主资料"
+          hero_intro: "请保持您的联系方式和登录信息为最新状态，以便看房和账户通知能准确送达。"
+          paragraph_1: "房源动态、预约确认和账户提醒都会依赖这里的资料。"
+          paragraph_2: "当前登录邮箱为 %{email}。只需更新需要修改的内容；如果不想更改密码，可以将新密码留空。"
+          form_badge: "您的资料"
+          form_intro: "请在下方检查并更新您的个人资料、联系方式和密码设置。"
+          password_hint: "如果您不想修改密码，请留空。"
+          current_password_hint: "我们需要您当前的密码来确认这些更改。"
+          support_note: "确认无误后再保存。我们会使用您当前的密码作为最后的安全验证。"
+          danger_body: "如果您不再使用 GotTheKeys，可以在这里永久删除您的账户。此操作无法撤销。"
+          cancel_action: "删除此账户"
         new:
           title: '注册'
           submit: '注册'
+          hero_title: "创建您的业主账户"
+          setup_badge: "账户设置"
+          form_intro: "请填写下列表单，告诉我们您是谁，以及我们应将账户和看房更新发送到哪里。"
+          read_more: "了解更多"
           why_so_much: "为什么你需要知道这么多关于我的吗？"
           paragraph_1: "你在做一些工作，我们不断降低成本"
           paragraph_2: "部分是你适合你的时间管理收看。您可以通过网站和电子邮件管理。没有更多的等待代理商回电话，或者错过观看的机会。"
@@ -121,10 +162,27 @@ zh:
           title: '登录'
           submit: '登录'
           remember_me: '记住我'
+          hero_badge: "会员入口"
+          hero_title: "继续您上次的进度"
+          hero_intro: "登录后即可管理房源、确认看房安排，并跟进最新预约动态。"
+          paragraph_1: "您的控制面板会把房源资料、看房时间和预约回复集中在一个地方，减少来回沟通。"
+          paragraph_2: "如果您是第一次使用，先创建账户；如果只是忘记密码，也可以使用下方链接快速重置并重新进入。"
+          create_account: "创建账户"
+          form_badge: "欢迎回来"
+          form_intro: "请输入您的电子邮箱和密码，重新进入您的业主控制面板。"
+          support_note: "如果您需要重置密码、解锁账户，或切换到管理员登录，请使用下方链接。"
       unlocks:
         new:
           title: '重发解锁指令'
           submit: '重发解锁邮件'
+          hero_badge: "账户解锁"
+          hero_title: "解锁您的账户"
+          hero_intro: "过多的登录尝试可能会暂时锁定账户。我们可以向您的邮箱发送解锁链接。"
+          paragraph_1: "请输入与账户关联的邮箱地址，我们会重新发送解锁说明。"
+          paragraph_2: "账户解锁后，您就可以继续使用原来的邮箱和密码登录。"
+          form_badge: "解锁邮件"
+          form_intro: "输入您的账户邮箱，我们会重新发送解锁说明。"
+          support_note: "如果您记得密码但账户被锁定，这是最快恢复访问的方法。"
     navigation:
       sign_in: '登录'
       sign_up: '注册'

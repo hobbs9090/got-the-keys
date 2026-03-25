@@ -4,20 +4,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= content_for?(:title) ? yield(:title) : "Admin | #{t('gotthekeys.gotthekeys')}" %></title>
-    <%= favicon_link_tag "favicon.ico" %>
+    <%= favicon_link_tag "favicon-house.svg", type: "image/svg+xml" %>
+    <%= favicon_link_tag "favicon.ico", rel: "alternate icon" %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", media: "all", "data-turbo-track" => "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track" => "reload", defer: true %>
   </head>
 
-  <body class="admin-shell">
+  <body class="admin-shell" data-whatpersist="false">
     <div class="admin-layout">
       <aside class="admin-sidebar" data-testid="admin-sidebar">
         <div class="admin-sidebar__brand">
           <%= link_to admin_root_path, class: "admin-sidebar__brand-link" do %>
             <span class="admin-sidebar__eyebrow">Admin Workspace</span>
-            <strong><%= render "layouts/gotthekeys", class_name: "marketing-wordmark--admin", width: 190 %></strong>
+            <strong><%= render "layouts/gotthekeys", class_name: "marketing-wordmark--admin", variant: :dark, width: 190 %></strong>
           <% end %>
         </div>
 
@@ -45,5 +46,7 @@
         </main>
       </div>
     </div>
+
+    <%= render "layouts/cookie_consent" %>
   </body>
 </html>

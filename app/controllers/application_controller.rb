@@ -2,7 +2,9 @@ class ApplicationController < ActionController::Base
   before_action :set_user_language
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  helper_method :available_languages, :booking_configuration, :chinese_locale?
+  helper_method :available_languages, :booking_configuration, :chinese_locale?,
+                :cookie_consent_choice, :cookie_consent_pending?, :cookie_consent_all?,
+                :cookie_consent_essential_only?
 
   protected
 
@@ -18,6 +20,23 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def cookie_consent_choice
+    value = cookies[:gotthekeys_cookie_consent].presence
+    %w[all essential].include?(value) ? value : nil
+  end
+
+  def cookie_consent_pending?
+    cookie_consent_choice.blank?
+  end
+
+  def cookie_consent_all?
+    cookie_consent_choice == "all"
+  end
+
+  def cookie_consent_essential_only?
+    cookie_consent_choice == "essential"
+  end
 
   def available_languages
     AppSettings.available_languages
