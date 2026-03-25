@@ -32,6 +32,8 @@ group :development do
   gem 'capistrano', '~> 3.20'
   gem 'capistrano-passenger', '~> 0.2.1'
   gem 'capistrano-rails', '~> 1.7'
+  gem 'bcrypt_pbkdf', '~> 1.1'
+  gem 'ed25519', '~> 1.3'
   gem 'letter_opener', '~> 1.10'
   gem 'ruby-lsp', require: false
   gem 'ruby-lsp-rails', require: false

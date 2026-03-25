@@ -9,13 +9,19 @@ This repo is now configured with these production defaults:
 - host: `192.168.2.204`
 - deploy root: `/var/www/stevenhobbs.co.uk`
 - Capistrano stage: `production`
+- live URL: `https://stevenhobbs.co.uk`
 
 That means the Apache virtual host should point at the Capistrano `current/public` path, not the deploy root itself:
 
 - `DocumentRoot /var/www/stevenhobbs.co.uk/current/public`
 - `PassengerAppRoot /var/www/stevenhobbs.co.uk/current`
+- `PassengerRuby /home/steven/.rbenv/versions/3.4.7/bin/ruby`
 
 If the existing virtual host currently uses `/var/www/stevenhobbs.co.uk` directly as its document root, update that before the first Rails deploy.
+
+For the current Nirvana host, the working server-side mirror is:
+
+- `/home/steven/git/rails_got_the_keys.git`
 
 ## Assumptions
 
@@ -27,6 +33,8 @@ If the existing virtual host currently uses `/var/www/stevenhobbs.co.uk` directl
 - the server can fetch `git@github.com:hobbs9090/rails_got_the_keys.git`, or you will deploy from a reachable mirror
 - The host can run SQLite or another relational database supported by Active Record.
 - You can either build frontend assets on the server or upload prebuilt assets during deployment.
+
+The local development bundle includes `ed25519` and `bcrypt_pbkdf` so Capistrano can authenticate cleanly with `ssh-ed25519` keys.
 
 ## Required Environment Variables
 
@@ -66,6 +74,14 @@ mkdir -p /var/www/stevenhobbs.co.uk/shared/{log,tmp/pids,tmp/cache,tmp/sockets,s
 
 2. Make sure the deploy user owns that tree or can write to it.
 3. Make sure the server can clone the repo over SSH from GitHub.
+
+If the host cannot read GitHub directly, create a bare mirror on the host and deploy from that instead:
+
+```bash
+mkdir -p ~/git
+git clone --bare git@github.com:hobbs9090/rails_got_the_keys.git ~/git/rails_got_the_keys.git
+```
+
 4. Install Ruby gems:
 
 ```bash
@@ -104,21 +120,41 @@ Example Apache snippet:
 ```apache
 <VirtualHost *:80>
   ServerName stevenhobbs.co.uk
+  ServerAlias www.stevenhobbs.co.uk
+  RewriteEngine On
+  RewriteRule ^ https://stevenhobbs.co.uk%{REQUEST_URI} [END,NE,R=permanent]
+</VirtualHost>
+
+<VirtualHost *:443>
+  ServerName stevenhobbs.co.uk
+  ServerAlias www.stevenhobbs.co.uk
   DocumentRoot /var/www/stevenhobbs.co.uk/current/public
 
-  <Directory /var/www/stevenhobbs.co.uk/current/public>
+  <Directory /var/www/stevenhobbs.co.uk>
     Require all granted
-    Options -MultiViews
+    Options -MultiViews +FollowSymLinks
   </Directory>
 
   PassengerEnabled on
   PassengerAppRoot /var/www/stevenhobbs.co.uk/current
-  PassengerRuby /path/to/ruby-3.4.7/bin/ruby
+  PassengerRuby /home/steven/.rbenv/versions/3.4.7/bin/ruby
   PassengerAppEnv production
+  PassengerFriendlyErrorPages off
+
+  SetEnv APP_HOST stevenhobbs.co.uk
+  SetEnv RAILS_ENV production
+  SetEnv RAILS_SERVE_STATIC_FILES 1
+  SetEnv SECRET_KEY_BASE your_generated_secret_here
+
+  Header always set Strict-Transport-Security "max-age=31536000"
+  SSLEngine on
+  SSLCertificateFile /etc/letsencrypt/live/stevenhobbs.co.uk/fullchain.pem
+  SSLCertificateKeyFile /etc/letsencrypt/live/stevenhobbs.co.uk/privkey.pem
+  Include /etc/letsencrypt/options-ssl-apache.conf
 </VirtualHost>
 ```
 
-Adapt only the Ruby path if needed. The document root and app root should match the Capistrano layout above.
+Adapt only the Ruby path, hostnames, and certificate paths if needed. The document root and app root should match the Capistrano layout above.
 
 ## Capistrano Deploys
 
@@ -141,6 +177,7 @@ Optional overrides:
 DEPLOY_USER=your_ssh_user \
 DEPLOY_HOST=192.168.2.204 \
 DEPLOY_TO=/var/www/stevenhobbs.co.uk \
+DEPLOY_REPO_URL=/home/steven/git/rails_got_the_keys.git \
 DEPLOY_BRANCH=master \
 bundle exec cap production deploy
 ```
@@ -239,5 +276,20 @@ touch tmp/restart.txt
 ### Passenger is serving an old version
 
 ```bash
+touch tmp/restart.txt
+```
+
+### Passenger fails during boot with a default gem version mismatch
+
+If Passenger reports errors like:
+
+- `You have already activated base64 0.2.0, but your Gemfile requires base64 0.3.0`
+- `You have already activated stringio 3.1.2, but your Gemfile requires stringio 3.2.0`
+
+install the matching gems into the Ruby used by Passenger, then restart:
+
+```bash
+gem install base64 -v 0.3.0 --no-document
+gem install stringio -v 3.2.0 --no-document
 touch tmp/restart.txt
 ```
