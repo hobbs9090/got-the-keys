@@ -49,10 +49,9 @@
                 <% end %>
                 <li class="divider"></li>
                 <li><label><%= t('menu.account_details') %></label></li>
-                <li><%= link_to t('menu.add_property'), new_user_property_path(current_user) %></li>
+                <li><%= link_to t('menu.add_property'), new_property_path %></li>
                 <li><%= link_to t('menu.user_profile'), edit_user_registration_path(current_user) %></li>
-                <li><%= link_to t('menu.appointments'), "#" %></li>
-                <li><%= link_to t('menu.account_billing'), "#" %></a></li>
+                <li><%= link_to t('menu.account_billing'), account_billing_index_path %></li>
                 <li class="divider"></li>
                 <li><label><%= t('menu.language_preference') %></label></li>
                 <%= render "layouts/english" %>
@@ -104,4 +103,3 @@
   </div>
 
 </div>
-

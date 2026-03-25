@@ -14,7 +14,11 @@ Foundation::Application.routes.draw do
 
   resources :account_billing, only: [:index]
 
-  resources :properties, only: [:index]
+  resources :properties do
+    resources :photos, only: [:index, :new]
+    resources :floor_plans, only: [:index, :new]
+    resources :viewing_times, only: [:index, :new, :create]
+  end
 
   resources :for_sale, only: [:index]
 
@@ -26,33 +30,7 @@ Foundation::Application.routes.draw do
 
   resources :location, only: [:show]
 
-  resources :users do
-    resources :properties
-  end
-
-  resources :users do
-    resources :appointments
-  end
-
-  resources :properties do
-    resources :photos
-  end
-
-  resources :properties do
-    resources :floor_plans
-  end
-
-  resources :properties do
-    resources :viewing_times
-  end
-
-  resources :properties do
-    resources :appointments
-  end
-
-  resources :properties do
-    resources :make_an_offer
-  end
+  resources :users, only: [:show]
 
   resources :legal, only: [:index]
 

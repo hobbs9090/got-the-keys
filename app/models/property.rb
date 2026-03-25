@@ -58,11 +58,9 @@ class Property < ActiveRecord::Base
   end
 
   def self.search_for_sale(search)
-    if search != ""
-      where(['postcode LIKE ?', "%#{search}%"])
-    else
-      where("sale_status = 'For Sale'")
-    end
+    return for_sale if search.blank?
+
+    for_sale.where(['postcode LIKE ?', "%#{sanitize_sql_like(search)}%"])
   end
 
   def self.total_portfolio_value
@@ -96,13 +94,13 @@ class Property < ActiveRecord::Base
 
   # TODO fix this query
   def self.total_6_plus_bedrooms
-    where(:bedrooms => '> 5').count
+    where('bedrooms > ?', 5).count
   end
 
   def self.added_today
     where("DATE(created_at) = DATE(?)", Time.now).count
   end
 
-  attr_accessible :address_line_1, :address_line_2, :town_city, :county, :postcode, :country, :property_description, :bedrooms, :image_file_name, :sale_status, :asking_price, :user_id
+  # Strong parameters in controller
 
 end

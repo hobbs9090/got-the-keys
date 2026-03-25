@@ -1,8 +1,10 @@
 <%
-rerun = File.file?('rerun.txt') ? IO.read('rerun.txt') : ""
-rerun_opts = rerun.to_s.strip.empty? ? "--format #{ENV['CUCUMBER_FORMAT'] || 'progress'} features" : "--format #{ENV['CUCUMBER_FORMAT'] || 'pretty'} #{rerun}"
-std_opts = "--format #{ENV['CUCUMBER_FORMAT'] || 'pretty'} --strict --tags not @wip"
+format = ENV.fetch("CUCUMBER_FORMAT", "pretty")
+rerun_targets = File.file?("rerun.txt") ? File.read("rerun.txt").strip : ""
+rerun_args = rerun_targets.empty? ? "features" : rerun_targets
+default_profile = "--publish-quiet --format #{format} --strict --tags 'not @wip' features"
+rerun_profile = "--publish-quiet --format #{format} --format rerun --out rerun.txt --strict --tags 'not @wip' #{rerun_args}"
 %>
-default: <%= std_opts %> features
-wip: --tags @wip:3 --wip features
-rerun: <%= rerun_opts %> --format rerun --out rerun.txt --strict --tags not @wip
+default: <%= default_profile %>
+wip: --publish-quiet --format pretty --strict --tags @wip --wip features
+rerun: <%= rerun_profile %>

@@ -3,7 +3,8 @@ require 'rails_helper'
 describe "Viewing the property for sale" do
 
   it "shows the property details" do
-    property = Property.create(property_attributes)
+    user = FactoryBot.create(:user)
+    property = user.properties.create!(property_attributes)
 
     visit property_url(property)
 
@@ -15,7 +16,8 @@ end
 describe "Viewing the property for rent" do
 
   it "shows the property details" do
-    property = Property.create(property_attributes(sale_status: 'For Rent'))
+    user = FactoryBot.create(:user)
+    property = user.properties.create!(property_attributes(sale_status: 'For Rent'))
 
     visit property_url(property)
 
@@ -27,7 +29,8 @@ end
 describe "Viewing an individual property" do
 
   it "shows Studio when number of bedrooms is zero" do
-    property = Property.create(property_attributes(bedrooms:0))
+    user = FactoryBot.create(:user)
+    property = user.properties.create!(property_attributes(bedrooms: 0))
 
     visit property_url(property)
 
@@ -35,7 +38,8 @@ describe "Viewing an individual property" do
   end
 
   it "shows '1 bedroom' when number of bedrooms is 1" do
-    property = Property.create(property_attributes(bedrooms:1))
+    user = FactoryBot.create(:user)
+    property = user.properties.create!(property_attributes(bedrooms: 1))
 
     visit property_url(property)
 
@@ -43,7 +47,8 @@ describe "Viewing an individual property" do
   end
 
   it "shows '2 bedrooms' when number of bedrooms is 2" do
-    property = Property.create(property_attributes(bedrooms:2))
+    user = FactoryBot.create(:user)
+    property = user.properties.create!(property_attributes(bedrooms: 2))
 
     visit property_url(property)
 

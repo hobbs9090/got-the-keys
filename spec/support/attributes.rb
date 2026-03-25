@@ -21,6 +21,7 @@ def user_attributes(overrides = {})
       last_name: "User",
       mobile_number: "07595 123456",
       language: "en",
+      terms_of_service: "1",
       password: "password",
       password_confirmation: "password"
   }.merge(overrides)

@@ -2,6 +2,6 @@ class FloorPlan < ActiveRecord::Base
 
   belongs_to :property
 
-  attr_accessible :floor_plans
+  # strong parameters in controller
 
 end

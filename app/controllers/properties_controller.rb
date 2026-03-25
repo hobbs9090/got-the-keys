@@ -1,10 +1,8 @@
 class PropertiesController < ApplicationController
 
   before_action :authenticate_user!, except: [:index, :show]
-
-  before_action :authenticate_user!, except: [:index, :show]
-
-  before_action :set_user
+  before_action :set_property, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_property_owner!, only: [:edit, :update, :destroy]
 
   def index
     @properties = Property.page(params[:page]).order(:id)
@@ -12,19 +10,12 @@ class PropertiesController < ApplicationController
   end
 
   def show
-    @property = Property.find(params[:id])
   end
 
   def edit
-    if Property.find(params[:id]).user_id == @user.id
-      @property = Property.find(params[:id])
-    else
-      redirect_to root_path, alert: t(:not_authorised)
-    end
   end
 
   def update
-    @property = Property.find(params[:id])
     if @property.update(property_params)
       redirect_to @property, notice: t(:successfully_updated)
     else
@@ -33,12 +24,12 @@ class PropertiesController < ApplicationController
   end
 
   def new
-    @property = @user.properties.new
+    @property = current_user.properties.new
   end
 
   def create
-    @property = @user.properties.new(property_params)
-    if @property.save(property_params)
+    @property = current_user.properties.new(property_params)
+    if @property.save
       redirect_to @property, notice: t(:successfully_created)
     else
       render :new
@@ -46,7 +37,6 @@ class PropertiesController < ApplicationController
   end
 
   def destroy
-    @property = Property.find(params[:id])
     @property.destroy
     redirect_to properties_path, notice: t(:successfully_deleted)
   end
@@ -54,11 +44,17 @@ class PropertiesController < ApplicationController
   private
 
   def property_params
-    params.require(:property).permit(:address_line_1, :address_line_2, :town_city, :county, :postcode, :country, :property_description, :bedrooms, :image_file_name, :sale_status, :asking_price, :user_id)
+    params.require(:property).permit(:address_line_1, :address_line_2, :town_city, :county, :postcode, :country, :property_description, :bedrooms, :image_file_name, :sale_status, :asking_price)
   end
 
-  def set_user
-    @user = current_user
+  def set_property
+    @property = Property.find(params[:id])
+  end
+
+  def authorize_property_owner!
+    return if @property.user == current_user
+
+    redirect_to root_path, alert: t(:not_authorised)
   end
 
 end

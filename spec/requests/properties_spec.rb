@@ -1,51 +1,54 @@
 require 'rails_helper'
 
 describe "Properties" do
+  let!(:user) { User.create!(user_attributes(email: 'request-user@example.com')) }
+  let!(:property) { user.properties.create!(property_attributes) }
+
   describe "GET /properties" do
     it "should retrieve page" do
       get properties_path
 
-      response.status.should be(200)
+      expect(response).to have_http_status(:ok)
     end
   end
 
   describe "GET /properties/1" do
     it "should retrieve page" do
-      get property_path(1)
+      get property_path(property)
 
-      response.status.should be(200)
+      expect(response).to have_http_status(:ok)
     end
   end
 
   describe "GET /properties/1/photos" do
     it "should retrieve page" do
-      get property_photos_path(1)
+      get property_photos_path(property)
 
-      response.status.should be(200)
+      expect(response).to have_http_status(:ok)
     end
   end
 
   describe "GET properties/1/floor_plans" do
     it "should retrieve page" do
-      get property_floor_plans_path(1)
+      get property_floor_plans_path(property)
 
-      response.status.should be(200)
+      expect(response).to have_http_status(:ok)
     end
   end
 
   describe "GET /location/1" do
     it "should retrieve page" do
-      get property_photos_path(1)
+      get location_path(property)
 
-      response.status.should be(200)
+      expect(response).to have_http_status(:ok)
     end
   end
 
   describe "GET /properties/1.json" do
     it "should retrieve page" do
-      get properties_path
+      get "/properties/#{property.id}.json"
 
-      response.status.should be(200)
+      expect(response).to have_http_status(:ok)
     end
   end
 

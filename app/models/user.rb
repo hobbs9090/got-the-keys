@@ -18,8 +18,7 @@ class User < ActiveRecord::Base
 
   validates :language, inclusion: {in: LANGUAGES}
 
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :first_name, :last_name, :mobile_number, :email, :password, :password_confirmation, :remember_me, :language, :properties_count, :terms_of_service
+  # Strong parameters are handled in controllers (Rails 4+)
 
   def init
     self.language ||= I18n.default_locale # will set the default value only if it's nil

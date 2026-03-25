@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_action :set_user_language
 
-  before_filter :update_sanitized_params, if: :devise_controller?
+  before_action :update_sanitized_params, if: :devise_controller?
 
   #before_filter :miniprofiler
 

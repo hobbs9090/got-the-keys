@@ -15,9 +15,11 @@
       <% end %>
     </ol>
 
-    <p>
-      <%= link_to 'Book Appointment', new_property_appointment_path(@property), class: 'button' %>
-    </p>
+    <% if current_user == @property.user %>
+        <p>
+          <%= link_to 'Add Viewing Time', new_property_viewing_time_path(@property), class: 'button' %>
+        </p>
+    <% end %>
 
   </div>
 
