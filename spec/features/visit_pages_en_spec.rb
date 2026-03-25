@@ -9,6 +9,10 @@ describe "For English language user" do
 
       expect(page).to have_title("GotTheKeys")
       expect(page).to have_text("Give buyers and tenants a polished website while giving QA teams a deterministic automation harness.")
+      within('[data-testid="site-nav"]') do
+        expect(page).to have_no_link("Home")
+        expect(page).to have_no_link("Properties")
+      end
     end
   end
 
@@ -18,7 +22,9 @@ describe "For English language user" do
       visit properties_url
 
       expect(page).to have_title("Properties")
-      expect(page).to have_text("Properties")
+      expect(page).to have_text("Property catalogue")
+      expect(page).to have_css(".site-card.empty-state")
+      expect(page).to have_text("No properties match this search")
     end
   end
 
