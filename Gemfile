@@ -13,6 +13,7 @@ gem 'turbo-rails'
 gem 'jbuilder', '~> 2.14'
 gem 'devise', '~> 5.0'
 gem 'kaminari', '~> 1.2'
+gem 'openai', '~> 0.56.0'
 
 group :doc do
   gem 'sdoc', require: false
