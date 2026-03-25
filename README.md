@@ -42,6 +42,15 @@ It is designed to feel like a credible small business product while also being p
 - RSpec, Capybara, Factory Bot, Faker
 - optional OpenAI enrichment via `openai-ruby`
 
+## App Versioning
+
+- The semantic app version lives in the repo-root `VERSION` file.
+- Public pages render `vX.Y.Z` from that single source of truth.
+- QA and admin surfaces can also show `APP_BUILD_SHA` and `APP_BUILD_NUMBER` when those environment variables are present.
+- Capistrano deploys persist optional build metadata into `storage/build_info.json`, so Passenger-hosted environments can keep reporting the exact deployed build after restart.
+- `APP_VERSION` is available as a troubleshooting override, but the normal release flow is to bump `VERSION` in source control.
+- The app never auto-increments its own version at runtime or during deploy.
+
 ## Key Areas In The Repo
 
 - `app/models/`

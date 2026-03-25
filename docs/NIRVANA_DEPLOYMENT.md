@@ -51,6 +51,9 @@ Optional but recommended:
 - `ASSUME_SSL=true`
 - `RAILS_LOG_LEVEL=info`
 - `BOOKINGS_FROM_EMAIL=sales@gotthekeys.com`
+- `APP_BUILD_SHA`
+- `APP_BUILD_NUMBER`
+- `APP_VERSION` for a temporary semantic-version override only
 
 SMTP, if available:
 
@@ -171,6 +174,18 @@ cd /Users/steven/Source/GitHub/rails_got_the_keys
 DEPLOY_USER=your_ssh_user bundle exec cap staging deploy
 ```
 
+To include build metadata in QA/admin diagnostics during a manual deploy:
+
+```bash
+cd /Users/steven/Source/GitHub/rails_got_the_keys
+APP_BUILD_SHA="$(git rev-parse --short HEAD)" \
+APP_BUILD_NUMBER="$(date +%s)" \
+DEPLOY_USER=your_ssh_user \
+bundle exec cap staging deploy
+```
+
+The public footer still renders the semantic version from `VERSION`. Build metadata is optional and only appears on admin or QA-facing surfaces. Capistrano writes `APP_BUILD_SHA` and `APP_BUILD_NUMBER` into `shared/storage/build_info.json`, so Passenger can keep reporting the exact deployed build after restart.
+
 Optional overrides:
 
 ```bash
@@ -186,6 +201,7 @@ The deploy now:
 
 - reuses shared `storage/`, `log/`, `tmp/`, `vendor/bundle/`, and `node_modules/`
 - installs npm dependencies before asset precompile
+- writes optional build metadata to `shared/storage/build_info.json`
 - restarts Passenger with `tmp/restart.txt`
 
 ## GitHub Actions Deployment
@@ -208,7 +224,8 @@ The deploy workflow:
 1. checks out the exact tested commit
 2. uses the shared Ruby at `/home/steven/.rbenv/versions/3.4.7/bin`
 3. pushes that exact commit into the server-local bare mirror
-4. deploys the mirrored ref with `bin/deploy_staging`
+4. exports `APP_BUILD_SHA` and `APP_BUILD_NUMBER` into the deploy command
+5. deploys the mirrored ref with `bin/deploy_staging`
 
 The self-hosted runner uses a dedicated localhost-only SSH key to reach `steven@127.0.0.1` for mirror updates and Capistrano SSH sessions. That key should remain restricted to local source addresses only.
 

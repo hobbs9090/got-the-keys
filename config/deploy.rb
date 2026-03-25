@@ -1,3 +1,6 @@
+require "json"
+require "stringio"
+
 # config valid only for current version of Capistrano
 lock '3.20.0'
 
@@ -49,6 +52,25 @@ set :bundle_without, %w[development test].join(' ')
 set :keep_releases, 3
 
 namespace :deploy do
+  desc "Writes deploy build metadata for runtime diagnostics"
+  task :write_build_metadata do
+    on roles(:app) do
+      build_metadata = {
+        build_sha: ENV["APP_BUILD_SHA"],
+        build_number: ENV["APP_BUILD_NUMBER"]
+      }.reject { |_key, value| value.nil? || value.empty? }
+
+      build_info_path = shared_path.join("storage", "build_info.json")
+      execute :mkdir, "-p", shared_path.join("storage")
+
+      if build_metadata.empty?
+        execute :rm, "-f", build_info_path
+      else
+        upload! StringIO.new(JSON.pretty_generate(build_metadata)), build_info_path
+      end
+    end
+  end
+
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
       # Here we can do anything such as:
@@ -59,3 +81,5 @@ namespace :deploy do
   end
 
 end
+
+before "passenger:restart", "deploy:write_build_metadata"

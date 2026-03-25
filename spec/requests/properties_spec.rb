@@ -9,6 +9,8 @@ describe "Properties" do
       get properties_path
 
       expect(response).to have_http_status(:ok)
+      expect(response.body).to include(%(data-testid="public-app-version"))
+      expect(response.body).to include("v#{Rails.configuration.x.got_the_keys.version}")
     end
   end
 
