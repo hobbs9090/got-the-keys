@@ -4,11 +4,11 @@ This app is intended to deploy cleanly to a conventional Apache + Passenger shar
 
 ## Current Target
 
-This repo is now configured with these production defaults:
+This repo is now configured with these deployment defaults:
 
 - host: `192.168.2.204`
 - deploy root: `/var/www/stevenhobbs.co.uk`
-- Capistrano stage: `production`
+- Capistrano stage: `staging`
 - live URL: `https://stevenhobbs.co.uk`
 
 That means the Apache virtual host should point at the Capistrano `current/public` path, not the deploy root itself:
@@ -158,7 +158,7 @@ Adapt only the Ruby path, hostnames, and certificate paths if needed. The docume
 
 ## Capistrano Deploys
 
-The `production` stage defaults to:
+The `staging` stage defaults to:
 
 - host `192.168.2.204`
 - deploy root `/var/www/stevenhobbs.co.uk`
@@ -168,7 +168,7 @@ Run a deploy with:
 
 ```bash
 cd /Users/steven/Source/GitHub/rails_got_the_keys
-DEPLOY_USER=your_ssh_user bundle exec cap production deploy
+DEPLOY_USER=your_ssh_user bundle exec cap staging deploy
 ```
 
 Optional overrides:
@@ -179,7 +179,7 @@ DEPLOY_HOST=192.168.2.204 \
 DEPLOY_TO=/var/www/stevenhobbs.co.uk \
 DEPLOY_REPO_URL=/home/steven/git/rails_got_the_keys.git \
 DEPLOY_BRANCH=master \
-bundle exec cap production deploy
+bundle exec cap staging deploy
 ```
 
 The deploy now:
@@ -193,10 +193,10 @@ The deploy now:
 This repo now supports a split CI/CD flow:
 
 - `.github/workflows/ci.yml` runs tests on GitHub-hosted runners
-- `.github/workflows/deploy-production.yml` deploys to production only after `CI` succeeds on `master`
-- manual production deploys are also available through `workflow_dispatch`
+- `.github/workflows/deploy-staging.yml` deploys to staging only after `CI` succeeds on `master`
+- manual staging deploys are also available through `workflow_dispatch`
 
-The production deploy job is pinned to the self-hosted runner labels:
+The staging deploy job is pinned to the self-hosted runner labels:
 
 - `self-hosted`
 - `Linux`
@@ -208,7 +208,7 @@ The deploy workflow:
 1. checks out the exact tested commit
 2. uses the shared Ruby at `/home/steven/.rbenv/versions/3.4.7/bin`
 3. pushes that exact commit into the server-local bare mirror
-4. deploys the mirrored ref with `bin/deploy_production`
+4. deploys the mirrored ref with `bin/deploy_staging`
 
 The self-hosted runner uses a dedicated localhost-only SSH key to reach `steven@127.0.0.1` for mirror updates and Capistrano SSH sessions. That key should remain restricted to local source addresses only.
 

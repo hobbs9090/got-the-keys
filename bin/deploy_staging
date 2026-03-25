@@ -34,5 +34,5 @@ git push --force "$DEPLOY_MIRROR_REMOTE" "${DEPLOY_SHA}:refs/heads/${DEPLOY_REF}
 export DEPLOY_USER DEPLOY_HOST DEPLOY_TO APP_HOST DEPLOY_REPO_URL
 export DEPLOY_BRANCH="$DEPLOY_REF"
 
-bundle exec cap production deploy:check
-bundle exec cap production deploy
+bundle exec cap staging deploy:check
+bundle exec cap staging deploy
