@@ -3,7 +3,7 @@
     <div class="site-footer__intro">
       <p class="site-footer__brand">
         <span>&copy; 2026</span>
-        <%= render "layouts/gotthekeys", class_name: "marketing-wordmark--footer", decorative: true, width: 172 %>
+        <%= render "layouts/gotthekeys", class_name: "marketing-wordmark--footer", decorative: true, variant: :dark, width: 172 %>
       </p>
       <p class="site-footer__copy">Modern property discovery, appointment booking, and deterministic QA scenarios in one server-rendered Rails application.</p>
     </div>
@@ -18,7 +18,10 @@
         <li><%= link_to t('blog.title'), blog_index_path %></li>
       </ul>
 
-      <p class="site-footer__small">Built for realistic demos, acceptance testing, and training in AI-driven browser automation.</p>
+      <p class="site-footer__small">
+        Built for realistic demos, acceptance testing, and training in AI-driven browser automation.
+        <%= link_to t("cookie_policy.manage_preferences"), cookie_policy_index_path(anchor: "cookie-preferences") %>
+      </p>
     </div>
   </div>
 </footer>

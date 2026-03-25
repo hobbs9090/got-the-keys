@@ -28,7 +28,7 @@ module ApplicationHelper
     link_to(name, path, **options.merge(class: classes))
   end
 
-  def marketing_wordmark_tag(class_name: nil, alt: nil, decorative: false, **options)
+  def marketing_wordmark_tag(class_name: nil, alt: nil, decorative: false, variant: :default, **options)
     image_options = {
       alt: decorative ? "" : (alt.presence || t("gotthekeys.gotthekeys", default: "got the keys")),
       class: ["marketing-wordmark", class_name].compact.join(" ")
@@ -39,7 +39,16 @@ module ApplicationHelper
       image_options[:role] = "presentation"
     end
 
-    image_tag("gotthekeys-wordmark-green.svg", **image_options.merge(options))
+    image_tag(marketing_wordmark_asset_name(variant), **image_options.merge(options))
+  end
+
+  def marketing_wordmark_asset_name(variant)
+    case variant.to_sym
+    when :dark
+      "gotthekeys-wordmark-green-dark.svg"
+    else
+      "gotthekeys-wordmark-green.svg"
+    end
   end
 
   def form_control_options(object, attribute, classes: nil, **options)

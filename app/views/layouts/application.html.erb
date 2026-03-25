@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= content_for?(:title) ? yield(:title) : t('gotthekeys.gotthekeys') %></title>
-    <%= favicon_link_tag 'favicon.ico' %>
+    <%= favicon_link_tag "favicon-house.svg", type: "image/svg+xml" %>
+    <%= favicon_link_tag "favicon.ico", rel: "alternate icon" %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", media: "all", "data-turbo-track" => "reload" %>
@@ -14,7 +15,7 @@
     <% end %>
   </head>
 
-  <body class="site-shell <%= controller_path.tr('/', '-') %>">
+  <body class="site-shell <%= controller_path.tr('/', '-') %>" data-whatpersist="false">
     <div class="site-background" aria-hidden="true"></div>
     <%= render "layouts/header" %>
     <%= render "layouts/flashes" %>
@@ -24,5 +25,6 @@
     </main>
 
     <%= render "layouts/footer" %>
+    <%= render "layouts/cookie_consent" %>
   </body>
 </html>

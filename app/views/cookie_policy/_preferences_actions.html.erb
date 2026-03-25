@@ -1,0 +1,13 @@
+<div class="<%= ["cookie-preferences__actions", local_assigns[:class_name]].compact.join(" ") %>">
+  <%= form_with url: cookie_preferences_path, method: :patch, local: true, class: "cookie-preferences__form" do %>
+    <%= hidden_field_tag :preference, "all" %>
+    <%= hidden_field_tag :return_to, return_to %>
+    <%= submit_tag t("cookie_policy.accept_all"), class: "button secondary" %>
+  <% end %>
+
+  <%= form_with url: cookie_preferences_path, method: :patch, local: true, class: "cookie-preferences__form" do %>
+    <%= hidden_field_tag :preference, "essential" %>
+    <%= hidden_field_tag :return_to, return_to %>
+    <%= submit_tag t("cookie_policy.reject_non_essential"), class: "button secondary hollow" %>
+  <% end %>
+</div>

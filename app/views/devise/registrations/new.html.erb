@@ -1,76 +1,95 @@
 <% title t('devise.views.registrations.new.title') %>
 
-<div class="row">
-  <div class="large-9 columns">
-    <h4><%= t('devise.views.registrations.new.title') %></h4>
+<section class="auth-shell auth-shell--registration">
+  <aside class="site-card auth-panel auth-panel--registration">
+    <%= render "layouts/gotthekeys", class_name: "marketing-wordmark--hero", width: 240 %>
+    <p class="section-heading__eyebrow"><%= t('devise.views.registrations.new.title') %></p>
+    <h1><%= t('devise.views.registrations.new.hero_title') %></h1>
+    <p class="auth-panel__lead"><%= t('devise.views.registrations.new.paragraph_1') %></p>
+    <p><%= t('devise.views.registrations.new.paragraph_2') %></p>
 
-    <p><%= button_tag t('devise.views.registrations.new.why_so_much'), type: 'button', class: 'button clear', data: { open: 'registration-explainer' } %></p>
+    <div class="auth-panel__callout">
+      <p><%= t('devise.views.registrations.new.paragraph_3') %></p>
+      <%= button_tag t('devise.views.registrations.new.read_more'), type: 'button', class: 'button secondary hollow auth-panel__more', data: { open: 'registration-explainer' } %>
+    </div>
+  </aside>
 
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { data: { turbo: false } }) do |f| %>
+  <section class="site-card auth-form-card auth-form-card--registration">
+    <div class="auth-form-card__header">
+      <div>
+        <p class="section-heading__eyebrow"><%= t('devise.views.registrations.new.setup_badge') %></p>
+        <h2><%= t('devise.views.registrations.new.title') %></h2>
+      </div>
+      <p class="auth-form-card__intro"><%= t('devise.views.registrations.new.form_intro') %></p>
+    </div>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "stacked-form auth-form", data: { turbo: false } }) do |f| %>
       <%= devise_error_messages! %>
-      <fieldset>
-        <ol>
-          <li class="required">
-            <%= f.label :first_name, nil, **form_label_options(resource, :first_name) %>
-            <%= f.text_field :first_name, autofocus: true, required: true, maxlength: 50, autocomplete: "given-name", **form_control_options(resource, :first_name) %>
-            <%= field_error_messages(resource, :first_name) %>
-          </li>
-          <li class="required">
-            <%= f.label :last_name, nil, **form_label_options(resource, :last_name) %>
-            <%= f.text_field :last_name, required: true, maxlength: 50, autocomplete: "family-name", **form_control_options(resource, :last_name) %>
-            <%= field_error_messages(resource, :last_name) %>
-          </li>
-          <li class="required">
-            <%= f.label :mobile_number, nil, **form_label_options(resource, :mobile_number) %>
-            <%= f.text_field :mobile_number, required: true, maxlength: 20, autocomplete: "tel", **form_control_options(resource, :mobile_number) %>
-            <%= field_error_messages(resource, :mobile_number) %>
-          </li>
-          <li class="required">
-            <%= f.label :email, nil, **form_label_options(resource, :email) %>
-            <%= f.email_field :email, required: true, autocomplete: "email", **form_control_options(resource, :email) %>
-            <%= field_error_messages(resource, :email) %>
-          </li>
-          <li class="required">
-            <%= f.label :language, nil, **form_label_options(resource, :language) %>
-            <%= f.select :language, available_languages, { prompt: t('properties.pick_one') }, form_control_options(resource, :language) %>
-            <%= field_error_messages(resource, :language) %>
-          </li>
-          <li class="required">
-            <%= f.label :password, nil, **form_label_options(resource, :password) %>
-            <%= f.password_field :password, required: true, minlength: 6, autocomplete: "new-password", **form_control_options(resource, :password) %>
-            <%= field_error_messages(resource, :password) %>
-          </li>
-          <li class="required">
-            <%= f.label :password_confirmation, nil, **form_label_options(resource, :password_confirmation) %>
-            <%= f.password_field :password_confirmation, required: true, minlength: 6, autocomplete: "new-password", **form_control_options(resource, :password_confirmation) %>
-            <%= field_error_messages(resource, :password_confirmation) %>
-          </li>
-          <li class="required">
-            <%= f.label :terms_of_service, nil, **form_label_options(resource, :terms_of_service) %>
-            <%= f.check_box :terms_of_service %>
+
+      <div class="form-grid auth-form__grid">
+        <div>
+          <%= f.label :first_name, nil, **form_label_options(resource, :first_name) %>
+          <%= f.text_field :first_name, autofocus: true, required: true, maxlength: 50, autocomplete: "given-name", **form_control_options(resource, :first_name) %>
+          <%= field_error_messages(resource, :first_name) %>
+        </div>
+        <div>
+          <%= f.label :last_name, nil, **form_label_options(resource, :last_name) %>
+          <%= f.text_field :last_name, required: true, maxlength: 50, autocomplete: "family-name", **form_control_options(resource, :last_name) %>
+          <%= field_error_messages(resource, :last_name) %>
+        </div>
+        <div>
+          <%= f.label :mobile_number, nil, **form_label_options(resource, :mobile_number) %>
+          <%= f.text_field :mobile_number, required: true, maxlength: 20, autocomplete: "tel", **form_control_options(resource, :mobile_number) %>
+          <%= field_error_messages(resource, :mobile_number) %>
+        </div>
+        <div>
+          <%= f.label :email, nil, **form_label_options(resource, :email) %>
+          <%= f.email_field :email, required: true, autocomplete: "email", **form_control_options(resource, :email) %>
+          <%= field_error_messages(resource, :email) %>
+        </div>
+        <div>
+          <%= f.label :language, nil, **form_label_options(resource, :language) %>
+          <%= f.select :language, available_languages, { prompt: t('properties.pick_one') }, form_control_options(resource, :language) %>
+          <%= field_error_messages(resource, :language) %>
+        </div>
+        <div>
+          <%= f.label :password, nil, **form_label_options(resource, :password) %>
+          <%= f.password_field :password, required: true, minlength: 6, autocomplete: "new-password", **form_control_options(resource, :password) %>
+          <%= field_error_messages(resource, :password) %>
+        </div>
+        <div class="form-grid__full">
+          <%= f.label :password_confirmation, nil, **form_label_options(resource, :password_confirmation) %>
+          <%= f.password_field :password_confirmation, required: true, minlength: 6, autocomplete: "new-password", **form_control_options(resource, :password_confirmation) %>
+          <%= field_error_messages(resource, :password_confirmation) %>
+        </div>
+        <div class="form-grid__full auth-form__checkbox">
+          <%= f.check_box :terms_of_service %>
+          <div>
+            <%= f.label :terms_of_service, nil, class: "checkbox-label" %>
             <%= field_error_messages(resource, :terms_of_service) %>
-          </li>
-        </ol>
-        <p>
-          <%= f.submit t('devise.views.links.register') %>
-        </p>
-      </fieldset>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions auth-form__actions">
+        <p class="auth-form__note"><%= t('devise.views.registrations.new.paragraph_4') %></p>
+        <%= f.submit t('devise.views.links.register'), class: "button primary large auth-form__submit" %>
+      </div>
     <% end %>
 
-    <%= render partial: "devise/shared/links" %>
-  </div>
+    <div class="auth-form-card__links">
+      <%= render partial: "devise/shared/links" %>
+    </div>
+  </section>
+</section>
 
-  <%= render "layouts/sidebar" %>
-
-  <div class="reveal small" id="registration-explainer" data-reveal>
-    <h3><%= render "layouts/gotthekeys" %></h3>
-    <h4><%= t('devise.views.registrations.new.why_so_much') %></h4>
-    <p class="lead"><%= t('devise.views.registrations.new.paragraph_1') %></p>
-    <p><%= t('devise.views.registrations.new.paragraph_2') %></p>
-    <p><%= t('devise.views.registrations.new.paragraph_3') %></p>
-    <p><%= t('devise.views.registrations.new.paragraph_4') %></p>
-    <button class="close-button" data-close aria-label="Close modal" type="button">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
+<div class="reveal small auth-modal auth-modal--registration" id="registration-explainer" data-reveal>
+  <h4><%= t('devise.views.registrations.new.why_so_much') %></h4>
+  <p class="lead"><%= t('devise.views.registrations.new.paragraph_1') %></p>
+  <p><%= t('devise.views.registrations.new.paragraph_2') %></p>
+  <p><%= t('devise.views.registrations.new.paragraph_3') %></p>
+  <p><%= t('devise.views.registrations.new.paragraph_4') %></p>
+  <button class="close-button" data-close aria-label="Close modal" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>

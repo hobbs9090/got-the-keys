@@ -63,6 +63,7 @@ GotTheKeys::Application.routes.draw do
   resources :legal, only: [:index]
 
   resources :cookie_policy, only: [:index]
+  resource :cookie_preferences, only: [:update]
 
   resources :how_it_works, only: [:index]
 

@@ -1,76 +1,92 @@
 <% title t('devise.views.registrations.edit.title') %>
 
-<div class="row">
+<section class="auth-shell auth-shell--account">
+  <aside class="site-card auth-panel auth-panel--account">
+    <%= render "layouts/gotthekeys", class_name: "marketing-wordmark--hero", width: 240 %>
+    <p class="section-heading__eyebrow"><%= t('devise.views.registrations.edit.hero_badge') %></p>
+    <h1><%= t('devise.views.registrations.edit.hero_title') %></h1>
+    <p class="auth-panel__lead"><%= t('devise.views.registrations.edit.hero_intro') %></p>
+    <p><%= t('devise.views.registrations.edit.paragraph_1') %></p>
 
-  <div class="large-9 columns">
+    <div class="auth-panel__callout">
+      <p><%= t('devise.views.registrations.edit.paragraph_2', email: current_user.email) %></p>
+    </div>
+  </aside>
 
-    <h4><%= t('devise.views.registrations.edit.title') %> <%= current_user.email %></h4>
+  <section class="site-card auth-form-card auth-form-card--account">
+    <div class="auth-form-card__header">
+      <div>
+        <p class="section-heading__eyebrow"><%= t('devise.views.registrations.edit.form_badge') %></p>
+        <h2><%= t('devise.views.registrations.edit.title') %></h2>
+      </div>
+      <p class="auth-form-card__intro"><%= t('devise.views.registrations.edit.form_intro') %></p>
+    </div>
 
-    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, data: { turbo: false } }) do |f| %>
-        <%= devise_error_messages! %>
-        <fieldset>
-          <ol>
-            <li class="required">
-              <%= f.label :first_name, nil, **form_label_options(resource, :first_name) %>
-              <%= f.text_field :first_name, autofocus: true, required: true, maxlength: 50, autocomplete: "given-name", **form_control_options(resource, :first_name) %>
-              <%= field_error_messages(resource, :first_name) %>
-            </li>
-            <li class="required">
-              <%= f.label :last_name, nil, **form_label_options(resource, :last_name) %>
-              <%= f.text_field :last_name, required: true, maxlength: 50, autocomplete: "family-name", **form_control_options(resource, :last_name) %>
-              <%= field_error_messages(resource, :last_name) %>
-            </li>
-            <li class="required">
-              <%= f.label :mobile_number, nil, **form_label_options(resource, :mobile_number) %>
-              <%= f.text_field :mobile_number, required: true, maxlength: 20, autocomplete: "tel", **form_control_options(resource, :mobile_number) %>
-              <%= field_error_messages(resource, :mobile_number) %>
-            </li>
-            <li class="required">
-              <%= f.label :email, nil, **form_label_options(resource, :email) %>
-              <%= f.email_field :email, required: true, autocomplete: "email", **form_control_options(resource, :email) %>
-              <%= field_error_messages(resource, :email) %>
-            </li>
-            <li class="required">
-              <%= f.label :language, nil, **form_label_options(resource, :language) %>
-              <%= f.select :language, available_languages, { prompt: t('properties.pick_one') }, form_control_options(resource, :language) %>
-              <%= field_error_messages(resource, :language) %>
-            </li>
-            <li class="required">
-              <%= f.label :password, nil, **form_label_options(resource, :password) %> <i>(leave blank if you don't want to change it)</i><br/>
-              <%= f.password_field :password, minlength: 6, autocomplete: "new-password", **form_control_options(resource, :password) %>
-              <%= field_error_messages(resource, :password) %>
-            </li>
-            <li class="required">
-              <%= f.label :password_confirmation, nil, **form_label_options(resource, :password_confirmation) %>
-              <%= f.password_field :password_confirmation, minlength: 6, autocomplete: "new-password", **form_control_options(resource, :password_confirmation) %>
-              <%= field_error_messages(resource, :password_confirmation) %>
-            </li>
-            <li class="required">
-              <%= f.label :current_password, nil, **form_label_options(resource, :current_password) %> <i>(we need your current password to confirm your changes)</i><br/>
-              <%= f.password_field :current_password, required: true, autocomplete: "current-password", **form_control_options(resource, :current_password) %>
-              <%= field_error_messages(resource, :current_password) %>
-            </li>
-          </ol>
-          <p>
-            <%= f.submit t('devise.views.registrations.edit.update') %>
-          </p>
-        </fieldset>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "stacked-form auth-form", data: { turbo: false } }) do |f| %>
+      <%= devise_error_messages! %>
+
+      <div class="form-grid auth-form__grid">
+        <div>
+          <%= f.label :first_name, nil, **form_label_options(resource, :first_name) %>
+          <%= f.text_field :first_name, autofocus: true, required: true, maxlength: 50, autocomplete: "given-name", **form_control_options(resource, :first_name) %>
+          <%= field_error_messages(resource, :first_name) %>
+        </div>
+        <div>
+          <%= f.label :last_name, nil, **form_label_options(resource, :last_name) %>
+          <%= f.text_field :last_name, required: true, maxlength: 50, autocomplete: "family-name", **form_control_options(resource, :last_name) %>
+          <%= field_error_messages(resource, :last_name) %>
+        </div>
+        <div>
+          <%= f.label :mobile_number, nil, **form_label_options(resource, :mobile_number) %>
+          <%= f.text_field :mobile_number, required: true, maxlength: 20, autocomplete: "tel", **form_control_options(resource, :mobile_number) %>
+          <%= field_error_messages(resource, :mobile_number) %>
+        </div>
+        <div>
+          <%= f.label :email, nil, **form_label_options(resource, :email) %>
+          <%= f.email_field :email, required: true, autocomplete: "email", **form_control_options(resource, :email) %>
+          <%= field_error_messages(resource, :email) %>
+        </div>
+        <div class="form-grid__full">
+          <%= f.label :language, nil, **form_label_options(resource, :language) %>
+          <%= f.select :language, available_languages, { prompt: t('properties.pick_one') }, form_control_options(resource, :language) %>
+          <%= field_error_messages(resource, :language) %>
+        </div>
+        <div class="form-grid__full">
+          <%= f.label :password, nil, **form_label_options(resource, :password) %>
+          <%= f.password_field :password, minlength: 6, autocomplete: "new-password", **form_control_options(resource, :password) %>
+          <p class="auth-form__hint"><%= t('devise.views.registrations.edit.password_hint') %></p>
+          <%= field_error_messages(resource, :password) %>
+        </div>
+        <div class="form-grid__full">
+          <%= f.label :password_confirmation, nil, **form_label_options(resource, :password_confirmation) %>
+          <%= f.password_field :password_confirmation, minlength: 6, autocomplete: "new-password", **form_control_options(resource, :password_confirmation) %>
+          <%= field_error_messages(resource, :password_confirmation) %>
+        </div>
+        <div class="form-grid__full">
+          <%= f.label :current_password, nil, **form_label_options(resource, :current_password) %>
+          <%= f.password_field :current_password, required: true, autocomplete: "current-password", **form_control_options(resource, :current_password) %>
+          <p class="auth-form__hint"><%= t('devise.views.registrations.edit.current_password_hint') %></p>
+          <%= field_error_messages(resource, :current_password) %>
+        </div>
+      </div>
+
+      <div class="form-actions auth-form__actions">
+        <p class="auth-form__note"><%= t('devise.views.registrations.edit.support_note') %></p>
+        <%= f.submit t('devise.views.registrations.edit.update'), class: "button primary large auth-form__submit" %>
+      </div>
     <% end %>
 
-    <h4><%= t('devise.views.registrations.edit.cancel_my_account') %></h4>
-
-    <p>
-      Unhappy?
-      <%= link_to t('devise.views.registrations.edit.cancel_my_account'),
+    <section class="auth-form__danger">
+      <p class="section-heading__eyebrow"><%= t('devise.views.registrations.edit.cancel_my_account') %></p>
+      <h3><%= t('devise.views.registrations.edit.cancel_my_account') %></h3>
+      <p><%= t('devise.views.registrations.edit.danger_body') %></p>
+      <%= link_to t('devise.views.registrations.edit.cancel_action'),
                   registration_path(resource_name),
+                  class: "button hollow auth-form__danger-link",
                   data: {
                     turbo_method: :delete,
                     turbo_confirm: t('devise.views.registrations.edit.are_you_sure')
                   } %>
-    </p>
-
-  </div>
-
-  <%= render "layouts/sidebar" %>
-
-</div>
+    </section>
+  </section>
+</section>

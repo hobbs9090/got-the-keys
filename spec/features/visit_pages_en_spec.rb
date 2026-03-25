@@ -38,7 +38,7 @@ describe "For English language user" do
       visit for_rent_index_url
 
       expect(page).to have_title("For Rent")
-      expect(page).to have_text("Rental listings with viewings ready to book")
+      expect(page).to have_text("Homes available to rent")
     end
   end
 
@@ -68,7 +68,7 @@ describe "For English language user" do
       visit cookie_policy_index_url
 
       expect(page).to have_title("Cookie Policy")
-      expect(page).to have_text("How we use cookies and similar technologies to keep the site working properly.")
+      expect(page).to have_text("This site uses essential cookies to keep sign-in, forms, and language preferences working.")
     end
   end
 
@@ -78,7 +78,7 @@ describe "For English language user" do
       visit how_it_works_url
 
       expect(page).to have_title("How It Works")
-      expect(page).to have_text("Keep more control over the sale or let and reduce the cost of marketing")
+      expect(page).to have_text("How to market your home with more clarity and less fluff")
     end
   end
 
