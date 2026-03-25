@@ -16,7 +16,7 @@ end
 
 def user_attributes(overrides = {})
   {
-      email: "seller01@acme.com",
+      email: "seller-#{SecureRandom.hex(4)}@acme.com",
       first_name: "Test",
       last_name: "User",
       mobile_number: "07595 123456",

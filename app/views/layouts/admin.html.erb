@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "Admin | #{t('gotthekeys.gotthekeys')}" %></title>
+    <%= favicon_link_tag "favicon.ico" %>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", media: "all", "data-turbo-track" => "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track" => "reload", defer: true %>
+  </head>
+
+  <body class="admin-shell">
+    <div class="admin-layout">
+      <aside class="admin-sidebar" data-testid="admin-sidebar">
+        <div class="admin-sidebar__brand">
+          <%= link_to admin_root_path, class: "admin-sidebar__brand-link" do %>
+            <span class="admin-sidebar__eyebrow">Admin Workspace</span>
+            <strong><%= render "layouts/gotthekeys" %></strong>
+          <% end %>
+        </div>
+
+        <%= render "layouts/admin_navigation" %>
+      </aside>
+
+      <div class="admin-content-wrap">
+        <header class="admin-topbar">
+          <div>
+            <p class="admin-topbar__label">Active demo scenario</p>
+            <strong data-testid="active-demo-scenario"><%= active_demo_scenario_key.humanize %></strong>
+          </div>
+
+          <div class="admin-topbar__actions">
+            <span class="admin-topbar__user"><%= current_admin.email %></span>
+            <%= link_to "View site", root_path, class: "button hollow small" %>
+            <%= link_to "Sign out", destroy_admin_session_path, class: "button alert hollow small", data: { turbo_method: :delete } %>
+          </div>
+        </header>
+
+        <%= render "layouts/flashes" %>
+
+        <main class="admin-main">
+          <%= yield %>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

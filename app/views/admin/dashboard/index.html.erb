@@ -1,0 +1,104 @@
+<% title "Admin dashboard" %>
+
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow">Operations overview</p>
+      <h1>Admin dashboard</h1>
+    </div>
+  </div>
+
+  <div class="admin-metric-grid">
+    <% @metrics.each do |label, value| %>
+      <article class="metric-card metric-card--admin">
+        <strong><%= number_with_delimiter(value, delimiter: ",") %></strong>
+        <span><%= label.to_s.humanize %></span>
+      </article>
+    <% end %>
+  </div>
+</section>
+
+<section class="admin-grid">
+  <article class="admin-panel">
+    <h2>Bookings requiring action</h2>
+    <% if @pending_appointments.any? %>
+      <div class="admin-list">
+        <% @pending_appointments.each do |appointment| %>
+          <div class="admin-list__item">
+            <div>
+              <%= link_to appointment.customer_name, admin_appointment_path(appointment) %>
+              <p><%= appointment.property.address_line_1 %> · <%= formatted_date_time(appointment.scheduled_at) %></p>
+            </div>
+            <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="empty-copy">Nothing currently needs attention.</p>
+    <% end %>
+  </article>
+
+  <article class="admin-panel">
+    <h2>Upcoming appointments</h2>
+    <% if @upcoming_appointments.any? %>
+      <div class="admin-list">
+        <% @upcoming_appointments.each do |appointment| %>
+          <div class="admin-list__item">
+            <div>
+              <%= link_to appointment.property.address_line_1, admin_appointment_path(appointment) %>
+              <p><%= appointment.customer_name %> · <%= formatted_date_time(appointment.scheduled_at) %></p>
+            </div>
+            <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="empty-copy">No upcoming bookings.</p>
+    <% end %>
+  </article>
+</section>
+
+<section class="admin-grid">
+  <article class="admin-panel">
+    <h2>Recent activity</h2>
+    <div class="admin-table">
+      <% @recent_appointments.each do |appointment| %>
+        <div class="admin-table__row">
+          <span><%= link_to appointment.public_reference, admin_appointment_path(appointment) %></span>
+          <span><%= appointment.customer_name %></span>
+          <span><%= appointment.property.address_line_1 %></span>
+          <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+        </div>
+      <% end %>
+    </div>
+  </article>
+
+  <article class="admin-panel">
+    <h2>Notification log snapshot</h2>
+    <% if @notification_logs.any? %>
+      <div class="admin-list">
+        <% @notification_logs.each do |log| %>
+          <div class="admin-list__item">
+            <div>
+              <strong><%= log.subject %></strong>
+              <p><%= log.recipient_email %> · <%= formatted_date_time(log.created_at) %></p>
+            </div>
+            <span class="<%= appointment_status_badge_class(log.status == 'failed' ? 'no_show' : log.status == 'sent' ? 'confirmed' : 'pending') %>"><%= log.status.humanize %></span>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="empty-copy">No notification records yet.</p>
+    <% end %>
+  </article>
+</section>
+
+<section class="admin-panel">
+  <h2>Last demo data action</h2>
+  <% if @latest_demo_run.present? %>
+    <p><strong><%= @latest_demo_run.action_type.humanize %></strong> on <%= formatted_date_time(@latest_demo_run.created_at) %></p>
+    <p><%= @latest_demo_run.summary_data&.fetch("name", @latest_demo_run.scenario_key.to_s.humanize) %></p>
+  <% else %>
+    <p class="empty-copy">No scenario reset or import has been recorded yet.</p>
+  <% end %>
+</section>

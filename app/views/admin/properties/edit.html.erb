@@ -1,0 +1,14 @@
+<% title "Edit property #{@property.address_line_1}" %>
+
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow">Catalogue management</p>
+      <h1>Edit property</h1>
+    </div>
+  </div>
+
+  <article class="admin-panel">
+    <%= render "properties/form", form_model: [:admin, @property], cancel_path: admin_property_path(@property), allow_destroy: false %>
+  </article>
+</section>

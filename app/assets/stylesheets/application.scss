@@ -5,11 +5,6 @@
 @include motion-ui-transitions;
 @include motion-ui-animations;
 
-@import "colors";
-@import "forms";
-@import "header";
-@import "layout";
-@import "properties";
+@import "theme";
 @import "responsive-tables";
 @import "statistics";
-@import "welcome";

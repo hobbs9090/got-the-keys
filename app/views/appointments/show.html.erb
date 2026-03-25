@@ -1,0 +1,62 @@
+<% title "Appointment #{@appointment.public_reference}" %>
+
+<section class="page-hero">
+  <div>
+    <p class="page-hero__eyebrow">Appointment details</p>
+    <h1><%= @appointment.public_reference %></h1>
+    <p>Your appointment timeline stays visible here so you can verify every status change and timestamp.</p>
+  </div>
+
+  <div class="page-hero__meta">
+    <span class="<%= appointment_status_badge_class(@appointment.status) %>"><%= @appointment.display_status %></span>
+  </div>
+</section>
+
+<section class="property-layout">
+  <article class="property-panel">
+    <h2>Booking summary</h2>
+
+    <dl class="detail-list">
+      <div>
+        <dt>Property</dt>
+        <dd><%= link_to @appointment.property.address_line_1, property_path(@appointment.property) %></dd>
+      </div>
+      <div>
+        <dt>Requested slot</dt>
+        <dd><%= formatted_date_time(@appointment.requested_time) %></dd>
+      </div>
+      <div>
+        <dt>Current slot</dt>
+        <dd><%= formatted_date_time(@appointment.scheduled_at) %></dd>
+      </div>
+      <div>
+        <dt>Duration</dt>
+        <dd><%= pluralize(@appointment.duration_minutes, "minute") %></dd>
+      </div>
+      <div>
+        <dt>Customer</dt>
+        <dd><%= @appointment.customer_name %> · <%= @appointment.customer_email %><% if @appointment.customer_phone.present? %> · <%= @appointment.customer_phone %><% end %></dd>
+      </div>
+    </dl>
+
+    <% if @appointment.notes.present? %>
+      <div class="note-card">
+        <h3>Customer notes</h3>
+        <p><%= @appointment.notes %></p>
+      </div>
+    <% end %>
+  </article>
+
+  <aside class="property-booking-panel">
+    <h2>Status timeline</h2>
+    <ol class="timeline" data-testid="appointment-timeline">
+      <% @appointment.timeline.each do |event| %>
+        <li>
+          <strong><%= event.event_type.tr("_", " ").humanize %></strong>
+          <span><%= formatted_date_time(event.occurred_at) %></span>
+          <p><%= event.message %></p>
+        </li>
+      <% end %>
+    </ol>
+  </aside>
+</section>

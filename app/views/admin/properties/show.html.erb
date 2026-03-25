@@ -1,0 +1,61 @@
+<% title "Admin property #{@property.address_line_1}" %>
+
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow">Property details</p>
+      <h1><%= @property.address_line_1 %></h1>
+    </div>
+
+    <div class="section-heading__actions">
+      <%= link_to "Edit property", edit_admin_property_path(@property), class: "button primary hollow" %>
+      <%= link_to "View public page", property_path(@property), class: "button hollow secondary" %>
+    </div>
+  </div>
+</section>
+
+<section class="admin-grid">
+  <article class="admin-panel">
+    <h2>Listing summary</h2>
+    <p><strong><%= @property.headline %></strong></p>
+    <p><%= @property.property_description %></p>
+    <p><%= @property.user.full_name.presence || @property.user.email %> · <%= @property.user.email %></p>
+  </article>
+
+  <article class="admin-panel">
+    <h2>Availability windows</h2>
+    <% if @availability_windows.any? %>
+      <div class="admin-list">
+        <% @availability_windows.each do |window| %>
+          <div class="admin-list__item">
+            <div>
+              <strong><%= window.kind.humanize %></strong>
+              <p><%= formatted_date_time(window.starts_at) %> to <%= formatted_date_time(window.ends_at) %></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="empty-copy">No property-specific windows yet. The global booking rules are being used.</p>
+    <% end %>
+  </article>
+</section>
+
+<section class="admin-panel">
+  <h2>Property booking history</h2>
+  <% if @appointments.any? %>
+    <div class="admin-list">
+      <% @appointments.each do |appointment| %>
+        <div class="admin-list__item">
+          <div>
+            <%= link_to appointment.customer_name, admin_appointment_path(appointment) %>
+            <p><%= appointment.customer_email %> · <%= formatted_date_time(appointment.scheduled_at) %></p>
+          </div>
+          <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="empty-copy">No bookings for this property yet.</p>
+  <% end %>
+</section>

@@ -1,15 +1,15 @@
 <% title "Add new Property" %>
 
-<div class="row">
-
-  <div class="large-9 columns" role="content">
-
-    <h4><%= t('properties.add_property_details') %></h4>
-
-    <%= render 'form' %>
-
+<section class="page-hero">
+  <div>
+    <p class="page-hero__eyebrow">Seller tools</p>
+    <h1>Add a property</h1>
+    <p>Create a listing with richer metadata and booking-ready presentation.</p>
   </div>
+</section>
 
-  <%= render "properties/property_sidebar" %>
-
-</div>
+<section class="page-section">
+  <article class="property-panel">
+    <%= render "form" %>
+  </article>
+</section>

@@ -1,6 +1,8 @@
 class ForRentController < ApplicationController
   def index
-    @properties = Property.for_rent.order(updated_at: :desc).page(params[:page])
-    @total_for_rent = Property.for_rent_total
+    @filters = params.permit(:q, :min_bedrooms, :min_price, :max_price, :town_city, :sort).merge(sale_status: Property::SALE_STATUSES[:for_rent])
+    @properties = Property.filter(@filters).page(params[:page])
+    @available_towns = Property.for_rent.order(:town_city).distinct.pluck(:town_city)
+    @total_for_rent = @properties.total_count
   end
 end

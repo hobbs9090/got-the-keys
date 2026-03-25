@@ -1,21 +1,24 @@
 <% title t('for_rent.title') %>
 
-<div class="row">
-
-  <div class="large-9 columns" role="content">
-
-    <h4><%= t('for_rent.header') %>
-      <small><%= t(:total) %>: <%= number_with_delimiter(@total_for_rent, :delimiter => ',') %></small>
-    </h4>
-
-    <%= paginate @properties %>
-
-    <%= render "properties/property" %>
-
-    <%= paginate @properties %>
-
+<section class="page-hero">
+  <div>
+    <p class="page-hero__eyebrow">For rent</p>
+    <h1>Rental listings with viewings ready to book</h1>
+    <p>Explore homes to let, compare availability, and test the renter viewing flow across a realistic catalogue.</p>
   </div>
 
-  <%= render "layouts/sidebar" %>
+  <div class="page-hero__meta">
+    <strong><%= number_with_delimiter(@total_for_rent, delimiter: ",") %></strong>
+    <span>rental listings</span>
+  </div>
+</section>
 
-</div>
+<section class="page-section">
+  <%= render "properties/filters", url: for_rent_index_path, selected_sale_status: Property::SALE_STATUSES[:for_rent], show_status_select: false %>
+</section>
+
+<section class="page-section">
+  <%= paginate @properties %>
+  <%= render "properties/property" %>
+  <%= paginate @properties %>
+</section>

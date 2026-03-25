@@ -38,4 +38,10 @@ class User < ApplicationRecord
   def set_defaults
     self.language ||= I18n.default_locale.to_s
   end
+
+  public
+
+  def full_name
+    [first_name, last_name].reject(&:blank?).join(' ')
+  end
 end

@@ -16,6 +16,21 @@ GotTheKeys::Application.configure do
     host: ENV.fetch('APP_HOST', 'localhost'),
     protocol: 'https'
   }
+  if ENV['SMTP_ADDRESS'].present?
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address: ENV.fetch('SMTP_ADDRESS'),
+      port: Integer(ENV.fetch('SMTP_PORT', 587)),
+      domain: ENV.fetch('SMTP_DOMAIN', ENV.fetch('APP_HOST', 'localhost')),
+      user_name: ENV['SMTP_USERNAME'],
+      password: ENV['SMTP_PASSWORD'],
+      authentication: ENV.fetch('SMTP_AUTHENTICATION', 'plain').to_sym,
+      enable_starttls_auto: ENV.fetch('SMTP_STARTTLS_AUTO', 'true') == 'true'
+    }.compact
+  else
+    config.action_mailer.delivery_method = :file
+    config.action_mailer.file_settings = { location: Rails.root.join('tmp', 'mails') }
+  end
   config.i18n.fallbacks = true
   config.active_support.report_deprecations = false
   config.log_formatter = ::Logger::Formatter.new

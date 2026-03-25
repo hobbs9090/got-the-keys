@@ -1,0 +1,32 @@
+<% title "Notification log" %>
+
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow">Customer communication</p>
+      <h1>Notification log</h1>
+    </div>
+  </div>
+
+  <div class="admin-list">
+    <% @notification_logs.each do |log| %>
+      <article class="admin-list__item">
+        <div>
+          <strong><%= log.subject %></strong>
+          <p><%= log.recipient_email.presence || "No recipient" %> · <%= formatted_date_time(log.created_at) %></p>
+          <% if log.appointment.present? %>
+            <p><%= link_to log.appointment.public_reference, admin_appointment_path(log.appointment) %></p>
+          <% end %>
+        </div>
+        <div class="admin-log-status">
+          <span class="<%= appointment_status_badge_class(log.status == 'failed' ? 'no_show' : log.status == 'sent' ? 'confirmed' : 'pending') %>"><%= log.status.humanize %></span>
+          <% if log.error_message.present? %>
+            <p><%= log.error_message %></p>
+          <% end %>
+        </div>
+      </article>
+    <% end %>
+  </div>
+
+  <%= paginate @notification_logs %>
+</section>

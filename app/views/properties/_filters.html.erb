@@ -1,0 +1,45 @@
+<%= form_with url: url, method: :get, class: "property-filters", local: true, data: { testid: "property-filter-form" } do %>
+  <% if show_status_select %>
+    <div>
+      <%= label_tag :sale_status, "Listing type" %>
+      <%= select_tag :sale_status, options_for_select(Property::SALE_STATUS, selected_sale_status), include_blank: "All listings" %>
+    </div>
+  <% else %>
+    <%= hidden_field_tag :sale_status, selected_sale_status %>
+  <% end %>
+
+  <div>
+    <%= label_tag :q, "Area, postcode or keyword" %>
+    <%= text_field_tag :q, params[:q], placeholder: "Try Sevenoaks, TN13 or garden", data: { testid: "property-search-query" } %>
+  </div>
+
+  <div>
+    <%= label_tag :town_city, "Town" %>
+    <%= select_tag :town_city, options_for_select(@available_towns, params[:town_city]), include_blank: "Any town" %>
+  </div>
+
+  <div>
+    <%= label_tag :min_bedrooms, "Min bedrooms" %>
+    <%= select_tag :min_bedrooms, options_for_select([["Any", nil], [1, 1], [2, 2], [3, 3], [4, 4], ["5+", 5]], params[:min_bedrooms]) %>
+  </div>
+
+  <div>
+    <%= label_tag :min_price, "Min price" %>
+    <%= number_field_tag :min_price, params[:min_price], min: 0, step: 5000, placeholder: "0" %>
+  </div>
+
+  <div>
+    <%= label_tag :max_price, "Max price" %>
+    <%= number_field_tag :max_price, params[:max_price], min: 0, step: 5000, placeholder: "1000000" %>
+  </div>
+
+  <div>
+    <%= label_tag :sort, "Sort" %>
+    <%= select_tag :sort, options_for_select([["Recommended", "recommended"], ["Newest", "newest"], ["Price: low to high", "price_low"], ["Price: high to low", "price_high"], ["Bedrooms", "bedrooms_high"]], params[:sort].presence || "recommended") %>
+  </div>
+
+  <div class="property-filters__actions">
+    <%= button_tag "Apply filters", class: "button primary", data: { testid: "apply-property-filters" } %>
+    <%= link_to "Reset", url, class: "button hollow secondary" %>
+  </div>
+<% end %>

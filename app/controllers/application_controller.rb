@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   before_action :set_user_language
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  helper_method :available_languages, :chinese_locale?
+  helper_method :available_languages, :booking_configuration, :chinese_locale?
 
   protected
 
@@ -25,6 +25,10 @@ class ApplicationController < ActionController::Base
 
   def chinese_locale?
     I18n.locale.to_sym == :zh
+  end
+
+  def booking_configuration
+    BookingConfiguration.current
   end
 
   def set_user_language

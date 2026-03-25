@@ -1,16 +1,15 @@
 <% title "#{t('properties.edit_property_details_for')} #{@property.address_line_1}" %>
 
-<div class="row">
-
-  <div class="large-9 columns" role="content">
-
-    <h4><%= t('properties.edit_property_details_for') %><%= @property.address_line_1 %></h4>
-
-    <%= render 'form' %>
-
+<section class="page-hero">
+  <div>
+    <p class="page-hero__eyebrow">Seller tools</p>
+    <h1>Edit <%= @property.address_line_1 %></h1>
+    <p>Update the listing details, positioning, and metadata shown in the modern catalogue.</p>
   </div>
+</section>
 
-  <%= render "properties/property_sidebar" %>
-
-</div>
-
+<section class="page-section">
+  <article class="property-panel">
+    <%= render "form" %>
+  </article>
+</section>

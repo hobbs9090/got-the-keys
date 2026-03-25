@@ -1,19 +1,32 @@
 # GotTheKeys
 
-GotTheKeys is a small Rails property-listing application that has been modernized onto Rails 8.1, Ruby 3.4, and Foundation Sites 6.9. It is useful in three ways:
+GotTheKeys is a modern Rails 8 property website, appointment-booking app, and QA automation training harness.
 
-1. As a demo Rails application with authentication, listing pages, search, and simple CRUD.
-2. As a development sandbox for trying changes to a Rails 8 app with a classic server-rendered UI.
-3. As a harness for acceptance and browser automation work, because it has predictable public pages, user flows, and a lightweight SQLite setup.
+It is designed to feel like a credible small business product while also being predictable enough for acceptance testing, browser automation exercises, and trainer-led demos. The app stays server-rendered, uses Foundation Sites on the frontend, and remains practical to deploy on an Apache + Passenger shared host.
 
-## What The App Includes
+## What The App Does
 
-- Public marketing pages such as Home, For Sale, For Rent, Search, How It Works, Contact Us, Legal, and Blog.
-- User registration and login via Devise.
-- Admin login via Devise.
-- Property CRUD plus related photos, floor plans, and viewing times.
-- English and Chinese locale support.
-- Server-rendered Rails views with Foundation Sites styling and npm-based JS/CSS bundling.
+- Public marketing and property pages with responsive Foundation styling.
+- Property catalogue, sale/rent filters, sorting, and richer listing cards.
+- Public viewing-request flow on each property page.
+- Full appointment domain with:
+  - `pending`
+  - `confirmed`
+  - `rescheduled`
+  - `cancelled`
+  - `completed`
+  - `no_show`
+- Admin workspace with:
+  - dashboard
+  - agenda/day/week/month appointment views
+  - appointment management
+  - property and seller views
+  - booking rules
+  - notification log
+  - demo-data controls
+  - QA guide
+- Deterministic YAML-backed demo scenarios for repeatable QA training.
+- Optional AI-assisted larger data generation for catalogue population.
 
 ## Current Stack
 
@@ -24,25 +37,32 @@ GotTheKeys is a small Rails property-listing application that has been modernize
 - Foundation Sites `6.9.0`
 - `jsbundling-rails` with `esbuild`
 - `cssbundling-rails` with `sass`
-- optional OpenAI enrichment via the official `openai-ruby` SDK
+- Turbo Rails
+- Devise for `User` and `Admin`
 - RSpec, Capybara, Factory Bot, Faker
-- Cucumber and Database Cleaner plumbing for acceptance-style testing
+- optional OpenAI enrichment via `openai-ruby`
 
-## Repository Layout
+## Key Areas In The Repo
 
-- [`app/`](/Users/steven/Source/GitHub/rails_got_the_keys/app): controllers, models, views, assets, and frontend entrypoints.
-- [`app/javascript/`](/Users/steven/Source/GitHub/rails_got_the_keys/app/javascript): bundled JavaScript source.
-- [`app/assets/stylesheets/`](/Users/steven/Source/GitHub/rails_got_the_keys/app/assets/stylesheets): Sass stylesheets.
-- [`config/routes.rb`](/Users/steven/Source/GitHub/rails_got_the_keys/config/routes.rb): main route map for the site.
-- [`spec/`](/Users/steven/Source/GitHub/rails_got_the_keys/spec): RSpec model, controller, request, routing, and feature specs.
-- [`features/`](/Users/steven/Source/GitHub/rails_got_the_keys/features): Cucumber support is wired up here, though no active `.feature` scenarios are committed yet.
-- [`lib/tasks/populate.rake`](/Users/steven/Source/GitHub/rails_got_the_keys/lib/tasks/populate.rake): AI-capable demo data generator for larger datasets.
-- [`app/services/demo_data/`](/Users/steven/Source/GitHub/rails_got_the_keys/app/services/demo_data): shared seeding and enrichment services used by both `db:seed` and `db:populate`.
-- [`.github/workflows/ci.yml`](/Users/steven/Source/GitHub/rails_got_the_keys/.github/workflows/ci.yml): CI pipeline.
+- `app/models/`
+  Public catalogue models plus the booking domain:
+  `Appointment`, `AppointmentEvent`, `AvailabilityWindow`, `BookingConfiguration`, `NotificationLog`, and `DemoScenarioRun`.
+- `app/controllers/admin/`
+  The password-protected admin workspace.
+- `app/services/demo_data/`
+  Scenario catalog, validation, loading, export, and AI-assisted data generation.
+- `db/demo_scenarios/`
+  Version-controlled scenario definitions used by `db:seed` and the admin demo-data UI.
+- `docs/NIRVANA_DEPLOYMENT.md`
+  Apache + Passenger deployment guide for shared hosting.
+- `docs/QA_TRAINING.md`
+  QA walkthroughs, selectors, scenarios, and known credentials.
 
-## Prerequisites
+## Local Setup
 
-Install the following locally:
+### Prerequisites
+
+Install locally:
 
 - Ruby `3.4.7`
 - Bundler `2.x`
@@ -50,11 +70,11 @@ Install the following locally:
 - npm
 - SQLite3 development libraries/tools
 
-The project already includes [`.ruby-version`](/Users/steven/Source/GitHub/rails_got_the_keys/.ruby-version), so Ruby version managers such as `rbenv`, `asdf`, or `mise` work well.
+The project includes `.ruby-version`, so `rbenv`, `asdf`, `mise`, or similar tools work well.
 
-## Fresh Setup
+### First-Time Install
 
-From the project root:
+From the repo root:
 
 ```bash
 bundle config set path 'vendor/bundle'
@@ -64,29 +84,20 @@ bin/rails db:prepare
 npm run build
 ```
 
-That does the following:
+### Run The App
 
-- installs Ruby gems into `vendor/bundle`
-- installs JavaScript dependencies from `package-lock.json`
-- creates or migrates the SQLite database
-- builds `application.css` and `application.js` into `app/assets/builds`
-
-## Running The App
-
-For a simple local run:
+For a simple local boot:
 
 ```bash
 npm run build
 bin/rails server
 ```
 
-Open:
+Then open:
 
 - `http://127.0.0.1:3000`
 
-### Recommended Development Workflow
-
-Because this repo uses Rails plus separate JS/CSS bundling, the nicest day-to-day setup is three terminals:
+### Recommended Day-To-Day Workflow
 
 Terminal 1:
 
@@ -106,139 +117,60 @@ Terminal 3:
 bin/rails server
 ```
 
-This repo does not currently define a `bin/dev` launcher, so running the watchers separately is the intended workflow.
+## Demo Data And Seeding
 
-## Frontend Build Notes
+This repo now has two distinct data paths:
 
-Frontend assets are generated from:
+### 1. Deterministic Scenario Seeding
 
-- [`app/javascript/application.js`](/Users/steven/Source/GitHub/rails_got_the_keys/app/javascript/application.js)
-- [`app/assets/stylesheets/application.scss`](/Users/steven/Source/GitHub/rails_got_the_keys/app/assets/stylesheets/application.scss)
-
-Build outputs land in:
-
-- [`app/assets/builds/`](/Users/steven/Source/GitHub/rails_got_the_keys/app/assets/builds)
-
-Those generated files are git-ignored except for [`.keep`](/Users/steven/Source/GitHub/rails_got_the_keys/app/assets/builds/.keep).
-
-If the UI looks unstyled or JavaScript interactions stop working, the first recovery step should be:
-
-```bash
-npm run build
-```
-
-## Database And Demo Data
-
-### Baseline Database
-
-For normal setup, use:
-
-```bash
-bin/rails db:prepare
-```
-
-That is the safest command for both development and test databases.
-
-### Generated Demo Data
-
-Both `db:seed` and `db:populate` now use the same shared demo-data pipeline:
-
-- a local blueprint generator creates plausible UK property addresses, towns, counties, bedroom counts, and base prices
-- an optional OpenAI enrichment step rewrites the listing copy and fine-tunes asking prices in structured JSON
-- if no OpenAI API key is present, the generator still works entirely offline
-
-### Quick Start: Seed A Small Demo Environment
-
-Use `db:seed` when you want a compact, ready-to-explore local environment with known logins:
+Use `db:seed` for repeatable demo and QA environments:
 
 ```bash
 bin/rails db:seed
 ```
 
-By default this creates:
+By default this loads the `baseline` scenario from `db/demo_scenarios/baseline.yml`.
 
-- two admin accounts
-- four seller accounts with known email addresses
-- a generated portfolio of demo properties attached to those sellers
+You can load a different bundled scenario:
 
-The seeded seller credentials are:
+```bash
+SEED_SCENARIO=fully_booked_day bin/rails db:seed
+SEED_SCENARIO=qa_edge_cases bin/rails db:seed
+SEED_SCENARIO=high_volume_search bin/rails db:seed
+```
 
-- `seller01@acme.com` / `********`
-- `seller02@acme.com` / `********`
-- `seller03@acme.com` / `********`
-- `seller04@acme.com` / `********`
+Scenario files are human-editable YAML and are intended to be committed to source control.
 
-The admin credentials are:
+### Relative Scenario Dates
 
-- `steven@gotthekeys.com` / `********`
-- `stevenhobbs@meeane.co.uk` / `********`
+Scenario timestamps use relative anchors such as:
 
-### Quick Start: Generate A Larger Dataset
+- `today+7d 09:00`
+- `today-5d 10:00`
 
-Use `db:populate` when you want a larger volume of generated data:
+That keeps the scenarios deterministic when loaded while stopping them from going stale as the real calendar moves on.
+
+### 2. AI-Assisted Catalogue Population
+
+Use `db:populate` when you want a broader generated catalogue:
 
 ```bash
 bin/rails db:populate
 ```
 
-Use that when you want:
+That path still uses the shared `DemoData::Populator` service and optional OpenAI enrichment.
 
-- a fuller catalog for UI testing
-- more realistic pagination/search behavior
-- a larger acceptance-test dataset
+Useful environment variables:
 
-By default, `db:populate` creates a fresh batch of generated users plus a larger property portfolio. It is better for exercising volume and listing diversity than for deterministic login credentials.
-
-### AI Enrichment Modes
-
-The demo-data generator supports three AI modes:
-
-- `SEED_AI_MODE=auto`
-  This is the default. If `OPENAI_API_KEY` is set, the generator uses OpenAI to enrich descriptions and tune prices. If no key is present, it silently falls back to local generation.
-- `SEED_AI_MODE=on`
-  Forces OpenAI enrichment and raises an error if `OPENAI_API_KEY` is missing.
-- `SEED_AI_MODE=off`
-  Disables OpenAI entirely and uses the local generator only.
-
-Example with AI explicitly enabled:
-
-```bash
-OPENAI_API_KEY=your_key_here \
-SEED_AI_MODE=on \
-OPENAI_SEED_MODEL=gpt-5-mini \
-bin/rails db:populate
-```
-
-Example with a smaller AI-enriched seed run:
-
-```bash
-OPENAI_API_KEY=your_key_here \
-SEED_AI_MODE=on \
-OPENAI_SEED_MODEL=gpt-5-mini \
-SEED_PROPERTIES=12 \
-bin/rails db:seed
-```
-
-### Generator Environment Variables
-
-Useful knobs for both `db:seed` and `db:populate`:
-
-- `SEED_AI_MODE`
-  `auto`, `on`, or `off`
-- `OPENAI_API_KEY`
-  enables the OpenAI enrichment step
-- `OPENAI_SEED_MODEL`
-  defaults to `gpt-5-mini`
-- `OPENAI_SEED_BATCH_SIZE`
-  controls how many properties are sent to OpenAI per request
-- `SEED_PROPERTIES`
-  total generated properties
 - `SEED_USERS`
-  number of generated users for `db:populate`
+- `SEED_PROPERTIES`
 - `SEED_PASSWORD`
-  password for generated users in `db:populate`
+- `SEED_AI_MODE=auto|on|off`
+- `OPENAI_API_KEY`
+- `OPENAI_SEED_MODEL`
+- `OPENAI_SEED_BATCH_SIZE`
 
-Example large run tuned for acceptance-test volume:
+Example:
 
 ```bash
 OPENAI_API_KEY=your_key_here \
@@ -246,273 +178,168 @@ SEED_AI_MODE=on \
 OPENAI_SEED_MODEL=gpt-5-mini \
 SEED_USERS=30 \
 SEED_PROPERTIES=120 \
-OPENAI_SEED_BATCH_SIZE=10 \
 bin/rails db:populate
 ```
 
-### Seed Data
+## Bundled Demo Scenarios
 
-A supported [`db/seeds.rb`](/Users/steven/Source/GitHub/rails_got_the_keys/db/seeds.rb) file exists and now uses the same shared generator services as `db:populate`. Use it when you want a smaller, known-credentials demo environment.
+The repo currently ships with:
 
-Run it with:
+- `baseline`
+  Balanced day-to-day catalogue with mixed statuses and known credentials.
+- `fully_booked_day`
+  One property is fully booked across the day, useful for conflict and availability testing.
+- `qa_edge_cases`
+  Includes missing phone data, long notes, a reschedule, and an empty-slot property.
+- `high_volume_search`
+  A larger catalogue intended to trigger sorting and pagination behavior.
+
+## Known Credentials
+
+When you load the `baseline` scenario:
+
+Admins:
+
+- `steven@gotthekeys.com` / `********`
+- `stevenhobbs@meeane.co.uk` / `********`
+
+Sellers:
+
+- `seller01@acme.com` / `********`
+- `seller02@acme.com` / `********`
+- `seller03@acme.com` / `********`
+- `seller04@acme.com` / `********`
+
+## Public Booking Flow
+
+1. Visit a property page.
+2. Choose a published slot from the booking panel.
+3. Submit the viewing request form.
+4. Land on a secure appointment page that shows the status timeline and reference code.
+5. Use the admin workspace to confirm, reschedule, cancel, complete, or mark no-show.
+
+## Admin Workspace
+
+Entry points:
+
+- `/admins/sign_in`
+- `/admin`
+
+The admin area includes:
+
+- `Dashboard`
+- `Appointments`
+- `Properties`
+- `Sellers`
+- `Demo Data`
+- `QA Guide`
+- `Notifications`
+- `Booking Rules`
+
+### Demo Data UI
+
+Inside `/admin/demo-data` an admin can:
+
+- inspect bundled scenario previews
+- restore baseline
+- apply another bundled scenario
+- preview and import YAML
+- export the current dataset
+- see diagnostics and the last reset/import/export record
+
+## Using This App As An Acceptance-Test Harness
+
+GotTheKeys is intentionally useful for browser automation and QA training.
+
+It includes:
+
+- deterministic data via YAML scenarios
+- stable success and validation messaging
+- visible audit timeline for appointments
+- admin diagnostics
+- representative happy-path and edge-case states
+- stable selectors on core flows
+
+Important selectors include:
+
+- `data-testid="property-card"`
+- `data-testid="book-viewing-cta"`
+- `data-testid="appointment-form"`
+- `data-testid="admin-appointment-row"`
+- `data-testid="active-demo-scenario"`
+
+The dedicated QA guide is in [`docs/QA_TRAINING.md`](docs/QA_TRAINING.md).
+
+## Testing
+
+Run the main suite:
 
 ```bash
-bin/rails db:seed
-```
-
-Re-running `db:seed` refreshes the generated properties attached to the seed sellers so you do not accumulate duplicates for those accounts.
-
-### How The AI Step Works
-
-When AI enrichment is enabled:
-
-- the local generator first creates structured property blueprints
-- those blueprints are sent to OpenAI using the Responses API through the official Ruby SDK
-- the request uses a strict JSON schema so the model returns machine-readable price and description updates
-- the app then merges the enriched values back into the local blueprints before writing records to the database
-
-This design keeps the seed task useful even without network access, while still letting you opt into richer listing copy and more market-aware prices when you have an API key available.
-
-### Creating Deterministic Local Accounts
-
-For acceptance automation, it is usually better to create only the records you need.
-
-Example user:
-
-```bash
-bin/rails runner "User.create!(first_name: 'Test', last_name: 'Seller', mobile_number: '07123 456789', email: 'seller@example.com', password: 'secret123', password_confirmation: 'secret123', terms_of_service: true, language: 'en')"
-```
-
-Example admin:
-
-```bash
-bin/rails runner "Admin.create!(email: 'admin@example.com', password: 'secret123', language: 'en')"
-```
-
-Those commands are a better fit for repeatable setup because they create known credentials and only the minimum data your scenario needs.
-
-## Useful Routes For Manual And Automated Testing
-
-Common flows you will likely hit in development or acceptance tests:
-
-- `/` home page
-- `/properties` property listing index
-- `/for_sale` for-sale listing page
-- `/for_rent` for-rent listing page
-- `/searches` search page
-- `/users/register` user registration
-- `/users/sign_in` user sign in
-- `/admins/sign_in` admin sign in
-- `/contact_us` contact page
-- `/how_it_works` feature overview page
-
-You can inspect the full route set with:
-
-```bash
-bin/rails routes
-```
-
-## Test Suite
-
-### RSpec
-
-Run the main Ruby test suite with:
-
-```bash
-npm run build
 bundle exec rspec
 ```
 
-The RSpec suite currently includes:
-
-- model specs
-- controller specs
-- request specs
-- routing specs
-- feature specs using Capybara
-
-Feature-style specs already exist under [`spec/features/`](/Users/steven/Source/GitHub/rails_got_the_keys/spec/features), including page-visit coverage and high-level UI checks.
-
-### Cucumber
-
-Run Cucumber with:
+Run Cucumber support wiring:
 
 ```bash
-npm run build
 bundle exec cucumber
 ```
 
-Important note:
+Current automated coverage includes:
 
-- Cucumber support is configured in [`features/support/env.rb`](/Users/steven/Source/GitHub/rails_got_the_keys/features/support/env.rb).
-- At the moment, the repository has support wiring but no committed `.feature` scenarios, so the command currently completes with `0 scenarios`.
+- property model behaviour
+- appointment conflict and audit behaviour
+- public booking requests
+- admin appointment status transitions
+- demo scenario preview/load/export services
+- public page smoke checks
 
-### Test Database Behavior
+## Notifications
 
-Current test configuration uses:
+Appointment updates write to `notification_logs`.
 
-- transactional RSpec examples via [`spec/rails_helper.rb`](/Users/steven/Source/GitHub/rails_got_the_keys/spec/rails_helper.rb)
-- Database Cleaner transactions for Cucumber
-- truncation fallback for JavaScript-enabled Cucumber scenarios
+Behaviour by environment:
 
-That means the repo is already set up for future higher-level browser scenarios even though the Cucumber feature files themselves have not been written yet.
+- development uses `letter_opener`
+- test uses the standard test mailer
+- production uses SMTP if `SMTP_ADDRESS` is set
+- otherwise production falls back to file delivery under `tmp/mails`
 
-## Using This App As An Acceptance Test Harness
+This keeps the app usable on shared hosting even when outbound SMTP is not yet available.
 
-This app is a good acceptance-test target because it has:
+## Deployment
 
-- a simple local SQLite database
-- no required external SaaS services to boot basic flows
-- public pages with stable routes
-- authentication flows
-- CRUD-style forms
-- search and filtering behavior
-- both guest and signed-in paths
+The app is intended to stay compatible with Apache + Passenger on shared hosting.
 
-### Harness Mode 1: RSpec + Capybara
+Read the deployment guide:
 
-This is the most mature acceptance path already present in the repo.
+- [`docs/NIRVANA_DEPLOYMENT.md`](docs/NIRVANA_DEPLOYMENT.md)
 
-Use it when you want:
+That guide covers:
 
-- Rails-native browser-level specs
-- assertions tightly coupled to the app
-- fast iteration inside the Ruby test suite
+- required environment variables
+- asset build and precompile steps
+- Apache/Passenger configuration shape
+- database migration and seeding
+- backup and restore strategy
 
-Add new end-to-end style coverage under:
-
-- [`spec/features/`](/Users/steven/Source/GitHub/rails_got_the_keys/spec/features)
-
-### Harness Mode 2: Cucumber / BDD
-
-Use Cucumber if you want business-readable acceptance scenarios.
-
-Suggested workflow:
-
-1. Add `.feature` files under `features/`.
-2. Add matching step definitions under `features/step_definitions/`.
-3. Keep environment bootstrapping in `features/support/`.
-
-The repo is already prepared for this path; it just needs actual scenarios.
-
-### Harness Mode 3: External Browser Automation
-
-You can also use the app as the system under test for Playwright, Cypress, Selenium, or another external browser runner.
-
-A practical approach is:
+## Quick Command Summary
 
 ```bash
-RAILS_ENV=test bin/rails db:prepare
-npm run build
-RAILS_ENV=test bin/rails server -b 127.0.0.1 -p 3001
-```
-
-Then point your browser automation tool at:
-
-- `http://127.0.0.1:3001`
-
-This is useful when you want:
-
-- richer browser tooling
-- screenshots/videos/traces
-- cross-browser execution
-- an acceptance layer separate from the app repo's native Ruby tests
-
-For deterministic browser tests in that mode, create records explicitly in the test environment before starting the server. For example:
-
-```bash
-RAILS_ENV=test bin/rails runner "User.create!(first_name: 'Browser', last_name: 'Tester', mobile_number: '07123 456789', email: 'browser@example.com', password: 'secret123', password_confirmation: 'secret123', terms_of_service: true, language: 'en')"
-```
-
-### Good Candidate Acceptance Flows
-
-If you want to build an acceptance suite quickly, these are strong starter scenarios:
-
-- guest can browse the public home page and listings
-- guest can switch between For Sale and For Rent searches
-- guest can open contact/help UI such as tabs and reveal dialogs
-- user can register and sign in
-- signed-in user can create or edit a property
-- admin can sign in and view members/statistics pages
-- locale switching works between English and Chinese
-
-### Data Strategy For Acceptance Tests
-
-For deterministic automation, prefer one of these approaches:
-
-- create records in the test database using factories or Rails helpers
-- seed data explicitly with `bin/rails runner` scripts for each test run
-- use `db:populate` only when the exact records do not matter
-
-In other words:
-
-- use factories for precision
-- use `db:populate` for volume
-
-## Development Notes
-
-### Editor Support
-
-Ruby LSP support is configured for this workspace and runs from the app bundle. If VS Code shows stale Ruby LSP state after dependency changes, restart the Ruby LSP or reload the window.
-
-### Routes And Server-Side Rendering
-
-This is primarily a server-rendered Rails app. Most pages are rendered through standard Rails controllers and ERB templates, with Foundation JavaScript enhancing tabs, orbit, reveal, accordion, and dropdown interactions.
-
-### No External App Server Dependency For Local Work
-
-Development and test use SQLite locally, so there is no required Postgres, Redis, or background job service just to boot the app and exercise the main UI paths.
-
-## CI
-
-GitHub Actions on [`main` and `master`](/Users/steven/Source/GitHub/rails_got_the_keys/.github/workflows/ci.yml) does the following:
-
-1. checks out the repo
-2. installs Node dependencies
-3. installs Ruby gems
-4. builds frontend assets
-5. prepares the test database
-6. runs RSpec
-7. runs Cucumber
-
-You can mirror CI locally with:
-
-```bash
+# install deps
 bundle install
-npm ci
-npm run build
+npm install
+
+# prepare the database
 bin/rails db:prepare
+
+# load deterministic demo data
+bin/rails db:seed
+
+# run the app
+npm run build
+bin/rails server
+
+# run tests
 bundle exec rspec
 bundle exec cucumber
 ```
-
-## Troubleshooting
-
-### The app boots but looks unstyled
-
-Run:
-
-```bash
-npm run build
-```
-
-### Ruby dependencies fail to install
-
-Confirm your active Ruby matches:
-
-```bash
-ruby -v
-cat .ruby-version
-```
-
-### Acceptance/browser tests behave oddly
-
-Make sure you:
-
-- built frontend assets first
-- prepared the correct database for the environment you are using
-- are not accidentally pointing an external runner at a stale development server
-
-## Summary
-
-Use this repo when you want a compact Rails 8 application that is easy to boot, straightforward to inspect, and practical for UI, regression, and acceptance-test automation work.

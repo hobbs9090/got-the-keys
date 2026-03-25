@@ -8,7 +8,7 @@ describe "For English language user" do
       visit root_url
 
       expect(page).to have_title("GotTheKeys")
-      expect(page).to have_text("Sell Or Let With More Control")
+      expect(page).to have_text("Give buyers and tenants a polished website while giving QA teams a deterministic automation harness.")
     end
   end
 
@@ -28,7 +28,7 @@ describe "For English language user" do
       visit for_sale_index_url
 
       expect(page).to have_title("For Sale")
-      expect(page).to have_text("For Sale")
+      expect(page).to have_text("Homes available to buy")
     end
   end
 
@@ -38,7 +38,7 @@ describe "For English language user" do
       visit for_rent_index_url
 
       expect(page).to have_title("For Rent")
-      expect(page).to have_text("For Rent")
+      expect(page).to have_text("Rental listings with viewings ready to book")
     end
   end
 
@@ -48,7 +48,7 @@ describe "For English language user" do
       visit searches_url
 
       expect(page).to have_title("Search")
-      expect(page).to have_text("Search for Properties")
+      expect(page).to have_text("Search listings and booking availability together")
     end
   end
 

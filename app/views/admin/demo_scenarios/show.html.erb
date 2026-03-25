@@ -1,0 +1,27 @@
+<% title "Scenario preview #{@preview.fetch(:name)}" %>
+
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow">Scenario preview</p>
+      <h1><%= @preview.fetch(:name) %></h1>
+    </div>
+
+    <div class="section-heading__actions">
+      <%= button_to "Apply scenario", apply_admin_demo_scenario_path(@preview.fetch(:key)), method: :post, class: "button primary" %>
+      <%= link_to "Back to demo data", admin_demo_scenarios_path, class: "button hollow secondary" %>
+    </div>
+  </div>
+
+  <article class="admin-panel">
+    <p><%= @preview.fetch(:description) %></p>
+    <dl class="detail-list">
+      <% @preview.except(:name, :description).each do |label, value| %>
+        <div>
+          <dt><%= label.to_s.humanize %></dt>
+          <dd><%= value.is_a?(Hash) ? value.map { |k, v| "#{k}: #{v}" }.join(", ") : value %></dd>
+        </div>
+      <% end %>
+    </dl>
+  </article>
+</section>

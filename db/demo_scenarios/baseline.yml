@@ -1,0 +1,200 @@
+key: baseline
+name: Baseline Demo Estate
+description: A balanced day-to-day dataset with mixed sale and rental listings, multiple appointment statuses, and known credentials for training.
+booking_configuration:
+  slot_duration_minutes: 45
+  lead_time_hours: 4
+  buffer_minutes: 15
+  office_opens_at: "09:00"
+  office_closes_at: "18:00"
+  open_weekdays: [1, 2, 3, 4, 5, 6]
+admins:
+  - email: steven@gotthekeys.com
+    password: secret
+    password_confirmation: secret
+    language: en
+  - email: stevenhobbs@meeane.co.uk
+    password: secret
+    password_confirmation: secret
+    language: en
+users:
+  - first_name: Steven
+    last_name: Sykes
+    mobile_number: "07595 123456"
+    email: seller01@acme.com
+    password: secret
+    password_confirmation: secret
+    language: en
+  - first_name: Maurice
+    last_name: DuBuque
+    mobile_number: "07595 223344"
+    email: seller02@acme.com
+    password: secret
+    password_confirmation: secret
+    language: zh
+  - first_name: Matt
+    last_name: Will
+    mobile_number: "07595 998877"
+    email: seller03@acme.com
+    password: secret
+    password_confirmation: secret
+    language: en
+  - first_name: Lia
+    last_name: McClure
+    mobile_number: "07595 334455"
+    email: seller04@acme.com
+    password: secret
+    password_confirmation: secret
+    language: en
+properties:
+  - key: sevenoaks_family_home
+    owner_email: seller01@acme.com
+    address_line_1: 18 Cedar Road
+    address_line_2: Riverhead
+    town_city: Sevenoaks
+    county: Kent
+    postcode: TN13 2AB
+    country: United Kingdom
+    property_type: Detached house
+    listing_tagline: Calm family living close to the station and schools
+    property_description: A bright detached home with a landscaped garden, a generous kitchen diner, and flexible study space for hybrid working. It is ideal for buyers who want a polished move-in-ready house close to Sevenoaks station.
+    bedrooms: 4
+    bathrooms: 2
+    sale_status: For Sale
+    asking_price: 865000
+    featured: true
+  - key: tunbridge_garden_flat
+    owner_email: seller02@acme.com
+    address_line_1: Flat 3, 44 Mount Ephraim
+    address_line_2: ""
+    town_city: Tunbridge Wells
+    county: Kent
+    postcode: TN4 8BZ
+    country: United Kingdom
+    property_type: Garden apartment
+    listing_tagline: A polished apartment with private outside space
+    property_description: A well-finished garden apartment with excellent storage, a separate utility cupboard, and French doors opening to a private terrace. The Pantiles, rail links, and café culture are all within easy reach.
+    bedrooms: 2
+    bathrooms: 1
+    sale_status: For Sale
+    asking_price: 435000
+    featured: true
+  - key: guildford_townhouse
+    owner_email: seller03@acme.com
+    address_line_1: 72 Quarry Street
+    address_line_2: ""
+    town_city: Guildford
+    county: Surrey
+    postcode: GU1 3UY
+    country: United Kingdom
+    property_type: Townhouse
+    listing_tagline: Flexible modern space in the heart of Guildford
+    property_description: A contemporary townhouse with open-plan reception space, a top-floor principal suite, and practical storage across three levels. It suits commuters and families who want a walkable town-centre location.
+    bedrooms: 3
+    bathrooms: 2
+    sale_status: For Sale
+    asking_price: 675000
+    featured: false
+  - key: croydon_rental_loft
+    owner_email: seller04@acme.com
+    address_line_1: Apartment 11, 9 Park Lane
+    address_line_2: ""
+    town_city: Croydon
+    county: Greater London
+    postcode: CR0 1JA
+    country: United Kingdom
+    property_type: Loft apartment
+    listing_tagline: Design-led rental close to East Croydon
+    property_description: A striking rental apartment with high ceilings, a streamlined kitchen, and a comfortable open-plan lounge. It is well placed for fast rail connections, restaurants, and local retail.
+    bedrooms: 2
+    bathrooms: 2
+    sale_status: For Rent
+    asking_price: 1950
+    featured: false
+availability_windows:
+  - property_key: sevenoaks_family_home
+    starts_at: "today+7d 09:00"
+    ends_at: "today+7d 17:00"
+    kind: open
+    label: Wednesday published slots
+  - property_key: sevenoaks_family_home
+    starts_at: "today+7d 12:00"
+    ends_at: "today+7d 13:00"
+    kind: blackout
+    label: Lunch blackout
+  - property_key: tunbridge_garden_flat
+    starts_at: "today+8d 10:00"
+    ends_at: "today+8d 16:00"
+    kind: open
+    label: Thursday open house
+  - property_key: croydon_rental_loft
+    starts_at: "today+9d 09:30"
+    ends_at: "today+9d 15:30"
+    kind: open
+    label: Friday lettings viewings
+appointments:
+  - property_key: sevenoaks_family_home
+    assigned_admin_email: steven@gotthekeys.com
+    customer_name: Holly Mercer
+    customer_email: holly.mercer@example.com
+    customer_phone: "07700 900111"
+    requested_time: "today+7d 09:00"
+    scheduled_at: "today+7d 09:00"
+    duration_minutes: 45
+    status: pending
+    notes: We are relocating for work and would like to ask about parking.
+  - property_key: sevenoaks_family_home
+    assigned_admin_email: steven@gotthekeys.com
+    customer_name: Daniel Porter
+    customer_email: daniel.porter@example.com
+    customer_phone: "07700 900222"
+    requested_time: "today+7d 10:00"
+    scheduled_at: "today+7d 10:00"
+    duration_minutes: 45
+    status: confirmed
+    notes: Coming with my partner and a mortgage adviser.
+    internal_notes: Confirmed by phone and keen on school catchment details.
+  - property_key: tunbridge_garden_flat
+    assigned_admin_email: stevenhobbs@meeane.co.uk
+    customer_name: Jasmine Boyd
+    customer_email: jasmine.boyd@example.com
+    customer_phone: "07700 900333"
+    requested_time: "today+8d 11:00"
+    scheduled_at: "today+9d 14:00"
+    duration_minutes: 45
+    status: rescheduled
+    notes: Afternoon is easier if possible.
+    internal_notes: Requested move after train cancellation.
+  - property_key: guildford_townhouse
+    assigned_admin_email: steven@gotthekeys.com
+    customer_name: Marcus Lee
+    customer_email: marcus.lee@example.com
+    customer_phone: "07700 900444"
+    requested_time: "today+10d 15:00"
+    scheduled_at: "today+10d 15:00"
+    duration_minutes: 45
+    status: cancelled
+    notes: Please cancel if the property is no longer available.
+    internal_notes: Cancelled by customer after receiving another offer acceptance.
+  - property_key: croydon_rental_loft
+    assigned_admin_email: stevenhobbs@meeane.co.uk
+    customer_name: Aisha Rahman
+    customer_email: aisha.rahman@example.com
+    customer_phone: "07700 900555"
+    requested_time: "today-5d 10:00"
+    scheduled_at: "today-5d 10:00"
+    duration_minutes: 45
+    status: completed
+    notes: Interested in moving before the end of April.
+    internal_notes: Strong fit for the property and requested application paperwork.
+  - property_key: croydon_rental_loft
+    assigned_admin_email: stevenhobbs@meeane.co.uk
+    customer_name: Samir Patel
+    customer_email: samir.patel@example.com
+    customer_phone: "07700 900666"
+    requested_time: "today-1d 13:00"
+    scheduled_at: "today-1d 13:00"
+    duration_minutes: 45
+    status: no_show
+    notes: Please call if I am delayed.
+    internal_notes: Did not arrive and could not be reached after two calls.

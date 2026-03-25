@@ -6,11 +6,14 @@ class PropertiesController < ApplicationController
   before_action :authorize_property_owner!, only: [:edit, :update, :destroy]
 
   def index
-    @properties = Property.order(updated_at: :desc).page(params[:page])
-    @total_properties = Property.all_properties_total
+    @filters = property_filter_params
+    @properties = Property.filter(@filters).page(params[:page])
+    @available_towns = Property.order(:town_city).distinct.pluck(:town_city)
+    @total_properties = @properties.total_count
   end
 
   def show
+    @available_slots = @property.next_available_slots(limit: 8)
   end
 
   def edit
@@ -45,11 +48,15 @@ class PropertiesController < ApplicationController
   private
 
   def property_params
-    params.require(:property).permit(:address_line_1, :address_line_2, :town_city, :county, :postcode, :country, :property_description, :bedrooms, :image_file_name, :sale_status, :asking_price)
+    params.require(:property).permit(:address_line_1, :address_line_2, :town_city, :county, :postcode, :country, :property_description, :bedrooms, :bathrooms, :property_type, :listing_tagline, :image_file_name, :sale_status, :asking_price, :featured)
   end
 
   def set_property
     super
+  end
+
+  def property_filter_params
+    params.permit(:q, :sale_status, :min_bedrooms, :min_price, :max_price, :town_city, :sort)
   end
 
 end
