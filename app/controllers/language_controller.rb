@@ -1,18 +1,10 @@
 class LanguageController < ApplicationController
-
   def new
-    language = params[:language]
-    raise 'unsupported location' unless LANGUAGES.include?(language)
-    if user_signed_in?
-      current_user.language = language
-      current_user.save
-    elsif admin_signed_in?
-      current_admin.language = language
-      current_admin.save
-    else
-      Rails.logger.debug 'DEBUG: Oops'
-    end
-    redirect_to :back
-  end
+    language = params.require(:language)
+    raise ActionController::BadRequest, 'unsupported language' unless available_languages.include?(language)
 
+    (current_user || current_admin)&.update(language: language)
+
+    redirect_back fallback_location: root_path
+  end
 end

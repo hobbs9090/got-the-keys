@@ -20,6 +20,7 @@ namespace :db do
                              mobile_number: ['07595 123456', '07955 654321', '07955 123123', '+44 7887 112233'].sample,
                              email: Faker::Internet.email,
                              password: "secret",
+                             terms_of_service: true
                          }
                      ])
       rescue

@@ -1,7 +1,4 @@
-class FloorPlan < ActiveRecord::Base
+class FloorPlan < ApplicationRecord
 
   belongs_to :property
-
-  # strong parameters in controller
-
 end

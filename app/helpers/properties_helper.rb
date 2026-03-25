@@ -1,7 +1,7 @@
 module PropertiesHelper
 
   def cache_key_for_properties_total
-    max_updated_at = Properties.maximum(:updated_at)
+    max_updated_at = Property.maximum(:updated_at)
     "properties/all-#{max_updated_at}"
   end
 
@@ -34,7 +34,11 @@ module PropertiesHelper
   end
 
   def format_renminbi(property)
-    number_to_currency(property.asking_price * EXCHANGE_RATE, :unit => "¥", :precision => 0)
+    number_to_currency(
+      property.asking_price * AppSettings.exchange_rate_gbp_to_cny,
+      unit: '¥',
+      precision: 0
+    )
   end
 
 end

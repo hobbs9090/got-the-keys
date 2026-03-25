@@ -18,11 +18,13 @@
           <table>
             <tr>
               <th><%= t('properties.price') %></th>
-              <td><%= format_price(property) %>
-                <% if locale == :zh %>
-                    <h6><%= format_renminbi(property) %></h6>
+              <td>
+                <%= format_price(property) %>
+                <% if chinese_locale? %>
+                  <div class="property-price-secondary"><%= format_renminbi(property) %></div>
                 <% end %>
-                </tr>
+              </td>
+            </tr>
           </table>
           <footer>
           </footer>

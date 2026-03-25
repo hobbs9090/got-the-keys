@@ -1,39 +1,27 @@
 <!DOCTYPE html>
-<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
-<!--[if lt IE 7 ]> <html class="ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]>    <html class="ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]>    <html class="ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
+<html lang="<%= I18n.locale %>">
   <head>
-  	<meta charset="utf-8" />
-
-  	<!-- Uncomment to make IE8 render like IE7 -->
-  	<!-- <meta http-equiv="X-UA-Compatible" content="IE=7" /> -->
-
-  	<!-- Set the viewport width to device width for mobile -->
-  	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= content_for?(:title) ? yield(:title) : t('gotthekeys.gotthekeys') %></title>
     <%= favicon_link_tag 'favicon.ico' %>
-
-    <%= javascript_include_tag "custom.modernizr" %>
-    <%= stylesheet_link_tag "application", media: "all", "data-turbo-track" => "reload" %>
     <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", media: "all", "data-turbo-track" => "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track" => "reload", defer: true %>
+    <% if params[:controller] == 'statistics' %>
+      <%= javascript_include_tag "charts", "data-turbo-track" => "reload", defer: true %>
+    <% end %>
   </head>
 
-  <body>
+  <body class="site-shell">
+    <%= render "layouts/header" %>
+    <%= render "layouts/flashes" %>
 
-<%= render "layouts/header" %>
+    <main class="site-main">
+      <%= yield %>
+    </main>
 
-<%= render "layouts/flashes" %>
-
-    <%= yield %>
-
-<%= render "layouts/footer" %>
-
-    <%= javascript_include_tag "application" %>
-   <% if params[:controller] == 'statistics' %>
-     <%= javascript_include_tag "charts" %>
-   <% end %>
-   </body>
+    <%= render "layouts/footer" %>
+  </body>
 </html>

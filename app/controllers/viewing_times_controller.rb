@@ -1,4 +1,5 @@
 class ViewingTimesController < ApplicationController
+  include PropertyScoped
 
   before_action :set_property
   before_action :authenticate_user!
@@ -27,15 +28,4 @@ class ViewingTimesController < ApplicationController
   def viewing_time_params
     params.require(:viewing_time).permit(:start_time, :end_time)
   end
-
-  def set_property
-    @property = Property.find(params[:property_id])
-  end
-
-  def authorize_property_owner!
-    return if @property.user == current_user
-
-    redirect_to root_path, alert: t(:not_authorised)
-  end
-
 end

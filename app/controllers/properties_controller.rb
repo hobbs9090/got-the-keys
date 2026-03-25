@@ -1,11 +1,12 @@
 class PropertiesController < ApplicationController
+  include PropertyScoped
 
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_property, only: [:show, :edit, :update, :destroy]
   before_action :authorize_property_owner!, only: [:edit, :update, :destroy]
 
   def index
-    @properties = Property.page(params[:page]).order(:id)
+    @properties = Property.order(updated_at: :desc).page(params[:page])
     @total_properties = Property.all_properties_total
   end
 
@@ -48,13 +49,7 @@ class PropertiesController < ApplicationController
   end
 
   def set_property
-    @property = Property.find(params[:id])
-  end
-
-  def authorize_property_owner!
-    return if @property.user == current_user
-
-    redirect_to root_path, alert: t(:not_authorised)
+    super
   end
 
 end

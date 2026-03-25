@@ -1,9 +1,6 @@
 class ForRentController < ApplicationController
-
   def index
-    @properties = Property.for_rent.page(params[:page]).order(:id)
+    @properties = Property.for_rent.order(updated_at: :desc).page(params[:page])
     @total_for_rent = Property.for_rent_total
-    #@total_for_rent = Property.cached_for_rent_total
   end
-
 end

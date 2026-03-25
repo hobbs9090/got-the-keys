@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock '3.11.0'
+lock '3.20.0'
 
 # Application config
 set :application, 'got_the_keys'
@@ -28,6 +28,9 @@ set :repo_url, 'git@github.com:hobbs9090/rails_got_the_keys.git'
 
 # Default value for linked_dirs is []
 # set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
+
+set :passenger_in_gemfile, true
+set :passenger_restart_with_touch, false
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }

@@ -1,11 +1,8 @@
 <% title t('members.title') %>
 
 <div class="row">
-
   <div class="large-12 columns">
-    <h4><%= t('members.sale_or_rental') %>
-      <small><%= t(:total) %>: <%= number_with_delimiter(@total_number_users, :delimiter => ',') %></small>
-    </h4>
+    <h4><%= t('members.sale_or_rental') %> <small><%= t(:total) %>: <%= number_with_delimiter(@total_number_users, delimiter: ',') %></small></h4>
   </div>
 
   <div class="large-12 columns">
@@ -13,76 +10,39 @@
   </div>
 
   <div class="large-12 columns">
-    <table width=100%>
-      <tr>
-        <th width=10%><%= t('members.member_username') %></th>
-        <th width=5%><%= t('members.num') %></th>
-        <th width=22%><%= t('members.properties_for_sale') %></th>
-        <th width=10%><%= t('members.total_selling_value') %></th>
-        <th width=22%><%= t('members.properties_for_sale') %></th>
-        <th width=10%><%= t('members.total_rental_value') %></th>
-      </tr>
+    <table class="responsive stack">
+      <thead>
+        <tr>
+          <th><%= t('members.member_username') %></th>
+          <th><%= t('members.num') %></th>
+          <th><%= t('members.properties_for_sale') %></th>
+          <th><%= t('members.total_selling_value') %></th>
+          <th><%= t('members.properties_for_sale') %></th>
+          <th><%= t('members.total_rental_value') %></th>
+        </tr>
+      </thead>
 
-      <% @users.each do |user| %>
-          <!-- TODO this need refactoring to use helpers -->
+      <tbody>
+        <% @users.each do |user| %>
+          <% sale_properties = user.properties.select { |property| property.sale_status == Property::SALE_STATUSES[:for_sale] } %>
+          <% rent_properties = user.properties.select { |property| property.sale_status == Property::SALE_STATUSES[:for_rent] } %>
           <tr>
             <td>
-              <%= link_to format_name(user), user %>
+              <strong><%= link_to format_name(user), user %></strong><br>
+              <small><%= user.email %></small>
             </td>
-            <td>
-              <%= user.properties.size %>
-            </td>
-            <td>
-              <%= raw user.properties.where(:sale_status => 'For Sale').collect { |property| link_to property.address_line_1, property_path(property) }.join(", ") %>
-            </td>
-            <td>
-              <% if user.properties.where(:sale_status => 'For Sale').exists? %>
-                  <%= format_total(user.properties.where(:sale_status => 'For Sale').sum(:asking_price)) %>
-              <% end %>
-            </td>
-            <td>
-              <%= raw user.properties.where(:sale_status => 'For Rent').collect { |property| link_to property.address_line_1, property_path(property) }.join(", ") %>
-            </td>
-            <td>
-              <% if user.properties.where(:sale_status => 'For Rent').exists? %>
-                  <%= format_total(user.properties.where(:sale_status => 'For Rent').sum(:asking_price)) %>
-              <% end %>
-            </td>
+            <td><%= user.properties.size %></td>
+            <td><%= safe_join(sale_properties.map { |property| link_to property.address_line_1, property_path(property) }, ', ') %></td>
+            <td><%= sale_properties.any? ? format_total(sale_properties.sum(&:asking_price)) : '' %></td>
+            <td><%= safe_join(rent_properties.map { |property| link_to property.address_line_1, property_path(property) }, ', ') %></td>
+            <td><%= rent_properties.any? ? format_total(rent_properties.sum(&:asking_price)) : '' %></td>
           </tr>
-
-          <div id="myModal" class="reveal-modal">
-            <h3><%= render "layouts/gotthekeys" %></h3>
-
-            <p><strong>Name:</strong>  <%= user.first_name.capitalize %> <%= user.last_name.capitalize %></p>
-
-            <p><strong>Email:</strong>  <%= user.email %></p>
-
-            <p><strong><%= t('properties.property_details') %>:</strong></p>
-            <% user.properties.each do |property| %>
-
-                <ul class="vcard">
-                  <li><%= property.address_line_1 %></li>
-                  <li><%= property.address_line_2 %></li>
-                  <li><%= property.town_city %></li>
-                  <li><%= property.county %></li>
-                  <li><%= property.postcode %></li>
-                  <li><%= property.country %></li>
-                </ul>
-
-            <% end %>
-            <p><strong>Appointments:</strong></p>
-            <a class="close-reveal-modal">&#215;</a>
-          </div>
-
-      <% end %>
-
+        <% end %>
+      </tbody>
     </table>
-
   </div>
 
   <div class="large-12 columns">
     <%= paginate @users %>
   </div>
-
 </div>
-

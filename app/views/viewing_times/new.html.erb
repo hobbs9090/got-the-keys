@@ -8,17 +8,17 @@
 
     <%= render "shared/under_construction" %>
 
-    <%= form_for [@property, @viewing_time] do |f| %>
+    <%= form_with model: [@property, @viewing_time] do |f| %>
         <%= render "shared/errors", object: @viewing_time %>
         <fieldset>
           <ol>
             <li class="required">
               <%= f.label :start_time %>
-              <%= f.datetime_select :start_time, autofocus: true, :minute_step => 15 %>
+              <%= f.datetime_select :start_time, autofocus: true, minute_step: 15 %>
             </li>
             <li class="required">
               <%= f.label :end_time %>
-              <%= f.datetime_select :end_time, :minute_step => 15 %>
+              <%= f.datetime_select :end_time, minute_step: 15 %>
             </li>
           </ol>
           <p>
