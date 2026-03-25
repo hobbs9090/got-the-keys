@@ -90,7 +90,7 @@ For a simple local boot:
 
 ```bash
 npm run build
-bin/rails server
+bin/rails server -b 127.0.0.1
 ```
 
 Then open:
@@ -114,7 +114,7 @@ npm run watch:js
 Terminal 3:
 
 ```bash
-bin/rails server
+bin/rails server -b 127.0.0.1
 ```
 
 ## Demo Data And Seeding
