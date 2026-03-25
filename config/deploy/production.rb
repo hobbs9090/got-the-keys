@@ -5,5 +5,8 @@ server ENV.fetch('DEPLOY_HOST', '192.168.2.204'),
 set :deploy_to, ENV.fetch('DEPLOY_TO', '/var/www/stevenhobbs.co.uk')
 set :rails_env, 'production'
 set :default_env, {
-  'PATH' => '$HOME/.local/bin:$HOME/.rbenv/bin:$HOME/.rbenv/shims:/usr/local/bin:/usr/bin:/bin'
+  'PATH' => '$HOME/.local/bin:$HOME/.rbenv/bin:$HOME/.rbenv/shims:/usr/local/bin:/usr/bin:/bin',
+  'APP_HOST' => ENV.fetch('APP_HOST', 'stevenhobbs.co.uk'),
+  'RAILS_SERVE_STATIC_FILES' => '1',
+  'SECRET_KEY_BASE_DUMMY' => '1'
 }
