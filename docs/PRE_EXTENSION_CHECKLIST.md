@@ -130,15 +130,16 @@ Treat the app as ready for major extension when all of these are true:
 
 ### Tasks
 
-- [ ] Decide whether the next extension phase will stay on `:async` jobs or requires a durable backend.
-- [ ] If staying on `:async`, document the limitation clearly and avoid putting mission-critical flows behind it.
-- [ ] If moving to a durable backend, choose one backend and define the host/process plan before adding more jobs.
-- [ ] List likely future job candidates so they follow one policy from the start.
+- [x] Decide that the next extension phase stays on `:async` jobs for the current shared-host deployment.
+- [x] Document the limitation clearly and keep mission-critical flows off that adapter.
+- [x] Record that a durable backend choice is deferred until real operational pain justifies it.
+- [x] List likely future job candidates so they follow one policy from the start.
 
 ### Repo Hotspots
 
 - `app/jobs/`
 - `config/environments/`
+- `docs/BACKGROUND_JOB_POLICY.md`
 - `docs/NIRVANA_DEPLOYMENT.md`
 - `docs/MODERNIZATION_AUDIT.md`
 
