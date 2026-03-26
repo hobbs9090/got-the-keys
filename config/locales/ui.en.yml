@@ -65,6 +65,8 @@ en:
         first: "First slide"
         second: "Second slide"
         third: "Third slide"
+        fourth: "Fourth slide"
+        fifth: "Fifth slide"
       hero_eyebrow: "Modern property discovery and appointment booking"
       hero_title: "Give buyers and tenants a polished website while giving QA teams a deterministic automation harness."
       primary_cta: "Browse properties"

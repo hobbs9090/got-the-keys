@@ -1,12 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe SharedHelper, type: :helper do
-  describe "#hero_1_image" do
-    it "renders the homepage hero image with 1x and 2x sources" do
-      markup = helper.hero_1_image
+  (1..5).each do |index|
+    describe "#hero_#{index}_image" do
+      it "renders the homepage hero image with 1x and 2x sources" do
+        markup = helper.public_send("hero_#{index}_image")
 
-      expect(markup).to match(%r{src="/assets/hero_1-[^"]+\.jpg"})
-      expect(markup).to match(%r{srcset="/assets/hero_1-[^"]+\.jpg 1x, /assets/hero_1@2x-[^"]+\.jpg 2x"})
+        expect(markup).to match(%r{src="/assets/hero_#{index}-[^"]+\.jpg"})
+        expect(markup).to match(%r{srcset="/assets/hero_#{index}-[^"]+\.jpg 1x, /assets/hero_#{index}@2x-[^"]+\.jpg 2x"})
+      end
     end
   end
 

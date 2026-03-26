@@ -11,6 +11,14 @@ module SharedHelper
     pixel_density_image_tag('hero_3.jpg', retina_source: 'hero_3@2x.jpg')
   end
 
+  def hero_4_image
+    pixel_density_image_tag('hero_4.jpg', retina_source: 'hero_4@2x.jpg')
+  end
+
+  def hero_5_image
+    pixel_density_image_tag('hero_5.jpg', retina_source: 'hero_5@2x.jpg')
+  end
+
   def welcome_image_1
     image_tag('welcome_1.jpg')
   end

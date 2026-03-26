@@ -65,6 +65,8 @@ it:
         first: "Prima slide"
         second: "Seconda slide"
         third: "Terza slide"
+        fourth: "Quarta slide"
+        fifth: "Quinta slide"
       hero_eyebrow: "Scoperta immobiliare moderna e prenotazione appuntamenti"
       hero_title: "Offri ad acquirenti e inquilini un sito curato dando allo stesso tempo ai team QA un ambiente di automazione deterministico."
       primary_cta: "Sfoglia gli immobili"
