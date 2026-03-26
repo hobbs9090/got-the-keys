@@ -2,11 +2,11 @@
 
 GotTheKeys is a modern Rails 8 property website, appointment-booking app, and QA automation training harness.
 
-It is designed to feel like a credible small business product while also being predictable enough for acceptance testing, browser automation exercises, and trainer-led demos. The app stays server-rendered, uses Foundation Sites on the frontend, and remains practical to deploy on an Apache + Passenger shared host.
+It is designed to feel like a credible small business product while also being predictable enough for acceptance testing, browser automation exercises, and trainer-led demos. The app stays server-rendered, uses Foundation Sites as a CSS layer with bundled Turbo/vanilla JavaScript, and remains practical to deploy on an Apache + Passenger shared host.
 
 ## What The App Does
 
-- Public marketing and property pages with responsive Foundation styling.
+- Public marketing and property pages with responsive componentized styling.
 - Property catalogue, sale/rent filters, sorting, and richer listing cards.
 - Public viewing-request flow on each property page.
 - Full appointment domain with:
@@ -34,13 +34,21 @@ It is designed to feel like a credible small business product while also being p
 - Rails `8.1.3`
 - SQLite `2.1.x`
 - Puma `7.2.x`
-- Foundation Sites `6.9.0`
-- `jsbundling-rails` with `esbuild`
+- Active Job for notification delivery
+- Foundation Sites `6.9.0` as the CSS framework layer
+- `jsbundling-rails` with `esbuild` for all app-authored JavaScript
 - `cssbundling-rails` with `sass`
 - Turbo Rails
 - Devise for `User` and `Admin`
 - RSpec, Capybara, Factory Bot, Faker
 - optional OpenAI enrichment via `openai-ruby`
+
+## Modernization Status
+
+- Appointment notifications now enqueue `AppointmentNotificationJob` after commit instead of sending synchronously on the request path.
+- The frontend runtime now flows through the bundled `app/javascript/application.js`; legacy Sprockets-managed JavaScript and app-authored jQuery/Foundation JS usage have been removed.
+- Component and page styles now live under `app/assets/stylesheets/components/` and `app/assets/stylesheets/pages/`, with matching partials in `app/views/`.
+- SQLite plus Apache/Passenger shared hosting remain the default deployment posture until measured scale or operational pain justifies a move.
 
 ## App Versioning
 
@@ -66,12 +74,20 @@ It is designed to feel like a credible small business product while also being p
   `Appointment`, `AppointmentEvent`, `AvailabilityWindow`, `BookingConfiguration`, `NotificationLog`, and `DemoScenarioRun`.
 - `app/controllers/admin/`
   The password-protected admin workspace.
+- `app/jobs/`
+  Active Job boundaries for background work such as appointment notifications.
+- `app/javascript/`
+  The bundled frontend runtime, including Turbo plus app-authored controllers/modules.
+- `app/assets/stylesheets/components/` and `app/assets/stylesheets/pages/`
+  Component and page-level SCSS imported by the bundled `application.scss`.
 - `app/services/demo_data/`
   Scenario catalog, validation, loading, export, and AI-assisted data generation.
 - `db/demo_scenarios/`
   Version-controlled scenario definitions used by `db:seed` and the admin demo-data UI.
 - `docs/NIRVANA_DEPLOYMENT.md`
   Apache + Passenger deployment guide for shared hosting.
+- `docs/MODERNIZATION_AUDIT.md`
+  Recommended modernization sequence for jobs, frontend stack, CSS/view components, and deployment posture.
 - `docs/QA_TRAINING.md`
   QA walkthroughs, selectors, scenarios, and known credentials.
 
@@ -406,16 +422,17 @@ Current automated coverage includes:
 
 ## Notifications
 
-Appointment updates write to `notification_logs`.
+Appointment updates enqueue `AppointmentNotificationJob`, which writes to `notification_logs`.
 
 Behaviour by environment:
 
 - development uses `letter_opener`
 - test uses the standard test mailer
+- development and the Rails `production` environment currently use the Active Job `:async` adapter for notification work
 - the Rails `production` environment uses SMTP if `SMTP_ADDRESS` is set
 - otherwise the Rails `production` environment falls back to file delivery under `tmp/mails`
 
-This keeps the app usable on shared hosting even when outbound SMTP is not yet available.
+This keeps the app responsive and usable on shared hosting even when outbound SMTP is not yet available. It is intentionally not a durable worker setup yet; the queue backend should only be revisited when real operational pain justifies it.
 
 ## Deployment
 

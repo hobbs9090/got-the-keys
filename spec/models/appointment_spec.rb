@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe Appointment do
+  include ActiveJob::TestHelper
+
   let(:user) { FactoryBot.create(:user) }
   let(:admin) { FactoryBot.create(:admin, email: "steven@gotthekeys.com") }
   let(:property) { user.properties.create!(property_attributes(address_line_1: "18 Cedar Road")) }
@@ -17,14 +19,23 @@ RSpec.describe Appointment do
     end
   end
 
+  before do
+    clear_enqueued_jobs
+    clear_performed_jobs
+  end
+
   it "generates public access fields and records a creation event" do
-    appointment = property.appointments.create!(
-      customer_name: "Ruby Owen",
-      customer_email: "ruby.owen@example.com",
-      customer_phone: "07700 930001",
-      requested_time: next_open_slot,
-      notes: "Please confirm parking arrangements."
-    )
+    appointment = nil
+
+    expect do
+      appointment = property.appointments.create!(
+        customer_name: "Ruby Owen",
+        customer_email: "ruby.owen@example.com",
+        customer_phone: "07700 930001",
+        requested_time: next_open_slot,
+        notes: "Please confirm parking arrangements."
+      )
+    end.to have_enqueued_job(AppointmentNotificationJob).with(kind_of(Integer), "created")
 
     expect(appointment.public_reference).to start_with("GTK-")
     expect(appointment.access_token).to be_present
@@ -72,7 +83,9 @@ RSpec.describe Appointment do
       status: "pending"
     )
 
-    appointment.update!(status: "confirmed", admin: admin)
+    expect do
+      appointment.update!(status: "confirmed", admin: admin)
+    end.to have_enqueued_job(AppointmentNotificationJob).with(appointment.id, "confirmed")
 
     expect(appointment.appointment_events.count).to eq(2)
     expect(appointment.appointment_events.order(:created_at).last.event_type).to eq("confirmed")

@@ -1,5 +1,5 @@
 <h5><%= t('statistics.property_totals') %></h5>
-<table width=100%>
+<table class="statistics-table">
   <tr>
     <th width=60%></th>
     <th width=40%><%= t('total') %></th>
@@ -33,7 +33,7 @@
       <%= t('statistics.total_value_properties') %>
     </td>
     <td>
-      <span data-tooltip data-options="disable-for-touch:true" class="has-tip" title="<%= number_with_delimiter(@total_portfolio_on_books) %>"><%= number_to_human(@total_portfolio_on_books, precision: 2) %></span>
+      <span class="statistics-inline-value" title="<%= number_with_delimiter(@total_portfolio_on_books) %>"><%= number_to_human(@total_portfolio_on_books, precision: 2) %></span>
     </td>
   </tr>
   <tr>

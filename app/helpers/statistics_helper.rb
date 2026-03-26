@@ -1,14 +1,15 @@
 module StatisticsHelper
-
-  def cache_key_for_statistics
-    products_updated_at = Product.maximum(:updated_at).try(:utc).try(:to_s, :number)
-    users_update_at = User.maximum(:updated_at).try(:utc).try(:to_s, :number)
-    "statistics/all-#{products_updated_at}-#{users_update_at}"
+  def statistics_chart_tag(chart_id:, chart_type:, data:, options:, class_name: nil)
+    tag.div(
+      "",
+      id: chart_id,
+      class: ["statistics-chart", class_name].compact.join(" "),
+      data: {
+        statistics_chart: true,
+        chart_type: chart_type,
+        chart_data: data.to_json,
+        chart_options: options.to_json
+      }
+    )
   end
-
-  def cache_key_for_property_sizes
-    products_updated_at = Product.maximum(:updated_at).try(:utc).try(:to_s, :number)
-    "property_sizes/all-#{products_updated_at}"
-  end
-
 end
