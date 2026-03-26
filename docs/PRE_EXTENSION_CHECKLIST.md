@@ -176,9 +176,9 @@ Treat the app as ready for major extension when all of these are true:
 
 ## Optional But Worth Considering
 
-- [ ] Add a small “architecture map” doc for the booking domain.
-- [ ] Add a deprecation rule for new top-level controller actions without matching request or system coverage.
-- [ ] Add simple performance baselines for slowest specs if the suite starts growing quickly.
+- [x] Add a small “architecture map” doc for the booking domain.
+- [x] Add a deprecation rule for new top-level controller actions without matching request or system coverage.
+- [x] Add simple performance baselines for slowest specs if the suite starts growing quickly.
 
 ## Suggested First Pass
 
