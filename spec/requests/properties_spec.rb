@@ -32,6 +32,38 @@ describe "Properties" do
       expect(response.body.scan(%(data-testid="property-card")).count).to eq(12)
       expect(response.body).to include(%(href="/properties?page=2"))
     end
+
+    it "applies catalogue filters to the listing results" do
+      matching = FactoryBot.create(
+        :property,
+        user:,
+        address_line_1: "Filtered House",
+        town_city: "Sevenoaks",
+        bedrooms: 4,
+        asking_price: 650_000,
+        sale_status: Property::SALE_STATUSES[:for_sale]
+      )
+      FactoryBot.create(
+        :property,
+        :for_rent,
+        user:,
+        address_line_1: "Excluded Rental",
+        town_city: "Sevenoaks",
+        bedrooms: 4,
+        asking_price: 2_500
+      )
+
+      get properties_path, params: {
+        sale_status: Property::SALE_STATUSES[:for_sale],
+        town_city: "Sevenoaks",
+        min_bedrooms: 4,
+        min_price: 600_000
+      }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(matching.address_line_1)
+      expect(response.body).not_to include("Excluded Rental")
+    end
   end
 
   describe "GET /properties/1" do
