@@ -354,6 +354,11 @@ Important selectors include:
 - `data-testid="active-demo-scenario"`
 
 The dedicated QA guide is in [`docs/QA_TRAINING.md`](docs/QA_TRAINING.md).
+It now includes:
+
+- bundled scenario purposes
+- how to build and validate new QA seed packs
+- how to reset local or hosted QA environments back to a known state
 
 ## Testing
 
@@ -404,6 +409,10 @@ That guide covers:
 - required environment variables
 - asset build and precompile steps
 - Apache/Passenger configuration shape
+- how the `staging` Capistrano deploy works end to end
+- the `current/`, `releases/`, and `shared/` layout under the deploy root
+- which writable paths Capistrano keeps linked across releases
+- how exact-commit staging deploys, cleanup, and rollback work
 - database migration and seeding
 - backup and restore strategy
 

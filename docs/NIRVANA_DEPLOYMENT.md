@@ -204,6 +204,107 @@ The deploy now:
 - writes optional build metadata to `shared/storage/build_info.json`
 - restarts Passenger with `tmp/restart.txt`
 
+### What `bin/deploy_staging` Does
+
+The repo-managed staging entrypoint is:
+
+```bash
+bin/deploy_staging
+```
+
+That wrapper does more than call Capistrano directly:
+
+1. resolves the exact Git commit to deploy with `DEPLOY_SHA` defaulting to local `HEAD`
+2. creates a synthetic ref name like `deploy/<full_sha>`
+3. force-pushes that exact commit into the server-local bare mirror at `/home/steven/git/rails_got_the_keys.git`
+4. exports `DEPLOY_BRANCH` to that synthetic ref
+5. runs `bundle exec cap staging deploy:check`
+6. runs `bundle exec cap staging deploy`
+
+This matters because the staging deploy is commit-addressed, not branch-tip-addressed. If `master` moves after CI passes, the staging deploy can still install the exact SHA that was tested.
+
+### How Capistrano Lays Out The Staging App
+
+Under the deploy root `/var/www/stevenhobbs.co.uk`, Capistrano manages the standard release structure:
+
+- `current/`
+  Symlink to the live release Apache and Passenger should serve.
+- `releases/<timestamp>/`
+  Immutable release directories for individual deploys.
+- `shared/`
+  Persistent writable state and caches that must survive between releases.
+- `repo/`
+  Capistrano's cached Git checkout on the server side.
+
+Apache should always point at `current/public`, because Capistrano switches releases by atomically moving the `current` symlink.
+
+### What Stays Shared Between Releases
+
+These paths are configured as `linked_dirs` and survive deploys:
+
+- `log`
+- `tmp/pids`
+- `tmp/cache`
+- `tmp/sockets`
+- `storage`
+- `vendor/bundle`
+- `node_modules`
+
+That means a new release gets fresh app code, but keeps:
+
+- the SQLite database and uploaded/runtime files in `storage/`
+- bundler-installed gems in `vendor/bundle/`
+- npm packages in `node_modules/`
+- logs and runtime temp directories under `tmp/` and `log/`
+
+Capistrano symlinks those shared directories into each new release before the app is published.
+
+### What Happens During A Staging Deploy
+
+In practical terms, Capistrano manages staging with this flow:
+
+1. `deploy:check` verifies the remote directory structure and linked paths exist or can be created.
+2. `git:update` refreshes the cached server-side repo mirror.
+3. `git:create_release` copies the chosen revision into a new timestamped release directory.
+4. `deploy:symlink:shared` links the shared writable directories into that release.
+5. `bundler:install` installs production gems into the shared bundle path.
+6. `deploy:npm_install` installs frontend packages into shared `node_modules/`.
+7. `deploy:compile_assets` precompiles the Rails frontend assets for the new release.
+8. `deploy:write_build_metadata` writes optional build info into `shared/storage/build_info.json`.
+9. `passenger:restart` touches `tmp/restart.txt` so Passenger boots the new release.
+10. `deploy:cleanup` removes older releases beyond the configured retention window.
+
+Capistrano is configured here to keep only the latest `3` releases on disk:
+
+- `set :keep_releases, 3`
+
+That gives you a small rollback window without letting old releases accumulate indefinitely.
+
+### How Staging Rollback Works
+
+Because each deploy is a separate timestamped release, Capistrano can roll staging back by repointing `current` to the previous known-good release.
+
+Typical rollback command:
+
+```bash
+DEPLOY_USER=your_ssh_user bundle exec cap staging deploy:rollback
+```
+
+That rollback uses the preserved `releases/` history, so it only works while the target release is still within the retained set.
+
+### How Build Metadata Is Managed
+
+Version reporting is split intentionally:
+
+- semantic version: read from the repo `VERSION` file
+- build SHA / build number: optional deploy metadata
+
+During deploy, Capistrano writes `APP_BUILD_SHA` and `APP_BUILD_NUMBER` into:
+
+- `shared/storage/build_info.json`
+
+If those values are not provided, the file is removed. That keeps QA/admin release diagnostics accurate without baking environment-specific metadata into Git-tracked source files.
+
 ## GitHub Actions Deployment
 
 This repo now supports a split CI/CD flow:

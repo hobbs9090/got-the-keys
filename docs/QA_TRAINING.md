@@ -31,10 +31,10 @@ Admins:
 
 Sellers:
 
-- `seller01@acme.com` / `secret`
-- `seller02@acme.com` / `secret`
-- `seller03@acme.com` / `secret`
-- `seller04@acme.com` / `secret`
+- `charlotte.hughes@example.com` / `secret`
+- `daniel.mercer@example.com` / `secret`
+- `matthew.wells@example.com` / `secret`
+- `lucy.mcclure@example.com` / `secret`
 
 ## Bundled Scenario Packs
 
@@ -75,6 +75,79 @@ Use when you want:
 - sorting
 - broader filter combinations
 - more list cards for scanning and scraping exercises
+
+## Building QA Seed Data
+
+If you want a new deterministic QA pack, the easiest path is:
+
+1. Start from `baseline` or the closest bundled scenario.
+2. Use the UI, Rails console, or helper scripts to shape the data into the state you want.
+3. Export that state to YAML.
+4. Edit the exported YAML into a reusable scenario pack.
+5. Validate it.
+6. Reseed from it and confirm the counts and statuses you expect.
+
+### Exporting The Current Dataset
+
+From the admin UI:
+
+- sign in as admin
+- open `/admin/demo-data`
+- use the export action
+
+From the command line:
+
+```bash
+bin/rails runner 'puts DemoData::ScenarioLoader.new.export' > db/demo_scenarios/my_training_pack.yml
+```
+
+The scenario catalog automatically discovers any `*.yml` file in `db/demo_scenarios/`.
+
+### Editing A Scenario Pack
+
+After export, update at least these top-level fields:
+
+- `key`
+- `name`
+- `description`
+
+Recommended conventions for QA-friendly scenario files:
+
+- keep non-admin demo accounts on `@example.com`
+- keep exported passwords as `secret` unless you have a training reason to change them
+- prefer relative times like `today+7d 09:00` over hard-coded dates so the pack does not go stale
+- keep property `key` values short, stable, and unique because availability windows and appointments reference them
+- keep the dataset focused on the workflow you want to test rather than making every pack large
+
+### Validating Before You Commit
+
+You can preview and validate a scenario from the admin UI before applying it:
+
+- open `/admin/demo-data`
+- use the YAML preview/import controls
+
+Or validate it from the command line:
+
+```bash
+bin/rails runner 'payload = YAML.safe_load(File.read("db/demo_scenarios/my_training_pack.yml"), permitted_classes: [Date, Time], aliases: false); p DemoData::ScenarioValidator.new.preview(payload)'
+```
+
+That prints a normalized summary with counts and appointment statuses. If the YAML is invalid, the validator raises a descriptive error.
+
+### Applying Your Scenario Pack
+
+Once the YAML is in `db/demo_scenarios/` and the `key` is set:
+
+```bash
+SEED_SCENARIO=my_training_pack bin/rails db:seed
+```
+
+Then verify:
+
+- the active scenario marker in `/admin/demo-data`
+- property and appointment counts
+- the status mix you intended to create
+- any specific empty states, conflicts, or booking windows the pack is meant to cover
 
 ## Recommended Training Journeys
 
@@ -163,20 +236,64 @@ Key selectors currently exposed:
 - imported YAML must pass validation before it can be applied
 - export produces YAML with the current dataset
 
-## Resetting During Training
+## Resetting QA Environments
 
-From the UI:
+Important: a scenario reset replaces the current demo dataset, including:
+
+- admins
+- sellers/users
+- properties
+- availability windows
+- appointments and appointment events
+- notification logs
+- booking configuration
+
+### Fast Reset From The UI
 
 - sign in as admin
 - open `/admin/demo-data`
 - choose `Restore baseline` or apply another scenario
 
-From the command line:
+### Command-Line Reset In Development
 
 ```bash
 bin/rails db:seed
 SEED_SCENARIO=qa_edge_cases bin/rails db:seed
 ```
+
+Use plain `bin/rails db:seed` when you want the default `baseline` pack back.
+
+### Full Local Database Reset For A Clean QA Loop
+
+If the development database has drifted badly and you want to rebuild everything from scratch:
+
+```bash
+rm -f db/development.sqlite3 db/development.sqlite3-shm db/development.sqlite3-wal
+bin/rails db:prepare
+bin/rails db:seed
+```
+
+That recreates the local database and restores the deterministic baseline scenario.
+
+### Resetting A Hosted QA Environment
+
+If you have deployed the scenario YAML to a staging or hosted QA environment, use the same seed command with the correct Rails environment:
+
+```bash
+RAILS_ENV=production bundle exec rails db:seed
+RAILS_ENV=production SEED_SCENARIO=qa_edge_cases bundle exec rails db:seed
+```
+
+For Capistrano-managed environments, keep the deployment guide handy as well:
+
+- `docs/NIRVANA_DEPLOYMENT.md`
+
+### Good QA Reset Habits
+
+- return to `baseline` before starting a new training session unless the exercise depends on another pack
+- reseed before recording demos or browser automation runs that need deterministic counts
+- export useful trainer-built states back into `db/demo_scenarios/` so they can be replayed later
+- verify `/admin/demo-data` after a reset so you know the intended scenario actually loaded
 
 ## Notes For AI Browser Automation
 
