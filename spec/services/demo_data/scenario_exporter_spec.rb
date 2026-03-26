@@ -5,37 +5,29 @@ RSpec.describe DemoData::ScenarioExporter do
 
   let(:admin) { FactoryBot.create(:admin, email: "ops@gotthekeys.com") }
   let(:user) { FactoryBot.create(:user, email: "owner@example.com", first_name: "Lina", last_name: "West") }
-  let(:property) do
-    user.properties.create!(
-      property_attributes(
-        user_id: user.id,
-        address_line_1: "7 Cedar Close",
-        bathrooms: 2,
-        property_type: "House",
-        listing_tagline: "Light-filled family house",
-        property_description: "A bright, extended family house with a practical kitchen diner and a generous rear garden."
-      )
-    )
-  end
+  let(:property) { FactoryBot.create(:property, user:, address_line_1: "7 Cedar Close", listing_tagline: "Light-filled family house") }
   let!(:window) do
-    property.availability_windows.create!(
-      starts_at: Time.zone.local(2026, 4, 6, 10, 0),
-      ends_at: Time.zone.local(2026, 4, 6, 11, 0),
-      kind: "open",
+    FactoryBot.create(
+      :availability_window,
+      property:,
+      starts_at: booking_time(2026, 4, 6, 10, 0),
+      ends_at: booking_time(2026, 4, 6, 11, 0),
       label: "Morning slot",
       notes: "Front door entry"
     )
   end
   let!(:appointment) do
-    property.appointments.create!(
+    FactoryBot.create(
+      :appointment,
+      :confirmed,
+      property:,
       admin: admin,
       customer_name: "Nina Hall",
       customer_email: "nina@example.com",
       customer_phone: "07700 900333",
-      requested_time: Time.zone.local(2026, 4, 6, 10, 0),
-      scheduled_at: Time.zone.local(2026, 4, 6, 10, 0),
+      requested_time: booking_time(2026, 4, 6, 10, 0),
+      scheduled_at: booking_time(2026, 4, 6, 10, 0),
       duration_minutes: 45,
-      status: "confirmed",
       notes: "Please ring the side gate",
       internal_notes: "Vendor works from home"
     )
@@ -46,7 +38,7 @@ RSpec.describe DemoData::ScenarioExporter do
   end
 
   before do
-    BookingConfiguration.current.update!(active_demo_scenario_key: "qa_snapshot")
+    configure_booking_rules!(active_demo_scenario_key: "qa_snapshot")
   end
 
   it "exports the current dataset as normalized YAML" do

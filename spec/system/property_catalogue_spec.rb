@@ -2,13 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Property catalogue", type: :system do
   def create_property(user:, sale_status:, address_line_1:, bedrooms: 2)
-    user.properties.create!(
-      property_attributes(
-        address_line_1:,
-        bedrooms:,
-        sale_status:
-      )
-    )
+    FactoryBot.create(:property, user:, address_line_1:, bedrooms:, sale_status:)
   end
 
   it "shows sale and rent listings in their respective catalogues" do

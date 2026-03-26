@@ -79,19 +79,19 @@ Treat the app as ready for major extension when all of these are true:
 
 ### Tasks
 
-- [ ] Add Factory Bot factories for:
+- [x] Add Factory Bot factories for:
   `Property`
   `Appointment`
   `BookingConfiguration`
   `AvailabilityWindow`
   `NotificationLog`
-- [ ] Add traits for common booking states such as:
+- [x] Add traits for common booking states such as:
   `pending`
   `confirmed`
   `rescheduled`
   `cancelled`
-- [ ] Add helpers for common date/time setup so tests stop duplicating slot logic.
-- [ ] Replace repeated hand-built setup in request/service specs with shared factories.
+- [x] Add helpers for common date/time setup so tests stop duplicating slot logic.
+- [x] Replace repeated hand-built setup in request/service specs with shared factories.
 
 ### Repo Hotspots
 
