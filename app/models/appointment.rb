@@ -104,7 +104,7 @@ class Appointment < ApplicationRecord
   end
 
   def send_creation_notification
-    AppointmentNotifier.new(self, event_type: "created").deliver
+    AppointmentNotificationJob.perform_later(id, "created")
   end
 
   def record_change_event
@@ -159,6 +159,6 @@ class Appointment < ApplicationRecord
         "rescheduled"
       end
 
-    AppointmentNotifier.new(self, event_type: event_type).deliver
+    AppointmentNotificationJob.perform_later(id, event_type)
   end
 end

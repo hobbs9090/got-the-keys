@@ -21,6 +21,7 @@ GotTheKeys::Application.configure do
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.active_job.queue_adapter = (config.x.got_the_keys.active_job_queue_adapter || "async").to_sym
 
   config.active_support.deprecation = :log
   config.active_record.migration_error = :page_load
