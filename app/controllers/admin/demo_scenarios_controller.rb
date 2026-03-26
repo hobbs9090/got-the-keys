@@ -16,7 +16,7 @@ class Admin::DemoScenariosController < Admin::BaseController
     summary = @scenario_loader.apply_catalog!(key: params[:id], actor_email:)
     reauthenticate_admin(actor_email)
 
-    redirect_to admin_demo_scenarios_path, notice: "Applied demo scenario #{summary.fetch(:name)}."
+    redirect_to admin_demo_scenarios_path, notice: t("ui.admin.flash.applied_demo_scenario", name: summary.fetch(:name))
   rescue StandardError => error
     redirect_to admin_demo_scenarios_path, alert: error.message
   end
@@ -26,7 +26,7 @@ class Admin::DemoScenariosController < Admin::BaseController
     summary = @scenario_loader.apply_catalog!(key: "baseline", actor_email:)
     reauthenticate_admin(actor_email)
 
-    redirect_to admin_demo_scenarios_path, notice: "Restored baseline demo scenario (#{summary.fetch(:name)})."
+    redirect_to admin_demo_scenarios_path, notice: t("ui.admin.flash.restored_baseline_demo_scenario", name: summary.fetch(:name))
   rescue StandardError => error
     redirect_to admin_demo_scenarios_path, alert: error.message
   end
@@ -50,7 +50,7 @@ class Admin::DemoScenariosController < Admin::BaseController
     session.delete(:demo_scenario_import_yaml)
     reauthenticate_admin(actor_email)
 
-    redirect_to admin_demo_scenarios_path, notice: "Imported demo scenario #{summary.fetch(:name)}."
+    redirect_to admin_demo_scenarios_path, notice: t("ui.admin.flash.imported_demo_scenario", name: summary.fetch(:name))
   rescue StandardError => error
     redirect_to import_admin_demo_scenarios_path, alert: error.message
   end

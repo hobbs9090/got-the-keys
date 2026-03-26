@@ -1,74 +1,74 @@
-<% title "Appointment #{@appointment.public_reference}" %>
+<% title t("ui.admin.appointments.show.title", reference: @appointment.public_reference) %>
 
 <section class="admin-section">
   <div class="section-heading">
     <div>
-      <p class="section-heading__eyebrow">Appointment details</p>
+      <p class="section-heading__eyebrow"><%= t("ui.admin.appointments.show.eyebrow") %></p>
       <h1><%= @appointment.public_reference %></h1>
     </div>
 
     <div class="section-heading__actions">
       <span class="<%= appointment_status_badge_class(@appointment.status) %>"><%= @appointment.display_status %></span>
-      <%= link_to "Edit", edit_admin_appointment_path(@appointment), class: "button primary hollow" %>
+      <%= link_to t("ui.admin.appointments.show.edit"), edit_admin_appointment_path(@appointment), class: "button primary hollow" %>
     </div>
   </div>
 </section>
 
 <section class="admin-grid">
   <article class="admin-panel">
-    <h2>Summary</h2>
+    <h2><%= t("ui.admin.appointments.show.summary_title") %></h2>
     <dl class="detail-list">
       <div>
-        <dt>Property</dt>
+        <dt><%= t("ui.common.property") %></dt>
         <dd><%= link_to @appointment.property.address_line_1, admin_property_path(@appointment.property) %></dd>
       </div>
       <div>
-        <dt>Customer</dt>
+        <dt><%= t("ui.common.customer") %></dt>
         <dd><%= @appointment.customer_name %></dd>
       </div>
       <div>
-        <dt>Email</dt>
+        <dt><%= t("ui.common.email_address") %></dt>
         <dd><%= @appointment.customer_email %></dd>
       </div>
       <div>
-        <dt>Phone</dt>
-        <dd><%= @appointment.customer_phone.presence || "Not supplied" %></dd>
+        <dt><%= t("ui.common.phone_number") %></dt>
+        <dd><%= @appointment.customer_phone.presence || t("ui.admin.appointments.show.not_supplied") %></dd>
       </div>
       <div>
-        <dt>Requested slot</dt>
+        <dt><%= t("ui.common.requested_slot") %></dt>
         <dd><%= formatted_date_time(@appointment.requested_time) %></dd>
       </div>
       <div>
-        <dt>Current slot</dt>
+        <dt><%= t("ui.common.current_slot") %></dt>
         <dd><%= formatted_date_time(@appointment.scheduled_at) %></dd>
       </div>
     </dl>
 
     <div class="admin-inline-actions">
-      <%= button_to "Confirm", transition_admin_appointment_path(@appointment, status: "confirmed"), method: :patch, class: "button success hollow" unless @appointment.status == "confirmed" %>
-      <%= button_to "Complete", transition_admin_appointment_path(@appointment, status: "completed"), method: :patch, class: "button primary hollow" unless @appointment.status == "completed" %>
-      <%= button_to "No show", transition_admin_appointment_path(@appointment, status: "no_show"), method: :patch, class: "button warning hollow" unless @appointment.status == "no_show" %>
-      <%= button_to "Cancel", transition_admin_appointment_path(@appointment, status: "cancelled"), method: :patch, class: "button alert hollow" unless @appointment.status == "cancelled" %>
+      <%= button_to t("ui.admin.appointments.confirm"), transition_admin_appointment_path(@appointment, status: "confirmed"), method: :patch, class: "button success hollow" unless @appointment.status == "confirmed" %>
+      <%= button_to t("ui.admin.appointments.show.actions.complete"), transition_admin_appointment_path(@appointment, status: "completed"), method: :patch, class: "button primary hollow" unless @appointment.status == "completed" %>
+      <%= button_to t("ui.admin.appointments.show.actions.no_show"), transition_admin_appointment_path(@appointment, status: "no_show"), method: :patch, class: "button warning hollow" unless @appointment.status == "no_show" %>
+      <%= button_to t("ui.admin.appointments.cancel"), transition_admin_appointment_path(@appointment, status: "cancelled"), method: :patch, class: "button alert hollow" unless @appointment.status == "cancelled" %>
     </div>
   </article>
 
   <article class="admin-panel">
-    <h2>Notes</h2>
-    <p><strong>Customer notes</strong></p>
-    <p><%= @appointment.notes.presence || "No customer notes supplied." %></p>
+    <h2><%= t("ui.admin.appointments.show.notes_title") %></h2>
+    <p><strong><%= t("ui.common.customer_notes") %></strong></p>
+    <p><%= @appointment.notes.presence || t("ui.admin.appointments.show.no_customer_notes") %></p>
 
-    <p><strong>Internal notes</strong></p>
-    <p><%= @appointment.internal_notes.presence || "No internal notes yet." %></p>
+    <p><strong><%= t("ui.admin.appointments.edit.internal_notes") %></strong></p>
+    <p><%= @appointment.internal_notes.presence || t("ui.admin.appointments.show.no_internal_notes") %></p>
   </article>
 </section>
 
 <section class="admin-grid">
   <article class="admin-panel">
-    <h2>Audit trail</h2>
+    <h2><%= t("ui.admin.appointments.show.audit_trail_title") %></h2>
     <ol class="timeline">
       <% @appointment.timeline.each do |event| %>
         <li>
-          <strong><%= event.event_type.tr("_", " ").humanize %></strong>
+          <strong><%= t("ui.appointments.events.#{event.event_type}", default: event.event_type.tr("_", " ").humanize) %></strong>
           <span><%= formatted_date_time(event.occurred_at) %></span>
           <p><%= event.message %></p>
         </li>
@@ -77,7 +77,7 @@
   </article>
 
   <article class="admin-panel">
-    <h2>Customer history</h2>
+    <h2><%= t("ui.admin.appointments.show.customer_history_title") %></h2>
     <% if @customer_history.any? %>
       <div class="admin-list">
         <% @customer_history.each do |appointment| %>
@@ -91,7 +91,7 @@
         <% end %>
       </div>
     <% else %>
-      <p class="empty-copy">No other bookings found for this customer.</p>
+      <p class="empty-copy"><%= t("ui.admin.appointments.show.no_customer_history") %></p>
     <% end %>
   </article>
 </section>

@@ -2,6 +2,7 @@ class Appointment < ApplicationRecord
   STATUSES = %w[pending confirmed rescheduled cancelled completed no_show].freeze
   ACTIVE_STATUSES = %w[pending confirmed rescheduled].freeze
   PHONE_FORMAT = /\A\+?[0-9().\-\s]{7,20}\z/.freeze
+  attr_accessor :skip_slot_validation
 
   belongs_to :property
   belongs_to :admin, optional: true
@@ -75,7 +76,7 @@ class Appointment < ApplicationRecord
   end
 
   def needs_slot_validation?
-    property.present? && scheduled_at.present? && duration_minutes.present? && status.in?(ACTIVE_STATUSES)
+    !skip_slot_validation && property.present? && scheduled_at.present? && duration_minutes.present? && status.in?(ACTIVE_STATUSES)
   end
 
   def slot_available_for_active_bookings

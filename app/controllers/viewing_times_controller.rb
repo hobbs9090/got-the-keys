@@ -17,7 +17,7 @@ class ViewingTimesController < ApplicationController
     @viewing_time = @property.viewing_times.new(viewing_time_params)
     if @viewing_time.save
       redirect_to property_viewing_times_path(@property),
-                  notice: 'Available viewing times have been updated!'
+                  notice: t("ui.legacy.viewing_times_updated_notice")
     else
       render :new, status: :unprocessable_entity
     end

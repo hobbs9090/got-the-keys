@@ -52,6 +52,7 @@ fr:
       update: "Mettre a jour"
       add_viewing_time: "Ajouter un horaire de visite"
       new_viewing_time_title: "Nouvel horaire de visite pour %{address}"
+      viewing_times_updated_notice: "Les horaires de visite disponibles ont ete mis a jour."
       new_photos_title: "Nouvelles photos pour %{address}"
       new_floor_plan_title: "Nouveau plan d'etage pour %{address}"
       location_details_title: "Details de localisation pour %{address}"
@@ -211,6 +212,7 @@ fr:
         title: "Reserver une visite pour %{address}"
         eyebrow: "Demande de visite"
         hero_body: "Choisissez un creneau publie, ajoutez vos coordonnees et creez une demande que l'equipe pourra confirmer, reprogrammer ou annuler."
+        submitted_notice: "La demande de rendez-vous a ete envoyee. Nous vous informerons par e-mail."
         preferred_slot: "Creneau prefere"
         choose_slot: "Choisir un creneau"
         notes_label: "Y a-t-il quelque chose a signaler ?"
@@ -223,6 +225,7 @@ fr:
         title: "Rendez-vous %{reference}"
         eyebrow: "Details du rendez-vous"
         hero_body: "L'historique de votre rendez-vous reste visible ici afin de verifier chaque changement de statut et horodatage."
+        invalid_link_alert: "Ce lien de rendez-vous n'est pas valide."
         summary_title: "Resume de la reservation"
         duration_minutes:
           one: "1 minute"
@@ -247,3 +250,196 @@ fr:
       notes: "Vos notes : %{notes}"
       revisit: "Vous pouvez revoir ce rendez-vous a tout moment en utilisant le lien securise envoye apres la reservation."
       thanks_html: "Merci,<br>GotTheKeys"
+
+    admin:
+      dashboard:
+        on: "le"
+      appointments:
+        confirm: "Confirmer"
+        cancel: "Annuler"
+        show:
+          title: "Rendez-vous %{reference}"
+          eyebrow: "Details du rendez-vous"
+          edit: "Modifier"
+          summary_title: "Resume"
+          not_supplied: "Non fourni"
+          notes_title: "Notes"
+          no_customer_notes: "Aucune note client fournie."
+          no_internal_notes: "Aucune note interne pour le moment."
+          audit_trail_title: "Historique d'audit"
+          customer_history_title: "Historique client"
+          no_customer_history: "Aucune autre reservation trouvee pour ce client."
+          actions:
+            complete: "Terminer"
+            no_show: "Absent"
+        edit:
+          title: "Modifier le rendez-vous %{reference}"
+          eyebrow: "Gestion des reservations"
+          heading: "Modifier le rendez-vous %{reference}"
+          customer_name: "Nom du client"
+          customer_email: "Email du client"
+          customer_phone: "Telephone du client"
+          duration_minutes: "Duree (minutes)"
+          requested_time: "Heure demandee"
+          confirmed_slot: "Creneau confirme"
+          customer_notes: "Notes du client"
+          internal_notes: "Notes internes"
+          save_changes: "Enregistrer les modifications"
+          back: "Retour"
+      flash:
+        booking_rules_updated: "Les regles de reservation ont ete mises a jour."
+        property_updated: "Le bien a ete mis a jour."
+        appointment_updated: "Le rendez-vous a ete mis a jour."
+        unsupported_appointment_status: "Statut de rendez-vous non pris en charge."
+        appointment_marked: "Le rendez-vous a ete marque comme %{status}."
+        applied_demo_scenario: "Scenario de demo %{name} applique."
+        restored_baseline_demo_scenario: "Scenario de demo de base (%{name}) restaure."
+        imported_demo_scenario: "Scenario de demo %{name} importe."
+      properties:
+        index:
+          title: "Biens"
+          eyebrow: "Gestion du catalogue"
+          appointment_count:
+            one: "1 rendez-vous"
+            other: "%{count} rendez-vous"
+          open: "Ouvrir"
+        show:
+          title: "Bien %{address}"
+          eyebrow: "Details du bien"
+          edit_property: "Modifier le bien"
+          view_public_page: "Voir la page publique"
+          summary_title: "Resume de l'annonce"
+          availability_windows_title: "Fenetres de disponibilite"
+          window_range: "%{start_time} a %{end_time}"
+          window_kinds:
+            open: "Ouvert"
+            blackout: "Bloque"
+          no_windows: "Aucune fenetre propre a ce bien pour le moment. Les regles globales de reservation sont utilisees."
+          booking_history_title: "Historique des reservations du bien"
+          no_bookings: "Aucune reservation pour ce bien pour le moment."
+        edit:
+          title: "Modifier le bien %{address}"
+          eyebrow: "Gestion du catalogue"
+          heading: "Modifier le bien"
+      users:
+        index:
+          title: "Vendeurs"
+          eyebrow: "Gestion des clients et vendeurs"
+          property_count:
+            one: "1 bien"
+            other: "%{count} biens"
+        show:
+          title: "Vendeur %{name}"
+          eyebrow: "Profil vendeur"
+          account_details_title: "Details du compte"
+          mobile: "Mobile"
+          properties: "Biens"
+          listing_count:
+            one: "1 annonce"
+            other: "%{count} annonces"
+          recent_booking_activity_title: "Activite recente des reservations"
+          no_activity: "Aucune activite de rendez-vous sur les biens de ce vendeur pour le moment."
+      notification_logs:
+        title: "Journal des notifications"
+        eyebrow: "Communication client"
+        no_recipient: "Aucun destinataire"
+        statuses:
+          sent: "Envoye"
+          skipped: "Ignore"
+          failed: "Echoue"
+      booking_configuration:
+        title: "Regles de reservation"
+        eyebrow: "Configuration des reservations"
+        slot_duration_minutes: "Duree du creneau (minutes)"
+        lead_time_hours: "Delai minimum (heures)"
+        buffer_minutes: "Tampon entre reservations (minutes)"
+        office_opens_at: "Ouverture du bureau a"
+        office_closes_at: "Fermeture du bureau a"
+        open_weekdays: "Jours ouverts"
+        save: "Enregistrer les regles"
+      demo_data:
+        title: "Gestion des donnees de demo"
+        eyebrow: "Environnement QA deterministe"
+        restore_baseline: "Restaurer la base"
+        import_scenario: "Importer un scenario"
+        export_current_data: "Exporter les donnees actuelles"
+        diagnostics_title: "Diagnostic"
+        last_demo_action_title: "Derniere action de demo"
+        no_actions: "Aucune reinitialisation, importation ou exportation n'a encore ete enregistree."
+        preview_action: "Apercu"
+        counts:
+          properties:
+            one: "bien"
+            other: "biens"
+          bookings:
+            one: "reservation"
+            other: "reservations"
+          sellers:
+            one: "vendeur"
+            other: "vendeurs"
+        labels:
+          active_scenario: "Scenario actif"
+          property_count: "Biens"
+          user_count: "Utilisateurs"
+          appointment_count: "Rendez-vous"
+          notification_count: "Journaux de notifications"
+          last_demo_action: "Derniere action de demo"
+        preview_labels:
+          key: "Cle"
+          admin_count: "Administrateurs"
+          user_count: "Utilisateurs"
+          property_count: "Biens"
+          availability_window_count: "Fenetres de disponibilite"
+          appointment_count: "Rendez-vous"
+          appointment_statuses: "Statuts des rendez-vous"
+        actions:
+          apply: "Applique"
+          restore: "Restaure"
+          import: "Importe"
+          export: "Exporte"
+        scenario_keys:
+          baseline: "Base"
+          fully_booked_day: "Journee complete"
+          high_volume_search: "Recherche a fort volume"
+          qa_edge_cases: "Cas limites QA"
+        preview:
+          title: "Apercu du scenario %{name}"
+          eyebrow: "Apercu du scenario"
+          apply_scenario: "Appliquer le scenario"
+          back_to_demo_data: "Retour aux donnees de demo"
+        import:
+          title: "Importer un scenario de demo"
+          eyebrow: "Import de donnees de demo"
+          heading: "Apercu d'un scenario importe avant son application"
+          upload_yaml_file: "Televerser un fichier YAML"
+          paste_yaml: "Ou coller du YAML"
+          yaml_placeholder: "key: imported_scenario\nname: Imported Scenario\n..."
+          preview_import: "Apercu de l'import"
+          back: "Retour"
+        import_preview:
+          title: "Apercu de l'import %{name}"
+          eyebrow: "Apercu de l'import"
+          apply_imported_scenario: "Appliquer le scenario importe"
+          back_to_import: "Retour a l'import"
+          raw_yaml: "YAML brut"
+    aardvarks:
+      index:
+        title: "Liste des aardvarks"
+        new: "Nouvel aardvark"
+      new:
+        title: "Nouvel aardvark"
+      edit:
+        title: "Modifier l'aardvark"
+      actions:
+        show: "Afficher"
+        edit: "Modifier"
+        destroy: "Supprimer"
+        back: "Retour"
+        confirm_destroy: "Etes-vous sur ?"
+      form:
+        error_summary:
+          one: "1 erreur a empeche l'enregistrement de cet aardvark :"
+          other: "%{count} erreurs ont empeche l'enregistrement de cet aardvark :"
+      flash:
+        created: "L'aardvark a ete cree avec succes."
+        updated: "L'aardvark a ete mis a jour avec succes."

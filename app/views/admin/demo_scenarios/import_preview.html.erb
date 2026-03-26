@@ -1,9 +1,9 @@
-<% title "Import preview #{@preview.fetch(:name)}" %>
+<% title t("ui.admin.demo_data.import_preview.title", name: @preview.fetch(:name)) %>
 
 <section class="admin-section">
   <div class="section-heading">
     <div>
-      <p class="section-heading__eyebrow">Import preview</p>
+      <p class="section-heading__eyebrow"><%= t("ui.admin.demo_data.import_preview.eyebrow") %></p>
       <h1><%= @preview.fetch(:name) %></h1>
     </div>
   </div>
@@ -13,20 +13,20 @@
     <dl class="detail-list">
       <% @preview.except(:name, :description).each do |label, value| %>
         <div>
-          <dt><%= label.to_s.humanize %></dt>
-          <dd><%= value.is_a?(Hash) ? value.map { |k, v| "#{k}: #{v}" }.join(", ") : value %></dd>
+          <dt><%= admin_demo_label(label) %></dt>
+          <dd><%= admin_demo_value(label, value) %></dd>
         </div>
       <% end %>
     </dl>
 
     <div class="form-actions">
-      <%= button_to "Apply imported scenario", apply_import_admin_demo_scenarios_path, method: :post, class: "button primary" %>
-      <%= link_to "Back to import", import_admin_demo_scenarios_path, class: "button hollow secondary" %>
+      <%= button_to t("ui.admin.demo_data.import_preview.apply_imported_scenario"), apply_import_admin_demo_scenarios_path, method: :post, class: "button primary" %>
+      <%= link_to t("ui.admin.demo_data.import_preview.back_to_import"), import_admin_demo_scenarios_path, class: "button hollow secondary" %>
     </div>
   </article>
 
   <article class="admin-panel">
-    <h2>Raw YAML</h2>
+    <h2><%= t("ui.admin.demo_data.import_preview.raw_yaml") %></h2>
     <pre class="code-block"><%= @raw_yaml %></pre>
   </article>
 </section>

@@ -1,9 +1,9 @@
-<% title "Seller #{@user.full_name.presence || @user.email}" %>
+<% title t("ui.admin.users.show.title", name: @user.full_name.presence || @user.email) %>
 
 <section class="admin-section">
   <div class="section-heading">
     <div>
-      <p class="section-heading__eyebrow">Seller profile</p>
+      <p class="section-heading__eyebrow"><%= t("ui.admin.users.show.eyebrow") %></p>
       <h1><%= @user.full_name.presence || @user.email %></h1>
     </div>
   </div>
@@ -11,25 +11,25 @@
 
 <section class="admin-grid">
   <article class="admin-panel">
-    <h2>Account details</h2>
+    <h2><%= t("ui.admin.users.show.account_details_title") %></h2>
     <dl class="detail-list">
       <div>
-        <dt>Email</dt>
+        <dt><%= t("ui.common.email_address") %></dt>
         <dd><%= @user.email %></dd>
       </div>
       <div>
-        <dt>Mobile</dt>
+        <dt><%= t("ui.admin.users.show.mobile") %></dt>
         <dd><%= @user.mobile_number %></dd>
       </div>
       <div>
-        <dt>Properties</dt>
-        <dd><%= pluralize(@user.properties.count, "listing") %></dd>
+        <dt><%= t("ui.admin.users.show.properties") %></dt>
+        <dd><%= t("ui.admin.users.show.listing_count", count: @user.properties.count) %></dd>
       </div>
     </dl>
   </article>
 
   <article class="admin-panel">
-    <h2>Recent booking activity</h2>
+    <h2><%= t("ui.admin.users.show.recent_booking_activity_title") %></h2>
     <% if @appointments.any? %>
       <div class="admin-list">
         <% @appointments.each do |appointment| %>
@@ -43,7 +43,7 @@
         <% end %>
       </div>
     <% else %>
-      <p class="empty-copy">No appointment activity on this seller’s properties yet.</p>
+      <p class="empty-copy"><%= t("ui.admin.users.show.no_activity") %></p>
     <% end %>
   </article>
 </section>

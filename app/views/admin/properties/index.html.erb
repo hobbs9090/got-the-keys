@@ -1,10 +1,10 @@
-<% title "Admin properties" %>
+<% title t("ui.admin.properties.index.title") %>
 
 <section class="admin-section">
   <div class="section-heading">
     <div>
-      <p class="section-heading__eyebrow">Catalogue management</p>
-      <h1>Properties</h1>
+      <p class="section-heading__eyebrow"><%= t("ui.admin.properties.index.eyebrow") %></p>
+      <h1><%= t("ui.admin.properties.index.title") %></h1>
     </div>
   </div>
 
@@ -18,8 +18,8 @@
           <p><%= format_price(property) %> · <%= format_bedrooms(property) %></p>
         </div>
         <footer class="property-card__footer">
-          <span><%= pluralize(property.appointments.count, "appointment") %></span>
-          <%= link_to "Open", admin_property_path(property), class: "button primary hollow" %>
+          <span><%= t("ui.admin.properties.index.appointment_count", count: property.appointments.count) %></span>
+          <%= link_to t("ui.admin.properties.index.open"), admin_property_path(property), class: "button primary hollow" %>
         </footer>
       </article>
     <% end %>

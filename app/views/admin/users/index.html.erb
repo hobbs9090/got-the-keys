@@ -1,10 +1,10 @@
-<% title "Admin sellers" %>
+<% title t("ui.admin.users.index.title") %>
 
 <section class="admin-section">
   <div class="section-heading">
     <div>
-      <p class="section-heading__eyebrow">Customer and seller management</p>
-      <h1>Sellers</h1>
+      <p class="section-heading__eyebrow"><%= t("ui.admin.users.index.eyebrow") %></p>
+      <h1><%= t("ui.admin.users.index.title") %></h1>
     </div>
   </div>
 
@@ -13,7 +13,7 @@
       <div class="admin-list__item">
         <div>
           <%= link_to user.full_name.presence || user.email, admin_user_path(user) %>
-          <p><%= user.email %> · <%= pluralize(user.properties.count, "property") %></p>
+          <p><%= user.email %> · <%= t("ui.admin.users.index.property_count", count: user.properties.count) %></p>
         </div>
         <span class="badge badge--neutral"><%= user.language.upcase %></span>
       </div>

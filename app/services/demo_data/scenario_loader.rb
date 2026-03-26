@@ -147,16 +147,18 @@ module DemoData
         scheduled_at = attributes.fetch(:scheduled_at)
 
         appointment = property.appointments.create!(
-          admin:,
-          customer_name: attributes.fetch(:customer_name),
-          customer_email: attributes.fetch(:customer_email),
-          customer_phone: attributes[:customer_phone],
-          requested_time:,
-          scheduled_at: requested_time,
-          duration_minutes: attributes.fetch(:duration_minutes),
-          notes: attributes[:notes],
-          internal_notes: attributes[:internal_notes],
-          status: "pending"
+          {
+            admin:,
+            customer_name: attributes.fetch(:customer_name),
+            customer_email: attributes.fetch(:customer_email),
+            customer_phone: attributes[:customer_phone],
+            requested_time:,
+            scheduled_at: requested_time,
+            duration_minutes: attributes.fetch(:duration_minutes),
+            notes: attributes[:notes],
+            internal_notes: attributes[:internal_notes],
+            status: "pending"
+          }.merge(skip_slot_validation: true)
         )
 
         next if final_status == "pending" && scheduled_at == requested_time

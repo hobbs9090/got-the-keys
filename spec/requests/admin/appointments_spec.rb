@@ -53,4 +53,24 @@ RSpec.describe "Admin appointments" do
     expect(appointment.reload.status).to eq("confirmed")
     expect(appointment.admin).to eq(admin)
   end
+
+  it "renders the appointment detail page in the admin's locale" do
+    admin.update!(language: "de")
+    slot = next_open_slot(hour: 11)
+    appointment = property.appointments.create!(
+      customer_name: "Maya Singh",
+      customer_email: "maya.singh@example.com",
+      customer_phone: "07700 930008",
+      requested_time: slot,
+      scheduled_at: slot,
+      status: "pending"
+    )
+
+    get admin_appointment_path(appointment)
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("Termindetails")
+    expect(response.body).to include("Zusammenfassung")
+    expect(response.body).to include("Kundenhistorie")
+  end
 end

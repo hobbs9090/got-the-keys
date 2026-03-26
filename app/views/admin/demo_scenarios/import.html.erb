@@ -1,26 +1,26 @@
-<% title "Import demo scenario" %>
+<% title t("ui.admin.demo_data.import.title") %>
 
 <section class="admin-section">
   <div class="section-heading">
     <div>
-      <p class="section-heading__eyebrow">Demo data import</p>
-      <h1>Preview an imported scenario before applying it</h1>
+      <p class="section-heading__eyebrow"><%= t("ui.admin.demo_data.import.eyebrow") %></p>
+      <h1><%= t("ui.admin.demo_data.import.heading") %></h1>
     </div>
   </div>
 
   <article class="admin-panel">
     <%= form_with url: preview_import_admin_demo_scenarios_path, method: :post, class: "stacked-form", local: true, multipart: true do |f| %>
       <div>
-        <%= label_tag "demo_import_scenario_file", "Upload YAML file" %>
+        <%= label_tag "demo_import_scenario_file", t("ui.admin.demo_data.import.upload_yaml_file") %>
         <%= file_field_tag "demo_import[scenario_file]", accept: ".yml,.yaml" %>
       </div>
       <div>
-        <%= label_tag :scenario_yaml, "Or paste YAML" %>
-        <%= text_area_tag :scenario_yaml, nil, rows: 18, placeholder: "key: imported_scenario\nname: Imported Scenario\n..." %>
+        <%= label_tag :scenario_yaml, t("ui.admin.demo_data.import.paste_yaml") %>
+        <%= text_area_tag :scenario_yaml, nil, rows: 18, placeholder: t("ui.admin.demo_data.import.yaml_placeholder") %>
       </div>
       <div class="form-actions">
-        <%= button_tag "Preview import", class: "button primary" %>
-        <%= link_to "Back", admin_demo_scenarios_path, class: "button hollow secondary" %>
+        <%= button_tag t("ui.admin.demo_data.import.preview_import"), class: "button primary" %>
+        <%= link_to t("ui.admin.demo_data.import.back"), admin_demo_scenarios_path, class: "button hollow secondary" %>
       </div>
     <% end %>
   </article>

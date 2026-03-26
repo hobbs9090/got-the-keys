@@ -28,7 +28,7 @@ class Admin::AppointmentsController < Admin::BaseController
     @appointment.assign_attributes(appointment_params.merge(admin: current_admin))
 
     if @appointment.save
-      redirect_to admin_appointment_path(@appointment), notice: "Appointment updated."
+      redirect_to admin_appointment_path(@appointment), notice: t("ui.admin.flash.appointment_updated")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -38,12 +38,18 @@ class Admin::AppointmentsController < Admin::BaseController
     new_status = params[:status].presence_in(Appointment::STATUSES)
 
     unless new_status
-      redirect_to admin_appointments_path, alert: "Unsupported appointment status."
+      redirect_to admin_appointments_path, alert: t("ui.admin.flash.unsupported_appointment_status")
       return
     end
 
     if @appointment.update(status: new_status, admin: current_admin)
-      redirect_back fallback_location: admin_appointments_path, notice: "Appointment marked as #{new_status.tr('_', ' ')}."
+      redirect_back(
+        fallback_location: admin_appointments_path,
+        notice: t(
+          "ui.admin.flash.appointment_marked",
+          status: I18n.t("ui.appointments.statuses.#{new_status}", default: new_status.tr("_", " ").humanize).downcase
+        )
+      )
     else
       redirect_back fallback_location: admin_appointments_path, alert: @appointment.errors.full_messages.to_sentence
     end

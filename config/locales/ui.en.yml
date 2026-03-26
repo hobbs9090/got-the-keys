@@ -52,6 +52,7 @@ en:
       update: "Update"
       add_viewing_time: "Add Viewing Time"
       new_viewing_time_title: "New Viewing Time for %{address}"
+      viewing_times_updated_notice: "Available viewing times have been updated!"
       new_photos_title: "New Photos for %{address}"
       new_floor_plan_title: "New Floor Plan for %{address}"
       location_details_title: "Location details for %{address}"
@@ -211,6 +212,7 @@ en:
         title: "Book a viewing for %{address}"
         eyebrow: "Viewing request"
         hero_body: "Choose a published slot, add your contact details, and create a request that staff can confirm, reschedule, or cancel from the admin appointment book."
+        submitted_notice: "Appointment request submitted. We will email you with updates."
         preferred_slot: "Preferred slot"
         choose_slot: "Choose a slot"
         notes_label: "Anything we should know?"
@@ -223,6 +225,7 @@ en:
         title: "Appointment %{reference}"
         eyebrow: "Appointment details"
         hero_body: "Your appointment timeline stays visible here so you can verify every status change and timestamp."
+        invalid_link_alert: "That appointment link is not valid."
         summary_title: "Booking summary"
         duration_minutes:
           one: "1 minute"
@@ -343,3 +346,189 @@ en:
         bookings_count:
           one: "1 booking"
           other: "%{count} bookings"
+        show:
+          title: "Appointment %{reference}"
+          eyebrow: "Appointment details"
+          edit: "Edit"
+          summary_title: "Summary"
+          not_supplied: "Not supplied"
+          notes_title: "Notes"
+          no_customer_notes: "No customer notes supplied."
+          no_internal_notes: "No internal notes yet."
+          audit_trail_title: "Audit trail"
+          customer_history_title: "Customer history"
+          no_customer_history: "No other bookings found for this customer."
+          actions:
+            complete: "Complete"
+            no_show: "No show"
+        edit:
+          title: "Edit appointment %{reference}"
+          eyebrow: "Booking management"
+          heading: "Edit appointment %{reference}"
+          customer_name: "Customer name"
+          customer_email: "Customer email"
+          customer_phone: "Customer phone"
+          duration_minutes: "Duration (minutes)"
+          requested_time: "Requested time"
+          confirmed_slot: "Confirmed slot"
+          customer_notes: "Customer notes"
+          internal_notes: "Internal notes"
+          save_changes: "Save changes"
+          back: "Back"
+      flash:
+        booking_rules_updated: "Booking rules updated."
+        property_updated: "Property updated."
+        appointment_updated: "Appointment updated."
+        unsupported_appointment_status: "Unsupported appointment status."
+        appointment_marked: "Appointment marked as %{status}."
+        applied_demo_scenario: "Applied demo scenario %{name}."
+        restored_baseline_demo_scenario: "Restored baseline demo scenario (%{name})."
+        imported_demo_scenario: "Imported demo scenario %{name}."
+      properties:
+        index:
+          title: "Properties"
+          eyebrow: "Catalogue management"
+          appointment_count:
+            one: "1 appointment"
+            other: "%{count} appointments"
+          open: "Open"
+        show:
+          title: "Property %{address}"
+          eyebrow: "Property details"
+          edit_property: "Edit property"
+          view_public_page: "View public page"
+          summary_title: "Listing summary"
+          availability_windows_title: "Availability windows"
+          window_range: "%{start_time} to %{end_time}"
+          window_kinds:
+            open: "Open"
+            blackout: "Blackout"
+          no_windows: "No property-specific windows yet. The global booking rules are being used."
+          booking_history_title: "Property booking history"
+          no_bookings: "No bookings for this property yet."
+        edit:
+          title: "Edit property %{address}"
+          eyebrow: "Catalogue management"
+          heading: "Edit property"
+      users:
+        index:
+          title: "Sellers"
+          eyebrow: "Customer and seller management"
+          property_count:
+            one: "1 property"
+            other: "%{count} properties"
+        show:
+          title: "Seller %{name}"
+          eyebrow: "Seller profile"
+          account_details_title: "Account details"
+          mobile: "Mobile"
+          properties: "Properties"
+          listing_count:
+            one: "1 listing"
+            other: "%{count} listings"
+          recent_booking_activity_title: "Recent booking activity"
+          no_activity: "No appointment activity on this seller's properties yet."
+      notification_logs:
+        title: "Notification log"
+        eyebrow: "Customer communication"
+        no_recipient: "No recipient"
+        statuses:
+          sent: "Sent"
+          skipped: "Skipped"
+          failed: "Failed"
+      booking_configuration:
+        title: "Booking rules"
+        eyebrow: "Booking configuration"
+        slot_duration_minutes: "Slot duration (minutes)"
+        lead_time_hours: "Lead time (hours)"
+        buffer_minutes: "Buffer between bookings (minutes)"
+        office_opens_at: "Office opens at"
+        office_closes_at: "Office closes at"
+        open_weekdays: "Open weekdays"
+        save: "Save booking rules"
+      demo_data:
+        title: "Demo data management"
+        eyebrow: "Deterministic QA harness"
+        restore_baseline: "Restore baseline"
+        import_scenario: "Import scenario"
+        export_current_data: "Export current data"
+        diagnostics_title: "Diagnostics"
+        last_demo_action_title: "Last demo action"
+        no_actions: "No resets, imports, or exports have been recorded yet."
+        preview_action: "Preview"
+        counts:
+          properties:
+            one: "property"
+            other: "properties"
+          bookings:
+            one: "booking"
+            other: "bookings"
+          sellers:
+            one: "seller"
+            other: "sellers"
+        labels:
+          active_scenario: "Active scenario"
+          property_count: "Properties"
+          user_count: "Users"
+          appointment_count: "Appointments"
+          notification_count: "Notification logs"
+          last_demo_action: "Last demo action"
+        preview_labels:
+          key: "Key"
+          admin_count: "Admins"
+          user_count: "Users"
+          property_count: "Properties"
+          availability_window_count: "Availability windows"
+          appointment_count: "Appointments"
+          appointment_statuses: "Appointment statuses"
+        actions:
+          apply: "Applied"
+          restore: "Restored"
+          import: "Imported"
+          export: "Exported"
+        scenario_keys:
+          baseline: "Baseline"
+          fully_booked_day: "Fully booked day"
+          high_volume_search: "High volume search"
+          qa_edge_cases: "QA edge cases"
+        preview:
+          title: "Scenario preview %{name}"
+          eyebrow: "Scenario preview"
+          apply_scenario: "Apply scenario"
+          back_to_demo_data: "Back to demo data"
+        import:
+          title: "Import demo scenario"
+          eyebrow: "Demo data import"
+          heading: "Preview an imported scenario before applying it"
+          upload_yaml_file: "Upload YAML file"
+          paste_yaml: "Or paste YAML"
+          yaml_placeholder: "key: imported_scenario\nname: Imported Scenario\n..."
+          preview_import: "Preview import"
+          back: "Back"
+        import_preview:
+          title: "Import preview %{name}"
+          eyebrow: "Import preview"
+          apply_imported_scenario: "Apply imported scenario"
+          back_to_import: "Back to import"
+          raw_yaml: "Raw YAML"
+    aardvarks:
+      index:
+        title: "Listing aardvarks"
+        new: "New aardvark"
+      new:
+        title: "New aardvark"
+      edit:
+        title: "Editing aardvark"
+      actions:
+        show: "Show"
+        edit: "Edit"
+        destroy: "Destroy"
+        back: "Back"
+        confirm_destroy: "Are you sure?"
+      form:
+        error_summary:
+          one: "1 error prohibited this aardvark from being saved:"
+          other: "%{count} errors prohibited this aardvark from being saved:"
+      flash:
+        created: "Aardvark was successfully created."
+        updated: "Aardvark was successfully updated."

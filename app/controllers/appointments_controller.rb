@@ -17,7 +17,7 @@ class AppointmentsController < ApplicationController
     @appointment.scheduled_at = @appointment.requested_time
 
     if @appointment.save
-      redirect_to appointment_path(@appointment, token: @appointment.access_token), notice: "Appointment request submitted. We will email you with updates."
+      redirect_to appointment_path(@appointment, token: @appointment.access_token), notice: t("ui.appointments.new.submitted_notice")
     else
       @available_slots = @property.next_available_slots(limit: 10)
       render :new, status: :unprocessable_entity
@@ -30,7 +30,7 @@ class AppointmentsController < ApplicationController
     return if current_admin.present?
     return if token.present? && token.bytesize == @appointment.access_token.to_s.bytesize && ActiveSupport::SecurityUtils.secure_compare(token, @appointment.access_token.to_s)
 
-    redirect_to root_path, alert: "That appointment link is not valid."
+    redirect_to root_path, alert: t("ui.appointments.show.invalid_link_alert")
   end
 
   private

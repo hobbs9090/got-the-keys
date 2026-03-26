@@ -52,6 +52,7 @@ de:
       update: "Aktualisieren"
       add_viewing_time: "Besichtigungszeit hinzufügen"
       new_viewing_time_title: "Neue Besichtigungszeit für %{address}"
+      viewing_times_updated_notice: "Die verfügbaren Besichtigungszeiten wurden aktualisiert."
       new_photos_title: "Neue Fotos für %{address}"
       new_floor_plan_title: "Neuer Grundriss für %{address}"
       location_details_title: "Standortdetails für %{address}"
@@ -211,6 +212,7 @@ de:
         title: "Besichtigung für %{address} buchen"
         eyebrow: "Besichtigungsanfrage"
         hero_body: "Wählen Sie einen veröffentlichten Termin, fügen Sie Ihre Kontaktdaten hinzu und erstellen Sie eine Anfrage, die vom Team bestätigt, verschoben oder storniert werden kann."
+        submitted_notice: "Die Terminanfrage wurde gesendet. Wir informieren Sie per E-Mail über Updates."
         preferred_slot: "Bevorzugter Termin"
         choose_slot: "Termin wählen"
         notes_label: "Gibt es etwas, das wir wissen sollten?"
@@ -223,6 +225,7 @@ de:
         title: "Termin %{reference}"
         eyebrow: "Termindetails"
         hero_body: "Ihre Terminchronik bleibt hier sichtbar, damit Sie jede Statusänderung und jeden Zeitstempel nachvollziehen können."
+        invalid_link_alert: "Dieser Terminlink ist ungültig."
         summary_title: "Buchungsübersicht"
         duration_minutes:
           one: "1 Minute"
@@ -247,3 +250,196 @@ de:
       notes: "Ihre Notizen: %{notes}"
       revisit: "Sie können den Termin jederzeit über den sicheren Link erneut aufrufen, den Sie nach der Buchung erhalten haben."
       thanks_html: "Vielen Dank,<br>GotTheKeys"
+
+    admin:
+      dashboard:
+        on: "am"
+      appointments:
+        confirm: "Bestätigen"
+        cancel: "Stornieren"
+        show:
+          title: "Termin %{reference}"
+          eyebrow: "Termindetails"
+          edit: "Bearbeiten"
+          summary_title: "Zusammenfassung"
+          not_supplied: "Nicht angegeben"
+          notes_title: "Notizen"
+          no_customer_notes: "Keine Kundennotizen angegeben."
+          no_internal_notes: "Noch keine internen Notizen."
+          audit_trail_title: "Prüfverlauf"
+          customer_history_title: "Kundenhistorie"
+          no_customer_history: "Keine weiteren Buchungen für diesen Kunden gefunden."
+          actions:
+            complete: "Abschließen"
+            no_show: "Nicht erschienen"
+        edit:
+          title: "Termin %{reference} bearbeiten"
+          eyebrow: "Terminverwaltung"
+          heading: "Termin %{reference} bearbeiten"
+          customer_name: "Kundenname"
+          customer_email: "Kunden-E-Mail"
+          customer_phone: "Kundentelefon"
+          duration_minutes: "Dauer (Minuten)"
+          requested_time: "Gewünschte Zeit"
+          confirmed_slot: "Bestätigter Termin"
+          customer_notes: "Kundennotizen"
+          internal_notes: "Interne Notizen"
+          save_changes: "Änderungen speichern"
+          back: "Zurück"
+      flash:
+        booking_rules_updated: "Buchungsregeln aktualisiert."
+        property_updated: "Objekt aktualisiert."
+        appointment_updated: "Termin aktualisiert."
+        unsupported_appointment_status: "Nicht unterstützter Terminstatus."
+        appointment_marked: "Termin als %{status} markiert."
+        applied_demo_scenario: "Demodatenszenario %{name} angewendet."
+        restored_baseline_demo_scenario: "Basis-Demodatenszenario (%{name}) wiederhergestellt."
+        imported_demo_scenario: "Demodatenszenario %{name} importiert."
+      properties:
+        index:
+          title: "Objekte"
+          eyebrow: "Katalogverwaltung"
+          appointment_count:
+            one: "1 Termin"
+            other: "%{count} Termine"
+          open: "Öffnen"
+        show:
+          title: "Objekt %{address}"
+          eyebrow: "Objektdetails"
+          edit_property: "Objekt bearbeiten"
+          view_public_page: "Öffentliche Seite ansehen"
+          summary_title: "Zusammenfassung des Inserats"
+          availability_windows_title: "Verfügbarkeitsfenster"
+          window_range: "%{start_time} bis %{end_time}"
+          window_kinds:
+            open: "Offen"
+            blackout: "Gesperrt"
+          no_windows: "Für dieses Objekt gibt es noch keine eigenen Zeitfenster. Es gelten die globalen Buchungsregeln."
+          booking_history_title: "Buchungshistorie des Objekts"
+          no_bookings: "Für dieses Objekt gibt es noch keine Buchungen."
+        edit:
+          title: "Objekt %{address} bearbeiten"
+          eyebrow: "Katalogverwaltung"
+          heading: "Objekt bearbeiten"
+      users:
+        index:
+          title: "Verkäufer"
+          eyebrow: "Kunden- und Verkäuferverwaltung"
+          property_count:
+            one: "1 Objekt"
+            other: "%{count} Objekte"
+        show:
+          title: "Verkäufer %{name}"
+          eyebrow: "Verkäuferprofil"
+          account_details_title: "Kontodetails"
+          mobile: "Mobil"
+          properties: "Objekte"
+          listing_count:
+            one: "1 Inserat"
+            other: "%{count} Inserate"
+          recent_booking_activity_title: "Letzte Buchungsaktivität"
+          no_activity: "Auf den Objekten dieses Verkäufers gibt es noch keine Terminaktivität."
+      notification_logs:
+        title: "Benachrichtigungsprotokoll"
+        eyebrow: "Kundenkommunikation"
+        no_recipient: "Kein Empfänger"
+        statuses:
+          sent: "Gesendet"
+          skipped: "Übersprungen"
+          failed: "Fehlgeschlagen"
+      booking_configuration:
+        title: "Buchungsregeln"
+        eyebrow: "Buchungskonfiguration"
+        slot_duration_minutes: "Dauer des Zeitfensters (Minuten)"
+        lead_time_hours: "Vorlaufzeit (Stunden)"
+        buffer_minutes: "Puffer zwischen Buchungen (Minuten)"
+        office_opens_at: "Büro öffnet um"
+        office_closes_at: "Büro schließt um"
+        open_weekdays: "Geöffnete Wochentage"
+        save: "Buchungsregeln speichern"
+      demo_data:
+        title: "Demodatenverwaltung"
+        eyebrow: "Deterministische QA-Umgebung"
+        restore_baseline: "Basis wiederherstellen"
+        import_scenario: "Szenario importieren"
+        export_current_data: "Aktuelle Daten exportieren"
+        diagnostics_title: "Diagnose"
+        last_demo_action_title: "Letzte Demo-Aktion"
+        no_actions: "Es wurden noch keine Zurücksetzungen, Importe oder Exporte aufgezeichnet."
+        preview_action: "Vorschau"
+        counts:
+          properties:
+            one: "Objekt"
+            other: "Objekte"
+          bookings:
+            one: "Buchung"
+            other: "Buchungen"
+          sellers:
+            one: "Verkäufer"
+            other: "Verkäufer"
+        labels:
+          active_scenario: "Aktives Szenario"
+          property_count: "Objekte"
+          user_count: "Benutzer"
+          appointment_count: "Termine"
+          notification_count: "Benachrichtigungsprotokolle"
+          last_demo_action: "Letzte Demo-Aktion"
+        preview_labels:
+          key: "Schlüssel"
+          admin_count: "Administratoren"
+          user_count: "Benutzer"
+          property_count: "Objekte"
+          availability_window_count: "Verfügbarkeitsfenster"
+          appointment_count: "Termine"
+          appointment_statuses: "Terminstatus"
+        actions:
+          apply: "Angewendet"
+          restore: "Wiederhergestellt"
+          import: "Importiert"
+          export: "Exportiert"
+        scenario_keys:
+          baseline: "Basis"
+          fully_booked_day: "Voll ausgebuchter Tag"
+          high_volume_search: "Suche mit hohem Volumen"
+          qa_edge_cases: "QA-Grenzfälle"
+        preview:
+          title: "Szenariovorschau %{name}"
+          eyebrow: "Szenariovorschau"
+          apply_scenario: "Szenario anwenden"
+          back_to_demo_data: "Zurück zu den Demodaten"
+        import:
+          title: "Demodatenszenario importieren"
+          eyebrow: "Import von Demodaten"
+          heading: "Importiertes Szenario vor dem Anwenden prüfen"
+          upload_yaml_file: "YAML-Datei hochladen"
+          paste_yaml: "Oder YAML einfügen"
+          yaml_placeholder: "key: imported_scenario\nname: Imported Scenario\n..."
+          preview_import: "Importvorschau"
+          back: "Zurück"
+        import_preview:
+          title: "Importvorschau %{name}"
+          eyebrow: "Importvorschau"
+          apply_imported_scenario: "Importiertes Szenario anwenden"
+          back_to_import: "Zurück zum Import"
+          raw_yaml: "Rohes YAML"
+    aardvarks:
+      index:
+        title: "Aardvarks auflisten"
+        new: "Neues Aardvark"
+      new:
+        title: "Neues Aardvark"
+      edit:
+        title: "Aardvark bearbeiten"
+      actions:
+        show: "Anzeigen"
+        edit: "Bearbeiten"
+        destroy: "Löschen"
+        back: "Zurück"
+        confirm_destroy: "Sind Sie sicher?"
+      form:
+        error_summary:
+          one: "1 Fehler hat das Speichern dieses Aardvarks verhindert:"
+          other: "%{count} Fehler haben das Speichern dieses Aardvarks verhindert:"
+      flash:
+        created: "Aardvark wurde erfolgreich erstellt."
+        updated: "Aardvark wurde erfolgreich aktualisiert."
