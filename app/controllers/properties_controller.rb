@@ -23,6 +23,8 @@ class PropertiesController < ApplicationController
   def show
     @available_slots = @property.next_available_slots(limit: 8)
     @recent_enquiries = @property.enquiries.recent_first.limit(3)
+    @recent_offers = @property.offers.recent_first.limit(3)
+    @recent_rental_applications = @property.rental_applications.recent_first.limit(3)
   end
 
   def edit

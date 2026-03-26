@@ -12,6 +12,7 @@ It is designed to feel like a credible small business product while also being p
 - Property enquiry capture, admin lead inbox triage, and seller-side recent lead visibility.
 - Public viewing-request flow on each property page.
 - Customer self-service viewing management, grouped viewing support, reminder emails with calendar attachments, and richer admin booking filters.
+- Sales offers and rental applications with admin progression boards, decision history, and seller-side visibility.
 - Full appointment domain with:
   - `pending`
   - `confirmed`
@@ -230,6 +231,7 @@ SEED_SCENARIO=high_volume_search bin/rails db:seed
 SEED_SCENARIO=listing_lifecycle bin/rails db:seed
 SEED_SCENARIO=lead_management bin/rails db:seed
 SEED_SCENARIO=viewing_operations bin/rails db:seed
+SEED_SCENARIO=deal_progression bin/rails db:seed
 ```
 
 Scenario files are human-editable YAML and are intended to be committed to source control.

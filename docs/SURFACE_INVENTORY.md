@@ -22,6 +22,10 @@ Framework-owned endpoints such as Active Storage, Action Mailbox, and Turbo nati
   Public property-enquiry capture path for brochure requests, general questions, valuation enquiries, and letting follow-up.
 - `/properties/:property_id/appointments/new`
   Public appointment request entry point.
+- `/properties/:property_id/offers/new`
+  Public sales-offer capture path for sale listings.
+- `/properties/:property_id/rental_applications/new`
+  Public rental-application capture path for rental listings.
 - `/appointments/:public_reference`
   Public appointment confirmation/status page.
 - `/appointments/:public_reference/manage`
@@ -69,6 +73,10 @@ Framework-owned endpoints such as Active Storage, Action Mailbox, and Turbo nati
   Core bookings desk.
 - `/admin/enquiries`
   Admin lead inbox with filters, assignment, spam flags, and qualification workflow.
+- `/admin/offers`
+  Admin sales-progression board and offer decision workflow.
+- `/admin/rental_applications`
+  Admin lettings-progression board and rental-application decision workflow.
 - `/admin/booking_configuration`
   Booking rules and lead-time configuration.
 - `/admin/properties`

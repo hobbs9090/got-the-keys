@@ -116,6 +116,20 @@
       <p>Ask for brochure information, a landlord or seller callback, or clarification before you pick a viewing slot.</p>
       <%= link_to "Send an enquiry", new_property_enquiry_path(@property), class: "button hollow secondary expanded", data: { testid: "open-enquiry-form" } %>
     </div>
+
+    <% if @property.sale_status == Property::SALE_STATUSES[:for_sale] %>
+      <div class="empty-state" data-testid="property-offer-panel">
+        <h3>Ready to make an offer?</h3>
+        <p>Register your buying position and headline offer directly with the team.</p>
+        <%= link_to "Submit an offer", new_property_offer_path(@property), class: "button primary expanded", data: { testid: "open-offer-form" } %>
+      </div>
+    <% elsif @property.sale_status == Property::SALE_STATUSES[:for_rent] %>
+      <div class="empty-state" data-testid="property-rental-application-panel">
+        <h3>Want to apply to rent?</h3>
+        <p>Share your intended move-in timing and affordability notes with the lettings team.</p>
+        <%= link_to "Start rental application", new_property_rental_application_path(@property), class: "button primary expanded", data: { testid: "open-rental-application-form" } %>
+      </div>
+    <% end %>
   </aside>
 </section>
 
@@ -151,6 +165,38 @@
         </ul>
       <% else %>
         <p class="empty-copy">No enquiries have come in for this listing yet.</p>
+      <% end %>
+
+      <% if @property.sale_status == Property::SALE_STATUSES[:for_sale] %>
+        <h3>Recent offers</h3>
+        <% if @recent_offers.any? %>
+          <ul class="detail-inline-list" data-testid="seller-recent-offers">
+            <% @recent_offers.each do |offer| %>
+              <li>
+                <strong><%= offer.buyer_name %></strong>:
+                <%= number_to_currency(offer.amount, unit: "£", precision: 0) %>,
+                <%= offer.status.humanize.downcase %>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p class="empty-copy">No offers have been recorded yet.</p>
+        <% end %>
+      <% elsif @property.sale_status == Property::SALE_STATUSES[:for_rent] %>
+        <h3>Recent rental applications</h3>
+        <% if @recent_rental_applications.any? %>
+          <ul class="detail-inline-list" data-testid="seller-recent-rental-applications">
+            <% @recent_rental_applications.each do |application| %>
+              <li>
+                <strong><%= application.applicant_name %></strong>:
+                <%= application.status.humanize.downcase %>,
+                move-in <%= application.move_in_date %>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p class="empty-copy">No rental applications have been recorded yet.</p>
+        <% end %>
       <% end %>
     </article>
   </section>

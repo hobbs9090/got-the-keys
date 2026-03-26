@@ -18,6 +18,8 @@ class Property < ApplicationRecord
   has_many :availability_windows, dependent: :destroy
   has_many :appointments, dependent: :destroy
   has_many :enquiries, dependent: :destroy
+  has_many :offers, dependent: :destroy
+  has_many :rental_applications, dependent: :destroy
 
   validates :address_line_1, :town_city, :county, :postcode, :country,
             :property_description, :bedrooms, :sale_status, :asking_price,

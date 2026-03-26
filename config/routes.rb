@@ -17,6 +17,8 @@ GotTheKeys::Application.routes.draw do
       patch :transition, on: :member
       post :send_reminder, on: :member
     end
+    resources :offers, only: [:index, :show, :update]
+    resources :rental_applications, only: [:index, :show, :update]
     resources :enquiries, only: [:index, :show, :update]
     resources :properties, only: [:index, :show, :edit, :update] do
       patch :transition, on: :member
@@ -46,6 +48,8 @@ GotTheKeys::Application.routes.draw do
     resources :floor_plans, only: [:index, :new, :create, :update, :destroy]
     resources :viewing_times, only: [:index, :new, :create]
     resources :enquiries, only: [:new, :create]
+    resources :offers, only: [:new, :create]
+    resources :rental_applications, only: [:new, :create]
     resources :appointments, only: [:new, :create]
   end
 

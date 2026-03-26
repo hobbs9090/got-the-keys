@@ -13,8 +13,9 @@ RSpec.describe DemoData::ScenarioLoader do
     lifecycle = previews.find { |scenario| scenario[:key] == "listing_lifecycle" }
     leads = previews.find { |scenario| scenario[:key] == "lead_management" }
     viewing = previews.find { |scenario| scenario[:key] == "viewing_operations" }
+    deals = previews.find { |scenario| scenario[:key] == "deal_progression" }
 
-    expect(previews.map { |scenario| scenario[:key] }).to include("baseline", "fully_booked_day", "qa_edge_cases", "high_volume_search", "listing_lifecycle", "lead_management", "viewing_operations")
+    expect(previews.map { |scenario| scenario[:key] }).to include("baseline", "fully_booked_day", "qa_edge_cases", "high_volume_search", "listing_lifecycle", "lead_management", "viewing_operations", "deal_progression")
     expect(baseline[:property_count]).to eq(4)
     expect(baseline[:appointment_count]).to eq(6)
     expect(baseline[:enquiry_count]).to eq(2)
@@ -25,6 +26,8 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(leads[:enquiry_count]).to eq(5)
     expect(leads[:enquiry_statuses]).to include("new" => 2, "contacted" => 1, "qualified" => 1, "unqualified" => 1)
     expect(viewing[:appointment_statuses]).to include("confirmed" => 1, "rescheduled" => 1, "completed" => 1, "no_show" => 1)
+    expect(deals[:offer_statuses]).to include("rejected" => 1, "withdrawn" => 1, "accepted" => 1)
+    expect(deals[:rental_application_statuses]).to include("rejected" => 1, "withdrawn" => 1, "approved" => 1)
   end
 
   it "applies a scenario and records the active key" do
@@ -59,5 +62,7 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(exported).to include("listing_state:")
     expect(exported).to include("enquiries:")
     expect(exported).to include("visit_outcome:")
+    expect(exported).to include("offers:")
+    expect(exported).to include("rental_applications:")
   end
 end
