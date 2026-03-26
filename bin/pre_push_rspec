@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+cd "$repo_root"
+
+if ! command -v bundle >/dev/null 2>&1; then
+  echo "bundle is required to run the pre-push RSpec checks." >&2
+  exit 1
+fi
+
+rspec_args=()
+
+if [ -n "${PRE_PUSH_RSPEC_ARGS:-}" ]; then
+  # shellcheck disable=SC2206
+  rspec_args=(${PRE_PUSH_RSPEC_ARGS})
+fi
+
+echo "Running RSpec before push..."
+echo "+ bundle exec rspec${PRE_PUSH_RSPEC_ARGS:+ ${PRE_PUSH_RSPEC_ARGS}}"
+
+if [ "${#rspec_args[@]}" -gt 0 ]; then
+  bundle exec rspec "${rspec_args[@]}"
+else
+  bundle exec rspec
+fi

@@ -90,8 +90,11 @@ bundle config set path 'vendor/bundle'
 bundle install
 npm install
 bin/rails db:prepare
+bin/install_git_hooks
 npm run build
 ```
+
+`bin/install_git_hooks` configures this repo to use the tracked `.githooks/pre-push` hook, which runs `bundle exec rspec` and blocks the push if the suite fails.
 
 ### Run The App
 

@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+cd "$repo_root"
+
+if [ ! -x "bin/pre_push_rspec" ]; then
+  echo "Missing executable helper: bin/pre_push_rspec" >&2
+  exit 1
+fi
+
+echo "pre-push: running RSpec checks..."
+
+if ! bin/pre_push_rspec; then
+  echo "pre-push: RSpec failed. Push cancelled." >&2
+  exit 1
+fi
