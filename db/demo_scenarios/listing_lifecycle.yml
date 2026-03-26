@@ -1,6 +1,17 @@
 key: listing_lifecycle
 name: Listing Lifecycle Studio
 description: Focused seller and admin dataset showing draft, review, marketed, withdrawn, and deal-stage listings with marketing assets.
+qa:
+  family: happy_path
+  intended_journey: Walk a seller and admin through listing readiness, moderation, and publish transitions.
+  complexity: foundational
+  risk_type: workflow
+  locale_coverage: [en]
+  trainer_notes:
+    - Use this to teach listing moderation controls before moving into leads or bookings.
+  expected_assertions:
+    - Readiness checks should surface incomplete marketing assets and missing facts.
+  quick_reset: false
 booking_configuration:
   slot_duration_minutes: 45
   lead_time_hours: 4

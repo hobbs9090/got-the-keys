@@ -1,6 +1,17 @@
 key: lead_management
 name: Lead Management Inbox
 description: Focused admin and seller training dataset with clean, duplicate, empty-phone, spam-like, and invalid-email enquiries for triage practice.
+qa:
+  family: multilingual
+  intended_journey: Work through lead triage, spam review, assignment, and seller visibility with broader locale expectations.
+  complexity: intermediate
+  risk_type: localization
+  locale_coverage: [en, de, fr, it, zh]
+  trainer_notes:
+    - Pair this with locale switching to confirm lead-management copy stays understandable across supported languages.
+  expected_assertions:
+    - Lead filters and assignment controls should remain usable across locale changes.
+  quick_reset: false
 booking_configuration:
   slot_duration_minutes: 45
   lead_time_hours: 4

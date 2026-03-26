@@ -7,6 +7,7 @@ module DemoData
         key: BookingConfiguration.current.active_demo_scenario_key.presence || "exported_snapshot",
         name: "Exported Snapshot",
         description: "Generated from the current application dataset on #{Time.current.iso8601}. Passwords are normalized to 'secret' on export.",
+        qa: export_qa_metadata,
         booking_configuration: export_configuration,
         admins: Admin.order(:email).map { |admin| export_admin(admin) },
         users: User.order(:email).map { |user| export_user(user) },
@@ -36,6 +37,19 @@ module DemoData
         office_opens_at: configuration.office_opens_at,
         office_closes_at: configuration.office_closes_at,
         open_weekdays: configuration.open_weekday_numbers
+      }
+    end
+
+    def export_qa_metadata
+      {
+        family: "happy_path",
+        intended_journey: "Import and replay the currently running dataset.",
+        complexity: "intermediate",
+        risk_type: "workflow",
+        locale_coverage: AppSettings.available_languages,
+        trainer_notes: ["Use this when you need a portable snapshot of the current environment."],
+        expected_assertions: ["The imported scenario should reproduce the exported counts and seeded personas."],
+        quick_reset: false
       }
     end
 

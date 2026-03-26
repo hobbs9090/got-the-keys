@@ -2,6 +2,8 @@ module DemoData
   class ScenarioValidator
     class ValidationError < StandardError; end
 
+    SCENARIO_FAMILIES = %w[happy_path edge_cases high_volume multilingual accessibility flaky_operator_workflow].freeze
+    COMPLEXITY_LEVELS = %w[foundational intermediate advanced].freeze
     REQUIRED_PROPERTY_KEYS = %i[key owner_email address_line_1 town_city county postcode country property_description bedrooms sale_status asking_price].freeze
 
     def validate!(payload)
@@ -56,6 +58,7 @@ module DemoData
         key: scenario.fetch(:key),
         name: scenario.fetch(:name),
         description: scenario[:description].to_s,
+        qa: normalize_qa_metadata(scenario[:qa] || {}),
         booking_configuration: normalize_booking_configuration(scenario[:booking_configuration] || {}),
         admins:,
         users:,
@@ -78,6 +81,7 @@ module DemoData
         key: normalized.fetch(:key),
         name: normalized.fetch(:name),
         description: normalized.fetch(:description),
+        qa: normalized.fetch(:qa).merge(expected_counts: expected_counts(normalized)),
         admin_count: normalized.fetch(:admins).count,
         user_count: normalized.fetch(:users).count,
         property_count: normalized.fetch(:properties).count,
@@ -97,6 +101,26 @@ module DemoData
     end
 
     private
+
+    def normalize_qa_metadata(metadata)
+      payload = metadata.deep_symbolize_keys
+      family = payload.fetch(:family, "happy_path")
+      raise ValidationError, "Unsupported scenario family #{family.inspect}" unless SCENARIO_FAMILIES.include?(family)
+
+      complexity = payload.fetch(:complexity, "foundational")
+      raise ValidationError, "Unsupported complexity #{complexity.inspect}" unless COMPLEXITY_LEVELS.include?(complexity)
+
+      {
+        family:,
+        intended_journey: payload.fetch(:intended_journey, "General QA walkthrough").to_s,
+        complexity:,
+        risk_type: payload.fetch(:risk_type, "workflow").to_s,
+        locale_coverage: Array(payload.fetch(:locale_coverage, ["en"])).map(&:to_s),
+        trainer_notes: Array(payload[:trainer_notes]).map(&:to_s).reject(&:blank?),
+        expected_assertions: Array(payload[:expected_assertions]).map(&:to_s).reject(&:blank?),
+        quick_reset: ActiveModel::Type::Boolean.new.cast(payload.fetch(:quick_reset, false))
+      }
+    end
 
     def validate_presence!(hash, *keys)
       keys.each do |key|
@@ -410,6 +434,22 @@ module DemoData
       target_date = Date.current + offset_days
 
       Time.zone.local(target_date.year, target_date.month, target_date.day, match[:hour].to_i, match[:minute].to_i)
+    end
+
+    def expected_counts(normalized)
+      {
+        admins: normalized.fetch(:admins).count,
+        users: normalized.fetch(:users).count,
+        properties: normalized.fetch(:properties).count,
+        photos: normalized.fetch(:photos).count,
+        floor_plans: normalized.fetch(:floor_plans).count,
+        property_documents: normalized.fetch(:property_documents).count,
+        availability_windows: normalized.fetch(:availability_windows).count,
+        appointments: normalized.fetch(:appointments).count,
+        enquiries: normalized.fetch(:enquiries).count,
+        offers: normalized.fetch(:offers).count,
+        rental_applications: normalized.fetch(:rental_applications).count
+      }
     end
   end
 end

@@ -50,6 +50,21 @@ RSpec.describe "Admin QA guide" do
     expect(version_box.at_css(%([data-testid="qa-environment"])).text).to eq("staging host, Rails env test")
   end
 
+  it "shows runtime diagnostics, seeded personas, and selector contracts" do
+    DemoData::ScenarioLoader.new.apply_catalog!(key: "baseline", actor_email: admin.email)
+
+    get admin_qa_path
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("mail delivery mode".humanize)
+    expect(response.body).to include(ActionMailer::Base.delivery_method.to_s)
+    expect(response.body).to include("seeded personas".humanize)
+    expect(response.body).to include("Admins:")
+    expect(response.body).to include("property-card")
+    expect(response.body).to include("Scenario families")
+    expect(response.body).to include("Happy path")
+  end
+
   it "places the QA guide link at the bottom of the admin workspace navigation" do
     get admin_root_path
 

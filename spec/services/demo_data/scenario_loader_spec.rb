@@ -31,6 +31,8 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(deals[:offer_statuses]).to include("rejected" => 1, "withdrawn" => 1, "accepted" => 1)
     expect(deals[:rental_application_statuses]).to include("rejected" => 1, "withdrawn" => 1, "approved" => 1)
     expect(documents[:property_document_count]).to eq(3)
+    expect(documents.dig(:qa, :family)).to eq("accessibility")
+    expect(viewing.dig(:qa, :quick_reset)).to eq(true)
   end
 
   it "applies a scenario and records the active key" do
@@ -69,5 +71,6 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(exported).to include("offers:")
     expect(exported).to include("rental_applications:")
     expect(exported).to include("property_documents:")
+    expect(exported).to include("qa:")
   end
 end

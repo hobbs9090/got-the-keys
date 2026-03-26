@@ -12,6 +12,7 @@ RSpec.describe "Admin demo scenarios" do
 
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Demo data management")
+    expect(response.body).to include(%(data-testid="scenario-quick-reset-panel"))
   end
 
   it "restores the baseline scenario" do
@@ -32,5 +33,14 @@ RSpec.describe "Admin demo scenarios" do
     expect(response.body).to include("Demodatenverwaltung")
     expect(response.body).to include("Basis wiederherstellen")
     expect(response.body).to include("Vorschau")
+  end
+
+  it "renders trainer notes and expected assertions on the preview page" do
+    get admin_demo_scenario_path("documents_and_trust")
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("Trainer notes")
+    expect(response.body).to include("Expected assertions")
+    expect(response.body).to include("public pages should expose brochure files".capitalize)
   end
 end

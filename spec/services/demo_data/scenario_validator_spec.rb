@@ -8,6 +8,16 @@ RSpec.describe DemoData::ScenarioValidator do
     {
       key: "baseline",
       name: "Baseline",
+      qa: {
+        family: "happy_path",
+        intended_journey: "General smoke pass",
+        complexity: "foundational",
+        risk_type: "workflow",
+        locale_coverage: %w[en de],
+        trainer_notes: ["Use this during onboarding."],
+        expected_assertions: ["Counts remain stable."],
+        quick_reset: true
+      },
       booking_configuration: {
         slot_duration_minutes: 30,
         lead_time_hours: 2,
@@ -106,6 +116,12 @@ RSpec.describe DemoData::ScenarioValidator do
     expect(normalized[:property_documents]).to include(
       include(property_key: "cedar-close", title: "Sales brochure", category: "brochure", visibility: "public")
     )
+    expect(normalized[:qa]).to include(
+      family: "happy_path",
+      complexity: "foundational",
+      locale_coverage: %w[en de],
+      quick_reset: true
+    )
     expect(normalized[:availability_windows]).to include(
       include(
         property_key: "cedar-close",
@@ -170,6 +186,11 @@ RSpec.describe DemoData::ScenarioValidator do
     expect(preview).to include(
       key: "baseline",
       name: "Baseline",
+      qa: include(
+        family: "happy_path",
+        intended_journey: "General smoke pass",
+        expected_counts: include(properties: 1, property_documents: 1)
+      ),
       admin_count: 1,
       user_count: 1,
       property_count: 1,
@@ -177,6 +198,16 @@ RSpec.describe DemoData::ScenarioValidator do
       availability_window_count: 1,
       appointment_count: 1,
       appointment_statuses: { "confirmed" => 1 }
+    )
+  end
+
+  it "raises for an unsupported scenario family" do
+    payload = base_payload.deep_dup
+    payload[:qa][:family] = "mystery"
+
+    expect { validator.validate!(payload) }.to raise_error(
+      described_class::ValidationError,
+      'Unsupported scenario family "mystery"'
     )
   end
 end

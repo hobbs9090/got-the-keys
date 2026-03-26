@@ -18,6 +18,7 @@ module AdminHelper
   end
 
   def admin_demo_value(label, value)
+    return value.join(", ") if value.is_a?(Array)
     return value unless value.is_a?(Hash)
 
     case label.to_sym
@@ -47,5 +48,9 @@ module AdminHelper
 
   def admin_availability_window_kind_label(kind)
     t("ui.admin.properties.show.window_kinds.#{kind}", default: kind.to_s.humanize)
+  end
+
+  def admin_scenario_family_label(value)
+    value.to_s.tr("_", " ").humanize
   end
 end

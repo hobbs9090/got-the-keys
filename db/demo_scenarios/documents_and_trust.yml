@@ -1,6 +1,18 @@
 key: documents_and_trust
 name: Documents and Trust Signals
 description: Highlights brochure downloads, private compliance files, stale listing cues, and delayed lead follow-up for training.
+qa:
+  family: accessibility
+  intended_journey: Validate brochures, trust cues, private-file boundaries, and activity trails on listings and leads.
+  complexity: intermediate
+  risk_type: accessibility
+  locale_coverage: [en]
+  trainer_notes:
+    - Use this when you want a realistic public-detail page with both downloadable and protected assets.
+  expected_assertions:
+    - Public pages should expose brochure files but not private compliance files.
+    - Stale listings should still render clear trust and branch information.
+  quick_reset: true
 booking_configuration:
   slot_duration_minutes: 45
   lead_time_hours: 6

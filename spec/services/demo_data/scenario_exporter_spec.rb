@@ -88,6 +88,7 @@ RSpec.describe DemoData::ScenarioExporter do
 
     expect(payload["key"]).to eq("qa_snapshot")
     expect(payload["name"]).to eq("Exported Snapshot")
+    expect(payload["qa"]).to include("family" => "happy_path", "quick_reset" => false)
     expect(payload["admins"]).to include(
       include("email" => "ops@gotthekeys.com", "password" => "secret", "password_confirmation" => "secret")
     )

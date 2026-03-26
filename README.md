@@ -32,6 +32,7 @@ It is designed to feel like a credible small business product while also being p
   - demo-data controls
   - QA guide
 - Deterministic YAML-backed demo scenarios for repeatable QA training.
+- Admin scenario operations console with trainer notes, quick-reset packs, diagnostics, and selector registry.
 - Optional AI-assisted larger data generation for catalogue population.
 
 ## Current Stack
@@ -394,8 +395,10 @@ The admin area includes:
 Inside `/admin/demo-data` an admin can:
 
 - inspect bundled scenario previews
+- review scenario family, complexity, locale coverage, trainer notes, and expected assertions
 - restore baseline
 - apply another bundled scenario
+- use one-click quick-reset packs for common training sessions
 - preview and import YAML
 - export the current dataset
 - see diagnostics and the last reset/import/export record
@@ -409,9 +412,9 @@ It includes:
 - deterministic data via YAML scenarios
 - stable success and validation messaging
 - visible audit timeline for appointments
-- admin diagnostics
+- admin diagnostics including job adapter, mail delivery mode, and seeded personas
 - representative happy-path and edge-case states
-- stable selectors on core flows
+- stable selectors on core flows plus a selector contract registry in `/admin/qa`
 
 Important selectors include:
 
@@ -423,6 +426,15 @@ Important selectors include:
 - `data-testid="saved-search-panel"`
 - `data-testid="property-documents-panel"`
 - `data-testid="admin-property-activity-timeline"`
+
+Scenario families now cover:
+
+- happy path
+- edge cases
+- high volume
+- multilingual
+- accessibility
+- flaky operator workflow
 
 The dedicated QA guide is in [`docs/QA_TRAINING.md`](docs/QA_TRAINING.md).
 It now includes:
