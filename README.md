@@ -86,6 +86,8 @@ It is designed to feel like a credible small business product while also being p
   Version-controlled scenario definitions used by `db:seed` and the admin demo-data UI.
 - `docs/NIRVANA_DEPLOYMENT.md`
   Apache + Passenger deployment guide for shared hosting.
+- `docs/BACKGROUND_JOB_POLICY.md`
+  Explicit rules for what background work is safe on the current `:async` setup and when to revisit a durable backend.
 - `docs/MODERNIZATION_AUDIT.md`
   Recommended modernization sequence for jobs, frontend stack, CSS/view components, and deployment posture.
 - `docs/PRE_EXTENSION_CHECKLIST.md`
@@ -444,6 +446,12 @@ Behaviour by environment:
 - otherwise the Rails `production` environment falls back to file delivery under `tmp/mails`
 
 This keeps the app responsive and usable on shared hosting even when outbound SMTP is not yet available. It is intentionally not a durable worker setup yet; the queue backend should only be revisited when real operational pain justifies it.
+
+Background-job policy for the next extension phase:
+
+- keep `:async` for the current shared-host/staging posture
+- do not put mission-critical, costly, or long-running workflows on that adapter
+- use [`docs/BACKGROUND_JOB_POLICY.md`](docs/BACKGROUND_JOB_POLICY.md) as the source of truth for safe job types, unsafe job types, and future candidates
 
 ## Deployment
 
