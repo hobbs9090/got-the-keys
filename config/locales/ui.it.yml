@@ -1,8 +1,9 @@
 it:
   ui:
     site_header:
-      eyebrow: "Piattaforma immobiliare e prenotazioni"
+      eyebrow: "Piattaforma immobiliare"
       admin_bookings: "Prenotazioni"
+      admin_dashboard: "Dashboard"
       sign_out: "Esci"
       add_property: "Aggiungi immobile"
       profile: "Profilo"

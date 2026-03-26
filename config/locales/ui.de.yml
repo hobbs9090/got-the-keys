@@ -1,8 +1,9 @@
 de:
   ui:
     site_header:
-      eyebrow: "Immobilien- und Buchungsplattform"
+      eyebrow: "Immobilienplattform"
       admin_bookings: "Buchungen"
+      admin_dashboard: "Dashboard"
       sign_out: "Abmelden"
       add_property: "Objekt hinzufügen"
       profile: "Profil"

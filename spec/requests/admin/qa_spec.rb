@@ -22,7 +22,7 @@ RSpec.describe "Admin QA guide" do
     sign_in admin
   end
 
-  it "shows the full app version in diagnostics" do
+  it "shows the version number and git details in the release box" do
     version_config.version = "2.4.0"
     version_config.build_sha = "abc1234"
     version_config.build_number = "42"
@@ -30,7 +30,28 @@ RSpec.describe "Admin QA guide" do
     get admin_qa_path
 
     expect(response).to have_http_status(:ok)
-    expect(response.body).to include(%(data-testid="qa-app-version"))
-    expect(response.body).to include("v2.4.0+abc1234.42")
+    expect(response.body).to match(%r{favicon-house-[^"]+\.svg})
+    expect(response.body).not_to include("favicon.ico")
+
+    document = Nokogiri::HTML.parse(response.body)
+    version_box = document.at_css(%([data-testid="qa-version-box"]))
+
+    expect(version_box).to be_present
+    expect(version_box.at_css(%([data-testid="qa-app-version"])).text).to eq("v2.4.0")
+    expect(version_box.at_css(%([data-testid="qa-git-sha"])).text).to eq("abc1234")
+    expect(version_box.at_css(%([data-testid="qa-build-number"])).text).to eq("42")
+  end
+
+  it "places the QA guide link at the bottom of the admin workspace navigation" do
+    get admin_root_path
+
+    expect(response).to have_http_status(:ok)
+
+    navigation_testids = Nokogiri::HTML.parse(response.body)
+      .css(".admin-nav__menu [data-testid]")
+      .map { |node| node["data-testid"] }
+
+    expect(navigation_testids.last).to eq("admin-qa-link")
+    expect(navigation_testids).to include("admin-booking-rules-link")
   end
 end

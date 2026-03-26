@@ -38,6 +38,24 @@ RSpec.describe "Language switching", type: :request do
       expect(response.body).to include('lang="fr"')
     end
 
+    it "redirects back to a safe in-app return path when provided" do
+      get new_language_path(language: "it", return_to: properties_path)
+
+      expect(response).to redirect_to(properties_path)
+    end
+
+    it "ignores external return paths" do
+      get new_language_path(language: "it", return_to: "https://example.com/phish"), headers: { "HTTP_REFERER" => root_path }
+
+      expect(response).to redirect_to(root_path)
+    end
+
+    it "ignores protocol-relative return paths" do
+      get new_language_path(language: "it", return_to: "//example.com/phish"), headers: { "HTTP_REFERER" => root_path }
+
+      expect(response).to redirect_to(root_path)
+    end
+
     it "rejects unsupported languages" do
       expect do
         get new_language_path(language: "es")

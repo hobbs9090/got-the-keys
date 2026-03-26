@@ -1,8 +1,9 @@
 fr:
   ui:
     site_header:
-      eyebrow: "Plateforme immobiliere et de reservation"
+      eyebrow: "Plateforme immobiliere"
       admin_bookings: "Reservations"
+      admin_dashboard: "Tableau de bord"
       sign_out: "Se deconnecter"
       add_property: "Ajouter un bien"
       profile: "Profil"

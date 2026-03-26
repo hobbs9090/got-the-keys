@@ -21,34 +21,34 @@ users:
   - first_name: Charlotte
     last_name: Hughes
     mobile_number: "07700 900101"
-    email: charlotte.hughes@gmail.example
+    email: charlotte.hughes@example.com
     password: secret
     password_confirmation: secret
     language: en
   - first_name: Daniel
     last_name: Mercer
     mobile_number: "07700 900102"
-    email: daniel.mercer@outlook.example
+    email: daniel.mercer@example.com
     password: secret
     password_confirmation: secret
     language: en
   - first_name: Matthew
     last_name: Wells
     mobile_number: "07700 900103"
-    email: matthew.wells@icloud.example
+    email: matthew.wells@example.com
     password: secret
     password_confirmation: secret
     language: en
   - first_name: Lucy
     last_name: McClure
     mobile_number: "07700 900104"
-    email: lucy.mcclure@btinternet.example
+    email: lucy.mcclure@example.com
     password: secret
     password_confirmation: secret
     language: en
 properties:
   - key: sevenoaks_family_home
-    owner_email: charlotte.hughes@gmail.example
+    owner_email: charlotte.hughes@example.com
     address_line_1: 18 Cedar Road
     address_line_2: Riverhead
     town_city: Sevenoaks
@@ -64,7 +64,7 @@ properties:
     asking_price: 865000
     featured: true
   - key: tunbridge_garden_flat
-    owner_email: daniel.mercer@outlook.example
+    owner_email: daniel.mercer@example.com
     address_line_1: Flat 3, 44 Mount Ephraim
     address_line_2: ""
     town_city: Tunbridge Wells
@@ -80,7 +80,7 @@ properties:
     asking_price: 435000
     featured: true
   - key: guildford_townhouse
-    owner_email: matthew.wells@icloud.example
+    owner_email: matthew.wells@example.com
     address_line_1: 72 Quarry Street
     address_line_2: ""
     town_city: Guildford
@@ -96,7 +96,7 @@ properties:
     asking_price: 675000
     featured: false
   - key: croydon_rental_loft
-    owner_email: lucy.mcclure@btinternet.example
+    owner_email: lucy.mcclure@example.com
     address_line_1: Apartment 11, 9 Park Lane
     address_line_2: ""
     town_city: Croydon

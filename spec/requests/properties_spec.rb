@@ -9,8 +9,28 @@ describe "Properties" do
       get properties_path
 
       expect(response).to have_http_status(:ok)
+      expect(response.body).to match(%r{favicon-house-[^"]+\.svg})
+      expect(response.body).not_to include("favicon.ico")
       expect(response.body).to include(%(data-testid="public-app-version"))
       expect(response.body).to include("v#{Rails.configuration.x.got_the_keys.version}")
+    end
+
+    it "renders a full first page of 12 property cards" do
+      12.times do |index|
+        user.properties.create!(
+          property_attributes(
+            address_line_1: "Request Street #{index + 2}",
+            postcode: format("RG1 %<n>1AA", n: index + 2),
+            listing_tagline: "Listing #{index + 2}"
+          )
+        )
+      end
+
+      get properties_path
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body.scan(%(data-testid="property-card")).count).to eq(12)
+      expect(response.body).to include(%(href="/properties?page=2"))
     end
   end
 

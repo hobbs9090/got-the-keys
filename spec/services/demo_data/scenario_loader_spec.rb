@@ -27,10 +27,10 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(Appointment.count).to eq(6)
     expect(User.pluck(:language).uniq).to eq(["en"])
     expect(User.order(:email).pluck(:email)).to match_array([
-      "charlotte.hughes@gmail.example",
-      "daniel.mercer@outlook.example",
-      "lucy.mcclure@btinternet.example",
-      "matthew.wells@icloud.example"
+      "charlotte.hughes@example.com",
+      "daniel.mercer@example.com",
+      "lucy.mcclure@example.com",
+      "matthew.wells@example.com"
     ])
   end
 

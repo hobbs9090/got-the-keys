@@ -23,6 +23,18 @@ RSpec.describe AppVersionHelper, type: :helper do
     expect(helper.public_app_version).to eq("v2.4.0")
   end
 
+  it "exposes the git sha and build number separately" do
+    version_config.build_sha = "abc1234"
+    version_config.build_number = "42"
+
+    expect(helper.app_build_sha).to eq("abc1234")
+    expect(helper.app_build_number).to eq("42")
+  end
+
+  it "falls back cleanly when build metadata is missing" do
+    expect(helper.app_build_value(nil)).to eq("Not available")
+  end
+
   it "includes build metadata in the full app version when present" do
     version_config.version = "2.4.0"
     version_config.build_sha = "abc1234"

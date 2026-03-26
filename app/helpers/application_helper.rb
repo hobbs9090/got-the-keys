@@ -28,6 +28,13 @@ module ApplicationHelper
     link_to(name, path, **options.merge(class: classes))
   end
 
+  def admin_dashboard_entry_path
+    remembered_path = session[:last_admin_path].to_s
+    return admin_root_path unless remembered_path.start_with?("/admin")
+
+    remembered_path
+  end
+
   def marketing_wordmark_tag(class_name: nil, alt: nil, decorative: false, variant: :default, **options)
     image_options = {
       alt: decorative ? "" : (alt.presence || t("gotthekeys.gotthekeys", default: "got the keys")),

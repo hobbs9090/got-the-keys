@@ -21,6 +21,10 @@ describe "A property" do
     expect(property.valid?).to be true
   end
 
+  it "uses an even page size for catalogue listings" do
+    expect(Property.default_per_page).to eq(12)
+  end
+
   it "requires a Address line 1" do
     property = build_property(address_line_1: "")
 
