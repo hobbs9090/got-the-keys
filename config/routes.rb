@@ -16,6 +16,7 @@ GotTheKeys::Application.routes.draw do
     resources :appointments, only: [:index, :show, :edit, :update] do
       patch :transition, on: :member
     end
+    resources :enquiries, only: [:index, :show, :update]
     resources :properties, only: [:index, :show, :edit, :update] do
       patch :transition, on: :member
     end
@@ -43,6 +44,7 @@ GotTheKeys::Application.routes.draw do
     resources :photos, only: [:index, :new, :create, :update, :destroy]
     resources :floor_plans, only: [:index, :new, :create, :update, :destroy]
     resources :viewing_times, only: [:index, :new, :create]
+    resources :enquiries, only: [:new, :create]
     resources :appointments, only: [:new, :create]
   end
 

@@ -34,6 +34,18 @@ RSpec.describe DemoData::ScenarioExporter do
       internal_notes: "Vendor works from home"
     )
   end
+  let!(:enquiry) do
+    FactoryBot.create(
+      :enquiry,
+      property:,
+      admin:,
+      customer_name: "Dara Cole",
+      customer_email: "dara@example.com",
+      customer_phone: "07700 900777",
+      source_type: "brochure_request",
+      message: "Please send the brochure and let me know whether there is loft storage above the second floor."
+    )
+  end
 
   around do |example|
     travel_to(Time.zone.local(2026, 4, 5, 9, 0)) { example.run }
@@ -78,6 +90,15 @@ RSpec.describe DemoData::ScenarioExporter do
         "assigned_admin_email" => "ops@gotthekeys.com",
         "customer_email" => "nina@example.com",
         "status" => "confirmed"
+      )
+    )
+    expect(payload["enquiries"]).to include(
+      include(
+        "property_key" => property_payload.fetch("key"),
+        "assigned_admin_email" => "ops@gotthekeys.com",
+        "customer_email" => "dara@example.com",
+        "source_type" => "brochure_request",
+        "status" => "new"
       )
     )
   end

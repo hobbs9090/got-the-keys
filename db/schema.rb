@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_26_152000) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_26_164000) do
   create_table "admins", force: :cascade do |t|
     t.datetime "created_at", precision: nil
     t.string "email"
@@ -97,6 +97,31 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_152000) do
     t.index ["scenario_key"], name: "index_demo_scenario_runs_on_scenario_key"
   end
 
+  create_table "enquiries", force: :cascade do |t|
+    t.integer "admin_id"
+    t.datetime "contacted_at"
+    t.datetime "created_at", null: false
+    t.string "customer_email"
+    t.string "customer_name", null: false
+    t.string "customer_phone"
+    t.text "internal_notes"
+    t.string "lead_reference", null: false
+    t.text "message", null: false
+    t.integer "property_id", null: false
+    t.string "source_type", default: "general_enquiry", null: false
+    t.boolean "spam", default: false, null: false
+    t.string "spam_reason"
+    t.string "status", default: "new", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_enquiries_on_admin_id"
+    t.index ["lead_reference"], name: "index_enquiries_on_lead_reference", unique: true
+    t.index ["property_id", "created_at"], name: "index_enquiries_on_property_id_and_created_at"
+    t.index ["property_id"], name: "index_enquiries_on_property_id"
+    t.index ["source_type"], name: "index_enquiries_on_source_type"
+    t.index ["spam"], name: "index_enquiries_on_spam"
+    t.index ["status"], name: "index_enquiries_on_status"
+  end
+
   create_table "floor_plans", force: :cascade do |t|
     t.datetime "created_at", precision: nil
     t.string "floor_plans"
@@ -112,6 +137,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_152000) do
     t.integer "appointment_id"
     t.text "body_preview"
     t.datetime "created_at", null: false
+    t.integer "enquiry_id"
     t.text "error_message"
     t.string "event_type", null: false
     t.json "metadata"
@@ -120,6 +146,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_152000) do
     t.string "subject", null: false
     t.datetime "updated_at", null: false
     t.index ["appointment_id"], name: "index_notification_logs_on_appointment_id"
+    t.index ["enquiry_id"], name: "index_notification_logs_on_enquiry_id"
     t.index ["status"], name: "index_notification_logs_on_status"
   end
 
@@ -220,5 +247,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_152000) do
   add_foreign_key "appointments", "admins"
   add_foreign_key "appointments", "properties"
   add_foreign_key "availability_windows", "properties"
+  add_foreign_key "enquiries", "admins"
+  add_foreign_key "enquiries", "properties"
   add_foreign_key "notification_logs", "appointments"
+  add_foreign_key "notification_logs", "enquiries"
 end

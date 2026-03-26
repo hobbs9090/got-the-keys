@@ -37,7 +37,8 @@ module DemoData
         summary_data: {
           exported_at: Time.current.iso8601,
           property_count: Property.count,
-          appointment_count: Appointment.count
+          appointment_count: Appointment.count,
+          enquiry_count: Enquiry.count
         }
       )
 
@@ -72,6 +73,7 @@ module DemoData
         create_floor_plans(payload.fetch(:floor_plans), properties:)
         create_availability_windows(payload.fetch(:availability_windows), properties:)
         create_appointments(payload.fetch(:appointments), properties:, admins:)
+        create_enquiries(payload.fetch(:enquiries), properties:, admins:)
 
         summary = {
           name: payload.fetch(:name),
@@ -82,6 +84,7 @@ module DemoData
           photo_count: Photo.count,
           floor_plan_count: FloorPlan.count,
           appointment_count: Appointment.count,
+          enquiry_count: Enquiry.count,
           active_demo_scenario_key: configuration.active_demo_scenario_key
         }
 
@@ -101,6 +104,7 @@ module DemoData
       NotificationLog.delete_all
       AppointmentEvent.delete_all
       Appointment.delete_all
+      Enquiry.delete_all
       AvailabilityWindow.delete_all
       Photo.delete_all
       FloorPlan.delete_all
@@ -189,6 +193,28 @@ module DemoData
           status: final_status,
           notes: attributes[:notes],
           internal_notes: attributes[:internal_notes]
+        )
+      end
+    end
+
+    def create_enquiries(enquiry_specs, properties:, admins:)
+      enquiry_specs.each do |attributes|
+        property = properties.fetch(attributes.fetch(:property_key))
+        admin = attributes[:assigned_admin_email].present? ? admins.fetch(attributes.fetch(:assigned_admin_email)) : nil
+
+        Enquiry.create_seeded!(
+          property:,
+          admin:,
+          allow_invalid: attributes.fetch(:allow_invalid, false),
+          customer_name: attributes.fetch(:customer_name),
+          customer_email: attributes[:customer_email],
+          customer_phone: attributes[:customer_phone],
+          source_type: attributes.fetch(:source_type),
+          message: attributes.fetch(:message),
+          status: attributes.fetch(:status),
+          internal_notes: attributes[:internal_notes],
+          spam: attributes.fetch(:spam, false),
+          spam_reason: attributes[:spam_reason]
         )
       end
     end

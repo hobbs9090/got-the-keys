@@ -1,0 +1,66 @@
+<% title "Lead inbox" %>
+
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow">Leads</p>
+      <h1>Lead inbox</h1>
+    </div>
+  </div>
+</section>
+
+<section class="admin-panel">
+  <%= form_with url: admin_enquiries_path, method: :get, local: true, class: "form-grid", data: { testid: "lead-inbox-filters" } do |f| %>
+    <div>
+      <%= f.label :status, "Status" %>
+      <%= f.select :status, [["All", nil]] + Enquiry::STATUSES.map { |status| [status.humanize, status] }, { selected: @filters[:status] }, data: { testid: "lead-filter-status" } %>
+    </div>
+    <div>
+      <%= f.label :source_type, "Source" %>
+      <%= f.select :source_type, [["All", nil]] + Enquiry::SOURCE_TYPES.map { |source| [enquiry_source_label(source), source] }, { selected: @filters[:source_type] }, data: { testid: "lead-filter-source" } %>
+    </div>
+    <div>
+      <%= f.label :admin_id, "Assigned admin" %>
+      <%= f.select :admin_id, [["Anyone", nil]] + Admin.order(:email).map { |admin| [admin.email, admin.id] }, { selected: @filters[:admin_id] }, data: { testid: "lead-filter-admin" } %>
+    </div>
+    <div>
+      <%= f.label :q, "Search" %>
+      <%= f.search_field :q, value: @filters[:q], placeholder: "Name, email, message, or reference", data: { testid: "lead-filter-query" } %>
+    </div>
+    <div class="form-grid__checkbox">
+      <%= f.check_box :spam_only, { checked: ActiveModel::Type::Boolean.new.cast(@filters[:spam_only]), data: { testid: "lead-filter-spam" } }, "true", "false" %>
+      <%= f.label :spam_only, "Flagged spam only", class: "checkbox-label" %>
+    </div>
+    <div class="form-actions">
+      <%= f.submit "Apply filters", class: "button primary" %>
+      <%= link_to "Clear", admin_enquiries_path, class: "button hollow secondary" %>
+    </div>
+  <% end %>
+</section>
+
+<section class="admin-panel">
+  <% if @enquiries.any? %>
+    <div class="admin-list">
+      <% @enquiries.each do |enquiry| %>
+        <article class="admin-list__item" data-testid="lead-row-<%= enquiry.id %>">
+          <div>
+            <strong><%= link_to enquiry.customer_name, admin_enquiry_path(enquiry) %></strong>
+            <p><%= enquiry.property.address_line_1 %> · <%= enquiry.customer_email.presence || enquiry.customer_phone %></p>
+            <p><%= enquiry.lead_reference %> · <%= enquiry_source_label(enquiry.source_type) %></p>
+            <% if enquiry.spam? %>
+              <p>Flagged: <%= enquiry.spam_reason.presence || "Potential spam" %></p>
+            <% end %>
+          </div>
+          <div class="admin-log-status">
+            <span class="<%= enquiry_status_badge_class(enquiry.status) %>"><%= enquiry.display_status %></span>
+            <p><%= formatted_date_time(enquiry.created_at) %></p>
+          </div>
+        </article>
+      <% end %>
+    </div>
+
+    <%= paginate @enquiries %>
+  <% else %>
+    <p class="empty-copy">No leads match the current filters.</p>
+  <% end %>
+</section>

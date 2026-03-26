@@ -58,6 +58,27 @@
   </article>
 
   <article class="admin-panel">
+    <h2>Recent leads</h2>
+    <% if @recent_enquiries.any? %>
+      <div class="admin-list">
+        <% @recent_enquiries.each do |enquiry| %>
+          <div class="admin-list__item">
+            <div>
+              <%= link_to enquiry.customer_name, admin_enquiry_path(enquiry) %>
+              <p><%= enquiry.property.address_line_1 %> · <%= enquiry_source_label(enquiry.source_type) %></p>
+            </div>
+            <span class="<%= enquiry_status_badge_class(enquiry.status) %>"><%= enquiry.display_status %></span>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="empty-copy">No leads have been captured yet.</p>
+    <% end %>
+  </article>
+</section>
+
+<section class="admin-grid">
+  <article class="admin-panel">
     <h2><%= t("ui.admin.dashboard.upcoming_appointments") %></h2>
     <% if @upcoming_appointments.any? %>
       <div class="admin-list">
@@ -75,9 +96,6 @@
       <p class="empty-copy"><%= t("ui.admin.dashboard.no_upcoming_bookings") %></p>
     <% end %>
   </article>
-</section>
-
-<section class="admin-grid">
   <article class="admin-panel">
     <h2><%= t("ui.admin.dashboard.recent_activity") %></h2>
     <div class="admin-table">

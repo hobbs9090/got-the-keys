@@ -260,3 +260,21 @@ appointments:
     status: no_show
     notes: Please call if I am delayed.
     internal_notes: Did not arrive and could not be reached after two calls.
+enquiries:
+  - property_key: sevenoaks_family_home
+    assigned_admin_email: steven@gotthekeys.com
+    customer_name: Emily Carter
+    customer_email: emily.carter@example.com
+    customer_phone: "07700 901111"
+    source_type: brochure_request
+    message: Please send over the brochure and let me know whether the study could work as a downstairs bedroom for an older parent.
+    status: new
+  - property_key: croydon_rental_loft
+    assigned_admin_email: stevenhobbs@meeane.co.uk
+    customer_name: Leon Grant
+    customer_email: leon.grant@example.com
+    customer_phone: ""
+    source_type: letting_enquiry
+    message: I am relocating for work in May and want to check the move-in timing, furnished inventory, and whether there is flexibility on the initial tenancy length.
+    status: contacted
+    internal_notes: Replied with current availability and referencing outline.
