@@ -1,0 +1,55 @@
+<% title "Enquire about #{@property.address_line_1}" %>
+
+<section class="property-layout">
+  <article class="property-panel">
+    <p class="section-heading__eyebrow">Property enquiry</p>
+    <h1>Ask about <%= @property.address_line_1 %></h1>
+    <p>Use this form if you want brochure details, a landlord or seller callback, or answers before booking a viewing.</p>
+
+    <%= form_with model: [@property, @enquiry], data: { testid: "property-enquiry-form" } do |f| %>
+      <%= render "shared/errors", object: @enquiry %>
+
+      <div class="form-grid">
+        <div>
+          <%= f.label :customer_name, "Your name", **form_label_options(@enquiry, :customer_name) %>
+          <%= f.text_field :customer_name, required: true, autofocus: true, data: { testid: "enquiry-customer-name" }, **form_control_options(@enquiry, :customer_name) %>
+          <%= field_error_messages(@enquiry, :customer_name) %>
+        </div>
+        <div>
+          <%= f.label :customer_email, "Email address", **form_label_options(@enquiry, :customer_email) %>
+          <%= f.email_field :customer_email, data: { testid: "enquiry-customer-email" }, **form_control_options(@enquiry, :customer_email) %>
+          <%= field_error_messages(@enquiry, :customer_email) %>
+        </div>
+        <div>
+          <%= f.label :customer_phone, "Phone number", **form_label_options(@enquiry, :customer_phone) %>
+          <%= f.telephone_field :customer_phone, data: { testid: "enquiry-customer-phone" }, **form_control_options(@enquiry, :customer_phone) %>
+          <%= field_error_messages(@enquiry, :customer_phone) %>
+        </div>
+        <div>
+          <%= f.label :source_type, "Enquiry type", **form_label_options(@enquiry, :source_type) %>
+          <%= f.select :source_type, Enquiry::SOURCE_TYPES.map { |source| [enquiry_source_label(source), source] }, {}, form_control_options(@enquiry, :source_type, data: { testid: "enquiry-source-type" }) %>
+          <%= field_error_messages(@enquiry, :source_type) %>
+        </div>
+        <div class="form-grid__full">
+          <%= f.label :message, "Message", **form_label_options(@enquiry, :message) %>
+          <%= f.text_area :message, rows: 8, required: true, maxlength: 3000, data: { testid: "enquiry-message" }, **form_control_options(@enquiry, :message) %>
+          <%= field_error_messages(@enquiry, :message) %>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <%= f.submit "Send enquiry", class: "button primary", data: { testid: "submit-enquiry-button" } %>
+        <%= link_to "Back to property", property_path(@property), class: "button hollow secondary" %>
+      </div>
+    <% end %>
+  </article>
+
+  <aside class="property-booking-panel">
+    <h2>What happens next?</h2>
+    <ul class="detail-inline-list">
+      <li><strong>1.</strong> The lead lands in the admin inbox immediately.</li>
+      <li><strong>2.</strong> The team can assign, qualify, and follow it up.</li>
+      <li><strong>3.</strong> You will get an acknowledgement email if you provide an email address.</li>
+    </ul>
+  </aside>
+</section>

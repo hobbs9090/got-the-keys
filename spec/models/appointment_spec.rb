@@ -114,4 +114,32 @@ RSpec.describe Appointment do
     expect(appointment).not_to be_valid
     expect(appointment.errors[:customer_phone]).to include("must be a valid phone number")
   end
+
+  it "supports customer self-service before the appointment expires" do
+    appointment = FactoryBot.create(
+      :appointment,
+      property:,
+      requested_time: next_booking_slot(hour: 15),
+      scheduled_at: next_booking_slot(hour: 15)
+    )
+
+    expect(appointment.manageable_by_customer?).to be(true)
+    expect(appointment.valid_access_token?(appointment.access_token)).to be(true)
+  end
+
+  it "records a visit outcome event when follow-up progress is updated" do
+    appointment = FactoryBot.create(
+      :appointment,
+      :completed,
+      property:,
+      admin: admin,
+      requested_time: next_booking_slot(hour: 10, from: Time.zone.local(2026, 3, 29, 8, 0)),
+      scheduled_at: next_booking_slot(hour: 10, from: Time.zone.local(2026, 3, 29, 8, 0))
+    )
+
+    appointment.update!(visit_outcome: "feedback_requested", admin: admin)
+
+    expect(appointment.timeline.last.event_type).to eq("feedback_requested")
+    expect(appointment.timeline.last.message).to include("feedback requested")
+  end
 end

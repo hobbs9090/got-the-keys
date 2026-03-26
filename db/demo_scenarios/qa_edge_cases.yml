@@ -1,6 +1,17 @@
 key: qa_edge_cases
 name: QA Edge Cases
 description: Purpose-built for automation practice with a missing phone number, long notes, a reschedule, and a property that shows no public availability.
+qa:
+  family: edge_cases
+  intended_journey: Reproduce awkward or invalid inputs without losing deterministic assertions.
+  complexity: advanced
+  risk_type: workflow
+  locale_coverage: [en, de]
+  trainer_notes:
+    - Use this for negative tests, long-form inputs, and no-availability messaging.
+  expected_assertions:
+    - Edge-case records should still render stable selectors and safe validation copy.
+  quick_reset: true
 booking_configuration:
   slot_duration_minutes: 30
   lead_time_hours: 1

@@ -21,6 +21,13 @@ RSpec.describe NotificationLog do
     expect(log).to be_valid
   end
 
+  it "allows logs tied to an enquiry" do
+    enquiry = FactoryBot.create(:enquiry)
+    log = FactoryBot.build(:notification_log, appointment: nil, enquiry:, subject: "Lead received", event_type: "enquiry_acknowledgement", status: "sent")
+
+    expect(log).to be_valid
+  end
+
   it "orders logs with the newest entry first" do
     older_log = FactoryBot.create(
       :notification_log,

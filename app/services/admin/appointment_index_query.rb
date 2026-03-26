@@ -30,6 +30,7 @@ class Admin::AppointmentIndexQuery
     scope = relation.includes(:property, :admin).recent_first
     scope = scope.where(property_id: params[:property_id]) if params[:property_id].present?
     scope = scope.where(status: params[:status]) if params[:status].present?
+    scope = scope.where(visit_outcome: params[:visit_outcome]) if params[:visit_outcome].present?
     scope = scope.where(admin_id: params[:admin_id]) if params[:admin_id].present?
     scope = scope.where("lower(customer_email) = ?", params[:customer_email].to_s.downcase) if params[:customer_email].present?
 

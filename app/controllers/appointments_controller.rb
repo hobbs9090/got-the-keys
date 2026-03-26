@@ -1,6 +1,8 @@
 class AppointmentsController < ApplicationController
   before_action :set_property, only: %i[new create]
-  before_action :set_appointment, only: :show
+  before_action :set_appointment, only: %i[show edit_self_service reschedule_self_service cancel_self_service]
+  before_action :authorize_public_access!, only: %i[show edit_self_service reschedule_self_service cancel_self_service]
+  before_action :authorize_customer_self_service!, only: %i[edit_self_service reschedule_self_service cancel_self_service]
 
   def new
     @appointment = @property.appointments.new(
@@ -25,12 +27,36 @@ class AppointmentsController < ApplicationController
   end
 
   def show
-    token = params[:token].to_s
+  end
 
-    return if current_admin.present?
-    return if token.present? && token.bytesize == @appointment.access_token.to_s.bytesize && ActiveSupport::SecurityUtils.secure_compare(token, @appointment.access_token.to_s)
+  def edit_self_service
+    @available_slots = @appointment.property.next_available_slots(limit: 10, excluding_appointment: @appointment)
+  end
 
-    redirect_to root_path, alert: t("ui.appointments.show.invalid_link_alert")
+  def reschedule_self_service
+    requested_time = parse_requested_time
+
+    if requested_time.blank?
+      @available_slots = @appointment.property.next_available_slots(limit: 10, excluding_appointment: @appointment)
+      @appointment.errors.add(:requested_time, "Choose a new slot.")
+      render :edit_self_service, status: :unprocessable_entity
+      return
+    end
+
+    if @appointment.update(requested_time:, scheduled_at: requested_time, status: "rescheduled")
+      redirect_to appointment_path(@appointment, token: @appointment.access_token), notice: "Your viewing has been rescheduled."
+    else
+      @available_slots = @appointment.property.next_available_slots(limit: 10, excluding_appointment: @appointment)
+      render :edit_self_service, status: :unprocessable_entity
+    end
+  end
+
+  def cancel_self_service
+    if @appointment.update(status: "cancelled")
+      redirect_to appointment_path(@appointment, token: @appointment.access_token), notice: "Your viewing has been cancelled."
+    else
+      redirect_to appointment_path(@appointment, token: @appointment.access_token), alert: @appointment.errors.full_messages.to_sentence
+    end
   end
 
   private
@@ -47,11 +73,31 @@ class AppointmentsController < ApplicationController
     params.require(:appointment).permit(:customer_name, :customer_email, :customer_phone, :requested_time, :notes)
   end
 
+  def authorize_public_access!
+    return if current_admin.present?
+    return if @appointment.valid_access_token?(params[:token].to_s)
+
+    redirect_to root_path, alert: t("ui.appointments.show.invalid_link_alert")
+  end
+
+  def authorize_customer_self_service!
+    return if current_admin.present?
+    return if @appointment.manageable_by_customer?
+
+    redirect_to appointment_path(@appointment, token: @appointment.access_token), alert: "This self-service link has expired."
+  end
+
   def preselected_slot
     return if params[:slot].blank?
 
     Time.zone.parse(params[:slot])
   rescue ArgumentError, TypeError
+    nil
+  end
+
+  def parse_requested_time
+    Time.zone.parse(params.require(:appointment).fetch(:requested_time))
+  rescue ActionController::ParameterMissing, ArgumentError, TypeError
     nil
   end
 end

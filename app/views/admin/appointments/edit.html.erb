@@ -48,6 +48,11 @@
           <%= f.select :status, Appointment::STATUSES.map { |status| [t("ui.appointments.statuses.#{status}", default: status.humanize), status] }, {}, form_control_options(@appointment, :status) %>
           <%= field_error_messages(@appointment, :status) %>
         </div>
+        <div>
+          <%= f.label :visit_outcome, "Visit outcome", **form_label_options(@appointment, :visit_outcome) %>
+          <%= f.select :visit_outcome, [["Not recorded", nil]] + Appointment::VISIT_OUTCOMES.map { |outcome| [outcome.to_s.humanize, outcome] }, {}, form_control_options(@appointment, :visit_outcome) %>
+          <%= field_error_messages(@appointment, :visit_outcome) %>
+        </div>
         <div class="form-grid__full">
           <%= f.label :notes, t("ui.admin.appointments.edit.customer_notes"), **form_label_options(@appointment, :notes) %>
           <%= f.text_area :notes, rows: 4, maxlength: 2000, **form_control_options(@appointment, :notes) %>

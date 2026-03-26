@@ -37,7 +37,8 @@ module DemoData
         summary_data: {
           exported_at: Time.current.iso8601,
           property_count: Property.count,
-          appointment_count: Appointment.count
+          appointment_count: Appointment.count,
+          enquiry_count: Enquiry.count
         }
       )
 
@@ -68,8 +69,14 @@ module DemoData
         admins = create_admins(payload.fetch(:admins))
         users = create_users(payload.fetch(:users))
         properties = create_properties(payload.fetch(:properties), users:)
+        create_photos(payload.fetch(:photos), properties:)
+        create_floor_plans(payload.fetch(:floor_plans), properties:)
+        create_property_documents(payload.fetch(:property_documents), properties:)
         create_availability_windows(payload.fetch(:availability_windows), properties:)
         create_appointments(payload.fetch(:appointments), properties:, admins:)
+        create_enquiries(payload.fetch(:enquiries), properties:, admins:)
+        create_offers(payload.fetch(:offers), properties:, admins:)
+        create_rental_applications(payload.fetch(:rental_applications), properties:, admins:)
 
         summary = {
           name: payload.fetch(:name),
@@ -77,7 +84,13 @@ module DemoData
           admin_count: admins.size,
           user_count: users.size,
           property_count: properties.size,
+          photo_count: Photo.count,
+          floor_plan_count: FloorPlan.count,
+          property_document_count: PropertyDocument.count,
           appointment_count: Appointment.count,
+          enquiry_count: Enquiry.count,
+          offer_count: Offer.count,
+          rental_application_count: RentalApplication.count,
           active_demo_scenario_key: configuration.active_demo_scenario_key
         }
 
@@ -96,10 +109,17 @@ module DemoData
     def reset_demo_data!
       NotificationLog.delete_all
       AppointmentEvent.delete_all
+      OfferEvent.delete_all
+      RentalApplicationEvent.delete_all
       Appointment.delete_all
+      Enquiry.delete_all
+      Offer.delete_all
+      RentalApplication.delete_all
       AvailabilityWindow.delete_all
       Photo.delete_all
       FloorPlan.delete_all
+      PropertyDocument.delete_all
+      AuditLog.delete_all
       Property.delete_all
       User.delete_all
       Admin.delete_all
@@ -123,8 +143,14 @@ module DemoData
         owner = users.fetch(attributes.fetch(:owner_email))
 
         property = owner.properties.create!(
-          attributes.except(:key, :owner_email)
+          attributes.except(:key, :owner_email, :created_at, :updated_at)
         )
+        property.update_columns(
+          {
+            created_at: attributes[:created_at],
+            updated_at: attributes[:updated_at]
+          }.compact
+        ) if attributes[:created_at].present? || attributes[:updated_at].present?
 
         memo[attributes.fetch(:key)] = property
       end
@@ -133,6 +159,30 @@ module DemoData
     def create_availability_windows(window_specs, properties:)
       window_specs.each do |attributes|
         properties.fetch(attributes.fetch(:property_key)).availability_windows.create!(
+          attributes.except(:property_key)
+        )
+      end
+    end
+
+    def create_photos(photo_specs, properties:)
+      photo_specs.each do |attributes|
+        properties.fetch(attributes.fetch(:property_key)).photos.create!(
+          attributes.except(:property_key)
+        )
+      end
+    end
+
+    def create_floor_plans(floor_plan_specs, properties:)
+      floor_plan_specs.each do |attributes|
+        properties.fetch(attributes.fetch(:property_key)).floor_plans.create!(
+          attributes.except(:property_key)
+        )
+      end
+    end
+
+    def create_property_documents(document_specs, properties:)
+      document_specs.each do |attributes|
+        properties.fetch(attributes.fetch(:property_key)).property_documents.create!(
           attributes.except(:property_key)
         )
       end
@@ -157,17 +207,103 @@ module DemoData
             duration_minutes: attributes.fetch(:duration_minutes),
             notes: attributes[:notes],
             internal_notes: attributes[:internal_notes],
-            status: "pending"
+            status: "pending",
+            visit_outcome: attributes[:visit_outcome]
           }.merge(skip_slot_validation: true)
         )
 
-        next if final_status == "pending" && scheduled_at == requested_time
+        next if final_status == "pending" && scheduled_at == requested_time && attributes[:visit_outcome].blank?
 
         appointment.update!(
           admin:,
           scheduled_at:,
           status: final_status,
+          visit_outcome: attributes[:visit_outcome],
           notes: attributes[:notes],
+          internal_notes: attributes[:internal_notes]
+        )
+      end
+    end
+
+    def create_enquiries(enquiry_specs, properties:, admins:)
+      enquiry_specs.each do |attributes|
+        property = properties.fetch(attributes.fetch(:property_key))
+        admin = attributes[:assigned_admin_email].present? ? admins.fetch(attributes.fetch(:assigned_admin_email)) : nil
+
+        Enquiry.create_seeded!(
+          property:,
+          admin:,
+          allow_invalid: attributes.fetch(:allow_invalid, false),
+          customer_name: attributes.fetch(:customer_name),
+          customer_email: attributes[:customer_email],
+          customer_phone: attributes[:customer_phone],
+          source_type: attributes.fetch(:source_type),
+          message: attributes.fetch(:message),
+          status: attributes.fetch(:status),
+          internal_notes: attributes[:internal_notes],
+          spam: attributes.fetch(:spam, false),
+          spam_reason: attributes[:spam_reason]
+        )
+      end
+    end
+
+    def create_offers(offer_specs, properties:, admins:)
+      offer_specs.each do |attributes|
+        property = properties.fetch(attributes.fetch(:property_key))
+        admin = attributes[:assigned_admin_email].present? ? admins.fetch(attributes.fetch(:assigned_admin_email)) : nil
+        final_status = attributes.fetch(:status)
+
+        offer = property.offers.create!(
+          admin:,
+          buyer_name: attributes.fetch(:buyer_name),
+          buyer_email: attributes.fetch(:buyer_email),
+          buyer_phone: attributes.fetch(:buyer_phone),
+          amount: attributes.fetch(:amount),
+          status: "received",
+          chain_position: attributes[:chain_position],
+          notes: attributes[:notes],
+          internal_notes: attributes[:internal_notes]
+        )
+
+        next if final_status == "received"
+
+        offer.update!(
+          admin:,
+          status: final_status,
+          chain_position: attributes[:chain_position],
+          internal_notes: attributes[:internal_notes]
+        )
+      end
+    end
+
+    def create_rental_applications(application_specs, properties:, admins:)
+      application_specs.each do |attributes|
+        property = properties.fetch(attributes.fetch(:property_key))
+        admin = attributes[:assigned_admin_email].present? ? admins.fetch(attributes.fetch(:assigned_admin_email)) : nil
+        final_status = attributes.fetch(:status)
+
+        application = property.rental_applications.create!(
+          admin:,
+          applicant_name: attributes.fetch(:applicant_name),
+          applicant_email: attributes.fetch(:applicant_email),
+          applicant_phone: attributes.fetch(:applicant_phone),
+          move_in_date: attributes.fetch(:move_in_date),
+          status: "received",
+          guarantor_required: attributes.fetch(:guarantor_required, false),
+          guarantor_available: attributes.fetch(:guarantor_available, false),
+          affordability_notes: attributes[:affordability_notes],
+          notes: attributes[:notes],
+          internal_notes: attributes[:internal_notes]
+        )
+
+        next if final_status == "received"
+
+        application.update!(
+          admin:,
+          status: final_status,
+          guarantor_required: attributes.fetch(:guarantor_required, false),
+          guarantor_available: attributes.fetch(:guarantor_available, false),
+          affordability_notes: attributes[:affordability_notes],
           internal_notes: attributes[:internal_notes]
         )
       end

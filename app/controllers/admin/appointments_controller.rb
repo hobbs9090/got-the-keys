@@ -1,5 +1,5 @@
 class Admin::AppointmentsController < Admin::BaseController
-  before_action :set_appointment, only: %i[show edit update transition]
+  before_action :set_appointment, only: %i[show edit update transition send_reminder]
   before_action :load_filters, only: :index
 
   def index
@@ -50,6 +50,13 @@ class Admin::AppointmentsController < Admin::BaseController
     end
   end
 
+  def send_reminder
+    AppointmentNotificationJob.perform_later(@appointment.id, "reminder")
+    @appointment.update_column(:reminder_sent_at, Time.current)
+
+    redirect_to admin_appointment_path(@appointment), notice: "Reminder queued."
+  end
+
   private
 
   def set_appointment
@@ -60,9 +67,10 @@ class Admin::AppointmentsController < Admin::BaseController
     @properties = Property.order(:address_line_1)
     @admins = Admin.order(:email)
     @statuses = Appointment::STATUSES
+    @visit_outcomes = Appointment::VISIT_OUTCOMES
   end
 
   def appointment_params
-    params.require(:appointment).permit(:customer_name, :customer_email, :customer_phone, :requested_time, :scheduled_at, :duration_minutes, :status, :notes, :internal_notes)
+    params.require(:appointment).permit(:customer_name, :customer_email, :customer_phone, :requested_time, :scheduled_at, :duration_minutes, :status, :visit_outcome, :notes, :internal_notes)
   end
 end

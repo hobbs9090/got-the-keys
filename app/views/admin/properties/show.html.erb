@@ -20,6 +20,36 @@
     <p><strong><%= @property.headline %></strong></p>
     <p><%= @property.property_description %></p>
     <p><%= @property.user.full_name.presence || @property.user.email %> · <%= @property.user.email %></p>
+    <p><span class="<%= listing_state_badge_class(@property.listing_state) %>"><%= translated_listing_state(@property.listing_state) %></span></p>
+    <% if property_fact_rows(@property).any? %>
+      <dl class="detail-list">
+        <% property_fact_rows(@property).each do |label, value| %>
+          <div>
+            <dt><%= label %></dt>
+            <dd><%= value %></dd>
+          </div>
+        <% end %>
+      </dl>
+    <% end %>
+  </article>
+
+  <article class="admin-panel" data-testid="admin-listing-completeness">
+    <h2>Listing readiness</h2>
+    <p><strong><%= @property.listing_completeness_percentage %>% complete</strong></p>
+    <ul class="detail-inline-list">
+      <% @property.listing_completeness_checks.each do |check| %>
+        <li><strong><%= check[:complete] ? "Done" : "Needed" %></strong>: <%= check[:label] %></li>
+      <% end %>
+    </ul>
+    <div class="admin-inline-actions">
+      <% %w[review_pending published under_offer let_agreed sold let withdrawn].each do |state| %>
+        <%= button_to translated_listing_state(state),
+                      transition_admin_property_path(@property, listing_state: state),
+                      method: :patch,
+                      class: "button #{state == @property.listing_state ? 'primary' : 'hollow secondary'}",
+                      data: { testid: "listing-transition-#{state.dasherize}" } %>
+      <% end %>
+    </div>
   </article>
 
   <article class="admin-panel">
@@ -42,6 +72,66 @@
 </section>
 
 <section class="admin-panel">
+  <h2>Marketing assets</h2>
+  <div class="admin-grid">
+    <article class="admin-panel">
+      <h3>Photos</h3>
+      <% if @property.ordered_photos.any? %>
+        <div class="admin-list">
+          <% @property.ordered_photos.each do |photo| %>
+            <div class="admin-list__item">
+              <div>
+                <strong><%= photo.primary? ? "Primary image" : "Photo #{photo.position}" %></strong>
+                <p><%= photo.image_filename %></p>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="empty-copy">No marketing photos added yet.</p>
+      <% end %>
+    </article>
+
+    <article class="admin-panel">
+      <h3>Floor plans</h3>
+      <% if @property.ordered_floor_plans.any? %>
+        <div class="admin-list">
+          <% @property.ordered_floor_plans.each do |floor_plan| %>
+            <div class="admin-list__item">
+              <div>
+                <strong><%= floor_plan.label.presence || "Floor plan #{floor_plan.position}" %></strong>
+                <p><%= floor_plan.floor_plans %></p>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="empty-copy">No floor plans added yet.</p>
+      <% end %>
+    </article>
+  </div>
+</section>
+
+<section class="admin-panel">
+  <h2>Documents</h2>
+  <% if @property.ordered_documents.any? %>
+    <div class="admin-list">
+      <% @property.ordered_documents.each do |document| %>
+        <div class="admin-list__item">
+          <div>
+            <strong><%= document.title %></strong>
+            <p><%= document.category_label %> · <%= document.visibility.humanize %> · <%= document.file_name %></p>
+          </div>
+          <%= link_to "Download", download_property_property_document_path(@property, document), class: "button hollow secondary" %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="empty-copy">No documents have been attached to this listing yet.</p>
+  <% end %>
+</section>
+
+<section class="admin-panel">
   <h2><%= t("ui.admin.properties.show.booking_history_title") %></h2>
   <% if @appointments.any? %>
     <div class="admin-list">
@@ -57,5 +147,22 @@
     </div>
   <% else %>
     <p class="empty-copy"><%= t("ui.admin.properties.show.no_bookings") %></p>
+  <% end %>
+</section>
+
+<section class="admin-panel">
+  <h2>Activity timeline</h2>
+  <% if @activity_logs.any? %>
+    <ol class="timeline" data-testid="admin-property-activity-timeline">
+      <% @activity_logs.each do |entry| %>
+        <li>
+          <strong><%= entry.action.to_s.tr("_", " ").humanize %></strong>
+          <span><%= formatted_date_time(entry.occurred_at) %></span>
+          <p><%= entry.message %></p>
+        </li>
+      <% end %>
+    </ol>
+  <% else %>
+    <p class="empty-copy">No activity has been recorded for this property yet.</p>
   <% end %>
 </section>

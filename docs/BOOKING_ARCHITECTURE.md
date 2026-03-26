@@ -16,10 +16,11 @@ Public visitor
   -> AppointmentEvent + AppointmentNotificationJob
   -> AppointmentNotifier
   -> AppointmentMailer + NotificationLog
+  -> secure self-service manage/cancel/reschedule links
 
 Admin
   -> Admin::AppointmentIndexQuery
-  -> Admin::AppointmentsController#index/show/edit/update/transition
+  -> Admin::AppointmentsController#index/show/edit/update/transition/send_reminder
   -> Appointment updates
   -> after_commit hooks
   -> AppointmentEvent + AppointmentNotificationJob
@@ -49,6 +50,7 @@ Admin
 3. `Appointment` validations call `AppointmentAvailability` to confirm the slot is bookable.
 4. After commit, `Appointment` records a `created` timeline event and enqueues `AppointmentNotificationJob`.
 5. The customer can view the confirmation page through the secure `public_reference` plus `access_token` pair.
+6. Until the self-service window expires, the customer can reschedule or cancel through secure tokenised manage links.
 
 Relevant files:
 
@@ -63,7 +65,8 @@ Relevant files:
 2. `show` exposes the timeline and customer history.
 3. `edit` and `update` change schedule, notes, or status while attributing the change to the current admin.
 4. `transition` is the quick status-change path from the bookings desk.
-5. After commit, `Appointment` writes the matching timeline event and enqueues a notification when status or schedule changes.
+5. `send_reminder` can trigger an explicit reminder email with an `.ics` calendar attachment.
+6. After commit, `Appointment` writes the matching timeline event and enqueues a notification when status or schedule changes.
 
 Relevant files:
 
@@ -77,9 +80,9 @@ Relevant files:
 - `BookingConfiguration.current`
   Global defaults for slot duration, lead time, office hours, open weekdays, and buffer minutes.
 - `AppointmentAvailability`
-  The main scheduling policy object. It decides which future slots are offered and whether a proposed slot is valid.
+  The main scheduling policy object. It decides which future slots are offered, handles grouped-viewing capacity, and decides whether a proposed slot is valid.
 - `AvailabilityWindow`
-  Per-property overrides for special openings and blackouts.
+  Per-property overrides for special openings, grouped-viewing windows, and blackouts.
 - `Appointment.blocking`
   Only `confirmed` and `rescheduled` appointments block other bookings.
 
@@ -92,9 +95,9 @@ This split is intentional:
 ## Notifications And Audit Trail
 
 - `AppointmentNotificationJob`
-  Active Job boundary used after create and after notification-worthy updates.
+  Active Job boundary used after create, after notification-worthy updates, and for explicit reminders.
 - `AppointmentNotifier`
-  Delivery service that decides whether to send mail now and always writes a `NotificationLog` row.
+  Delivery service that decides whether to send mail now, attaches the calendar event, and always writes a `NotificationLog` row.
 - `AppointmentMailer`
   Builds the customer-facing email content and subject.
 - `AppointmentEvent`
@@ -107,9 +110,10 @@ The current design keeps side effects after commit so booking writes succeed or 
 - Publicly created appointments start as `pending`.
 - `requested_time` and `scheduled_at` should stay synchronized unless a deliberate future change separates them.
 - Slot validation only matters for active bookings: `pending`, `confirmed`, and `rescheduled`.
-- Only blocking bookings should prevent another slot from being offered.
+- Only blocking bookings should prevent another slot from being offered, unless a grouped-viewing window intentionally raises slot capacity.
 - Admin-originated changes should keep `admin` attribution so the timeline remains useful.
 - New side effects should cross the Active Job boundary instead of being added inline to controllers.
+- Customer self-service should stay token-gated and time-limited.
 
 ## Extension Guide
 

@@ -24,4 +24,11 @@ RSpec.describe AppSettings do
 
     expect(described_class.exchange_rate_gbp_to_cny).to eq(9.99)
   end
+
+  it "returns the default branch profile" do
+    expect(described_class.primary_branch_profile).to include(
+      name: "Sevenoaks and Westerham office",
+      email: "hello@gotthekeys.com"
+    )
+  end
 end

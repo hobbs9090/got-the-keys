@@ -1,0 +1,33 @@
+<% title "Rental applications board" %>
+
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow">Lettings progression</p>
+      <h1>Rental applications board</h1>
+    </div>
+  </div>
+</section>
+
+<section class="admin-grid">
+  <% @applications_by_status.each do |status, applications| %>
+    <article class="admin-panel" data-testid="rental-applications-column-<%= status %>">
+      <h2><%= status.humanize %></h2>
+      <% if applications.any? %>
+        <div class="admin-list">
+          <% applications.each do |application| %>
+            <div class="admin-list__item">
+              <div>
+                <%= link_to application.applicant_name, admin_rental_application_path(application) %>
+                <p><%= application.property.address_line_1 %> · move-in <%= application.move_in_date %></p>
+              </div>
+              <span class="<%= rental_application_status_badge_class(application.status) %>"><%= application.status.humanize %></span>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="empty-copy">No applications in this column.</p>
+      <% end %>
+    </article>
+  <% end %>
+</section>

@@ -35,7 +35,7 @@ RSpec.describe "Admin header navigation" do
   end
 
   it "keeps the admin layout action as view site" do
-    get admin_bookings_path
+    get admin_enquiries_path
 
     expect(response).to have_http_status(:ok)
 
@@ -47,6 +47,18 @@ RSpec.describe "Admin header navigation" do
     expect(view_site_link).to be_present
     expect(view_site_link.text.strip).to eq("View site")
     expect(view_site_link["href"]).to eq(root_path)
+
+    lead_link = parsed_html.at_css('[data-testid="admin-enquiries-link"]')
+    expect(lead_link).to be_present
+    expect(lead_link["href"]).to eq(admin_enquiries_path)
+
+    offers_link = parsed_html.at_css('[data-testid="admin-offers-link"]')
+    expect(offers_link).to be_present
+    expect(offers_link["href"]).to eq(admin_offers_path)
+
+    applications_link = parsed_html.at_css('[data-testid="admin-rental-applications-link"]')
+    expect(applications_link).to be_present
+    expect(applications_link["href"]).to eq(admin_rental_applications_path)
 
     sign_out_link = parsed_html.at_css(".admin-topbar__actions a.button.alert.hollow.small")
     expect(sign_out_link).to be_present

@@ -17,11 +17,21 @@ Framework-owned endpoints such as Active Storage, Action Mailbox, and Turbo nati
 - `/searches`
   Combined search surface across listing scopes.
 - `/properties/*`
-  Seller listing CRUD plus public property detail pages.
+  Seller listing CRUD plus public property detail pages, listing-readiness workspace, marketing asset management for photos/floor plans/documents, saved-search capture, and public brochure downloads.
+- `/properties/:property_id/enquiries/new`
+  Public property-enquiry capture path for brochure requests, general questions, valuation enquiries, and letting follow-up.
 - `/properties/:property_id/appointments/new`
   Public appointment request entry point.
+- `/properties/:property_id/offers/new`
+  Public sales-offer capture path for sale listings.
+- `/properties/:property_id/rental_applications/new`
+  Public rental-application capture path for rental listings.
 - `/appointments/:public_reference`
   Public appointment confirmation/status page.
+- `/appointments/:public_reference/manage`
+  Public self-service viewing management for secure reschedule and cancellation links.
+- `/saved_searches`
+  Public saved-search capture endpoint for catalogue alerts and filter snapshots.
 - `/location/:id`
   Property location detail.
 
@@ -63,10 +73,16 @@ Framework-owned endpoints such as Active Storage, Action Mailbox, and Turbo nati
   Admin dashboard landing page.
 - `/admin/bookings`
   Core bookings desk.
+- `/admin/enquiries`
+  Admin lead inbox with filters, assignment, spam flags, and qualification workflow.
+- `/admin/offers`
+  Admin sales-progression board and offer decision workflow.
+- `/admin/rental_applications`
+  Admin lettings-progression board and rental-application decision workflow.
 - `/admin/booking_configuration`
   Booking rules and lead-time configuration.
 - `/admin/properties`
-  Admin property review.
+  Admin property review, listing-readiness moderation, lifecycle transitions, documents, and property activity timeline.
 - `/admin/users`
   Admin seller directory.
 - `/admin/notification_logs`
@@ -75,9 +91,9 @@ Framework-owned endpoints such as Active Storage, Action Mailbox, and Turbo nati
 ## Training And Demo Surfaces
 
 - `/admin/demo-data`
-  Scenario catalogue plus import/export/restore flows used for deterministic QA resets.
+  Scenario operations console with quick resets, metadata-rich previews, import/export, and reset diagnostics.
 - `/admin/qa`
-  QA guide, release metadata, selectors, and known credentials.
+  QA guide, release metadata, selector contract registry, scenario families, and seeded-persona diagnostics.
 - `/coffee`
   Explicit training/demo page retained as a harmless static experiment surface.
 

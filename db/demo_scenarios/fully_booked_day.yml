@@ -1,6 +1,17 @@
 key: fully_booked_day
 name: Fully Booked Day
 description: A scenario built for conflict and availability testing, with one property fully booked from opening through to the afternoon.
+qa:
+  family: high_volume
+  intended_journey: Stress slot availability, booking conflicts, and fallback messaging on a packed day.
+  complexity: intermediate
+  risk_type: performance
+  locale_coverage: [en]
+  trainer_notes:
+    - Good for demonstrating how the booking UI behaves when the day is saturated.
+  expected_assertions:
+    - The affected property should show no remaining public viewing slots.
+  quick_reset: false
 booking_configuration:
   slot_duration_minutes: 60
   lead_time_hours: 2

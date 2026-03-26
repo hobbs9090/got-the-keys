@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :notification_log do
     association :appointment
+    enquiry { nil }
     event_type { "confirmed" }
     status { "sent" }
     subject { appointment ? "GotTheKeys viewing confirmed: #{appointment.public_reference}" : "General notice" }
