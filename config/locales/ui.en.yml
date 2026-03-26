@@ -1,8 +1,9 @@
 en:
   ui:
     site_header:
-      eyebrow: "Property and Booking Platform"
+      eyebrow: "Property Platform"
       admin_bookings: "Bookings"
+      admin_dashboard: "Dashboard"
       sign_out: "Sign out"
       add_property: "Add property"
       profile: "Profile"
@@ -272,6 +273,11 @@ en:
         eyebrow: "Automation training harness"
         diagnostics_title: "Diagnostics"
         app_version: "App version"
+        version_box:
+          title: "Release build"
+          git_sha: "Git SHA"
+          build_number: "Build number"
+          unavailable: "Not available"
         diagnostic_labels:
           active_scenario: "Active scenario"
           properties: "Properties"

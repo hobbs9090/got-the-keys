@@ -1,8 +1,9 @@
 zh:
   ui:
     site_header:
-      eyebrow: "房产与预约平台"
+      eyebrow: "房产平台"
       admin_bookings: "预约"
+      admin_dashboard: "仪表盘"
       sign_out: "退出登录"
       add_property: "添加房源"
       profile: "个人资料"
@@ -272,6 +273,11 @@ zh:
         eyebrow: "自动化训练环境"
         diagnostics_title: "诊断信息"
         app_version: "应用版本"
+        version_box:
+          title: "发布构建"
+          git_sha: "Git SHA"
+          build_number: "构建编号"
+          unavailable: "不可用"
         diagnostic_labels:
           active_scenario: "当前场景"
           properties: "房源"

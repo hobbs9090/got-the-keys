@@ -1,5 +1,5 @@
 class Property < ApplicationRecord
-  paginates_per 9
+  paginates_per 12
 
   SALE_STATUSES = {
     for_sale: 'For Sale',

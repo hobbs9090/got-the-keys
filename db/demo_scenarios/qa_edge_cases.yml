@@ -17,13 +17,13 @@ users:
   - first_name: Matthew
     last_name: Wells
     mobile_number: "07700 900103"
-    email: matthew.wells@icloud.example
+    email: matthew.wells@example.com
     password: secret
     password_confirmation: secret
     language: en
 properties:
   - key: westerham_quiet_cottage
-    owner_email: matthew.wells@icloud.example
+    owner_email: matthew.wells@example.com
     address_line_1: 6 Lime Hill
     address_line_2: ""
     town_city: Westerham
@@ -39,7 +39,7 @@ properties:
     asking_price: 485000
     featured: false
   - key: reigate_modern_flat
-    owner_email: matthew.wells@icloud.example
+    owner_email: matthew.wells@example.com
     address_line_1: Flat 5, 12 Priory Court
     address_line_2: ""
     town_city: Reigate

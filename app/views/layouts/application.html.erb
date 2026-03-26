@@ -4,8 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= content_for?(:title) ? yield(:title) : t('gotthekeys.gotthekeys') %></title>
-    <%= favicon_link_tag "favicon-house.svg", type: "image/svg+xml" %>
-    <%= favicon_link_tag "favicon.ico", rel: "alternate icon" %>
+    <%= favicon_link_tag "favicon-house.svg", rel: "icon", type: "image/svg+xml", sizes: "any" %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", media: "all", "data-turbo-track" => "reload" %>

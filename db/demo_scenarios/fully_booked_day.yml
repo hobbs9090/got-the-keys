@@ -17,20 +17,20 @@ users:
   - first_name: Charlotte
     last_name: Hughes
     mobile_number: "07700 900101"
-    email: charlotte.hughes@gmail.example
+    email: charlotte.hughes@example.com
     password: secret
     password_confirmation: secret
     language: en
   - first_name: Lucy
     last_name: McClure
     mobile_number: "07700 900104"
-    email: lucy.mcclure@btinternet.example
+    email: lucy.mcclure@example.com
     password: secret
     password_confirmation: secret
     language: en
 properties:
   - key: bromley_show_home
-    owner_email: charlotte.hughes@gmail.example
+    owner_email: charlotte.hughes@example.com
     address_line_1: 28 Orchard Avenue
     address_line_2: ""
     town_city: Bromley
@@ -46,7 +46,7 @@ properties:
     asking_price: 745000
     featured: true
   - key: canterbury_empty_backup
-    owner_email: lucy.mcclure@btinternet.example
+    owner_email: lucy.mcclure@example.com
     address_line_1: Flat 2, 16 Kings Street
     address_line_2: ""
     town_city: Canterbury

@@ -6,6 +6,24 @@
       <p class="section-heading__eyebrow"><%= t("ui.admin.qa.eyebrow") %></p>
       <h1><%= t("ui.admin.qa.title") %></h1>
     </div>
+
+    <aside class="qa-version-box" data-testid="qa-version-box">
+      <p class="qa-version-box__eyebrow"><%= t("ui.admin.qa.version_box.title", default: "Release build") %></p>
+      <dl class="qa-version-box__list">
+        <div>
+          <dt><%= t("ui.admin.qa.app_version") %></dt>
+          <dd data-testid="qa-app-version"><%= public_app_version %></dd>
+        </div>
+        <div>
+          <dt><%= t("ui.admin.qa.version_box.git_sha", default: "Git SHA") %></dt>
+          <dd data-testid="qa-git-sha"><%= app_build_value(app_build_sha) %></dd>
+        </div>
+        <div>
+          <dt><%= t("ui.admin.qa.version_box.build_number", default: "Build number") %></dt>
+          <dd data-testid="qa-build-number"><%= app_build_value(app_build_number) %></dd>
+        </div>
+      </dl>
+    </aside>
   </div>
 </section>
 
@@ -13,10 +31,6 @@
   <article class="admin-panel">
     <h2><%= t("ui.admin.qa.diagnostics_title") %></h2>
     <dl class="detail-list">
-      <div>
-        <dt><%= t("ui.admin.qa.app_version") %></dt>
-        <dd data-testid="qa-app-version"><%= full_app_version %></dd>
-      </div>
       <% @diagnostics.each do |label, value| %>
         <div>
           <dt><%= t("ui.admin.qa.diagnostic_labels.#{label}", default: label.to_s.humanize) %></dt>
