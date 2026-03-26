@@ -368,6 +368,21 @@ Run the main suite:
 bundle exec rspec
 ```
 
+Generate the richer Allure HTML report locally:
+
+```bash
+ALLURE_REPORTS=1 ALLURE_CLEAN_RESULTS=1 bundle exec rspec --require allure-rspec --format progress --format AllureRspecFormatter
+npx allure generate tmp/allure-results --output tmp/allure-report --report-name "GotTheKeys RSpec"
+```
+
+Once GitHub Pages is enabled for GitHub Actions on this repository, pushes to `main` or `master` will publish the latest RSpec report to:
+
+```text
+https://hobbs9090.github.io/rails_got_the_keys/
+```
+
+GitHub Pages should be set to `Source: GitHub Actions` before the first publish.
+
 Run Cucumber support wiring:
 
 ```bash
