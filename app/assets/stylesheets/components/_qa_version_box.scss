@@ -1,0 +1,94 @@
+.qa-version-box {
+  align-self: stretch;
+  background:
+    radial-gradient(circle at top right, rgba(15, 139, 141, 0.16), transparent 34%),
+    linear-gradient(160deg, rgba(20, 87, 214, 0.12), rgba(255, 255, 255, 0.96));
+  border: 1px solid rgba(20, 87, 214, 0.14);
+  border-radius: calc(var(--radius-lg) - 6px);
+  display: grid;
+  gap: 1rem;
+  padding: 1.1rem 1.2rem 1.2rem;
+  width: min(100%, 24rem);
+}
+
+.qa-version-box__eyebrow {
+  color: var(--color-primary-strong);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.qa-version-box__hero {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(20, 87, 214, 0.1);
+  border-radius: var(--radius-md);
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.9rem 1rem;
+}
+
+.qa-version-box__label {
+  color: var(--color-muted);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.qa-version-box__version {
+  color: #10213f;
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 0.95rem + 0.8vw, 1.55rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.qa-version-box__list {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+}
+
+.qa-version-box__list > div {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(20, 37, 63, 0.08);
+  border-radius: var(--radius-sm);
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+  padding: 0.8rem 0.9rem;
+}
+
+.qa-version-box__list dt {
+  color: var(--color-muted);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.qa-version-box__list dd {
+  color: #10213f;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.94rem;
+  font-weight: 700;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+@media screen and (max-width: 39.9375em) {
+  .qa-version-box {
+    width: 100%;
+  }
+
+  .qa-version-box__list {
+    grid-template-columns: 1fr;
+  }
+}

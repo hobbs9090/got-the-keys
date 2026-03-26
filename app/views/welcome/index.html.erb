@@ -1,26 +1,7 @@
 <% hero_slides = [hero_1_image, hero_2_image, hero_3_image, hero_4_image, hero_5_image] %>
 <% hero_slide_labels = %w[first second third fourth fifth] %>
 
-<section class="landing-showcase">
-  <div class="orbit site-hero site-hero--full-bleed" role="region" aria-label="<%= t('welcome.title') %>" data-orbit data-auto-play="true">
-    <ul class="orbit-container">
-      <button class="orbit-previous" aria-label="<%= t('ui.welcome.carousel.previous') %>" type="button">
-        <span class="show-for-sr"><%= t("ui.welcome.carousel.previous") %></span>&#9664;&#65038;
-      </button>
-      <button class="orbit-next" aria-label="<%= t('ui.welcome.carousel.next') %>" type="button">
-        <span class="show-for-sr"><%= t("ui.welcome.carousel.next") %></span>&#9654;&#65038;
-      </button>
-      <% hero_slides.each_with_index do |slide, index| %>
-        <li class="<%= index.zero? ? 'is-active orbit-slide' : 'orbit-slide' %>"><%= slide %></li>
-      <% end %>
-    </ul>
-    <nav class="orbit-bullets">
-      <% hero_slide_labels.each_with_index do |label, index| %>
-        <button class="<%= 'is-active' if index.zero? %>" data-slide="<%= index %>"><span class="show-for-sr"><%= t("ui.welcome.carousel.#{label}") %></span></button>
-      <% end %>
-    </nav>
-  </div>
-</section>
+<%= render "hero_carousel", slides: hero_slides, labels: hero_slide_labels %>
 
 <section class="landing-hero">
   <div class="landing-hero__content">
@@ -35,14 +16,7 @@
   </div>
 </section>
 
-<section class="metric-strip">
-  <% @site_metrics.each do |label, value| %>
-    <article class="metric-card">
-      <strong><%= number_with_delimiter(value, delimiter: ",") %></strong>
-      <span><%= t("ui.welcome.metric_labels.#{label}") %></span>
-    </article>
-  <% end %>
-</section>
+<%= render "metric_strip", metrics: @site_metrics %>
 
 <section class="page-section">
   <div class="section-heading">
