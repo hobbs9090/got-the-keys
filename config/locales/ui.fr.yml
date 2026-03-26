@@ -65,6 +65,8 @@ fr:
         first: "Premiere diapositive"
         second: "Deuxieme diapositive"
         third: "Troisieme diapositive"
+        fourth: "Quatrieme diapositive"
+        fifth: "Cinquieme diapositive"
       hero_eyebrow: "Decouverte immobiliere moderne et prise de rendez-vous"
       hero_title: "Offrez aux acheteurs et aux locataires un site soigne tout en donnant aux equipes QA un environnement d'automatisation deterministe."
       primary_cta: "Parcourir les biens"

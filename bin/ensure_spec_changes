@@ -1,0 +1,44 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'json'
+require 'open3'
+require_relative '../lib/ci/spec_change_guard'
+
+def read_event_payload(path)
+  return {} unless path && File.exist?(path)
+
+  JSON.parse(File.read(path))
+end
+
+def git_changed_files(range)
+  args =
+    case range.diff_mode
+    when :three_dot
+      ['diff', '--name-only', "#{range.base_sha}...#{range.head_sha}"]
+    when :two_dot
+      ['diff', '--name-only', range.base_sha, range.head_sha]
+    else
+      ['diff-tree', '--no-commit-id', '--name-only', '--root', '-r', range.head_sha]
+    end
+
+  stdout, stderr, status = Open3.capture3('git', *args)
+  return stdout.lines.map(&:strip).reject(&:empty?) if status.success?
+
+  warn stderr
+  abort "Unable to determine changed files for spec coverage guard."
+end
+
+payload = read_event_payload(ENV['GITHUB_EVENT_PATH'])
+range = Ci::ChangeRange.from_github(env: ENV, payload: payload)
+
+unless range.complete?
+  puts 'Skipping spec coverage guard because GitHub did not provide a complete change range.'
+  exit 0
+end
+
+changed_files = git_changed_files(range)
+result = Ci::SpecChangeGuard.new(changed_files: changed_files).evaluate
+
+puts result.message
+exit(result.success? ? 0 : 1)

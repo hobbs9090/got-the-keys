@@ -19,6 +19,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Require spec updates for product code changes
+        run: ruby bin/ensure_spec_changes
 
       - name: Set up GitHub Pages
         if: ${{ github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'master') }}
