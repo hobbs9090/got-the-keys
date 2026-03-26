@@ -383,12 +383,6 @@ https://hobbs9090.github.io/rails_got_the_keys/
 
 GitHub Pages should be set to `Source: GitHub Actions` before the first publish.
 
-Run Cucumber support wiring:
-
-```bash
-bundle exec cucumber
-```
-
 Current automated coverage includes:
 
 - property model behaviour
@@ -458,5 +452,4 @@ bin/rails server
 
 # run tests
 bundle exec rspec
-bundle exec cucumber
 ```
