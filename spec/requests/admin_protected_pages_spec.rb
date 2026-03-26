@@ -1,0 +1,41 @@
+require "rails_helper"
+
+RSpec.describe "Admin-protected pages", type: :request do
+  let(:admin) { FactoryBot.create(:admin, email: "protected-admin@gotthekeys.com", password: "changeme", password_confirmation: "changeme") }
+  let(:user) { FactoryBot.create(:user, first_name: "Taylor", last_name: "Stone", email: "taylor.stone@example.com") }
+
+  describe "GET /members" do
+    it "redirects guests to the admin sign-in page" do
+      get "/members"
+
+      expect(response).to redirect_to(new_admin_session_path)
+    end
+
+    it "renders the member directory for admins" do
+      sign_in admin
+      user
+
+      get "/members"
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(user.email)
+    end
+  end
+  describe "GET /users/:id" do
+    it "redirects guests to the admin sign-in page" do
+      get user_path(user)
+
+      expect(response).to redirect_to(new_admin_session_path)
+    end
+
+    it "renders the user profile for admins" do
+      sign_in admin
+
+      get user_path(user)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("Taylor Stone")
+      expect(response.body).to include("taylor.stone@example.com")
+    end
+  end
+end

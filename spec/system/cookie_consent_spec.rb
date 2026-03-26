@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Cookie consent" do
+RSpec.describe "Cookie consent", type: :system do
   it "shows the banner until a visitor chooses essential-only cookies" do
     visit root_path
 

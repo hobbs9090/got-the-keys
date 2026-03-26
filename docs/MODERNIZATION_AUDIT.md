@@ -104,3 +104,5 @@ The completed modernization path was:
 2. standardize the frontend runtime path
 3. componentize the CSS/view layer
 4. leave SQLite/shared hosting alone until real pain appears
+
+For the recommended next cleanup pass before a larger feature wave, see `docs/PRE_EXTENSION_CHECKLIST.md`.
