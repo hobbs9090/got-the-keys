@@ -110,6 +110,12 @@
         <p><%= t("ui.properties.show.no_slots_body") %></p>
       </div>
     <% end %>
+
+    <div class="empty-state" data-testid="property-enquiry-panel">
+      <h3>Need details first?</h3>
+      <p>Ask for brochure information, a landlord or seller callback, or clarification before you pick a viewing slot.</p>
+      <%= link_to "Send an enquiry", new_property_enquiry_path(@property), class: "button hollow secondary expanded", data: { testid: "open-enquiry-form" } %>
+    </div>
   </aside>
 </section>
 
@@ -130,6 +136,22 @@
         <%= link_to "Manage photos", property_photos_path(@property), class: "button hollow secondary", data: { testid: "manage-photos-link" } %>
         <%= link_to "Manage floor plans", property_floor_plans_path(@property), class: "button hollow secondary" %>
       </div>
+
+      <h3>Recent lead activity</h3>
+      <% if @recent_enquiries.any? %>
+        <ul class="detail-inline-list" data-testid="seller-recent-enquiries">
+          <% @recent_enquiries.each do |enquiry| %>
+            <li>
+              <strong><%= enquiry.customer_name %></strong>:
+              <%= enquiry_source_label(enquiry.source_type) %>,
+              <%= enquiry.display_status.downcase %>,
+              <%= l(enquiry.created_at, format: :long) %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="empty-copy">No enquiries have come in for this listing yet.</p>
+      <% end %>
     </article>
   </section>
 <% end %>

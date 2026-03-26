@@ -35,6 +35,11 @@ module DemoData
         admin_emails:,
         default_duration_minutes: scenario.dig(:booking_configuration, :slot_duration_minutes) || BookingConfiguration.current.slot_duration_minutes
       )
+      enquiries = normalize_enquiries(
+        Array(scenario[:enquiries]),
+        property_index:,
+        admin_emails:
+      )
 
       {
         key: scenario.fetch(:key),
@@ -47,7 +52,8 @@ module DemoData
         photos:,
         floor_plans:,
         availability_windows:,
-        appointments:
+        appointments:,
+        enquiries:
       }
     end
 
@@ -65,7 +71,9 @@ module DemoData
         floor_plan_count: normalized.fetch(:floor_plans).count,
         availability_window_count: normalized.fetch(:availability_windows).count,
         appointment_count: normalized.fetch(:appointments).count,
-        appointment_statuses: normalized.fetch(:appointments).group_by { |appointment| appointment.fetch(:status) }.transform_values(&:count)
+        appointment_statuses: normalized.fetch(:appointments).group_by { |appointment| appointment.fetch(:status) }.transform_values(&:count),
+        enquiry_count: normalized.fetch(:enquiries).count,
+        enquiry_statuses: normalized.fetch(:enquiries).group_by { |enquiry| enquiry.fetch(:status) }.transform_values(&:count)
       }
     end
 
@@ -228,6 +236,43 @@ module DemoData
           status:,
           notes: appointment[:notes],
           internal_notes: appointment[:internal_notes]
+        }
+      end
+    end
+
+    def normalize_enquiries(enquiries, property_index:, admin_emails:)
+      enquiries.map do |enquiry|
+        property_key = enquiry.fetch(:property_key)
+        raise ValidationError, "Enquiry references unknown property key #{property_key}" unless property_index.key?(property_key)
+
+        assigned_admin_email = enquiry[:assigned_admin_email]
+        if assigned_admin_email.present? && !admin_emails.include?(assigned_admin_email)
+          raise ValidationError, "Enquiry references unknown admin email #{assigned_admin_email}"
+        end
+
+        status = enquiry.fetch(:status, "new")
+        unless Enquiry::STATUSES.include?(status)
+          raise ValidationError, "Unsupported enquiry status #{status.inspect}"
+        end
+
+        source_type = enquiry.fetch(:source_type, "general_enquiry")
+        unless Enquiry::SOURCE_TYPES.include?(source_type)
+          raise ValidationError, "Unsupported enquiry source #{source_type.inspect}"
+        end
+
+        {
+          property_key:,
+          assigned_admin_email:,
+          customer_name: enquiry.fetch(:customer_name),
+          customer_email: enquiry[:customer_email],
+          customer_phone: enquiry[:customer_phone],
+          source_type:,
+          message: enquiry.fetch(:message),
+          status:,
+          internal_notes: enquiry[:internal_notes],
+          spam: ActiveModel::Type::Boolean.new.cast(enquiry.fetch(:spam, false)),
+          spam_reason: enquiry[:spam_reason],
+          allow_invalid: ActiveModel::Type::Boolean.new.cast(enquiry.fetch(:allow_invalid, false))
         }
       end
     end

@@ -48,6 +48,7 @@
         <li><strong><%= scenario.fetch(:property_count) %></strong> <%= t("ui.admin.demo_data.counts.properties", count: scenario.fetch(:property_count)) %></li>
         <li><strong><%= scenario.fetch(:appointment_count) %></strong> <%= t("ui.admin.demo_data.counts.bookings", count: scenario.fetch(:appointment_count)) %></li>
         <li><strong><%= scenario.fetch(:user_count) %></strong> <%= t("ui.admin.demo_data.counts.sellers", count: scenario.fetch(:user_count)) %></li>
+        <li><strong><%= scenario.fetch(:enquiry_count, 0) %></strong> leads</li>
       </ul>
       <div class="admin-inline-actions">
         <%= link_to t("ui.admin.demo_data.preview_action"), admin_demo_scenario_path(scenario.fetch(:key)), class: "button hollow secondary" %>

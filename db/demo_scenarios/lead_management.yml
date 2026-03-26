@@ -1,0 +1,108 @@
+key: lead_management
+name: Lead Management Inbox
+description: Focused admin and seller training dataset with clean, duplicate, empty-phone, spam-like, and invalid-email enquiries for triage practice.
+booking_configuration:
+  slot_duration_minutes: 45
+  lead_time_hours: 4
+  buffer_minutes: 15
+  office_opens_at: "09:00"
+  office_closes_at: "18:00"
+  open_weekdays: [1, 2, 3, 4, 5, 6]
+admins:
+  - email: steven@gotthekeys.com
+    password: secret
+    password_confirmation: secret
+    language: en
+  - email: stevenhobbs@meeane.co.uk
+    password: secret
+    password_confirmation: secret
+    language: en
+users:
+  - first_name: Priya
+    last_name: Shah
+    mobile_number: "07700 902001"
+    email: priya.shah@example.com
+    password: secret
+    password_confirmation: secret
+    language: en
+properties:
+  - key: sevenoaks_lead_home
+    owner_email: priya.shah@example.com
+    address_line_1: 5 Maple Gardens
+    address_line_2: ""
+    town_city: Sevenoaks
+    county: Kent
+    postcode: TN13 3PP
+    country: United Kingdom
+    property_type: Detached house
+    listing_tagline: Family house with strong lead activity
+    property_description: A polished family house used for lead-management training, with enough detail to support brochure requests, general enquiries, and letting questions.
+    bedrooms: 4
+    bathrooms: 2
+    sale_status: For Sale
+    listing_state: published
+    asking_price: 925000
+    featured: true
+    tenure: Freehold
+    council_tax_band: G
+    parking: Driveway
+    outdoor_space: Garden
+    epc_rating: C
+    floor_area_sq_ft: 1810
+photos:
+  - property_key: sevenoaks_lead_home
+    image_filename: hero_1.jpg
+    caption: Front aspect
+    position: 1
+    primary: true
+floor_plans:
+  - property_key: sevenoaks_lead_home
+    floor_plans: maple-gardens-plan.pdf
+    label: Whole house layout
+    position: 1
+availability_windows: []
+appointments: []
+enquiries:
+  - property_key: sevenoaks_lead_home
+    assigned_admin_email: steven@gotthekeys.com
+    customer_name: Anna Webb
+    customer_email: anna.webb@example.com
+    customer_phone: "07700 902111"
+    source_type: brochure_request
+    message: Please send the brochure and confirm whether the garden studio has independent heating and broadband coverage.
+    status: new
+  - property_key: sevenoaks_lead_home
+    assigned_admin_email: steven@gotthekeys.com
+    customer_name: Anna Webb
+    customer_email: anna.webb@example.com
+    customer_phone: "07700 902111"
+    source_type: general_enquiry
+    message: Following up on my earlier message because I also want to understand the timeline for viewings next week and whether there is onward chain information available.
+    status: contacted
+    internal_notes: Duplicate lead from same customer. Merge conversation notes before follow-up.
+  - property_key: sevenoaks_lead_home
+    assigned_admin_email: stevenhobbs@meeane.co.uk
+    customer_name: Marcus Flynn
+    customer_email: "marcus at invalid"
+    customer_phone: "07700 902222"
+    source_type: valuation_request
+    message: I may want to sell a similar home on the same road and wanted someone to call me back about pricing, timing, and how you prepare a launch plan.
+    status: qualified
+    allow_invalid: true
+    internal_notes: Seeded invalid email example for QA training.
+  - property_key: sevenoaks_lead_home
+    customer_name: Chloe Peters
+    customer_email: chloe.peters@example.com
+    customer_phone: ""
+    source_type: letting_enquiry
+    message: I know this one is for sale, but I am looking for something similar to rent nearby and wanted to ask if you handle local landlord instructions as well.
+    status: new
+  - property_key: sevenoaks_lead_home
+    customer_name: Global Reach Media
+    customer_email: growth@mailinator.com
+    customer_phone: ""
+    source_type: general_enquiry
+    message: We can guarantee premium backlinks and crypto-ready SEO growth for your listings. Visit https://spam.example.test and https://spam2.example.test today.
+    status: unqualified
+    spam: true
+    spam_reason: Suspicious automated outreach

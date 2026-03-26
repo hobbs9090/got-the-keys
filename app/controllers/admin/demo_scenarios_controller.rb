@@ -80,6 +80,7 @@ class Admin::DemoScenariosController < Admin::BaseController
       property_count: Property.count,
       user_count: User.count,
       appointment_count: Appointment.count,
+      enquiry_count: Enquiry.count,
       notification_count: NotificationLog.count,
       last_demo_action: DemoScenarioRun.recent_first.first&.created_at
     }

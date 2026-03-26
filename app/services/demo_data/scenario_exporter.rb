@@ -14,7 +14,8 @@ module DemoData
         photos: Photo.order(:property_id, :position, :id).map { |photo| export_photo(photo, property_keys) },
         floor_plans: FloorPlan.order(:property_id, :position, :id).map { |floor_plan| export_floor_plan(floor_plan, property_keys) },
         availability_windows: AvailabilityWindow.order(:starts_at).map { |window| export_window(window, property_keys) },
-        appointments: Appointment.order(:scheduled_at, :created_at).map { |appointment| export_appointment(appointment, property_keys) }
+        appointments: Appointment.order(:scheduled_at, :created_at).map { |appointment| export_appointment(appointment, property_keys) },
+        enquiries: Enquiry.order(:created_at, :id).map { |enquiry| export_enquiry(enquiry, property_keys) }
       }
 
       YAML.dump(payload.deep_stringify_keys)
@@ -135,6 +136,23 @@ module DemoData
         status: appointment.status,
         notes: appointment.notes,
         internal_notes: appointment.internal_notes
+      }
+    end
+
+    def export_enquiry(enquiry, property_keys)
+      {
+        property_key: property_keys.fetch(enquiry.property_id),
+        assigned_admin_email: enquiry.admin&.email,
+        customer_name: enquiry.customer_name,
+        customer_email: enquiry.customer_email,
+        customer_phone: enquiry.customer_phone,
+        source_type: enquiry.source_type,
+        message: enquiry.message,
+        status: enquiry.status,
+        internal_notes: enquiry.internal_notes,
+        spam: enquiry.spam,
+        spam_reason: enquiry.spam_reason,
+        allow_invalid: enquiry.customer_email.present? && !enquiry.customer_email.match?(URI::MailTo::EMAIL_REGEXP)
       }
     end
   end
