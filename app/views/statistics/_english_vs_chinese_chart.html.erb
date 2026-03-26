@@ -1,28 +1,16 @@
-<script type="text/javascript">
-
-    function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-            ['<%= t('charts.language') %>', '<%= t('total') %>'],
-            ['<%= t('charts.english') %>', <%= @total_number_en_users %>],
-            ['<%= t('charts.chinese') %>', <%= @total_number_zh_users %>]
-        ]);
-
-        var options = {
-            title: '<%= t('charts.english_vs_chinese') %>',
-            fontSize: 14,
-            chartArea: {left: "10%", top: "20%", width: "80%", height: "70%"},
-            backgroundColor: {strokeWidth: 2, stroke: '#D9D9D9'},
-            colors: ['2BA6CB', '2E6AA0']
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('english_vs_chinese_chart'));
-        chart.draw(data, options);
-    }
-
-    $(document).ready(function(){
-        drawChart();
-    });
-
-</script>
-
-<div id="english_vs_chinese_chart" style="width: 428px; height: 260px;"></div>
+<%= statistics_chart_tag(
+      chart_id: "english_vs_chinese_chart",
+      chart_type: "pie",
+      data: [
+        [t('charts.language'), t('total')],
+        [t('charts.english'), @total_number_en_users],
+        [t('charts.chinese'), @total_number_zh_users]
+      ],
+      options: {
+        title: t('charts.english_vs_chinese'),
+        fontSize: 14,
+        chartArea: { left: "10%", top: "20%", width: "80%", height: "70%" },
+        backgroundColor: { strokeWidth: 2, stroke: "#D9D9D9" },
+        colors: %w[#2BA6CB #2E6AA0]
+      }
+    ) %>

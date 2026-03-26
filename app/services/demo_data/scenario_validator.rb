@@ -2,6 +2,8 @@ module DemoData
   class ScenarioValidator
     class ValidationError < StandardError; end
 
+    SCENARIO_FAMILIES = %w[happy_path edge_cases high_volume multilingual accessibility flaky_operator_workflow].freeze
+    COMPLEXITY_LEVELS = %w[foundational intermediate advanced].freeze
     REQUIRED_PROPERTY_KEYS = %i[key owner_email address_line_1 town_city county postcode country property_description bedrooms sale_status asking_price].freeze
 
     def validate!(payload)
@@ -26,6 +28,9 @@ module DemoData
         raise ValidationError, "Property #{property.fetch(:key)} references missing owner email #{property.fetch(:owner_email)}"
       end
 
+      photos = normalize_photos(Array(scenario[:photos]), property_index:)
+      floor_plans = normalize_floor_plans(Array(scenario[:floor_plans]), property_index:)
+      property_documents = normalize_property_documents(Array(scenario[:property_documents]), property_index:)
       availability_windows = normalize_availability_windows(Array(scenario[:availability_windows]), property_index:)
       appointments = normalize_appointments(
         Array(scenario[:appointments]),
@@ -33,17 +38,39 @@ module DemoData
         admin_emails:,
         default_duration_minutes: scenario.dig(:booking_configuration, :slot_duration_minutes) || BookingConfiguration.current.slot_duration_minutes
       )
+      enquiries = normalize_enquiries(
+        Array(scenario[:enquiries]),
+        property_index:,
+        admin_emails:
+      )
+      offers = normalize_offers(
+        Array(scenario[:offers]),
+        property_index:,
+        admin_emails:
+      )
+      rental_applications = normalize_rental_applications(
+        Array(scenario[:rental_applications]),
+        property_index:,
+        admin_emails:
+      )
 
       {
         key: scenario.fetch(:key),
         name: scenario.fetch(:name),
         description: scenario[:description].to_s,
+        qa: normalize_qa_metadata(scenario[:qa] || {}),
         booking_configuration: normalize_booking_configuration(scenario[:booking_configuration] || {}),
         admins:,
         users:,
         properties:,
+        photos:,
+        floor_plans:,
+        property_documents:,
         availability_windows:,
-        appointments:
+        appointments:,
+        enquiries:,
+        offers:,
+        rental_applications:
       }
     end
 
@@ -54,16 +81,46 @@ module DemoData
         key: normalized.fetch(:key),
         name: normalized.fetch(:name),
         description: normalized.fetch(:description),
+        qa: normalized.fetch(:qa).merge(expected_counts: expected_counts(normalized)),
         admin_count: normalized.fetch(:admins).count,
         user_count: normalized.fetch(:users).count,
         property_count: normalized.fetch(:properties).count,
+        photo_count: normalized.fetch(:photos).count,
+        floor_plan_count: normalized.fetch(:floor_plans).count,
+        property_document_count: normalized.fetch(:property_documents).count,
         availability_window_count: normalized.fetch(:availability_windows).count,
         appointment_count: normalized.fetch(:appointments).count,
-        appointment_statuses: normalized.fetch(:appointments).group_by { |appointment| appointment.fetch(:status) }.transform_values(&:count)
+        appointment_statuses: normalized.fetch(:appointments).group_by { |appointment| appointment.fetch(:status) }.transform_values(&:count),
+        enquiry_count: normalized.fetch(:enquiries).count,
+        enquiry_statuses: normalized.fetch(:enquiries).group_by { |enquiry| enquiry.fetch(:status) }.transform_values(&:count),
+        offer_count: normalized.fetch(:offers).count,
+        offer_statuses: normalized.fetch(:offers).group_by { |offer| offer.fetch(:status) }.transform_values(&:count),
+        rental_application_count: normalized.fetch(:rental_applications).count,
+        rental_application_statuses: normalized.fetch(:rental_applications).group_by { |application| application.fetch(:status) }.transform_values(&:count)
       }
     end
 
     private
+
+    def normalize_qa_metadata(metadata)
+      payload = metadata.deep_symbolize_keys
+      family = payload.fetch(:family, "happy_path")
+      raise ValidationError, "Unsupported scenario family #{family.inspect}" unless SCENARIO_FAMILIES.include?(family)
+
+      complexity = payload.fetch(:complexity, "foundational")
+      raise ValidationError, "Unsupported complexity #{complexity.inspect}" unless COMPLEXITY_LEVELS.include?(complexity)
+
+      {
+        family:,
+        intended_journey: payload.fetch(:intended_journey, "General QA walkthrough").to_s,
+        complexity:,
+        risk_type: payload.fetch(:risk_type, "workflow").to_s,
+        locale_coverage: Array(payload.fetch(:locale_coverage, ["en"])).map(&:to_s),
+        trainer_notes: Array(payload[:trainer_notes]).map(&:to_s).reject(&:blank?),
+        expected_assertions: Array(payload[:expected_assertions]).map(&:to_s).reject(&:blank?),
+        quick_reset: ActiveModel::Type::Boolean.new.cast(payload.fetch(:quick_reset, false))
+      }
+    end
 
     def validate_presence!(hash, *keys)
       keys.each do |key|
@@ -130,7 +187,74 @@ module DemoData
           listing_tagline: property[:listing_tagline],
           sale_status: property.fetch(:sale_status),
           asking_price: Integer(property.fetch(:asking_price)),
-          featured: ActiveModel::Type::Boolean.new.cast(property.fetch(:featured, false))
+          featured: ActiveModel::Type::Boolean.new.cast(property.fetch(:featured, false)),
+          listing_state: property.fetch(:listing_state, "published"),
+          tenure: property[:tenure],
+          council_tax_band: property[:council_tax_band],
+          furnishing: property[:furnishing],
+          available_from: property[:available_from],
+          parking: property[:parking],
+          outdoor_space: property[:outdoor_space],
+          epc_rating: property[:epc_rating],
+          floor_area_sq_ft: property[:floor_area_sq_ft].present? ? Integer(property[:floor_area_sq_ft]) : nil,
+          deposit_amount: property[:deposit_amount].present? ? Integer(property[:deposit_amount]) : nil,
+          pets_allowed: ActiveModel::Type::Boolean.new.cast(property.fetch(:pets_allowed, false)),
+          service_charge_amount: property[:service_charge_amount].present? ? Integer(property[:service_charge_amount]) : nil,
+          lease_length_years: property[:lease_length_years].present? ? Integer(property[:lease_length_years]) : nil,
+          created_at: property[:created_at].present? ? parse_time!(property[:created_at]) : nil,
+          updated_at: property[:updated_at].present? ? parse_time!(property[:updated_at]) : nil,
+          published_at: property[:published_at].present? ? parse_time!(property[:published_at]) : nil
+        }
+      end
+    end
+
+    def normalize_photos(photos, property_index:)
+      photos.map do |photo|
+        property_key = photo.fetch(:property_key)
+        raise ValidationError, "Photo references unknown property key #{property_key}" unless property_index.key?(property_key)
+
+        {
+          property_key:,
+          image_filename: photo.fetch(:image_filename),
+          caption: photo[:caption],
+          position: Integer(photo.fetch(:position, 0)),
+          primary: ActiveModel::Type::Boolean.new.cast(photo.fetch(:primary, false))
+        }
+      end
+    end
+
+    def normalize_floor_plans(floor_plans, property_index:)
+      floor_plans.map do |floor_plan|
+        property_key = floor_plan.fetch(:property_key)
+        raise ValidationError, "Floor plan references unknown property key #{property_key}" unless property_index.key?(property_key)
+
+        {
+          property_key:,
+          floor_plans: floor_plan.fetch(:floor_plans),
+          label: floor_plan[:label],
+          position: Integer(floor_plan.fetch(:position, 0))
+        }
+      end
+    end
+
+    def normalize_property_documents(property_documents, property_index:)
+      property_documents.map do |document|
+        property_key = document.fetch(:property_key)
+        raise ValidationError, "Property document references unknown property key #{property_key}" unless property_index.key?(property_key)
+
+        category = document.fetch(:category, "brochure")
+        raise ValidationError, "Unsupported property document category #{category.inspect}" unless PropertyDocument::CATEGORIES.include?(category)
+
+        visibility = document.fetch(:visibility, "private")
+        raise ValidationError, "Unsupported property document visibility #{visibility.inspect}" unless PropertyDocument::VISIBILITIES.include?(visibility)
+
+        {
+          property_key:,
+          title: document.fetch(:title),
+          file_name: document.fetch(:file_name),
+          category:,
+          visibility:,
+          position: Integer(document.fetch(:position, 0))
         }
       end
     end
@@ -145,6 +269,7 @@ module DemoData
           starts_at: parse_time!(window.fetch(:starts_at)),
           ends_at: parse_time!(window.fetch(:ends_at)),
           kind: window.fetch(:kind, "open"),
+          capacity: Integer(window.fetch(:capacity, 1)),
           label: window[:label],
           notes: window[:notes]
         }
@@ -178,8 +303,104 @@ module DemoData
           scheduled_at: parse_time!(appointment.fetch(:scheduled_at, requested_time)),
           duration_minutes: Integer(appointment.fetch(:duration_minutes, default_duration_minutes)),
           status:,
+          visit_outcome: appointment[:visit_outcome],
           notes: appointment[:notes],
           internal_notes: appointment[:internal_notes]
+        }
+      end
+    end
+
+    def normalize_enquiries(enquiries, property_index:, admin_emails:)
+      enquiries.map do |enquiry|
+        property_key = enquiry.fetch(:property_key)
+        raise ValidationError, "Enquiry references unknown property key #{property_key}" unless property_index.key?(property_key)
+
+        assigned_admin_email = enquiry[:assigned_admin_email]
+        if assigned_admin_email.present? && !admin_emails.include?(assigned_admin_email)
+          raise ValidationError, "Enquiry references unknown admin email #{assigned_admin_email}"
+        end
+
+        status = enquiry.fetch(:status, "new")
+        unless Enquiry::STATUSES.include?(status)
+          raise ValidationError, "Unsupported enquiry status #{status.inspect}"
+        end
+
+        source_type = enquiry.fetch(:source_type, "general_enquiry")
+        unless Enquiry::SOURCE_TYPES.include?(source_type)
+          raise ValidationError, "Unsupported enquiry source #{source_type.inspect}"
+        end
+
+        {
+          property_key:,
+          assigned_admin_email:,
+          customer_name: enquiry.fetch(:customer_name),
+          customer_email: enquiry[:customer_email],
+          customer_phone: enquiry[:customer_phone],
+          source_type:,
+          message: enquiry.fetch(:message),
+          status:,
+          internal_notes: enquiry[:internal_notes],
+          spam: ActiveModel::Type::Boolean.new.cast(enquiry.fetch(:spam, false)),
+          spam_reason: enquiry[:spam_reason],
+          allow_invalid: ActiveModel::Type::Boolean.new.cast(enquiry.fetch(:allow_invalid, false))
+        }
+      end
+    end
+
+    def normalize_offers(offers, property_index:, admin_emails:)
+      offers.map do |offer|
+        property_key = offer.fetch(:property_key)
+        raise ValidationError, "Offer references unknown property key #{property_key}" unless property_index.key?(property_key)
+
+        assigned_admin_email = offer[:assigned_admin_email]
+        if assigned_admin_email.present? && !admin_emails.include?(assigned_admin_email)
+          raise ValidationError, "Offer references unknown admin email #{assigned_admin_email}"
+        end
+
+        status = offer.fetch(:status, "received")
+        raise ValidationError, "Unsupported offer status #{status.inspect}" unless Offer::STATUSES.include?(status)
+
+        {
+          property_key:,
+          assigned_admin_email:,
+          buyer_name: offer.fetch(:buyer_name),
+          buyer_email: offer.fetch(:buyer_email),
+          buyer_phone: offer.fetch(:buyer_phone),
+          amount: Integer(offer.fetch(:amount)),
+          status:,
+          chain_position: offer[:chain_position],
+          notes: offer[:notes],
+          internal_notes: offer[:internal_notes]
+        }
+      end
+    end
+
+    def normalize_rental_applications(applications, property_index:, admin_emails:)
+      applications.map do |application|
+        property_key = application.fetch(:property_key)
+        raise ValidationError, "Rental application references unknown property key #{property_key}" unless property_index.key?(property_key)
+
+        assigned_admin_email = application[:assigned_admin_email]
+        if assigned_admin_email.present? && !admin_emails.include?(assigned_admin_email)
+          raise ValidationError, "Rental application references unknown admin email #{assigned_admin_email}"
+        end
+
+        status = application.fetch(:status, "received")
+        raise ValidationError, "Unsupported rental application status #{status.inspect}" unless RentalApplication::STATUSES.include?(status)
+
+        {
+          property_key:,
+          assigned_admin_email:,
+          applicant_name: application.fetch(:applicant_name),
+          applicant_email: application.fetch(:applicant_email),
+          applicant_phone: application.fetch(:applicant_phone),
+          move_in_date: Date.parse(application.fetch(:move_in_date).to_s),
+          status:,
+          guarantor_required: ActiveModel::Type::Boolean.new.cast(application.fetch(:guarantor_required, false)),
+          guarantor_available: ActiveModel::Type::Boolean.new.cast(application.fetch(:guarantor_available, false)),
+          affordability_notes: application[:affordability_notes],
+          notes: application[:notes],
+          internal_notes: application[:internal_notes]
         }
       end
     end
@@ -213,6 +434,22 @@ module DemoData
       target_date = Date.current + offset_days
 
       Time.zone.local(target_date.year, target_date.month, target_date.day, match[:hour].to_i, match[:minute].to_i)
+    end
+
+    def expected_counts(normalized)
+      {
+        admins: normalized.fetch(:admins).count,
+        users: normalized.fetch(:users).count,
+        properties: normalized.fetch(:properties).count,
+        photos: normalized.fetch(:photos).count,
+        floor_plans: normalized.fetch(:floor_plans).count,
+        property_documents: normalized.fetch(:property_documents).count,
+        availability_windows: normalized.fetch(:availability_windows).count,
+        appointments: normalized.fetch(:appointments).count,
+        enquiries: normalized.fetch(:enquiries).count,
+        offers: normalized.fetch(:offers).count,
+        rental_applications: normalized.fetch(:rental_applications).count
+      }
     end
   end
 end

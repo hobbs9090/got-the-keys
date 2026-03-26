@@ -1,35 +1,29 @@
 import "@hotwired/turbo-rails";
-import $ from "jquery";
-import Foundation from "foundation-sites";
-import "what-input";
 
-import { reflowResponsiveTables, teardownResponsiveTables } from "./responsive_tables";
+import { bootCarousels, teardownCarousels } from "./carousels";
+import { bootModals, teardownModals } from "./modals";
+import { bootResponsiveTables, teardownResponsiveTables } from "./responsive_tables";
+import { bootStatisticsCharts, teardownStatisticsCharts } from "./statistics_charts";
 
-window.$ = $;
-window.jQuery = $;
-window.Foundation = Foundation;
-
-const clearNonEssentialInputPersistence = () => {
-  if (document.body?.dataset.whatpersist !== "false") return;
-
-  try {
-    window.sessionStorage.removeItem("what-input");
-    window.sessionStorage.removeItem("what-intent");
-  } catch (error) {
-    // Ignore storage access errors in restricted browser contexts.
-  }
+const bootApplication = () => {
+  bootCarousels();
+  bootModals();
+  bootResponsiveTables();
+  bootStatisticsCharts();
 };
 
-const bootFoundation = () => {
-  clearNonEssentialInputPersistence();
-  $(document).foundation();
-  reflowResponsiveTables($);
+const teardownApplication = () => {
+  teardownCarousels();
+  teardownModals();
+  teardownResponsiveTables();
+  teardownStatisticsCharts();
 };
 
-document.addEventListener("turbo:load", bootFoundation);
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", bootApplication, { once: true });
+} else {
+  bootApplication();
+}
 
-document.addEventListener("turbo:before-cache", () => {
-  teardownResponsiveTables($);
-  $(".reveal-overlay").remove();
-  $("body").removeClass("is-reveal-open");
-});
+document.addEventListener("turbo:load", bootApplication);
+document.addEventListener("turbo:before-cache", teardownApplication);

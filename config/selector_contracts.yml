@@ -1,0 +1,37 @@
+selectors:
+  - key: property_card
+    surface: Public catalogue
+    selector: data-testid="property-card"
+    purpose: Listing card root for catalogue assertions and drill-in navigation.
+  - key: book_viewing_cta
+    surface: Public property detail
+    selector: data-testid="book-viewing-cta"
+    purpose: Main viewing-request call to action on a property page.
+  - key: appointment_form
+    surface: Public appointment flow
+    selector: data-testid="appointment-form"
+    purpose: Appointment request form shell for booking automation.
+  - key: saved_search_panel
+    surface: Public catalogue
+    selector: data-testid="saved-search-panel"
+    purpose: Saved-search capture card for buyer and tenant alert journeys.
+  - key: property_documents_panel
+    surface: Public property detail
+    selector: data-testid="property-documents-panel"
+    purpose: Public brochure and document-download panel.
+  - key: admin_appointment_row
+    surface: Admin bookings desk
+    selector: data-testid="admin-appointment-row"
+    purpose: Agenda row contract for booking-desk workflows.
+  - key: admin_property_activity_timeline
+    surface: Admin property detail
+    selector: data-testid="admin-property-activity-timeline"
+    purpose: Property activity history including documents, leads, and moderation actions.
+  - key: lead_activity_timeline
+    surface: Admin lead detail
+    selector: data-testid="lead-activity-timeline"
+    purpose: Lead activity timeline for follow-up and audit checks.
+  - key: active_demo_scenario
+    surface: Admin shell
+    selector: data-testid="active-demo-scenario"
+    purpose: Global active-scenario indicator used after resets and imports.

@@ -1,0 +1,12 @@
+<p>A new property enquiry has been received.</p>
+
+<ul>
+  <li>Lead reference: <%= @enquiry.lead_reference %></li>
+  <li>Property: <%= @property.address_line_1 %></li>
+  <li>Customer: <%= @enquiry.customer_name %></li>
+  <li>Email: <%= @enquiry.customer_email.presence || "Not provided" %></li>
+  <li>Phone: <%= @enquiry.customer_phone.presence || "Not provided" %></li>
+  <li>Source: <%= @enquiry.display_source %></li>
+</ul>
+
+<p><%= simple_format(@enquiry.message) %></p>

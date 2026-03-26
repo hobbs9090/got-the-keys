@@ -102,4 +102,96 @@ module Ci
       Result.new(success?: false, message: lines.join("\n"), covered_paths: relevant_paths)
     end
   end
+
+  class TopLevelControllerCoverageGuard
+    Result = Struct.new(:success?, :message, :covered_paths, keyword_init: true)
+
+    REQUEST_SYSTEM_PREFIXES = %w[spec/requests/ spec/system/].freeze
+    TOP_LEVEL_CONTROLLER_PATTERN = %r{\Aapp/controllers/[^/]+_controller\.rb\z}
+    ACTION_DEFINITION = /\Adef\s+([a-z_]\w*[!?=]?)(?:\s*\(|\z)/.freeze
+
+    def initialize(changed_files:, before_reader:, after_reader:, request_system_prefixes: REQUEST_SYSTEM_PREFIXES)
+      @changed_files = Array(changed_files).map(&:to_s).reject(&:empty?).uniq.sort
+      @before_reader = before_reader
+      @after_reader = after_reader
+      @request_system_prefixes = request_system_prefixes
+    end
+
+    def evaluate
+      additions = added_actions_by_controller
+
+      return success("No new top-level controller actions requiring request/system coverage were detected.") if additions.empty?
+      return success("Request or system spec updates detected for new top-level controller actions.", additions.keys) if request_or_system_changes?
+
+      failure(additions)
+    end
+
+    private
+
+    attr_reader :changed_files, :before_reader, :after_reader, :request_system_prefixes
+
+    def added_actions_by_controller
+      changed_files.each_with_object({}) do |path, result|
+        next unless top_level_controller?(path)
+
+        before_actions = public_actions(before_reader.call(path))
+        after_actions = public_actions(after_reader.call(path))
+        added_actions = (after_actions - before_actions).sort
+
+        result[path] = added_actions if added_actions.any?
+      end
+    end
+
+    def top_level_controller?(path)
+      path.match?(TOP_LEVEL_CONTROLLER_PATTERN) && path != "app/controllers/application_controller.rb"
+    end
+
+    def request_or_system_changes?
+      changed_files.any? do |path|
+        request_system_prefixes.any? { |prefix| path.start_with?(prefix) }
+      end
+    end
+
+    def public_actions(source)
+      visibility = :public
+
+      source.to_s.each_line.each_with_object([]) do |line, actions|
+        code = line.sub(/#.*\z/, "").strip
+        next if code.empty?
+
+        case code
+        when "private", "protected"
+          visibility = code.to_sym
+          next
+        when "public"
+          visibility = :public
+          next
+        end
+
+        next unless visibility == :public
+
+        match = code.match(ACTION_DEFINITION)
+        actions << match[1] if match
+      end.uniq
+    end
+
+    def success(message, covered_paths = [])
+      Result.new(success?: true, message: message, covered_paths: covered_paths)
+    end
+
+    def failure(additions)
+      lines = [
+        "New top-level controller actions were added without matching request/system coverage.",
+        "",
+        "Add or update files under spec/requests/ or spec/system/ when introducing:",
+        *additions.flat_map do |path, actions|
+          actions.map { |action| "- #{path}: ##{action}" }
+        end,
+        "",
+        "This guard only applies to new public actions in app/controllers/*. Existing action edits still follow the broader spec-change rule."
+      ]
+
+      Result.new(success?: false, message: lines.join("\n"), covered_paths: additions.keys)
+    end
+  end
 end

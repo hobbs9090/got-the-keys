@@ -522,24 +522,3 @@ zh:
           apply_imported_scenario: "应用导入的场景"
           back_to_import: "返回导入"
           raw_yaml: "原始 YAML"
-    aardvarks:
-      index:
-        title: "Aardvark 列表"
-        new: "新建 aardvark"
-      new:
-        title: "新建 aardvark"
-      edit:
-        title: "编辑 aardvark"
-      actions:
-        show: "查看"
-        edit: "编辑"
-        destroy: "删除"
-        back: "返回"
-        confirm_destroy: "你确定吗？"
-      form:
-        error_summary:
-          one: "1 个错误导致该 aardvark 无法保存："
-          other: "%{count} 个错误导致该 aardvark 无法保存："
-      flash:
-        created: "Aardvark 已成功创建。"
-        updated: "Aardvark 已成功更新。"

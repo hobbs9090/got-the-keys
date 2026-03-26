@@ -1,0 +1,86 @@
+.hero-carousel {
+  border: 1px solid rgba(17, 32, 51, 0.12);
+  border-radius: 1.35rem;
+  box-shadow: 0 20px 50px rgba(17, 32, 51, 0.14);
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-carousel__viewport {
+  position: relative;
+}
+
+.hero-carousel__track {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.hero-carousel__slide {
+  display: none;
+}
+
+.hero-carousel__slide.is-active {
+  display: block;
+}
+
+.hero-carousel__slide img {
+  border-radius: 0;
+  display: block;
+  height: clamp(20rem, 58vw, 42rem);
+  object-fit: cover;
+  width: 100%;
+}
+
+.hero-carousel__control {
+  align-items: center;
+  background: rgba(15, 24, 40, 0.55);
+  border: 0;
+  border-radius: 999px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  height: 2.75rem;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.75rem;
+  z-index: 2;
+}
+
+.hero-carousel__control--previous {
+  left: 1rem;
+}
+
+.hero-carousel__control--next {
+  right: 1rem;
+}
+
+.hero-carousel__bullets {
+  bottom: 1.15rem;
+  display: flex;
+  gap: 0.55rem;
+  justify-content: center;
+  left: 50%;
+  margin: 0;
+  position: absolute;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.hero-carousel__bullets button {
+  background: rgba(17, 32, 51, 0.18);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  height: 0.8rem;
+  margin: 0;
+  padding: 0;
+  width: 0.8rem;
+}
+
+.hero-carousel__bullets button.is-active {
+  background: #2f7cc0;
+}

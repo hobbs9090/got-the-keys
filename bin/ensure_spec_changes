@@ -29,6 +29,23 @@ def git_changed_files(range)
   abort "Unable to determine changed files for spec coverage guard."
 end
 
+def git_file_exists_at?(sha, path)
+  return false unless sha
+
+  _stdout, _stderr, status = Open3.capture3("git", "cat-file", "-e", "#{sha}:#{path}")
+  status.success?
+end
+
+def file_contents_at(sha, path)
+  return unless git_file_exists_at?(sha, path)
+
+  stdout, stderr, status = Open3.capture3("git", "show", "#{sha}:#{path}")
+  return stdout if status.success?
+
+  warn stderr
+  abort "Unable to read #{path} from #{sha} for spec coverage guard."
+end
+
 payload = read_event_payload(ENV['GITHUB_EVENT_PATH'])
 range = Ci::ChangeRange.from_github(env: ENV, payload: payload)
 
@@ -38,7 +55,14 @@ unless range.complete?
 end
 
 changed_files = git_changed_files(range)
-result = Ci::SpecChangeGuard.new(changed_files: changed_files).evaluate
+results = []
+results << Ci::SpecChangeGuard.new(changed_files: changed_files).evaluate
+results << Ci::TopLevelControllerCoverageGuard.new(
+  changed_files: changed_files,
+  before_reader: ->(path) { file_contents_at(range.base_sha, path) },
+  after_reader: ->(path) { File.exist?(path) ? File.read(path) : nil }
+).evaluate
 
-puts result.message
-exit(result.success? ? 0 : 1)
+results.each { |result| puts result.message }
+
+exit(results.all?(&:success?) ? 0 : 1)

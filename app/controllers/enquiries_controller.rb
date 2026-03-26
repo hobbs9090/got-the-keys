@@ -1,0 +1,30 @@
+class EnquiriesController < ApplicationController
+  include PropertyScoped
+
+  before_action :set_property
+  before_action :ensure_property_is_visible!
+
+  def new
+    @enquiry = @property.enquiries.new(source_type: params[:source_type].presence || "general_enquiry")
+  end
+
+  def create
+    @enquiry = @property.enquiries.new(enquiry_params)
+
+    if @enquiry.save
+      redirect_to property_path(@property), notice: "Thanks. Your enquiry has been sent to the team."
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def enquiry_params
+    params.require(:enquiry).permit(:customer_name, :customer_email, :customer_phone, :source_type, :message)
+  end
+
+  def ensure_property_is_visible!
+    redirect_to properties_path, alert: "This listing is not currently public." unless @property.publicly_visible?
+  end
+end

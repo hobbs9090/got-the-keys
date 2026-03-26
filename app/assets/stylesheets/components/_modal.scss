@@ -1,0 +1,72 @@
+.site-modal {
+  align-items: center;
+  display: grid;
+  inset: 0;
+  justify-items: center;
+  padding: 1.5rem;
+  position: fixed;
+  z-index: 1100;
+}
+
+.site-modal[hidden] {
+  display: none;
+}
+
+.site-modal__backdrop {
+  background: rgba(15, 24, 40, 0.72);
+  inset: 0;
+  position: absolute;
+}
+
+.site-modal__dialog {
+  background: #fff;
+  border: 1px solid rgba(17, 32, 51, 0.12);
+  border-radius: 1.25rem;
+  box-shadow: 0 24px 60px rgba(17, 32, 51, 0.18);
+  max-height: min(90vh, 56rem);
+  max-width: min(44rem, calc(100vw - 2rem));
+  overflow: auto;
+  padding: 1.5rem;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+.site-modal--small .site-modal__dialog {
+  max-width: min(34rem, calc(100vw - 2rem));
+}
+
+.site-modal--large .site-modal__dialog {
+  max-width: min(64rem, calc(100vw - 2rem));
+}
+
+.site-modal__header {
+  align-items: flex-start;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.site-modal__header h4 {
+  margin: 0;
+}
+
+.site-modal__close {
+  background: transparent;
+  border: 0;
+  color: var(--color-ink);
+  cursor: pointer;
+  font-size: 2rem;
+  line-height: 1;
+  padding: 0;
+}
+
+.site-modal__body iframe {
+  border: 0;
+  max-width: 100%;
+}
+
+body.site-modal-open {
+  overflow: hidden;
+}

@@ -4,25 +4,17 @@ RSpec.describe AppointmentEvent do
   include ActiveSupport::Testing::TimeHelpers
 
   let(:user) { FactoryBot.create(:user) }
-  let(:property) do
-    user.properties.create!(
-      property_attributes(
-        user_id: user.id,
-        bathrooms: 2,
-        property_type: "House",
-        property_description: "A spacious detached home close to schools, green space, and commuter links."
-      )
-    )
-  end
+  let(:property) { FactoryBot.create(:property, user:) }
   let(:appointment) do
-    property.appointments.create!(
+    FactoryBot.create(
+      :appointment,
+      property:,
       customer_name: "Jamie Seller",
       customer_email: "jamie@example.com",
       customer_phone: "07700 900111",
-      requested_time: Time.zone.local(2026, 4, 2, 10, 0),
-      scheduled_at: Time.zone.local(2026, 4, 2, 10, 0),
-      duration_minutes: 45,
-      status: "pending"
+      requested_time: booking_time(2026, 4, 2, 10, 0),
+      scheduled_at: booking_time(2026, 4, 2, 10, 0),
+      duration_minutes: 45
     )
   end
 
@@ -41,7 +33,7 @@ RSpec.describe AppointmentEvent do
   end
 
   it "keeps an explicitly provided occurred_at" do
-    occurred_at = Time.zone.local(2026, 4, 1, 7, 0)
+    occurred_at = booking_time(2026, 4, 1, 7, 0)
     event = described_class.create!(
       appointment: appointment,
       event_type: "created",
@@ -57,13 +49,13 @@ RSpec.describe AppointmentEvent do
       appointment: appointment,
       event_type: "confirmed",
       message: "Appointment confirmed.",
-      occurred_at: Time.zone.local(2026, 4, 1, 13, 0)
+      occurred_at: booking_time(2026, 4, 1, 13, 0)
     )
     earlier_event = described_class.create!(
       appointment: appointment,
       event_type: "created",
       message: "Appointment created.",
-      occurred_at: Time.zone.local(2026, 4, 1, 9, 0)
+      occurred_at: booking_time(2026, 4, 1, 9, 0)
     )
 
     expect(described_class.chronological.last(2)).to eq([earlier_event, later_event])

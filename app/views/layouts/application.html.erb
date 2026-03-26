@@ -9,12 +9,9 @@
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", media: "all", "data-turbo-track" => "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track" => "reload", defer: true %>
-    <% if params[:controller] == 'statistics' %>
-      <%= javascript_include_tag "charts", "data-turbo-track" => "reload", defer: true %>
-    <% end %>
   </head>
 
-  <body class="site-shell <%= controller_path.tr('/', '-') %>" data-whatpersist="false">
+  <body class="site-shell <%= controller_path.tr('/', '-') %>">
     <div class="site-background" aria-hidden="true"></div>
     <%= render "layouts/header" %>
     <%= render "layouts/flashes" %>

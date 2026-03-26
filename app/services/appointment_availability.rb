@@ -1,7 +1,8 @@
 class AppointmentAvailability
-  Slot = Struct.new(:starts_at, :ends_at, keyword_init: true) do
+  Slot = Struct.new(:starts_at, :ends_at, :group_viewing, keyword_init: true) do
     def label
-      "#{I18n.l(starts_at, format: :long)} to #{I18n.l(ends_at, format: :time_only)}"
+      base = "#{I18n.l(starts_at, format: :long)} to #{I18n.l(ends_at, format: :time_only)}"
+      group_viewing ? "#{base} (group viewing)" : base
     end
   end
 
@@ -11,7 +12,7 @@ class AppointmentAvailability
     @from = from
   end
 
-  def next_slots(limit: 8, days_ahead: 21)
+  def next_slots(limit: 8, days_ahead: 21, excluding_appointment: nil)
     slots = []
 
     date_range(days_ahead).each do |date|
@@ -21,8 +22,8 @@ class AppointmentAvailability
         while (cursor + slot_duration) <= window_end
           slot_end = cursor + slot_duration
 
-          if slot_available?(cursor, duration_minutes: configuration.slot_duration_minutes)
-            slots << Slot.new(starts_at: cursor, ends_at: slot_end)
+          if slot_available?(cursor, duration_minutes: configuration.slot_duration_minutes, excluding_appointment:)
+            slots << Slot.new(starts_at: cursor, ends_at: slot_end, group_viewing: group_viewing_window?(cursor, slot_end))
             return slots if slots.length >= limit
           end
 
@@ -67,7 +68,7 @@ class AppointmentAvailability
   end
 
   def windows_for(date)
-    explicit_windows = overlap_windows(property.availability_windows.open_windows, date)
+    explicit_windows = overlap_windows(property.availability_windows.bookable_windows, date)
     return explicit_windows if explicit_windows.any?
 
     return [] unless configuration.open_on?(date)
@@ -102,17 +103,34 @@ class AppointmentAvailability
   def blocking_overlap?(starts_at, ends_at, excluding_appointment:)
     buffered_start = starts_at - configuration.buffer_minutes.minutes
     buffered_end = ends_at + configuration.buffer_minutes.minutes
+    capacity = booking_capacity_for(starts_at, ends_at)
 
-    property
+    overlaps = property
       .appointments
       .blocking
       .where.not(id: excluding_appointment&.id)
       .where(scheduled_at: (starts_at - 1.day)..(ends_at + 1.day))
-      .any? do |appointment|
+      .count do |appointment|
         existing_start = appointment.scheduled_at - configuration.buffer_minutes.minutes
         existing_end = appointment.end_at + configuration.buffer_minutes.minutes
 
         buffered_start < existing_end && buffered_end > existing_start
       end
+
+    overlaps >= capacity
+  end
+
+  def booking_capacity_for(starts_at, ends_at)
+    matching_window = property.availability_windows.bookable_windows.find do |window|
+      starts_at >= window.starts_at && ends_at <= window.ends_at
+    end
+
+    matching_window&.capacity || 1
+  end
+
+  def group_viewing_window?(starts_at, ends_at)
+    property.availability_windows.group_viewings.any? do |window|
+      starts_at >= window.starts_at && ends_at <= window.ends_at
+    end
   end
 end

@@ -1,0 +1,11 @@
+<p>Hi <%= @enquiry.customer_name %>,</p>
+
+<p>Thanks for getting in touch about <strong><%= @property.address_line_1 %></strong>. The team has your enquiry and will review it shortly.</p>
+
+<ul>
+  <li>Lead reference: <%= @enquiry.lead_reference %></li>
+  <li>Enquiry type: <%= @enquiry.display_source %></li>
+  <li>Property: <%= @property.address_line_1 %>, <%= @property.town_city %></li>
+</ul>
+
+<p>We will reply using the contact details you provided.</p>

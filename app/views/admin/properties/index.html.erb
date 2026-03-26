@@ -16,9 +16,10 @@
           <h3><%= property.address_line_1 %></h3>
           <p><%= property.headline %></p>
           <p><%= format_price(property) %> · <%= format_bedrooms(property) %></p>
+          <p><span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span></p>
         </div>
         <footer class="property-card__footer">
-          <span><%= t("ui.admin.properties.index.appointment_count", count: property.appointments.count) %></span>
+          <span><%= property.listing_completeness_percentage %>% complete · <%= t("ui.admin.properties.index.appointment_count", count: property.appointments.count) %></span>
           <%= link_to t("ui.admin.properties.index.open"), admin_property_path(property), class: "button primary hollow" %>
         </footer>
       </article>
