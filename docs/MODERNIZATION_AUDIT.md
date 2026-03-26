@@ -28,6 +28,7 @@ Important limitation:
 - the current shared-host setup is still not a durable worker architecture
 - if the process dies, in-flight async work can be lost
 - that is acceptable for the current staging/shared-host posture, but it should not be mistaken for “background jobs fully solved forever”
+- the explicit next-phase policy now lives in `docs/BACKGROUND_JOB_POLICY.md`
 
 ### 2. Frontend Stack Standardized
 
@@ -93,6 +94,7 @@ Revisit SQLite, hosting, or the job backend only if one or more of these start h
 2. Keep all new app-authored frontend behaviour inside `app/javascript/`.
 3. Keep growing UI work through component/page SCSS partials plus shared ERB partials.
 4. Leave SQLite/shared hosting alone until measured pain says otherwise.
+5. Keep the current background-job policy explicit by following `docs/BACKGROUND_JOB_POLICY.md`.
 
 ## Bottom Line
 
@@ -104,3 +106,5 @@ The completed modernization path was:
 2. standardize the frontend runtime path
 3. componentize the CSS/view layer
 4. leave SQLite/shared hosting alone until real pain appears
+
+For the recommended next cleanup pass before a larger feature wave, see `docs/PRE_EXTENSION_CHECKLIST.md`.

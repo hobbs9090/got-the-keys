@@ -2,26 +2,19 @@ require "rails_helper"
 
 RSpec.describe AppointmentNotificationJob do
   let(:user) { FactoryBot.create(:user) }
-  let(:property) do
-    user.properties.create!(
-      property_attributes(
-        user_id: user.id,
-        address_line_1: "44 Mount Ephraim",
-        bathrooms: 2,
-        property_type: "House",
-        property_description: "A spacious family home with a practical layout, modern finishes, and a private garden."
-      )
-    )
-  end
+  let(:property) { FactoryBot.create(:property, user:, address_line_1: "44 Mount Ephraim") }
   let(:appointment) do
-    property.appointments.create!(
+    slot = next_booking_slot(hour: 13)
+
+    FactoryBot.create(
+      :appointment,
+      property:,
       customer_name: "Owen Clark",
       customer_email: "owen.clark@example.com",
       customer_phone: "07700 930006",
-      requested_time: Time.zone.local(2026, 3, 30, 13, 0),
-      scheduled_at: Time.zone.local(2026, 3, 30, 13, 0),
-      duration_minutes: 45,
-      status: "pending"
+      requested_time: slot,
+      scheduled_at: slot,
+      duration_minutes: 45
     )
   end
 

@@ -19,5 +19,11 @@ const teardownApplication = () => {
   teardownStatisticsCharts();
 };
 
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", bootApplication, { once: true });
+} else {
+  bootApplication();
+}
+
 document.addEventListener("turbo:load", bootApplication);
 document.addEventListener("turbo:before-cache", teardownApplication);

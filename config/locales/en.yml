@@ -77,7 +77,6 @@ en:
     user_profile: "User Profile"
     coffeescripts: "CoffeeScripts"
     appointments: "Appointments"
-    account_billing: "Account Billing"
     manage_account: "Manage Account"
     administration: "Administration"
     language_preference: "Language Preference"
@@ -217,11 +216,6 @@ en:
     popularity: "Popularity"
     united_kingdom: "United Kingdom"
     china: "China"
-
-# Accounts Billing
-  account_billing:
-    title: "Account Billing"
-    heading: "Account Billing"
 
 # Member Area
 # Welcome

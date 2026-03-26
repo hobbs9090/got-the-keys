@@ -22,7 +22,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Require spec updates for product code changes
+      - name: Guard spec coverage rules
         run: ruby bin/ensure_spec_changes
 
       - name: Set up GitHub Pages

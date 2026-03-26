@@ -86,8 +86,16 @@ It is designed to feel like a credible small business product while also being p
   Version-controlled scenario definitions used by `db:seed` and the admin demo-data UI.
 - `docs/NIRVANA_DEPLOYMENT.md`
   Apache + Passenger deployment guide for shared hosting.
+- `docs/BACKGROUND_JOB_POLICY.md`
+  Explicit rules for what background work is safe on the current `:async` setup and when to revisit a durable backend.
 - `docs/MODERNIZATION_AUDIT.md`
   Recommended modernization sequence for jobs, frontend stack, CSS/view components, and deployment posture.
+- `docs/PRE_EXTENSION_CHECKLIST.md`
+  Actionable checklist to complete before a major new extension phase.
+- `docs/BOOKING_ARCHITECTURE.md`
+  Small architecture map for the booking domain, including core records, flow ownership, and extension seams.
+- `docs/SURFACE_INVENTORY.md`
+  Current classification of top-level app-owned routes as product, demo/training, or legacy support surfaces.
 - `docs/QA_TRAINING.md`
   QA walkthroughs, selectors, scenarios, and known credentials.
 
@@ -101,6 +109,7 @@ Install locally:
 - Bundler `2.x`
 - Node.js `22+`
 - npm
+- Firefox
 - SQLite3 development libraries/tools
 
 The project includes `.ruby-version`, so `rbenv`, `asdf`, `mise`, or similar tools work well.
@@ -121,6 +130,14 @@ npm run build
 `bin/install_git_hooks` configures this repo to use the tracked `.githooks/pre-push` hook, which runs `bundle exec rspec` and blocks the push if the suite fails. Each pre-push run also saves its console output to `tmp/rspec/pre_push/latest.log` so you can review the full output afterward.
 
 GitHub Actions also enforces that product code changes under `app/` or `lib/` include matching updates under `spec/`. Static assets under `app/assets/` and Rake tasks under `lib/tasks/` are exempt from that check.
+GitHub Actions also blocks new public actions added to top-level controllers under `app/controllers/` unless the same change includes request or system spec updates.
+
+Preferred spec types for new work:
+
+- request specs for server-rendered responses, redirects, auth boundaries, and HTML contracts
+- system specs for browser journeys and UI interactions
+- model, service, job, and helper specs for unit-level behaviour
+- avoid adding new controller specs or legacy `spec/features` coverage
 
 To make that rule block merges, mark the `CI` workflow as a required status check in your GitHub branch protection settings for `main`/`master`.
 
@@ -396,6 +413,8 @@ Run the main suite:
 bundle exec rspec
 ```
 
+The suite now includes one `js: true` system smoke test, which runs in headless Firefox via Selenium. If you have old precompiled assets lying around locally after frontend changes, refresh them with `npm run build` and `SECRET_KEY_BASE=dummy RAILS_ENV=test bundle exec rails assets:precompile`.
+
 Generate the richer Allure HTML report locally:
 
 ```bash
@@ -410,6 +429,8 @@ https://hobbs9090.github.io/rails_got_the_keys/
 ```
 
 GitHub Pages should be set to `Source: GitHub Actions` before the first publish.
+
+The CI summary also includes the slowest examples from the JSON report and compares them against the warning thresholds in `config/rspec_performance_baseline.yml`. Those thresholds are meant to be simple drift alarms, not hard release gates.
 
 Current automated coverage includes:
 
@@ -433,6 +454,12 @@ Behaviour by environment:
 - otherwise the Rails `production` environment falls back to file delivery under `tmp/mails`
 
 This keeps the app responsive and usable on shared hosting even when outbound SMTP is not yet available. It is intentionally not a durable worker setup yet; the queue backend should only be revisited when real operational pain justifies it.
+
+Background-job policy for the next extension phase:
+
+- keep `:async` for the current shared-host/staging posture
+- do not put mission-critical, costly, or long-running workflows on that adapter
+- use [`docs/BACKGROUND_JOB_POLICY.md`](docs/BACKGROUND_JOB_POLICY.md) as the source of truth for safe job types, unsafe job types, and future candidates
 
 ## Deployment
 

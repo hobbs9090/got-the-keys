@@ -37,8 +37,6 @@ GotTheKeys::Application.routes.draw do
 
   resources :coffee, only: [:index]
 
-  resources :account_billing, only: [:index]
-
   resources :properties do
     resources :photos, only: [:index, :new]
     resources :floor_plans, only: [:index, :new]
