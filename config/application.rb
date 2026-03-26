@@ -16,10 +16,16 @@ module GotTheKeys
     build_metadata = build_info_path.exist? ? JSON.parse(build_info_path.read) : {}
     raise "VERSION file must contain a semantic version" if semantic_version.blank?
 
+    config.i18n.available_locales = %i[en zh de fr it]
     config.i18n.default_locale = :en
-    config.i18n.fallbacks = { zh: :en }
+    config.i18n.fallbacks = {
+      zh: :en,
+      de: :en,
+      fr: :en,
+      it: :en
+    }
     config.filter_parameters += %i[password password_confirmation]
-    config.x.got_the_keys.available_languages = %w[en zh].freeze
+    config.x.got_the_keys.available_languages = %w[en de fr it zh].freeze
     config.x.got_the_keys.exchange_rate_gbp_to_cny = 9.368
     config.x.got_the_keys.version = semantic_version
     config.x.got_the_keys.build_sha = ENV["APP_BUILD_SHA"].presence || build_metadata["build_sha"].presence

@@ -1,0 +1,54 @@
+it:
+  studio_flat: "Monolocale"
+
+  languages:
+    label: "Lingua"
+    names:
+      en: "English"
+      de: "Deutsch"
+      fr: "Français"
+      it: "Italiano"
+      zh: "中文"
+
+  button:
+    submit: "Invia"
+
+  welcome:
+    title: "Home"
+    try_today: "Perche i team scelgono GotTheKeys"
+    paragraph_1: "GotTheKeys aiuta proprietari e locatori a creare annunci chiari e credibili senza rinunciare al controllo dell'intero processo."
+    paragraph_2: "Aggiungi le informazioni essenziali, carica foto e planimetrie e rispondi direttamente alle richieste, cosi acquirenti e inquilini ricevono informazioni accurate in tempi rapidi."
+    paragraph_3: "Usa la piattaforma per confrontare immobili in vendita e in affitto, capire se il prezzo richiesto e realistico e mantenere l'annuncio aggiornato mentre il mercato cambia."
+    paragraph_4: "Dal primo contatto fino all'accordo, l'obiettivo e semplice: meno attrito, meno costi e un percorso piu lineare per tutti."
+
+  legal:
+    title: "Note legali"
+
+  cookie_policy:
+    title: "Cookie Policy"
+
+  how_it_works:
+    title: "Come funziona"
+
+  about_us:
+    title: "Chi siamo"
+
+  contact_us:
+    title: "Contattaci"
+
+  blog:
+    title: "Blog"
+
+  properties:
+    title: "Immobili"
+    bedrooms: "Camere"
+    pick_one: "Selezionane uno"
+
+  for_sale:
+    title: "In vendita"
+
+  for_rent:
+    title: "In affitto"
+
+  search:
+    title: "Ricerca"

@@ -56,8 +56,8 @@ describe "A user" do
     expect(user.errors[:language].first).to eq("can't be blank")
   end
 
-  it "requires language values of 'en' or 'zh'" do
-    language = ['en', 'zh']
+  it "accepts the configured supported languages" do
+    language = %w[en de fr it zh]
     language.each do |language|
       user = User.new(user_attributes(language: language))
 
@@ -66,8 +66,8 @@ describe "A user" do
     end
   end
 
-  it "is rejected for language values of 'fr' or 'zm'" do
-    language = ['fr', 'zm']
+  it "rejects unsupported language values" do
+    language = %w[es zm]
     language.each do |language|
       user = User.new(user_attributes(language: language))
 

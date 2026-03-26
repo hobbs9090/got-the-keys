@@ -1,20 +1,20 @@
-<% title "Admin dashboard" %>
+<% title t("ui.admin.dashboard.title") %>
 
 <section class="admin-section">
   <div class="section-heading">
     <div>
-      <p class="section-heading__eyebrow">Operations overview</p>
-      <h1>Admin dashboard</h1>
+      <p class="section-heading__eyebrow"><%= t("ui.admin.dashboard.eyebrow") %></p>
+      <h1><%= t("ui.admin.dashboard.title") %></h1>
     </div>
 
-    <%= link_to "Open bookings desk", admin_bookings_path, class: "button primary" %>
+    <%= link_to t("ui.admin.dashboard.open_bookings_desk"), admin_bookings_path, class: "button primary" %>
   </div>
 
   <div class="admin-metric-grid">
     <% @metrics.each do |label, value| %>
       <article class="metric-card metric-card--admin">
         <strong><%= number_with_delimiter(value, delimiter: ",") %></strong>
-        <span><%= label.to_s.humanize %></span>
+        <span><%= t("ui.admin.dashboard.metrics.#{label}", default: label.to_s.humanize) %></span>
       </article>
     <% end %>
   </div>
@@ -23,23 +23,23 @@
 <section class="admin-panel">
   <div class="section-heading">
     <div>
-      <p class="section-heading__eyebrow">Admin-only section</p>
-      <h2>Booking visibility and control</h2>
+      <p class="section-heading__eyebrow"><%= t("ui.admin.dashboard.bookings_eyebrow") %></p>
+      <h2><%= t("ui.admin.dashboard.bookings_title") %></h2>
     </div>
 
     <div class="segmented-links">
-      <%= link_to "All bookings", admin_bookings_path, class: "is-active" %>
-      <%= link_to "Pending action", admin_bookings_path(status: "pending") %>
-      <%= link_to "This week", admin_bookings_path(view: "week", date: Date.current) %>
+      <%= link_to t("ui.admin.dashboard.all_bookings"), admin_bookings_path, class: "is-active" %>
+      <%= link_to t("ui.admin.dashboard.pending_action"), admin_bookings_path(status: "pending") %>
+      <%= link_to t("ui.admin.dashboard.this_week"), admin_bookings_path(view: "week", date: Date.current) %>
     </div>
   </div>
 
-  <p>The bookings desk is reserved for administrators and gives you the full calendar view, live filters, and status controls for every viewing request on the site.</p>
+  <p><%= t("ui.admin.dashboard.bookings_body") %></p>
 </section>
 
 <section class="admin-grid">
   <article class="admin-panel">
-    <h2>Bookings requiring action</h2>
+    <h2><%= t("ui.admin.dashboard.bookings_requiring_action") %></h2>
     <% if @pending_appointments.any? %>
       <div class="admin-list">
         <% @pending_appointments.each do |appointment| %>
@@ -53,12 +53,12 @@
         <% end %>
       </div>
     <% else %>
-      <p class="empty-copy">Nothing currently needs attention.</p>
+      <p class="empty-copy"><%= t("ui.admin.dashboard.nothing_needs_attention") %></p>
     <% end %>
   </article>
 
   <article class="admin-panel">
-    <h2>Upcoming appointments</h2>
+    <h2><%= t("ui.admin.dashboard.upcoming_appointments") %></h2>
     <% if @upcoming_appointments.any? %>
       <div class="admin-list">
         <% @upcoming_appointments.each do |appointment| %>
@@ -72,14 +72,14 @@
         <% end %>
       </div>
     <% else %>
-      <p class="empty-copy">No upcoming bookings.</p>
+      <p class="empty-copy"><%= t("ui.admin.dashboard.no_upcoming_bookings") %></p>
     <% end %>
   </article>
 </section>
 
 <section class="admin-grid">
   <article class="admin-panel">
-    <h2>Recent activity</h2>
+    <h2><%= t("ui.admin.dashboard.recent_activity") %></h2>
     <div class="admin-table">
       <% @recent_appointments.each do |appointment| %>
         <div class="admin-table__row">
@@ -93,7 +93,7 @@
   </article>
 
   <article class="admin-panel">
-    <h2>Notification log snapshot</h2>
+    <h2><%= t("ui.admin.dashboard.notification_log_snapshot") %></h2>
     <% if @notification_logs.any? %>
       <div class="admin-list">
         <% @notification_logs.each do |log| %>
@@ -107,17 +107,17 @@
         <% end %>
       </div>
     <% else %>
-      <p class="empty-copy">No notification records yet.</p>
+      <p class="empty-copy"><%= t("ui.admin.dashboard.no_notification_records") %></p>
     <% end %>
   </article>
 </section>
 
 <section class="admin-panel">
-  <h2>Last demo data action</h2>
+  <h2><%= t("ui.admin.dashboard.last_demo_data_action") %></h2>
   <% if @latest_demo_run.present? %>
-    <p><strong><%= @latest_demo_run.action_type.humanize %></strong> on <%= formatted_date_time(@latest_demo_run.created_at) %></p>
+    <p><strong><%= @latest_demo_run.action_type.humanize %></strong> <%= t("ui.admin.dashboard.on") %> <%= formatted_date_time(@latest_demo_run.created_at) %></p>
     <p><%= @latest_demo_run.summary_data&.fetch("name", @latest_demo_run.scenario_key.to_s.humanize) %></p>
   <% else %>
-    <p class="empty-copy">No scenario reset or import has been recorded yet.</p>
+    <p class="empty-copy"><%= t("ui.admin.dashboard.no_demo_action") %></p>
   <% end %>
 </section>

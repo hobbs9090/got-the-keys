@@ -1,12 +1,12 @@
-<nav class="admin-nav" aria-label="Admin">
+<nav class="admin-nav" aria-label="<%= t('ui.admin.navigation.aria_label') %>">
   <ul class="vertical menu admin-nav__menu">
-    <li><%= admin_nav_link_to "Dashboard", admin_root_path, data: { testid: "admin-dashboard-link" } %></li>
-    <li><%= admin_nav_link_to "Bookings", admin_bookings_path, active: controller_path == "admin/appointments", data: { testid: "admin-bookings-link" } %></li>
-    <li><%= admin_nav_link_to "Properties", admin_properties_path, data: { testid: "admin-properties-link" } %></li>
-    <li><%= admin_nav_link_to "Sellers", admin_users_path, data: { testid: "admin-users-link" } %></li>
-    <li><%= admin_nav_link_to "Demo Data", admin_demo_scenarios_path, data: { testid: "admin-demo-data-link" } %></li>
-    <li><%= admin_nav_link_to "QA Guide", admin_qa_path, data: { testid: "admin-qa-link" } %></li>
-    <li><%= admin_nav_link_to "Notifications", admin_notification_logs_path, data: { testid: "admin-notifications-link" } %></li>
-    <li><%= admin_nav_link_to "Booking Rules", admin_booking_configuration_path, data: { testid: "admin-booking-rules-link" } %></li>
+    <li><%= admin_nav_link_to t("ui.admin.navigation.dashboard"), admin_root_path, data: { testid: "admin-dashboard-link" } %></li>
+    <li><%= admin_nav_link_to t("ui.admin.navigation.bookings"), admin_bookings_path, active: controller_path == "admin/appointments", data: { testid: "admin-bookings-link" } %></li>
+    <li><%= admin_nav_link_to t("ui.admin.navigation.properties"), admin_properties_path, data: { testid: "admin-properties-link" } %></li>
+    <li><%= admin_nav_link_to t("ui.admin.navigation.sellers"), admin_users_path, data: { testid: "admin-users-link" } %></li>
+    <li><%= admin_nav_link_to t("ui.admin.navigation.demo_data"), admin_demo_scenarios_path, data: { testid: "admin-demo-data-link" } %></li>
+    <li><%= admin_nav_link_to t("ui.admin.navigation.qa_guide"), admin_qa_path, data: { testid: "admin-qa-link" } %></li>
+    <li><%= admin_nav_link_to t("ui.admin.navigation.notifications"), admin_notification_logs_path, data: { testid: "admin-notifications-link" } %></li>
+    <li><%= admin_nav_link_to t("ui.admin.navigation.booking_rules"), admin_booking_configuration_path, data: { testid: "admin-booking-rules-link" } %></li>
   </ul>
 </nav>

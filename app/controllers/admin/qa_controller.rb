@@ -16,12 +16,6 @@ class Admin::QaController < Admin::BaseController
       notification_logs: NotificationLog.count,
       last_demo_action: DemoScenarioRun.recent_first.first
     }
-    @training_journeys = [
-      "Create a new booking from a property page and verify the success message plus reference code.",
-      "As an admin, confirm a pending appointment and validate the status badge plus audit timeline.",
-      "Reschedule an appointment into an occupied slot and verify the conflict validation message.",
-      "Restore the baseline dataset, then switch to the fully booked scenario and verify the empty-slot state.",
-      "Export the current dataset, import it back through the preview screen, and confirm the diagnostics panel updates."
-    ]
+    @training_journeys = I18n.t("ui.admin.qa.training_journeys")
   end
 end

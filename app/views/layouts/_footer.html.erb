@@ -5,7 +5,7 @@
         <span>&copy; 2026</span>
         <%= render "layouts/gotthekeys", class_name: "marketing-wordmark--footer", decorative: true, variant: :dark, width: 172 %>
       </p>
-      <p class="site-footer__copy">Modern property discovery, appointment booking, and deterministic QA scenarios in one server-rendered Rails application.</p>
+      <p class="site-footer__copy"><%= t("ui.site_footer.copy") %></p>
     </div>
 
     <div class="site-footer__meta">
@@ -19,7 +19,7 @@
       </ul>
 
       <p class="site-footer__small">
-        Built for realistic demos, acceptance testing, and training in AI-driven browser automation.
+        <%= t("ui.site_footer.meta_copy") %>
         <%= link_to t("cookie_policy.manage_preferences"), cookie_policy_index_path(anchor: "cookie-preferences") %>
       </p>
       <p class="site-footer__small" data-testid="public-app-version"><%= public_app_version %></p>

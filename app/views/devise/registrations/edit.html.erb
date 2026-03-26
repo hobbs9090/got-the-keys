@@ -48,7 +48,10 @@
         </div>
         <div class="form-grid__full">
           <%= f.label :language, nil, **form_label_options(resource, :language) %>
-          <%= f.select :language, available_languages, { prompt: t('properties.pick_one') }, form_control_options(resource, :language) %>
+          <%= f.select :language,
+                       options_for_select(language_options, resource.language),
+                       { prompt: t('properties.pick_one') },
+                       form_control_options(resource, :language) %>
           <%= field_error_messages(resource, :language) %>
         </div>
         <div class="form-grid__full">

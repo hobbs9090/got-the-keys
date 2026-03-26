@@ -1,0 +1,345 @@
+zh:
+  ui:
+    site_header:
+      eyebrow: "房产与预约平台"
+      admin_bookings: "预约"
+      sign_out: "退出登录"
+      add_property: "添加房源"
+      profile: "个人资料"
+      register: "注册"
+      sign_in: "登录"
+
+    site_footer:
+      copy: "在同一个服务端渲染的 Rails 应用中，整合现代房源浏览、预约看房和可重复的 QA 场景。"
+      meta_copy: "为真实演示、验收测试和 AI 驱动浏览器自动化训练而构建。"
+
+    shared:
+      property_placeholder_alt: "房源占位图"
+
+    common:
+      apply: "应用"
+      any: "不限"
+      cancel: "取消"
+      reset: "重置"
+      clear_all: "清除全部"
+      featured: "精选"
+      view_property: "查看房源"
+      book_a_viewing: "预约看房"
+      town: "城镇"
+      bathrooms: "浴室"
+      postcode: "邮编"
+      overview: "概览"
+      address: "地址"
+      property: "房源"
+      requested_slot: "申请时段"
+      current_slot: "当前时段"
+      duration: "时长"
+      customer: "客户"
+      customer_notes: "客户备注"
+      full_name: "姓名"
+      email_address: "电子邮箱"
+      phone_number: "电话号码"
+      status: "状态"
+
+    contact:
+      office_name: "GotTheKeys Limited"
+      office_line_1: "123 Awesome Road"
+      office_line_2: "Limpsfield, TN16 4AB"
+
+    legacy:
+      from: "从"
+      to: "到"
+      update: "更新"
+      add_viewing_time: "添加看房时间"
+      new_viewing_time_title: "%{address} 的新看房时间"
+      new_photos_title: "%{address} 的新照片"
+      new_floor_plan_title: "%{address} 的新平面图"
+      location_details_title: "%{address} 的位置详情"
+
+    welcome:
+      carousel:
+        previous: "上一张幻灯片"
+        next: "下一张幻灯片"
+        first: "第一张幻灯片"
+        second: "第二张幻灯片"
+        third: "第三张幻灯片"
+      hero_eyebrow: "现代房源浏览与看房预约"
+      hero_title: "为买家和租客提供更专业的网站体验，同时为 QA 团队提供可重复的自动化训练环境。"
+      primary_cta: "浏览房源"
+      admin_cta: "打开预约后台"
+      metric_labels:
+        properties: "房源"
+        for_sale: "出售"
+        for_rent: "出租"
+        upcoming_viewings: "即将到来的看房"
+      featured_eyebrow: "精选房源"
+      featured_title: "可信、响应迅速，并内建预约入口的房源卡片"
+      featured_action: "查看完整目录"
+      insights_label: "平台亮点"
+      qa_title: "为 QA 训练而打造"
+      qa_points:
+        selectors: "在关键预约与后台控件上使用稳定的语义化选择器。"
+        scenarios: "提供可重复的演示场景，覆盖顺畅流程、冲突、空状态和大批量搜索。"
+        audit: "可见的审计轨迹和通知日志，让状态变化更容易验证。"
+      shared_host_title: "适合共享主机"
+      shared_host_points:
+        stack: "在 Apache + Passenger 下运行的服务端渲染 Rails。"
+        dependencies: "不依赖 Redis、Sidekiq、Docker 或常驻工作进程。"
+        enhancement: "结合 Foundation、Turbo 和传统表单的渐进增强。"
+
+    properties:
+      headline_fallback: "%{town_city} 的 %{property_type}"
+      in_location: "%{location} 的 %{property_type}"
+      bedroom_count:
+        one: "1 间卧室"
+        other: "%{count} 间卧室"
+      bathroom_count:
+        one: "1 间浴室"
+        other: "%{count} 间浴室"
+      sale_statuses:
+        for_sale: "出售"
+        for_rent: "出租"
+      catalogue:
+        eyebrow: "房源目录"
+        hero_title: "浏览带有实时预约可用性的现代房源"
+        hero_body: "按区域、价格和卧室数量搜索，然后直接从房源详情页预约看房。"
+        active_filter_count:
+          one: "1 个筛选条件"
+          other: "%{count} 个筛选条件"
+        overview_badge: "目录概览"
+        matching_properties:
+          one: "条匹配房源"
+          other: "条匹配房源"
+        browse_eyebrow: "浏览"
+        browse_title: "在不同目录视图之间切换"
+        browse_body: "你可以在这里查看完整目录，也可以在已经明确方向时直接切换到仅出售或仅出租的房源。"
+        all_listings: "全部房源"
+        totals:
+          all: "全部"
+        filters_eyebrow: "优化搜索"
+        filters_title: "筛选房源列表"
+        sidebar_copy: "按房源类型、区域、城镇、卧室和预算缩小范围；如果想重新开始，也可以一键重置。"
+        results_eyebrow: "实时结果"
+        results_title:
+          one: "1 套房源可供查看"
+          other: "%{count} 套房源可供查看"
+        empty_copy: "当前显示完整目录。使用筛选面板按位置、价格和卧室数量缩小范围。"
+      filters:
+        listing_type: "房源类型"
+        all_listings: "全部房源"
+        query_label: "区域、邮编或关键词"
+        query_placeholder: "例如 Sevenoaks、TN13 或 garden"
+        any_town: "不限城镇"
+        min_bedrooms: "最少卧室"
+        min_price: "最低价格"
+        max_price: "最高价格"
+        sort: "排序"
+        apply: "应用筛选"
+        search_chip: "搜索：%{query}"
+        min_bedrooms_chip: "%{count}+ 间卧室"
+        min_price_chip: "%{price} 起"
+        max_price_chip: "最高 %{price}"
+        sort_options:
+          recommended: "推荐"
+          newest: "最新优先"
+          price_low: "价格：从低到高"
+          price_high: "价格：从高到低"
+          bedrooms_high: "卧室优先"
+      card:
+        next_slot: "下一时段：%{time}"
+        no_slots: "暂无即将开放的公开看房时段"
+      empty:
+        eyebrow: "没有匹配结果"
+        title: "没有房源符合当前搜索"
+        body: "试着放宽区域、卧室或价格范围，或者重置筛选后再次浏览完整目录。"
+      show:
+        booking_body: "选择一个已发布的时段来创建预约申请。管理员之后可以在预约后台确认、改期或取消。"
+        slot_finish: "%{time} 结束"
+        request_viewing: "提交看房申请"
+        no_slots_title: "暂无公开时段"
+        no_slots_body: "这也是一种很有用的 QA 边界场景，适合测试空预约状态和备用联系流程。"
+      editor:
+        new_title: "新增房源"
+        eyebrow: "卖家工具"
+        new_heading: "添加房源"
+        new_body: "创建一个拥有更丰富元数据和预约展示能力的房源。"
+        edit_heading: "编辑 %{address}"
+        edit_body: "更新现代目录中展示的房源详情、定位和元数据。"
+
+    for_sale:
+      eyebrow: "出售"
+      hero_title: "可购买房源"
+      hero_body: "使用筛选器按区域、卧室和价格查找房源，然后从详情页进入预约流程。"
+      count_label:
+        one: "条出售房源"
+        other: "条出售房源"
+
+    for_rent:
+      eyebrow: "出租"
+      hero_title: "可租赁房源"
+      hero_body: "浏览待租房源，对比可用时段，并在真实目录中测试租客预约流程。"
+      count_label:
+        one: "条出租房源"
+        other: "条出租房源"
+
+    search:
+      eyebrow: "房源搜索"
+      hero_title: "同时搜索房源与预约可用性"
+      hero_body: "为 QA 自动化练习找到真实的顺畅路径、空状态和分页场景。"
+      results_count:
+        one: "条结果"
+        other: "条结果"
+
+    appointments:
+      statuses:
+        pending: "待处理"
+        confirmed: "已确认"
+        rescheduled: "已改期"
+        cancelled: "已取消"
+        completed: "已完成"
+        no_show: "未到场"
+      events:
+        created: "已创建"
+        confirmed: "已确认"
+        rescheduled: "已改期"
+        cancelled: "已取消"
+        completed: "已完成"
+        no_show: "未到场"
+        internal_note_added: "已添加内部备注"
+        customer_note_updated: "已更新客户备注"
+      new:
+        title: "预约看房：%{address}"
+        eyebrow: "看房申请"
+        hero_body: "选择一个已发布的时段，填写联系信息，然后创建一个可由后台确认、改期或取消的申请。"
+        preferred_slot: "偏好时段"
+        choose_slot: "选择时段"
+        notes_label: "还有什么需要我们知道的吗？"
+        notes_placeholder: "例如无障碍需求、到达说明，或想提前告诉团队的问题。"
+        submit: "提交申请"
+        back_to_property: "返回房源"
+        no_slots_title: "暂无发布时段"
+        no_slots_body: "当前房源没有公开看房时段。在某些 QA 场景中这是刻意设置的，因此这里会清楚展示空状态。"
+      show:
+        title: "预约 %{reference}"
+        eyebrow: "预约详情"
+        hero_body: "这里会持续显示你的预约时间线，方便你核对每次状态变化和时间戳。"
+        summary_title: "预约摘要"
+        duration_minutes:
+          one: "1 分钟"
+          other: "%{count} 分钟"
+        timeline_title: "状态时间线"
+
+    appointment_mailer:
+      subject: "GotTheKeys 看房 %{action}：%{reference}"
+      actions:
+        request_received: "申请已收到"
+        confirmed: "已确认"
+        cancelled: "已取消"
+        completed: "已完成"
+        marked_as_missed: "已标记为未到场"
+        updated: "已更新"
+      greeting: "%{name}，你好："
+      updated_html: "你关于 <strong>%{address}</strong> 的看房预约已更新。"
+      reference: "编号：%{reference}"
+      status: "状态：%{status}"
+      requested_slot: "申请时段：%{time}"
+      current_slot: "当前时段：%{time}"
+      notes: "你的备注：%{notes}"
+      revisit: "你可以随时使用预约成功后发送的安全链接再次查看此预约。"
+      thanks_html: "谢谢，<br>GotTheKeys"
+
+    admin:
+      layout:
+        title: "后台 | %{app_name}"
+        sidebar_eyebrow: "后台工作区"
+        active_demo_scenario: "当前演示场景"
+        view_site: "查看站点"
+      navigation:
+        aria_label: "后台"
+        dashboard: "仪表盘"
+        bookings: "预约"
+        properties: "房源"
+        sellers: "卖家"
+        demo_data: "演示数据"
+        qa_guide: "QA 指南"
+        notifications: "通知"
+        booking_rules: "预约规则"
+      qa:
+        title: "QA 指南"
+        eyebrow: "自动化训练环境"
+        diagnostics_title: "诊断信息"
+        app_version: "应用版本"
+        diagnostic_labels:
+          active_scenario: "当前场景"
+          properties: "房源"
+          users: "用户"
+          bookings: "预约"
+          notification_logs: "通知日志"
+          last_demo_action: "最近一次演示操作"
+        demo_action_value: "%{action} 于 %{time}"
+        known_credentials_title: "已知凭据"
+        admin_credential: "管理员：%{email} / %{password}"
+        seller_credential: "卖家：%{email} / %{password}"
+        default_password: "secret"
+        training_title: "推荐训练路径"
+        training_journeys:
+          - "从房源页面创建一个新的预约，并验证成功提示和参考编号。"
+          - "以管理员身份确认一个待处理预约，并检查状态徽章和审计时间线。"
+          - "将预约改到一个已占用时段，并验证冲突校验提示。"
+          - "恢复基线数据后切换到满额场景，并验证空时段状态。"
+          - "导出当前数据集，再通过预览页面导入，并确认诊断面板更新。"
+        selectors_title: "适合自动化的选择器"
+        selectors:
+          property_card: "房源卡片上的 `data-testid=\"property-card\"`"
+          book_viewing_cta: "房源预约按钮上的 `data-testid=\"book-viewing-cta\"`"
+          appointment_form: "公开预约表单上的 `data-testid=\"appointment-form\"`"
+          admin_appointment_row: "议程行上的 `data-testid=\"admin-appointment-row\"`"
+          active_demo_scenario: "后台外壳上的 `data-testid=\"active-demo-scenario\"`"
+        available_scenarios_title: "可用场景"
+      dashboard:
+        title: "后台仪表盘"
+        eyebrow: "运营概览"
+        open_bookings_desk: "打开预约台"
+        metrics:
+          properties: "房源"
+          upcoming_appointments: "即将到来的预约"
+          pending_actions: "待处理事项"
+          customers: "客户"
+        bookings_eyebrow: "仅限管理员"
+        bookings_title: "预约可见性与控制"
+        all_bookings: "全部预约"
+        pending_action: "待处理"
+        this_week: "本周"
+        bookings_body: "预约台仅供管理员使用，提供完整日历视图、实时筛选和状态控制，用于管理站点上的每一个看房请求。"
+        bookings_requiring_action: "需要处理的预约"
+        nothing_needs_attention: "当前没有需要关注的事项。"
+        upcoming_appointments: "即将到来的预约"
+        no_upcoming_bookings: "暂无即将到来的预约。"
+        recent_activity: "最近活动"
+        notification_log_snapshot: "通知日志快照"
+        no_notification_records: "暂无通知记录。"
+        last_demo_data_action: "最近一次演示数据操作"
+        on: "于"
+        no_demo_action: "尚未记录任何场景重置或导入。"
+      appointments:
+        title: "预约台"
+        eyebrow: "仅限管理员的预约管理"
+        hero_body: "查看即将到来的预约，按房源或状态筛选，并对需要管理员决定的申请采取操作。"
+        views:
+          agenda: "议程"
+          day: "日"
+          week: "周"
+          month: "月"
+        filters:
+          anchor_date: "锚点日期"
+          all_properties: "全部房源"
+          all_statuses: "全部状态"
+          assigned_admin: "分配管理员"
+          anyone: "不限"
+          customer_email: "客户邮箱"
+          customer_email_placeholder: "customer@example.com"
+        confirm: "确认"
+        cancel: "取消"
+        bookings_count:
+          one: "1 个预约"
+          other: "%{count} 个预约"

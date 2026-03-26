@@ -1,0 +1,345 @@
+en:
+  ui:
+    site_header:
+      eyebrow: "Property and Booking Platform"
+      admin_bookings: "Bookings"
+      sign_out: "Sign out"
+      add_property: "Add property"
+      profile: "Profile"
+      register: "Register"
+      sign_in: "Sign in"
+
+    site_footer:
+      copy: "Modern property discovery, appointment booking, and deterministic QA scenarios in one server-rendered Rails application."
+      meta_copy: "Built for realistic demos, acceptance testing, and training in AI-driven browser automation."
+
+    shared:
+      property_placeholder_alt: "Property placeholder image"
+
+    common:
+      apply: "Apply"
+      any: "Any"
+      cancel: "Cancel"
+      reset: "Reset"
+      clear_all: "Clear all"
+      featured: "Featured"
+      view_property: "View property"
+      book_a_viewing: "Book a viewing"
+      town: "Town"
+      bathrooms: "Bathrooms"
+      postcode: "Postcode"
+      overview: "Overview"
+      address: "Address"
+      property: "Property"
+      requested_slot: "Requested slot"
+      current_slot: "Current slot"
+      duration: "Duration"
+      customer: "Customer"
+      customer_notes: "Customer notes"
+      full_name: "Full name"
+      email_address: "Email address"
+      phone_number: "Phone number"
+      status: "Status"
+
+    contact:
+      office_name: "GotTheKeys Limited"
+      office_line_1: "123 Awesome Road"
+      office_line_2: "Limpsfield, TN16 4AB"
+
+    legacy:
+      from: "From"
+      to: "To"
+      update: "Update"
+      add_viewing_time: "Add Viewing Time"
+      new_viewing_time_title: "New Viewing Time for %{address}"
+      new_photos_title: "New Photos for %{address}"
+      new_floor_plan_title: "New Floor Plan for %{address}"
+      location_details_title: "Location details for %{address}"
+
+    welcome:
+      carousel:
+        previous: "Previous slide"
+        next: "Next slide"
+        first: "First slide"
+        second: "Second slide"
+        third: "Third slide"
+      hero_eyebrow: "Modern property discovery and appointment booking"
+      hero_title: "Give buyers and tenants a polished website while giving QA teams a deterministic automation harness."
+      primary_cta: "Browse properties"
+      admin_cta: "Open bookings desk"
+      metric_labels:
+        properties: "Properties"
+        for_sale: "For sale"
+        for_rent: "For rent"
+        upcoming_viewings: "Upcoming viewings"
+      featured_eyebrow: "Featured listings"
+      featured_title: "Credible, responsive property cards with booking hooks built in"
+      featured_action: "See the full catalogue"
+      insights_label: "Platform insights"
+      qa_title: "Built for QA training"
+      qa_points:
+        selectors: "Stable semantic selectors on the critical booking and admin controls."
+        scenarios: "Deterministic demo scenarios for happy paths, conflicts, empty states, and high-volume searches."
+        audit: "Visible audit trails and notification logs that make status transitions easy to verify."
+      shared_host_title: "Shared-host friendly"
+      shared_host_points:
+        stack: "Server-rendered Rails under Apache + Passenger."
+        dependencies: "No Redis, Sidekiq, Docker, or always-on worker assumptions."
+        enhancement: "Progressive enhancement with Foundation, Turbo, and conventional forms."
+
+    properties:
+      headline_fallback: "%{property_type} in %{town_city}"
+      in_location: "%{property_type} in %{location}"
+      bedroom_count:
+        one: "1 bedroom"
+        other: "%{count} bedrooms"
+      bathroom_count:
+        one: "1 bathroom"
+        other: "%{count} bathrooms"
+      sale_statuses:
+        for_sale: "For Sale"
+        for_rent: "For Rent"
+      catalogue:
+        eyebrow: "Property catalogue"
+        hero_title: "Browse modern listings with live booking availability"
+        hero_body: "Search by area, price, and bedroom count, then book a viewing from each property page."
+        active_filter_count:
+          one: "1 active filter"
+          other: "%{count} active filters"
+        overview_badge: "Catalogue overview"
+        matching_properties:
+          one: "matching property"
+          other: "matching properties"
+        browse_eyebrow: "Browse"
+        browse_title: "Move between catalogue views"
+        browse_body: "Use the full catalogue here, or jump straight into sale-only or rent-only stock when you already know the lane you want."
+        all_listings: "All listings"
+        totals:
+          all: "All"
+        filters_eyebrow: "Refine search"
+        filters_title: "Filter the property list"
+        sidebar_copy: "Narrow the list by listing type, area, town, bedrooms, and budget, then reset everything with one tap if you want to start over."
+        results_eyebrow: "Live results"
+        results_title:
+          one: "1 property ready to explore"
+          other: "%{count} properties ready to explore"
+        empty_copy: "Showing the full catalogue. Use the filter panel to narrow by location, price, and bedroom count."
+      filters:
+        listing_type: "Listing type"
+        all_listings: "All listings"
+        query_label: "Area, postcode or keyword"
+        query_placeholder: "Try Sevenoaks, TN13 or garden"
+        any_town: "Any town"
+        min_bedrooms: "Min bedrooms"
+        min_price: "Min price"
+        max_price: "Max price"
+        sort: "Sort"
+        apply: "Apply filters"
+        search_chip: "Search: %{query}"
+        min_bedrooms_chip: "%{count}+ bedrooms"
+        min_price_chip: "From %{price}"
+        max_price_chip: "Up to %{price}"
+        sort_options:
+          recommended: "Recommended"
+          newest: "Newest first"
+          price_low: "Price: low to high"
+          price_high: "Price: high to low"
+          bedrooms_high: "Bedrooms first"
+      card:
+        next_slot: "Next slot: %{time}"
+        no_slots: "No upcoming public slots published"
+      empty:
+        eyebrow: "No matches"
+        title: "No properties match this search"
+        body: "Try widening the area, bedrooms, or price range, or reset the filters to browse the full catalogue again."
+      show:
+        booking_body: "Pick a published slot to create a booking request. Admins can later confirm, reschedule, or cancel it from the appointment book."
+        slot_finish: "%{time} finish"
+        request_viewing: "Request a viewing"
+        no_slots_title: "No public slots available"
+        no_slots_body: "This is a useful QA edge case for testing empty booking states and fallback contact flows."
+      editor:
+        new_title: "Add new Property"
+        eyebrow: "Seller tools"
+        new_heading: "Add a property"
+        new_body: "Create a listing with richer metadata and booking-ready presentation."
+        edit_heading: "Edit %{address}"
+        edit_body: "Update the listing details, positioning, and metadata shown in the modern catalogue."
+
+    for_sale:
+      eyebrow: "For sale"
+      hero_title: "Homes available to buy"
+      hero_body: "Use the filters to find stock by area, bedrooms, and price, then move into the booking flow from the listing details page."
+      count_label:
+        one: "sale listing"
+        other: "sale listings"
+
+    for_rent:
+      eyebrow: "For rent"
+      hero_title: "Homes available to rent"
+      hero_body: "Explore homes to let, compare availability, and test the renter viewing flow across a realistic catalogue."
+      count_label:
+        one: "rental listing"
+        other: "rental listings"
+
+    search:
+      eyebrow: "Property search"
+      hero_title: "Search listings and booking availability together"
+      hero_body: "Find realistic happy paths, empty states, and pagination scenarios for QA automation practice."
+      results_count:
+        one: "result"
+        other: "results"
+
+    appointments:
+      statuses:
+        pending: "Pending"
+        confirmed: "Confirmed"
+        rescheduled: "Rescheduled"
+        cancelled: "Cancelled"
+        completed: "Completed"
+        no_show: "No show"
+      events:
+        created: "Created"
+        confirmed: "Confirmed"
+        rescheduled: "Rescheduled"
+        cancelled: "Cancelled"
+        completed: "Completed"
+        no_show: "No show"
+        internal_note_added: "Internal note added"
+        customer_note_updated: "Customer note updated"
+      new:
+        title: "Book a viewing for %{address}"
+        eyebrow: "Viewing request"
+        hero_body: "Choose a published slot, add your contact details, and create a request that staff can confirm, reschedule, or cancel from the admin appointment book."
+        preferred_slot: "Preferred slot"
+        choose_slot: "Choose a slot"
+        notes_label: "Anything we should know?"
+        notes_placeholder: "Accessibility needs, arrival notes, or questions for the team."
+        submit: "Submit request"
+        back_to_property: "Back to property"
+        no_slots_title: "No slots published"
+        no_slots_body: "This property currently has no public viewing availability. That is intentional in some QA scenarios, so the empty state is surfaced clearly."
+      show:
+        title: "Appointment %{reference}"
+        eyebrow: "Appointment details"
+        hero_body: "Your appointment timeline stays visible here so you can verify every status change and timestamp."
+        summary_title: "Booking summary"
+        duration_minutes:
+          one: "1 minute"
+          other: "%{count} minutes"
+        timeline_title: "Status timeline"
+
+    appointment_mailer:
+      subject: "GotTheKeys viewing %{action}: %{reference}"
+      actions:
+        request_received: "request received"
+        confirmed: "confirmed"
+        cancelled: "cancelled"
+        completed: "completed"
+        marked_as_missed: "marked as missed"
+        updated: "updated"
+      greeting: "Hello %{name},"
+      updated_html: "Your viewing for <strong>%{address}</strong> has been updated."
+      reference: "Reference: %{reference}"
+      status: "Status: %{status}"
+      requested_slot: "Requested slot: %{time}"
+      current_slot: "Current slot: %{time}"
+      notes: "Your notes: %{notes}"
+      revisit: "You can revisit the appointment at any time using the secure appointment link sent after booking."
+      thanks_html: "Thank you,<br>GotTheKeys"
+
+    admin:
+      layout:
+        title: "Admin | %{app_name}"
+        sidebar_eyebrow: "Admin Workspace"
+        active_demo_scenario: "Active demo scenario"
+        view_site: "View site"
+      navigation:
+        aria_label: "Admin"
+        dashboard: "Dashboard"
+        bookings: "Bookings"
+        properties: "Properties"
+        sellers: "Sellers"
+        demo_data: "Demo Data"
+        qa_guide: "QA Guide"
+        notifications: "Notifications"
+        booking_rules: "Booking Rules"
+      qa:
+        title: "QA guide"
+        eyebrow: "Automation training harness"
+        diagnostics_title: "Diagnostics"
+        app_version: "App version"
+        diagnostic_labels:
+          active_scenario: "Active scenario"
+          properties: "Properties"
+          users: "Users"
+          bookings: "Bookings"
+          notification_logs: "Notification logs"
+          last_demo_action: "Last demo action"
+        demo_action_value: "%{action} at %{time}"
+        known_credentials_title: "Known credentials"
+        admin_credential: "admin: %{email} / %{password}"
+        seller_credential: "seller: %{email} / %{password}"
+        default_password: "secret"
+        training_title: "Recommended training journeys"
+        training_journeys:
+          - "Create a new booking from a property page and verify the success message plus reference code."
+          - "As an admin, confirm a pending appointment and validate the status badge plus audit timeline."
+          - "Reschedule an appointment into an occupied slot and verify the conflict validation message."
+          - "Restore the baseline dataset, then switch to the fully booked scenario and verify the empty-slot state."
+          - "Export the current dataset, import it back through the preview screen, and confirm the diagnostics panel updates."
+        selectors_title: "Automation-friendly selectors"
+        selectors:
+          property_card: "`data-testid=\"property-card\"` on listing cards"
+          book_viewing_cta: "`data-testid=\"book-viewing-cta\"` on property booking CTA"
+          appointment_form: "`data-testid=\"appointment-form\"` on the public booking form"
+          admin_appointment_row: "`data-testid=\"admin-appointment-row\"` on agenda rows"
+          active_demo_scenario: "`data-testid=\"active-demo-scenario\"` on the admin shell"
+        available_scenarios_title: "Available scenarios"
+      dashboard:
+        title: "Admin dashboard"
+        eyebrow: "Operations overview"
+        open_bookings_desk: "Open bookings desk"
+        metrics:
+          properties: "Properties"
+          upcoming_appointments: "Upcoming appointments"
+          pending_actions: "Pending actions"
+          customers: "Customers"
+        bookings_eyebrow: "Admin-only section"
+        bookings_title: "Booking visibility and control"
+        all_bookings: "All bookings"
+        pending_action: "Pending action"
+        this_week: "This week"
+        bookings_body: "The bookings desk is reserved for administrators and gives you the full calendar view, live filters, and status controls for every viewing request on the site."
+        bookings_requiring_action: "Bookings requiring action"
+        nothing_needs_attention: "Nothing currently needs attention."
+        upcoming_appointments: "Upcoming appointments"
+        no_upcoming_bookings: "No upcoming bookings."
+        recent_activity: "Recent activity"
+        notification_log_snapshot: "Notification log snapshot"
+        no_notification_records: "No notification records yet."
+        last_demo_data_action: "Last demo data action"
+        on: "on"
+        no_demo_action: "No scenario reset or import has been recorded yet."
+      appointments:
+        title: "Bookings desk"
+        eyebrow: "Admin-only booking management"
+        hero_body: "Review upcoming bookings, filter by property or status, and take action on requests that need an admin decision."
+        views:
+          agenda: "Agenda"
+          day: "Day"
+          week: "Week"
+          month: "Month"
+        filters:
+          anchor_date: "Anchor date"
+          all_properties: "All properties"
+          all_statuses: "All statuses"
+          assigned_admin: "Assigned admin"
+          anyone: "Anyone"
+          customer_email: "Customer email"
+          customer_email_placeholder: "customer@example.com"
+        confirm: "Confirm"
+        cancel: "Cancel"
+        bookings_count:
+          one: "1 booking"
+          other: "%{count} bookings"

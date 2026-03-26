@@ -40,19 +40,29 @@ module SharedHelper
   end
 
   def property_image_small(class_name: nil)
-    image_tag('property_placeholder_listing.svg', size: '160', class: class_name, alt: 'Property placeholder image')
+    image_tag(
+      'property_placeholder_listing.svg',
+      size: '160',
+      class: class_name,
+      alt: t("ui.shared.property_placeholder_alt")
+    )
   end
 
   def property_image_medium(class_name: nil)
-    image_tag('property_placeholder_listing.svg', size: '250', class: class_name, alt: 'Property placeholder image')
+    image_tag(
+      'property_placeholder_listing.svg',
+      size: '250',
+      class: class_name,
+      alt: t("ui.shared.property_placeholder_alt")
+    )
   end
 
   def format_time(time)
-    time.strftime('%B %d %Y, %H:%M')
+    I18n.l(time, format: :shared_time)
   end
 
   def format_date(time)
-    time.strftime('%d %B, %Y')
+    I18n.l(time.to_date, format: :shared_date)
   end
 
   def format_name(user)

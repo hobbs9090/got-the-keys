@@ -1,0 +1,54 @@
+de:
+  studio_flat: "Studio"
+
+  languages:
+    label: "Sprache"
+    names:
+      en: "English"
+      de: "Deutsch"
+      fr: "Français"
+      it: "Italiano"
+      zh: "中文"
+
+  button:
+    submit: "Senden"
+
+  welcome:
+    title: "Startseite"
+    try_today: "Warum Teams GotTheKeys nutzen"
+    paragraph_1: "GotTheKeys hilft Eigentumern und Vermietern, klare und glaubwurdige Inserate zu erstellen, ohne die Kontrolle uber den gesamten Prozess abzugeben."
+    paragraph_2: "Fugen Sie die wichtigsten Angaben hinzu, laden Sie Fotos und Grundrisse hoch und beantworten Sie Anfragen direkt, damit Kaufer und Mieter schnell prazise Informationen erhalten."
+    paragraph_3: "Nutzen Sie die Plattform, um Kauf- und Mietbestand zu vergleichen, Ihre Preisvorstellung einzuordnen und Inserate aktuell zu halten, wenn sich der Markt verandert."
+    paragraph_4: "Vom ersten Kontakt bis zu vereinbarten Konditionen ist das Ziel einfach: weniger Reibung, geringere Kosten und ein geradlinigerer Ablauf fur alle Beteiligten."
+
+  legal:
+    title: "Rechtliches"
+
+  cookie_policy:
+    title: "Cookie-Richtlinie"
+
+  how_it_works:
+    title: "So funktioniert es"
+
+  about_us:
+    title: "Uber uns"
+
+  contact_us:
+    title: "Kontakt"
+
+  blog:
+    title: "Blog"
+
+  properties:
+    title: "Immobilien"
+    bedrooms: "Schlafzimmer"
+    pick_one: "Bitte auswahlen"
+
+  for_sale:
+    title: "Kaufen"
+
+  for_rent:
+    title: "Mieten"
+
+  search:
+    title: "Suche"

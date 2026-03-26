@@ -2,9 +2,9 @@
 
 <section class="page-hero">
   <div>
-    <p class="page-hero__eyebrow">Seller tools</p>
-    <h1>Edit <%= @property.address_line_1 %></h1>
-    <p>Update the listing details, positioning, and metadata shown in the modern catalogue.</p>
+    <p class="page-hero__eyebrow"><%= t("ui.properties.editor.eyebrow") %></p>
+    <h1><%= t("ui.properties.editor.edit_heading", address: @property.address_line_1) %></h1>
+    <p><%= t("ui.properties.editor.edit_body") %></p>
   </div>
 </section>
 

@@ -1,5 +1,4 @@
 module PropertiesHelper
-
   def cache_key_for_properties_total
     max_updated_at = Property.maximum(:updated_at)
     "properties/all-#{max_updated_at}"
@@ -25,8 +24,12 @@ module PropertiesHelper
     if property.bedrooms == 0
       content_tag(:span, t(:studio_flat))
     else
-      pluralize(property.bedrooms, t('bedroom'))
+      t("ui.properties.bedroom_count", count: property.bedrooms)
     end
+  end
+
+  def format_bathrooms(count)
+    t("ui.properties.bathroom_count", count:)
   end
 
   def format_price(property)
@@ -47,34 +50,59 @@ module PropertiesHelper
     classes.join(' ')
   end
 
-  def property_sort_label(sort)
-    case sort
-    when 'price_low'
-      'Price: low to high'
-    when 'price_high'
-      'Price: high to low'
-    when 'bedrooms_high'
-      'Bedrooms first'
-    when 'newest'
-      'Newest first'
+  def translated_sale_status(status)
+    case status
+    when Property::SALE_STATUSES[:for_sale]
+      t("ui.properties.sale_statuses.for_sale")
+    when Property::SALE_STATUSES[:for_rent]
+      t("ui.properties.sale_statuses.for_rent")
     else
-      'Recommended'
+      status
     end
+  end
+
+  def property_sale_status_options(include_all: false)
+    options = []
+    options << [t("ui.properties.filters.all_listings"), nil] if include_all
+    options.concat(
+      [
+        [t("ui.properties.sale_statuses.for_sale"), Property::SALE_STATUSES[:for_sale]],
+        [t("ui.properties.sale_statuses.for_rent"), Property::SALE_STATUSES[:for_rent]]
+      ]
+    )
+    options
+  end
+
+  def property_sort_options
+    Property::SORT_OPTIONS.map { |sort| [property_sort_label(sort), sort] }
+  end
+
+  def property_sort_label(sort)
+    t("ui.properties.filters.sort_options.#{sort.presence || 'recommended'}")
+  end
+
+  def property_location_label(property)
+    t("ui.properties.in_location", property_type: property.property_type, location: property.location_line)
   end
 
   def property_filter_chip_labels(filters)
     filters = filters.to_h.symbolize_keys
     chips = []
-    chips << filters[:sale_status] if filters[:sale_status].present?
-    chips << "Search: #{filters[:q]}" if filters[:q].present?
+    chips << translated_sale_status(filters[:sale_status]) if filters[:sale_status].present?
+    chips << t("ui.properties.filters.search_chip", query: filters[:q]) if filters[:q].present?
     chips << filters[:town_city] if filters[:town_city].present?
-    chips << "#{filters[:min_bedrooms]}+ bedrooms" if filters[:min_bedrooms].present?
-    chips << "From #{number_to_currency(filters[:min_price], unit: '£', precision: 0)}" if filters[:min_price].present?
-    chips << "Up to #{number_to_currency(filters[:max_price], unit: '£', precision: 0)}" if filters[:max_price].present?
+    chips << t("ui.properties.filters.min_bedrooms_chip", count: filters[:min_bedrooms]) if filters[:min_bedrooms].present?
+    chips << t(
+      "ui.properties.filters.min_price_chip",
+      price: number_to_currency(filters[:min_price], unit: '£', precision: 0)
+    ) if filters[:min_price].present?
+    chips << t(
+      "ui.properties.filters.max_price_chip",
+      price: number_to_currency(filters[:max_price], unit: '£', precision: 0)
+    ) if filters[:max_price].present?
 
     sort = filters[:sort].presence
     chips << property_sort_label(sort) if sort.present? && sort != 'recommended'
     chips
   end
-
 end

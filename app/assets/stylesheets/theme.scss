@@ -288,7 +288,6 @@ a:focus {
 }
 
 .site-nav a,
-.site-header__languages a,
 .segmented-links a {
   border-radius: 999px;
   color: var(--color-muted);
@@ -298,26 +297,97 @@ a:focus {
 }
 
 .site-header .site-nav a,
-.site-header .site-header__languages a,
 .site-header .button {
   border-radius: 1rem;
 }
 
 .site-nav a:hover,
 .site-nav a.is-active,
-.site-header__languages a:hover,
-.site-header__languages a.is-active,
 .segmented-links a:hover,
 .segmented-links a.is-active {
   background: rgba(20, 87, 214, 0.1);
   color: var(--color-primary-strong);
 }
 
-.site-header__actions,
-.site-header__languages {
+.site-header__actions {
   align-items: center;
   display: flex;
   gap: 0.7rem;
+}
+
+.language-dropdown {
+  position: relative;
+}
+
+.language-dropdown__form {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(26, 36, 51, 0.08);
+  border-radius: 1rem;
+  color: var(--color-muted);
+  display: inline-flex;
+  gap: 0.55rem;
+  padding: 0.45rem 0.75rem;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.language-dropdown__form:hover,
+.language-dropdown__form:focus-within {
+  background: rgba(20, 87, 214, 0.08);
+  border-color: rgba(20, 87, 214, 0.12);
+  color: var(--color-primary-strong);
+}
+
+.language-dropdown__label {
+  color: var(--color-muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.language-dropdown__field {
+  position: relative;
+}
+
+.language-dropdown__field::after {
+  border-left: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  content: "";
+  color: var(--color-muted);
+  height: 0.45rem;
+  pointer-events: none;
+  position: absolute;
+  right: 0.3rem;
+  top: 50%;
+  transform: translateY(-65%) rotate(-45deg);
+  width: 0.45rem;
+}
+
+.language-dropdown__select {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  color: #10213f;
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-weight: 700;
+  margin: 0;
+  min-height: auto;
+  min-width: 8rem;
+  padding: 0 1.2rem 0 0;
+}
+
+.language-dropdown__select:focus {
+  background: transparent;
+  box-shadow: none;
+  color: var(--color-primary-strong);
+}
+
+.language-dropdown__select option {
+  color: var(--color-ink);
 }
 
 .flash-stack {
@@ -2773,7 +2843,6 @@ a:focus {
 
   .site-nav,
   .site-header__actions,
-  .site-header__languages,
   .property-card__actions,
   .section-heading__actions,
   .admin-inline-actions {
