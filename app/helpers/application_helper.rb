@@ -30,6 +30,26 @@ module ApplicationHelper
     source_type.to_s.tr("_", " ").humanize
   end
 
+  def offer_status_badge_class(status)
+    {
+      "received" => "badge badge--warning",
+      "accepted" => "badge badge--success",
+      "rejected" => "badge badge--danger",
+      "withdrawn" => "badge badge--muted",
+      "completed" => "badge badge--neutral"
+    }.fetch(status.to_s, "badge")
+  end
+
+  def rental_application_status_badge_class(status)
+    {
+      "received" => "badge badge--warning",
+      "referencing" => "badge badge--accent",
+      "approved" => "badge badge--success",
+      "rejected" => "badge badge--danger",
+      "withdrawn" => "badge badge--muted"
+    }.fetch(status.to_s, "badge")
+  end
+
   def formatted_date_time(value)
     return if value.blank?
 

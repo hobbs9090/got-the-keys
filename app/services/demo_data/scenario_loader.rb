@@ -74,6 +74,8 @@ module DemoData
         create_availability_windows(payload.fetch(:availability_windows), properties:)
         create_appointments(payload.fetch(:appointments), properties:, admins:)
         create_enquiries(payload.fetch(:enquiries), properties:, admins:)
+        create_offers(payload.fetch(:offers), properties:, admins:)
+        create_rental_applications(payload.fetch(:rental_applications), properties:, admins:)
 
         summary = {
           name: payload.fetch(:name),
@@ -85,6 +87,8 @@ module DemoData
           floor_plan_count: FloorPlan.count,
           appointment_count: Appointment.count,
           enquiry_count: Enquiry.count,
+          offer_count: Offer.count,
+          rental_application_count: RentalApplication.count,
           active_demo_scenario_key: configuration.active_demo_scenario_key
         }
 
@@ -103,8 +107,12 @@ module DemoData
     def reset_demo_data!
       NotificationLog.delete_all
       AppointmentEvent.delete_all
+      OfferEvent.delete_all
+      RentalApplicationEvent.delete_all
       Appointment.delete_all
       Enquiry.delete_all
+      Offer.delete_all
+      RentalApplication.delete_all
       AvailabilityWindow.delete_all
       Photo.delete_all
       FloorPlan.delete_all
@@ -217,6 +225,68 @@ module DemoData
           internal_notes: attributes[:internal_notes],
           spam: attributes.fetch(:spam, false),
           spam_reason: attributes[:spam_reason]
+        )
+      end
+    end
+
+    def create_offers(offer_specs, properties:, admins:)
+      offer_specs.each do |attributes|
+        property = properties.fetch(attributes.fetch(:property_key))
+        admin = attributes[:assigned_admin_email].present? ? admins.fetch(attributes.fetch(:assigned_admin_email)) : nil
+        final_status = attributes.fetch(:status)
+
+        offer = property.offers.create!(
+          admin:,
+          buyer_name: attributes.fetch(:buyer_name),
+          buyer_email: attributes.fetch(:buyer_email),
+          buyer_phone: attributes.fetch(:buyer_phone),
+          amount: attributes.fetch(:amount),
+          status: "received",
+          chain_position: attributes[:chain_position],
+          notes: attributes[:notes],
+          internal_notes: attributes[:internal_notes]
+        )
+
+        next if final_status == "received"
+
+        offer.update!(
+          admin:,
+          status: final_status,
+          chain_position: attributes[:chain_position],
+          internal_notes: attributes[:internal_notes]
+        )
+      end
+    end
+
+    def create_rental_applications(application_specs, properties:, admins:)
+      application_specs.each do |attributes|
+        property = properties.fetch(attributes.fetch(:property_key))
+        admin = attributes[:assigned_admin_email].present? ? admins.fetch(attributes.fetch(:assigned_admin_email)) : nil
+        final_status = attributes.fetch(:status)
+
+        application = property.rental_applications.create!(
+          admin:,
+          applicant_name: attributes.fetch(:applicant_name),
+          applicant_email: attributes.fetch(:applicant_email),
+          applicant_phone: attributes.fetch(:applicant_phone),
+          move_in_date: attributes.fetch(:move_in_date),
+          status: "received",
+          guarantor_required: attributes.fetch(:guarantor_required, false),
+          guarantor_available: attributes.fetch(:guarantor_available, false),
+          affordability_notes: attributes[:affordability_notes],
+          notes: attributes[:notes],
+          internal_notes: attributes[:internal_notes]
+        )
+
+        next if final_status == "received"
+
+        application.update!(
+          admin:,
+          status: final_status,
+          guarantor_required: attributes.fetch(:guarantor_required, false),
+          guarantor_available: attributes.fetch(:guarantor_available, false),
+          affordability_notes: attributes[:affordability_notes],
+          internal_notes: attributes[:internal_notes]
         )
       end
     end

@@ -15,7 +15,9 @@ module DemoData
         floor_plans: FloorPlan.order(:property_id, :position, :id).map { |floor_plan| export_floor_plan(floor_plan, property_keys) },
         availability_windows: AvailabilityWindow.order(:starts_at).map { |window| export_window(window, property_keys) },
         appointments: Appointment.order(:scheduled_at, :created_at).map { |appointment| export_appointment(appointment, property_keys) },
-        enquiries: Enquiry.order(:created_at, :id).map { |enquiry| export_enquiry(enquiry, property_keys) }
+        enquiries: Enquiry.order(:created_at, :id).map { |enquiry| export_enquiry(enquiry, property_keys) },
+        offers: Offer.order(:created_at, :id).map { |offer| export_offer(offer, property_keys) },
+        rental_applications: RentalApplication.order(:created_at, :id).map { |application| export_rental_application(application, property_keys) }
       }
 
       YAML.dump(payload.deep_stringify_keys)
@@ -155,6 +157,38 @@ module DemoData
         spam: enquiry.spam,
         spam_reason: enquiry.spam_reason,
         allow_invalid: enquiry.customer_email.present? && !enquiry.customer_email.match?(URI::MailTo::EMAIL_REGEXP)
+      }
+    end
+
+    def export_offer(offer, property_keys)
+      {
+        property_key: property_keys.fetch(offer.property_id),
+        assigned_admin_email: offer.admin&.email,
+        buyer_name: offer.buyer_name,
+        buyer_email: offer.buyer_email,
+        buyer_phone: offer.buyer_phone,
+        amount: offer.amount,
+        status: offer.status,
+        chain_position: offer.chain_position,
+        notes: offer.notes,
+        internal_notes: offer.internal_notes
+      }
+    end
+
+    def export_rental_application(application, property_keys)
+      {
+        property_key: property_keys.fetch(application.property_id),
+        assigned_admin_email: application.admin&.email,
+        applicant_name: application.applicant_name,
+        applicant_email: application.applicant_email,
+        applicant_phone: application.applicant_phone,
+        move_in_date: application.move_in_date.iso8601,
+        status: application.status,
+        guarantor_required: application.guarantor_required,
+        guarantor_available: application.guarantor_available,
+        affordability_notes: application.affordability_notes,
+        notes: application.notes,
+        internal_notes: application.internal_notes
       }
     end
   end

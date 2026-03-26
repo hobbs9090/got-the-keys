@@ -1,0 +1,66 @@
+<% title "Offer #{@offer.public_reference}" %>
+
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow">Offer detail</p>
+      <h1><%= @offer.public_reference %></h1>
+    </div>
+
+    <div class="section-heading__actions">
+      <%= link_to "Back to board", admin_offers_path, class: "button hollow secondary" %>
+      <span class="<%= offer_status_badge_class(@offer.status) %>"><%= @offer.status.humanize %></span>
+    </div>
+  </div>
+</section>
+
+<section class="admin-grid">
+  <article class="admin-panel">
+    <h2>Offer summary</h2>
+    <dl class="detail-list">
+      <div><dt>Property</dt><dd><%= @offer.property.address_line_1 %></dd></div>
+      <div><dt>Buyer</dt><dd><%= @offer.buyer_name %></dd></div>
+      <div><dt>Email</dt><dd><%= @offer.buyer_email %></dd></div>
+      <div><dt>Phone</dt><dd><%= @offer.buyer_phone %></dd></div>
+      <div><dt>Amount</dt><dd><%= number_to_currency(@offer.amount, unit: "£", precision: 0) %></dd></div>
+      <div><dt>Chain</dt><dd><%= @offer.chain_position.presence || "Not supplied" %></dd></div>
+      <div><dt>Notes</dt><dd><%= @offer.notes.presence || "None" %></dd></div>
+    </dl>
+  </article>
+
+  <article class="admin-panel">
+    <h2>Manage offer</h2>
+    <%= form_with model: [:admin, @offer], data: { testid: "offer-management-form" } do |f| %>
+      <div class="form-grid">
+        <div>
+          <%= f.label :status, "Status" %>
+          <%= f.select :status, Offer::STATUSES.map { |status| [status.humanize, status] }, {}, data: { testid: "offer-status-select" } %>
+        </div>
+        <div class="form-grid__full">
+          <%= f.label :chain_position, "Chain position" %>
+          <%= f.text_field :chain_position, data: { testid: "offer-chain-position-admin" } %>
+        </div>
+        <div class="form-grid__full">
+          <%= f.label :internal_notes, "Internal notes" %>
+          <%= f.text_area :internal_notes, rows: 6, data: { testid: "offer-internal-notes" } %>
+        </div>
+      </div>
+      <div class="form-actions">
+        <%= f.submit "Save offer", class: "button primary", data: { testid: "save-offer-button" } %>
+      </div>
+    <% end %>
+  </article>
+</section>
+
+<section class="admin-panel">
+  <h2>Decision history</h2>
+  <ol class="timeline" data-testid="offer-decision-history">
+    <% @offer.timeline.each do |event| %>
+      <li>
+        <strong><%= event.event_type.to_s.humanize %></strong>
+        <span><%= formatted_date_time(event.occurred_at) %></span>
+        <p><%= event.message %></p>
+      </li>
+    <% end %>
+  </ol>
+</section>

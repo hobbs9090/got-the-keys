@@ -1,0 +1,51 @@
+<% title "Submit an offer for #{@property.address_line_1}" %>
+
+<section class="property-layout">
+  <article class="property-panel">
+    <p class="section-heading__eyebrow">Sales offer</p>
+    <h1>Submit an offer for <%= @property.address_line_1 %></h1>
+    <p>Use this form if you are ready to register an offer and share your buying position with the team.</p>
+
+    <%= form_with model: [@property, @offer], data: { testid: "property-offer-form" } do |f| %>
+      <%= render "shared/errors", object: @offer %>
+
+      <div class="form-grid">
+        <div>
+          <%= f.label :buyer_name, "Your name", **form_label_options(@offer, :buyer_name) %>
+          <%= f.text_field :buyer_name, required: true, data: { testid: "offer-buyer-name" }, **form_control_options(@offer, :buyer_name) %>
+          <%= field_error_messages(@offer, :buyer_name) %>
+        </div>
+        <div>
+          <%= f.label :buyer_email, "Email address", **form_label_options(@offer, :buyer_email) %>
+          <%= f.email_field :buyer_email, required: true, data: { testid: "offer-buyer-email" }, **form_control_options(@offer, :buyer_email) %>
+          <%= field_error_messages(@offer, :buyer_email) %>
+        </div>
+        <div>
+          <%= f.label :buyer_phone, "Phone number", **form_label_options(@offer, :buyer_phone) %>
+          <%= f.telephone_field :buyer_phone, required: true, data: { testid: "offer-buyer-phone" }, **form_control_options(@offer, :buyer_phone) %>
+          <%= field_error_messages(@offer, :buyer_phone) %>
+        </div>
+        <div>
+          <%= f.label :amount, "Offer amount", **form_label_options(@offer, :amount) %>
+          <%= f.number_field :amount, min: 1, step: 1000, required: true, data: { testid: "offer-amount" }, **form_control_options(@offer, :amount) %>
+          <%= field_error_messages(@offer, :amount) %>
+        </div>
+        <div class="form-grid__full">
+          <%= f.label :chain_position, "Buying position", **form_label_options(@offer, :chain_position) %>
+          <%= f.text_field :chain_position, placeholder: "Cash buyer, no onward chain", data: { testid: "offer-chain-position" }, **form_control_options(@offer, :chain_position) %>
+          <%= field_error_messages(@offer, :chain_position) %>
+        </div>
+        <div class="form-grid__full">
+          <%= f.label :notes, "Notes", **form_label_options(@offer, :notes) %>
+          <%= f.text_area :notes, rows: 6, data: { testid: "offer-notes" }, **form_control_options(@offer, :notes) %>
+          <%= field_error_messages(@offer, :notes) %>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <%= f.submit "Submit offer", class: "button primary", data: { testid: "submit-offer-button" } %>
+        <%= link_to "Back to property", property_path(@property), class: "button hollow secondary" %>
+      </div>
+    <% end %>
+  </article>
+</section>

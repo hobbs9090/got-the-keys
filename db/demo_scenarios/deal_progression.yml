@@ -1,0 +1,133 @@
+key: deal_progression
+name: Deal Progression Studio
+description: Focused sales and lettings progression dataset covering accepted and rejected offers, duplicate applicants, missing guarantors, and failed affordability cases.
+booking_configuration:
+  slot_duration_minutes: 45
+  lead_time_hours: 4
+  buffer_minutes: 15
+  office_opens_at: "09:00"
+  office_closes_at: "18:00"
+  open_weekdays: [1, 2, 3, 4, 5, 6]
+admins:
+  - email: steven@gotthekeys.com
+    password: secret
+    password_confirmation: secret
+    language: en
+users:
+  - first_name: Laura
+    last_name: Finch
+    mobile_number: "07700 904001"
+    email: laura.finch@example.com
+    password: secret
+    password_confirmation: secret
+    language: en
+  - first_name: Ben
+    last_name: Kirby
+    mobile_number: "07700 904002"
+    email: ben.kirby@example.com
+    password: secret
+    password_confirmation: secret
+    language: en
+properties:
+  - key: sale_pipeline_home
+    owner_email: laura.finch@example.com
+    address_line_1: 10 Ash Grove
+    address_line_2: ""
+    town_city: Sevenoaks
+    county: Kent
+    postcode: TN13 4QR
+    country: United Kingdom
+    property_type: Detached house
+    listing_tagline: Family home in active offer progression
+    property_description: A polished sale listing used for offer-progression training, including received, withdrawn, rejected, and accepted outcomes.
+    bedrooms: 4
+    bathrooms: 2
+    sale_status: For Sale
+    listing_state: published
+    asking_price: 910000
+    featured: true
+  - key: rent_pipeline_flat
+    owner_email: ben.kirby@example.com
+    address_line_1: Flat 2, 18 South Parade
+    address_line_2: ""
+    town_city: Bromley
+    county: Kent
+    postcode: BR1 5ZA
+    country: United Kingdom
+    property_type: Apartment
+    listing_tagline: Rental home in application progression
+    property_description: A clean rental listing used for application training, including duplicate applicants, missing guarantor issues, failed affordability, and approved progression.
+    bedrooms: 2
+    bathrooms: 1
+    sale_status: For Rent
+    listing_state: published
+    asking_price: 2100
+    featured: false
+photos: []
+floor_plans: []
+availability_windows: []
+appointments: []
+enquiries: []
+offers:
+  - property_key: sale_pipeline_home
+    assigned_admin_email: steven@gotthekeys.com
+    buyer_name: Daniel Webb
+    buyer_email: daniel.webb@example.com
+    buyer_phone: "07700 904111"
+    amount: 885000
+    status: rejected
+    chain_position: Needs to sell own home
+    notes: Initial opening offer below guide.
+    internal_notes: Rejected after seller review.
+  - property_key: sale_pipeline_home
+    assigned_admin_email: steven@gotthekeys.com
+    buyer_name: Chloe Morgan
+    buyer_email: chloe.morgan@example.com
+    buyer_phone: "07700 904222"
+    amount: 905000
+    status: withdrawn
+    chain_position: First-time buyer with mortgage agreement in principle
+    notes: Withdrew after survey issues elsewhere.
+  - property_key: sale_pipeline_home
+    assigned_admin_email: steven@gotthekeys.com
+    buyer_name: Alex Turner
+    buyer_email: alex.turner@example.com
+    buyer_phone: "07700 904333"
+    amount: 920000
+    status: accepted
+    chain_position: Cash buyer, no onward chain
+    notes: Strong headline offer and flexible completion.
+rental_applications:
+  - property_key: rent_pipeline_flat
+    assigned_admin_email: steven@gotthekeys.com
+    applicant_name: Priya Shah
+    applicant_email: priya.shah@example.com
+    applicant_phone: "07700 904444"
+    move_in_date: 2026-05-10
+    status: rejected
+    guarantor_required: true
+    guarantor_available: false
+    affordability_notes: Income below target and no guarantor yet.
+    internal_notes: Missing guarantor case for training.
+  - property_key: rent_pipeline_flat
+    assigned_admin_email: steven@gotthekeys.com
+    applicant_name: Priya Shah
+    applicant_email: priya.shah@example.com
+    applicant_phone: "07700 904444"
+    move_in_date: 2026-05-17
+    status: withdrawn
+    guarantor_required: false
+    guarantor_available: false
+    affordability_notes: Duplicate applicant follow-up.
+    internal_notes: Duplicate applicant example.
+  - property_key: rent_pipeline_flat
+    assigned_admin_email: steven@gotthekeys.com
+    applicant_name: Marcus Hall
+    applicant_email: marcus.hall@example.com
+    applicant_phone: "07700 904555"
+    move_in_date: 2026-05-01
+    status: approved
+    guarantor_required: false
+    guarantor_available: false
+    affordability_notes: Affordability checks complete and references strong.
+    internal_notes: Approved application.

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_26_173000) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_26_190000) do
   create_table "admins", force: :cascade do |t|
     t.datetime "created_at", precision: nil
     t.string "email"
@@ -154,6 +154,41 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_173000) do
     t.index ["status"], name: "index_notification_logs_on_status"
   end
 
+  create_table "offer_events", force: :cascade do |t|
+    t.integer "admin_id"
+    t.datetime "created_at", null: false
+    t.string "event_type", null: false
+    t.string "from_status"
+    t.text "message"
+    t.datetime "occurred_at", null: false
+    t.integer "offer_id", null: false
+    t.string "to_status"
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_offer_events_on_admin_id"
+    t.index ["offer_id"], name: "index_offer_events_on_offer_id"
+  end
+
+  create_table "offers", force: :cascade do |t|
+    t.integer "admin_id"
+    t.integer "amount", null: false
+    t.string "buyer_email", null: false
+    t.string "buyer_name", null: false
+    t.string "buyer_phone", null: false
+    t.string "chain_position"
+    t.datetime "created_at", null: false
+    t.datetime "decision_made_at"
+    t.text "internal_notes"
+    t.text "notes"
+    t.integer "property_id", null: false
+    t.string "public_reference", null: false
+    t.string "status", default: "received", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_offers_on_admin_id"
+    t.index ["property_id"], name: "index_offers_on_property_id"
+    t.index ["public_reference"], name: "index_offers_on_public_reference", unique: true
+    t.index ["status"], name: "index_offers_on_status"
+  end
+
   create_table "photos", force: :cascade do |t|
     t.string "caption"
     t.datetime "created_at", precision: nil
@@ -207,6 +242,43 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_173000) do
     t.index ["user_id"], name: "index_properties_on_user_id"
   end
 
+  create_table "rental_application_events", force: :cascade do |t|
+    t.integer "admin_id"
+    t.datetime "created_at", null: false
+    t.string "event_type", null: false
+    t.string "from_status"
+    t.text "message"
+    t.datetime "occurred_at", null: false
+    t.integer "rental_application_id", null: false
+    t.string "to_status"
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_rental_application_events_on_admin_id"
+    t.index ["rental_application_id"], name: "index_rental_application_events_on_rental_application_id"
+  end
+
+  create_table "rental_applications", force: :cascade do |t|
+    t.integer "admin_id"
+    t.text "affordability_notes"
+    t.string "applicant_email", null: false
+    t.string "applicant_name", null: false
+    t.string "applicant_phone", null: false
+    t.datetime "created_at", null: false
+    t.datetime "decision_made_at"
+    t.boolean "guarantor_available", default: false, null: false
+    t.boolean "guarantor_required", default: false, null: false
+    t.text "internal_notes"
+    t.date "move_in_date", null: false
+    t.text "notes"
+    t.integer "property_id", null: false
+    t.string "public_reference", null: false
+    t.string "status", default: "received", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_rental_applications_on_admin_id"
+    t.index ["property_id"], name: "index_rental_applications_on_property_id"
+    t.index ["public_reference"], name: "index_rental_applications_on_public_reference", unique: true
+    t.index ["status"], name: "index_rental_applications_on_status"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "confirmation_sent_at", precision: nil
     t.string "confirmation_token"
@@ -255,4 +327,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_173000) do
   add_foreign_key "enquiries", "properties"
   add_foreign_key "notification_logs", "appointments"
   add_foreign_key "notification_logs", "enquiries"
+  add_foreign_key "offer_events", "admins"
+  add_foreign_key "offer_events", "offers"
+  add_foreign_key "offers", "admins"
+  add_foreign_key "offers", "properties"
+  add_foreign_key "rental_application_events", "admins"
+  add_foreign_key "rental_application_events", "rental_applications"
+  add_foreign_key "rental_applications", "admins"
+  add_foreign_key "rental_applications", "properties"
 end

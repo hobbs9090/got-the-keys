@@ -48,6 +48,31 @@ RSpec.describe DemoData::ScenarioExporter do
       message: "Please send the brochure and let me know whether there is loft storage above the second floor."
     )
   end
+  let!(:offer) do
+    FactoryBot.create(
+      :offer,
+      property:,
+      admin:,
+      buyer_name: "Alex Cole",
+      buyer_email: "alex.cole@example.com",
+      buyer_phone: "07700 900888",
+      amount: 640_000,
+      status: "accepted"
+    )
+  end
+  let!(:rental_application) do
+    rental_property = FactoryBot.create(:property, :for_rent, user:, address_line_1: "9 Fern Court")
+    FactoryBot.create(
+      :rental_application,
+      property: rental_property,
+      admin:,
+      applicant_name: "Sara Young",
+      applicant_email: "sara.young@example.com",
+      applicant_phone: "07700 900999",
+      move_in_date: Date.new(2026, 4, 20),
+      status: "approved"
+    )
+  end
 
   around do |example|
     travel_to(Time.zone.local(2026, 4, 5, 9, 0)) { example.run }
@@ -74,7 +99,7 @@ RSpec.describe DemoData::ScenarioExporter do
       "owner_email" => "owner@example.com",
       "listing_tagline" => "Light-filled family house",
       "featured" => false,
-      "listing_state" => "published"
+      "listing_state" => "under_offer"
     )
 
     expect(payload["photos"]).to include(
@@ -102,6 +127,21 @@ RSpec.describe DemoData::ScenarioExporter do
         "customer_email" => "dara@example.com",
         "source_type" => "brochure_request",
         "status" => "new"
+      )
+    )
+    expect(payload["offers"]).to include(
+      include(
+        "property_key" => property_payload.fetch("key"),
+        "assigned_admin_email" => "ops@gotthekeys.com",
+        "buyer_email" => "alex.cole@example.com",
+        "status" => "accepted"
+      )
+    )
+    expect(payload["rental_applications"]).to include(
+      include(
+        "assigned_admin_email" => "ops@gotthekeys.com",
+        "applicant_email" => "sara.young@example.com",
+        "status" => "approved"
       )
     )
   end

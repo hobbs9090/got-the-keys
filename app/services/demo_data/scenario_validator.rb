@@ -40,6 +40,16 @@ module DemoData
         property_index:,
         admin_emails:
       )
+      offers = normalize_offers(
+        Array(scenario[:offers]),
+        property_index:,
+        admin_emails:
+      )
+      rental_applications = normalize_rental_applications(
+        Array(scenario[:rental_applications]),
+        property_index:,
+        admin_emails:
+      )
 
       {
         key: scenario.fetch(:key),
@@ -53,7 +63,9 @@ module DemoData
         floor_plans:,
         availability_windows:,
         appointments:,
-        enquiries:
+        enquiries:,
+        offers:,
+        rental_applications:
       }
     end
 
@@ -73,7 +85,11 @@ module DemoData
         appointment_count: normalized.fetch(:appointments).count,
         appointment_statuses: normalized.fetch(:appointments).group_by { |appointment| appointment.fetch(:status) }.transform_values(&:count),
         enquiry_count: normalized.fetch(:enquiries).count,
-        enquiry_statuses: normalized.fetch(:enquiries).group_by { |enquiry| enquiry.fetch(:status) }.transform_values(&:count)
+        enquiry_statuses: normalized.fetch(:enquiries).group_by { |enquiry| enquiry.fetch(:status) }.transform_values(&:count),
+        offer_count: normalized.fetch(:offers).count,
+        offer_statuses: normalized.fetch(:offers).group_by { |offer| offer.fetch(:status) }.transform_values(&:count),
+        rental_application_count: normalized.fetch(:rental_applications).count,
+        rental_application_statuses: normalized.fetch(:rental_applications).group_by { |application| application.fetch(:status) }.transform_values(&:count)
       }
     end
 
@@ -275,6 +291,64 @@ module DemoData
           spam: ActiveModel::Type::Boolean.new.cast(enquiry.fetch(:spam, false)),
           spam_reason: enquiry[:spam_reason],
           allow_invalid: ActiveModel::Type::Boolean.new.cast(enquiry.fetch(:allow_invalid, false))
+        }
+      end
+    end
+
+    def normalize_offers(offers, property_index:, admin_emails:)
+      offers.map do |offer|
+        property_key = offer.fetch(:property_key)
+        raise ValidationError, "Offer references unknown property key #{property_key}" unless property_index.key?(property_key)
+
+        assigned_admin_email = offer[:assigned_admin_email]
+        if assigned_admin_email.present? && !admin_emails.include?(assigned_admin_email)
+          raise ValidationError, "Offer references unknown admin email #{assigned_admin_email}"
+        end
+
+        status = offer.fetch(:status, "received")
+        raise ValidationError, "Unsupported offer status #{status.inspect}" unless Offer::STATUSES.include?(status)
+
+        {
+          property_key:,
+          assigned_admin_email:,
+          buyer_name: offer.fetch(:buyer_name),
+          buyer_email: offer.fetch(:buyer_email),
+          buyer_phone: offer.fetch(:buyer_phone),
+          amount: Integer(offer.fetch(:amount)),
+          status:,
+          chain_position: offer[:chain_position],
+          notes: offer[:notes],
+          internal_notes: offer[:internal_notes]
+        }
+      end
+    end
+
+    def normalize_rental_applications(applications, property_index:, admin_emails:)
+      applications.map do |application|
+        property_key = application.fetch(:property_key)
+        raise ValidationError, "Rental application references unknown property key #{property_key}" unless property_index.key?(property_key)
+
+        assigned_admin_email = application[:assigned_admin_email]
+        if assigned_admin_email.present? && !admin_emails.include?(assigned_admin_email)
+          raise ValidationError, "Rental application references unknown admin email #{assigned_admin_email}"
+        end
+
+        status = application.fetch(:status, "received")
+        raise ValidationError, "Unsupported rental application status #{status.inspect}" unless RentalApplication::STATUSES.include?(status)
+
+        {
+          property_key:,
+          assigned_admin_email:,
+          applicant_name: application.fetch(:applicant_name),
+          applicant_email: application.fetch(:applicant_email),
+          applicant_phone: application.fetch(:applicant_phone),
+          move_in_date: Date.parse(application.fetch(:move_in_date).to_s),
+          status:,
+          guarantor_required: ActiveModel::Type::Boolean.new.cast(application.fetch(:guarantor_required, false)),
+          guarantor_available: ActiveModel::Type::Boolean.new.cast(application.fetch(:guarantor_available, false)),
+          affordability_notes: application[:affordability_notes],
+          notes: application[:notes],
+          internal_notes: application[:internal_notes]
         }
       end
     end

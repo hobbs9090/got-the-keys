@@ -57,4 +57,20 @@ RSpec.describe "Admin-protected pages", type: :request do
       expect(response.body).to include("Inbox Lead")
     end
   end
+
+  describe "GET /admin/offers" do
+    it "redirects guests to the admin sign-in page" do
+      get admin_offers_path
+
+      expect(response).to redirect_to(new_admin_session_path)
+    end
+  end
+
+  describe "GET /admin/rental_applications" do
+    it "redirects guests to the admin sign-in page" do
+      get admin_rental_applications_path
+
+      expect(response).to redirect_to(new_admin_session_path)
+    end
+  end
 end
