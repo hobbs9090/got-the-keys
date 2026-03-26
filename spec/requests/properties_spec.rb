@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe "Properties" do
-  let!(:user) { User.create!(user_attributes(email: 'request-user@example.com')) }
-  let!(:property) { user.properties.create!(property_attributes) }
+  let!(:user) { FactoryBot.create(:user, email: "request-user@example.com") }
+  let!(:property) { FactoryBot.create(:property, user:) }
 
   describe "GET /properties" do
     it "should retrieve page" do
@@ -17,12 +17,12 @@ describe "Properties" do
 
     it "renders a full first page of 12 property cards" do
       12.times do |index|
-        user.properties.create!(
-          property_attributes(
-            address_line_1: "Request Street #{index + 2}",
-            postcode: format("RG1 %<n>1AA", n: index + 2),
-            listing_tagline: "Listing #{index + 2}"
-          )
+        FactoryBot.create(
+          :property,
+          user:,
+          address_line_1: "Request Street #{index + 2}",
+          postcode: format("RG1 %<n>1AA", n: index + 2),
+          listing_tagline: "Listing #{index + 2}"
         )
       end
 
@@ -31,6 +31,38 @@ describe "Properties" do
       expect(response).to have_http_status(:ok)
       expect(response.body.scan(%(data-testid="property-card")).count).to eq(12)
       expect(response.body).to include(%(href="/properties?page=2"))
+    end
+
+    it "applies catalogue filters to the listing results" do
+      matching = FactoryBot.create(
+        :property,
+        user:,
+        address_line_1: "Filtered House",
+        town_city: "Sevenoaks",
+        bedrooms: 4,
+        asking_price: 650_000,
+        sale_status: Property::SALE_STATUSES[:for_sale]
+      )
+      FactoryBot.create(
+        :property,
+        :for_rent,
+        user:,
+        address_line_1: "Excluded Rental",
+        town_city: "Sevenoaks",
+        bedrooms: 4,
+        asking_price: 2_500
+      )
+
+      get properties_path, params: {
+        sale_status: Property::SALE_STATUSES[:for_sale],
+        town_city: "Sevenoaks",
+        min_bedrooms: 4,
+        min_price: 600_000
+      }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(matching.address_line_1)
+      expect(response.body).not_to include("Excluded Rental")
     end
   end
 

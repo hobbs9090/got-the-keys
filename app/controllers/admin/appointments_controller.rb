@@ -3,18 +3,13 @@ class Admin::AppointmentsController < Admin::BaseController
   before_action :load_filters, only: :index
 
   def index
-    @view_mode = params[:view].presence_in(%w[agenda day week month]) || "agenda"
-    @anchor_date = parse_date(params[:date]) || Date.current
-    scope = Appointment.includes(:property, :admin).recent_first
-    scope = scope.where(property_id: params[:property_id]) if params[:property_id].present?
-    scope = scope.where(status: params[:status]) if params[:status].present?
-    scope = scope.where(admin_id: params[:admin_id]) if params[:admin_id].present?
-    scope = scope.where("lower(customer_email) = ?", params[:customer_email].to_s.downcase) if params[:customer_email].present?
-    scope = scope.where(scheduled_at: appointment_range) if appointment_range.present?
+    listing = Admin::AppointmentIndexQuery.new(params:).call
 
-    @appointments = scope.order(:scheduled_at, :created_at)
-    @appointments_by_day = @appointments.group_by { |appointment| appointment.scheduled_at.to_date }
-    @calendar_days = calendar_days_for(@view_mode, @anchor_date)
+    @view_mode = listing.view_mode
+    @anchor_date = listing.anchor_date
+    @appointments = listing.appointments
+    @appointments_by_day = listing.appointments_by_day
+    @calendar_days = listing.calendar_days
   end
 
   def show
@@ -69,43 +64,5 @@ class Admin::AppointmentsController < Admin::BaseController
 
   def appointment_params
     params.require(:appointment).permit(:customer_name, :customer_email, :customer_phone, :requested_time, :scheduled_at, :duration_minutes, :status, :notes, :internal_notes)
-  end
-
-  def appointment_range
-    if params[:from].present? || params[:to].present?
-      from = parse_date(params[:from]) || Date.current
-      to = parse_date(params[:to]) || from
-      from.beginning_of_day..to.end_of_day
-    else
-      case params[:view]
-      when "day"
-        @anchor_date.beginning_of_day..@anchor_date.end_of_day
-      when "week"
-        @anchor_date.beginning_of_week.beginning_of_day..@anchor_date.end_of_week.end_of_day
-      when "month"
-        @anchor_date.beginning_of_month.beginning_of_week.beginning_of_day..@anchor_date.end_of_month.end_of_week.end_of_day
-      else
-        Date.current.beginning_of_day..(Date.current + 14.days).end_of_day
-      end
-    end
-  end
-
-  def calendar_days_for(view_mode, anchor_date)
-    case view_mode
-    when "day"
-      [anchor_date]
-    when "week"
-      (anchor_date.beginning_of_week..anchor_date.end_of_week).to_a
-    when "month"
-      (anchor_date.beginning_of_month.beginning_of_week..anchor_date.end_of_month.end_of_week).to_a
-    else
-      []
-    end
-  end
-
-  def parse_date(value)
-    Date.parse(value.to_s)
-  rescue ArgumentError, TypeError
-    nil
   end
 end

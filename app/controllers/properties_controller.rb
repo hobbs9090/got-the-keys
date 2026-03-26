@@ -6,10 +6,12 @@ class PropertiesController < ApplicationController
   before_action :authorize_property_owner!, only: [:edit, :update, :destroy]
 
   def index
-    @filters = property_filter_params
-    @properties = Property.filter(@filters).page(params[:page])
-    @available_towns = Property.order(:town_city).distinct.pluck(:town_city)
-    @total_properties = @properties.total_count
+    catalogue = PropertyCatalogueQuery.new(params:).call
+
+    @filters = catalogue.filters
+    @properties = catalogue.properties
+    @available_towns = catalogue.available_towns
+    @total_properties = catalogue.total_count
     @catalogue_totals = {
       all: Property.cached_all_properties_total,
       for_sale: Property.cached_for_sale_total,
@@ -58,10 +60,6 @@ class PropertiesController < ApplicationController
 
   def set_property
     super
-  end
-
-  def property_filter_params
-    params.permit(:q, :sale_status, :min_bedrooms, :min_price, :max_price, :town_city, :sort)
   end
 
 end

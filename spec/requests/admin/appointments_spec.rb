@@ -3,19 +3,7 @@ require "rails_helper"
 RSpec.describe "Admin appointments" do
   let(:admin) { FactoryBot.create(:admin, email: "steven@gotthekeys.com", password: "changeme", password_confirmation: "changeme") }
   let(:user) { FactoryBot.create(:user) }
-  let(:property) { user.properties.create!(property_attributes(address_line_1: "9 Park Lane")) }
-
-  def next_open_slot(hour: 10)
-    configuration = BookingConfiguration.current
-    date = Date.current
-
-    loop do
-      candidate = Time.zone.local(date.year, date.month, date.day, hour, 0)
-      return candidate if configuration.open_on?(date) && candidate > Time.current + configuration.lead_time_hours.hours
-
-      date += 1.day
-    end
-  end
+  let(:property) { FactoryBot.create(:property, user:, address_line_1: "9 Park Lane") }
 
   before do
     sign_in admin
@@ -37,8 +25,10 @@ RSpec.describe "Admin appointments" do
   end
 
   it "allows an admin to confirm a pending appointment" do
-    slot = next_open_slot
-    appointment = property.appointments.create!(
+    slot = next_booking_slot
+    appointment = FactoryBot.create(
+      :appointment,
+      property:,
       customer_name: "Priya Shah",
       customer_email: "priya.shah@example.com",
       customer_phone: "07700 930007",
@@ -56,8 +46,10 @@ RSpec.describe "Admin appointments" do
 
   it "renders the appointment detail page in the admin's locale" do
     admin.update!(language: "de")
-    slot = next_open_slot(hour: 11)
-    appointment = property.appointments.create!(
+    slot = next_booking_slot(hour: 11)
+    appointment = FactoryBot.create(
+      :appointment,
+      property:,
       customer_name: "Maya Singh",
       customer_email: "maya.singh@example.com",
       customer_phone: "07700 930008",
@@ -72,5 +64,34 @@ RSpec.describe "Admin appointments" do
     expect(response.body).to include("Termindetails")
     expect(response.body).to include("Zusammenfassung")
     expect(response.body).to include("Kundenhistorie")
+  end
+
+  it "filters the bookings desk by status and customer email" do
+    matching_slot = next_booking_slot(hour: 12)
+    matching = FactoryBot.create(
+      :appointment,
+      :confirmed,
+      property:,
+      customer_name: "Filtered Match",
+      customer_email: "filtered.match@example.com",
+      requested_time: matching_slot,
+      scheduled_at: matching_slot
+    )
+    other_slot = next_booking_slot(hour: 14)
+    FactoryBot.create(
+      :appointment,
+      :pending,
+      property:,
+      customer_name: "Other Viewer",
+      customer_email: "other.viewer@example.com",
+      requested_time: other_slot,
+      scheduled_at: other_slot
+    )
+
+    get admin_bookings_path, params: { status: "confirmed", customer_email: "FILTERED.MATCH@example.com" }
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include(matching.customer_name)
+    expect(response.body).not_to include("Other Viewer")
   end
 end
