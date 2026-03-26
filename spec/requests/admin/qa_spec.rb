@@ -37,7 +37,7 @@ RSpec.describe "Admin QA guide" do
     version_box = document.at_css(%([data-testid="qa-version-box"]))
 
     expect(version_box).to be_present
-    expect(version_box.at_css(%([data-testid="qa-app-version"])).text).to eq("v2.4.0")
+    expect(version_box.at_css(%([data-testid="qa-app-version"])).text).to eq("v2.4.0+abc1234.42")
     expect(version_box.at_css(%([data-testid="qa-git-sha"])).text).to eq("abc1234")
     expect(version_box.at_css(%([data-testid="qa-build-number"])).text).to eq("42")
   end

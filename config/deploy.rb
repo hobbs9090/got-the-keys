@@ -1,5 +1,7 @@
 require "json"
+require "time"
 require "stringio"
+require_relative "../lib/release_build_metadata"
 
 # config valid only for current version of Capistrano
 lock '3.20.0'
@@ -55,19 +57,22 @@ namespace :deploy do
   desc "Writes deploy build metadata for runtime diagnostics"
   task :write_build_metadata do
     on roles(:app) do
-      build_metadata = {
-        build_sha: ENV["APP_BUILD_SHA"],
-        build_number: ENV["APP_BUILD_NUMBER"]
-      }.reject { |_key, value| value.nil? || value.empty? }
-
       build_info_path = shared_path.join("storage", "build_info.json")
       execute :mkdir, "-p", shared_path.join("storage")
-
-      if build_metadata.empty?
-        execute :rm, "-f", build_info_path
-      else
-        upload! StringIO.new(JSON.pretty_generate(build_metadata)), build_info_path
+      previous_metadata = begin
+        test("[ -f #{build_info_path} ]") ? JSON.parse(capture(:cat, build_info_path)) : {}
+      rescue JSON::ParserError
+        {}
       end
+      build_metadata = ReleaseBuildMetadata.payload(
+        previous_metadata: previous_metadata,
+        current_revision: fetch(:current_revision),
+        requested_build_sha: ENV["APP_BUILD_SHA"],
+        requested_build_number: ENV["APP_BUILD_NUMBER"],
+        deployed_at: Time.now.utc.iso8601
+      )
+
+      upload! StringIO.new(JSON.pretty_generate(build_metadata)), build_info_path
     end
   end
 

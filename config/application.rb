@@ -1,4 +1,5 @@
 require_relative 'boot'
+require_relative '../lib/release_build_metadata'
 
 require 'rails/all'
 require 'json'
@@ -13,7 +14,7 @@ module GotTheKeys
     version_path = root.join("VERSION")
     build_info_path = root.join("storage", "build_info.json")
     semantic_version = ENV["APP_VERSION"].presence || version_path.read.strip.presence
-    build_metadata = build_info_path.exist? ? JSON.parse(build_info_path.read) : {}
+    build_metadata = ReleaseBuildMetadata.load(build_info_path)
     raise "VERSION file must contain a semantic version" if semantic_version.blank?
 
     config.i18n.available_locales = %i[en zh de fr it]
