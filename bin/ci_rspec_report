@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require "fileutils"
 require "json"
 require "time"
 
@@ -45,6 +46,8 @@ end
 def markdown_table_row(label, value)
   "| #{label} | #{value} |"
 end
+
+FileUtils.mkdir_p(File.dirname(markdown_path))
 
 markdown_lines = ["# RSpec Test Report", ""]
 
