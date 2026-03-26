@@ -4,6 +4,7 @@ class PropertiesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_property, only: [:show, :edit, :update, :destroy]
   before_action :authorize_property_owner!, only: [:edit, :update, :destroy]
+  before_action :ensure_property_is_visible!, only: :show
 
   def index
     catalogue = PropertyCatalogueQuery.new(params:).call
@@ -35,11 +36,11 @@ class PropertiesController < ApplicationController
   end
 
   def new
-    @property = current_user.properties.new
+    @property = current_user.properties.new(listing_state: "draft")
   end
 
   def create
-    @property = current_user.properties.new(property_params)
+    @property = current_user.properties.new(property_params.reverse_merge(listing_state: "draft"))
     if @property.save
       redirect_to @property, notice: t(:successfully_created)
     else
@@ -55,11 +56,26 @@ class PropertiesController < ApplicationController
   private
 
   def property_params
-    params.require(:property).permit(:address_line_1, :address_line_2, :town_city, :county, :postcode, :country, :property_description, :bedrooms, :bathrooms, :property_type, :listing_tagline, :image_file_name, :sale_status, :asking_price, :featured)
+    params.require(:property).permit(
+      :address_line_1, :address_line_2, :town_city, :county, :postcode, :country,
+      :property_description, :bedrooms, :bathrooms, :property_type, :listing_tagline,
+      :image_file_name, :sale_status, :asking_price, :featured, :listing_state, :tenure,
+      :council_tax_band, :furnishing, :available_from, :parking, :outdoor_space,
+      :epc_rating, :floor_area_sq_ft, :deposit_amount, :pets_allowed, :service_charge_amount,
+      :lease_length_years
+    )
   end
 
   def set_property
     super
+  end
+
+  def ensure_property_is_visible!
+    return if @property.publicly_visible?
+    return if current_admin.present?
+    return if current_user == @property.user
+
+    redirect_to properties_path, alert: "This listing is not currently public."
   end
 
 end

@@ -2,16 +2,59 @@ class PhotosController < ApplicationController
   include PropertyScoped
 
   before_action :set_property
-  before_action :authenticate_user!, only: [:new]
-  before_action :authorize_property_owner!, only: [:new]
+  before_action :authenticate_user!, except: [:index]
+  before_action :authorize_property_owner!, except: [:index]
+  before_action :set_photo, only: [:update, :destroy]
 
   def index
-    @photos = @property.photos
+    @photos = @property.photos.ordered
+    @new_photo = @property.photos.new(position: next_position)
   end
 
   def new
-    @photos = @property.photos.new
+    redirect_to property_photos_path(@property)
+  end
+
+  def create
+    @photos = @property.photos.ordered
+    @new_photo = @property.photos.new(photo_params)
+    @new_photo.primary = true if @property.photos.none?
+
+    if @new_photo.save
+      redirect_to property_photos_path(@property), notice: "Photo added."
+    else
+      render :index, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    @photos = @property.photos.ordered
+    @new_photo = @property.photos.new(position: next_position)
+    @edited_photo = @photo
+
+    if @photo.update(photo_params)
+      redirect_to property_photos_path(@property), notice: "Photo updated."
+    else
+      render :index, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @photo.destroy
+    redirect_to property_photos_path(@property), notice: "Photo removed."
   end
 
   private
+
+  def set_photo
+    @photo = @property.photos.find(params[:id])
+  end
+
+  def photo_params
+    params.require(:photo).permit(:image_filename, :caption, :position, :primary)
+  end
+
+  def next_position
+    @property.photos.maximum(:position).to_i + 1
+  end
 end

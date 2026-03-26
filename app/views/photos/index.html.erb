@@ -1,15 +1,86 @@
-<% title "#{@property.address_line_1} - #{t('photos.title')}" %>
+<% title "#{@property.address_line_1} photos" %>
 
-<div class="row">
-
-  <div class="large-9 columns" role="content">
-
-    <h4><%= t('photos.photos_of') %> <%= link_to(@property.address_line_1, @property) %></h4>
-
-    <%= render "shared/under_construction" %>
-
+<section class="page-hero">
+  <div>
+    <p class="page-hero__eyebrow">Listing assets</p>
+    <h1>Manage photos</h1>
+    <p>Set a primary image, keep the ordering tidy, and add brochure-ready captions for this listing.</p>
   </div>
+</section>
 
-  <%= render "properties/property_sidebar" %>
+<section class="page-section">
+  <article class="property-panel">
+    <h2>Add a photo</h2>
+    <%= render "shared/errors", object: @new_photo %>
 
-</div>
+    <%= form_with model: [@property, @new_photo] do |f| %>
+      <div class="form-grid">
+        <div>
+          <%= f.label :image_filename, "Image filename" %>
+          <%= f.text_field :image_filename, placeholder: "hero_family_home.jpg" %>
+        </div>
+        <div>
+          <%= f.label :caption, "Caption" %>
+          <%= f.text_field :caption, placeholder: "Kitchen diner at dusk" %>
+        </div>
+        <div>
+          <%= f.label :position, "Display order" %>
+          <%= f.number_field :position, min: 0, step: 1 %>
+        </div>
+        <div class="form-grid__checkbox">
+          <%= f.check_box :primary %>
+          <%= f.label :primary, "Use as primary image", class: "checkbox-label" %>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <%= f.submit "Add photo", class: "button primary", data: { testid: "add-photo-button" } %>
+        <%= link_to "Back to listing", edit_property_path(@property), class: "button hollow secondary" %>
+      </div>
+    <% end %>
+  </article>
+
+  <article class="property-panel">
+    <h2>Current photos</h2>
+    <% if @photos.any? %>
+      <div class="admin-list">
+        <% @photos.each do |photo| %>
+          <% photo_form = photo == @edited_photo ? @edited_photo : photo %>
+          <div class="admin-list__item">
+            <div class="property-panel">
+              <%= form_with model: [@property, photo_form], method: :patch do |f| %>
+                <div class="form-grid">
+                  <div>
+                    <%= f.label :image_filename, "Image filename" %>
+                    <%= f.text_field :image_filename %>
+                  </div>
+                  <div>
+                    <%= f.label :caption, "Caption" %>
+                    <%= f.text_field :caption %>
+                  </div>
+                  <div>
+                    <%= f.label :position, "Display order" %>
+                    <%= f.number_field :position, min: 0, step: 1 %>
+                  </div>
+                  <div class="form-grid__checkbox">
+                    <%= f.check_box :primary %>
+                    <%= f.label :primary, "Primary image", class: "checkbox-label" %>
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <%= f.submit "Save", class: "button primary hollow" %>
+                  <%= link_to "Remove",
+                              property_photo_path(@property, photo),
+                              class: "button alert hollow",
+                              data: { turbo_method: :delete, turbo_confirm: "Remove this photo?" } %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="empty-copy">No photos have been added yet.</p>
+    <% end %>
+  </article>
+</section>

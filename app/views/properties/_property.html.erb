@@ -7,6 +7,9 @@
         <div class="property-card__media">
           <%= small_image_for(property) %>
           <span class="badge <%= property.sale_status == Property::SALE_STATUSES[:for_sale] ? 'badge--accent' : 'badge--success' %>"><%= translated_sale_status(property.sale_status) %></span>
+          <% unless property.listing_state == "published" %>
+            <span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span>
+          <% end %>
         </div>
 
         <div class="property-card__body">
@@ -26,6 +29,11 @@
 
           <p class="property-card__headline"><%= property.headline %></p>
           <p class="property-card__description"><%= truncate(property.property_description, length: 130, separator: " ") %></p>
+          <% if property.available_now? %>
+            <p class="property-card__availability"><strong>Available now</strong></p>
+          <% elsif property.available_from.present? %>
+            <p class="property-card__availability">Available from <%= l(property.available_from, format: :long) %></p>
+          <% end %>
 
           <dl class="property-card__meta">
             <div>
@@ -40,6 +48,12 @@
               <dt><%= t("ui.common.town") %></dt>
               <dd><%= property.town_city %></dd>
             </div>
+            <% if property.floor_area_sq_ft.present? %>
+              <div>
+                <dt>Area</dt>
+                <dd><%= property.floor_area_sq_ft %> sq ft</dd>
+              </div>
+            <% end %>
           </dl>
         </div>
 

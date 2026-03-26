@@ -68,6 +68,8 @@ module DemoData
         admins = create_admins(payload.fetch(:admins))
         users = create_users(payload.fetch(:users))
         properties = create_properties(payload.fetch(:properties), users:)
+        create_photos(payload.fetch(:photos), properties:)
+        create_floor_plans(payload.fetch(:floor_plans), properties:)
         create_availability_windows(payload.fetch(:availability_windows), properties:)
         create_appointments(payload.fetch(:appointments), properties:, admins:)
 
@@ -77,6 +79,8 @@ module DemoData
           admin_count: admins.size,
           user_count: users.size,
           property_count: properties.size,
+          photo_count: Photo.count,
+          floor_plan_count: FloorPlan.count,
           appointment_count: Appointment.count,
           active_demo_scenario_key: configuration.active_demo_scenario_key
         }
@@ -133,6 +137,22 @@ module DemoData
     def create_availability_windows(window_specs, properties:)
       window_specs.each do |attributes|
         properties.fetch(attributes.fetch(:property_key)).availability_windows.create!(
+          attributes.except(:property_key)
+        )
+      end
+    end
+
+    def create_photos(photo_specs, properties:)
+      photo_specs.each do |attributes|
+        properties.fetch(attributes.fetch(:property_key)).photos.create!(
+          attributes.except(:property_key)
+        )
+      end
+    end
+
+    def create_floor_plans(floor_plan_specs, properties:)
+      floor_plan_specs.each do |attributes|
+        properties.fetch(attributes.fetch(:property_key)).floor_plans.create!(
           attributes.except(:property_key)
         )
       end

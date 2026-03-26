@@ -4,6 +4,7 @@
   <div class="property-hero__content">
     <div class="property-hero__labels">
       <span class="badge <%= @property.sale_status == Property::SALE_STATUSES[:for_sale] ? 'badge--accent' : 'badge--success' %>"><%= translated_sale_status(@property.sale_status) %></span>
+      <span class="<%= listing_state_badge_class(@property.listing_state) %>"><%= translated_listing_state(@property.listing_state) %></span>
       <% if @property.featured? %>
         <span class="badge badge--warning"><%= t("ui.common.featured") %></span>
       <% end %>
@@ -33,6 +34,12 @@
         <dt><%= t("ui.common.postcode") %></dt>
         <dd><%= @property.postcode %></dd>
       </div>
+      <% if @property.available_from.present? %>
+        <div>
+          <dt>Available from</dt>
+          <dd><%= l(@property.available_from, format: :long) %></dd>
+        </div>
+      <% end %>
     </dl>
   </div>
 
@@ -46,10 +53,39 @@
     <h2><%= t("ui.common.overview") %></h2>
     <p><%= @property.property_description %></p>
 
+    <% if property_fact_rows(@property).any? %>
+      <div class="property-address">
+        <h3>Key facts</h3>
+        <dl class="detail-list">
+          <% property_fact_rows(@property).each do |label, value| %>
+            <div>
+              <dt><%= label %></dt>
+              <dd><%= value %></dd>
+            </div>
+          <% end %>
+        </dl>
+      </div>
+    <% end %>
+
     <div class="property-address">
       <h3><%= t("ui.common.address") %></h3>
       <p><%= [@property.address_line_1, @property.address_line_2, @property.town_city, @property.county, @property.postcode, @property.country].reject(&:blank?).join(", ") %></p>
     </div>
+
+    <% brochure_assets = @property.ordered_photos.limit(6) %>
+    <% if brochure_assets.any? || @property.ordered_floor_plans.any? %>
+      <div class="property-address">
+        <h3>Brochure assets</h3>
+        <ul class="detail-inline-list">
+          <% brochure_assets.each do |photo| %>
+            <li><strong><%= photo.primary? ? "Primary image" : "Photo" %></strong>: <%= photo.image_filename %></li>
+          <% end %>
+          <% @property.ordered_floor_plans.each do |floor_plan| %>
+            <li><strong>Floor plan</strong>: <%= floor_plan.label.presence || floor_plan.floor_plans %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
   </article>
 
   <aside class="property-booking-panel" data-testid="booking-panel">
@@ -76,3 +112,24 @@
     <% end %>
   </aside>
 </section>
+
+<% if current_user == @property.user %>
+  <section class="property-layout">
+    <article class="property-panel" data-testid="seller-listing-workspace">
+      <h2>Seller workspace</h2>
+      <p><strong><%= @property.listing_completeness_percentage %>% complete</strong> · <%= @property.listing_completeness_score %>/<%= @property.listing_completeness_checks.size %> readiness checks done</p>
+      <ul class="detail-inline-list" data-testid="seller-listing-checklist">
+        <% @property.listing_completeness_checks.each do |check| %>
+          <li class="<%= check[:complete] ? 'text-success' : 'text-danger' %>">
+            <strong><%= check[:complete] ? "Done" : "Needed" %></strong>: <%= check[:label] %>
+          </li>
+        <% end %>
+      </ul>
+      <div class="section-heading__actions">
+        <%= link_to "Edit listing", edit_property_path(@property), class: "button primary" %>
+        <%= link_to "Manage photos", property_photos_path(@property), class: "button hollow secondary", data: { testid: "manage-photos-link" } %>
+        <%= link_to "Manage floor plans", property_floor_plans_path(@property), class: "button hollow secondary" %>
+      </div>
+    </article>
+  </section>
+<% end %>

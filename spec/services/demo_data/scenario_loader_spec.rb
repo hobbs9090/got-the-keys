@@ -10,10 +10,15 @@ RSpec.describe DemoData::ScenarioLoader do
   it "previews the bundled scenarios" do
     previews = loader.scenarios
     baseline = previews.find { |scenario| scenario[:key] == "baseline" }
+    lifecycle = previews.find { |scenario| scenario[:key] == "listing_lifecycle" }
 
-    expect(previews.map { |scenario| scenario[:key] }).to include("baseline", "fully_booked_day", "qa_edge_cases", "high_volume_search")
+    expect(previews.map { |scenario| scenario[:key] }).to include("baseline", "fully_booked_day", "qa_edge_cases", "high_volume_search", "listing_lifecycle")
     expect(baseline[:property_count]).to eq(4)
     expect(baseline[:appointment_count]).to eq(6)
+    expect(baseline[:photo_count]).to eq(3)
+    expect(lifecycle[:property_count]).to eq(5)
+    expect(lifecycle[:photo_count]).to eq(3)
+    expect(lifecycle[:floor_plan_count]).to eq(2)
   end
 
   it "applies a scenario and records the active key" do
@@ -24,6 +29,8 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(Admin.count).to eq(2)
     expect(User.count).to eq(4)
     expect(Property.count).to eq(4)
+    expect(Photo.count).to eq(3)
+    expect(FloorPlan.count).to eq(2)
     expect(Appointment.count).to eq(6)
     expect(User.pluck(:language).uniq).to eq(["en"])
     expect(User.order(:email).pluck(:email)).to match_array([
@@ -41,5 +48,7 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(exported).to include("Exported Snapshot")
     expect(exported).to include("baseline")
     expect(exported).to include("steven@gotthekeys.com")
+    expect(exported).to include("photos:")
+    expect(exported).to include("listing_state:")
   end
 end

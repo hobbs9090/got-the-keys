@@ -16,7 +16,9 @@ GotTheKeys::Application.routes.draw do
     resources :appointments, only: [:index, :show, :edit, :update] do
       patch :transition, on: :member
     end
-    resources :properties, only: [:index, :show, :edit, :update]
+    resources :properties, only: [:index, :show, :edit, :update] do
+      patch :transition, on: :member
+    end
     resources :users, only: [:index, :show]
     resources :notification_logs, only: :index
     resources :demo_scenarios, only: [:index, :show], path: 'demo-data' do
@@ -38,8 +40,8 @@ GotTheKeys::Application.routes.draw do
   resources :coffee, only: [:index]
 
   resources :properties do
-    resources :photos, only: [:index, :new]
-    resources :floor_plans, only: [:index, :new]
+    resources :photos, only: [:index, :new, :create, :update, :destroy]
+    resources :floor_plans, only: [:index, :new, :create, :update, :destroy]
     resources :viewing_times, only: [:index, :new, :create]
     resources :appointments, only: [:new, :create]
   end

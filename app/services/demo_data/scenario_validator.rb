@@ -26,6 +26,8 @@ module DemoData
         raise ValidationError, "Property #{property.fetch(:key)} references missing owner email #{property.fetch(:owner_email)}"
       end
 
+      photos = normalize_photos(Array(scenario[:photos]), property_index:)
+      floor_plans = normalize_floor_plans(Array(scenario[:floor_plans]), property_index:)
       availability_windows = normalize_availability_windows(Array(scenario[:availability_windows]), property_index:)
       appointments = normalize_appointments(
         Array(scenario[:appointments]),
@@ -42,6 +44,8 @@ module DemoData
         admins:,
         users:,
         properties:,
+        photos:,
+        floor_plans:,
         availability_windows:,
         appointments:
       }
@@ -57,6 +61,8 @@ module DemoData
         admin_count: normalized.fetch(:admins).count,
         user_count: normalized.fetch(:users).count,
         property_count: normalized.fetch(:properties).count,
+        photo_count: normalized.fetch(:photos).count,
+        floor_plan_count: normalized.fetch(:floor_plans).count,
         availability_window_count: normalized.fetch(:availability_windows).count,
         appointment_count: normalized.fetch(:appointments).count,
         appointment_statuses: normalized.fetch(:appointments).group_by { |appointment| appointment.fetch(:status) }.transform_values(&:count)
@@ -130,7 +136,49 @@ module DemoData
           listing_tagline: property[:listing_tagline],
           sale_status: property.fetch(:sale_status),
           asking_price: Integer(property.fetch(:asking_price)),
-          featured: ActiveModel::Type::Boolean.new.cast(property.fetch(:featured, false))
+          featured: ActiveModel::Type::Boolean.new.cast(property.fetch(:featured, false)),
+          listing_state: property.fetch(:listing_state, "published"),
+          tenure: property[:tenure],
+          council_tax_band: property[:council_tax_band],
+          furnishing: property[:furnishing],
+          available_from: property[:available_from],
+          parking: property[:parking],
+          outdoor_space: property[:outdoor_space],
+          epc_rating: property[:epc_rating],
+          floor_area_sq_ft: property[:floor_area_sq_ft].present? ? Integer(property[:floor_area_sq_ft]) : nil,
+          deposit_amount: property[:deposit_amount].present? ? Integer(property[:deposit_amount]) : nil,
+          pets_allowed: ActiveModel::Type::Boolean.new.cast(property.fetch(:pets_allowed, false)),
+          service_charge_amount: property[:service_charge_amount].present? ? Integer(property[:service_charge_amount]) : nil,
+          lease_length_years: property[:lease_length_years].present? ? Integer(property[:lease_length_years]) : nil
+        }
+      end
+    end
+
+    def normalize_photos(photos, property_index:)
+      photos.map do |photo|
+        property_key = photo.fetch(:property_key)
+        raise ValidationError, "Photo references unknown property key #{property_key}" unless property_index.key?(property_key)
+
+        {
+          property_key:,
+          image_filename: photo.fetch(:image_filename),
+          caption: photo[:caption],
+          position: Integer(photo.fetch(:position, 0)),
+          primary: ActiveModel::Type::Boolean.new.cast(photo.fetch(:primary, false))
+        }
+      end
+    end
+
+    def normalize_floor_plans(floor_plans, property_index:)
+      floor_plans.map do |floor_plan|
+        property_key = floor_plan.fetch(:property_key)
+        raise ValidationError, "Floor plan references unknown property key #{property_key}" unless property_index.key?(property_key)
+
+        {
+          property_key:,
+          floor_plans: floor_plan.fetch(:floor_plans),
+          label: floor_plan[:label],
+          position: Integer(floor_plan.fetch(:position, 0))
         }
       end
     end
