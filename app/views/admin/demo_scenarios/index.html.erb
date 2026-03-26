@@ -40,12 +40,17 @@
 </section>
 
 <% if @quick_reset_scenarios.any? %>
-  <section class="admin-panel" data-testid="scenario-quick-reset-panel">
+  <section class="admin-panel admin-demo-quick-reset" data-testid="scenario-quick-reset-panel">
     <h2>Quick reset packs</h2>
     <p>Use these one-click resets for the most common training sessions.</p>
-    <div class="admin-inline-actions">
+    <div class="admin-demo-quick-reset__grid" data-testid="scenario-quick-reset-grid">
       <% @quick_reset_scenarios.each do |scenario| %>
-        <%= button_to scenario.fetch(:name), apply_admin_demo_scenario_path(scenario.fetch(:key)), method: :post, class: "button hollow secondary", data: { testid: "quick-reset-#{scenario.fetch(:key).dasherize}" } %>
+        <%= button_to scenario.fetch(:name),
+                      apply_admin_demo_scenario_path(scenario.fetch(:key)),
+                      method: :post,
+                      class: "button hollow secondary admin-demo-quick-reset__button",
+                      form_class: "admin-demo-quick-reset__form",
+                      data: { testid: "quick-reset-#{scenario.fetch(:key).dasherize}" } %>
       <% end %>
     </div>
   </section>
@@ -63,17 +68,17 @@
 
   <section class="admin-grid">
     <% scenarios.each do |scenario| %>
-      <article class="admin-panel">
-        <div class="property-results-panel__head">
-          <div>
+      <article class="admin-panel admin-demo-scenario-card" data-testid="scenario-card-<%= scenario.fetch(:key).dasherize %>">
+        <div class="admin-demo-scenario-card__header">
+          <div class="admin-demo-scenario-card__intro">
             <h3><%= scenario.fetch(:name) %></h3>
             <p><%= scenario.fetch(:description) %></p>
           </div>
 
-          <span class="badge badge--neutral"><%= scenario.dig(:qa, :complexity).to_s.humanize %></span>
+          <span class="badge badge--neutral admin-demo-scenario-card__complexity" data-testid="scenario-complexity-<%= scenario.fetch(:key).dasherize %>"><%= scenario.dig(:qa, :complexity).to_s.humanize %></span>
         </div>
 
-        <ul class="detail-inline-list">
+        <ul class="detail-inline-list admin-demo-scenario-card__meta">
           <li><strong>Journey</strong>: <%= scenario.dig(:qa, :intended_journey) %></li>
           <li><strong>Risk</strong>: <%= scenario.dig(:qa, :risk_type).to_s.humanize %></li>
           <li><strong>Locales</strong>: <%= Array(scenario.dig(:qa, :locale_coverage)).join(", ") %></li>
@@ -88,7 +93,7 @@
           <p><strong>Trainer note:</strong> <%= scenario.dig(:qa, :trainer_notes).first %></p>
         <% end %>
 
-        <div class="admin-inline-actions">
+        <div class="admin-demo-scenario-card__actions" data-testid="scenario-actions-<%= scenario.fetch(:key).dasherize %>">
           <%= link_to t("ui.admin.demo_data.preview_action"), admin_demo_scenario_path(scenario.fetch(:key)), class: "button hollow secondary" %>
           <%= button_to t("ui.common.apply"), apply_admin_demo_scenario_path(scenario.fetch(:key)), method: :post, class: "button primary" %>
         </div>

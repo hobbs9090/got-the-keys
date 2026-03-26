@@ -1883,7 +1883,7 @@ a:focus {
 .property-grid {
   display: grid;
   gap: 1.35rem;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .property-card {
@@ -2072,6 +2072,31 @@ a:focus {
   margin: 2rem 0 0;
 }
 
+.property-booking-panel {
+  display: grid;
+  gap: 1rem;
+}
+
+.property-booking-panel > h2,
+.property-booking-panel > p {
+  margin-bottom: 0;
+}
+
+.property-booking-panel__support-card {
+  display: grid;
+  gap: 0.85rem;
+  padding: 1.45rem 1.5rem;
+}
+
+.property-booking-panel__support-card h3,
+.property-booking-panel__support-card p {
+  margin-bottom: 0;
+}
+
+.property-booking-panel__support-card .button {
+  margin-bottom: 0;
+}
+
 .slot-list,
 .timeline,
 .detail-inline-list {
@@ -2175,6 +2200,7 @@ a:focus {
 }
 
 .empty-state {
+  padding: 1.25rem;
   text-align: left;
 }
 
@@ -2380,6 +2406,10 @@ a:focus {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .property-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .contact-form-card {
     grid-template-columns: 1fr;
   }
@@ -2485,6 +2515,10 @@ a:focus {
   .property-filters,
   .admin-filter-form,
   .admin-calendar-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .property-grid {
     grid-template-columns: 1fr;
   }
 

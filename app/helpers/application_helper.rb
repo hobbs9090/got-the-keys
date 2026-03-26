@@ -69,6 +69,22 @@ module ApplicationHelper
     remembered_path
   end
 
+  def header_account_summary
+    if admin_signed_in?
+      {
+        eyebrow: t("ui.site_header.account_eyebrow", default: "Signed in"),
+        name: t("ui.site_header.admin_account_name", default: "Administrator"),
+        detail: current_admin.email
+      }
+    elsif user_signed_in?
+      {
+        eyebrow: t("ui.site_header.account_eyebrow", default: "Signed in"),
+        name: header_user_display_name(current_user),
+        detail: current_user.email
+      }
+    end
+  end
+
   def marketing_wordmark_tag(class_name: nil, alt: nil, decorative: false, variant: :default, **options)
     image_options = {
       alt: decorative ? "" : (alt.presence || t("gotthekeys.gotthekeys", default: "got the keys")),
@@ -140,6 +156,11 @@ module ApplicationHelper
 
   def field_error_id(object, attribute)
     "#{object.model_name.singular}_#{attribute}_error"
+  end
+
+  def header_user_display_name(user)
+    names = [user.first_name, user.last_name].filter_map { |value| value.to_s.strip.presence }.map(&:capitalize)
+    names.join(" ").presence || t("ui.site_header.member_account_name", default: "Seller account")
   end
 
 end
