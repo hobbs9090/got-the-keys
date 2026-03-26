@@ -16,10 +16,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
@@ -43,7 +43,21 @@ jobs:
         run: bundle exec rails db:prepare
 
       - name: Run RSpec
-        run: bundle exec rspec
+        run: bundle exec rspec --format progress --format json --out tmp/rspec-report.json
+
+      - name: Publish RSpec report summary
+        if: ${{ always() }}
+        run: ruby bin/ci_rspec_report tmp/rspec-report.json tmp/rspec-report.md
+
+      - name: Upload RSpec report artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: rspec-report
+          path: |
+            tmp/rspec-report.json
+            tmp/rspec-report.md
+          if-no-files-found: warn
 
       - name: Run Cucumber
         run: bundle exec cucumber

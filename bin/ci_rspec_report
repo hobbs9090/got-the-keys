@@ -1,0 +1,123 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "json"
+require "time"
+
+json_path = ARGV[0] || "tmp/rspec-report.json"
+markdown_path = ARGV[1] || "tmp/rspec-report.md"
+
+def escape_command_data(value)
+  value.to_s.gsub("%", "%25").gsub("\r", "%0D").gsub("\n", "%0A")
+end
+
+def escape_command_property(value)
+  escape_command_data(value).gsub(":", "%3A").gsub(",", "%2C")
+end
+
+def normalize_file_path(path)
+  path.to_s.sub(%r{\A\./}, "")
+end
+
+def format_duration(seconds)
+  format("%.2fs", seconds.to_f)
+end
+
+def truncate(text, limit = 180)
+  value = text.to_s.strip
+  return value if value.length <= limit
+
+  "#{value[0, limit - 1]}..."
+end
+
+def failure_line(example)
+  return example["line_number"] if example["line_number"]
+
+  Array(example.dig("exception", "backtrace")).each do |entry|
+    if (match = entry.match(/\A\.?\/?([^:]+):(\d+)/))
+      return match[2]
+    end
+  end
+
+  nil
+end
+
+def markdown_table_row(label, value)
+  "| #{label} | #{value} |"
+end
+
+markdown_lines = ["# RSpec Test Report", ""]
+
+unless File.exist?(json_path)
+  markdown_lines << "RSpec did not generate `#{json_path}`."
+  File.write(markdown_path, markdown_lines.join("\n"))
+  if ENV["GITHUB_STEP_SUMMARY"]
+    File.open(ENV["GITHUB_STEP_SUMMARY"], "a") { |file| file.puts(markdown_lines.join("\n")) }
+  end
+  exit 0
+end
+
+data = JSON.parse(File.read(json_path))
+summary = data.fetch("summary", {})
+examples = Array(data["examples"])
+failed_examples = examples.select { |example| example["status"] == "failed" }
+pending_examples = examples.select { |example| example["status"] == "pending" }
+
+markdown_lines << (data["summary_line"] || "RSpec completed.")
+markdown_lines << ""
+markdown_lines << "| Metric | Value |"
+markdown_lines << "| --- | --- |"
+markdown_lines << markdown_table_row("Examples", summary.fetch("example_count", 0))
+markdown_lines << markdown_table_row("Failures", summary.fetch("failure_count", 0))
+markdown_lines << markdown_table_row("Pending", summary.fetch("pending_count", 0))
+markdown_lines << markdown_table_row("Errors Outside Examples", summary.fetch("errors_outside_of_examples_count", 0))
+markdown_lines << markdown_table_row("Duration", format_duration(summary.fetch("duration", 0)))
+
+if failed_examples.any?
+  markdown_lines << ""
+  markdown_lines << "## Failed Examples"
+  markdown_lines << ""
+  markdown_lines << "| Location | Example |"
+  markdown_lines << "| --- | --- |"
+
+  failed_examples.each do |example|
+    file = normalize_file_path(example["file_path"])
+    line = failure_line(example)
+    location = [file, line].compact.join(":")
+    markdown_lines << markdown_table_row("`#{location}`", truncate(example["full_description"] || example["description"]))
+  end
+end
+
+if pending_examples.any?
+  markdown_lines << ""
+  markdown_lines << "## Pending Examples"
+  markdown_lines << ""
+  pending_examples.first(10).each do |example|
+    markdown_lines << "- `#{normalize_file_path(example["file_path"])}:#{example["line_number"]}` #{truncate(example["full_description"] || example["description"])}"
+  end
+end
+
+File.write(markdown_path, markdown_lines.join("\n"))
+
+if ENV["GITHUB_STEP_SUMMARY"]
+  File.open(ENV["GITHUB_STEP_SUMMARY"], "a") do |file|
+    file.puts(markdown_lines.join("\n"))
+  end
+end
+
+failed_examples.each do |example|
+  file = normalize_file_path(example["file_path"])
+  line = failure_line(example)
+  title = truncate(example["full_description"] || example["description"] || "RSpec failure", 120)
+  message = truncate(example.dig("exception", "message") || "Example failed", 800)
+
+  command = +"::error"
+  if file && !file.empty?
+    command << " file=#{escape_command_property(file)}"
+  end
+  if line
+    command << ",line=#{escape_command_property(line)}"
+  end
+  command << ",title=#{escape_command_property(title)}::#{escape_command_data(message)}"
+  puts command
+end
