@@ -1,6 +1,18 @@
 key: baseline
 name: Baseline Demo Estate
 description: A balanced day-to-day dataset with mixed sale and rental listings, multiple appointment statuses, and known credentials for training.
+qa:
+  family: happy_path
+  intended_journey: Baseline end-to-end walkthrough covering catalogue browse, booking, admin confirmation, and seller visibility.
+  complexity: foundational
+  risk_type: workflow
+  locale_coverage: [en]
+  trainer_notes:
+    - Use this as the default onboarding pack for new testers and browser agents.
+  expected_assertions:
+    - The active scenario badge should read Baseline.
+    - Known admin and seller credentials should appear in the QA guide.
+  quick_reset: true
 booking_configuration:
   slot_duration_minutes: 45
   lead_time_hours: 4

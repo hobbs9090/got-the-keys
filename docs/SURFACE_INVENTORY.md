@@ -91,9 +91,9 @@ Framework-owned endpoints such as Active Storage, Action Mailbox, and Turbo nati
 ## Training And Demo Surfaces
 
 - `/admin/demo-data`
-  Scenario catalogue plus import/export/restore flows used for deterministic QA resets.
+  Scenario operations console with quick resets, metadata-rich previews, import/export, and reset diagnostics.
 - `/admin/qa`
-  QA guide, release metadata, selectors, and known credentials.
+  QA guide, release metadata, selector contract registry, scenario families, and seeded-persona diagnostics.
 - `/coffee`
   Explicit training/demo page retained as a harmless static experiment surface.
 

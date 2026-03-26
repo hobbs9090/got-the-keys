@@ -38,6 +38,16 @@ Sellers:
 
 ## Bundled Scenario Packs
 
+Each bundled scenario now carries trainer metadata in the admin demo-data console:
+
+- family
+- intended journey
+- complexity
+- risk type
+- locale coverage
+- trainer notes
+- expected assertions
+
 ### `baseline`
 
 Use when you want the normal happy-path environment.
@@ -200,6 +210,8 @@ Then verify:
 
 ## Stable Selectors
 
+The selector contract registry is visible in `/admin/qa`.
+
 Key selectors currently exposed:
 
 - `data-testid="site-header"`
@@ -212,6 +224,10 @@ Key selectors currently exposed:
 - `data-testid="appointment-timeline"`
 - `data-testid="admin-sidebar"`
 - `data-testid="admin-appointment-row"`
+- `data-testid="saved-search-panel"`
+- `data-testid="property-documents-panel"`
+- `data-testid="admin-property-activity-timeline"`
+- `data-testid="lead-activity-timeline"`
 - `data-testid="active-demo-scenario"`
 
 ## Helpful Assertions

@@ -1,6 +1,18 @@
 key: deal_progression
 name: Deal Progression Studio
 description: Focused sales and lettings progression dataset covering accepted and rejected offers, duplicate applicants, missing guarantors, and failed affordability cases.
+qa:
+  family: happy_path
+  intended_journey: Demonstrate offer and rental-application progression from intake through decision history.
+  complexity: intermediate
+  risk_type: workflow
+  locale_coverage: [en]
+  trainer_notes:
+    - Use this pack when the class needs state-machine and progression-board practice.
+  expected_assertions:
+    - Accepted offers should push the listing into under offer.
+    - Approved rental applications should push the listing into let agreed.
+  quick_reset: true
 booking_configuration:
   slot_duration_minutes: 45
   lead_time_hours: 4

@@ -1,6 +1,17 @@
 key: high_volume_search
 name: High Volume Search
 description: A broader catalogue intentionally sized to trigger pagination, sorting checks, and larger search result sets in the public UI.
+qa:
+  family: high_volume
+  intended_journey: Exercise pagination, sort controls, and catalogue filters with a larger property set.
+  complexity: advanced
+  risk_type: performance
+  locale_coverage: [en]
+  trainer_notes:
+    - Use this when you need pagination and count assertions rather than deep booking journeys.
+  expected_assertions:
+    - The catalogue should paginate and keep filters stable between pages.
+  quick_reset: false
 booking_configuration:
   slot_duration_minutes: 45
   lead_time_hours: 4

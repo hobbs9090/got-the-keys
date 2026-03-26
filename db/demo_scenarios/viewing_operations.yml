@@ -1,6 +1,17 @@
 key: viewing_operations
 name: Viewing Operations Lab
 description: Focused viewing-operations dataset with grouped open-house capacity, blackout periods, reschedules, reminders, and post-visit follow-up outcomes.
+qa:
+  family: flaky_operator_workflow
+  intended_journey: Demonstrate grouped viewings, blackout windows, reminders, and self-service appointment handling.
+  complexity: advanced
+  risk_type: operator_error
+  locale_coverage: [en]
+  trainer_notes:
+    - This is the best pack for replaying booking-desk mistakes and recovery paths.
+  expected_assertions:
+    - Reminder actions and self-service reschedules should both preserve the activity timeline.
+  quick_reset: true
 booking_configuration:
   slot_duration_minutes: 45
   lead_time_hours: 4

@@ -16,6 +16,7 @@ RSpec.describe "Admin demo scenarios", type: :system do
 
     expect(page).to have_text("Demo data management")
     expect(page).to have_css('[data-testid="active-demo-scenario"]', text: "Baseline")
+    expect(page).to have_css('[data-testid="scenario-quick-reset-panel"]')
 
     within(:xpath, "//article[contains(., 'Fully Booked Day')]") do
       click_button "Apply"
