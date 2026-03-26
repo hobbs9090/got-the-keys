@@ -3,19 +3,7 @@ require "rails_helper"
 RSpec.describe "Admin appointments" do
   let(:admin) { FactoryBot.create(:admin, email: "steven@gotthekeys.com", password: "changeme", password_confirmation: "changeme") }
   let(:user) { FactoryBot.create(:user) }
-  let(:property) { user.properties.create!(property_attributes(address_line_1: "9 Park Lane")) }
-
-  def next_open_slot(hour: 10)
-    configuration = BookingConfiguration.current
-    date = Date.current
-
-    loop do
-      candidate = Time.zone.local(date.year, date.month, date.day, hour, 0)
-      return candidate if configuration.open_on?(date) && candidate > Time.current + configuration.lead_time_hours.hours
-
-      date += 1.day
-    end
-  end
+  let(:property) { FactoryBot.create(:property, user:, address_line_1: "9 Park Lane") }
 
   before do
     sign_in admin
@@ -37,8 +25,10 @@ RSpec.describe "Admin appointments" do
   end
 
   it "allows an admin to confirm a pending appointment" do
-    slot = next_open_slot
-    appointment = property.appointments.create!(
+    slot = next_booking_slot
+    appointment = FactoryBot.create(
+      :appointment,
+      property:,
       customer_name: "Priya Shah",
       customer_email: "priya.shah@example.com",
       customer_phone: "07700 930007",
@@ -56,8 +46,10 @@ RSpec.describe "Admin appointments" do
 
   it "renders the appointment detail page in the admin's locale" do
     admin.update!(language: "de")
-    slot = next_open_slot(hour: 11)
-    appointment = property.appointments.create!(
+    slot = next_booking_slot(hour: 11)
+    appointment = FactoryBot.create(
+      :appointment,
+      property:,
       customer_name: "Maya Singh",
       customer_email: "maya.singh@example.com",
       customer_phone: "07700 930008",
