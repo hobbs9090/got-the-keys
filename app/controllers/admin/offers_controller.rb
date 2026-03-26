@@ -11,6 +11,13 @@ class Admin::OffersController < Admin::BaseController
 
   def update
     if @offer.update(offer_params.merge(admin: current_admin, decision_made_at: Time.current))
+      AuditLogger.log!(
+        auditable: @offer,
+        property: @offer.property,
+        admin: current_admin,
+        action: "offer_updated",
+        message: offer_audit_message
+      )
       redirect_to admin_offer_path(@offer), notice: "Offer updated."
     else
       render :show, status: :unprocessable_entity
@@ -25,5 +32,12 @@ class Admin::OffersController < Admin::BaseController
 
   def offer_params
     params.require(:offer).permit(:status, :chain_position, :internal_notes)
+  end
+
+  def offer_audit_message
+    changed_fields = @offer.previous_changes.except("updated_at", "decision_made_at").keys
+    return "Offer reviewed." if changed_fields.empty?
+
+    "Offer updated: #{changed_fields.map { |field| field.to_s.humanize.downcase }.to_sentence}."
   end
 end

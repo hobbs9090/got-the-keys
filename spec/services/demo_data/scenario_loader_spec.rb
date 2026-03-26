@@ -14,12 +14,14 @@ RSpec.describe DemoData::ScenarioLoader do
     leads = previews.find { |scenario| scenario[:key] == "lead_management" }
     viewing = previews.find { |scenario| scenario[:key] == "viewing_operations" }
     deals = previews.find { |scenario| scenario[:key] == "deal_progression" }
+    documents = previews.find { |scenario| scenario[:key] == "documents_and_trust" }
 
-    expect(previews.map { |scenario| scenario[:key] }).to include("baseline", "fully_booked_day", "qa_edge_cases", "high_volume_search", "listing_lifecycle", "lead_management", "viewing_operations", "deal_progression")
+    expect(previews.map { |scenario| scenario[:key] }).to include("baseline", "fully_booked_day", "qa_edge_cases", "high_volume_search", "listing_lifecycle", "lead_management", "viewing_operations", "deal_progression", "documents_and_trust")
     expect(baseline[:property_count]).to eq(4)
     expect(baseline[:appointment_count]).to eq(6)
     expect(baseline[:enquiry_count]).to eq(2)
     expect(baseline[:photo_count]).to eq(3)
+    expect(baseline[:property_document_count]).to eq(3)
     expect(lifecycle[:property_count]).to eq(5)
     expect(lifecycle[:photo_count]).to eq(3)
     expect(lifecycle[:floor_plan_count]).to eq(2)
@@ -28,6 +30,7 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(viewing[:appointment_statuses]).to include("confirmed" => 1, "rescheduled" => 1, "completed" => 1, "no_show" => 1)
     expect(deals[:offer_statuses]).to include("rejected" => 1, "withdrawn" => 1, "accepted" => 1)
     expect(deals[:rental_application_statuses]).to include("rejected" => 1, "withdrawn" => 1, "approved" => 1)
+    expect(documents[:property_document_count]).to eq(3)
   end
 
   it "applies a scenario and records the active key" do
@@ -40,6 +43,7 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(Property.count).to eq(4)
     expect(Photo.count).to eq(3)
     expect(FloorPlan.count).to eq(2)
+    expect(PropertyDocument.count).to eq(3)
     expect(Appointment.count).to eq(6)
     expect(Enquiry.count).to eq(2)
     expect(User.pluck(:language).uniq).to eq(["en"])
@@ -64,5 +68,6 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(exported).to include("visit_outcome:")
     expect(exported).to include("offers:")
     expect(exported).to include("rental_applications:")
+    expect(exported).to include("property_documents:")
   end
 end

@@ -8,6 +8,7 @@ class Admin::PropertiesController < Admin::BaseController
   def show
     @appointments = @property.appointments.recent_first.limit(20)
     @availability_windows = @property.availability_windows.order(:starts_at)
+    @activity_logs = @property.activity_timeline(limit: 20)
   end
 
   def edit
@@ -30,6 +31,14 @@ class Admin::PropertiesController < Admin::BaseController
     end
 
     if @property.update(listing_state: new_state)
+      AuditLogger.log!(
+        auditable: @property,
+        property: @property,
+        admin: current_admin,
+        action: "listing_state_changed",
+        message: "Listing state moved to #{new_state.tr('_', ' ')}.",
+        metadata: { listing_state: new_state }
+      )
       redirect_back fallback_location: admin_property_path(@property), notice: "Listing moved to #{new_state.tr('_', ' ')}."
     else
       redirect_back fallback_location: admin_property_path(@property), alert: @property.errors.full_messages.to_sentence

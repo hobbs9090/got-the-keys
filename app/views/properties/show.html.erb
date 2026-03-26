@@ -72,6 +72,16 @@
       <p><%= [@property.address_line_1, @property.address_line_2, @property.town_city, @property.county, @property.postcode, @property.country].reject(&:blank?).join(", ") %></p>
     </div>
 
+    <div class="property-address" data-testid="property-trust-panel">
+      <h3>Why this listing feels current</h3>
+      <ul class="detail-inline-list">
+        <% property_trust_cues(@property).each do |cue| %>
+          <li><%= cue %></li>
+        <% end %>
+        <li><%= property_update_label(@property) %></li>
+      </ul>
+    </div>
+
     <% brochure_assets = @property.ordered_photos.limit(6) %>
     <% if brochure_assets.any? || @property.ordered_floor_plans.any? %>
       <div class="property-address">
@@ -82,6 +92,21 @@
           <% end %>
           <% @property.ordered_floor_plans.each do |floor_plan| %>
             <li><strong>Floor plan</strong>: <%= floor_plan.label.presence || floor_plan.floor_plans %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <% if @public_documents.any? %>
+      <div class="property-address" data-testid="property-documents-panel">
+        <h3>Documents and downloads</h3>
+        <ul class="detail-inline-list">
+          <% @public_documents.each do |document| %>
+            <li>
+              <strong><%= document.title %></strong>
+              (<%= document.category_label %>)
+              <%= link_to "Download", download_property_property_document_path(@property, document), class: "button hollow secondary tiny", data: { testid: "property-document-download-#{document.id}" } %>
+            </li>
           <% end %>
         </ul>
       </div>
@@ -130,6 +155,14 @@
         <%= link_to "Start rental application", new_property_rental_application_path(@property), class: "button primary expanded", data: { testid: "open-rental-application-form" } %>
       </div>
     <% end %>
+
+    <div class="empty-state property-branch-card" data-testid="property-branch-card">
+      <h3><%= primary_branch_profile[:name] %></h3>
+      <p><strong><%= primary_branch_profile[:team_label] %></strong></p>
+      <p><%= primary_branch_profile[:response_time] %></p>
+      <p><%= primary_branch_profile[:phone] %> · <%= primary_branch_profile[:email] %></p>
+      <p><%= primary_branch_profile[:hours] %></p>
+    </div>
   </aside>
 </section>
 
@@ -149,6 +182,7 @@
         <%= link_to "Edit listing", edit_property_path(@property), class: "button primary" %>
         <%= link_to "Manage photos", property_photos_path(@property), class: "button hollow secondary", data: { testid: "manage-photos-link" } %>
         <%= link_to "Manage floor plans", property_floor_plans_path(@property), class: "button hollow secondary" %>
+        <%= link_to "Manage documents", property_property_documents_path(@property), class: "button hollow secondary", data: { testid: "manage-documents-link" } %>
       </div>
 
       <h3>Recent lead activity</h3>
@@ -197,6 +231,21 @@
         <% else %>
           <p class="empty-copy">No rental applications have been recorded yet.</p>
         <% end %>
+      <% end %>
+
+      <h3>Recent listing activity</h3>
+      <% if @recent_activity.any? %>
+        <ol class="timeline" data-testid="seller-property-activity-timeline">
+          <% @recent_activity.each do |entry| %>
+            <li>
+              <strong><%= entry.action.to_s.tr("_", " ").humanize %></strong>
+              <span><%= formatted_date_time(entry.occurred_at) %></span>
+              <p><%= entry.message %></p>
+            </li>
+          <% end %>
+        </ol>
+      <% else %>
+        <p class="empty-copy">No listing activity has been recorded yet.</p>
       <% end %>
     </article>
   </section>

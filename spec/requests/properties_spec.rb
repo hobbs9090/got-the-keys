@@ -85,12 +85,15 @@ describe "Properties" do
       sign_in user
       FactoryBot.create(:photo, property:, primary: true)
       FactoryBot.create(:floor_plan, property:)
+      FactoryBot.create(:property_document, property:, title: "Sales brochure")
 
       get property_path(property)
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include(%(data-testid="seller-listing-workspace"))
       expect(response.body).to include("Manage photos")
+      expect(response.body).to include("Manage documents")
+      expect(response.body).to include(%(data-testid="property-documents-panel"))
     end
   end
 

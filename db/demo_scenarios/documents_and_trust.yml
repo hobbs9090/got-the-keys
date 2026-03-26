@@ -1,0 +1,132 @@
+key: documents_and_trust
+name: Documents and Trust Signals
+description: Highlights brochure downloads, private compliance files, stale listing cues, and delayed lead follow-up for training.
+booking_configuration:
+  slot_duration_minutes: 45
+  lead_time_hours: 6
+  buffer_minutes: 15
+  office_opens_at: "09:00"
+  office_closes_at: "18:00"
+  open_weekdays: [1, 2, 3, 4, 5, 6]
+admins:
+  - email: steven@gotthekeys.com
+    password: secret
+    password_confirmation: secret
+    language: en
+users:
+  - first_name: Priya
+    last_name: Collins
+    mobile_number: "07700 911001"
+    email: priya.collins@example.com
+    password: secret
+    password_confirmation: secret
+    language: en
+  - first_name: Hugo
+    last_name: Price
+    mobile_number: "07700 911002"
+    email: hugo.price@example.com
+    password: secret
+    password_confirmation: secret
+    language: en
+properties:
+  - key: sevenoaks_brochure_house
+    owner_email: priya.collins@example.com
+    address_line_1: 31 Granville Road
+    address_line_2: ""
+    town_city: Sevenoaks
+    county: Kent
+    postcode: TN13 1QH
+    country: United Kingdom
+    property_type: Semi-detached house
+    listing_tagline: Refreshed family home with brochure-ready marketing
+    property_description: A polished family home with newly refreshed copy, a good kitchen diner, and a garden studio that works well for home working or hobbies.
+    bedrooms: 4
+    bathrooms: 2
+    sale_status: For Sale
+    listing_state: published
+    asking_price: 725000
+    featured: true
+    tenure: Freehold
+    council_tax_band: F
+    parking: Driveway
+    outdoor_space: Garden studio and lawn
+    epc_rating: C
+    floor_area_sq_ft: 1540
+    created_at: "today-30d 09:00"
+    updated_at: "today-2d 10:00"
+    published_at: "today-28d 10:00"
+  - key: westerham_private_pack
+    owner_email: hugo.price@example.com
+    address_line_1: 9 Croft Close
+    address_line_2: ""
+    town_city: Westerham
+    county: Kent
+    postcode: TN16 1QQ
+    country: United Kingdom
+    property_type: Cottage
+    listing_tagline: Charming cottage with a deliberately stale marketing trail
+    property_description: A cottage with beams, courtyard parking, and older marketing collateral that trainers can use to show stale-listing and permission-boundary behaviour.
+    bedrooms: 3
+    bathrooms: 1
+    sale_status: For Rent
+    listing_state: published
+    asking_price: 1850
+    featured: false
+    furnishing: Unfurnished
+    available_from: 2026-05-15
+    parking: Courtyard space
+    outdoor_space: Walled courtyard
+    epc_rating: D
+    floor_area_sq_ft: 1040
+    created_at: "today-60d 09:00"
+    updated_at: "today-35d 09:00"
+    published_at: "today-58d 11:00"
+photos:
+  - property_key: sevenoaks_brochure_house
+    image_filename: hero_4.jpg
+    caption: Garden studio
+    position: 1
+    primary: true
+  - property_key: westerham_private_pack
+    image_filename: hero_5.jpg
+    caption: Cottage frontage
+    position: 1
+    primary: true
+property_documents:
+  - property_key: sevenoaks_brochure_house
+    title: Sales brochure
+    file_name: granville-road-brochure.pdf
+    category: brochure
+    visibility: public
+    position: 1
+  - property_key: sevenoaks_brochure_house
+    title: EPC certificate
+    file_name: granville-road-epc.pdf
+    category: epc
+    visibility: public
+    position: 2
+  - property_key: westerham_private_pack
+    title: Landlord compliance notes
+    file_name: croft-close-compliance.pdf
+    category: compliance
+    visibility: private
+    position: 1
+enquiries:
+  - property_key: sevenoaks_brochure_house
+    assigned_admin_email: steven@gotthekeys.com
+    customer_name: Emma Bishop
+    customer_email: emma.bishop@example.com
+    customer_phone: "07700 911111"
+    source_type: brochure_request
+    message: Please send the brochure and let me know whether there is room for a larger dining table.
+    status: contacted
+    internal_notes: Brochure sent, waiting for preferred viewing dates.
+  - property_key: westerham_private_pack
+    assigned_admin_email: steven@gotthekeys.com
+    customer_name: Theo Green
+    customer_email: theo.green@example.com
+    customer_phone: "07700 911222"
+    source_type: letting_enquiry
+    message: We are interested in the cottage and want to know whether pets are negotiable before we book.
+    status: new
+    internal_notes: Waiting for follow-up from the lettings team.

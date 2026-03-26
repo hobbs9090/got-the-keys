@@ -6,6 +6,7 @@ class Offer < ApplicationRecord
   belongs_to :admin, optional: true
 
   has_many :offer_events, dependent: :destroy
+  has_many :audit_logs, as: :auditable, dependent: :destroy
 
   before_validation :apply_defaults
 
@@ -22,6 +23,7 @@ class Offer < ApplicationRecord
   scope :recent_first, -> { order(created_at: :desc, id: :desc) }
 
   after_create_commit :record_creation_event
+  after_create_commit :record_creation_audit_log
   after_update_commit :record_status_event, if: -> { previous_changes.key?("status") }
   after_save_commit :sync_property_progression, if: -> { previous_changes.key?("status") }
 
@@ -80,5 +82,15 @@ class Offer < ApplicationRecord
     when "rejected", "withdrawn"
       property.update!(listing_state: "published") if property.listing_state == "under_offer" && property.offers.where(status: "accepted").where.not(id: id).none?
     end
+  end
+
+  def record_creation_audit_log
+    AuditLogger.log!(
+      auditable: self,
+      property: property,
+      actor_label: buyer_email,
+      action: "offer_created",
+      message: "Offer received from #{buyer_name} at #{ApplicationController.helpers.number_to_currency(amount, unit: '£', precision: 0)}."
+    )
   end
 end

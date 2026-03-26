@@ -46,6 +46,9 @@ GotTheKeys::Application.routes.draw do
   resources :properties do
     resources :photos, only: [:index, :new, :create, :update, :destroy]
     resources :floor_plans, only: [:index, :new, :create, :update, :destroy]
+    resources :property_documents, path: "documents", only: [:index, :new, :create, :update, :destroy] do
+      get :download, on: :member
+    end
     resources :viewing_times, only: [:index, :new, :create]
     resources :enquiries, only: [:new, :create]
     resources :offers, only: [:new, :create]
@@ -68,6 +71,7 @@ GotTheKeys::Application.routes.draw do
   resources :language, only: [:new]
 
   resources :searches, only: [:index]
+  resources :saved_searches, only: [:create]
 
   resources :location, only: [:show]
 

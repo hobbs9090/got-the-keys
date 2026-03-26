@@ -35,5 +35,15 @@ RSpec.describe "Admin enquiries", type: :request do
     expect(enquiry.reload.status).to eq("qualified")
     expect(enquiry.admin).to eq(admin)
     expect(enquiry.internal_notes).to include("Strong lead")
+    expect(enquiry.audit_logs.recent_first.first.action).to eq("enquiry_updated")
+  end
+
+  it "shows the lead activity timeline" do
+    enquiry = FactoryBot.create(:enquiry, property:, customer_name: "Mina Khan")
+
+    get admin_enquiry_path(enquiry)
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include(%(data-testid="lead-activity-timeline"))
   end
 end

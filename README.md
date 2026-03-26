@@ -13,6 +13,8 @@ It is designed to feel like a credible small business product while also being p
 - Public viewing-request flow on each property page.
 - Customer self-service viewing management, grouped viewing support, reminder emails with calendar attachments, and richer admin booking filters.
 - Sales offers and rental applications with admin progression boards, decision history, and seller-side visibility.
+- Public brochure and compliance-document downloads with seller-side document management.
+- Saved-search capture, trust cues, branch profile content, and property/lead activity timelines.
 - Full appointment domain with:
   - `pending`
   - `confirmed`
@@ -75,7 +77,7 @@ It is designed to feel like a credible small business product while also being p
 
 - `app/models/`
   Public catalogue models plus the booking domain:
-  `Appointment`, `AppointmentEvent`, `AvailabilityWindow`, `BookingConfiguration`, `NotificationLog`, and `DemoScenarioRun`.
+  `Appointment`, `AppointmentEvent`, `AvailabilityWindow`, `BookingConfiguration`, `NotificationLog`, `PropertyDocument`, `AuditLog`, `SavedSearch`, and `DemoScenarioRun`.
 - `app/controllers/admin/`
   The password-protected admin workspace.
 - `app/jobs/`
@@ -232,6 +234,7 @@ SEED_SCENARIO=listing_lifecycle bin/rails db:seed
 SEED_SCENARIO=lead_management bin/rails db:seed
 SEED_SCENARIO=viewing_operations bin/rails db:seed
 SEED_SCENARIO=deal_progression bin/rails db:seed
+SEED_SCENARIO=documents_and_trust bin/rails db:seed
 ```
 
 Scenario files are human-editable YAML and are intended to be committed to source control.
@@ -333,6 +336,16 @@ The repo currently ships with:
   Includes missing phone data, long notes, a reschedule, and an empty-slot property.
 - `high_volume_search`
   A larger catalogue intended to trigger sorting and pagination behavior.
+- `listing_lifecycle`
+  Listing-readiness, moderation, and asset-management workflow.
+- `lead_management`
+  Lead inbox, spam, and qualification examples.
+- `viewing_operations`
+  Reschedules, reminders, grouped viewings, and visit outcomes.
+- `deal_progression`
+  Sales offers and rental-application state changes.
+- `documents_and_trust`
+  Brochure downloads, private files, stale-listing cues, and delayed lead follow-up.
 
 ## Known Credentials
 
@@ -407,6 +420,9 @@ Important selectors include:
 - `data-testid="appointment-form"`
 - `data-testid="admin-appointment-row"`
 - `data-testid="active-demo-scenario"`
+- `data-testid="saved-search-panel"`
+- `data-testid="property-documents-panel"`
+- `data-testid="admin-property-activity-timeline"`
 
 The dedicated QA guide is in [`docs/QA_TRAINING.md`](docs/QA_TRAINING.md).
 It now includes:

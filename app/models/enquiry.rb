@@ -17,6 +17,7 @@ class Enquiry < ApplicationRecord
   belongs_to :admin, optional: true
 
   has_many :notification_logs, dependent: :nullify
+  has_many :audit_logs, as: :auditable, dependent: :destroy
 
   before_validation :apply_defaults
   before_validation :flag_suspected_spam
@@ -39,6 +40,7 @@ class Enquiry < ApplicationRecord
   scope :flagged_spam, -> { where(spam: true) }
 
   after_create_commit :enqueue_creation_notifications, unless: :skip_notifications?
+  after_create_commit :record_creation_audit_log
 
   def self.create_seeded!(property:, admin: nil, allow_invalid: false, **attributes)
     enquiry = property.enquiries.new(attributes.merge(admin:))
@@ -103,5 +105,15 @@ class Enquiry < ApplicationRecord
 
   def skip_notifications?
     ActiveModel::Type::Boolean.new.cast(skip_notifications)
+  end
+
+  def record_creation_audit_log
+    AuditLogger.log!(
+      auditable: self,
+      property: property,
+      actor_label: customer_email.presence || customer_name,
+      action: "enquiry_created",
+      message: "Lead created from #{display_source.downcase} by #{customer_name}."
+    )
   end
 end

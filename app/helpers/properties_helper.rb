@@ -90,6 +90,27 @@ module PropertiesHelper
     t("ui.properties.in_location", property_type: property.property_type, location: property.location_line)
   end
 
+  def primary_branch_profile
+    AppSettings.primary_branch_profile
+  end
+
+  def property_trust_cues(property)
+    cues = []
+    cues << "Recently updated" if property.recently_updated?
+    cues << "Available now" if property.available_now?
+    cues << primary_branch_profile.fetch(:team_label)
+    cues << primary_branch_profile.fetch(:response_time)
+    cues << "Brochure ready" if property.public_documents.any?
+    cues.uniq
+  end
+
+  def property_update_label(property)
+    return "Recently updated" if property.recently_updated?
+    return "Needs a fresh update" if property.stale_listing?
+
+    "Updated this month"
+  end
+
   def property_filter_chip_labels(filters)
     filters = filters.to_h.symbolize_keys
     chips = []
@@ -156,6 +177,14 @@ module PropertiesHelper
       ["Service charge", property.service_charge_amount.present? ? number_to_currency(property.service_charge_amount, unit: "£", precision: 0) : nil],
       ["Lease length", property.lease_length_years.present? ? "#{property.lease_length_years} years" : nil]
     ].select { |_label, value| value.present? }
+  end
+
+  def property_document_category_options
+    PropertyDocument::CATEGORIES.map { |category| [category.to_s.tr("_", " ").humanize, category] }
+  end
+
+  def property_document_visibility_options
+    PropertyDocument::VISIBILITIES.map { |visibility| [visibility.humanize, visibility] }
   end
 
   private
