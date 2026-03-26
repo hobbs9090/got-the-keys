@@ -24,6 +24,8 @@ Framework-owned endpoints such as Active Storage, Action Mailbox, and Turbo nati
   Public appointment request entry point.
 - `/appointments/:public_reference`
   Public appointment confirmation/status page.
+- `/appointments/:public_reference/manage`
+  Public self-service viewing management for secure reschedule and cancellation links.
 - `/location/:id`
   Property location detail.
 

@@ -1,6 +1,8 @@
 class Appointment < ApplicationRecord
   STATUSES = %w[pending confirmed rescheduled cancelled completed no_show].freeze
   ACTIVE_STATUSES = %w[pending confirmed rescheduled].freeze
+  VISIT_OUTCOMES = %w[attended feedback_requested feedback_received].freeze
+  CUSTOMER_SELF_SERVICE_STATUSES = %w[pending confirmed rescheduled].freeze
   PHONE_FORMAT = /\A\+?[0-9().\-\s]{7,20}\z/.freeze
   attr_accessor :skip_slot_validation
 
@@ -18,6 +20,7 @@ class Appointment < ApplicationRecord
   validates :customer_email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
   validates :customer_phone, format: { with: PHONE_FORMAT, message: "must be a valid phone number" }, allow_blank: true
   validates :status, inclusion: { in: STATUSES }
+  validates :visit_outcome, inclusion: { in: VISIT_OUTCOMES }, allow_blank: true
   validates :duration_minutes, numericality: { only_integer: true, greater_than_or_equal_to: 15, less_than_or_equal_to: 240 }, allow_blank: true
   validates :notes, :internal_notes, length: { maximum: 2000 }, allow_blank: true
   validate :slot_available_for_active_bookings, if: :needs_slot_validation?
@@ -47,6 +50,24 @@ class Appointment < ApplicationRecord
 
   def timeline
     appointment_events.order(:occurred_at, :created_at)
+  end
+
+  def manageable_by_customer?
+    status.in?(CUSTOMER_SELF_SERVICE_STATUSES) && !self_service_expired?
+  end
+
+  def self_service_expires_at
+    scheduled_at + 12.hours
+  end
+
+  def self_service_expired?
+    Time.current > self_service_expires_at
+  end
+
+  def valid_access_token?(token)
+    token.present? &&
+      token.bytesize == access_token.to_s.bytesize &&
+      ActiveSupport::SecurityUtils.secure_compare(token, access_token.to_s)
   end
 
   def customer_history
@@ -87,7 +108,7 @@ class Appointment < ApplicationRecord
   end
 
   def noteworthy_change?
-    previous_changes.key?("status") || previous_changes.key?("scheduled_at") || previous_changes.key?("internal_notes") || previous_changes.key?("notes")
+    previous_changes.key?("status") || previous_changes.key?("scheduled_at") || previous_changes.key?("internal_notes") || previous_changes.key?("notes") || previous_changes.key?("visit_outcome")
   end
 
   def notification_worthy_change?
@@ -146,6 +167,17 @@ class Appointment < ApplicationRecord
         from_status: status,
         to_status: status,
         message: "Customer-facing notes were updated.",
+        occurred_at: updated_at
+      )
+    elsif previous_changes.key?("visit_outcome")
+      _from_outcome, to_outcome = previous_changes.fetch("visit_outcome")
+
+      appointment_events.create!(
+        admin:,
+        event_type: to_outcome,
+        from_status: status,
+        to_status: status,
+        message: "Visit outcome marked as #{to_outcome.to_s.tr('_', ' ').downcase}.",
         occurred_at: updated_at
       )
     end

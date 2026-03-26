@@ -11,6 +11,7 @@ It is designed to feel like a credible small business product while also being p
 - Listing lifecycle and seller workspace features including completeness checks, listing moderation states, and marketing asset management.
 - Property enquiry capture, admin lead inbox triage, and seller-side recent lead visibility.
 - Public viewing-request flow on each property page.
+- Customer self-service viewing management, grouped viewing support, reminder emails with calendar attachments, and richer admin booking filters.
 - Full appointment domain with:
   - `pending`
   - `confirmed`
@@ -228,6 +229,7 @@ SEED_SCENARIO=qa_edge_cases bin/rails db:seed
 SEED_SCENARIO=high_volume_search bin/rails db:seed
 SEED_SCENARIO=listing_lifecycle bin/rails db:seed
 SEED_SCENARIO=lead_management bin/rails db:seed
+SEED_SCENARIO=viewing_operations bin/rails db:seed
 ```
 
 Scenario files are human-editable YAML and are intended to be committed to source control.

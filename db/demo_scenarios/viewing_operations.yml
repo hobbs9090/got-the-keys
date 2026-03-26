@@ -1,0 +1,115 @@
+key: viewing_operations
+name: Viewing Operations Lab
+description: Focused viewing-operations dataset with grouped open-house capacity, blackout periods, reschedules, reminders, and post-visit follow-up outcomes.
+booking_configuration:
+  slot_duration_minutes: 45
+  lead_time_hours: 4
+  buffer_minutes: 15
+  office_opens_at: "09:00"
+  office_closes_at: "18:00"
+  open_weekdays: [1, 2, 3, 4, 5, 6]
+admins:
+  - email: steven@gotthekeys.com
+    password: secret
+    password_confirmation: secret
+    language: en
+users:
+  - first_name: Hannah
+    last_name: Doyle
+    mobile_number: "07700 903001"
+    email: hannah.doyle@example.com
+    password: secret
+    password_confirmation: secret
+    language: en
+properties:
+  - key: bromley_open_house
+    owner_email: hannah.doyle@example.com
+    address_line_1: 14 Willow Crescent
+    address_line_2: ""
+    town_city: Bromley
+    county: Kent
+    postcode: BR1 7MN
+    country: United Kingdom
+    property_type: Detached house
+    listing_tagline: Weekend open house with grouped viewing slots
+    property_description: A polished family listing with a staged open-house session, a maintenance blackout, and a mix of pending, rescheduled, completed, and missed viewings for operations training.
+    bedrooms: 4
+    bathrooms: 2
+    sale_status: For Sale
+    listing_state: published
+    asking_price: 835000
+    featured: true
+    tenure: Freehold
+    council_tax_band: F
+    parking: Driveway
+    outdoor_space: Garden
+    epc_rating: C
+    floor_area_sq_ft: 1760
+photos:
+  - property_key: bromley_open_house
+    image_filename: hero_5.jpg
+    caption: Garden and rear elevation
+    position: 1
+    primary: true
+floor_plans:
+  - property_key: bromley_open_house
+    floor_plans: willow-crescent-plan.pdf
+    label: Full house layout
+    position: 1
+availability_windows:
+  - property_key: bromley_open_house
+    starts_at: "today+7d 10:00"
+    ends_at: "today+7d 13:00"
+    kind: group_viewing
+    capacity: 3
+    label: Saturday open house
+  - property_key: bromley_open_house
+    starts_at: "today+7d 11:30"
+    ends_at: "today+7d 12:15"
+    kind: blackout
+    capacity: 1
+    label: Vendor break
+appointments:
+  - property_key: bromley_open_house
+    assigned_admin_email: steven@gotthekeys.com
+    customer_name: Olivia Hart
+    customer_email: olivia.hart@example.com
+    customer_phone: "07700 903111"
+    requested_time: "today+7d 10:00"
+    scheduled_at: "today+7d 10:00"
+    duration_minutes: 45
+    status: confirmed
+    notes: Wants to understand onward chain position.
+  - property_key: bromley_open_house
+    assigned_admin_email: steven@gotthekeys.com
+    customer_name: Noah Quinn
+    customer_email: noah.quinn@example.com
+    customer_phone: "07700 903222"
+    requested_time: "today+7d 10:00"
+    scheduled_at: "today+7d 10:00"
+    duration_minutes: 45
+    status: rescheduled
+    notes: Needed to move after a train delay.
+    internal_notes: Reminder still to be sent.
+  - property_key: bromley_open_house
+    assigned_admin_email: steven@gotthekeys.com
+    customer_name: Zara Miles
+    customer_email: zara.miles@example.com
+    customer_phone: "07700 903333"
+    requested_time: "today-2d 14:00"
+    scheduled_at: "today-2d 14:00"
+    duration_minutes: 45
+    status: completed
+    visit_outcome: feedback_requested
+    notes: Asked about extension potential.
+  - property_key: bromley_open_house
+    assigned_admin_email: steven@gotthekeys.com
+    customer_name: Ethan Cole
+    customer_email: ethan.cole@example.com
+    customer_phone: "07700 903444"
+    requested_time: "today-1d 11:00"
+    scheduled_at: "today-1d 11:00"
+    duration_minutes: 45
+    status: no_show
+    notes: Please call if I am late.
+enquiries: []

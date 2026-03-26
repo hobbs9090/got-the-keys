@@ -234,8 +234,8 @@ class Property < ApplicationRecord
     listing_completeness_checks.all? { |check| check.fetch(:complete) }
   end
 
-  def next_available_slots(limit: 6, from: Time.current)
-    AppointmentAvailability.new(property: self, from: from).next_slots(limit: limit)
+  def next_available_slots(limit: 6, from: Time.current, excluding_appointment: nil)
+    AppointmentAvailability.new(property: self, from: from).next_slots(limit: limit, excluding_appointment:)
   end
 
   private

@@ -14,6 +14,7 @@ RSpec.describe DemoData::ScenarioExporter do
       property:,
       starts_at: booking_time(2026, 4, 6, 10, 0),
       ends_at: booking_time(2026, 4, 6, 11, 0),
+      capacity: 3,
       label: "Morning slot",
       notes: "Front door entry"
     )
@@ -30,6 +31,7 @@ RSpec.describe DemoData::ScenarioExporter do
       requested_time: booking_time(2026, 4, 6, 10, 0),
       scheduled_at: booking_time(2026, 4, 6, 10, 0),
       duration_minutes: 45,
+      visit_outcome: "feedback_requested",
       notes: "Please ring the side gate",
       internal_notes: "Vendor works from home"
     )
@@ -82,14 +84,15 @@ RSpec.describe DemoData::ScenarioExporter do
       include("property_key" => property_payload.fetch("key"), "floor_plans" => "cedar-close-plan.pdf", "label" => "Ground floor")
     )
     expect(payload["availability_windows"]).to include(
-      include("property_key" => property_payload.fetch("key"), "kind" => "open", "label" => "Morning slot")
+      include("property_key" => property_payload.fetch("key"), "kind" => "open", "label" => "Morning slot", "capacity" => 3)
     )
     expect(payload["appointments"]).to include(
       include(
         "property_key" => property_payload.fetch("key"),
         "assigned_admin_email" => "ops@gotthekeys.com",
         "customer_email" => "nina@example.com",
-        "status" => "confirmed"
+        "status" => "confirmed",
+        "visit_outcome" => "feedback_requested"
       )
     )
     expect(payload["enquiries"]).to include(

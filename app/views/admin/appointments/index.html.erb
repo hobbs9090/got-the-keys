@@ -15,27 +15,39 @@
     </div>
   </div>
 
-  <%= form_with url: admin_bookings_path, method: :get, class: "admin-filter-form", local: true do %>
+  <%= form_with url: admin_bookings_path, method: :get, class: "admin-filter-form", local: true, data: { testid: "admin-bookings-filters" } do %>
     <%= hidden_field_tag :view, @view_mode %>
     <div>
       <%= label_tag :date, t("ui.admin.appointments.filters.anchor_date") %>
-      <%= date_field_tag :date, @anchor_date %>
+      <%= date_field_tag :date, @anchor_date, data: { testid: "bookings-filter-anchor-date" } %>
     </div>
     <div>
       <%= label_tag :property_id, t("ui.common.property") %>
-      <%= select_tag :property_id, options_from_collection_for_select(@properties, :id, :address_line_1, params[:property_id]), include_blank: t("ui.admin.appointments.filters.all_properties") %>
+      <%= select_tag :property_id, options_from_collection_for_select(@properties, :id, :address_line_1, params[:property_id]), include_blank: t("ui.admin.appointments.filters.all_properties"), data: { testid: "bookings-filter-property" } %>
     </div>
     <div>
       <%= label_tag :status, t("ui.common.status") %>
-      <%= select_tag :status, options_for_select(@statuses.map { |status| [I18n.t("ui.appointments.statuses.#{status}", default: status.humanize), status] }, params[:status]), include_blank: t("ui.admin.appointments.filters.all_statuses") %>
+      <%= select_tag :status, options_for_select(@statuses.map { |status| [I18n.t("ui.appointments.statuses.#{status}", default: status.humanize), status] }, params[:status]), include_blank: t("ui.admin.appointments.filters.all_statuses"), data: { testid: "bookings-filter-status" } %>
     </div>
     <div>
       <%= label_tag :admin_id, t("ui.admin.appointments.filters.assigned_admin") %>
-      <%= select_tag :admin_id, options_from_collection_for_select(@admins, :id, :email, params[:admin_id]), include_blank: t("ui.admin.appointments.filters.anyone") %>
+      <%= select_tag :admin_id, options_from_collection_for_select(@admins, :id, :email, params[:admin_id]), include_blank: t("ui.admin.appointments.filters.anyone"), data: { testid: "bookings-filter-admin" } %>
+    </div>
+    <div>
+      <%= label_tag :visit_outcome, "Visit outcome" %>
+      <%= select_tag :visit_outcome, options_for_select(@visit_outcomes.map { |outcome| [outcome.to_s.humanize, outcome] }, params[:visit_outcome]), include_blank: "Any outcome", data: { testid: "bookings-filter-outcome" } %>
+    </div>
+    <div>
+      <%= label_tag :from, "From" %>
+      <%= date_field_tag :from, params[:from], data: { testid: "bookings-filter-from" } %>
+    </div>
+    <div>
+      <%= label_tag :to, "To" %>
+      <%= date_field_tag :to, params[:to], data: { testid: "bookings-filter-to" } %>
     </div>
     <div>
       <%= label_tag :customer_email, t("ui.admin.appointments.filters.customer_email") %>
-      <%= text_field_tag :customer_email, params[:customer_email], placeholder: t("ui.admin.appointments.filters.customer_email_placeholder") %>
+      <%= text_field_tag :customer_email, params[:customer_email], placeholder: t("ui.admin.appointments.filters.customer_email_placeholder"), data: { testid: "bookings-filter-customer-email" } %>
     </div>
     <div class="admin-filter-form__actions">
       <%= button_tag t("ui.common.apply"), class: "button primary" %>
@@ -59,6 +71,9 @@
 
               <div class="admin-inline-actions">
                 <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+                <% if appointment.visit_outcome.present? %>
+                  <span class="badge badge--neutral"><%= appointment.visit_outcome.to_s.humanize %></span>
+                <% end %>
                 <%= button_to t("ui.admin.appointments.confirm"), transition_admin_appointment_path(appointment, status: "confirmed"), method: :patch, class: "button tiny success hollow" unless appointment.status == "confirmed" %>
                 <%= button_to t("ui.admin.appointments.cancel"), transition_admin_appointment_path(appointment, status: "cancelled"), method: :patch, class: "button tiny alert hollow" unless appointment.status == "cancelled" %>
               </div>

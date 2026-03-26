@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_26_164000) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_26_173000) do
   create_table "admins", force: :cascade do |t|
     t.datetime "created_at", precision: nil
     t.string "email"
@@ -47,19 +47,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_164000) do
     t.text "notes"
     t.integer "property_id", null: false
     t.string "public_reference", null: false
+    t.datetime "reminder_sent_at"
     t.datetime "requested_time", null: false
     t.datetime "scheduled_at", null: false
     t.string "status", default: "pending", null: false
     t.datetime "updated_at", null: false
+    t.string "visit_outcome"
     t.index ["access_token"], name: "index_appointments_on_access_token", unique: true
     t.index ["admin_id"], name: "index_appointments_on_admin_id"
     t.index ["customer_email"], name: "index_appointments_on_customer_email"
     t.index ["property_id"], name: "index_appointments_on_property_id"
     t.index ["public_reference"], name: "index_appointments_on_public_reference", unique: true
     t.index ["status", "scheduled_at"], name: "index_appointments_on_status_and_scheduled_at"
+    t.index ["visit_outcome"], name: "index_appointments_on_visit_outcome"
   end
 
   create_table "availability_windows", force: :cascade do |t|
+    t.integer "capacity", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "ends_at", null: false
     t.string "kind", default: "open", null: false

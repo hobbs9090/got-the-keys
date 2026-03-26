@@ -201,6 +201,7 @@ module DemoData
           starts_at: parse_time!(window.fetch(:starts_at)),
           ends_at: parse_time!(window.fetch(:ends_at)),
           kind: window.fetch(:kind, "open"),
+          capacity: Integer(window.fetch(:capacity, 1)),
           label: window[:label],
           notes: window[:notes]
         }
@@ -234,6 +235,7 @@ module DemoData
           scheduled_at: parse_time!(appointment.fetch(:scheduled_at, requested_time)),
           duration_minutes: Integer(appointment.fetch(:duration_minutes, default_duration_minutes)),
           status:,
+          visit_outcome: appointment[:visit_outcome],
           notes: appointment[:notes],
           internal_notes: appointment[:internal_notes]
         }

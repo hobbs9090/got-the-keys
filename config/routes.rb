@@ -15,6 +15,7 @@ GotTheKeys::Application.routes.draw do
     resource :qa, only: :show, controller: :qa
     resources :appointments, only: [:index, :show, :edit, :update] do
       patch :transition, on: :member
+      post :send_reminder, on: :member
     end
     resources :enquiries, only: [:index, :show, :update]
     resources :properties, only: [:index, :show, :edit, :update] do
@@ -48,7 +49,13 @@ GotTheKeys::Application.routes.draw do
     resources :appointments, only: [:new, :create]
   end
 
-  resources :appointments, only: [:show], param: :public_reference
+  resources :appointments, only: [:show], param: :public_reference do
+    member do
+      get :edit_self_service, path: "manage"
+      patch :reschedule_self_service, path: "reschedule"
+      patch :cancel_self_service, path: "cancel"
+    end
+  end
 
   resources :for_sale, only: [:index]
 
