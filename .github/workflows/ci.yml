@@ -99,9 +99,6 @@ jobs:
         with:
           path: tmp/allure-report
 
-      - name: Run Cucumber
-        run: bundle exec cucumber
-
   deploy-rspec-report:
     if: ${{ always() && github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'master') && needs.test.outputs.allure_report_present == 'true' && needs.test.result != 'cancelled' }}
     needs: test

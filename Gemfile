@@ -41,8 +41,6 @@ end
 
 group :test do
   gem 'allure-rspec', '~> 2.28'
-  gem 'cucumber-rails', '~> 4.0', require: false
-  gem 'database_cleaner-active_record', '~> 2.1'
   gem 'capybara', '~> 3.40'
   gem 'rake', '~> 13.0'
 end
