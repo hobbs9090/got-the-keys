@@ -43,6 +43,7 @@ group :test do
   gem 'allure-rspec', '~> 2.28'
   gem 'capybara', '~> 3.40'
   gem 'rake', '~> 13.0'
+  gem 'selenium-webdriver', '~> 4.0'
 end
 
 group :production do

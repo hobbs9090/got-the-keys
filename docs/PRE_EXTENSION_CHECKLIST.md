@@ -156,11 +156,11 @@ Treat the app as ready for major extension when all of these are true:
   public browse -> property detail -> appointment request
 - [x] Add a system spec for:
   admin sign-in -> bookings desk -> confirm or reschedule appointment
-- [ ] Add a system spec for:
+- [x] Add a system spec for:
   language switch persistence across pages
-- [ ] Add a system spec for:
+- [x] Add a system spec for:
   demo scenario restore from the admin area
-- [ ] Add one JavaScript smoke path that proves the shared modal/carousel runtime works end to end.
+- [x] Add one JavaScript smoke path that proves the shared modal/carousel runtime works end to end.
 
 ### Repo Hotspots
 
