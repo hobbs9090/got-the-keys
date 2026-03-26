@@ -88,6 +88,8 @@ It is designed to feel like a credible small business product while also being p
   Apache + Passenger deployment guide for shared hosting.
 - `docs/MODERNIZATION_AUDIT.md`
   Recommended modernization sequence for jobs, frontend stack, CSS/view components, and deployment posture.
+- `docs/PRE_EXTENSION_CHECKLIST.md`
+  Actionable checklist to complete before a major new extension phase.
 - `docs/QA_TRAINING.md`
   QA walkthroughs, selectors, scenarios, and known credentials.
 
@@ -121,6 +123,13 @@ npm run build
 `bin/install_git_hooks` configures this repo to use the tracked `.githooks/pre-push` hook, which runs `bundle exec rspec` and blocks the push if the suite fails. Each pre-push run also saves its console output to `tmp/rspec/pre_push/latest.log` so you can review the full output afterward.
 
 GitHub Actions also enforces that product code changes under `app/` or `lib/` include matching updates under `spec/`. Static assets under `app/assets/` and Rake tasks under `lib/tasks/` are exempt from that check.
+
+Preferred spec types for new work:
+
+- request specs for server-rendered responses, redirects, auth boundaries, and HTML contracts
+- system specs for browser journeys and UI interactions
+- model, service, job, and helper specs for unit-level behaviour
+- avoid adding new controller specs or legacy `spec/features` coverage
 
 To make that rule block merges, mark the `CI` workflow as a required status check in your GitHub branch protection settings for `main`/`master`.
 
