@@ -11,6 +11,8 @@ This repo is now configured with these deployment defaults:
 - Capistrano stage: `staging`
 - live URL: `https://stevenhobbs.co.uk`
 
+This is a staging host, but it intentionally boots the app in the Rails `production` environment with `RAILS_ENV=production` and `PassengerAppEnv production`. That keeps staging behaviour aligned with a later live production deploy.
+
 That means the Apache virtual host should point at the Capistrano `current/public` path, not the deploy root itself:
 
 - `DocumentRoot /var/www/stevenhobbs.co.uk/current/public`
@@ -65,7 +67,7 @@ SMTP, if available:
 - `SMTP_AUTHENTICATION`
 - `SMTP_STARTTLS_AUTO`
 
-If `SMTP_ADDRESS` is not set, production mail falls back to file delivery in `tmp/mails`, and the app will still log notifications in the admin UI.
+If `SMTP_ADDRESS` is not set, the Rails `production` environment falls back to file delivery in `tmp/mails`, and the app will still log notifications in the admin UI.
 
 ## One-Time Server Preparation
 
@@ -117,6 +119,8 @@ RAILS_ENV=production SEED_SCENARIO=fully_booked_day bundle exec rails db:seed
 ## Apache + Passenger Shape
 
 Use the app’s `public/` directory as the document root.
+
+The `Header always set` directive below requires Apache's headers module to be enabled.
 
 Example Apache snippet:
 
@@ -334,7 +338,7 @@ The self-hosted runner uses a dedicated localhost-only SSH key to reach `steven@
 
 ## SQLite Notes
 
-If you are staying on SQLite in production:
+If you are staying on SQLite for the Rails `production` environment:
 
 - the production database now lives at `storage/production.sqlite3` by default
 - make sure the `storage/` directory is writable by the app user

@@ -51,6 +51,14 @@ It is designed to feel like a credible small business product while also being p
 - `APP_VERSION` is available as a troubleshooting override, but the normal release flow is to bump `VERSION` in source control.
 - The app never auto-increments its own version at runtime or during deploy.
 
+## Asset Cache Busting
+
+- Rails asset helpers resolve fingerprinted filenames for precompiled CSS, JavaScript, and images under `/assets`.
+- Those digested filenames are the cache-busting mechanism, so a new deploy naturally points browsers at new asset URLs.
+- When the app serves static files in the Rails `production` environment, including the current staging host, `/assets/*` responses are marked with `Cache-Control: public, max-age=31536000, immutable`.
+- On Apache + Passenger deployments, the web server may serve precompiled files from `public/assets` before Rails sees the request, so the Apache virtual host should also set the same cache header for `/assets/`.
+- See `docs/NIRVANA_DEPLOYMENT.md` for the matching Apache configuration snippet.
+
 ## Key Areas In The Repo
 
 - `app/models/`
@@ -400,14 +408,15 @@ Behaviour by environment:
 
 - development uses `letter_opener`
 - test uses the standard test mailer
-- production uses SMTP if `SMTP_ADDRESS` is set
-- otherwise production falls back to file delivery under `tmp/mails`
+- the Rails `production` environment uses SMTP if `SMTP_ADDRESS` is set
+- otherwise the Rails `production` environment falls back to file delivery under `tmp/mails`
 
 This keeps the app usable on shared hosting even when outbound SMTP is not yet available.
 
 ## Deployment
 
 The app is intended to stay compatible with Apache + Passenger on shared hosting.
+The current deploy target is a staging host, but it intentionally runs in the Rails `production` environment so it behaves like a later live production deployment.
 
 Read the deployment guide:
 

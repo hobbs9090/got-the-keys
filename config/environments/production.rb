@@ -1,9 +1,14 @@
+require Rails.root.join("lib/asset_public_file_server")
+
 GotTheKeys::Application.configure do
+  serve_static_files = ENV["RAILS_SERVE_STATIC_FILES"].present?
+
   config.enable_reloading = false
   config.eager_load = true
   config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  config.public_file_server.enabled = serve_static_files
+  config.middleware.insert_before(ActionDispatch::Static, AssetPublicFileServer, Rails.root.join("public").to_s) if serve_static_files
   config.assume_ssl = true if ENV['ASSUME_SSL'].present?
   config.assets.compile = false
   config.force_ssl = ENV['FORCE_SSL'].present?

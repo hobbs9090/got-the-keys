@@ -8,7 +8,9 @@ RSpec.describe ApplicationHelper, type: :helper do
       original_values = {
         version: version_config.version,
         build_sha: version_config.build_sha,
-        build_number: version_config.build_number
+        build_number: version_config.build_number,
+        deployed_at: version_config.deployed_at,
+        deploy_target: version_config.deploy_target
       }
 
       example.run
@@ -16,6 +18,8 @@ RSpec.describe ApplicationHelper, type: :helper do
       version_config.version = original_values[:version]
       version_config.build_sha = original_values[:build_sha]
       version_config.build_number = original_values[:build_number]
+      version_config.deployed_at = original_values[:deployed_at]
+      version_config.deploy_target = original_values[:deploy_target]
     end
 
     it "formats the public app version from the semantic version" do
