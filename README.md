@@ -90,6 +90,8 @@ It is designed to feel like a credible small business product while also being p
   Explicit rules for what background work is safe on the current `:async` setup and when to revisit a durable backend.
 - `docs/MODERNIZATION_AUDIT.md`
   Recommended modernization sequence for jobs, frontend stack, CSS/view components, and deployment posture.
+- `docs/CODEX_EXPANSION_PLAN.md`
+  Phased product and QA-harness growth plan for making the app feel more like a credible sales and lettings platform.
 - `docs/PRE_EXTENSION_CHECKLIST.md`
   Actionable checklist to complete before a major new extension phase.
 - `docs/BOOKING_ARCHITECTURE.md`
