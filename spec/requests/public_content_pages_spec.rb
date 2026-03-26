@@ -22,4 +22,10 @@ RSpec.describe "Public content pages", type: :request do
       expect(response.body).to include(page[:text])
     end
   end
+
+  it "redirects the legacy baits path to the blog" do
+    get "/baits"
+
+    expect(response).to redirect_to("/blog")
+  end
 end
