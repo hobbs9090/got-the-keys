@@ -34,6 +34,14 @@ FactoryBot.define do
       status { "cancelled" }
     end
 
+    trait :completed do
+      status { "completed" }
+    end
+
+    trait :no_show do
+      status { "no_show" }
+    end
+
     trait :assigned do
       association :admin
     end

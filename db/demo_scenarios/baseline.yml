@@ -247,6 +247,7 @@ appointments:
     scheduled_at: "today-5d 10:00"
     duration_minutes: 45
     status: completed
+    visit_outcome: feedback_requested
     notes: Interested in moving before the end of April.
     internal_notes: Strong fit for the property and requested application paperwork.
   - property_key: croydon_rental_loft

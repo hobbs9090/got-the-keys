@@ -1,0 +1,44 @@
+<% title "Manage viewing #{@appointment.public_reference}" %>
+
+<section class="page-hero">
+  <div>
+    <p class="page-hero__eyebrow">Manage your viewing</p>
+    <h1><%= @appointment.public_reference %></h1>
+    <p>Choose a new slot or keep the current one. Self-service stays open until shortly after the booked time.</p>
+  </div>
+</section>
+
+<section class="property-layout">
+  <article class="property-panel">
+    <h2><%= @appointment.property.address_line_1 %></h2>
+    <p>Current slot: <strong><%= formatted_date_time(@appointment.scheduled_at) %></strong></p>
+    <p>Status: <span class="<%= appointment_status_badge_class(@appointment.status) %>"><%= @appointment.display_status %></span></p>
+  </article>
+
+  <aside class="property-booking-panel">
+    <%= render "shared/errors", object: @appointment %>
+
+    <% if @available_slots.any? %>
+      <%= form_with model: @appointment, url: reschedule_self_service_appointment_path(@appointment, token: @appointment.access_token), method: :patch, data: { testid: "self-service-reschedule-form" } do |f| %>
+        <div>
+          <%= f.label :requested_time, "Choose a new slot", **form_label_options(@appointment, :requested_time) %>
+          <%= f.select :requested_time,
+                       options_for_select(@available_slots.map { |slot| [slot.label, slot.starts_at.iso8601] }),
+                       { prompt: "Select a new time" },
+                       form_control_options(@appointment, :requested_time, data: { testid: "self-service-slot-select" }) %>
+          <%= field_error_messages(@appointment, :requested_time) %>
+        </div>
+
+        <div class="form-actions">
+          <%= f.submit "Reschedule viewing", class: "button primary expanded", data: { testid: "self-service-reschedule-button" } %>
+          <%= link_to "Back to appointment", appointment_path(@appointment, token: @appointment.access_token), class: "button hollow secondary expanded" %>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="empty-state">
+        <h2>No slots available</h2>
+        <p>There are no self-service slots available right now. Please contact the office for help.</p>
+      </div>
+    <% end %>
+  </aside>
+</section>

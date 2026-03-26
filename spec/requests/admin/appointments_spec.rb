@@ -94,4 +94,43 @@ RSpec.describe "Admin appointments" do
     expect(response.body).to include(matching.customer_name)
     expect(response.body).not_to include("Other Viewer")
   end
+
+  it "filters the bookings desk by date range and visit outcome" do
+    matching = FactoryBot.create(
+      :appointment,
+      :completed,
+      property:,
+      customer_name: "Feedback Lead",
+      requested_time: booking_time(2026, 4, 2, 11, 0),
+      scheduled_at: booking_time(2026, 4, 2, 11, 0),
+      visit_outcome: "feedback_requested"
+    )
+    FactoryBot.create(
+      :appointment,
+      :completed,
+      property:,
+      customer_name: "Outside Range",
+      requested_time: booking_time(2026, 4, 10, 11, 0),
+      scheduled_at: booking_time(2026, 4, 10, 11, 0),
+      visit_outcome: "attended"
+    )
+
+    get admin_bookings_path, params: { from: "2026-04-01", to: "2026-04-03", visit_outcome: "feedback_requested" }
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("Feedback Lead")
+    expect(response.body).not_to include("Outside Range")
+    expect(response.body).to include(%(data-testid="admin-bookings-filters"))
+  end
+
+  it "queues a reminder from the admin detail page" do
+    appointment = FactoryBot.create(:appointment, property:, requested_time: next_booking_slot(hour: 11), scheduled_at: next_booking_slot(hour: 11))
+
+    expect do
+      post send_reminder_admin_appointment_path(appointment)
+    end.to have_enqueued_job(AppointmentNotificationJob).with(appointment.id, "reminder")
+
+    expect(response).to redirect_to(admin_appointment_path(appointment))
+    expect(appointment.reload.reminder_sent_at).to be_present
+  end
 end

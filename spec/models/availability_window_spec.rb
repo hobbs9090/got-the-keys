@@ -47,10 +47,12 @@ RSpec.describe AvailabilityWindow do
   it "reports whether the window is open or blackout" do
     open_window = described_class.new(kind: "open")
     blackout_window = described_class.new(kind: "blackout")
+    group_window = described_class.new(kind: "group_viewing")
 
     expect(open_window).to be_open
     expect(open_window).not_to be_blackout
     expect(blackout_window).to be_blackout
     expect(blackout_window).not_to be_open
+    expect(group_window).to be_group_viewing
   end
 end

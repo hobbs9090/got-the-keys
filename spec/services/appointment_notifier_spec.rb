@@ -50,6 +50,13 @@ RSpec.describe AppointmentNotifier do
       "property_id" => property.id
     )
     expect(ActionMailer::Base.deliveries.last.subject).to eq(log.subject)
+    expect(ActionMailer::Base.deliveries.last.attachments.first.filename).to end_with(".ics")
+  end
+
+  it "supports reminder notifications" do
+    described_class.new(appointment, event_type: "reminder").deliver
+
+    expect(NotificationLog.last.subject).to eq("GotTheKeys viewing reminder: #{appointment.public_reference}")
   end
 
   it "records a skipped notification when production SMTP is unavailable" do

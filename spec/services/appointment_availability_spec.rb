@@ -78,4 +78,50 @@ RSpec.describe AppointmentAvailability do
     expect(availability.slot_available?(rescheduled_start, duration_minutes: 45)).to be(false)
     expect(availability.slot_available?(rescheduled_start, duration_minutes: 45, excluding_appointment: appointment)).to be(true)
   end
+
+  it "allows grouped viewing slots up to the configured window capacity" do
+    slot = booking_time(2026, 4, 4, 10, 0)
+    FactoryBot.create(
+      :availability_window,
+      :group_viewing,
+      property:,
+      starts_at: booking_time(2026, 4, 4, 10, 0),
+      ends_at: booking_time(2026, 4, 4, 12, 0),
+      capacity: 3
+    )
+
+    2.times do |index|
+      FactoryBot.create(
+        :appointment,
+        :confirmed,
+        property:,
+        admin: admin,
+        customer_name: "Group Viewer #{index + 1}",
+        customer_email: "group#{index + 1}@example.com",
+        customer_phone: format("07700 9301%02d", index),
+        requested_time: slot,
+        scheduled_at: slot,
+        duration_minutes: 45
+      )
+    end
+
+    availability = described_class.new(property: property, configuration: configuration, from: booking_time(2026, 4, 4, 8, 0))
+
+    expect(availability.slot_available?(slot, duration_minutes: 45)).to be(true)
+
+    FactoryBot.create(
+      :appointment,
+      :confirmed,
+      property:,
+      admin: admin,
+      customer_name: "Group Viewer 3",
+      customer_email: "group3@example.com",
+      customer_phone: "07700 930199",
+      requested_time: slot,
+      scheduled_at: slot,
+      duration_minutes: 45
+    )
+
+    expect(availability.slot_available?(slot, duration_minutes: 45)).to be(false)
+  end
 end

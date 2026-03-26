@@ -181,16 +181,18 @@ module DemoData
             duration_minutes: attributes.fetch(:duration_minutes),
             notes: attributes[:notes],
             internal_notes: attributes[:internal_notes],
-            status: "pending"
+            status: "pending",
+            visit_outcome: attributes[:visit_outcome]
           }.merge(skip_slot_validation: true)
         )
 
-        next if final_status == "pending" && scheduled_at == requested_time
+        next if final_status == "pending" && scheduled_at == requested_time && attributes[:visit_outcome].blank?
 
         appointment.update!(
           admin:,
           scheduled_at:,
           status: final_status,
+          visit_outcome: attributes[:visit_outcome],
           notes: attributes[:notes],
           internal_notes: attributes[:internal_notes]
         )

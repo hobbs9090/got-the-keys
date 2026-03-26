@@ -11,5 +11,11 @@ FactoryBot.define do
       kind { "blackout" }
       label { "Maintenance blackout" }
     end
+
+    trait :group_viewing do
+      kind { "group_viewing" }
+      capacity { 3 }
+      label { "Open house session" }
+    end
   end
 end

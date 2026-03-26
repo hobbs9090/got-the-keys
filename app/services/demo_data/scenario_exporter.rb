@@ -118,6 +118,7 @@ module DemoData
         starts_at: window.starts_at.iso8601,
         ends_at: window.ends_at.iso8601,
         kind: window.kind,
+        capacity: window.capacity,
         label: window.label,
         notes: window.notes
       }
@@ -134,6 +135,7 @@ module DemoData
         scheduled_at: appointment.scheduled_at.iso8601,
         duration_minutes: appointment.duration_minutes,
         status: appointment.status,
+        visit_outcome: appointment.visit_outcome,
         notes: appointment.notes,
         internal_notes: appointment.internal_notes
       }
