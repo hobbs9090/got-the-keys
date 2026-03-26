@@ -13,10 +13,16 @@ jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    outputs:
+      allure_report_present: ${{ steps.allure_report.outputs.present }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+
+      - name: Set up GitHub Pages
+        if: ${{ github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'master') }}
+        uses: actions/configure-pages@v5
 
       - name: Set up Node
         uses: actions/setup-node@v5
@@ -43,11 +49,29 @@ jobs:
         run: bundle exec rails db:prepare
 
       - name: Run RSpec
-        run: bundle exec rspec --format progress --format json --out tmp/rspec-report.json
+        env:
+          ALLURE_CLEAN_RESULTS: "1"
+          ALLURE_REPORTS: "1"
+          ALLURE_RESULTS_DIR: tmp/allure-results
+        run: bundle exec rspec --require allure-rspec --format progress --format json --out tmp/rspec-report.json --format AllureRspecFormatter
 
       - name: Publish RSpec report summary
         if: ${{ always() }}
         run: ruby bin/ci_rspec_report tmp/rspec-report.json tmp/rspec-report.md
+
+      - name: Generate Allure report
+        if: ${{ always() && hashFiles('tmp/allure-results/*') != '' }}
+        run: npx allure generate tmp/allure-results --output tmp/allure-report --report-name "GotTheKeys RSpec"
+
+      - name: Check Allure report output
+        if: ${{ always() }}
+        id: allure_report
+        run: |
+          if [ -f tmp/allure-report/index.html ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Upload RSpec report artifacts
         if: ${{ always() }}
@@ -59,5 +83,41 @@ jobs:
             tmp/rspec-report.md
           if-no-files-found: warn
 
+      - name: Upload Allure report artifacts
+        if: ${{ always() && steps.allure_report.outputs.present == 'true' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: allure-rspec-report
+          path: |
+            tmp/allure-results
+            tmp/allure-report
+          if-no-files-found: warn
+
+      - name: Upload GitHub Pages artifact
+        if: ${{ always() && steps.allure_report.outputs.present == 'true' && github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'master') }}
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: tmp/allure-report
+
       - name: Run Cucumber
         run: bundle exec cucumber
+
+  deploy-rspec-report:
+    if: ${{ always() && github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'master') && needs.test.outputs.allure_report_present == 'true' && needs.test.result != 'cancelled' }}
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy Allure report to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Publish report URL
+        run: echo "Published Allure RSpec report to ${{ steps.deployment.outputs.page_url }}" >> "$GITHUB_STEP_SUMMARY"
