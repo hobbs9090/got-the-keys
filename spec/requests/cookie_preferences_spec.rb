@@ -22,4 +22,26 @@ RSpec.describe "Cookie preferences", type: :request do
     expect(response).to redirect_to(cookie_policy_index_path(anchor: "cookie-preferences"))
     expect(response.cookies["gotthekeys_cookie_consent"]).to eq("all")
   end
+
+  it "ignores invalid preferences and does not set the consent cookie" do
+    patch cookie_preferences_path, params: {
+      preference: "marketing",
+      return_to: contact_us_path
+    }
+
+    expect(response).to redirect_to(contact_us_path)
+    expect(response.cookies["gotthekeys_cookie_consent"]).to be_nil
+    expect(response.headers["Set-Cookie"].to_s).not_to include("gotthekeys_cookie_consent")
+    expect(response.headers["Set-Cookie"].to_s).not_to include("_got_the_keys_session")
+  end
+
+  it "rejects protocol-relative return urls" do
+    patch cookie_preferences_path, params: {
+      preference: "all",
+      return_to: "//example.com/elsewhere"
+    }
+
+    expect(response).to redirect_to(cookie_policy_index_path(anchor: "cookie-preferences"))
+    expect(response.cookies["gotthekeys_cookie_consent"]).to eq("all")
+  end
 end

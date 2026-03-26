@@ -38,6 +38,17 @@ RSpec.describe "Language switching", type: :request do
       expect(response.body).to include('lang="fr"')
     end
 
+    it "updates the signed-in admin preference and falls back to the homepage when no return path is available" do
+      admin = FactoryBot.create(:admin, language: "en")
+
+      sign_in admin
+
+      get new_language_path(language: "zh")
+
+      expect(response).to redirect_to(root_path)
+      expect(admin.reload.language).to eq("zh")
+    end
+
     it "redirects back to a safe in-app return path when provided" do
       get new_language_path(language: "it", return_to: properties_path)
 

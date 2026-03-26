@@ -45,10 +45,22 @@ RSpec.describe AppVersionHelper, type: :helper do
     expect(helper.app_deployed_at).to eq(I18n.l(Time.zone.parse("2026-03-26T09:00:00Z"), format: :long))
   end
 
+  it "returns the raw deployed value when it cannot be parsed as a timestamp" do
+    version_config.deployed_at = "build just finished"
+
+    expect(helper.app_deployed_at).to eq("build just finished")
+  end
+
   it "combines the deploy target and Rails environment for diagnostics" do
     version_config.deploy_target = "staging host"
 
     expect(helper.app_runtime_environment).to eq("staging host, Rails env test")
+  end
+
+  it "still reports the Rails environment when no deploy target is set" do
+    version_config.deploy_target = nil
+
+    expect(helper.app_runtime_environment).to eq("Rails env test")
   end
 
   it "includes build metadata in the full app version when present" do

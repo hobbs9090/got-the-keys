@@ -9,6 +9,13 @@ if ! command -v bundle >/dev/null 2>&1; then
   exit 1
 fi
 
+log_dir="${PRE_PUSH_RSPEC_LOG_DIR:-tmp/rspec/pre_push}"
+timestamp="$(date +%Y%m%d-%H%M%S)"
+log_file="${log_dir}/${timestamp}.log"
+latest_log="${log_dir}/latest.log"
+
+mkdir -p "$log_dir"
+
 rspec_args=()
 
 if [ -n "${PRE_PUSH_RSPEC_ARGS:-}" ]; then
@@ -18,9 +25,23 @@ fi
 
 echo "Running RSpec before push..."
 echo "+ bundle exec rspec${PRE_PUSH_RSPEC_ARGS:+ ${PRE_PUSH_RSPEC_ARGS}}"
+echo "Saving detailed output to ${log_file}"
 
+set +e
 if [ "${#rspec_args[@]}" -gt 0 ]; then
-  bundle exec rspec "${rspec_args[@]}"
+  bundle exec rspec "${rspec_args[@]}" 2>&1 | tee "$log_file"
 else
-  bundle exec rspec
+  bundle exec rspec 2>&1 | tee "$log_file"
 fi
+rspec_status=${PIPESTATUS[0]}
+set -e
+
+ln -sf "$(basename "$log_file")" "$latest_log"
+
+if [ "$rspec_status" -eq 0 ]; then
+  echo "RSpec log saved to ${latest_log}"
+else
+  echo "RSpec failed. Review ${latest_log} for the full output." >&2
+fi
+
+exit "$rspec_status"

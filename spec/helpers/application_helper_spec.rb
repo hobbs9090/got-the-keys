@@ -95,6 +95,20 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
+  describe "#admin_dashboard_entry_path" do
+    it "returns the remembered admin path when it stays inside the admin area" do
+      helper.session[:last_admin_path] = "/admin/bookings?view=week"
+
+      expect(helper.admin_dashboard_entry_path).to eq("/admin/bookings?view=week")
+    end
+
+    it "falls back to the dashboard when the remembered path is outside admin" do
+      helper.session[:last_admin_path] = "/properties"
+
+      expect(helper.admin_dashboard_entry_path).to eq(admin_root_path)
+    end
+  end
+
   describe "#marketing_wordmark_tag" do
     it "renders the translated alt text and default asset" do
       markup = helper.marketing_wordmark_tag(class_name: "brand-lockup")
