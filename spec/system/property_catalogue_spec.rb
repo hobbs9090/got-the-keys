@@ -46,4 +46,19 @@ RSpec.describe "Property catalogue", type: :system do
     visit property_path(two_bed)
     expect(page).to have_text("2 bedrooms")
   end
+
+  it "lets visitors save the current search" do
+    user = FactoryBot.create(:user)
+    create_property(user:, sale_status: Property::SALE_STATUSES[:for_sale], address_line_1: "The Mead", bedrooms: 4)
+
+    visit properties_path(town_city: "Westerham", min_bedrooms: 3)
+
+    within('[data-testid="saved-search-panel"]') do
+      fill_in "saved_search_email", with: "buyer@example.com"
+      click_button "Save search"
+    end
+
+    expect(page).to have_text("Saved search created for")
+    expect(SavedSearch.last.email).to eq("buyer@example.com")
+  end
 end

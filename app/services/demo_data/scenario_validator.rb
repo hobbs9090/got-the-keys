@@ -28,6 +28,7 @@ module DemoData
 
       photos = normalize_photos(Array(scenario[:photos]), property_index:)
       floor_plans = normalize_floor_plans(Array(scenario[:floor_plans]), property_index:)
+      property_documents = normalize_property_documents(Array(scenario[:property_documents]), property_index:)
       availability_windows = normalize_availability_windows(Array(scenario[:availability_windows]), property_index:)
       appointments = normalize_appointments(
         Array(scenario[:appointments]),
@@ -61,6 +62,7 @@ module DemoData
         properties:,
         photos:,
         floor_plans:,
+        property_documents:,
         availability_windows:,
         appointments:,
         enquiries:,
@@ -81,6 +83,7 @@ module DemoData
         property_count: normalized.fetch(:properties).count,
         photo_count: normalized.fetch(:photos).count,
         floor_plan_count: normalized.fetch(:floor_plans).count,
+        property_document_count: normalized.fetch(:property_documents).count,
         availability_window_count: normalized.fetch(:availability_windows).count,
         appointment_count: normalized.fetch(:appointments).count,
         appointment_statuses: normalized.fetch(:appointments).group_by { |appointment| appointment.fetch(:status) }.transform_values(&:count),
@@ -173,7 +176,10 @@ module DemoData
           deposit_amount: property[:deposit_amount].present? ? Integer(property[:deposit_amount]) : nil,
           pets_allowed: ActiveModel::Type::Boolean.new.cast(property.fetch(:pets_allowed, false)),
           service_charge_amount: property[:service_charge_amount].present? ? Integer(property[:service_charge_amount]) : nil,
-          lease_length_years: property[:lease_length_years].present? ? Integer(property[:lease_length_years]) : nil
+          lease_length_years: property[:lease_length_years].present? ? Integer(property[:lease_length_years]) : nil,
+          created_at: property[:created_at].present? ? parse_time!(property[:created_at]) : nil,
+          updated_at: property[:updated_at].present? ? parse_time!(property[:updated_at]) : nil,
+          published_at: property[:published_at].present? ? parse_time!(property[:published_at]) : nil
         }
       end
     end
@@ -203,6 +209,28 @@ module DemoData
           floor_plans: floor_plan.fetch(:floor_plans),
           label: floor_plan[:label],
           position: Integer(floor_plan.fetch(:position, 0))
+        }
+      end
+    end
+
+    def normalize_property_documents(property_documents, property_index:)
+      property_documents.map do |document|
+        property_key = document.fetch(:property_key)
+        raise ValidationError, "Property document references unknown property key #{property_key}" unless property_index.key?(property_key)
+
+        category = document.fetch(:category, "brochure")
+        raise ValidationError, "Unsupported property document category #{category.inspect}" unless PropertyDocument::CATEGORIES.include?(category)
+
+        visibility = document.fetch(:visibility, "private")
+        raise ValidationError, "Unsupported property document visibility #{visibility.inspect}" unless PropertyDocument::VISIBILITIES.include?(visibility)
+
+        {
+          property_key:,
+          title: document.fetch(:title),
+          file_name: document.fetch(:file_name),
+          category:,
+          visibility:,
+          position: Integer(document.fetch(:position, 0))
         }
       end
     end

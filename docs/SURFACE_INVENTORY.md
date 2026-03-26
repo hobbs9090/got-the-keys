@@ -17,7 +17,7 @@ Framework-owned endpoints such as Active Storage, Action Mailbox, and Turbo nati
 - `/searches`
   Combined search surface across listing scopes.
 - `/properties/*`
-  Seller listing CRUD plus public property detail pages, listing-readiness workspace, and marketing asset management for photos and floor plans.
+  Seller listing CRUD plus public property detail pages, listing-readiness workspace, marketing asset management for photos/floor plans/documents, saved-search capture, and public brochure downloads.
 - `/properties/:property_id/enquiries/new`
   Public property-enquiry capture path for brochure requests, general questions, valuation enquiries, and letting follow-up.
 - `/properties/:property_id/appointments/new`
@@ -30,6 +30,8 @@ Framework-owned endpoints such as Active Storage, Action Mailbox, and Turbo nati
   Public appointment confirmation/status page.
 - `/appointments/:public_reference/manage`
   Public self-service viewing management for secure reschedule and cancellation links.
+- `/saved_searches`
+  Public saved-search capture endpoint for catalogue alerts and filter snapshots.
 - `/location/:id`
   Property location detail.
 
@@ -80,7 +82,7 @@ Framework-owned endpoints such as Active Storage, Action Mailbox, and Turbo nati
 - `/admin/booking_configuration`
   Booking rules and lead-time configuration.
 - `/admin/properties`
-  Admin property review, listing-readiness moderation, and lifecycle transitions.
+  Admin property review, listing-readiness moderation, lifecycle transitions, documents, and property activity timeline.
 - `/admin/users`
   Admin seller directory.
 - `/admin/notification_logs`

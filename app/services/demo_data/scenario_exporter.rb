@@ -13,6 +13,7 @@ module DemoData
         properties: Property.order(:id).map { |property| export_property(property, property_keys) },
         photos: Photo.order(:property_id, :position, :id).map { |photo| export_photo(photo, property_keys) },
         floor_plans: FloorPlan.order(:property_id, :position, :id).map { |floor_plan| export_floor_plan(floor_plan, property_keys) },
+        property_documents: PropertyDocument.order(:property_id, :position, :id).map { |document| export_property_document(document, property_keys) },
         availability_windows: AvailabilityWindow.order(:starts_at).map { |window| export_window(window, property_keys) },
         appointments: Appointment.order(:scheduled_at, :created_at).map { |appointment| export_appointment(appointment, property_keys) },
         enquiries: Enquiry.order(:created_at, :id).map { |enquiry| export_enquiry(enquiry, property_keys) },
@@ -91,7 +92,10 @@ module DemoData
         deposit_amount: property.deposit_amount,
         pets_allowed: property.pets_allowed,
         service_charge_amount: property.service_charge_amount,
-        lease_length_years: property.lease_length_years
+        lease_length_years: property.lease_length_years,
+        created_at: property.created_at.iso8601,
+        updated_at: property.updated_at.iso8601,
+        published_at: property.published_at&.iso8601
       }
     end
 
@@ -111,6 +115,17 @@ module DemoData
         floor_plans: floor_plan.floor_plans,
         label: floor_plan.label,
         position: floor_plan.position
+      }
+    end
+
+    def export_property_document(document, property_keys)
+      {
+        property_key: property_keys.fetch(document.property_id),
+        title: document.title,
+        file_name: document.file_name,
+        category: document.category,
+        visibility: document.visibility,
+        position: document.position
       }
     end
 

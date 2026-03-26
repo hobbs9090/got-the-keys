@@ -6,6 +6,7 @@ class RentalApplication < ApplicationRecord
   belongs_to :admin, optional: true
 
   has_many :rental_application_events, dependent: :destroy
+  has_many :audit_logs, as: :auditable, dependent: :destroy
 
   before_validation :apply_defaults
 
@@ -20,6 +21,7 @@ class RentalApplication < ApplicationRecord
   scope :recent_first, -> { order(created_at: :desc, id: :desc) }
 
   after_create_commit :record_creation_event
+  after_create_commit :record_creation_audit_log
   after_update_commit :record_status_event, if: -> { previous_changes.key?("status") }
   after_save_commit :sync_property_progression, if: -> { previous_changes.key?("status") }
 
@@ -76,5 +78,15 @@ class RentalApplication < ApplicationRecord
     when "rejected", "withdrawn"
       property.update!(listing_state: "published") if property.listing_state == "let_agreed" && property.rental_applications.where(status: "approved").where.not(id: id).none?
     end
+  end
+
+  def record_creation_audit_log
+    AuditLogger.log!(
+      auditable: self,
+      property: property,
+      actor_label: applicant_email,
+      action: "rental_application_created",
+      message: "Rental application received from #{applicant_name} for move-in #{move_in_date}."
+    )
   end
 end

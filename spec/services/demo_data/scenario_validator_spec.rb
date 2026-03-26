@@ -39,7 +39,17 @@ RSpec.describe DemoData::ScenarioValidator do
           property_description: "A bright detached house with open-plan reception space, modern finishes, and a landscaped garden.",
           bedrooms: 4,
           sale_status: "For Sale",
-          asking_price: 650000
+          asking_price: 650000,
+          updated_at: "today-2d 09:00"
+        }
+      ],
+      property_documents: [
+        {
+          property_key: "cedar-close",
+          title: "Sales brochure",
+          file_name: "cedar-close-brochure.pdf",
+          category: "brochure",
+          visibility: "public"
         }
       ],
       availability_windows: [
@@ -91,6 +101,10 @@ RSpec.describe DemoData::ScenarioValidator do
     )
     expect(normalized[:properties]).to include(
       include(key: "cedar-close", bathrooms: 1, property_type: "House", featured: false)
+    )
+    expect(normalized[:properties].first[:updated_at]).to eq(Time.zone.local(2026, 3, 30, 9, 0))
+    expect(normalized[:property_documents]).to include(
+      include(property_key: "cedar-close", title: "Sales brochure", category: "brochure", visibility: "public")
     )
     expect(normalized[:availability_windows]).to include(
       include(
@@ -159,6 +173,7 @@ RSpec.describe DemoData::ScenarioValidator do
       admin_count: 1,
       user_count: 1,
       property_count: 1,
+      property_document_count: 1,
       availability_window_count: 1,
       appointment_count: 1,
       appointment_statuses: { "confirmed" => 1 }

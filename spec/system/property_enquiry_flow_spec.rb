@@ -29,4 +29,16 @@ RSpec.describe "Property enquiry flow", type: :system do
     expect(enquiry.lead_reference).to be_present
     expect(enquiry.source_type).to eq("brochure_request")
   end
+
+  it "shows public brochure downloads but hides private files" do
+    property = FactoryBot.create(:property, address_line_1: "31 Granville Road")
+    FactoryBot.create(:property_document, property:, title: "Sales brochure", file_name: "granville-road-brochure.pdf", visibility: "public")
+    FactoryBot.create(:property_document, :private_document, property:, title: "Compliance pack", file_name: "granville-road-compliance.pdf")
+
+    visit property_path(property)
+
+    expect(page).to have_css('[data-testid="property-documents-panel"]')
+    expect(page).to have_text("Sales brochure")
+    expect(page).not_to have_text("Compliance pack")
+  end
 end

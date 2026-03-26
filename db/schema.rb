@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_26_190000) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_26_210000) do
   create_table "admins", force: :cascade do |t|
     t.datetime "created_at", precision: nil
     t.string "email"
@@ -60,6 +60,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_190000) do
     t.index ["public_reference"], name: "index_appointments_on_public_reference", unique: true
     t.index ["status", "scheduled_at"], name: "index_appointments_on_status_and_scheduled_at"
     t.index ["visit_outcome"], name: "index_appointments_on_visit_outcome"
+  end
+
+  create_table "audit_logs", force: :cascade do |t|
+    t.string "action", null: false
+    t.string "actor_label"
+    t.integer "admin_id"
+    t.integer "auditable_id"
+    t.string "auditable_type"
+    t.datetime "created_at", null: false
+    t.text "message", null: false
+    t.json "metadata"
+    t.datetime "occurred_at", null: false
+    t.integer "property_id"
+    t.datetime "updated_at", null: false
+    t.index ["action"], name: "index_audit_logs_on_action"
+    t.index ["admin_id"], name: "index_audit_logs_on_admin_id"
+    t.index ["auditable_type", "auditable_id"], name: "index_audit_logs_on_auditable"
+    t.index ["property_id", "occurred_at"], name: "index_audit_logs_on_property_id_and_occurred_at"
+    t.index ["property_id"], name: "index_audit_logs_on_property_id"
   end
 
   create_table "availability_windows", force: :cascade do |t|
@@ -242,6 +261,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_190000) do
     t.index ["user_id"], name: "index_properties_on_user_id"
   end
 
+  create_table "property_documents", force: :cascade do |t|
+    t.string "category", null: false
+    t.datetime "created_at", null: false
+    t.string "file_name", null: false
+    t.integer "position", default: 0, null: false
+    t.integer "property_id", null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.string "visibility", default: "private", null: false
+    t.index ["category"], name: "index_property_documents_on_category"
+    t.index ["property_id", "position"], name: "index_property_documents_on_property_id_and_position"
+    t.index ["property_id"], name: "index_property_documents_on_property_id"
+    t.index ["visibility"], name: "index_property_documents_on_visibility"
+  end
+
   create_table "rental_application_events", force: :cascade do |t|
     t.integer "admin_id"
     t.datetime "created_at", null: false
@@ -277,6 +311,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_190000) do
     t.index ["property_id"], name: "index_rental_applications_on_property_id"
     t.index ["public_reference"], name: "index_rental_applications_on_public_reference", unique: true
     t.index ["status"], name: "index_rental_applications_on_status"
+  end
+
+  create_table "saved_searches", force: :cascade do |t|
+    t.boolean "alerts_enabled", default: true, null: false
+    t.datetime "created_at", null: false
+    t.string "email", null: false
+    t.string "locale", default: "en", null: false
+    t.integer "max_price"
+    t.integer "min_bedrooms"
+    t.integer "min_price"
+    t.string "sale_status"
+    t.string "search_query"
+    t.string "sort"
+    t.string "town_city"
+    t.datetime "updated_at", null: false
+    t.index ["alerts_enabled"], name: "index_saved_searches_on_alerts_enabled"
+    t.index ["email"], name: "index_saved_searches_on_email"
+    t.index ["sale_status"], name: "index_saved_searches_on_sale_status"
+    t.index ["town_city"], name: "index_saved_searches_on_town_city"
   end
 
   create_table "users", force: :cascade do |t|
@@ -322,6 +375,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_190000) do
   add_foreign_key "appointment_events", "appointments"
   add_foreign_key "appointments", "admins"
   add_foreign_key "appointments", "properties"
+  add_foreign_key "audit_logs", "admins"
+  add_foreign_key "audit_logs", "properties"
   add_foreign_key "availability_windows", "properties"
   add_foreign_key "enquiries", "admins"
   add_foreign_key "enquiries", "properties"
@@ -331,6 +386,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_190000) do
   add_foreign_key "offer_events", "offers"
   add_foreign_key "offers", "admins"
   add_foreign_key "offers", "properties"
+  add_foreign_key "property_documents", "properties"
   add_foreign_key "rental_application_events", "admins"
   add_foreign_key "rental_application_events", "rental_applications"
   add_foreign_key "rental_applications", "admins"

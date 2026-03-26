@@ -29,6 +29,11 @@
 
           <p class="property-card__headline"><%= property.headline %></p>
           <p class="property-card__description"><%= truncate(property.property_description, length: 130, separator: " ") %></p>
+          <ul class="property-card__trust-list">
+            <% property_trust_cues(property).first(3).each do |cue| %>
+              <li><%= cue %></li>
+            <% end %>
+          </ul>
           <% if property.available_now? %>
             <p class="property-card__availability"><strong>Available now</strong></p>
           <% elsif property.available_from.present? %>
@@ -59,6 +64,7 @@
 
         <footer class="property-card__footer">
           <div>
+            <p class="property-card__availability"><%= property_update_label(property) %></p>
             <% next_slot = property.next_available_slots(limit: 1).first %>
             <% if next_slot.present? %>
               <p class="property-card__availability"><%= t("ui.properties.card.next_slot", time: formatted_date_time(next_slot.starts_at)) %></p>

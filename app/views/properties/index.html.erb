@@ -66,6 +66,48 @@
 
       <%= render "properties/filters", url: properties_path, selected_sale_status: params[:sale_status], show_status_select: true %>
     </section>
+
+    <section class="site-card property-catalogue__saved-search" data-testid="saved-search-panel">
+      <p class="section-heading__eyebrow">Stay in the loop</p>
+      <h2>Save this search</h2>
+      <p class="property-catalogue__sidebar-copy">Capture the current filters and let the team alert you when matching homes come in.</p>
+
+      <%= form_with model: @saved_search, url: saved_searches_path, class: "saved-search-form" do |f| %>
+        <%= f.hidden_field :locale %>
+        <%= f.hidden_field :sale_status %>
+        <%= f.hidden_field :search_query %>
+        <%= f.hidden_field :town_city %>
+        <%= f.hidden_field :min_bedrooms %>
+        <%= f.hidden_field :min_price %>
+        <%= f.hidden_field :max_price %>
+        <%= f.hidden_field :sort %>
+
+        <div>
+          <%= f.label :email, "Email" %>
+          <%= f.email_field :email, placeholder: "you@example.com" %>
+        </div>
+
+        <div class="form-grid__checkbox">
+          <%= f.check_box :alerts_enabled %>
+          <%= f.label :alerts_enabled, "Email me when new matching listings arrive", class: "checkbox-label" %>
+        </div>
+
+        <div class="form-actions">
+          <%= f.submit "Save search", class: "button primary expanded", data: { testid: "save-search-button" } %>
+        </div>
+      <% end %>
+    </section>
+
+    <section class="site-card property-catalogue__branch-card">
+      <p class="section-heading__eyebrow">Local team</p>
+      <h2><%= primary_branch_profile[:name] %></h2>
+      <ul class="detail-inline-list">
+        <li><strong><%= primary_branch_profile[:team_label] %></strong></li>
+        <li><%= primary_branch_profile[:response_time] %></li>
+        <li><%= primary_branch_profile[:phone] %></li>
+        <li><%= primary_branch_profile[:email] %></li>
+      </ul>
+    </section>
   </aside>
 
   <div class="property-catalogue__content">

@@ -71,6 +71,7 @@ module DemoData
         properties = create_properties(payload.fetch(:properties), users:)
         create_photos(payload.fetch(:photos), properties:)
         create_floor_plans(payload.fetch(:floor_plans), properties:)
+        create_property_documents(payload.fetch(:property_documents), properties:)
         create_availability_windows(payload.fetch(:availability_windows), properties:)
         create_appointments(payload.fetch(:appointments), properties:, admins:)
         create_enquiries(payload.fetch(:enquiries), properties:, admins:)
@@ -85,6 +86,7 @@ module DemoData
           property_count: properties.size,
           photo_count: Photo.count,
           floor_plan_count: FloorPlan.count,
+          property_document_count: PropertyDocument.count,
           appointment_count: Appointment.count,
           enquiry_count: Enquiry.count,
           offer_count: Offer.count,
@@ -116,6 +118,8 @@ module DemoData
       AvailabilityWindow.delete_all
       Photo.delete_all
       FloorPlan.delete_all
+      PropertyDocument.delete_all
+      AuditLog.delete_all
       Property.delete_all
       User.delete_all
       Admin.delete_all
@@ -139,8 +143,14 @@ module DemoData
         owner = users.fetch(attributes.fetch(:owner_email))
 
         property = owner.properties.create!(
-          attributes.except(:key, :owner_email)
+          attributes.except(:key, :owner_email, :created_at, :updated_at)
         )
+        property.update_columns(
+          {
+            created_at: attributes[:created_at],
+            updated_at: attributes[:updated_at]
+          }.compact
+        ) if attributes[:created_at].present? || attributes[:updated_at].present?
 
         memo[attributes.fetch(:key)] = property
       end
@@ -165,6 +175,14 @@ module DemoData
     def create_floor_plans(floor_plan_specs, properties:)
       floor_plan_specs.each do |attributes|
         properties.fetch(attributes.fetch(:property_key)).floor_plans.create!(
+          attributes.except(:property_key)
+        )
+      end
+    end
+
+    def create_property_documents(document_specs, properties:)
+      document_specs.each do |attributes|
+        properties.fetch(attributes.fetch(:property_key)).property_documents.create!(
           attributes.except(:property_key)
         )
       end

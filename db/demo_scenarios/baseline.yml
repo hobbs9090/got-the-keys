@@ -173,6 +173,25 @@ floor_plans:
     floor_plans: mount-ephraim-layout.pdf
     label: Apartment layout
     position: 1
+property_documents:
+  - property_key: sevenoaks_family_home
+    title: Sales brochure
+    file_name: cedar-road-brochure.pdf
+    category: brochure
+    visibility: public
+    position: 1
+  - property_key: sevenoaks_family_home
+    title: EPC certificate
+    file_name: cedar-road-epc.pdf
+    category: epc
+    visibility: public
+    position: 2
+  - property_key: croydon_rental_loft
+    title: Landlord compliance pack
+    file_name: park-lane-landlord-pack.pdf
+    category: landlord_attachment
+    visibility: private
+    position: 1
 availability_windows:
   - property_key: sevenoaks_family_home
     starts_at: "today+7d 09:00"

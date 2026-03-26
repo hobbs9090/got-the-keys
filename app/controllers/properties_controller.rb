@@ -18,6 +18,7 @@ class PropertiesController < ApplicationController
       for_sale: Property.cached_for_sale_total,
       for_rent: Property.cached_for_rent_total
     }
+    @saved_search = SavedSearch.new(saved_search_defaults)
   end
 
   def show
@@ -25,6 +26,8 @@ class PropertiesController < ApplicationController
     @recent_enquiries = @property.enquiries.recent_first.limit(3)
     @recent_offers = @property.offers.recent_first.limit(3)
     @recent_rental_applications = @property.rental_applications.recent_first.limit(3)
+    @public_documents = @property.public_documents
+    @recent_activity = @property.activity_timeline(limit: 8)
   end
 
   def edit
@@ -79,6 +82,21 @@ class PropertiesController < ApplicationController
     return if current_user == @property.user
 
     redirect_to properties_path, alert: "This listing is not currently public."
+  end
+
+  def saved_search_defaults
+    {
+      locale: I18n.locale.to_s,
+      email: current_user&.email,
+      sale_status: @filters[:sale_status],
+      search_query: @filters[:q],
+      town_city: @filters[:town_city],
+      min_bedrooms: @filters[:min_bedrooms],
+      min_price: @filters[:min_price],
+      max_price: @filters[:max_price],
+      sort: @filters[:sort],
+      alerts_enabled: true
+    }
   end
 
 end

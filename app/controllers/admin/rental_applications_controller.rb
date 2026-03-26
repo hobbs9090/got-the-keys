@@ -13,6 +13,13 @@ class Admin::RentalApplicationsController < Admin::BaseController
 
   def update
     if @rental_application.update(rental_application_params.merge(admin: current_admin, decision_made_at: Time.current))
+      AuditLogger.log!(
+        auditable: @rental_application,
+        property: @rental_application.property,
+        admin: current_admin,
+        action: "rental_application_updated",
+        message: rental_application_audit_message
+      )
       redirect_to admin_rental_application_path(@rental_application), notice: "Rental application updated."
     else
       render :show, status: :unprocessable_entity
@@ -27,5 +34,12 @@ class Admin::RentalApplicationsController < Admin::BaseController
 
   def rental_application_params
     params.require(:rental_application).permit(:status, :guarantor_required, :guarantor_available, :internal_notes, :affordability_notes)
+  end
+
+  def rental_application_audit_message
+    changed_fields = @rental_application.previous_changes.except("updated_at", "decision_made_at").keys
+    return "Rental application reviewed." if changed_fields.empty?
+
+    "Rental application updated: #{changed_fields.map { |field| field.to_s.humanize.downcase }.to_sentence}."
   end
 end

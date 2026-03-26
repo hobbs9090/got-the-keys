@@ -14,12 +14,14 @@ class Property < ApplicationRecord
 
   has_many :photos, dependent: :destroy
   has_many :floor_plans, dependent: :destroy
+  has_many :property_documents, dependent: :destroy
   has_many :viewing_times, dependent: :destroy
   has_many :availability_windows, dependent: :destroy
   has_many :appointments, dependent: :destroy
   has_many :enquiries, dependent: :destroy
   has_many :offers, dependent: :destroy
   has_many :rental_applications, dependent: :destroy
+  has_many :audit_logs, dependent: :destroy
 
   validates :address_line_1, :town_city, :county, :postcode, :country,
             :property_description, :bedrooms, :sale_status, :asking_price,
@@ -190,6 +192,14 @@ class Property < ApplicationRecord
     floor_plans.ordered
   end
 
+  def ordered_documents
+    property_documents.ordered
+  end
+
+  def public_documents
+    property_documents.publicly_visible.ordered
+  end
+
   def hero_image_name
     primary_photo&.image_filename.presence || image_file_name
   end
@@ -238,6 +248,19 @@ class Property < ApplicationRecord
 
   def next_available_slots(limit: 6, from: Time.current, excluding_appointment: nil)
     AppointmentAvailability.new(property: self, from: from).next_slots(limit: limit, excluding_appointment:)
+  end
+
+  def activity_timeline(limit: nil)
+    timeline = audit_logs.recent_first
+    limit.present? ? timeline.limit(limit) : timeline
+  end
+
+  def recently_updated?
+    updated_at.present? && updated_at >= 7.days.ago
+  end
+
+  def stale_listing?
+    updated_at.present? && updated_at < 21.days.ago
   end
 
   private
