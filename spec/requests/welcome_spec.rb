@@ -25,8 +25,8 @@ RSpec.describe "Welcome", type: :request do
 
       document = Nokogiri::HTML.parse(response.body)
 
-      expect(document.css(".orbit-container .orbit-slide").count).to eq(5)
-      expect(document.css(".orbit-bullets button").count).to eq(5)
+      expect(document.css("[data-carousel] [data-carousel-slide]").count).to eq(5)
+      expect(document.css(".hero-carousel__bullets button").count).to eq(5)
     end
 
     it "falls back to the most recently updated properties when no featured listings exist" do

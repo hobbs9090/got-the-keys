@@ -1,82 +1,91 @@
-let switched = false;
-let listenersBound = false;
+let resizeHandler;
+let splitTables = new WeakSet();
 
-const splitTable = ($, original) => {
-  if (original.closest(".table-wrapper").length) {
-    return;
-  }
-
-  original.wrap("<div class='table-wrapper' />");
-
-  const copy = original.clone();
-  copy.find("td:not(:first-child), th:not(:first-child)").css("display", "none");
-  copy.removeClass("responsive");
-
-  original.closest(".table-wrapper").append(copy);
-  copy.wrap("<div class='pinned' />");
-  original.wrap("<div class='scrollable' />");
-
-  setCellHeights($, original, copy);
-};
-
-const unsplitTable = (original) => {
-  if (!original.closest(".table-wrapper").length) {
-    return;
-  }
-
-  original.closest(".table-wrapper").find(".pinned").remove();
-  original.unwrap();
-  original.unwrap();
-};
-
-const setCellHeights = ($, original, copy) => {
+const setCellHeights = (original, copy) => {
   const heights = [];
 
-  original.find("tr").each(function(index) {
-    $(this).find("th, td").each(function() {
-      const height = $(this).outerHeight(true);
+  original.querySelectorAll("tr").forEach((row, index) => {
+    row.querySelectorAll("th, td").forEach((cell) => {
+      const height = cell.getBoundingClientRect().height;
       heights[index] = Math.max(heights[index] || 0, height);
     });
   });
 
-  copy.find("tr").each(function(index) {
-    $(this).height(heights[index]);
+  copy.querySelectorAll("tr").forEach((row, index) => {
+    row.style.height = `${heights[index] || 0}px`;
   });
 };
 
-const updateTables = ($) => {
-  const shouldSplit = $(window).width() < 767;
+const splitTable = (table) => {
+  if (table.closest(".table-wrapper")) return;
 
-  if (shouldSplit && !switched) {
-    switched = true;
-    $("table.responsive").each(function() {
-      splitTable($, $(this));
-    });
-    return;
-  }
+  const wrapper = document.createElement("div");
+  wrapper.className = "table-wrapper";
+  table.parentNode.insertBefore(wrapper, table);
+  wrapper.appendChild(table);
 
-  if (!shouldSplit && switched) {
-    switched = false;
-    $("table.responsive").each(function() {
-      unsplitTable($(this));
-    });
-  }
-};
+  const pinned = document.createElement("div");
+  pinned.className = "pinned";
 
-export const reflowResponsiveTables = ($) => {
-  if (!listenersBound) {
-    listenersBound = true;
-    $(window).on("load.responsiveTables redraw.responsiveTables resize.responsiveTables", () => {
-      updateTables($);
-    });
-  }
+  const scrollable = document.createElement("div");
+  scrollable.className = "scrollable";
 
-  updateTables($);
-};
-
-export const teardownResponsiveTables = ($) => {
-  $("table.responsive").each(function() {
-    unsplitTable($(this));
+  const copy = table.cloneNode(true);
+  copy.classList.remove("responsive");
+  copy.querySelectorAll("td:not(:first-child), th:not(:first-child)").forEach((cell) => {
+    cell.style.display = "none";
   });
-  switched = false;
+
+  wrapper.appendChild(pinned);
+  wrapper.appendChild(scrollable);
+  pinned.appendChild(copy);
+  scrollable.appendChild(table);
+
+  setCellHeights(table, copy);
+  splitTables.add(table);
+};
+
+const unsplitTable = (table) => {
+  const wrapper = table.closest(".table-wrapper");
+  if (!wrapper) return;
+
+  const parent = wrapper.parentNode;
+  parent.insertBefore(table, wrapper);
+  wrapper.remove();
+};
+
+const updateTables = () => {
+  const shouldSplit = window.innerWidth < 767;
+
+  document.querySelectorAll("table.responsive").forEach((table) => {
+    if (shouldSplit) {
+      splitTable(table);
+    } else if (splitTables.has(table)) {
+      unsplitTable(table);
+      splitTables.delete(table);
+    }
+  });
+};
+
+export const bootResponsiveTables = () => {
+  if (!resizeHandler) {
+    resizeHandler = () => updateTables();
+    window.addEventListener("resize", resizeHandler);
+  }
+
+  updateTables();
+};
+
+export const teardownResponsiveTables = () => {
+  document.querySelectorAll("table.responsive").forEach((table) => {
+    if (splitTables.has(table)) {
+      unsplitTable(table);
+      splitTables.delete(table);
+    }
+  });
+
+  if (resizeHandler) {
+    window.removeEventListener("resize", resizeHandler);
+    resizeHandler = null;
+  }
 };

@@ -16,6 +16,7 @@ GotTheKeys::Application.configure do
   config.log_tags = [:request_id]
   config.cache_store = :memory_store
   config.action_mailer.perform_caching = false
+  config.active_job.queue_adapter = (config.x.got_the_keys.active_job_queue_adapter || "async").to_sym
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default_url_options = {
     host: ENV.fetch('APP_HOST', 'localhost'),

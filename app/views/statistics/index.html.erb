@@ -1,73 +1,40 @@
 <% title t('statistics.title') %>
 
-<div class="row">
-
-  <div class="large-12 columns" role="content">
-    <h4><%= t('statistics.title') %></h4>
+<section class="page-hero statistics-hero">
+  <div>
+    <p class="section-heading__eyebrow"><%= t('statistics.title') %></p>
+    <h1><%= t('statistics.title') %></h1>
   </div>
+</section>
 
-  <div class="large-4 columns">
-    <div class="panel">
+<section class="statistics-grid statistics-grid--summary" role="content">
+  <article class="statistics-panel">
+    <%= render 'statistics/property_totals' %>
+  </article>
 
-      <%= render 'statistics/property_totals' %>
+  <article class="statistics-panel">
+    <%= render 'statistics/property_sizes' %>
+  </article>
 
-    </div>
-  </div>
+  <article class="statistics-panel">
+    <%= render 'statistics/website_statistics' %>
+  </article>
+</section>
 
-  <div class="large-4 columns">
-    <div class="panel">
+<section class="statistics-grid">
+  <article class="statistics-panel">
+    <%= render 'statistics/english_vs_chinese_chart' %>
+  </article>
 
-      <%= render 'statistics/property_sizes' %>
+  <article class="statistics-panel">
+    <%= render 'statistics/property_size_chart' %>
+  </article>
 
-    </div>
-  </div>
+  <article class="statistics-panel">
+    <%= render 'statistics/geographical_activity_chart' %>
+  </article>
 
-  <div class="large-4 columns">
-    <div class="panel">
-
-      <%= render 'statistics/website_statistics' %>
-
-    </div>
-  </div>
-
-</div>
-
-<div class="row">
-
-  <div class="large-6 columns">
-    <div class="panel">
-
-      <%= render 'statistics/english_vs_chinese_chart' %>
-
-    </div>
-  </div>
-
-  <div class="large-6 columns">
-    <div class="panel">
-
-      <%= render 'statistics/property_size_chart' %>
-
-    </div>
-  </div>
-
-</div>
-
-<div class="row">
-
-  <div class="large-6 columns">
-    <div class="panel">
-
-      <%= render 'statistics/geographical_activity_chart' %>
-
-    </div>
-  </div>
-
-  <div class="large-6 columns">
-    <div class="panel">
-
-      <%= render 'statistics/sale_vs_rent_chart' %>
-
-    </div>
-  </div>
-
-</div>
+  <article class="statistics-panel">
+    <%= render 'statistics/sale_vs_rent_chart' %>
+  </article>
+</section>

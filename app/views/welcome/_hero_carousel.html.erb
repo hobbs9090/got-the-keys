@@ -1,0 +1,26 @@
+<section class="hero-carousel site-hero site-hero--full-bleed" data-carousel data-auto-play="true" role="region" aria-label="<%= t('welcome.title') %>">
+  <div class="hero-carousel__viewport">
+    <button class="hero-carousel__control hero-carousel__control--previous" data-carousel-prev aria-label="<%= t('ui.welcome.carousel.previous') %>" type="button">
+      <span class="show-for-sr"><%= t("ui.welcome.carousel.previous") %></span>&#9664;&#65038;
+    </button>
+    <button class="hero-carousel__control hero-carousel__control--next" data-carousel-next aria-label="<%= t('ui.welcome.carousel.next') %>" type="button">
+      <span class="show-for-sr"><%= t("ui.welcome.carousel.next") %></span>&#9654;&#65038;
+    </button>
+
+    <ul class="hero-carousel__track">
+      <% slides.each_with_index do |slide, index| %>
+        <li class="hero-carousel__slide <%= "is-active" if index.zero? %>" data-carousel-slide aria-hidden="<%= index.zero? ? "false" : "true" %>">
+          <%= slide %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <nav class="hero-carousel__bullets" aria-label="<%= t('ui.welcome.carousel.next') %>">
+    <% labels.each_with_index do |label, index| %>
+      <button class="<%= "is-active" if index.zero? %>" data-carousel-bullet aria-current="<%= index.zero? ? "true" : "false" %>" data-slide="<%= index %>" type="button">
+        <span class="show-for-sr"><%= t("ui.welcome.carousel.#{label}") %></span>
+      </button>
+    <% end %>
+  </nav>
+</section>

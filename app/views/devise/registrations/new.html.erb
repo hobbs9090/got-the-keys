@@ -10,7 +10,7 @@
 
     <div class="auth-panel__callout">
       <p><%= t('devise.views.registrations.new.paragraph_3') %></p>
-      <%= button_tag t('devise.views.registrations.new.read_more'), type: 'button', class: 'button secondary hollow auth-panel__more', data: { open: 'registration-explainer' } %>
+      <%= button_tag t('devise.views.registrations.new.read_more'), type: 'button', class: 'button secondary hollow auth-panel__more', data: { modal_trigger: 'registration-explainer' } %>
     </div>
   </aside>
 
@@ -86,13 +86,9 @@
   </section>
 </section>
 
-<div class="reveal small auth-modal auth-modal--registration" id="registration-explainer" data-reveal>
-  <h4><%= t('devise.views.registrations.new.why_so_much') %></h4>
+<%= render "shared/modal", id: "registration-explainer", title: t('devise.views.registrations.new.why_so_much'), size: "small" do %>
   <p class="lead"><%= t('devise.views.registrations.new.paragraph_1') %></p>
   <p><%= t('devise.views.registrations.new.paragraph_2') %></p>
   <p><%= t('devise.views.registrations.new.paragraph_3') %></p>
   <p><%= t('devise.views.registrations.new.paragraph_4') %></p>
-  <button class="close-button" data-close aria-label="Close modal" type="button">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
+<% end %>

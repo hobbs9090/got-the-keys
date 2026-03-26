@@ -1,0 +1,68 @@
+.admin-layout {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.admin-sidebar {
+  background: linear-gradient(180deg, #112241 0%, #162f5d 100%);
+  color: #dfe8ff;
+  padding: 1.5rem;
+  position: sticky;
+  top: 0;
+}
+
+.admin-sidebar__brand-link {
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 2rem;
+}
+
+.admin-sidebar__eyebrow {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admin-topbar {
+  backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--color-shadow);
+  margin: 0 auto 1rem;
+  max-width: 1240px;
+  padding: 1rem 1.25rem;
+}
+
+.admin-topbar__actions {
+  align-items: center;
+  display: flex;
+  gap: 0.8rem;
+}
+
+.admin-topbar__user {
+  color: var(--color-muted);
+  font-weight: 700;
+}
+
+@media (max-width: 1100px) {
+  .admin-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-sidebar {
+    position: static;
+  }
+}
+
+@media (max-width: 760px) {
+  .admin-topbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
