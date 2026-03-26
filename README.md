@@ -107,6 +107,7 @@ Install locally:
 - Bundler `2.x`
 - Node.js `22+`
 - npm
+- Firefox
 - SQLite3 development libraries/tools
 
 The project includes `.ruby-version`, so `rbenv`, `asdf`, `mise`, or similar tools work well.
@@ -408,6 +409,8 @@ Run the main suite:
 ```bash
 bundle exec rspec
 ```
+
+The suite now includes one `js: true` system smoke test, which runs in headless Firefox via Selenium. If you have old precompiled assets lying around locally after frontend changes, refresh them with `npm run build` and `SECRET_KEY_BASE=dummy RAILS_ENV=test bundle exec rails assets:precompile`.
 
 Generate the richer Allure HTML report locally:
 
