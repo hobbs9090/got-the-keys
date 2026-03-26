@@ -28,15 +28,15 @@ Treat the app as ready for major extension when all of these are true:
 
 ### Tasks
 
-- [ ] Decide the primary test shape:
+- [x] Decide the primary test shape:
   request specs for server responses and auth/redirect behaviour
   system specs for browser journeys and JavaScript behaviour
   model/service/job/helper specs for unit-level logic
-- [ ] Migrate remaining controller specs under `spec/controllers/` into request specs.
-- [ ] Replace broad feature smoke specs under `spec/features/` with focused system specs.
-- [ ] Remove or rewrite commented-out test files such as `spec/features/visit_pages_zh_spec.rb`.
-- [ ] Remove skipped placeholder files such as `spec/models/user_spec_old.rb`.
-- [ ] Add a short README note documenting the preferred spec types for new work.
+- [x] Migrate remaining controller specs under `spec/controllers/` into request specs.
+- [x] Replace broad feature smoke specs under `spec/features/` with focused system specs.
+- [x] Remove or rewrite commented-out test files such as `spec/features/visit_pages_zh_spec.rb`.
+- [x] Remove skipped placeholder files such as `spec/models/user_spec_old.rb`.
+- [x] Add a short README note documenting the preferred spec types for new work.
 
 ### Repo Hotspots
 
@@ -55,13 +55,13 @@ Treat the app as ready for major extension when all of these are true:
 
 ### Tasks
 
-- [ ] Run a route/controller/view inventory and mark every public surface as:
+- [x] Run a route/controller/view inventory and mark every public surface as:
   active product surface
   training/demo surface
   orphaned legacy surface
-- [ ] Remove clearly orphaned code paths, starting with the `aardvarks` surface if it is no longer intentionally part of the app.
-- [ ] Remove helpers, views, translations, and specs that only support deleted surfaces.
-- [ ] Confirm every remaining route has a clear purpose in README or QA docs.
+- [x] Remove clearly orphaned code paths, starting with the `aardvarks` surface if it is no longer intentionally part of the app.
+- [x] Remove helpers, views, translations, and specs that only support deleted surfaces.
+- [x] Confirm every remaining route has a clear purpose in README or QA docs.
 
 ### Repo Hotspots
 

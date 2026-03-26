@@ -90,6 +90,8 @@ It is designed to feel like a credible small business product while also being p
   Recommended modernization sequence for jobs, frontend stack, CSS/view components, and deployment posture.
 - `docs/PRE_EXTENSION_CHECKLIST.md`
   Actionable checklist to complete before a major new extension phase.
+- `docs/SURFACE_INVENTORY.md`
+  Current classification of top-level app-owned routes as product, demo/training, or legacy support surfaces.
 - `docs/QA_TRAINING.md`
   QA walkthroughs, selectors, scenarios, and known credentials.
 

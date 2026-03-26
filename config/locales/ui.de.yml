@@ -425,24 +425,3 @@ de:
           apply_imported_scenario: "Importiertes Szenario anwenden"
           back_to_import: "Zurück zum Import"
           raw_yaml: "Rohes YAML"
-    aardvarks:
-      index:
-        title: "Aardvarks auflisten"
-        new: "Neues Aardvark"
-      new:
-        title: "Neues Aardvark"
-      edit:
-        title: "Aardvark bearbeiten"
-      actions:
-        show: "Anzeigen"
-        edit: "Bearbeiten"
-        destroy: "Löschen"
-        back: "Zurück"
-        confirm_destroy: "Sind Sie sicher?"
-      form:
-        error_summary:
-          one: "1 Fehler hat das Speichern dieses Aardvarks verhindert:"
-          other: "%{count} Fehler haben das Speichern dieses Aardvarks verhindert:"
-      flash:
-        created: "Aardvark wurde erfolgreich erstellt."
-        updated: "Aardvark wurde erfolgreich aktualisiert."

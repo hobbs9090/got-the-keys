@@ -425,24 +425,3 @@ it:
           apply_imported_scenario: "Applica scenario importato"
           back_to_import: "Torna all'importazione"
           raw_yaml: "YAML grezzo"
-    aardvarks:
-      index:
-        title: "Elenco aardvark"
-        new: "Nuovo aardvark"
-      new:
-        title: "Nuovo aardvark"
-      edit:
-        title: "Modifica aardvark"
-      actions:
-        show: "Mostra"
-        edit: "Modifica"
-        destroy: "Elimina"
-        back: "Indietro"
-        confirm_destroy: "Sei sicuro?"
-      form:
-        error_summary:
-          one: "1 errore ha impedito il salvataggio di questo aardvark:"
-          other: "%{count} errori hanno impedito il salvataggio di questo aardvark:"
-      flash:
-        created: "Aardvark creato correttamente."
-        updated: "Aardvark aggiornato correttamente."
