@@ -1,15 +1,78 @@
-<% title "#{@property.address_line_1} - #{t('floor_plans.title')}" %>
+<% title "#{@property.address_line_1} floor plans" %>
 
-<div class="row">
-
-  <div class="large-9 columns" role="content">
-
-    <h4><%= t('floor_plans.floor_plans_for') %> <%= link_to(@property.address_line_1, @property) %></h4>
-
-    <%= render "shared/under_construction" %>
-
+<section class="page-hero">
+  <div>
+    <p class="page-hero__eyebrow">Listing assets</p>
+    <h1>Manage floor plans</h1>
+    <p>Keep brochure attachments in order so buyers and tenants can review the layout quickly.</p>
   </div>
+</section>
 
-  <%= render "properties/property_sidebar" %>
+<section class="page-section">
+  <article class="property-panel">
+    <h2>Add a floor plan</h2>
+    <%= render "shared/errors", object: @new_floor_plan %>
 
-</div>
+    <%= form_with model: [@property, @new_floor_plan] do |f| %>
+      <div class="form-grid">
+        <div>
+          <%= f.label :label, "Label" %>
+          <%= f.text_field :label, placeholder: "Ground floor" %>
+        </div>
+        <div>
+          <%= f.label :floor_plans, "Filename" %>
+          <%= f.text_field :floor_plans, placeholder: "ground_floor_plan.pdf" %>
+        </div>
+        <div>
+          <%= f.label :position, "Display order" %>
+          <%= f.number_field :position, min: 0, step: 1 %>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <%= f.submit "Add floor plan", class: "button primary" %>
+        <%= link_to "Back to listing", edit_property_path(@property), class: "button hollow secondary" %>
+      </div>
+    <% end %>
+  </article>
+
+  <article class="property-panel">
+    <h2>Current floor plans</h2>
+    <% if @floor_plans.any? %>
+      <div class="admin-list">
+        <% @floor_plans.each do |floor_plan| %>
+          <% floor_plan_form = floor_plan == @edited_floor_plan ? @edited_floor_plan : floor_plan %>
+          <div class="admin-list__item">
+            <div class="property-panel">
+              <%= form_with model: [@property, floor_plan_form], method: :patch do |f| %>
+                <div class="form-grid">
+                  <div>
+                    <%= f.label :label, "Label" %>
+                    <%= f.text_field :label %>
+                  </div>
+                  <div>
+                    <%= f.label :floor_plans, "Filename" %>
+                    <%= f.text_field :floor_plans %>
+                  </div>
+                  <div>
+                    <%= f.label :position, "Display order" %>
+                    <%= f.number_field :position, min: 0, step: 1 %>
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <%= f.submit "Save", class: "button primary hollow" %>
+                  <%= link_to "Remove",
+                              property_floor_plan_path(@property, floor_plan),
+                              class: "button alert hollow",
+                              data: { turbo_method: :delete, turbo_confirm: "Remove this floor plan?" } %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="empty-copy">No floor plans have been added yet.</p>
+    <% end %>
+  </article>
+</section>

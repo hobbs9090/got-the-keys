@@ -3,6 +3,8 @@ class Admin::DemoScenariosController < Admin::BaseController
 
   def index
     @scenarios = @scenario_loader.scenarios
+    @scenario_groups = @scenarios.group_by { |scenario| scenario.dig(:qa, :family) }
+    @quick_reset_scenarios = @scenarios.select { |scenario| scenario.dig(:qa, :quick_reset) }
     @latest_run = DemoScenarioRun.recent_first.first
     @diagnostics = diagnostics_payload
   end
@@ -80,8 +82,11 @@ class Admin::DemoScenariosController < Admin::BaseController
       property_count: Property.count,
       user_count: User.count,
       appointment_count: Appointment.count,
+      enquiry_count: Enquiry.count,
       notification_count: NotificationLog.count,
-      last_demo_action: DemoScenarioRun.recent_first.first&.created_at
+      last_demo_action: DemoScenarioRun.recent_first.first&.created_at,
+      mail_delivery_mode: ActionMailer::Base.delivery_method.to_s,
+      job_adapter: ActiveJob::Base.queue_adapter.class.name.demodulize.underscore
     }
   end
 

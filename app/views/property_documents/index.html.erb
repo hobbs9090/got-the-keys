@@ -1,0 +1,103 @@
+<% title "Documents for #{@property.address_line_1}" %>
+
+<section class="property-layout">
+  <article class="property-panel">
+    <div class="section-heading">
+      <div>
+        <p class="section-heading__eyebrow">Seller workspace</p>
+        <h2>Manage documents</h2>
+      </div>
+
+      <div class="section-heading__actions">
+        <%= link_to "Back to listing", property_path(@property), class: "button hollow secondary" %>
+      </div>
+    </div>
+
+    <% if @property_documents.any? %>
+      <div class="admin-list">
+        <% @property_documents.each do |document| %>
+          <div class="admin-list__item">
+            <div>
+              <strong><%= document.title %></strong>
+              <p><%= document.category_label %> · <%= document.visibility.humanize %> · <%= document.file_name %></p>
+            </div>
+            <div class="admin-inline-actions">
+              <%= link_to "Download", download_property_property_document_path(@property, document), class: "button hollow secondary" %>
+              <%= button_to "Remove", property_property_document_path(@property, document), method: :delete, class: "button alert hollow" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="empty-copy">No brochure or compliance documents have been added yet.</p>
+    <% end %>
+  </article>
+
+  <aside class="property-booking-panel">
+    <h2>Add document</h2>
+
+    <%= form_with model: [@property, @new_property_document] do |f| %>
+      <%= render "shared/errors", object: @new_property_document %>
+
+      <div class="form-grid">
+        <div class="form-grid__full">
+          <%= f.label :title, "Title" %>
+          <%= f.text_field :title %>
+        </div>
+        <div class="form-grid__full">
+          <%= f.label :file_name, "File name" %>
+          <%= f.text_field :file_name, placeholder: "brochure.pdf" %>
+        </div>
+        <div>
+          <%= f.label :category, "Category" %>
+          <%= f.select :category, property_document_category_options %>
+        </div>
+        <div>
+          <%= f.label :visibility, "Visibility" %>
+          <%= f.select :visibility, property_document_visibility_options %>
+        </div>
+        <div>
+          <%= f.label :position, "Position" %>
+          <%= f.number_field :position, min: 0 %>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <%= f.submit "Add document", class: "button primary expanded" %>
+      </div>
+    <% end %>
+
+    <% if defined?(@edited_property_document) && @edited_property_document.present? %>
+      <hr>
+      <h3>Edit document</h3>
+      <%= form_with model: [@property, @edited_property_document] do |f| %>
+        <div class="form-grid">
+          <div class="form-grid__full">
+            <%= f.label :title, "Title" %>
+            <%= f.text_field :title %>
+          </div>
+          <div class="form-grid__full">
+            <%= f.label :file_name, "File name" %>
+            <%= f.text_field :file_name %>
+          </div>
+          <div>
+            <%= f.label :category, "Category" %>
+            <%= f.select :category, property_document_category_options %>
+          </div>
+          <div>
+            <%= f.label :visibility, "Visibility" %>
+            <%= f.select :visibility, property_document_visibility_options %>
+          </div>
+          <div>
+            <%= f.label :position, "Position" %>
+            <%= f.number_field :position, min: 0 %>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <%= f.submit "Save document", class: "button primary expanded" %>
+        </div>
+      <% end %>
+    <% end %>
+  </aside>
+</section>

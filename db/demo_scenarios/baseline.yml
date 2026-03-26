@@ -1,6 +1,18 @@
 key: baseline
 name: Baseline Demo Estate
 description: A balanced day-to-day dataset with mixed sale and rental listings, multiple appointment statuses, and known credentials for training.
+qa:
+  family: happy_path
+  intended_journey: Baseline end-to-end walkthrough covering catalogue browse, booking, admin confirmation, and seller visibility.
+  complexity: foundational
+  risk_type: workflow
+  locale_coverage: [en]
+  trainer_notes:
+    - Use this as the default onboarding pack for new testers and browser agents.
+  expected_assertions:
+    - The active scenario badge should read Baseline.
+    - Known admin and seller credentials should appear in the QA guide.
+  quick_reset: true
 booking_configuration:
   slot_duration_minutes: 45
   lead_time_hours: 4
@@ -61,8 +73,18 @@ properties:
     bedrooms: 4
     bathrooms: 2
     sale_status: For Sale
+    listing_state: published
     asking_price: 865000
     featured: true
+    tenure: Freehold
+    council_tax_band: G
+    furnishing: Unfurnished
+    available_from: 2026-04-15
+    parking: Driveway and garage
+    outdoor_space: Landscaped rear garden
+    epc_rating: C
+    floor_area_sq_ft: 1890
+    pets_allowed: true
   - key: tunbridge_garden_flat
     owner_email: daniel.mercer@example.com
     address_line_1: Flat 3, 44 Mount Ephraim
@@ -77,8 +99,19 @@ properties:
     bedrooms: 2
     bathrooms: 1
     sale_status: For Sale
+    listing_state: under_offer
     asking_price: 435000
     featured: true
+    tenure: Leasehold
+    council_tax_band: D
+    furnishing: Furnished
+    available_from: 2026-05-01
+    parking: Residents permit
+    outdoor_space: Private terrace
+    epc_rating: B
+    floor_area_sq_ft: 920
+    service_charge_amount: 2400
+    lease_length_years: 112
   - key: guildford_townhouse
     owner_email: matthew.wells@example.com
     address_line_1: 72 Quarry Street
@@ -93,8 +126,15 @@ properties:
     bedrooms: 3
     bathrooms: 2
     sale_status: For Sale
+    listing_state: review_pending
     asking_price: 675000
     featured: false
+    tenure: Freehold
+    council_tax_band: E
+    parking: Permit parking
+    outdoor_space: Courtyard
+    epc_rating: D
+    floor_area_sq_ft: 1360
   - key: croydon_rental_loft
     owner_email: lucy.mcclure@example.com
     address_line_1: Apartment 11, 9 Park Lane
@@ -109,8 +149,61 @@ properties:
     bedrooms: 2
     bathrooms: 2
     sale_status: For Rent
+    listing_state: let_agreed
     asking_price: 1950
     featured: false
+    furnishing: Part furnished
+    available_from: 2026-04-25
+    parking: Secure underground bay
+    outdoor_space: Juliet balcony
+    epc_rating: B
+    floor_area_sq_ft: 980
+    deposit_amount: 2250
+    pets_allowed: false
+photos:
+  - property_key: sevenoaks_family_home
+    image_filename: hero_1.jpg
+    caption: Rear terrace and garden
+    position: 1
+    primary: true
+  - property_key: tunbridge_garden_flat
+    image_filename: hero_2.jpg
+    caption: Living room opening to terrace
+    position: 1
+    primary: true
+  - property_key: croydon_rental_loft
+    image_filename: hero_3.jpg
+    caption: Open-plan lounge
+    position: 1
+    primary: true
+floor_plans:
+  - property_key: sevenoaks_family_home
+    floor_plans: cedar-road-ground-floor.pdf
+    label: Ground floor
+    position: 1
+  - property_key: tunbridge_garden_flat
+    floor_plans: mount-ephraim-layout.pdf
+    label: Apartment layout
+    position: 1
+property_documents:
+  - property_key: sevenoaks_family_home
+    title: Sales brochure
+    file_name: cedar-road-brochure.pdf
+    category: brochure
+    visibility: public
+    position: 1
+  - property_key: sevenoaks_family_home
+    title: EPC certificate
+    file_name: cedar-road-epc.pdf
+    category: epc
+    visibility: public
+    position: 2
+  - property_key: croydon_rental_loft
+    title: Landlord compliance pack
+    file_name: park-lane-landlord-pack.pdf
+    category: landlord_attachment
+    visibility: private
+    position: 1
 availability_windows:
   - property_key: sevenoaks_family_home
     starts_at: "today+7d 09:00"
@@ -185,6 +278,7 @@ appointments:
     scheduled_at: "today-5d 10:00"
     duration_minutes: 45
     status: completed
+    visit_outcome: feedback_requested
     notes: Interested in moving before the end of April.
     internal_notes: Strong fit for the property and requested application paperwork.
   - property_key: croydon_rental_loft
@@ -198,3 +292,21 @@ appointments:
     status: no_show
     notes: Please call if I am delayed.
     internal_notes: Did not arrive and could not be reached after two calls.
+enquiries:
+  - property_key: sevenoaks_family_home
+    assigned_admin_email: steven@gotthekeys.com
+    customer_name: Emily Carter
+    customer_email: emily.carter@example.com
+    customer_phone: "07700 901111"
+    source_type: brochure_request
+    message: Please send over the brochure and let me know whether the study could work as a downstairs bedroom for an older parent.
+    status: new
+  - property_key: croydon_rental_loft
+    assigned_admin_email: stevenhobbs@meeane.co.uk
+    customer_name: Leon Grant
+    customer_email: leon.grant@example.com
+    customer_phone: ""
+    source_type: letting_enquiry
+    message: I am relocating for work in May and want to check the move-in timing, furnished inventory, and whether there is flexibility on the initial tenancy length.
+    status: contacted
+    internal_notes: Replied with current availability and referencing outline.

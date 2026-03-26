@@ -6,15 +6,22 @@ class Property < ApplicationRecord
     for_rent: 'For Rent'
   }.freeze
   SALE_STATUS = SALE_STATUSES.values.freeze
+  LISTING_STATES = %w[draft review_pending published under_offer let_agreed sold let withdrawn].freeze
+  PUBLIC_LISTING_STATES = %w[published under_offer let_agreed].freeze
   SORT_OPTIONS = %w[recommended newest price_low price_high bedrooms_high].freeze
 
   belongs_to :user, counter_cache: true
 
   has_many :photos, dependent: :destroy
   has_many :floor_plans, dependent: :destroy
+  has_many :property_documents, dependent: :destroy
   has_many :viewing_times, dependent: :destroy
   has_many :availability_windows, dependent: :destroy
   has_many :appointments, dependent: :destroy
+  has_many :enquiries, dependent: :destroy
+  has_many :offers, dependent: :destroy
+  has_many :rental_applications, dependent: :destroy
+  has_many :audit_logs, dependent: :destroy
 
   validates :address_line_1, :town_city, :county, :postcode, :country,
             :property_description, :bedrooms, :sale_status, :asking_price,
@@ -34,35 +41,42 @@ class Property < ApplicationRecord
               message: 'must reference a GIF, JPG, PNG, or SVG image'
             }
   validates :sale_status, inclusion: { in: SALE_STATUS }, allow_blank: true
+  validates :listing_state, inclusion: { in: LISTING_STATES }
+  validates :tenure, :council_tax_band, :furnishing, :parking, :outdoor_space, :epc_rating, length: { maximum: 60 }, allow_blank: true
+  validates :floor_area_sq_ft, :deposit_amount, :service_charge_amount, :lease_length_years,
+            numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_blank: true
+
+  before_validation :apply_listing_defaults
 
   scope :for_sale, -> { where(sale_status: SALE_STATUSES[:for_sale]) }
   scope :for_rent, -> { where(sale_status: SALE_STATUSES[:for_rent]) }
   scope :featured, -> { where(featured: true) }
+  scope :publicly_visible, -> { where(listing_state: PUBLIC_LISTING_STATES) }
   scope :recommended_order, -> { order(featured: :desc, updated_at: :desc) }
 
   class << self
     def all_properties_total
-      count
+      publicly_visible.count
     end
 
     def cached_all_properties_total
-      Rails.cache.fetch([name, 'all_properties_total', maximum(:updated_at)]) { count }
+      Rails.cache.fetch([name, 'all_properties_total', publicly_visible.maximum(:updated_at)]) { publicly_visible.count }
     end
 
     def for_sale_total
-      for_sale.count
+      publicly_visible.for_sale.count
     end
 
     def cached_for_sale_total
-      Rails.cache.fetch([name, 'for_sale_total', maximum(:updated_at)]) { for_sale.count }
+      Rails.cache.fetch([name, 'for_sale_total', publicly_visible.maximum(:updated_at)]) { publicly_visible.for_sale.count }
     end
 
     def for_rent_total
-      for_rent.count
+      publicly_visible.for_rent.count
     end
 
     def cached_for_rent_total
-      Rails.cache.fetch([name, 'for_rent_total', maximum(:updated_at)]) { for_rent.count }
+      Rails.cache.fetch([name, 'for_rent_total', publicly_visible.maximum(:updated_at)]) { publicly_visible.for_rent.count }
     end
 
     def search(query, sale_status:)
@@ -154,7 +168,105 @@ class Property < ApplicationRecord
     [town_city, county].reject(&:blank?).join(', ')
   end
 
-  def next_available_slots(limit: 6, from: Time.current)
-    AppointmentAvailability.new(property: self, from: from).next_slots(limit: limit)
+  def publicly_visible?
+    listing_state.in?(PUBLIC_LISTING_STATES)
+  end
+
+  def listing_state_humanized
+    listing_state.to_s.tr("_", " ").humanize
+  end
+
+  def available_now?
+    available_from.blank? || available_from <= Date.current
+  end
+
+  def primary_photo
+    photos.ordered.first
+  end
+
+  def ordered_photos
+    photos.ordered
+  end
+
+  def ordered_floor_plans
+    floor_plans.ordered
+  end
+
+  def ordered_documents
+    property_documents.ordered
+  end
+
+  def public_documents
+    property_documents.publicly_visible.ordered
+  end
+
+  def hero_image_name
+    primary_photo&.image_filename.presence || image_file_name
+  end
+
+  def listing_completeness_checks
+    [
+      {
+        key: :headline,
+        label: "Headline and summary",
+        complete: listing_tagline.present? && property_description.to_s.length >= 80
+      },
+      {
+        key: :media,
+        label: "Photography",
+        complete: ordered_photos.any? || image_file_name.present?
+      },
+      {
+        key: :floor_plan,
+        label: "Floor plan",
+        complete: ordered_floor_plans.any?
+      },
+      {
+        key: :facts,
+        label: "Key facts",
+        complete: [tenure, council_tax_band, epc_rating, floor_area_sq_ft].all?(&:present?)
+      },
+      {
+        key: :contact,
+        label: "Contact readiness",
+        complete: user.email.present? && user.mobile_number.present?
+      }
+    ]
+  end
+
+  def listing_completeness_score
+    listing_completeness_checks.count { |check| check.fetch(:complete) }
+  end
+
+  def listing_completeness_percentage
+    ((listing_completeness_score.to_f / listing_completeness_checks.size) * 100).round
+  end
+
+  def ready_for_review?
+    listing_completeness_checks.all? { |check| check.fetch(:complete) }
+  end
+
+  def next_available_slots(limit: 6, from: Time.current, excluding_appointment: nil)
+    AppointmentAvailability.new(property: self, from: from).next_slots(limit: limit, excluding_appointment:)
+  end
+
+  def activity_timeline(limit: nil)
+    timeline = audit_logs.recent_first
+    limit.present? ? timeline.limit(limit) : timeline
+  end
+
+  def recently_updated?
+    updated_at.present? && updated_at >= 7.days.ago
+  end
+
+  def stale_listing?
+    updated_at.present? && updated_at < 21.days.ago
+  end
+
+  private
+
+  def apply_listing_defaults
+    self.listing_state ||= "published"
+    self.published_at ||= Time.current if listing_state.in?(PUBLIC_LISTING_STATES) && published_at.blank?
   end
 end

@@ -2,6 +2,10 @@
 
 This app is intended to deploy cleanly to a conventional Apache + Passenger shared host without Redis, Sidekiq, Docker, or any always-on worker.
 
+The current notification path uses Active Job with the Rails `:async` adapter on this host. That improves request latency for appointment emails without requiring extra infrastructure, but it is not a durable worker system.
+
+The explicit policy for what is and is not safe to run on that adapter lives in `docs/BACKGROUND_JOB_POLICY.md`.
+
 ## Current Target
 
 This repo is now configured with these deployment defaults:
@@ -52,6 +56,7 @@ Optional but recommended:
 - `FORCE_SSL=true`
 - `ASSUME_SSL=true`
 - `RAILS_LOG_LEVEL=info`
+- `ACTIVE_JOB_QUEUE_ADAPTER=async` if you want to set the shared-host default explicitly
 - `BOOKINGS_FROM_EMAIL=sales@gotthekeys.com`
 - `APP_BUILD_SHA`
 - `APP_BUILD_NUMBER`
@@ -68,6 +73,8 @@ SMTP, if available:
 - `SMTP_STARTTLS_AUTO`
 
 If `SMTP_ADDRESS` is not set, the Rails `production` environment falls back to file delivery in `tmp/mails`, and the app will still log notifications in the admin UI.
+
+Changing `ACTIVE_JOB_QUEUE_ADAPTER` alone does not create a durable job system. If you ever switch away from `:async`, do it as part of a deliberate backend and worker-process rollout, not as a one-line environment tweak on the existing shared host.
 
 ## One-Time Server Preparation
 

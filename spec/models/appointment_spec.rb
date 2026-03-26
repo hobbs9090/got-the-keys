@@ -1,30 +1,31 @@
 require "rails_helper"
 
 RSpec.describe Appointment do
+  include ActiveJob::TestHelper
+
   let(:user) { FactoryBot.create(:user) }
   let(:admin) { FactoryBot.create(:admin, email: "steven@gotthekeys.com") }
-  let(:property) { user.properties.create!(property_attributes(address_line_1: "18 Cedar Road")) }
+  let(:property) { FactoryBot.create(:property, user:, address_line_1: "18 Cedar Road") }
 
-  def next_open_slot(hour: 10, minutes: 0)
-    configuration = BookingConfiguration.current
-    date = Date.current
-
-    loop do
-      candidate = Time.zone.local(date.year, date.month, date.day, hour, minutes)
-      return candidate if configuration.open_on?(date) && candidate > Time.current + configuration.lead_time_hours.hours
-
-      date += 1.day
-    end
+  before do
+    clear_enqueued_jobs
+    clear_performed_jobs
   end
 
   it "generates public access fields and records a creation event" do
-    appointment = property.appointments.create!(
-      customer_name: "Ruby Owen",
-      customer_email: "ruby.owen@example.com",
-      customer_phone: "07700 930001",
-      requested_time: next_open_slot,
-      notes: "Please confirm parking arrangements."
-    )
+    appointment = nil
+
+    expect do
+      appointment = FactoryBot.create(
+        :appointment,
+        property:,
+        customer_name: "Ruby Owen",
+        customer_email: "ruby.owen@example.com",
+        customer_phone: "07700 930001",
+        requested_time: next_booking_slot,
+        notes: "Please confirm parking arrangements."
+      )
+    end.to have_enqueued_job(AppointmentNotificationJob).with(kind_of(Integer), "created")
 
     expect(appointment.public_reference).to start_with("GTK-")
     expect(appointment.access_token).to be_present
@@ -33,28 +34,32 @@ RSpec.describe Appointment do
   end
 
   it "prevents overlapping active appointments on the same property" do
-    slot = next_open_slot(hour: 11)
+    slot = next_booking_slot(hour: 11)
 
-    property.appointments.create!(
+    FactoryBot.create(
+      :appointment,
+      :confirmed,
+      property:,
       admin: admin,
       customer_name: "Alice Morgan",
       customer_email: "alice.morgan@example.com",
       customer_phone: "07700 930002",
       requested_time: slot,
       scheduled_at: slot,
-      duration_minutes: 45,
-      status: "confirmed"
+      duration_minutes: 45
     )
 
-    overlapping = property.appointments.new(
+    overlapping = FactoryBot.build(
+      :appointment,
+      :confirmed,
+      property:,
       admin: admin,
       customer_name: "Ben Storey",
       customer_email: "ben.storey@example.com",
       customer_phone: "07700 930003",
       requested_time: slot,
       scheduled_at: slot,
-      duration_minutes: 45,
-      status: "confirmed"
+      duration_minutes: 45
     )
 
     expect(overlapping).not_to be_valid
@@ -62,28 +67,34 @@ RSpec.describe Appointment do
   end
 
   it "creates a status event when the appointment is updated" do
-    appointment = property.appointments.create!(
+    slot = next_booking_slot(hour: 12)
+    appointment = FactoryBot.create(
+      :appointment,
+      property:,
       customer_name: "Chloe White",
       customer_email: "chloe.white@example.com",
       customer_phone: "07700 930004",
-      requested_time: next_open_slot(hour: 12),
-      scheduled_at: next_open_slot(hour: 12),
-      duration_minutes: 45,
-      status: "pending"
+      requested_time: slot,
+      scheduled_at: slot,
+      duration_minutes: 45
     )
 
-    appointment.update!(status: "confirmed", admin: admin)
+    expect do
+      appointment.update!(status: "confirmed", admin: admin)
+    end.to have_enqueued_job(AppointmentNotificationJob).with(appointment.id, "confirmed")
 
     expect(appointment.appointment_events.count).to eq(2)
     expect(appointment.appointment_events.order(:created_at).last.event_type).to eq("confirmed")
   end
 
   it "requires a customer phone number" do
-    appointment = property.appointments.new(
+    appointment = FactoryBot.build(
+      :appointment,
+      property:,
       customer_name: "Mia Hart",
       customer_email: "mia.hart@example.com",
       customer_phone: "",
-      requested_time: next_open_slot(hour: 13)
+      requested_time: next_booking_slot(hour: 13)
     )
 
     expect(appointment).not_to be_valid
@@ -91,14 +102,44 @@ RSpec.describe Appointment do
   end
 
   it "rejects an invalid customer phone number" do
-    appointment = property.appointments.new(
+    appointment = FactoryBot.build(
+      :appointment,
+      property:,
       customer_name: "Mia Hart",
       customer_email: "mia.hart@example.com",
       customer_phone: "invalid-number",
-      requested_time: next_open_slot(hour: 13)
+      requested_time: next_booking_slot(hour: 13)
     )
 
     expect(appointment).not_to be_valid
     expect(appointment.errors[:customer_phone]).to include("must be a valid phone number")
+  end
+
+  it "supports customer self-service before the appointment expires" do
+    appointment = FactoryBot.create(
+      :appointment,
+      property:,
+      requested_time: next_booking_slot(hour: 15),
+      scheduled_at: next_booking_slot(hour: 15)
+    )
+
+    expect(appointment.manageable_by_customer?).to be(true)
+    expect(appointment.valid_access_token?(appointment.access_token)).to be(true)
+  end
+
+  it "records a visit outcome event when follow-up progress is updated" do
+    appointment = FactoryBot.create(
+      :appointment,
+      :completed,
+      property:,
+      admin: admin,
+      requested_time: next_booking_slot(hour: 10, from: Time.zone.local(2026, 3, 29, 8, 0)),
+      scheduled_at: next_booking_slot(hour: 10, from: Time.zone.local(2026, 3, 29, 8, 0))
+    )
+
+    appointment.update!(visit_outcome: "feedback_requested", admin: admin)
+
+    expect(appointment.timeline.last.event_type).to eq("feedback_requested")
+    expect(appointment.timeline.last.message).to include("feedback requested")
   end
 end

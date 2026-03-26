@@ -2,13 +2,19 @@
 
 GotTheKeys is a modern Rails 8 property website, appointment-booking app, and QA automation training harness.
 
-It is designed to feel like a credible small business product while also being predictable enough for acceptance testing, browser automation exercises, and trainer-led demos. The app stays server-rendered, uses Foundation Sites on the frontend, and remains practical to deploy on an Apache + Passenger shared host.
+It is designed to feel like a credible small business product while also being predictable enough for acceptance testing, browser automation exercises, and trainer-led demos. The app stays server-rendered, uses Foundation Sites as a CSS layer with bundled Turbo/vanilla JavaScript, and remains practical to deploy on an Apache + Passenger shared host.
 
 ## What The App Does
 
-- Public marketing and property pages with responsive Foundation styling.
+- Public marketing and property pages with responsive componentized styling.
 - Property catalogue, sale/rent filters, sorting, and richer listing cards.
+- Listing lifecycle and seller workspace features including completeness checks, listing moderation states, and marketing asset management.
+- Property enquiry capture, admin lead inbox triage, and seller-side recent lead visibility.
 - Public viewing-request flow on each property page.
+- Customer self-service viewing management, grouped viewing support, reminder emails with calendar attachments, and richer admin booking filters.
+- Sales offers and rental applications with admin progression boards, decision history, and seller-side visibility.
+- Public brochure and compliance-document downloads with seller-side document management.
+- Saved-search capture, trust cues, branch profile content, and property/lead activity timelines.
 - Full appointment domain with:
   - `pending`
   - `confirmed`
@@ -26,6 +32,7 @@ It is designed to feel like a credible small business product while also being p
   - demo-data controls
   - QA guide
 - Deterministic YAML-backed demo scenarios for repeatable QA training.
+- Admin scenario operations console with trainer notes, quick-reset packs, diagnostics, and selector registry.
 - Optional AI-assisted larger data generation for catalogue population.
 
 ## Current Stack
@@ -34,13 +41,21 @@ It is designed to feel like a credible small business product while also being p
 - Rails `8.1.3`
 - SQLite `2.1.x`
 - Puma `7.2.x`
-- Foundation Sites `6.9.0`
-- `jsbundling-rails` with `esbuild`
+- Active Job for notification delivery
+- Foundation Sites `6.9.0` as the CSS framework layer
+- `jsbundling-rails` with `esbuild` for all app-authored JavaScript
 - `cssbundling-rails` with `sass`
 - Turbo Rails
 - Devise for `User` and `Admin`
 - RSpec, Capybara, Factory Bot, Faker
 - optional OpenAI enrichment via `openai-ruby`
+
+## Modernization Status
+
+- Appointment notifications now enqueue `AppointmentNotificationJob` after commit instead of sending synchronously on the request path.
+- The frontend runtime now flows through the bundled `app/javascript/application.js`; legacy Sprockets-managed JavaScript and app-authored jQuery/Foundation JS usage have been removed.
+- Component and page styles now live under `app/assets/stylesheets/components/` and `app/assets/stylesheets/pages/`, with matching partials in `app/views/`.
+- SQLite plus Apache/Passenger shared hosting remain the default deployment posture until measured scale or operational pain justifies a move.
 
 ## App Versioning
 
@@ -63,15 +78,33 @@ It is designed to feel like a credible small business product while also being p
 
 - `app/models/`
   Public catalogue models plus the booking domain:
-  `Appointment`, `AppointmentEvent`, `AvailabilityWindow`, `BookingConfiguration`, `NotificationLog`, and `DemoScenarioRun`.
+  `Appointment`, `AppointmentEvent`, `AvailabilityWindow`, `BookingConfiguration`, `NotificationLog`, `PropertyDocument`, `AuditLog`, `SavedSearch`, and `DemoScenarioRun`.
 - `app/controllers/admin/`
   The password-protected admin workspace.
+- `app/jobs/`
+  Active Job boundaries for background work such as appointment notifications.
+- `app/javascript/`
+  The bundled frontend runtime, including Turbo plus app-authored controllers/modules.
+- `app/assets/stylesheets/components/` and `app/assets/stylesheets/pages/`
+  Component and page-level SCSS imported by the bundled `application.scss`.
 - `app/services/demo_data/`
   Scenario catalog, validation, loading, export, and AI-assisted data generation.
 - `db/demo_scenarios/`
   Version-controlled scenario definitions used by `db:seed` and the admin demo-data UI.
 - `docs/NIRVANA_DEPLOYMENT.md`
   Apache + Passenger deployment guide for shared hosting.
+- `docs/BACKGROUND_JOB_POLICY.md`
+  Explicit rules for what background work is safe on the current `:async` setup and when to revisit a durable backend.
+- `docs/MODERNIZATION_AUDIT.md`
+  Recommended modernization sequence for jobs, frontend stack, CSS/view components, and deployment posture.
+- `docs/CODEX_EXPANSION_PLAN.md`
+  Phased product and QA-harness growth plan for making the app feel more like a credible sales and lettings platform.
+- `docs/PRE_EXTENSION_CHECKLIST.md`
+  Actionable checklist to complete before a major new extension phase.
+- `docs/BOOKING_ARCHITECTURE.md`
+  Small architecture map for the booking domain, including core records, flow ownership, and extension seams.
+- `docs/SURFACE_INVENTORY.md`
+  Current classification of top-level app-owned routes as product, demo/training, or legacy support surfaces.
 - `docs/QA_TRAINING.md`
   QA walkthroughs, selectors, scenarios, and known credentials.
 
@@ -85,6 +118,7 @@ Install locally:
 - Bundler `2.x`
 - Node.js `22+`
 - npm
+- Firefox
 - SQLite3 development libraries/tools
 
 The project includes `.ruby-version`, so `rbenv`, `asdf`, `mise`, or similar tools work well.
@@ -105,6 +139,14 @@ npm run build
 `bin/install_git_hooks` configures this repo to use the tracked `.githooks/pre-push` hook, which runs `bundle exec rspec` and blocks the push if the suite fails. Each pre-push run also saves its console output to `tmp/rspec/pre_push/latest.log` so you can review the full output afterward.
 
 GitHub Actions also enforces that product code changes under `app/` or `lib/` include matching updates under `spec/`. Static assets under `app/assets/` and Rake tasks under `lib/tasks/` are exempt from that check.
+GitHub Actions also blocks new public actions added to top-level controllers under `app/controllers/` unless the same change includes request or system spec updates.
+
+Preferred spec types for new work:
+
+- request specs for server-rendered responses, redirects, auth boundaries, and HTML contracts
+- system specs for browser journeys and UI interactions
+- model, service, job, and helper specs for unit-level behaviour
+- avoid adding new controller specs or legacy `spec/features` coverage
 
 To make that rule block merges, mark the `CI` workflow as a required status check in your GitHub branch protection settings for `main`/`master`.
 
@@ -189,6 +231,11 @@ You can load a different bundled scenario:
 SEED_SCENARIO=fully_booked_day bin/rails db:seed
 SEED_SCENARIO=qa_edge_cases bin/rails db:seed
 SEED_SCENARIO=high_volume_search bin/rails db:seed
+SEED_SCENARIO=listing_lifecycle bin/rails db:seed
+SEED_SCENARIO=lead_management bin/rails db:seed
+SEED_SCENARIO=viewing_operations bin/rails db:seed
+SEED_SCENARIO=deal_progression bin/rails db:seed
+SEED_SCENARIO=documents_and_trust bin/rails db:seed
 ```
 
 Scenario files are human-editable YAML and are intended to be committed to source control.
@@ -290,6 +337,16 @@ The repo currently ships with:
   Includes missing phone data, long notes, a reschedule, and an empty-slot property.
 - `high_volume_search`
   A larger catalogue intended to trigger sorting and pagination behavior.
+- `listing_lifecycle`
+  Listing-readiness, moderation, and asset-management workflow.
+- `lead_management`
+  Lead inbox, spam, and qualification examples.
+- `viewing_operations`
+  Reschedules, reminders, grouped viewings, and visit outcomes.
+- `deal_progression`
+  Sales offers and rental-application state changes.
+- `documents_and_trust`
+  Brochure downloads, private files, stale-listing cues, and delayed lead follow-up.
 
 ## Known Credentials
 
@@ -338,8 +395,10 @@ The admin area includes:
 Inside `/admin/demo-data` an admin can:
 
 - inspect bundled scenario previews
+- review scenario family, complexity, locale coverage, trainer notes, and expected assertions
 - restore baseline
 - apply another bundled scenario
+- use one-click quick-reset packs for common training sessions
 - preview and import YAML
 - export the current dataset
 - see diagnostics and the last reset/import/export record
@@ -353,9 +412,9 @@ It includes:
 - deterministic data via YAML scenarios
 - stable success and validation messaging
 - visible audit timeline for appointments
-- admin diagnostics
+- admin diagnostics including job adapter, mail delivery mode, and seeded personas
 - representative happy-path and edge-case states
-- stable selectors on core flows
+- stable selectors on core flows plus a selector contract registry in `/admin/qa`
 
 Important selectors include:
 
@@ -364,6 +423,18 @@ Important selectors include:
 - `data-testid="appointment-form"`
 - `data-testid="admin-appointment-row"`
 - `data-testid="active-demo-scenario"`
+- `data-testid="saved-search-panel"`
+- `data-testid="property-documents-panel"`
+- `data-testid="admin-property-activity-timeline"`
+
+Scenario families now cover:
+
+- happy path
+- edge cases
+- high volume
+- multilingual
+- accessibility
+- flaky operator workflow
 
 The dedicated QA guide is in [`docs/QA_TRAINING.md`](docs/QA_TRAINING.md).
 It now includes:
@@ -380,6 +451,8 @@ Run the main suite:
 bundle exec rspec
 ```
 
+The suite now includes one `js: true` system smoke test, which runs in headless Firefox via Selenium. If you have old precompiled assets lying around locally after frontend changes, refresh them with `npm run build` and `SECRET_KEY_BASE=dummy RAILS_ENV=test bundle exec rails assets:precompile`.
+
 Generate the richer Allure HTML report locally:
 
 ```bash
@@ -395,6 +468,8 @@ https://hobbs9090.github.io/rails_got_the_keys/
 
 GitHub Pages should be set to `Source: GitHub Actions` before the first publish.
 
+The CI summary also includes the slowest examples from the JSON report and compares them against the warning thresholds in `config/rspec_performance_baseline.yml`. Those thresholds are meant to be simple drift alarms, not hard release gates.
+
 Current automated coverage includes:
 
 - property model behaviour
@@ -406,16 +481,23 @@ Current automated coverage includes:
 
 ## Notifications
 
-Appointment updates write to `notification_logs`.
+Appointment updates enqueue `AppointmentNotificationJob`, which writes to `notification_logs`.
 
 Behaviour by environment:
 
 - development uses `letter_opener`
 - test uses the standard test mailer
+- development and the Rails `production` environment currently use the Active Job `:async` adapter for notification work
 - the Rails `production` environment uses SMTP if `SMTP_ADDRESS` is set
 - otherwise the Rails `production` environment falls back to file delivery under `tmp/mails`
 
-This keeps the app usable on shared hosting even when outbound SMTP is not yet available.
+This keeps the app responsive and usable on shared hosting even when outbound SMTP is not yet available. It is intentionally not a durable worker setup yet; the queue backend should only be revisited when real operational pain justifies it.
+
+Background-job policy for the next extension phase:
+
+- keep `:async` for the current shared-host/staging posture
+- do not put mission-critical, costly, or long-running workflows on that adapter
+- use [`docs/BACKGROUND_JOB_POLICY.md`](docs/BACKGROUND_JOB_POLICY.md) as the source of truth for safe job types, unsafe job types, and future candidates
 
 ## Deployment
 

@@ -1,0 +1,8 @@
+<section class="metric-strip">
+  <% metrics.each do |label, value| %>
+    <article class="metric-card">
+      <strong><%= number_with_delimiter(value, delimiter: ",") %></strong>
+      <span><%= t("ui.welcome.metric_labels.#{label}") %></span>
+    </article>
+  <% end %>
+</section>

@@ -4,6 +4,7 @@
   <div class="property-hero__content">
     <div class="property-hero__labels">
       <span class="badge <%= @property.sale_status == Property::SALE_STATUSES[:for_sale] ? 'badge--accent' : 'badge--success' %>"><%= translated_sale_status(@property.sale_status) %></span>
+      <span class="<%= listing_state_badge_class(@property.listing_state) %>"><%= translated_listing_state(@property.listing_state) %></span>
       <% if @property.featured? %>
         <span class="badge badge--warning"><%= t("ui.common.featured") %></span>
       <% end %>
@@ -33,6 +34,12 @@
         <dt><%= t("ui.common.postcode") %></dt>
         <dd><%= @property.postcode %></dd>
       </div>
+      <% if @property.available_from.present? %>
+        <div>
+          <dt>Available from</dt>
+          <dd><%= l(@property.available_from, format: :long) %></dd>
+        </div>
+      <% end %>
     </dl>
   </div>
 
@@ -46,10 +53,64 @@
     <h2><%= t("ui.common.overview") %></h2>
     <p><%= @property.property_description %></p>
 
+    <% if property_fact_rows(@property).any? %>
+      <div class="property-address">
+        <h3>Key facts</h3>
+        <dl class="detail-list">
+          <% property_fact_rows(@property).each do |label, value| %>
+            <div>
+              <dt><%= label %></dt>
+              <dd><%= value %></dd>
+            </div>
+          <% end %>
+        </dl>
+      </div>
+    <% end %>
+
     <div class="property-address">
       <h3><%= t("ui.common.address") %></h3>
       <p><%= [@property.address_line_1, @property.address_line_2, @property.town_city, @property.county, @property.postcode, @property.country].reject(&:blank?).join(", ") %></p>
     </div>
+
+    <div class="property-address" data-testid="property-trust-panel">
+      <h3>Why this listing feels current</h3>
+      <ul class="detail-inline-list">
+        <% property_trust_cues(@property).each do |cue| %>
+          <li><%= cue %></li>
+        <% end %>
+        <li><%= property_update_label(@property) %></li>
+      </ul>
+    </div>
+
+    <% brochure_assets = @property.ordered_photos.limit(6) %>
+    <% if brochure_assets.any? || @property.ordered_floor_plans.any? %>
+      <div class="property-address">
+        <h3>Brochure assets</h3>
+        <ul class="detail-inline-list">
+          <% brochure_assets.each do |photo| %>
+            <li><strong><%= photo.primary? ? "Primary image" : "Photo" %></strong>: <%= photo.image_filename %></li>
+          <% end %>
+          <% @property.ordered_floor_plans.each do |floor_plan| %>
+            <li><strong>Floor plan</strong>: <%= floor_plan.label.presence || floor_plan.floor_plans %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <% if @public_documents.any? %>
+      <div class="property-address" data-testid="property-documents-panel">
+        <h3>Documents and downloads</h3>
+        <ul class="detail-inline-list">
+          <% @public_documents.each do |document| %>
+            <li>
+              <strong><%= document.title %></strong>
+              (<%= document.category_label %>)
+              <%= link_to "Download", download_property_property_document_path(@property, document), class: "button hollow secondary tiny", data: { testid: "property-document-download-#{document.id}" } %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
   </article>
 
   <aside class="property-booking-panel" data-testid="booking-panel">
@@ -74,5 +135,118 @@
         <p><%= t("ui.properties.show.no_slots_body") %></p>
       </div>
     <% end %>
+
+    <div class="empty-state" data-testid="property-enquiry-panel">
+      <h3>Need details first?</h3>
+      <p>Ask for brochure information, a landlord or seller callback, or clarification before you pick a viewing slot.</p>
+      <%= link_to "Send an enquiry", new_property_enquiry_path(@property), class: "button hollow secondary expanded", data: { testid: "open-enquiry-form" } %>
+    </div>
+
+    <% if @property.sale_status == Property::SALE_STATUSES[:for_sale] %>
+      <div class="empty-state" data-testid="property-offer-panel">
+        <h3>Ready to make an offer?</h3>
+        <p>Register your buying position and headline offer directly with the team.</p>
+        <%= link_to "Submit an offer", new_property_offer_path(@property), class: "button primary expanded", data: { testid: "open-offer-form" } %>
+      </div>
+    <% elsif @property.sale_status == Property::SALE_STATUSES[:for_rent] %>
+      <div class="empty-state" data-testid="property-rental-application-panel">
+        <h3>Want to apply to rent?</h3>
+        <p>Share your intended move-in timing and affordability notes with the lettings team.</p>
+        <%= link_to "Start rental application", new_property_rental_application_path(@property), class: "button primary expanded", data: { testid: "open-rental-application-form" } %>
+      </div>
+    <% end %>
+
+    <div class="empty-state property-branch-card" data-testid="property-branch-card">
+      <h3><%= primary_branch_profile[:name] %></h3>
+      <p><strong><%= primary_branch_profile[:team_label] %></strong></p>
+      <p><%= primary_branch_profile[:response_time] %></p>
+      <p><%= primary_branch_profile[:phone] %> · <%= primary_branch_profile[:email] %></p>
+      <p><%= primary_branch_profile[:hours] %></p>
+    </div>
   </aside>
 </section>
+
+<% if current_user == @property.user %>
+  <section class="property-layout">
+    <article class="property-panel" data-testid="seller-listing-workspace">
+      <h2>Seller workspace</h2>
+      <p><strong><%= @property.listing_completeness_percentage %>% complete</strong> · <%= @property.listing_completeness_score %>/<%= @property.listing_completeness_checks.size %> readiness checks done</p>
+      <ul class="detail-inline-list" data-testid="seller-listing-checklist">
+        <% @property.listing_completeness_checks.each do |check| %>
+          <li class="<%= check[:complete] ? 'text-success' : 'text-danger' %>">
+            <strong><%= check[:complete] ? "Done" : "Needed" %></strong>: <%= check[:label] %>
+          </li>
+        <% end %>
+      </ul>
+      <div class="section-heading__actions">
+        <%= link_to "Edit listing", edit_property_path(@property), class: "button primary" %>
+        <%= link_to "Manage photos", property_photos_path(@property), class: "button hollow secondary", data: { testid: "manage-photos-link" } %>
+        <%= link_to "Manage floor plans", property_floor_plans_path(@property), class: "button hollow secondary" %>
+        <%= link_to "Manage documents", property_property_documents_path(@property), class: "button hollow secondary", data: { testid: "manage-documents-link" } %>
+      </div>
+
+      <h3>Recent lead activity</h3>
+      <% if @recent_enquiries.any? %>
+        <ul class="detail-inline-list" data-testid="seller-recent-enquiries">
+          <% @recent_enquiries.each do |enquiry| %>
+            <li>
+              <strong><%= enquiry.customer_name %></strong>:
+              <%= enquiry_source_label(enquiry.source_type) %>,
+              <%= enquiry.display_status.downcase %>,
+              <%= l(enquiry.created_at, format: :long) %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="empty-copy">No enquiries have come in for this listing yet.</p>
+      <% end %>
+
+      <% if @property.sale_status == Property::SALE_STATUSES[:for_sale] %>
+        <h3>Recent offers</h3>
+        <% if @recent_offers.any? %>
+          <ul class="detail-inline-list" data-testid="seller-recent-offers">
+            <% @recent_offers.each do |offer| %>
+              <li>
+                <strong><%= offer.buyer_name %></strong>:
+                <%= number_to_currency(offer.amount, unit: "£", precision: 0) %>,
+                <%= offer.status.humanize.downcase %>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p class="empty-copy">No offers have been recorded yet.</p>
+        <% end %>
+      <% elsif @property.sale_status == Property::SALE_STATUSES[:for_rent] %>
+        <h3>Recent rental applications</h3>
+        <% if @recent_rental_applications.any? %>
+          <ul class="detail-inline-list" data-testid="seller-recent-rental-applications">
+            <% @recent_rental_applications.each do |application| %>
+              <li>
+                <strong><%= application.applicant_name %></strong>:
+                <%= application.status.humanize.downcase %>,
+                move-in <%= application.move_in_date %>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p class="empty-copy">No rental applications have been recorded yet.</p>
+        <% end %>
+      <% end %>
+
+      <h3>Recent listing activity</h3>
+      <% if @recent_activity.any? %>
+        <ol class="timeline" data-testid="seller-property-activity-timeline">
+          <% @recent_activity.each do |entry| %>
+            <li>
+              <strong><%= entry.action.to_s.tr("_", " ").humanize %></strong>
+              <span><%= formatted_date_time(entry.occurred_at) %></span>
+              <p><%= entry.message %></p>
+            </li>
+          <% end %>
+        </ol>
+      <% else %>
+        <p class="empty-copy">No listing activity has been recorded yet.</p>
+      <% end %>
+    </article>
+  </section>
+<% end %>

@@ -33,6 +33,7 @@ module GotTheKeys
     config.x.got_the_keys.build_number = ENV["APP_BUILD_NUMBER"].presence || build_metadata["build_number"].presence
     config.x.got_the_keys.deployed_at = build_metadata["deployed_at"].presence
     config.x.got_the_keys.deploy_target = ENV["APP_DEPLOY_TARGET"].presence
+    config.x.got_the_keys.active_job_queue_adapter = ENV["ACTIVE_JOB_QUEUE_ADAPTER"].presence
 
     config.generators do |g|
       g.test_framework :rspec, fixture: true

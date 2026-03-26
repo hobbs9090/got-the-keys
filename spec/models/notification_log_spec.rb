@@ -1,19 +1,7 @@
 require "rails_helper"
 
 RSpec.describe NotificationLog do
-  let(:user) { FactoryBot.create(:user) }
-  let(:property) { user.properties.create!(property_attributes(user_id: user.id)) }
-  let(:appointment) do
-    property.appointments.create!(
-      customer_name: "Asha Patel",
-      customer_email: "asha@example.com",
-      customer_phone: "07700 900222",
-      requested_time: Time.zone.local(2026, 4, 4, 12, 0),
-      scheduled_at: Time.zone.local(2026, 4, 4, 12, 0),
-      duration_minutes: 45,
-      status: "pending"
-    )
-  end
+  let(:appointment) { FactoryBot.create(:appointment, customer_name: "Asha Patel", customer_email: "asha@example.com", customer_phone: "07700 900222") }
 
   before do
     appointment
@@ -21,32 +9,41 @@ RSpec.describe NotificationLog do
   end
 
   it "validates the allowed statuses" do
-    log = described_class.new(subject: "Status update", event_type: "confirmed", status: "queued")
+    log = FactoryBot.build(:notification_log, appointment:, subject: "Status update", event_type: "confirmed", status: "queued")
 
     expect(log).not_to be_valid
     expect(log.errors[:status]).to include("is not included in the list")
   end
 
   it "allows logs without an appointment association" do
-    log = described_class.new(subject: "General notice", event_type: "export", status: "sent")
+    log = FactoryBot.build(:notification_log, :without_appointment, subject: "General notice", event_type: "export", status: "sent")
+
+    expect(log).to be_valid
+  end
+
+  it "allows logs tied to an enquiry" do
+    enquiry = FactoryBot.create(:enquiry)
+    log = FactoryBot.build(:notification_log, appointment: nil, enquiry:, subject: "Lead received", event_type: "enquiry_acknowledgement", status: "sent")
 
     expect(log).to be_valid
   end
 
   it "orders logs with the newest entry first" do
-    older_log = described_class.create!(
-      appointment: appointment,
+    older_log = FactoryBot.create(
+      :notification_log,
+      appointment:,
       subject: "Older update",
       event_type: "confirmed",
       status: "sent",
       created_at: 2.days.ago,
       updated_at: 2.days.ago
     )
-    newer_log = described_class.create!(
-      appointment: appointment,
+    newer_log = FactoryBot.create(
+      :notification_log,
+      :failed,
+      appointment:,
       subject: "Newer update",
       event_type: "rescheduled",
-      status: "failed",
       created_at: 1.day.ago,
       updated_at: 1.day.ago
     )

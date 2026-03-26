@@ -1,0 +1,44 @@
+.statistics-hero {
+  margin-bottom: 1.5rem;
+}
+
+.statistics-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 1.5rem;
+}
+
+.statistics-grid--summary {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.statistics-panel {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(17, 32, 51, 0.12);
+  border-radius: 1rem;
+  box-shadow: 0 16px 40px rgba(17, 32, 51, 0.08);
+  padding: 1.25rem;
+}
+
+.statistics-chart {
+  min-height: 260px;
+  width: 100%;
+}
+
+.statistics-table {
+  margin-bottom: 0;
+  width: 100%;
+}
+
+.statistics-inline-value {
+  border-bottom: 1px dashed rgba(17, 32, 51, 0.25);
+  cursor: help;
+}
+
+@media screen and (max-width: 63.9375em) {
+  .statistics-grid,
+  .statistics-grid--summary {
+    grid-template-columns: 1fr;
+  }
+}

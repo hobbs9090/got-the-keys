@@ -1,27 +1,14 @@
-<script type="text/javascript">
-
-    function drawRegionsMap() {
-        var data = google.visualization.arrayToDataTable([
-            ['Country', 'Popularity'],
-            ['United Kingdom', <%= @total_number_en_users %>],
-            ['China', <%= @total_number_zh_users %>]
-        ]);
-
-        var options = {
-//            legend: 'Activity by Region',
-            title: '<%= t('charts.english_vs_chinese') %>',
-            fontSize: 14,
-            backgroundColor: {strokeWidth: 2, stroke: '#D9D9D9'}
-        };
-
-        var chart = new google.visualization.GeoChart(document.getElementById('activity_chart'));
-        chart.draw(data, options);
-    }
-
-    $(document).ready(function () {
-        drawRegionsMap();
-    });
-
-</script>
-
-<div id="activity_chart" style="width: 428px; height: 260px;"></div>
+<%= statistics_chart_tag(
+      chart_id: "activity_chart",
+      chart_type: "geo",
+      data: [
+        ["Country", "Popularity"],
+        ["United Kingdom", @total_number_en_users],
+        ["China", @total_number_zh_users]
+      ],
+      options: {
+        title: t('charts.english_vs_chinese'),
+        fontSize: 14,
+        backgroundColor: { strokeWidth: 2, stroke: "#D9D9D9" }
+      }
+    ) %>

@@ -5,18 +5,22 @@ module PropertiesHelper
   end
 
   def small_image_for(property)
-    if property.image_file_name.blank?
+    image_name = property.hero_image_name
+
+    if image_name.blank?
       property_image_small(class_name: 'property-card__image')
     else
-      image_tag(property.image_file_name, class: 'property-card__image', alt: property.headline)
+      listing_image_tag(image_name, class_name: 'property-card__image', alt: property.headline)
     end
   end
 
   def medium_image_for(property)
-    if property.image_file_name.blank?
+    image_name = property.hero_image_name
+
+    if image_name.blank?
       property_image_medium(class_name: 'property-hero__image')
     else
-      image_tag(property.image_file_name, class: 'property-hero__image', alt: property.headline)
+      listing_image_tag(image_name, class_name: 'property-hero__image', alt: property.headline)
     end
   end
 
@@ -47,6 +51,7 @@ module PropertiesHelper
   def property_card_classes(property)
     classes = ['property-card']
     classes << 'property-card--featured' if property.featured?
+    classes << "property-card--#{property.listing_state.to_s.dasherize}" if property.listing_state.present?
     classes.join(' ')
   end
 
@@ -85,6 +90,27 @@ module PropertiesHelper
     t("ui.properties.in_location", property_type: property.property_type, location: property.location_line)
   end
 
+  def primary_branch_profile
+    AppSettings.primary_branch_profile
+  end
+
+  def property_trust_cues(property)
+    cues = []
+    cues << "Recently updated" if property.recently_updated?
+    cues << "Available now" if property.available_now?
+    cues << primary_branch_profile.fetch(:team_label)
+    cues << primary_branch_profile.fetch(:response_time)
+    cues << "Brochure ready" if property.public_documents.any?
+    cues.uniq
+  end
+
+  def property_update_label(property)
+    return "Recently updated" if property.recently_updated?
+    return "Needs a fresh update" if property.stale_listing?
+
+    "Updated this month"
+  end
+
   def property_filter_chip_labels(filters)
     filters = filters.to_h.symbolize_keys
     chips = []
@@ -104,5 +130,75 @@ module PropertiesHelper
     sort = filters[:sort].presence
     chips << property_sort_label(sort) if sort.present? && sort != 'recommended'
     chips
+  end
+
+  def translated_listing_state(state)
+    {
+      "draft" => "Draft",
+      "review_pending" => "Review pending",
+      "published" => "Published",
+      "under_offer" => "Under offer",
+      "let_agreed" => "Let agreed",
+      "sold" => "Sold",
+      "let" => "Let",
+      "withdrawn" => "Withdrawn"
+    }.fetch(state.to_s, state.to_s.tr("_", " ").humanize)
+  end
+
+  def property_listing_state_options
+    Property::LISTING_STATES.map { |state| [translated_listing_state(state), state] }
+  end
+
+  def listing_state_badge_class(state)
+    {
+      "draft" => "badge badge--muted",
+      "review_pending" => "badge badge--warning",
+      "published" => "badge badge--success",
+      "under_offer" => "badge badge--accent",
+      "let_agreed" => "badge badge--accent",
+      "sold" => "badge badge--neutral",
+      "let" => "badge badge--neutral",
+      "withdrawn" => "badge badge--danger"
+    }.fetch(state.to_s, "badge")
+  end
+
+  def property_fact_rows(property)
+    [
+      ["Tenure", property.tenure],
+      ["Council tax band", property.council_tax_band],
+      ["Furnishing", property.furnishing],
+      ["Available from", property.available_from.present? ? l(property.available_from, format: :long) : nil],
+      ["Parking", property.parking],
+      ["Outdoor space", property.outdoor_space],
+      ["EPC rating", property.epc_rating],
+      ["Floor area", property.floor_area_sq_ft.present? ? "#{property.floor_area_sq_ft} sq ft" : nil],
+      ["Deposit", property.deposit_amount.present? ? number_to_currency(property.deposit_amount, unit: "£", precision: 0) : nil],
+      ["Pets allowed", property.pets_allowed? ? "Yes" : nil],
+      ["Service charge", property.service_charge_amount.present? ? number_to_currency(property.service_charge_amount, unit: "£", precision: 0) : nil],
+      ["Lease length", property.lease_length_years.present? ? "#{property.lease_length_years} years" : nil]
+    ].select { |_label, value| value.present? }
+  end
+
+  def property_document_category_options
+    PropertyDocument::CATEGORIES.map { |category| [category.to_s.tr("_", " ").humanize, category] }
+  end
+
+  def property_document_visibility_options
+    PropertyDocument::VISIBILITIES.map { |visibility| [visibility.humanize, visibility] }
+  end
+
+  private
+
+  def listing_image_tag(image_name, class_name:, alt:)
+    tag.img(src: listing_image_source(image_name), class: class_name, alt: alt)
+  end
+
+  def listing_image_source(image_name)
+    path_to_image(image_name)
+  rescue StandardError
+    source = image_name.to_s
+    return source if source.start_with?("/", "http://", "https://", "data:")
+
+    "/#{ERB::Util.url_encode(source)}"
   end
 end

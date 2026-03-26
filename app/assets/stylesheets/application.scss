@@ -1,10 +1,16 @@
 @import "foundation-sites/scss/foundation";
-@import "motion-ui/motion-ui";
 
 @include foundation-everything;
-@include motion-ui-transitions;
-@include motion-ui-animations;
 
 @import "theme";
-@import "responsive-tables";
-@import "statistics";
+@import "components/admin_shell";
+@import "components/hero_carousel";
+@import "components/insight_accordion";
+@import "components/metric_cards";
+@import "components/modal";
+@import "components/qa_version_box";
+@import "components/responsive_tables";
+@import "components/property_trust";
+@import "components/site_chrome";
+@import "components/statistics";
+@import "pages/welcome";

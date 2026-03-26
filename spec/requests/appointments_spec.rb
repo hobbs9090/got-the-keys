@@ -1,20 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "Appointments" do
+  include ActiveSupport::Testing::TimeHelpers
+
   let(:user) { FactoryBot.create(:user) }
-  let(:property) { user.properties.create!(property_attributes(address_line_1: "44 Mount Ephraim")) }
-
-  def next_open_slot(hour: 10, minutes: 0)
-    configuration = BookingConfiguration.current
-    date = Date.current
-
-    loop do
-      candidate = Time.zone.local(date.year, date.month, date.day, hour, minutes)
-      return candidate if configuration.open_on?(date) && candidate > Time.current + configuration.lead_time_hours.hours
-
-      date += 1.day
-    end
-  end
+  let(:property) { FactoryBot.create(:property, user:, address_line_1: "44 Mount Ephraim") }
 
   describe "GET /properties/:property_id/appointments/new" do
     it "renders the booking form" do
@@ -27,7 +17,7 @@ RSpec.describe "Appointments" do
 
   describe "POST /properties/:property_id/appointments" do
     it "creates a pending appointment and redirects to the secure show page" do
-      slot = next_open_slot
+      slot = next_booking_slot
 
       expect do
         post property_appointments_path(property), params: {
@@ -50,8 +40,10 @@ RSpec.describe "Appointments" do
 
   describe "GET /appointments/:public_reference" do
     it "requires the access token for public viewers" do
-      slot = next_open_slot(hour: 11)
-      appointment = property.appointments.create!(
+      slot = next_booking_slot(hour: 11)
+      appointment = FactoryBot.create(
+        :appointment,
+        property:,
         customer_name: "Owen Clark",
         customer_email: "owen.clark@example.com",
         customer_phone: "07700 930006",
@@ -65,6 +57,59 @@ RSpec.describe "Appointments" do
       get appointment_path(appointment, token: appointment.access_token)
       expect(response).to have_http_status(:ok)
       expect(response.body).to include(appointment.public_reference)
+    end
+  end
+
+  describe "self-service management" do
+    around do |example|
+      travel_to(Time.zone.local(2026, 3, 30, 8, 0)) { example.run }
+    end
+
+    it "lets the customer open the self-service reschedule page" do
+      appointment = FactoryBot.create(
+        :appointment,
+        property:,
+        requested_time: next_booking_slot(hour: 14),
+        scheduled_at: next_booking_slot(hour: 14)
+      )
+
+      get edit_self_service_appointment_path(appointment, token: appointment.access_token)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("Manage your viewing")
+    end
+
+    it "lets the customer reschedule with the secure token" do
+      appointment = FactoryBot.create(
+        :appointment,
+        :confirmed,
+        property:,
+        requested_time: next_booking_slot(hour: 14),
+        scheduled_at: next_booking_slot(hour: 14)
+      )
+      new_slot = property.next_available_slots(limit: 2, excluding_appointment: appointment).last
+
+      patch reschedule_self_service_appointment_path(appointment, token: appointment.access_token), params: {
+        appointment: { requested_time: new_slot.starts_at.iso8601 }
+      }
+
+      expect(response).to redirect_to(appointment_path(appointment, token: appointment.access_token))
+      expect(appointment.reload.status).to eq("rescheduled")
+      expect(appointment.scheduled_at).to eq(new_slot.starts_at)
+    end
+
+    it "blocks expired self-service links" do
+      appointment = FactoryBot.create(
+        :appointment,
+        property:,
+        requested_time: booking_time(2026, 3, 29, 10, 0),
+        scheduled_at: booking_time(2026, 3, 29, 10, 0),
+        skip_slot_validation: true
+      )
+
+      get edit_self_service_appointment_path(appointment, token: appointment.access_token)
+
+      expect(response).to redirect_to(appointment_path(appointment, token: appointment.access_token))
     end
   end
 end

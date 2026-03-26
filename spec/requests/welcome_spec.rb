@@ -2,12 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "Welcome", type: :request do
   def create_property(user:, address_line_1:, featured:, updated_at:)
-    user.properties.create!(
-      property_attributes(
-        user_id: user.id,
-        address_line_1: address_line_1,
-        featured: featured
-      )
+    FactoryBot.create(
+      :property,
+      user:,
+      address_line_1:,
+      featured:
     ).tap do |property|
       property.update_columns(updated_at: updated_at)
     end
@@ -25,12 +24,12 @@ RSpec.describe "Welcome", type: :request do
 
       document = Nokogiri::HTML.parse(response.body)
 
-      expect(document.css(".orbit-container .orbit-slide").count).to eq(5)
-      expect(document.css(".orbit-bullets button").count).to eq(5)
+      expect(document.css("[data-carousel] [data-carousel-slide]").count).to eq(5)
+      expect(document.css(".hero-carousel__bullets button").count).to eq(5)
     end
 
     it "falls back to the most recently updated properties when no featured listings exist" do
-      user = User.create!(user_attributes)
+      user = FactoryBot.create(:user)
       older = create_property(user:, address_line_1: "1 Old Mill Lane", featured: false, updated_at: 3.days.ago)
       middle = create_property(user:, address_line_1: "2 Market Street", featured: false, updated_at: 2.days.ago)
       newest = create_property(user:, address_line_1: "3 Harbour View", featured: false, updated_at: 1.day.ago)

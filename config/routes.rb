@@ -15,8 +15,14 @@ GotTheKeys::Application.routes.draw do
     resource :qa, only: :show, controller: :qa
     resources :appointments, only: [:index, :show, :edit, :update] do
       patch :transition, on: :member
+      post :send_reminder, on: :member
     end
-    resources :properties, only: [:index, :show, :edit, :update]
+    resources :offers, only: [:index, :show, :update]
+    resources :rental_applications, only: [:index, :show, :update]
+    resources :enquiries, only: [:index, :show, :update]
+    resources :properties, only: [:index, :show, :edit, :update] do
+      patch :transition, on: :member
+    end
     resources :users, only: [:index, :show]
     resources :notification_logs, only: :index
     resources :demo_scenarios, only: [:index, :show], path: 'demo-data' do
@@ -37,16 +43,26 @@ GotTheKeys::Application.routes.draw do
 
   resources :coffee, only: [:index]
 
-  resources :account_billing, only: [:index]
-
   resources :properties do
-    resources :photos, only: [:index, :new]
-    resources :floor_plans, only: [:index, :new]
+    resources :photos, only: [:index, :new, :create, :update, :destroy]
+    resources :floor_plans, only: [:index, :new, :create, :update, :destroy]
+    resources :property_documents, path: "documents", only: [:index, :new, :create, :update, :destroy] do
+      get :download, on: :member
+    end
     resources :viewing_times, only: [:index, :new, :create]
+    resources :enquiries, only: [:new, :create]
+    resources :offers, only: [:new, :create]
+    resources :rental_applications, only: [:new, :create]
     resources :appointments, only: [:new, :create]
   end
 
-  resources :appointments, only: [:show], param: :public_reference
+  resources :appointments, only: [:show], param: :public_reference do
+    member do
+      get :edit_self_service, path: "manage"
+      patch :reschedule_self_service, path: "reschedule"
+      patch :cancel_self_service, path: "cancel"
+    end
+  end
 
   resources :for_sale, only: [:index]
 
@@ -55,6 +71,7 @@ GotTheKeys::Application.routes.draw do
   resources :language, only: [:new]
 
   resources :searches, only: [:index]
+  resources :saved_searches, only: [:create]
 
   resources :location, only: [:show]
 

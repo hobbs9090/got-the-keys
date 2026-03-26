@@ -10,6 +10,7 @@
     <div class="section-heading__actions">
       <span class="<%= appointment_status_badge_class(@appointment.status) %>"><%= @appointment.display_status %></span>
       <%= link_to t("ui.admin.appointments.show.edit"), edit_admin_appointment_path(@appointment), class: "button primary hollow" %>
+      <%= button_to "Send reminder", send_reminder_admin_appointment_path(@appointment), method: :post, class: "button hollow secondary" if @appointment.status.in?(%w[pending confirmed rescheduled]) %>
     </div>
   </div>
 </section>
@@ -42,6 +43,20 @@
         <dt><%= t("ui.common.current_slot") %></dt>
         <dd><%= formatted_date_time(@appointment.scheduled_at) %></dd>
       </div>
+      <div>
+        <dt>Visit outcome</dt>
+        <dd><%= @appointment.visit_outcome.present? ? @appointment.visit_outcome.to_s.humanize : "Not recorded" %></dd>
+      </div>
+      <div>
+        <dt>Self-service</dt>
+        <dd><%= @appointment.manageable_by_customer? ? "Open until #{formatted_date_time(@appointment.self_service_expires_at)}" : "Closed" %></dd>
+      </div>
+      <% if @appointment.reminder_sent_at.present? %>
+        <div>
+          <dt>Reminder sent</dt>
+          <dd><%= formatted_date_time(@appointment.reminder_sent_at) %></dd>
+        </div>
+      <% end %>
     </dl>
 
     <div class="admin-inline-actions">
