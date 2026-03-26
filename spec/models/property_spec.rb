@@ -25,6 +25,40 @@ describe "A property" do
     expect(Property.default_per_page).to eq(12)
   end
 
+  it "supports the richer listing lifecycle states" do
+    Property::LISTING_STATES.each do |listing_state|
+      property = build_property(listing_state: listing_state)
+
+      expect(property.valid?).to be(true)
+    end
+  end
+
+  it "calculates listing completeness from structured facts and assets" do
+    property = FactoryBot.create(:property, user:)
+    FactoryBot.create(:photo, property:, primary: true)
+    FactoryBot.create(:floor_plan, property:)
+
+    expect(property.listing_completeness_score).to eq(5)
+    expect(property.listing_completeness_percentage).to eq(100)
+    expect(property).to be_ready_for_review
+  end
+
+  it "falls short of review readiness when key facts and assets are missing" do
+    property = FactoryBot.create(
+      :property,
+      user:,
+      listing_tagline: nil,
+      image_file_name: nil,
+      tenure: nil,
+      council_tax_band: nil,
+      epc_rating: nil,
+      floor_area_sq_ft: nil
+    )
+
+    expect(property.listing_completeness_score).to be < property.listing_completeness_checks.size
+    expect(property).not_to be_ready_for_review
+  end
+
   it "requires a Address line 1" do
     property = build_property(address_line_1: "")
 
@@ -132,5 +166,13 @@ describe "A property" do
 
     expect(property.valid?).to be false
     expect(property.errors[:image_file_name]).to include("must reference a GIF, JPG, PNG, or SVG image")
+  end
+
+  it "uses the primary photo as the hero image when present" do
+    property = FactoryBot.create(:property, user:, image_file_name: "fallback.svg")
+    FactoryBot.create(:photo, property:, image_filename: "gallery-1.jpg", primary: false, position: 2)
+    FactoryBot.create(:photo, property:, image_filename: "gallery-cover.jpg", primary: true, position: 1)
+
+    expect(property.hero_image_name).to eq("gallery-cover.jpg")
   end
 end

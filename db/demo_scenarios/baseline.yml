@@ -61,8 +61,18 @@ properties:
     bedrooms: 4
     bathrooms: 2
     sale_status: For Sale
+    listing_state: published
     asking_price: 865000
     featured: true
+    tenure: Freehold
+    council_tax_band: G
+    furnishing: Unfurnished
+    available_from: 2026-04-15
+    parking: Driveway and garage
+    outdoor_space: Landscaped rear garden
+    epc_rating: C
+    floor_area_sq_ft: 1890
+    pets_allowed: true
   - key: tunbridge_garden_flat
     owner_email: daniel.mercer@example.com
     address_line_1: Flat 3, 44 Mount Ephraim
@@ -77,8 +87,19 @@ properties:
     bedrooms: 2
     bathrooms: 1
     sale_status: For Sale
+    listing_state: under_offer
     asking_price: 435000
     featured: true
+    tenure: Leasehold
+    council_tax_band: D
+    furnishing: Furnished
+    available_from: 2026-05-01
+    parking: Residents permit
+    outdoor_space: Private terrace
+    epc_rating: B
+    floor_area_sq_ft: 920
+    service_charge_amount: 2400
+    lease_length_years: 112
   - key: guildford_townhouse
     owner_email: matthew.wells@example.com
     address_line_1: 72 Quarry Street
@@ -93,8 +114,15 @@ properties:
     bedrooms: 3
     bathrooms: 2
     sale_status: For Sale
+    listing_state: review_pending
     asking_price: 675000
     featured: false
+    tenure: Freehold
+    council_tax_band: E
+    parking: Permit parking
+    outdoor_space: Courtyard
+    epc_rating: D
+    floor_area_sq_ft: 1360
   - key: croydon_rental_loft
     owner_email: lucy.mcclure@example.com
     address_line_1: Apartment 11, 9 Park Lane
@@ -109,8 +137,42 @@ properties:
     bedrooms: 2
     bathrooms: 2
     sale_status: For Rent
+    listing_state: let_agreed
     asking_price: 1950
     featured: false
+    furnishing: Part furnished
+    available_from: 2026-04-25
+    parking: Secure underground bay
+    outdoor_space: Juliet balcony
+    epc_rating: B
+    floor_area_sq_ft: 980
+    deposit_amount: 2250
+    pets_allowed: false
+photos:
+  - property_key: sevenoaks_family_home
+    image_filename: hero_1.jpg
+    caption: Rear terrace and garden
+    position: 1
+    primary: true
+  - property_key: tunbridge_garden_flat
+    image_filename: hero_2.jpg
+    caption: Living room opening to terrace
+    position: 1
+    primary: true
+  - property_key: croydon_rental_loft
+    image_filename: hero_3.jpg
+    caption: Open-plan lounge
+    position: 1
+    primary: true
+floor_plans:
+  - property_key: sevenoaks_family_home
+    floor_plans: cedar-road-ground-floor.pdf
+    label: Ground floor
+    position: 1
+  - property_key: tunbridge_garden_flat
+    floor_plans: mount-ephraim-layout.pdf
+    label: Apartment layout
+    position: 1
 availability_windows:
   - property_key: sevenoaks_family_home
     starts_at: "today+7d 09:00"

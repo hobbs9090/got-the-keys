@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_25_121500) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_26_152000) do
   create_table "admins", force: :cascade do |t|
     t.datetime "created_at", precision: nil
     t.string "email"
@@ -100,8 +100,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_25_121500) do
   create_table "floor_plans", force: :cascade do |t|
     t.datetime "created_at", precision: nil
     t.string "floor_plans"
+    t.string "label"
+    t.integer "position", default: 0, null: false
     t.integer "property_id"
     t.datetime "updated_at", precision: nil
+    t.index ["property_id", "position"], name: "index_floor_plans_on_property_id_and_position"
     t.index ["property_id"], name: "index_floor_plans_on_property_id"
   end
 
@@ -121,10 +124,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_25_121500) do
   end
 
   create_table "photos", force: :cascade do |t|
+    t.string "caption"
     t.datetime "created_at", precision: nil
     t.string "image_filename"
+    t.integer "position", default: 0, null: false
+    t.boolean "primary", default: false, null: false
     t.integer "property_id"
     t.datetime "updated_at", precision: nil
+    t.index ["property_id", "position"], name: "index_photos_on_property_id_and_position"
     t.index ["property_id"], name: "index_photos_on_property_id"
   end
 
@@ -132,23 +139,39 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_25_121500) do
     t.string "address_line_1"
     t.string "address_line_2"
     t.integer "asking_price"
+    t.date "available_from"
     t.integer "bathrooms", default: 1, null: false
     t.integer "bedrooms"
+    t.string "council_tax_band"
     t.string "country"
     t.string "county"
     t.datetime "created_at", precision: nil
+    t.integer "deposit_amount"
+    t.string "epc_rating"
     t.boolean "featured", default: false, null: false
+    t.integer "floor_area_sq_ft"
+    t.string "furnishing"
     t.string "image_file_name"
+    t.integer "lease_length_years"
+    t.string "listing_state", default: "published", null: false
     t.string "listing_tagline"
+    t.string "outdoor_space"
+    t.string "parking"
+    t.boolean "pets_allowed", default: false, null: false
     t.string "postcode"
     t.text "property_description"
     t.string "property_type", default: "House", null: false
+    t.datetime "published_at"
     t.string "sale_status"
+    t.integer "service_charge_amount"
+    t.string "tenure"
     t.string "town_city"
     t.datetime "updated_at", precision: nil
     t.integer "user_id"
+    t.index ["available_from"], name: "index_properties_on_available_from"
     t.index ["bedrooms"], name: "index_properties_on_bedrooms"
     t.index ["featured"], name: "index_properties_on_featured"
+    t.index ["listing_state"], name: "index_properties_on_listing_state"
     t.index ["sale_status", "asking_price"], name: "index_properties_on_sale_status_and_price"
     t.index ["user_id"], name: "index_properties_on_user_id"
   end

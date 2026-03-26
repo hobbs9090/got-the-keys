@@ -11,6 +11,8 @@ module DemoData
         admins: Admin.order(:email).map { |admin| export_admin(admin) },
         users: User.order(:email).map { |user| export_user(user) },
         properties: Property.order(:id).map { |property| export_property(property, property_keys) },
+        photos: Photo.order(:property_id, :position, :id).map { |photo| export_photo(photo, property_keys) },
+        floor_plans: FloorPlan.order(:property_id, :position, :id).map { |floor_plan| export_floor_plan(floor_plan, property_keys) },
         availability_windows: AvailabilityWindow.order(:starts_at).map { |window| export_window(window, property_keys) },
         appointments: Appointment.order(:scheduled_at, :created_at).map { |appointment| export_appointment(appointment, property_keys) }
       }
@@ -73,7 +75,39 @@ module DemoData
         listing_tagline: property.listing_tagline,
         sale_status: property.sale_status,
         asking_price: property.asking_price,
-        featured: property.featured
+        featured: property.featured,
+        listing_state: property.listing_state,
+        tenure: property.tenure,
+        council_tax_band: property.council_tax_band,
+        furnishing: property.furnishing,
+        available_from: property.available_from,
+        parking: property.parking,
+        outdoor_space: property.outdoor_space,
+        epc_rating: property.epc_rating,
+        floor_area_sq_ft: property.floor_area_sq_ft,
+        deposit_amount: property.deposit_amount,
+        pets_allowed: property.pets_allowed,
+        service_charge_amount: property.service_charge_amount,
+        lease_length_years: property.lease_length_years
+      }
+    end
+
+    def export_photo(photo, property_keys)
+      {
+        property_key: property_keys.fetch(photo.property_id),
+        image_filename: photo.image_filename,
+        caption: photo.caption,
+        position: photo.position,
+        primary: photo.primary
+      }
+    end
+
+    def export_floor_plan(floor_plan, property_keys)
+      {
+        property_key: property_keys.fetch(floor_plan.property_id),
+        floor_plans: floor_plan.floor_plans,
+        label: floor_plan.label,
+        position: floor_plan.position
       }
     end
 

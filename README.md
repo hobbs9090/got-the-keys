@@ -8,6 +8,7 @@ It is designed to feel like a credible small business product while also being p
 
 - Public marketing and property pages with responsive componentized styling.
 - Property catalogue, sale/rent filters, sorting, and richer listing cards.
+- Listing lifecycle and seller workspace features including completeness checks, listing moderation states, and marketing asset management.
 - Public viewing-request flow on each property page.
 - Full appointment domain with:
   - `pending`
@@ -224,6 +225,7 @@ You can load a different bundled scenario:
 SEED_SCENARIO=fully_booked_day bin/rails db:seed
 SEED_SCENARIO=qa_edge_cases bin/rails db:seed
 SEED_SCENARIO=high_volume_search bin/rails db:seed
+SEED_SCENARIO=listing_lifecycle bin/rails db:seed
 ```
 
 Scenario files are human-editable YAML and are intended to be committed to source control.

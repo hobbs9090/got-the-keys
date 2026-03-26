@@ -1,0 +1,163 @@
+key: listing_lifecycle
+name: Listing Lifecycle Studio
+description: Focused seller and admin dataset showing draft, review, marketed, withdrawn, and deal-stage listings with marketing assets.
+booking_configuration:
+  slot_duration_minutes: 45
+  lead_time_hours: 4
+  buffer_minutes: 15
+  office_opens_at: "09:00"
+  office_closes_at: "18:00"
+  open_weekdays: [1, 2, 3, 4, 5, 6]
+admins:
+  - email: steven@gotthekeys.com
+    password: secret
+    password_confirmation: secret
+    language: en
+users:
+  - first_name: Naomi
+    last_name: Blake
+    mobile_number: "07700 900701"
+    email: naomi.blake@example.com
+    password: secret
+    password_confirmation: secret
+    language: en
+properties:
+  - key: bromley_draft
+    owner_email: naomi.blake@example.com
+    address_line_1: 12 Cedar Mews
+    address_line_2: ""
+    town_city: Bromley
+    county: Kent
+    postcode: BR1 2AB
+    country: United Kingdom
+    property_type: Townhouse
+    listing_tagline: Needs a stronger finish before launch
+    property_description: A spacious townhouse with flexible family accommodation, but the seller still needs to finish the marketing assets and key property facts.
+    bedrooms: 3
+    bathrooms: 2
+    sale_status: For Sale
+    listing_state: draft
+    asking_price: 625000
+    featured: false
+    available_from: today+21d
+  - key: bromley_review
+    owner_email: naomi.blake@example.com
+    address_line_1: 8 Orchard Rise
+    address_line_2: ""
+    town_city: Bromley
+    county: Kent
+    postcode: BR1 2CD
+    country: United Kingdom
+    property_type: Semi-detached house
+    listing_tagline: Ready for admin review
+    property_description: A polished family home with a strong description, complete key facts, and brochure assets ready for publication.
+    bedrooms: 4
+    bathrooms: 2
+    sale_status: For Sale
+    listing_state: review_pending
+    asking_price: 785000
+    featured: true
+    tenure: Freehold
+    council_tax_band: F
+    furnishing: Unfurnished
+    parking: Driveway
+    outdoor_space: West-facing garden
+    epc_rating: C
+    floor_area_sq_ft: 1715
+    pets_allowed: true
+  - key: bromley_under_offer
+    owner_email: naomi.blake@example.com
+    address_line_1: 4 Park View
+    address_line_2: ""
+    town_city: Bromley
+    county: Kent
+    postcode: BR2 8EF
+    country: United Kingdom
+    property_type: Detached house
+    listing_tagline: Negotiating with a committed buyer
+    property_description: A substantial detached family home with a long garden, generous reception space, and a sale currently progressing through the agreed-offer stage.
+    bedrooms: 5
+    bathrooms: 3
+    sale_status: For Sale
+    listing_state: under_offer
+    asking_price: 1125000
+    featured: true
+    tenure: Freehold
+    council_tax_band: G
+    parking: Garage and driveway
+    outdoor_space: Landscaped garden
+    epc_rating: D
+    floor_area_sq_ft: 2380
+  - key: bromley_let_agreed
+    owner_email: naomi.blake@example.com
+    address_line_1: 17 Station Parade
+    address_line_2: ""
+    town_city: Bromley
+    county: Kent
+    postcode: BR1 4GH
+    country: United Kingdom
+    property_type: Apartment
+    listing_tagline: Tenant references in progress
+    property_description: A smart apartment near the station with clean presentation, quick commuter access, and a tenancy that has reached the let agreed stage.
+    bedrooms: 2
+    bathrooms: 1
+    sale_status: For Rent
+    listing_state: let_agreed
+    asking_price: 2150
+    featured: false
+    furnishing: Furnished
+    available_from: today+10d
+    council_tax_band: C
+    parking: Permit parking
+    epc_rating: B
+    floor_area_sq_ft: 710
+    deposit_amount: 2450
+    pets_allowed: false
+  - key: bromley_withdrawn
+    owner_email: naomi.blake@example.com
+    address_line_1: 29 Pine Close
+    address_line_2: ""
+    town_city: Bromley
+    county: Kent
+    postcode: BR3 5JK
+    country: United Kingdom
+    property_type: Cottage
+    listing_tagline: Withdrawn while plans change
+    property_description: A charming cottage that the seller has temporarily withdrawn while they reconsider the timing, price, and preparation work for a relaunch.
+    bedrooms: 3
+    bathrooms: 1
+    sale_status: For Sale
+    listing_state: withdrawn
+    asking_price: 575000
+    featured: false
+    tenure: Freehold
+    council_tax_band: E
+    outdoor_space: Courtyard garden
+    epc_rating: E
+photos:
+  - property_key: bromley_review
+    image_filename: hero_4.jpg
+    caption: Front elevation
+    position: 1
+    primary: true
+  - property_key: bromley_under_offer
+    image_filename: hero_5.jpg
+    caption: Garden terrace
+    position: 1
+    primary: true
+  - property_key: bromley_let_agreed
+    image_filename: hero_2.jpg
+    caption: Reception room
+    position: 1
+    primary: true
+floor_plans:
+  - property_key: bromley_review
+    floor_plans: orchard-rise-plan.pdf
+    label: Full layout
+    position: 1
+  - property_key: bromley_under_offer
+    floor_plans: park-view-plan.pdf
+    label: Ground and first floors
+    position: 1
+availability_windows: []
+appointments: []

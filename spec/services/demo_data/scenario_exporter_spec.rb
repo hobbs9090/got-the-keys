@@ -6,6 +6,8 @@ RSpec.describe DemoData::ScenarioExporter do
   let(:admin) { FactoryBot.create(:admin, email: "ops@gotthekeys.com") }
   let(:user) { FactoryBot.create(:user, email: "owner@example.com", first_name: "Lina", last_name: "West") }
   let(:property) { FactoryBot.create(:property, user:, address_line_1: "7 Cedar Close", listing_tagline: "Light-filled family house") }
+  let!(:photo) { FactoryBot.create(:photo, property:, image_filename: "cedar-close-front.jpg", primary: true, position: 1) }
+  let!(:floor_plan) { FactoryBot.create(:floor_plan, property:, floor_plans: "cedar-close-plan.pdf", label: "Ground floor", position: 1) }
   let!(:window) do
     FactoryBot.create(
       :availability_window,
@@ -57,9 +59,16 @@ RSpec.describe DemoData::ScenarioExporter do
     expect(property_payload).to include(
       "owner_email" => "owner@example.com",
       "listing_tagline" => "Light-filled family house",
-      "featured" => false
+      "featured" => false,
+      "listing_state" => "published"
     )
 
+    expect(payload["photos"]).to include(
+      include("property_key" => property_payload.fetch("key"), "image_filename" => "cedar-close-front.jpg", "primary" => true)
+    )
+    expect(payload["floor_plans"]).to include(
+      include("property_key" => property_payload.fetch("key"), "floor_plans" => "cedar-close-plan.pdf", "label" => "Ground floor")
+    )
     expect(payload["availability_windows"]).to include(
       include("property_key" => property_payload.fetch("key"), "kind" => "open", "label" => "Morning slot")
     )
