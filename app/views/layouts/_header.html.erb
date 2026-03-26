@@ -1,3 +1,29 @@
+<% account_summary = header_account_summary %>
+<% language_switcher = capture do %>
+  <div class="language-dropdown" data-testid="language-dropdown">
+    <details class="language-dropdown__details">
+      <summary class="language-dropdown__summary" aria-label="<%= "#{language_switcher_label}: #{current_language_label}" %>">
+        <span class="language-dropdown__summary-value">
+          <%= image_tag current_language_flag_asset, alt: "", class: "language-dropdown__flag", size: "16x11" %>
+          <span class="language-dropdown__summary-code"><%= current_language_code %></span>
+        </span>
+      </summary>
+
+      <div class="language-dropdown__menu" aria-label="<%= language_switcher_label %>">
+        <% language_menu_options.each do |option| %>
+          <%= link_to new_language_path(language: option[:code], return_to: request.fullpath),
+                      class: class_names("language-dropdown__option", "is-active": option[:code] == I18n.locale.to_s),
+                      data: { turbo: false, testid: "language-option-#{option[:code]}" },
+                      "aria-current": ("true" if option[:code] == I18n.locale.to_s) do %>
+            <%= image_tag option[:flag_asset], alt: "", class: "language-dropdown__flag", size: "16x11" %>
+            <span><%= option[:label] %></span>
+          <% end %>
+        <% end %>
+      </div>
+    </details>
+  </div>
+<% end %>
+
 <header class="site-header" data-testid="site-header">
   <div class="site-header__inner">
     <%= link_to root_path, class: "site-brand", data: { testid: "home-link" } do %>
@@ -12,37 +38,33 @@
     </nav>
 
     <div class="site-header__actions">
-      <div class="language-dropdown" data-testid="language-dropdown">
-        <details class="language-dropdown__details">
-          <summary class="language-dropdown__summary" aria-label="<%= "#{language_switcher_label}: #{current_language_label}" %>">
-            <span class="language-dropdown__summary-value">
-              <%= image_tag current_language_flag_asset, alt: "", class: "language-dropdown__flag", size: "16x11" %>
-              <span class="language-dropdown__summary-code"><%= current_language_code %></span>
-            </span>
-          </summary>
+      <% if account_summary.present? %>
+        <div class="site-header__session">
+          <div class="site-header__session-meta">
+            <div class="site-header__account" data-testid="header-account-summary">
+              <div class="site-header__account-heading">
+                <span class="site-header__account-eyebrow"><%= account_summary[:eyebrow] %></span>
+                <strong class="site-header__account-name"><%= account_summary[:name] %></strong>
+              </div>
+              <span class="site-header__account-detail"><%= account_summary[:detail] %></span>
+            </div>
 
-          <div class="language-dropdown__menu" aria-label="<%= language_switcher_label %>">
-            <% language_menu_options.each do |option| %>
-              <%= link_to new_language_path(language: option[:code], return_to: request.fullpath),
-                          class: class_names("language-dropdown__option", "is-active": option[:code] == I18n.locale.to_s),
-                          data: { turbo: false, testid: "language-option-#{option[:code]}" },
-                          "aria-current": ("true" if option[:code] == I18n.locale.to_s) do %>
-                <%= image_tag option[:flag_asset], alt: "", class: "language-dropdown__flag", size: "16x11" %>
-                <span><%= option[:label] %></span>
-              <% end %>
+            <%= language_switcher %>
+          </div>
+
+          <div class="site-header__button-group">
+            <% if admin_signed_in? %>
+              <%= link_to t("ui.site_header.admin_dashboard"), admin_dashboard_entry_path, class: "button primary", data: { testid: "admin-bookings-entry-link" } %>
+              <%= link_to t("ui.site_header.sign_out"), destroy_admin_session_path, class: "button alert hollow", data: { turbo_method: :delete } %>
+            <% else %>
+              <%= link_to t("ui.site_header.add_property"), new_property_path, class: "button primary", data: { testid: "add-property-link" } %>
+              <%= link_to t("ui.site_header.profile"), edit_user_registration_path, class: "button hollow" %>
+              <%= link_to t("ui.site_header.sign_out"), destroy_user_session_path, class: "button alert hollow", data: { turbo_method: :delete } %>
             <% end %>
           </div>
-        </details>
-      </div>
-
-      <% if admin_signed_in? %>
-        <%= link_to t("ui.site_header.admin_dashboard"), admin_dashboard_entry_path, class: "button primary", data: { testid: "admin-bookings-entry-link" } %>
-        <%= link_to t("ui.site_header.sign_out"), destroy_admin_session_path, class: "button alert hollow", data: { turbo_method: :delete } %>
-      <% elsif user_signed_in? %>
-        <%= link_to t("ui.site_header.add_property"), new_property_path, class: "button primary", data: { testid: "add-property-link" } %>
-        <%= link_to t("ui.site_header.profile"), edit_user_registration_path, class: "button hollow" %>
-        <%= link_to t("ui.site_header.sign_out"), destroy_user_session_path, class: "button alert hollow", data: { turbo_method: :delete } %>
+        </div>
       <% else %>
+        <%= language_switcher %>
         <%= link_to t("ui.site_header.register"), new_user_registration_path, class: "button secondary hollow", id: "register" %>
         <%= link_to t("ui.site_header.sign_in"), new_user_session_path, class: "button primary", id: "sign_in" %>
       <% end %>

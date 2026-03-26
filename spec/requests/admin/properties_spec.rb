@@ -23,6 +23,10 @@ RSpec.describe "Admin properties", type: :request do
     expect(response.body).to include("Admin brochure")
     expect(response.body).to include(%(data-testid="admin-property-activity-timeline"))
     expect(response.body).to include(%(data-testid="listing-transition-published"))
+    expect(response.body).to include(%(data-testid="listing-transition-grid"))
+    expect(response.body).to include("admin-property-page__actions")
+    expect(response.body).to include("admin-property-readiness__transition-form")
+    expect(response.body).to include("admin-property-readiness__transition-button")
   end
 
   it "lets admins move a listing through moderation states" do

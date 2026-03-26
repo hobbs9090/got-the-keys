@@ -40,7 +40,8 @@ RSpec.describe DemoData::ScenarioLoader do
 
     expect(summary[:property_count]).to eq(4)
     expect(BookingConfiguration.current.active_demo_scenario_key).to eq("baseline")
-    expect(Admin.count).to eq(2)
+    expect(Admin.count).to eq(1)
+    expect(Admin.pluck(:email)).to eq(["steven@gotthekeys.com"])
     expect(User.count).to eq(4)
     expect(Property.count).to eq(4)
     expect(Photo.count).to eq(3)
