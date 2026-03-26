@@ -152,9 +152,9 @@ Treat the app as ready for major extension when all of these are true:
 
 ### Tasks
 
-- [ ] Add a system spec for:
+- [x] Add a system spec for:
   public browse -> property detail -> appointment request
-- [ ] Add a system spec for:
+- [x] Add a system spec for:
   admin sign-in -> bookings desk -> confirm or reschedule appointment
 - [ ] Add a system spec for:
   language switch persistence across pages
