@@ -31,6 +31,8 @@ module GotTheKeys
     config.x.got_the_keys.version = semantic_version
     config.x.got_the_keys.build_sha = ENV["APP_BUILD_SHA"].presence || build_metadata["build_sha"].presence
     config.x.got_the_keys.build_number = ENV["APP_BUILD_NUMBER"].presence || build_metadata["build_number"].presence
+    config.x.got_the_keys.deployed_at = build_metadata["deployed_at"].presence
+    config.x.got_the_keys.deploy_target = ENV["APP_DEPLOY_TARGET"].presence
 
     config.generators do |g|
       g.test_framework :rspec, fixture: true

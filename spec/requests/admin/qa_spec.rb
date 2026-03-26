@@ -8,7 +8,9 @@ RSpec.describe "Admin QA guide" do
     original_values = {
       version: version_config.version,
       build_sha: version_config.build_sha,
-      build_number: version_config.build_number
+      build_number: version_config.build_number,
+      deployed_at: version_config.deployed_at,
+      deploy_target: version_config.deploy_target
     }
 
     example.run
@@ -16,6 +18,8 @@ RSpec.describe "Admin QA guide" do
     version_config.version = original_values[:version]
     version_config.build_sha = original_values[:build_sha]
     version_config.build_number = original_values[:build_number]
+    version_config.deployed_at = original_values[:deployed_at]
+    version_config.deploy_target = original_values[:deploy_target]
   end
 
   before do
@@ -26,6 +30,8 @@ RSpec.describe "Admin QA guide" do
     version_config.version = "2.4.0"
     version_config.build_sha = "abc1234"
     version_config.build_number = "42"
+    version_config.deployed_at = "2026-03-26T09:00:00Z"
+    version_config.deploy_target = "staging host"
 
     get admin_qa_path
 
@@ -40,6 +46,8 @@ RSpec.describe "Admin QA guide" do
     expect(version_box.at_css(%([data-testid="qa-app-version"])).text).to eq("v2.4.0+abc1234.42")
     expect(version_box.at_css(%([data-testid="qa-git-sha"])).text).to eq("abc1234")
     expect(version_box.at_css(%([data-testid="qa-build-number"])).text).to eq("42")
+    expect(version_box.at_css(%([data-testid="qa-deployed-at"])).text).to eq(I18n.l(Time.zone.parse("2026-03-26T09:00:00Z"), format: :long))
+    expect(version_box.at_css(%([data-testid="qa-environment"])).text).to eq("staging host, Rails env test")
   end
 
   it "places the QA guide link at the bottom of the admin workspace navigation" do

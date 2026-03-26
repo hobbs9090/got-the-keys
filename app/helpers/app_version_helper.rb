@@ -11,6 +11,25 @@ module AppVersionHelper
     Rails.configuration.x.got_the_keys.build_number.presence
   end
 
+  def app_deployed_at
+    value = Rails.configuration.x.got_the_keys.deployed_at.presence
+    return if value.blank?
+
+    timestamp = Time.zone.parse(value)
+    timestamp ? l(timestamp, format: :long) : value
+  rescue ArgumentError, TypeError
+    value
+  end
+
+  def app_runtime_environment
+    components = []
+    deploy_target = Rails.configuration.x.got_the_keys.deploy_target.presence
+
+    components << deploy_target if deploy_target.present?
+    components << t("ui.admin.qa.version_box.rails_env", env: Rails.env, default: "Rails env %{env}")
+    components.join(", ")
+  end
+
   def app_build_value(value)
     value.presence || t("ui.admin.qa.version_box.unavailable", default: "Not available")
   end

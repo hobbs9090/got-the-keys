@@ -13,6 +13,7 @@ set :rails_env, "production"
 set :default_env, {
   "PATH" => "$HOME/.local/bin:$HOME/.rbenv/bin:$HOME/.rbenv/shims:/usr/local/bin:/usr/bin:/bin",
   "APP_HOST" => ENV.fetch("APP_HOST", "stevenhobbs.co.uk"),
+  "APP_DEPLOY_TARGET" => ENV.fetch("APP_DEPLOY_TARGET", "staging host"),
   "RAILS_SERVE_STATIC_FILES" => "1",
   "SECRET_KEY_BASE_DUMMY" => "1"
 }.merge(version_env)

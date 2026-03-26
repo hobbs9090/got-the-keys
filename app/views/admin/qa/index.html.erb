@@ -22,6 +22,14 @@
           <dt><%= t("ui.admin.qa.version_box.build_number", default: "Build number") %></dt>
           <dd data-testid="qa-build-number"><%= app_build_value(app_build_number) %></dd>
         </div>
+        <div>
+          <dt><%= t("ui.admin.qa.version_box.deployed_at", default: "Deployed at") %></dt>
+          <dd data-testid="qa-deployed-at"><%= app_build_value(app_deployed_at) %></dd>
+        </div>
+        <div>
+          <dt><%= t("ui.admin.qa.version_box.environment", default: "Environment") %></dt>
+          <dd data-testid="qa-environment"><%= app_runtime_environment %></dd>
+        </div>
       </dl>
     </aside>
   </div>

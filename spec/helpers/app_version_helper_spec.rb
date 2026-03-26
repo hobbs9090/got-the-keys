@@ -7,7 +7,9 @@ RSpec.describe AppVersionHelper, type: :helper do
     original_values = {
       version: version_config.version,
       build_sha: version_config.build_sha,
-      build_number: version_config.build_number
+      build_number: version_config.build_number,
+      deployed_at: version_config.deployed_at,
+      deploy_target: version_config.deploy_target
     }
 
     example.run
@@ -15,6 +17,8 @@ RSpec.describe AppVersionHelper, type: :helper do
     version_config.version = original_values[:version]
     version_config.build_sha = original_values[:build_sha]
     version_config.build_number = original_values[:build_number]
+    version_config.deployed_at = original_values[:deployed_at]
+    version_config.deploy_target = original_values[:deploy_target]
   end
 
   it "formats the public app version from the semantic version" do
@@ -33,6 +37,18 @@ RSpec.describe AppVersionHelper, type: :helper do
 
   it "falls back cleanly when build metadata is missing" do
     expect(helper.app_build_value(nil)).to eq("Not available")
+  end
+
+  it "formats the deployed timestamp for display" do
+    version_config.deployed_at = "2026-03-26T09:00:00Z"
+
+    expect(helper.app_deployed_at).to eq(I18n.l(Time.zone.parse("2026-03-26T09:00:00Z"), format: :long))
+  end
+
+  it "combines the deploy target and Rails environment for diagnostics" do
+    version_config.deploy_target = "staging host"
+
+    expect(helper.app_runtime_environment).to eq("staging host, Rails env test")
   end
 
   it "includes build metadata in the full app version when present" do

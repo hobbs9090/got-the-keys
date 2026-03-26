@@ -277,6 +277,9 @@ zh:
           title: "发布构建"
           git_sha: "Git SHA"
           build_number: "构建编号"
+          deployed_at: "部署时间"
+          environment: "环境"
+          rails_env: "Rails 环境 %{env}"
           unavailable: "不可用"
         diagnostic_labels:
           active_scenario: "当前场景"

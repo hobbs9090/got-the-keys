@@ -277,6 +277,9 @@ en:
           title: "Release build"
           git_sha: "Git SHA"
           build_number: "Build number"
+          deployed_at: "Deployed at"
+          environment: "Environment"
+          rails_env: "Rails env %{env}"
           unavailable: "Not available"
         diagnostic_labels:
           active_scenario: "Active scenario"
