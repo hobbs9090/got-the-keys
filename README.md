@@ -8,7 +8,13 @@ It is designed to feel like a credible small business product while also being p
 
 - Public marketing and property pages with responsive componentized styling.
 - Property catalogue, sale/rent filters, sorting, and richer listing cards.
+- Listing lifecycle and seller workspace features including completeness checks, listing moderation states, and marketing asset management.
+- Property enquiry capture, admin lead inbox triage, and seller-side recent lead visibility.
 - Public viewing-request flow on each property page.
+- Customer self-service viewing management, grouped viewing support, reminder emails with calendar attachments, and richer admin booking filters.
+- Sales offers and rental applications with admin progression boards, decision history, and seller-side visibility.
+- Public brochure and compliance-document downloads with seller-side document management.
+- Saved-search capture, trust cues, branch profile content, and property/lead activity timelines.
 - Full appointment domain with:
   - `pending`
   - `confirmed`
@@ -26,6 +32,7 @@ It is designed to feel like a credible small business product while also being p
   - demo-data controls
   - QA guide
 - Deterministic YAML-backed demo scenarios for repeatable QA training.
+- Admin scenario operations console with trainer notes, quick-reset packs, diagnostics, and selector registry.
 - Optional AI-assisted larger data generation for catalogue population.
 
 ## Current Stack
@@ -71,7 +78,7 @@ It is designed to feel like a credible small business product while also being p
 
 - `app/models/`
   Public catalogue models plus the booking domain:
-  `Appointment`, `AppointmentEvent`, `AvailabilityWindow`, `BookingConfiguration`, `NotificationLog`, and `DemoScenarioRun`.
+  `Appointment`, `AppointmentEvent`, `AvailabilityWindow`, `BookingConfiguration`, `NotificationLog`, `PropertyDocument`, `AuditLog`, `SavedSearch`, and `DemoScenarioRun`.
 - `app/controllers/admin/`
   The password-protected admin workspace.
 - `app/jobs/`
@@ -224,6 +231,11 @@ You can load a different bundled scenario:
 SEED_SCENARIO=fully_booked_day bin/rails db:seed
 SEED_SCENARIO=qa_edge_cases bin/rails db:seed
 SEED_SCENARIO=high_volume_search bin/rails db:seed
+SEED_SCENARIO=listing_lifecycle bin/rails db:seed
+SEED_SCENARIO=lead_management bin/rails db:seed
+SEED_SCENARIO=viewing_operations bin/rails db:seed
+SEED_SCENARIO=deal_progression bin/rails db:seed
+SEED_SCENARIO=documents_and_trust bin/rails db:seed
 ```
 
 Scenario files are human-editable YAML and are intended to be committed to source control.
@@ -325,6 +337,16 @@ The repo currently ships with:
   Includes missing phone data, long notes, a reschedule, and an empty-slot property.
 - `high_volume_search`
   A larger catalogue intended to trigger sorting and pagination behavior.
+- `listing_lifecycle`
+  Listing-readiness, moderation, and asset-management workflow.
+- `lead_management`
+  Lead inbox, spam, and qualification examples.
+- `viewing_operations`
+  Reschedules, reminders, grouped viewings, and visit outcomes.
+- `deal_progression`
+  Sales offers and rental-application state changes.
+- `documents_and_trust`
+  Brochure downloads, private files, stale-listing cues, and delayed lead follow-up.
 
 ## Known Credentials
 
@@ -373,8 +395,10 @@ The admin area includes:
 Inside `/admin/demo-data` an admin can:
 
 - inspect bundled scenario previews
+- review scenario family, complexity, locale coverage, trainer notes, and expected assertions
 - restore baseline
 - apply another bundled scenario
+- use one-click quick-reset packs for common training sessions
 - preview and import YAML
 - export the current dataset
 - see diagnostics and the last reset/import/export record
@@ -388,9 +412,9 @@ It includes:
 - deterministic data via YAML scenarios
 - stable success and validation messaging
 - visible audit timeline for appointments
-- admin diagnostics
+- admin diagnostics including job adapter, mail delivery mode, and seeded personas
 - representative happy-path and edge-case states
-- stable selectors on core flows
+- stable selectors on core flows plus a selector contract registry in `/admin/qa`
 
 Important selectors include:
 
@@ -399,6 +423,18 @@ Important selectors include:
 - `data-testid="appointment-form"`
 - `data-testid="admin-appointment-row"`
 - `data-testid="active-demo-scenario"`
+- `data-testid="saved-search-panel"`
+- `data-testid="property-documents-panel"`
+- `data-testid="admin-property-activity-timeline"`
+
+Scenario families now cover:
+
+- happy path
+- edge cases
+- high volume
+- multilingual
+- accessibility
+- flaky operator workflow
 
 The dedicated QA guide is in [`docs/QA_TRAINING.md`](docs/QA_TRAINING.md).
 It now includes:

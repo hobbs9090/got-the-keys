@@ -2,6 +2,9 @@
   <ul class="vertical menu admin-nav__menu">
     <li><%= admin_nav_link_to t("ui.admin.navigation.dashboard"), admin_root_path, data: { testid: "admin-dashboard-link" } %></li>
     <li><%= admin_nav_link_to t("ui.admin.navigation.bookings"), admin_bookings_path, active: controller_path == "admin/appointments", data: { testid: "admin-bookings-link" } %></li>
+    <li><%= admin_nav_link_to "Leads", admin_enquiries_path, active: controller_path == "admin/enquiries", data: { testid: "admin-enquiries-link" } %></li>
+    <li><%= admin_nav_link_to "Offers", admin_offers_path, active: controller_path == "admin/offers", data: { testid: "admin-offers-link" } %></li>
+    <li><%= admin_nav_link_to "Applications", admin_rental_applications_path, active: controller_path == "admin/rental_applications", data: { testid: "admin-rental-applications-link" } %></li>
     <li><%= admin_nav_link_to t("ui.admin.navigation.properties"), admin_properties_path, data: { testid: "admin-properties-link" } %></li>
     <li><%= admin_nav_link_to t("ui.admin.navigation.sellers"), admin_users_path, data: { testid: "admin-users-link" } %></li>
     <li><%= admin_nav_link_to t("ui.admin.navigation.demo_data"), admin_demo_scenarios_path, data: { testid: "admin-demo-data-link" } %></li>

@@ -2,7 +2,7 @@ class PropertyCatalogueQuery
   FILTER_KEYS = %i[q sale_status min_bedrooms min_price max_price town_city sort].freeze
   Result = Struct.new(:filters, :scope, :properties, :available_towns, :total_count, keyword_init: true)
 
-  def initialize(params:, relation: Property.all, town_scope: Property.all, page: nil, default_filters: {})
+  def initialize(params:, relation: Property.publicly_visible, town_scope: Property.publicly_visible, page: nil, default_filters: {})
     @params = normalize_params(params)
     @relation = relation
     @town_scope = town_scope

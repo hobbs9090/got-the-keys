@@ -73,22 +73,30 @@
   </article>
 
   <article class="admin-panel">
-    <h2><%= t("ui.admin.qa.selectors_title") %></h2>
-    <ul class="detail-inline-list">
-      <li><%= t("ui.admin.qa.selectors.property_card") %></li>
-      <li><%= t("ui.admin.qa.selectors.book_viewing_cta") %></li>
-      <li><%= t("ui.admin.qa.selectors.appointment_form") %></li>
-      <li><%= t("ui.admin.qa.selectors.admin_appointment_row") %></li>
-      <li><%= t("ui.admin.qa.selectors.active_demo_scenario") %></li>
-    </ul>
+    <h2>Selector contract registry</h2>
+    <% @selector_groups.each do |surface, selectors| %>
+      <p><strong><%= surface %></strong></p>
+      <ul class="detail-inline-list">
+        <% selectors.each do |entry| %>
+          <li><code><%= entry[:selector] %></code>: <%= entry[:purpose] %></li>
+        <% end %>
+      </ul>
+    <% end %>
   </article>
 </section>
 
 <section class="admin-panel">
-  <h2><%= t("ui.admin.qa.available_scenarios_title") %></h2>
-  <div class="detail-inline-list">
-    <% @scenarios.each do |scenario| %>
-      <li><strong><%= scenario[:name] %></strong>: <%= scenario[:description] %></li>
-    <% end %>
-  </div>
+  <h2>Scenario families</h2>
+  <% @scenario_family_groups.each do |family, scenarios| %>
+    <p><strong><%= admin_scenario_family_label(family) %></strong></p>
+    <ul class="detail-inline-list">
+      <% scenarios.each do |scenario| %>
+        <li>
+          <strong><%= scenario[:name] %></strong>:
+          <%= scenario.dig(:qa, :intended_journey) %>
+          (<%= scenario.dig(:qa, :complexity).to_s.humanize %>)
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
 </section>

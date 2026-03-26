@@ -12,16 +12,73 @@
       <%= link_to t("ui.admin.demo_data.preview.back_to_demo_data"), admin_demo_scenarios_path, class: "button hollow secondary" %>
     </div>
   </div>
+</section>
 
+<section class="admin-grid">
   <article class="admin-panel">
+    <h2>Scenario briefing</h2>
     <p><%= @preview.fetch(:description) %></p>
     <dl class="detail-list">
-      <% @preview.except(:name, :description).each do |label, value| %>
+      <div>
+        <dt>Family</dt>
+        <dd><%= admin_scenario_family_label(@preview.dig(:qa, :family)) %></dd>
+      </div>
+      <div>
+        <dt>Journey</dt>
+        <dd><%= @preview.dig(:qa, :intended_journey) %></dd>
+      </div>
+      <div>
+        <dt>Complexity</dt>
+        <dd><%= @preview.dig(:qa, :complexity).to_s.humanize %></dd>
+      </div>
+      <div>
+        <dt>Risk type</dt>
+        <dd><%= @preview.dig(:qa, :risk_type).to_s.humanize %></dd>
+      </div>
+      <div>
+        <dt>Locale coverage</dt>
+        <dd><%= Array(@preview.dig(:qa, :locale_coverage)).join(", ") %></dd>
+      </div>
+    </dl>
+  </article>
+
+  <article class="admin-panel">
+    <h2>Expected counts</h2>
+    <dl class="detail-list">
+      <% @preview.dig(:qa, :expected_counts).each do |label, value| %>
         <div>
           <dt><%= admin_demo_label(label) %></dt>
-          <dd><%= admin_demo_value(label, value) %></dd>
+          <dd><%= value %></dd>
         </div>
       <% end %>
     </dl>
+  </article>
+</section>
+
+<section class="admin-grid">
+  <article class="admin-panel">
+    <h2>Trainer notes</h2>
+    <% if @preview.dig(:qa, :trainer_notes).any? %>
+      <ol class="timeline">
+        <% @preview.dig(:qa, :trainer_notes).each do |note| %>
+          <li><p><%= note %></p></li>
+        <% end %>
+      </ol>
+    <% else %>
+      <p class="empty-copy">No trainer notes were provided for this scenario.</p>
+    <% end %>
+  </article>
+
+  <article class="admin-panel">
+    <h2>Expected assertions</h2>
+    <% if @preview.dig(:qa, :expected_assertions).any? %>
+      <ul class="detail-inline-list">
+        <% @preview.dig(:qa, :expected_assertions).each do |assertion| %>
+          <li><%= assertion %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="empty-copy">No expected assertions were provided for this scenario.</p>
+    <% end %>
   </article>
 </section>
