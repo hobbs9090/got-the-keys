@@ -1,40 +1,40 @@
-<% title "QA guide" %>
+<% title t("ui.admin.qa.title") %>
 
 <section class="admin-section">
   <div class="section-heading">
     <div>
-      <p class="section-heading__eyebrow">Automation training harness</p>
-      <h1>QA guide</h1>
+      <p class="section-heading__eyebrow"><%= t("ui.admin.qa.eyebrow") %></p>
+      <h1><%= t("ui.admin.qa.title") %></h1>
     </div>
   </div>
 </section>
 
 <section class="admin-grid">
   <article class="admin-panel">
-    <h2>Diagnostics</h2>
+    <h2><%= t("ui.admin.qa.diagnostics_title") %></h2>
     <dl class="detail-list">
       <div>
-        <dt>App version</dt>
+        <dt><%= t("ui.admin.qa.app_version") %></dt>
         <dd data-testid="qa-app-version"><%= full_app_version %></dd>
       </div>
       <% @diagnostics.each do |label, value| %>
         <div>
-          <dt><%= label.to_s.humanize %></dt>
-          <dd><%= value.is_a?(DemoScenarioRun) ? "#{value.action_type.humanize} at #{formatted_date_time(value.created_at)}" : value %></dd>
+          <dt><%= t("ui.admin.qa.diagnostic_labels.#{label}", default: label.to_s.humanize) %></dt>
+          <dd><%= value.is_a?(DemoScenarioRun) ? t("ui.admin.qa.demo_action_value", action: value.action_type.humanize, time: formatted_date_time(value.created_at)) : value %></dd>
         </div>
       <% end %>
     </dl>
   </article>
 
   <article class="admin-panel">
-    <h2>Known credentials</h2>
+    <h2><%= t("ui.admin.qa.known_credentials_title") %></h2>
     <div class="code-block">
       <% Array(@baseline[:admins]).each do |admin| %>
-        admin: <%= admin[:email] %> / <%= admin[:password] || "secret" %>
+        <%= t("ui.admin.qa.admin_credential", email: admin[:email], password: admin[:password] || t("ui.admin.qa.default_password")) %>
       <% end %>
 
       <% Array(@baseline[:users]).each do |user| %>
-        seller: <%= user[:email] %> / <%= user[:password] || "secret" %>
+        <%= t("ui.admin.qa.seller_credential", email: user[:email], password: user[:password] || t("ui.admin.qa.default_password")) %>
       <% end %>
     </div>
   </article>
@@ -42,7 +42,7 @@
 
 <section class="admin-grid">
   <article class="admin-panel">
-    <h2>Recommended training journeys</h2>
+    <h2><%= t("ui.admin.qa.training_title") %></h2>
     <ol class="timeline">
       <% @training_journeys.each do |journey| %>
         <li><p><%= journey %></p></li>
@@ -51,19 +51,19 @@
   </article>
 
   <article class="admin-panel">
-    <h2>Automation-friendly selectors</h2>
+    <h2><%= t("ui.admin.qa.selectors_title") %></h2>
     <ul class="detail-inline-list">
-      <li>`data-testid="property-card"` on listing cards</li>
-      <li>`data-testid="book-viewing-cta"` on property booking CTA</li>
-      <li>`data-testid="appointment-form"` on the public booking form</li>
-      <li>`data-testid="admin-appointment-row"` on agenda rows</li>
-      <li>`data-testid="active-demo-scenario"` on the admin shell</li>
+      <li><%= t("ui.admin.qa.selectors.property_card") %></li>
+      <li><%= t("ui.admin.qa.selectors.book_viewing_cta") %></li>
+      <li><%= t("ui.admin.qa.selectors.appointment_form") %></li>
+      <li><%= t("ui.admin.qa.selectors.admin_appointment_row") %></li>
+      <li><%= t("ui.admin.qa.selectors.active_demo_scenario") %></li>
     </ul>
   </article>
 </section>
 
 <section class="admin-panel">
-  <h2>Available scenarios</h2>
+  <h2><%= t("ui.admin.qa.available_scenarios_title") %></h2>
   <div class="detail-inline-list">
     <% @scenarios.each do |scenario| %>
       <li><strong><%= scenario[:name] %></strong>: <%= scenario[:description] %></li>

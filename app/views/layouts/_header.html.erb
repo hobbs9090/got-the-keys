@@ -1,7 +1,7 @@
 <header class="site-header" data-testid="site-header">
   <div class="site-header__inner">
     <%= link_to root_path, class: "site-brand", data: { testid: "home-link" } do %>
-      <span class="site-brand__eyebrow">Property and Booking Platform</span>
+      <span class="site-brand__eyebrow"><%= t("ui.site_header.eyebrow") %></span>
       <span class="site-brand__wordmark"><%= render "layouts/gotthekeys", class_name: "marketing-wordmark--header", width: 228 %></span>
     <% end %>
 
@@ -12,21 +12,29 @@
     </nav>
 
     <div class="site-header__actions">
-      <div class="site-header__languages">
-        <%= link_to "EN", new_language_path(language: "en"), class: ("is-active" unless chinese_locale?) %>
-        <%= link_to "中文", new_language_path(language: "zh"), class: ("is-active" if chinese_locale?) %>
+      <div class="language-dropdown" data-testid="language-dropdown">
+        <%= form_with url: new_language_path, method: :get, local: true, data: { turbo: false }, html: { class: "language-dropdown__form" } do %>
+          <%= label_tag "site-header-language", language_switcher_label, class: "language-dropdown__label" %>
+          <div class="language-dropdown__field">
+            <%= select_tag :language,
+                           options_for_select(language_options, I18n.locale.to_s),
+                           id: "site-header-language",
+                           class: "language-dropdown__select",
+                           onchange: "this.form.submit()" %>
+          </div>
+        <% end %>
       </div>
 
       <% if admin_signed_in? %>
-        <%= link_to "Bookings", admin_bookings_path, class: "button primary", data: { testid: "admin-bookings-entry-link" } %>
-        <%= link_to "Sign out", destroy_admin_session_path, class: "button alert hollow", data: { turbo_method: :delete } %>
+        <%= link_to t("ui.site_header.admin_bookings"), admin_bookings_path, class: "button primary", data: { testid: "admin-bookings-entry-link" } %>
+        <%= link_to t("ui.site_header.sign_out"), destroy_admin_session_path, class: "button alert hollow", data: { turbo_method: :delete } %>
       <% elsif user_signed_in? %>
-        <%= link_to "Add property", new_property_path, class: "button primary", data: { testid: "add-property-link" } %>
-        <%= link_to "Profile", edit_user_registration_path, class: "button hollow" %>
-        <%= link_to "Sign out", destroy_user_session_path, class: "button alert hollow", data: { turbo_method: :delete } %>
+        <%= link_to t("ui.site_header.add_property"), new_property_path, class: "button primary", data: { testid: "add-property-link" } %>
+        <%= link_to t("ui.site_header.profile"), edit_user_registration_path, class: "button hollow" %>
+        <%= link_to t("ui.site_header.sign_out"), destroy_user_session_path, class: "button alert hollow", data: { turbo_method: :delete } %>
       <% else %>
-        <%= link_to "Register", new_user_registration_path, class: "button secondary hollow", id: "register" %>
-        <%= link_to "Sign in", new_user_session_path, class: "button primary", id: "sign_in" %>
+        <%= link_to t("ui.site_header.register"), new_user_registration_path, class: "button secondary hollow", id: "register" %>
+        <%= link_to t("ui.site_header.sign_in"), new_user_session_path, class: "button primary", id: "sign_in" %>
       <% end %>
     </div>
   </div>

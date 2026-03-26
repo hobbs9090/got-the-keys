@@ -1,5 +1,5 @@
 <% title t('contact_us.title') %>
-<% map_locale = chinese_locale? ? 'zh' : 'en' %>
+<% map_locale = I18n.locale.to_s %>
 <% map_query = "https://maps.google.co.uk/maps?q=TN16+1ET&hl=#{map_locale}&sll=51.528642,-0.101599&sspn=0.733045,1.115112&hnear=Westerham+TN16+1ET,+United+Kingdom&t=m&ie=UTF8&hq=&ll=51.269595,0.06772&spn=0.01611,0.023947&z=14&iwloc=A" %>
 <% contact_people = [
   { email: 'zoe@serenity.bc.reb', name: 'Steven Hobbs', role: t('contact_us.roles.founder_support'), art: 'contact_avatar_ai_1.svg' },
@@ -162,7 +162,7 @@
       </div>
 
       <div class="contact-map-card__details">
-        <p><strong>GotTheKeys Limited</strong><br>123 Awesome Road,<br>Limpsfield, TN16 4AB</p>
+        <p><strong><%= t("ui.contact.office_name") %></strong><br><%= t("ui.contact.office_line_1") %>,<br><%= t("ui.contact.office_line_2") %></p>
       </div>
 
       <%= button_tag t('contact_us.view_map'), type: 'button', class: 'button secondary hollow expanded', data: { open: 'map-modal' } %>

@@ -26,6 +26,15 @@ zh:
   bedroom: "卧室"
   under_construction: "正在建设中"
 
+  languages:
+    label: "语言"
+    names:
+      en: "English"
+      de: "Deutsch"
+      fr: "Français"
+      it: "Italiano"
+      zh: "中文"
+
   activerecord:
     models:
       property: "财产"

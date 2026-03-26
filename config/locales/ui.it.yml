@@ -1,0 +1,249 @@
+it:
+  ui:
+    site_header:
+      eyebrow: "Piattaforma immobiliare e prenotazioni"
+      admin_bookings: "Prenotazioni"
+      sign_out: "Esci"
+      add_property: "Aggiungi immobile"
+      profile: "Profilo"
+      register: "Registrati"
+      sign_in: "Accedi"
+
+    site_footer:
+      copy: "Scoperta immobiliare moderna, prenotazione visite e scenari QA deterministici in un'unica applicazione Rails renderizzata lato server."
+      meta_copy: "Progettato per demo realistiche, test di accettazione e formazione sull'automazione del browser guidata dall'IA."
+
+    shared:
+      property_placeholder_alt: "Immagine segnaposto dell'immobile"
+
+    common:
+      apply: "Applica"
+      any: "Qualsiasi"
+      cancel: "Annulla"
+      reset: "Reimposta"
+      clear_all: "Cancella tutto"
+      featured: "In evidenza"
+      view_property: "Vedi immobile"
+      book_a_viewing: "Prenota una visita"
+      town: "Citta"
+      bathrooms: "Bagni"
+      postcode: "CAP"
+      overview: "Panoramica"
+      address: "Indirizzo"
+      property: "Immobile"
+      requested_slot: "Fascia richiesta"
+      current_slot: "Fascia attuale"
+      duration: "Durata"
+      customer: "Cliente"
+      customer_notes: "Note del cliente"
+      full_name: "Nome completo"
+      email_address: "Indirizzo e-mail"
+      phone_number: "Numero di telefono"
+      status: "Stato"
+
+    contact:
+      office_name: "GotTheKeys Limited"
+      office_line_1: "123 Awesome Road"
+      office_line_2: "Limpsfield, TN16 4AB"
+
+    legacy:
+      from: "Da"
+      to: "A"
+      update: "Aggiorna"
+      add_viewing_time: "Aggiungi fascia di visita"
+      new_viewing_time_title: "Nuova fascia di visita per %{address}"
+      new_photos_title: "Nuove foto per %{address}"
+      new_floor_plan_title: "Nuova planimetria per %{address}"
+      location_details_title: "Dettagli della posizione per %{address}"
+
+    welcome:
+      carousel:
+        previous: "Slide precedente"
+        next: "Slide successiva"
+        first: "Prima slide"
+        second: "Seconda slide"
+        third: "Terza slide"
+      hero_eyebrow: "Scoperta immobiliare moderna e prenotazione appuntamenti"
+      hero_title: "Offri ad acquirenti e inquilini un sito curato dando allo stesso tempo ai team QA un ambiente di automazione deterministico."
+      primary_cta: "Sfoglia gli immobili"
+      admin_cta: "Apri il desk prenotazioni"
+      metric_labels:
+        properties: "Immobili"
+        for_sale: "In vendita"
+        for_rent: "In affitto"
+        upcoming_viewings: "Visite in arrivo"
+      featured_eyebrow: "Annunci in evidenza"
+      featured_title: "Schede immobiliari credibili e reattive con agganci alla prenotazione integrati"
+      featured_action: "Vedi il catalogo completo"
+      insights_label: "Approfondimenti sulla piattaforma"
+      qa_title: "Pensato per la formazione QA"
+      qa_points:
+        selectors: "Selettori semantici stabili sui controlli principali di prenotazione e amministrazione."
+        scenarios: "Scenari demo deterministici per happy path, conflitti, stati vuoti e ricerche ad alto volume."
+        audit: "Tracce di audit visibili e log delle notifiche rendono facile verificare i cambi di stato."
+      shared_host_title: "Adatto all'hosting condiviso"
+      shared_host_points:
+        stack: "Rails renderizzato lato server su Apache + Passenger."
+        dependencies: "Nessuna dipendenza da Redis, Sidekiq, Docker o worker sempre attivi."
+        enhancement: "Miglioramento progressivo con Foundation, Turbo e moduli tradizionali."
+
+    properties:
+      headline_fallback: "%{property_type} a %{town_city}"
+      in_location: "%{property_type} a %{location}"
+      bedroom_count:
+        one: "1 camera"
+        other: "%{count} camere"
+      bathroom_count:
+        one: "1 bagno"
+        other: "%{count} bagni"
+      sale_statuses:
+        for_sale: "In vendita"
+        for_rent: "In affitto"
+      catalogue:
+        eyebrow: "Catalogo immobili"
+        hero_title: "Sfoglia annunci moderni con disponibilita di prenotazione in tempo reale"
+        hero_body: "Cerca per area, prezzo e numero di camere, poi prenota una visita dalla pagina di ogni immobile."
+        active_filter_count:
+          one: "1 filtro attivo"
+          other: "%{count} filtri attivi"
+        overview_badge: "Panoramica catalogo"
+        matching_properties:
+          one: "immobile corrispondente"
+          other: "immobili corrispondenti"
+        browse_eyebrow: "Sfoglia"
+        browse_title: "Passa tra le viste del catalogo"
+        browse_body: "Usa qui l'intero catalogo, oppure vai direttamente agli immobili solo in vendita o solo in affitto se sai gia in quale direzione muoverti."
+        all_listings: "Tutti gli annunci"
+        totals:
+          all: "Tutti"
+        filters_eyebrow: "Affina la ricerca"
+        filters_title: "Filtra l'elenco immobili"
+        sidebar_copy: "Restringi l'elenco per tipo di annuncio, area, citta, camere e budget, poi reimposta tutto con un solo tocco se vuoi ricominciare."
+        results_eyebrow: "Risultati in tempo reale"
+        results_title:
+          one: "1 immobile pronto da esplorare"
+          other: "%{count} immobili pronti da esplorare"
+        empty_copy: "Stai visualizzando l'intero catalogo. Usa il pannello filtri per restringere per posizione, prezzo e numero di camere."
+      filters:
+        listing_type: "Tipo di annuncio"
+        all_listings: "Tutti gli annunci"
+        query_label: "Area, CAP o parola chiave"
+        query_placeholder: "Prova Sevenoaks, TN13 o garden"
+        any_town: "Qualsiasi citta"
+        min_bedrooms: "Camere minime"
+        min_price: "Prezzo minimo"
+        max_price: "Prezzo massimo"
+        sort: "Ordina"
+        apply: "Applica filtri"
+        search_chip: "Ricerca: %{query}"
+        min_bedrooms_chip: "%{count}+ camere"
+        min_price_chip: "Da %{price}"
+        max_price_chip: "Fino a %{price}"
+        sort_options:
+          recommended: "Consigliato"
+          newest: "Piu recenti prima"
+          price_low: "Prezzo: dal piu basso al piu alto"
+          price_high: "Prezzo: dal piu alto al piu basso"
+          bedrooms_high: "Camere prima"
+      card:
+        next_slot: "Prossima fascia: %{time}"
+        no_slots: "Nessuna fascia pubblica imminente pubblicata"
+      empty:
+        eyebrow: "Nessuna corrispondenza"
+        title: "Nessun immobile corrisponde a questa ricerca"
+        body: "Prova ad ampliare area, camere o fascia di prezzo, oppure reimposta i filtri per tornare al catalogo completo."
+      show:
+        booking_body: "Scegli una fascia pubblicata per creare una richiesta di prenotazione. Gli amministratori potranno poi confermarla, riprogrammarla o annullarla dal planner."
+        slot_finish: "fine %{time}"
+        request_viewing: "Richiedi una visita"
+        no_slots_title: "Nessuna fascia pubblica disponibile"
+        no_slots_body: "Questo e un utile caso limite QA per testare stati di prenotazione vuoti e flussi di contatto alternativi."
+      editor:
+        new_title: "Aggiungi nuovo immobile"
+        eyebrow: "Strumenti venditore"
+        new_heading: "Aggiungi un immobile"
+        new_body: "Crea un annuncio con metadati piu ricchi e una presentazione pronta per la prenotazione."
+        edit_heading: "Modifica %{address}"
+        edit_body: "Aggiorna i dettagli dell'annuncio, il posizionamento e i metadati mostrati nel catalogo moderno."
+
+    for_sale:
+      eyebrow: "In vendita"
+      hero_title: "Case disponibili all'acquisto"
+      hero_body: "Usa i filtri per trovare immobili per area, camere e prezzo, poi passa al flusso di prenotazione dalla pagina di dettaglio."
+      count_label:
+        one: "annuncio di vendita"
+        other: "annunci di vendita"
+
+    for_rent:
+      eyebrow: "In affitto"
+      hero_title: "Case disponibili in affitto"
+      hero_body: "Esplora case in locazione, confronta la disponibilita e prova il flusso di visita per inquilini su un catalogo realistico."
+      count_label:
+        one: "annuncio in affitto"
+        other: "annunci in affitto"
+
+    search:
+      eyebrow: "Ricerca immobiliare"
+      hero_title: "Cerca insieme annunci e disponibilita per le visite"
+      hero_body: "Trova happy path realistici, stati vuoti e scenari di paginazione per la pratica di automazione QA."
+      results_count:
+        one: "risultato"
+        other: "risultati"
+
+    appointments:
+      statuses:
+        pending: "In attesa"
+        confirmed: "Confermata"
+        rescheduled: "Riprogrammata"
+        cancelled: "Annullata"
+        completed: "Completata"
+        no_show: "Assente"
+      events:
+        created: "Creata"
+        confirmed: "Confermata"
+        rescheduled: "Riprogrammata"
+        cancelled: "Annullata"
+        completed: "Completata"
+        no_show: "Assente"
+        internal_note_added: "Nota interna aggiunta"
+        customer_note_updated: "Nota cliente aggiornata"
+      new:
+        title: "Prenota una visita per %{address}"
+        eyebrow: "Richiesta di visita"
+        hero_body: "Scegli una fascia pubblicata, aggiungi i tuoi contatti e crea una richiesta che lo staff potra confermare, riprogrammare o annullare."
+        preferred_slot: "Fascia preferita"
+        choose_slot: "Scegli una fascia"
+        notes_label: "C'e qualcosa che dovremmo sapere?"
+        notes_placeholder: "Esigenze di accessibilita, indicazioni di arrivo o domande per il team."
+        submit: "Invia richiesta"
+        back_to_property: "Torna all'immobile"
+        no_slots_title: "Nessuna fascia pubblicata"
+        no_slots_body: "Questo immobile al momento non ha disponibilita pubblica per le visite. In alcuni scenari QA e intenzionale, quindi lo stato vuoto viene mostrato chiaramente."
+      show:
+        title: "Appuntamento %{reference}"
+        eyebrow: "Dettagli appuntamento"
+        hero_body: "La cronologia del tuo appuntamento resta visibile qui cosi puoi verificare ogni cambio di stato e ogni timestamp."
+        summary_title: "Riepilogo prenotazione"
+        duration_minutes:
+          one: "1 minuto"
+          other: "%{count} minuti"
+        timeline_title: "Cronologia dello stato"
+
+    appointment_mailer:
+      subject: "Visita GotTheKeys %{action}: %{reference}"
+      actions:
+        request_received: "richiesta ricevuta"
+        confirmed: "confermata"
+        cancelled: "annullata"
+        completed: "completata"
+        marked_as_missed: "segnata come mancata"
+        updated: "aggiornata"
+      greeting: "Ciao %{name},"
+      updated_html: "La tua visita per <strong>%{address}</strong> e stata aggiornata."
+      reference: "Riferimento: %{reference}"
+      status: "Stato: %{status}"
+      requested_slot: "Fascia richiesta: %{time}"
+      current_slot: "Fascia attuale: %{time}"
+      notes: "Le tue note: %{notes}"
+      revisit: "Puoi rivedere l'appuntamento in qualsiasi momento usando il link sicuro inviato dopo la prenotazione."
+      thanks_html: "Grazie,<br>GotTheKeys"

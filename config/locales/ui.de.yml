@@ -1,0 +1,249 @@
+de:
+  ui:
+    site_header:
+      eyebrow: "Immobilien- und Buchungsplattform"
+      admin_bookings: "Buchungen"
+      sign_out: "Abmelden"
+      add_property: "Objekt hinzufügen"
+      profile: "Profil"
+      register: "Registrieren"
+      sign_in: "Anmelden"
+
+    site_footer:
+      copy: "Moderne Immobiliensuche, Besichtigungstermine und deterministische QA-Szenarien in einer serverseitig gerenderten Rails-Anwendung."
+      meta_copy: "Entwickelt für realistische Demos, Abnahmetests und Schulungen in KI-gestützter Browser-Automatisierung."
+
+    shared:
+      property_placeholder_alt: "Platzhalterbild für Immobilie"
+
+    common:
+      apply: "Anwenden"
+      any: "Beliebig"
+      cancel: "Abbrechen"
+      reset: "Zurücksetzen"
+      clear_all: "Alles löschen"
+      featured: "Empfohlen"
+      view_property: "Objekt ansehen"
+      book_a_viewing: "Besichtigung buchen"
+      town: "Ort"
+      bathrooms: "Bäder"
+      postcode: "Postleitzahl"
+      overview: "Überblick"
+      address: "Adresse"
+      property: "Objekt"
+      requested_slot: "Gewünschter Termin"
+      current_slot: "Aktueller Termin"
+      duration: "Dauer"
+      customer: "Kunde"
+      customer_notes: "Kundennotizen"
+      full_name: "Vollständiger Name"
+      email_address: "E-Mail-Adresse"
+      phone_number: "Telefonnummer"
+      status: "Status"
+
+    contact:
+      office_name: "GotTheKeys Limited"
+      office_line_1: "123 Awesome Road"
+      office_line_2: "Limpsfield, TN16 4AB"
+
+    legacy:
+      from: "Von"
+      to: "Bis"
+      update: "Aktualisieren"
+      add_viewing_time: "Besichtigungszeit hinzufügen"
+      new_viewing_time_title: "Neue Besichtigungszeit für %{address}"
+      new_photos_title: "Neue Fotos für %{address}"
+      new_floor_plan_title: "Neuer Grundriss für %{address}"
+      location_details_title: "Standortdetails für %{address}"
+
+    welcome:
+      carousel:
+        previous: "Vorherige Folie"
+        next: "Nächste Folie"
+        first: "Erste Folie"
+        second: "Zweite Folie"
+        third: "Dritte Folie"
+      hero_eyebrow: "Moderne Immobiliensuche und Terminbuchung"
+      hero_title: "Bieten Sie Käufern und Mietern eine hochwertige Website und gleichzeitig ein deterministisches Automatisierungs-Setup für QA-Teams."
+      primary_cta: "Immobilien ansehen"
+      admin_cta: "Buchungsdesk öffnen"
+      metric_labels:
+        properties: "Objekte"
+        for_sale: "Zum Verkauf"
+        for_rent: "Zur Miete"
+        upcoming_viewings: "Bevorstehende Besichtigungen"
+      featured_eyebrow: "Ausgewählte Inserate"
+      featured_title: "Glaubwürdige, reaktionsschnelle Immobilienkarten mit integrierter Buchungslogik"
+      featured_action: "Gesamten Katalog ansehen"
+      insights_label: "Plattform-Einblicke"
+      qa_title: "Für QA-Training gebaut"
+      qa_points:
+        selectors: "Stabile semantische Selektoren für die wichtigsten Buchungs- und Admin-Steuerelemente."
+        scenarios: "Deterministische Demo-Szenarien für Happy Paths, Konflikte, Leerzustände und umfangreiche Suchen."
+        audit: "Sichtbare Audit-Trails und Benachrichtigungsprotokolle erleichtern die Prüfung von Statuswechseln."
+      shared_host_title: "Für Shared Hosting geeignet"
+      shared_host_points:
+        stack: "Serverseitig gerendertes Rails unter Apache + Passenger."
+        dependencies: "Keine Annahmen zu Redis, Sidekiq, Docker oder dauerhaft laufenden Workern."
+        enhancement: "Progressive Enhancement mit Foundation, Turbo und klassischen Formularen."
+
+    properties:
+      headline_fallback: "%{property_type} in %{town_city}"
+      in_location: "%{property_type} in %{location}"
+      bedroom_count:
+        one: "1 Schlafzimmer"
+        other: "%{count} Schlafzimmer"
+      bathroom_count:
+        one: "1 Bad"
+        other: "%{count} Bäder"
+      sale_statuses:
+        for_sale: "Zum Verkauf"
+        for_rent: "Zur Miete"
+      catalogue:
+        eyebrow: "Immobilienkatalog"
+        hero_title: "Moderne Inserate mit live verfügbaren Besichtigungsterminen durchsuchen"
+        hero_body: "Suchen Sie nach Gebiet, Preis und Schlafzimmeranzahl und buchen Sie dann direkt von der Objektseite eine Besichtigung."
+        active_filter_count:
+          one: "1 aktiver Filter"
+          other: "%{count} aktive Filter"
+        overview_badge: "Katalogübersicht"
+        matching_properties:
+          one: "passendes Objekt"
+          other: "passende Objekte"
+        browse_eyebrow: "Durchsuchen"
+        browse_title: "Zwischen Katalogansichten wechseln"
+        browse_body: "Nutzen Sie hier den vollständigen Katalog oder springen Sie direkt zu Kauf- oder Mietobjekten, wenn Sie Ihre Richtung bereits kennen."
+        all_listings: "Alle Inserate"
+        totals:
+          all: "Alle"
+        filters_eyebrow: "Suche verfeinern"
+        filters_title: "Objektliste filtern"
+        sidebar_copy: "Grenzen Sie die Liste nach Inserattyp, Gebiet, Ort, Schlafzimmern und Budget ein und setzen Sie alles bei Bedarf mit einem Klick zurück."
+        results_eyebrow: "Live-Ergebnisse"
+        results_title:
+          one: "1 Objekt bereit zur Erkundung"
+          other: "%{count} Objekte bereit zur Erkundung"
+        empty_copy: "Der vollständige Katalog wird angezeigt. Verwenden Sie die Filterleiste, um nach Lage, Preis und Schlafzimmeranzahl einzugrenzen."
+      filters:
+        listing_type: "Inserattyp"
+        all_listings: "Alle Inserate"
+        query_label: "Gebiet, Postleitzahl oder Stichwort"
+        query_placeholder: "Versuchen Sie Sevenoaks, TN13 oder garden"
+        any_town: "Beliebiger Ort"
+        min_bedrooms: "Min. Schlafzimmer"
+        min_price: "Mindestpreis"
+        max_price: "Höchstpreis"
+        sort: "Sortierung"
+        apply: "Filter anwenden"
+        search_chip: "Suche: %{query}"
+        min_bedrooms_chip: "%{count}+ Schlafzimmer"
+        min_price_chip: "Ab %{price}"
+        max_price_chip: "Bis %{price}"
+        sort_options:
+          recommended: "Empfohlen"
+          newest: "Neueste zuerst"
+          price_low: "Preis: aufsteigend"
+          price_high: "Preis: absteigend"
+          bedrooms_high: "Schlafzimmer zuerst"
+      card:
+        next_slot: "Nächster Termin: %{time}"
+        no_slots: "Keine kommenden öffentlichen Termine veröffentlicht"
+      empty:
+        eyebrow: "Keine Treffer"
+        title: "Keine Objekte entsprechen dieser Suche"
+        body: "Erweitern Sie Gebiet, Schlafzimmer oder Preisbereich oder setzen Sie die Filter zurück, um wieder den gesamten Katalog zu sehen."
+      show:
+        booking_body: "Wählen Sie einen veröffentlichten Termin, um eine Buchungsanfrage zu erstellen. Admins können sie später im Terminbuch bestätigen, verschieben oder stornieren."
+        slot_finish: "Ende %{time}"
+        request_viewing: "Besichtigung anfragen"
+        no_slots_title: "Keine öffentlichen Termine verfügbar"
+        no_slots_body: "Das ist ein hilfreicher QA-Grenzfall zum Testen leerer Buchungszustände und alternativer Kontaktwege."
+      editor:
+        new_title: "Neues Objekt hinzufügen"
+        eyebrow: "Verkäufer-Tools"
+        new_heading: "Objekt hinzufügen"
+        new_body: "Erstellen Sie ein Inserat mit reicheren Metadaten und buchungsfähiger Darstellung."
+        edit_heading: "%{address} bearbeiten"
+        edit_body: "Aktualisieren Sie die Objektdetails, Positionierung und Metadaten, die im modernen Katalog angezeigt werden."
+
+    for_sale:
+      eyebrow: "Zum Verkauf"
+      hero_title: "Häuser zum Kauf"
+      hero_body: "Nutzen Sie die Filter, um Bestand nach Gebiet, Schlafzimmern und Preis zu finden, und wechseln Sie dann von der Objektseite in den Buchungsablauf."
+      count_label:
+        one: "Verkaufsinserat"
+        other: "Verkaufsinserate"
+
+    for_rent:
+      eyebrow: "Zur Miete"
+      hero_title: "Häuser zur Miete"
+      hero_body: "Entdecken Sie Mietobjekte, vergleichen Sie Verfügbarkeiten und testen Sie den Besichtigungsablauf für Mieter in einem realistischen Katalog."
+      count_label:
+        one: "Mietinserat"
+        other: "Mietinserate"
+
+    search:
+      eyebrow: "Immobiliensuche"
+      hero_title: "Inserate und Terminverfügbarkeit gemeinsam durchsuchen"
+      hero_body: "Finden Sie realistische Happy Paths, Leerzustände und Paginierungsszenarien für QA-Automatisierung."
+      results_count:
+        one: "Ergebnis"
+        other: "Ergebnisse"
+
+    appointments:
+      statuses:
+        pending: "Ausstehend"
+        confirmed: "Bestätigt"
+        rescheduled: "Verschoben"
+        cancelled: "Storniert"
+        completed: "Abgeschlossen"
+        no_show: "Nicht erschienen"
+      events:
+        created: "Erstellt"
+        confirmed: "Bestätigt"
+        rescheduled: "Verschoben"
+        cancelled: "Storniert"
+        completed: "Abgeschlossen"
+        no_show: "Nicht erschienen"
+        internal_note_added: "Interne Notiz hinzugefügt"
+        customer_note_updated: "Kundennotiz aktualisiert"
+      new:
+        title: "Besichtigung für %{address} buchen"
+        eyebrow: "Besichtigungsanfrage"
+        hero_body: "Wählen Sie einen veröffentlichten Termin, fügen Sie Ihre Kontaktdaten hinzu und erstellen Sie eine Anfrage, die vom Team bestätigt, verschoben oder storniert werden kann."
+        preferred_slot: "Bevorzugter Termin"
+        choose_slot: "Termin wählen"
+        notes_label: "Gibt es etwas, das wir wissen sollten?"
+        notes_placeholder: "Barrierefreiheitsbedarf, Hinweise zur Ankunft oder Fragen an das Team."
+        submit: "Anfrage senden"
+        back_to_property: "Zurück zum Objekt"
+        no_slots_title: "Keine Termine veröffentlicht"
+        no_slots_body: "Für dieses Objekt gibt es derzeit keine öffentlichen Besichtigungstermine. In manchen QA-Szenarien ist das beabsichtigt, daher wird der Leerzustand klar dargestellt."
+      show:
+        title: "Termin %{reference}"
+        eyebrow: "Termindetails"
+        hero_body: "Ihre Terminchronik bleibt hier sichtbar, damit Sie jede Statusänderung und jeden Zeitstempel nachvollziehen können."
+        summary_title: "Buchungsübersicht"
+        duration_minutes:
+          one: "1 Minute"
+          other: "%{count} Minuten"
+        timeline_title: "Statusverlauf"
+
+    appointment_mailer:
+      subject: "GotTheKeys Besichtigung %{action}: %{reference}"
+      actions:
+        request_received: "Anfrage eingegangen"
+        confirmed: "bestätigt"
+        cancelled: "storniert"
+        completed: "abgeschlossen"
+        marked_as_missed: "als versäumt markiert"
+        updated: "aktualisiert"
+      greeting: "Hallo %{name},"
+      updated_html: "Ihre Besichtigung für <strong>%{address}</strong> wurde aktualisiert."
+      reference: "Referenz: %{reference}"
+      status: "Status: %{status}"
+      requested_slot: "Gewünschter Termin: %{time}"
+      current_slot: "Aktueller Termin: %{time}"
+      notes: "Ihre Notizen: %{notes}"
+      revisit: "Sie können den Termin jederzeit über den sicheren Link erneut aufrufen, den Sie nach der Buchung erhalten haben."
+      thanks_html: "Vielen Dank,<br>GotTheKeys"

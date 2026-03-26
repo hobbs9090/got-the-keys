@@ -13,6 +13,13 @@ describe "For English language user" do
         expect(page).to have_no_link("Home")
         expect(page).to have_no_link("Properties")
       end
+      within('[data-testid="language-dropdown"]') do
+        expect(page).to have_select(
+          "Language",
+          selected: "English",
+          with_options: ["English", "Deutsch", "Français", "Italiano", "中文"]
+        )
+      end
     end
   end
 
@@ -131,6 +138,10 @@ describe "For English language user" do
 
       expect(page).to have_title("Registration")
       expect(page).to have_text("Register")
+      expect(page).to have_select(
+        "Language",
+        with_options: ["English", "Deutsch", "Français", "Italiano", "中文"]
+      )
     end
   end
 

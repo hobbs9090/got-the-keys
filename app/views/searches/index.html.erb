@@ -2,14 +2,14 @@
 
 <section class="page-hero">
   <div>
-    <p class="page-hero__eyebrow">Property search</p>
-    <h1>Search listings and booking availability together</h1>
-    <p>Find realistic happy paths, empty states, and pagination scenarios for QA automation practice.</p>
+    <p class="page-hero__eyebrow"><%= t("ui.search.eyebrow") %></p>
+    <h1><%= t("ui.search.hero_title") %></h1>
+    <p><%= t("ui.search.hero_body") %></p>
   </div>
 
   <div class="page-hero__meta">
     <strong><%= number_with_delimiter(@number_search_results.count, delimiter: ",") %></strong>
-    <span>results</span>
+    <span><%= t("ui.search.results_count", count: @number_search_results.count) %></span>
   </div>
 </section>
 

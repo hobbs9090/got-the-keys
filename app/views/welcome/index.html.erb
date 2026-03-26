@@ -1,33 +1,33 @@
 <section class="landing-showcase">
   <div class="orbit site-hero site-hero--full-bleed" role="region" aria-label="<%= t('welcome.title') %>" data-orbit data-auto-play="true">
     <ul class="orbit-container">
-      <button class="orbit-previous" aria-label="Previous slide" type="button">
-        <span class="show-for-sr">Previous slide</span>&#9664;&#65038;
+      <button class="orbit-previous" aria-label="<%= t('ui.welcome.carousel.previous') %>" type="button">
+        <span class="show-for-sr"><%= t("ui.welcome.carousel.previous") %></span>&#9664;&#65038;
       </button>
-      <button class="orbit-next" aria-label="Next slide" type="button">
-        <span class="show-for-sr">Next slide</span>&#9654;&#65038;
+      <button class="orbit-next" aria-label="<%= t('ui.welcome.carousel.next') %>" type="button">
+        <span class="show-for-sr"><%= t("ui.welcome.carousel.next") %></span>&#9654;&#65038;
       </button>
       <li class="is-active orbit-slide"><%= hero_1_image %></li>
       <li class="orbit-slide"><%= hero_2_image %></li>
       <li class="orbit-slide"><%= hero_3_image %></li>
     </ul>
     <nav class="orbit-bullets">
-      <button class="is-active" data-slide="0"><span class="show-for-sr">First slide</span></button>
-      <button data-slide="1"><span class="show-for-sr">Second slide</span></button>
-      <button data-slide="2"><span class="show-for-sr">Third slide</span></button>
+      <button class="is-active" data-slide="0"><span class="show-for-sr"><%= t("ui.welcome.carousel.first") %></span></button>
+      <button data-slide="1"><span class="show-for-sr"><%= t("ui.welcome.carousel.second") %></span></button>
+      <button data-slide="2"><span class="show-for-sr"><%= t("ui.welcome.carousel.third") %></span></button>
     </nav>
   </div>
 </section>
 
 <section class="landing-hero">
   <div class="landing-hero__content">
-    <p class="landing-hero__eyebrow">Modern property discovery and appointment booking</p>
-    <h1>Give buyers and tenants a polished website while giving QA teams a deterministic automation harness.</h1>
+    <p class="landing-hero__eyebrow"><%= t("ui.welcome.hero_eyebrow") %></p>
+    <h1><%= t("ui.welcome.hero_title") %></h1>
     <p class="landing-hero__copy"><%= t('welcome.paragraph_1') %> <%= t('welcome.paragraph_2') %></p>
 
     <div class="landing-hero__actions">
-      <%= link_to "Browse properties", properties_path, class: "button primary large", data: { testid: "browse-properties-link" } %>
-      <%= link_to "Open bookings desk", admin_bookings_path, class: "button secondary hollow large" if admin_signed_in? %>
+      <%= link_to t("ui.welcome.primary_cta"), properties_path, class: "button primary large", data: { testid: "browse-properties-link" } %>
+      <%= link_to t("ui.welcome.admin_cta"), admin_bookings_path, class: "button secondary hollow large" if admin_signed_in? %>
     </div>
   </div>
 </section>
@@ -36,7 +36,7 @@
   <% @site_metrics.each do |label, value| %>
     <article class="metric-card">
       <strong><%= number_with_delimiter(value, delimiter: ",") %></strong>
-      <span><%= label.to_s.humanize %></span>
+      <span><%= t("ui.welcome.metric_labels.#{label}") %></span>
     </article>
   <% end %>
 </section>
@@ -44,18 +44,18 @@
 <section class="page-section">
   <div class="section-heading">
     <div>
-      <p class="section-heading__eyebrow">Featured listings</p>
-      <h2>Credible, responsive property cards with booking hooks built in</h2>
+      <p class="section-heading__eyebrow"><%= t("ui.welcome.featured_eyebrow") %></p>
+      <h2><%= t("ui.welcome.featured_title") %></h2>
     </div>
-    <%= link_to "See the full catalogue", properties_path, class: "button hollow secondary" %>
+    <%= link_to t("ui.welcome.featured_action"), properties_path, class: "button hollow secondary" %>
   </div>
 
   <%= render "properties/property", properties: @featured_properties %>
 </section>
 
-<section class="insight-accordion" aria-label="Platform insights">
+<section class="insight-accordion" aria-label="<%= t('ui.welcome.insights_label') %>">
   <details class="insight-accordion__item" open>
-    <summary>Why teams use it</summary>
+    <summary><%= t("welcome.try_today") %></summary>
     <div class="insight-accordion__content">
       <p><%= t('welcome.paragraph_3') %></p>
       <p><%= t('welcome.paragraph_4') %></p>
@@ -63,23 +63,23 @@
   </details>
 
   <details class="insight-accordion__item">
-    <summary>Built for QA training</summary>
+    <summary><%= t("ui.welcome.qa_title") %></summary>
     <div class="insight-accordion__content">
       <ul>
-        <li>Stable semantic selectors on the critical booking and admin controls.</li>
-        <li>Deterministic demo scenarios for happy paths, conflicts, empty states, and high-volume searches.</li>
-        <li>Visible audit trails and notification logs that make status transitions easy to verify.</li>
+        <li><%= t("ui.welcome.qa_points.selectors") %></li>
+        <li><%= t("ui.welcome.qa_points.scenarios") %></li>
+        <li><%= t("ui.welcome.qa_points.audit") %></li>
       </ul>
     </div>
   </details>
 
   <details class="insight-accordion__item">
-    <summary>Shared-host friendly</summary>
+    <summary><%= t("ui.welcome.shared_host_title") %></summary>
     <div class="insight-accordion__content">
       <ul>
-        <li>Server-rendered Rails under Apache + Passenger.</li>
-        <li>No Redis, Sidekiq, Docker, or always-on worker assumptions.</li>
-        <li>Progressive enhancement with Foundation, Turbo, and conventional forms.</li>
+        <li><%= t("ui.welcome.shared_host_points.stack") %></li>
+        <li><%= t("ui.welcome.shared_host_points.dependencies") %></li>
+        <li><%= t("ui.welcome.shared_host_points.enhancement") %></li>
       </ul>
     </div>
   </details>

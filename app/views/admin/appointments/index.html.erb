@@ -1,16 +1,16 @@
-<% title "Bookings desk" %>
+<% title t("ui.admin.appointments.title") %>
 
 <section class="admin-section">
   <div class="section-heading">
     <div>
-      <p class="section-heading__eyebrow">Admin-only booking management</p>
-      <h1>Bookings desk</h1>
-      <p>Review upcoming bookings, filter by property or status, and take action on requests that need an admin decision.</p>
+      <p class="section-heading__eyebrow"><%= t("ui.admin.appointments.eyebrow") %></p>
+      <h1><%= t("ui.admin.appointments.title") %></h1>
+      <p><%= t("ui.admin.appointments.hero_body") %></p>
     </div>
 
     <div class="segmented-links">
       <% %w[agenda day week month].each do |mode| %>
-        <%= link_to mode.titleize, admin_bookings_path(request.query_parameters.merge(view: mode)), class: ("is-active" if @view_mode == mode) %>
+        <%= link_to t("ui.admin.appointments.views.#{mode}"), admin_bookings_path(request.query_parameters.merge(view: mode)), class: ("is-active" if @view_mode == mode) %>
       <% end %>
     </div>
   </div>
@@ -18,28 +18,28 @@
   <%= form_with url: admin_bookings_path, method: :get, class: "admin-filter-form", local: true do %>
     <%= hidden_field_tag :view, @view_mode %>
     <div>
-      <%= label_tag :date, "Anchor date" %>
+      <%= label_tag :date, t("ui.admin.appointments.filters.anchor_date") %>
       <%= date_field_tag :date, @anchor_date %>
     </div>
     <div>
-      <%= label_tag :property_id, "Property" %>
-      <%= select_tag :property_id, options_from_collection_for_select(@properties, :id, :address_line_1, params[:property_id]), include_blank: "All properties" %>
+      <%= label_tag :property_id, t("ui.common.property") %>
+      <%= select_tag :property_id, options_from_collection_for_select(@properties, :id, :address_line_1, params[:property_id]), include_blank: t("ui.admin.appointments.filters.all_properties") %>
     </div>
     <div>
-      <%= label_tag :status, "Status" %>
-      <%= select_tag :status, options_for_select(@statuses.map { |status| [status.humanize, status] }, params[:status]), include_blank: "All statuses" %>
+      <%= label_tag :status, t("ui.common.status") %>
+      <%= select_tag :status, options_for_select(@statuses.map { |status| [I18n.t("ui.appointments.statuses.#{status}", default: status.humanize), status] }, params[:status]), include_blank: t("ui.admin.appointments.filters.all_statuses") %>
     </div>
     <div>
-      <%= label_tag :admin_id, "Assigned admin" %>
-      <%= select_tag :admin_id, options_from_collection_for_select(@admins, :id, :email, params[:admin_id]), include_blank: "Anyone" %>
+      <%= label_tag :admin_id, t("ui.admin.appointments.filters.assigned_admin") %>
+      <%= select_tag :admin_id, options_from_collection_for_select(@admins, :id, :email, params[:admin_id]), include_blank: t("ui.admin.appointments.filters.anyone") %>
     </div>
     <div>
-      <%= label_tag :customer_email, "Customer email" %>
-      <%= text_field_tag :customer_email, params[:customer_email], placeholder: "customer@example.com" %>
+      <%= label_tag :customer_email, t("ui.admin.appointments.filters.customer_email") %>
+      <%= text_field_tag :customer_email, params[:customer_email], placeholder: t("ui.admin.appointments.filters.customer_email_placeholder") %>
     </div>
     <div class="admin-filter-form__actions">
-      <%= button_tag "Apply", class: "button primary" %>
-      <%= link_to "Reset", admin_bookings_path(view: @view_mode), class: "button hollow secondary" %>
+      <%= button_tag t("ui.common.apply"), class: "button primary" %>
+      <%= link_to t("ui.common.reset"), admin_bookings_path(view: @view_mode), class: "button hollow secondary" %>
     </div>
   <% end %>
 </section>
@@ -59,8 +59,8 @@
 
               <div class="admin-inline-actions">
                 <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
-                <%= button_to "Confirm", transition_admin_appointment_path(appointment, status: "confirmed"), method: :patch, class: "button tiny success hollow" unless appointment.status == "confirmed" %>
-                <%= button_to "Cancel", transition_admin_appointment_path(appointment, status: "cancelled"), method: :patch, class: "button tiny alert hollow" unless appointment.status == "cancelled" %>
+                <%= button_to t("ui.admin.appointments.confirm"), transition_admin_appointment_path(appointment, status: "confirmed"), method: :patch, class: "button tiny success hollow" unless appointment.status == "confirmed" %>
+                <%= button_to t("ui.admin.appointments.cancel"), transition_admin_appointment_path(appointment, status: "cancelled"), method: :patch, class: "button tiny alert hollow" unless appointment.status == "cancelled" %>
               </div>
             </div>
           <% end %>
@@ -74,7 +74,7 @@
       <article class="admin-calendar-day">
         <header>
           <strong><%= l(day, format: :calendar_day) %></strong>
-          <span><%= @appointments_by_day.fetch(day, []).count %> bookings</span>
+          <span><%= t("ui.admin.appointments.bookings_count", count: @appointments_by_day.fetch(day, []).count) %></span>
         </header>
         <div class="admin-calendar-day__body">
           <% @appointments_by_day.fetch(day, []).first(@view_mode == "month" ? 4 : 12).each do |appointment| %>

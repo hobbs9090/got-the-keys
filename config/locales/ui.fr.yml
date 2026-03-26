@@ -1,0 +1,249 @@
+fr:
+  ui:
+    site_header:
+      eyebrow: "Plateforme immobiliere et de reservation"
+      admin_bookings: "Reservations"
+      sign_out: "Se deconnecter"
+      add_property: "Ajouter un bien"
+      profile: "Profil"
+      register: "S'inscrire"
+      sign_in: "Se connecter"
+
+    site_footer:
+      copy: "Decouverte immobiliere moderne, prise de rendez-vous et scenarios QA deterministes dans une seule application Rails rendue cote serveur."
+      meta_copy: "Concu pour des demos realistes, des tests d'acceptation et la formation a l'automatisation de navigateur pilotee par l'IA."
+
+    shared:
+      property_placeholder_alt: "Image de remplacement du bien"
+
+    common:
+      apply: "Appliquer"
+      any: "Tous"
+      cancel: "Annuler"
+      reset: "Reinitialiser"
+      clear_all: "Tout effacer"
+      featured: "A la une"
+      view_property: "Voir le bien"
+      book_a_viewing: "Reserver une visite"
+      town: "Ville"
+      bathrooms: "Salles de bain"
+      postcode: "Code postal"
+      overview: "Vue d'ensemble"
+      address: "Adresse"
+      property: "Bien"
+      requested_slot: "Creneau demande"
+      current_slot: "Creneau actuel"
+      duration: "Duree"
+      customer: "Client"
+      customer_notes: "Notes client"
+      full_name: "Nom complet"
+      email_address: "Adresse e-mail"
+      phone_number: "Numero de telephone"
+      status: "Statut"
+
+    contact:
+      office_name: "GotTheKeys Limited"
+      office_line_1: "123 Awesome Road"
+      office_line_2: "Limpsfield, TN16 4AB"
+
+    legacy:
+      from: "De"
+      to: "A"
+      update: "Mettre a jour"
+      add_viewing_time: "Ajouter un horaire de visite"
+      new_viewing_time_title: "Nouvel horaire de visite pour %{address}"
+      new_photos_title: "Nouvelles photos pour %{address}"
+      new_floor_plan_title: "Nouveau plan d'etage pour %{address}"
+      location_details_title: "Details de localisation pour %{address}"
+
+    welcome:
+      carousel:
+        previous: "Diapositive precedente"
+        next: "Diapositive suivante"
+        first: "Premiere diapositive"
+        second: "Deuxieme diapositive"
+        third: "Troisieme diapositive"
+      hero_eyebrow: "Decouverte immobiliere moderne et prise de rendez-vous"
+      hero_title: "Offrez aux acheteurs et aux locataires un site soigne tout en donnant aux equipes QA un environnement d'automatisation deterministe."
+      primary_cta: "Parcourir les biens"
+      admin_cta: "Ouvrir le bureau des reservations"
+      metric_labels:
+        properties: "Biens"
+        for_sale: "A vendre"
+        for_rent: "A louer"
+        upcoming_viewings: "Visites a venir"
+      featured_eyebrow: "Annonces mises en avant"
+      featured_title: "Des fiches credibles et reactives avec des points d'entree vers la reservation integres"
+      featured_action: "Voir tout le catalogue"
+      insights_label: "Apercus de la plateforme"
+      qa_title: "Concu pour la formation QA"
+      qa_points:
+        selectors: "Des selecteurs semantiques stables sur les controles essentiels de reservation et d'administration."
+        scenarios: "Des scenarios de demo deterministes pour les parcours heureux, les conflits, les etats vides et les recherches a grand volume."
+        audit: "Des pistes d'audit visibles et des journaux de notification qui facilitent la verification des changements d'etat."
+      shared_host_title: "Adapte a l'hebergement mutualise"
+      shared_host_points:
+        stack: "Rails rendu cote serveur sous Apache + Passenger."
+        dependencies: "Aucune hypothese sur Redis, Sidekiq, Docker ou des workers toujours actifs."
+        enhancement: "Amelioration progressive avec Foundation, Turbo et des formulaires classiques."
+
+    properties:
+      headline_fallback: "%{property_type} a %{town_city}"
+      in_location: "%{property_type} a %{location}"
+      bedroom_count:
+        one: "1 chambre"
+        other: "%{count} chambres"
+      bathroom_count:
+        one: "1 salle de bain"
+        other: "%{count} salles de bain"
+      sale_statuses:
+        for_sale: "A vendre"
+        for_rent: "A louer"
+      catalogue:
+        eyebrow: "Catalogue immobilier"
+        hero_title: "Parcourez des annonces modernes avec disponibilites de visite en direct"
+        hero_body: "Recherchez par zone, prix et nombre de chambres, puis reservez une visite depuis chaque fiche."
+        active_filter_count:
+          one: "1 filtre actif"
+          other: "%{count} filtres actifs"
+        overview_badge: "Vue d'ensemble du catalogue"
+        matching_properties:
+          one: "bien correspondant"
+          other: "biens correspondants"
+        browse_eyebrow: "Parcourir"
+        browse_title: "Passer d'une vue du catalogue a l'autre"
+        browse_body: "Utilisez ici le catalogue complet, ou allez directement vers les biens a vendre ou a louer si vous savez deja ce que vous cherchez."
+        all_listings: "Toutes les annonces"
+        totals:
+          all: "Tous"
+        filters_eyebrow: "Affiner la recherche"
+        filters_title: "Filtrer la liste des biens"
+        sidebar_copy: "Affinez la liste par type d'annonce, zone, ville, nombre de chambres et budget, puis reinitialisez tout en un clic si besoin."
+        results_eyebrow: "Resultats en direct"
+        results_title:
+          one: "1 bien pret a explorer"
+          other: "%{count} biens prets a explorer"
+        empty_copy: "Le catalogue complet est affiche. Utilisez le panneau de filtres pour affiner par lieu, prix et nombre de chambres."
+      filters:
+        listing_type: "Type d'annonce"
+        all_listings: "Toutes les annonces"
+        query_label: "Zone, code postal ou mot-cle"
+        query_placeholder: "Essayez Sevenoaks, TN13 ou garden"
+        any_town: "Toutes les villes"
+        min_bedrooms: "Chambres min."
+        min_price: "Prix min."
+        max_price: "Prix max."
+        sort: "Tri"
+        apply: "Appliquer les filtres"
+        search_chip: "Recherche : %{query}"
+        min_bedrooms_chip: "%{count}+ chambres"
+        min_price_chip: "A partir de %{price}"
+        max_price_chip: "Jusqu'a %{price}"
+        sort_options:
+          recommended: "Recommande"
+          newest: "Plus recentes d'abord"
+          price_low: "Prix : du plus bas au plus haut"
+          price_high: "Prix : du plus haut au plus bas"
+          bedrooms_high: "Chambres d'abord"
+      card:
+        next_slot: "Prochain creneau : %{time}"
+        no_slots: "Aucun creneau public a venir publie"
+      empty:
+        eyebrow: "Aucun resultat"
+        title: "Aucun bien ne correspond a cette recherche"
+        body: "Essayez d'elargir la zone, le nombre de chambres ou la fourchette de prix, ou reinitialisez les filtres pour revoir tout le catalogue."
+      show:
+        booking_body: "Choisissez un creneau publie pour creer une demande de reservation. Les administrateurs pourront ensuite confirmer, reprogrammer ou annuler depuis le planning."
+        slot_finish: "fin a %{time}"
+        request_viewing: "Demander une visite"
+        no_slots_title: "Aucun creneau public disponible"
+        no_slots_body: "C'est un cas limite utile pour QA afin de tester les etats vides de reservation et les parcours de contact de secours."
+      editor:
+        new_title: "Ajouter un nouveau bien"
+        eyebrow: "Outils vendeur"
+        new_heading: "Ajouter un bien"
+        new_body: "Creez une annonce avec des metadonnees plus riches et une presentation prete pour la reservation."
+        edit_heading: "Modifier %{address}"
+        edit_body: "Mettez a jour les details, le positionnement et les metadonnees affiches dans le catalogue moderne."
+
+    for_sale:
+      eyebrow: "A vendre"
+      hero_title: "Biens disponibles a l'achat"
+      hero_body: "Utilisez les filtres pour trouver des biens par zone, chambres et prix, puis passez au parcours de reservation depuis la fiche."
+      count_label:
+        one: "annonce de vente"
+        other: "annonces de vente"
+
+    for_rent:
+      eyebrow: "A louer"
+      hero_title: "Biens disponibles a la location"
+      hero_body: "Explorez les logements a louer, comparez les disponibilites et testez le parcours de visite locataire sur un catalogue realiste."
+      count_label:
+        one: "annonce locative"
+        other: "annonces locatives"
+
+    search:
+      eyebrow: "Recherche immobiliere"
+      hero_title: "Recherchez les annonces et les disponibilites de visite ensemble"
+      hero_body: "Trouvez des parcours heureux realistes, des etats vides et des scenarios de pagination pour l'automatisation QA."
+      results_count:
+        one: "resultat"
+        other: "resultats"
+
+    appointments:
+      statuses:
+        pending: "En attente"
+        confirmed: "Confirmee"
+        rescheduled: "Replanifiee"
+        cancelled: "Annulee"
+        completed: "Terminee"
+        no_show: "Absent"
+      events:
+        created: "Creee"
+        confirmed: "Confirmee"
+        rescheduled: "Replanifiee"
+        cancelled: "Annulee"
+        completed: "Terminee"
+        no_show: "Absent"
+        internal_note_added: "Note interne ajoutee"
+        customer_note_updated: "Note client mise a jour"
+      new:
+        title: "Reserver une visite pour %{address}"
+        eyebrow: "Demande de visite"
+        hero_body: "Choisissez un creneau publie, ajoutez vos coordonnees et creez une demande que l'equipe pourra confirmer, reprogrammer ou annuler."
+        preferred_slot: "Creneau prefere"
+        choose_slot: "Choisir un creneau"
+        notes_label: "Y a-t-il quelque chose a signaler ?"
+        notes_placeholder: "Besoins d'accessibilite, consignes d'arrivee ou questions pour l'equipe."
+        submit: "Envoyer la demande"
+        back_to_property: "Retour au bien"
+        no_slots_title: "Aucun creneau publie"
+        no_slots_body: "Ce bien n'a actuellement aucune disponibilite publique pour les visites. C'est intentionnel dans certains scenarios QA, donc l'etat vide est affiche clairement."
+      show:
+        title: "Rendez-vous %{reference}"
+        eyebrow: "Details du rendez-vous"
+        hero_body: "L'historique de votre rendez-vous reste visible ici afin de verifier chaque changement de statut et horodatage."
+        summary_title: "Resume de la reservation"
+        duration_minutes:
+          one: "1 minute"
+          other: "%{count} minutes"
+        timeline_title: "Chronologie du statut"
+
+    appointment_mailer:
+      subject: "Visite GotTheKeys %{action} : %{reference}"
+      actions:
+        request_received: "demande recue"
+        confirmed: "confirmee"
+        cancelled: "annulee"
+        completed: "terminee"
+        marked_as_missed: "marquee comme manquee"
+        updated: "mise a jour"
+      greeting: "Bonjour %{name},"
+      updated_html: "Votre visite pour <strong>%{address}</strong> a ete mise a jour."
+      reference: "Reference : %{reference}"
+      status: "Statut : %{status}"
+      requested_slot: "Creneau demande : %{time}"
+      current_slot: "Creneau actuel : %{time}"
+      notes: "Vos notes : %{notes}"
+      revisit: "Vous pouvez revoir ce rendez-vous a tout moment en utilisant le lien securise envoye apres la reservation."
+      thanks_html: "Merci,<br>GotTheKeys"

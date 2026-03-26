@@ -1,0 +1,54 @@
+fr:
+  studio_flat: "Studio"
+
+  languages:
+    label: "Langue"
+    names:
+      en: "English"
+      de: "Deutsch"
+      fr: "Français"
+      it: "Italiano"
+      zh: "中文"
+
+  button:
+    submit: "Envoyer"
+
+  welcome:
+    title: "Accueil"
+    try_today: "Pourquoi les equipes utilisent GotTheKeys"
+    paragraph_1: "GotTheKeys aide les proprietaires et bailleurs a creer des annonces claires et credibles sans perdre le controle de l'ensemble du processus."
+    paragraph_2: "Ajoutez l'essentiel, telechargez des photos et des plans, puis repondez directement aux demandes afin que les acheteurs et locataires obtiennent rapidement des informations precises."
+    paragraph_3: "Utilisez la plateforme pour comparer les biens a vendre et a louer, evaluer si votre prix est realiste et garder votre annonce a jour a mesure que le marche evolue."
+    paragraph_4: "Du premier contact jusqu'a l'accord, l'objectif est simple : moins de friction, moins de couts et un parcours plus direct pour tout le monde."
+
+  legal:
+    title: "Mentions legales"
+
+  cookie_policy:
+    title: "Politique relative aux cookies"
+
+  how_it_works:
+    title: "Fonctionnement"
+
+  about_us:
+    title: "A propos"
+
+  contact_us:
+    title: "Contact"
+
+  blog:
+    title: "Blog"
+
+  properties:
+    title: "Biens"
+    bedrooms: "Chambres"
+    pick_one: "Choisissez-en un"
+
+  for_sale:
+    title: "A vendre"
+
+  for_rent:
+    title: "A louer"
+
+  search:
+    title: "Recherche"

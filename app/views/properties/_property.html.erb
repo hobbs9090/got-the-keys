@@ -6,13 +6,13 @@
       <article class="<%= property_card_classes(property) %>" data-testid="property-card">
         <div class="property-card__media">
           <%= small_image_for(property) %>
-          <span class="badge <%= property.sale_status == Property::SALE_STATUSES[:for_sale] ? 'badge--accent' : 'badge--success' %>"><%= property.sale_status %></span>
+          <span class="badge <%= property.sale_status == Property::SALE_STATUSES[:for_sale] ? 'badge--accent' : 'badge--success' %>"><%= translated_sale_status(property.sale_status) %></span>
         </div>
 
         <div class="property-card__body">
           <div class="property-card__header">
             <div>
-              <p class="property-card__eyebrow"><%= property.property_type %> in <%= property.location_line %></p>
+              <p class="property-card__eyebrow"><%= property_location_label(property) %></p>
               <h3><%= link_to property.address_line_1, property_path(property), data: { testid: "property-card-link-#{property.id}" } %></h3>
             </div>
 
@@ -29,15 +29,15 @@
 
           <dl class="property-card__meta">
             <div>
-              <dt>Bedrooms</dt>
+              <dt><%= t("properties.bedrooms") %></dt>
               <dd><%= format_bedrooms(property) %></dd>
             </div>
             <div>
-              <dt>Bathrooms</dt>
-              <dd><%= pluralize(property.bathrooms, "bathroom") %></dd>
+              <dt><%= t("ui.common.bathrooms") %></dt>
+              <dd><%= format_bathrooms(property.bathrooms) %></dd>
             </div>
             <div>
-              <dt>Town</dt>
+              <dt><%= t("ui.common.town") %></dt>
               <dd><%= property.town_city %></dd>
             </div>
           </dl>
@@ -47,15 +47,15 @@
           <div>
             <% next_slot = property.next_available_slots(limit: 1).first %>
             <% if next_slot.present? %>
-              <p class="property-card__availability">Next slot: <%= formatted_date_time(next_slot.starts_at) %></p>
+              <p class="property-card__availability"><%= t("ui.properties.card.next_slot", time: formatted_date_time(next_slot.starts_at)) %></p>
             <% else %>
-              <p class="property-card__availability property-card__availability--empty">No upcoming public slots published</p>
+              <p class="property-card__availability property-card__availability--empty"><%= t("ui.properties.card.no_slots") %></p>
             <% end %>
           </div>
 
           <div class="property-card__actions">
-            <%= link_to "View property", property_path(property), class: "button primary hollow" %>
-            <%= link_to "Book a viewing", new_property_appointment_path(property), class: "button primary", data: { testid: "book-viewing-link-#{property.id}" } %>
+            <%= link_to t("ui.common.view_property"), property_path(property), class: "button primary hollow" %>
+            <%= link_to t("ui.common.book_a_viewing"), new_property_appointment_path(property), class: "button primary", data: { testid: "book-viewing-link-#{property.id}" } %>
           </div>
         </footer>
       </article>
@@ -63,8 +63,8 @@
   </div>
 <% else %>
   <section class="site-card empty-state">
-    <p class="section-heading__eyebrow">No matches</p>
-    <h2>No properties match this search</h2>
-    <p>Try widening the area, bedrooms, or price range, or reset the filters to browse the full catalogue again.</p>
+    <p class="section-heading__eyebrow"><%= t("ui.properties.empty.eyebrow") %></p>
+    <h2><%= t("ui.properties.empty.title") %></h2>
+    <p><%= t("ui.properties.empty.body") %></p>
   </section>
 <% end %>

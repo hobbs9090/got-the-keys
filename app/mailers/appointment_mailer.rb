@@ -13,10 +13,10 @@ class AppointmentMailer < ApplicationMailer
   private
 
   def subject_for(event_type)
-    action =
+    action_key =
       case event_type
       when "created"
-        "request received"
+        "request_received"
       when "confirmed"
         "confirmed"
       when "cancelled"
@@ -24,11 +24,15 @@ class AppointmentMailer < ApplicationMailer
       when "completed"
         "completed"
       when "no_show"
-        "marked as missed"
+        "marked_as_missed"
       else
         "updated"
       end
 
-    "GotTheKeys viewing #{action}: #{@appointment.public_reference}"
+    I18n.t(
+      "ui.appointment_mailer.subject",
+      action: I18n.t("ui.appointment_mailer.actions.#{action_key}"),
+      reference: @appointment.public_reference
+    )
   end
 end

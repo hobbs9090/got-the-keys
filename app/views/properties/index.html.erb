@@ -7,42 +7,44 @@
     <div class="page-hero__brand">
       <%= render "layouts/gotthekeys", class_name: "marketing-wordmark--hero", decorative: true, width: 248 %>
     </div>
-    <p class="page-hero__eyebrow">Property catalogue</p>
-    <h1>Browse modern listings with live booking availability</h1>
-    <p>Search by area, price, and bedroom count, then book a viewing from each property page.</p>
+    <p class="page-hero__eyebrow"><%= t("ui.properties.catalogue.eyebrow") %></p>
+    <h1><%= t("ui.properties.catalogue.hero_title") %></h1>
+    <p><%= t("ui.properties.catalogue.hero_body") %></p>
   </div>
 
   <div class="page-hero__meta property-catalogue-hero__meta">
-    <span class="badge badge--neutral"><%= active_filter_labels.any? ? pluralize(active_filter_labels.count, "active filter") : "Catalogue overview" %></span>
+    <span class="badge badge--neutral">
+      <%= active_filter_labels.any? ? t("ui.properties.catalogue.active_filter_count", count: active_filter_labels.count) : t("ui.properties.catalogue.overview_badge") %>
+    </span>
     <strong><%= number_with_delimiter(@total_properties, delimiter: ",") %></strong>
-    <span>matching properties</span>
+    <span><%= t("ui.properties.catalogue.matching_properties", count: @total_properties) %></span>
   </div>
 </section>
 
 <section class="property-catalogue">
   <aside class="property-catalogue__sidebar">
     <section class="site-card property-catalogue__browse">
-      <p class="section-heading__eyebrow">Browse</p>
-      <h2>Move between catalogue views</h2>
-      <p>Use the full catalogue here, or jump straight into sale-only or rent-only stock when you already know the lane you want.</p>
+      <p class="section-heading__eyebrow"><%= t("ui.properties.catalogue.browse_eyebrow") %></p>
+      <h2><%= t("ui.properties.catalogue.browse_title") %></h2>
+      <p><%= t("ui.properties.catalogue.browse_body") %></p>
 
       <div class="segmented-links property-catalogue__scope-links">
-        <%= link_to "All listings", properties_path, class: ("is-active" if current_scope.blank?) %>
-        <%= link_to "For sale", for_sale_index_path, class: ("is-active" if current_scope == Property::SALE_STATUSES[:for_sale]) %>
-        <%= link_to "For rent", for_rent_index_path, class: ("is-active" if current_scope == Property::SALE_STATUSES[:for_rent]) %>
+        <%= link_to t("ui.properties.catalogue.all_listings"), properties_path, class: ("is-active" if current_scope.blank?) %>
+        <%= link_to t("ui.properties.sale_statuses.for_sale"), for_sale_index_path, class: ("is-active" if current_scope == Property::SALE_STATUSES[:for_sale]) %>
+        <%= link_to t("ui.properties.sale_statuses.for_rent"), for_rent_index_path, class: ("is-active" if current_scope == Property::SALE_STATUSES[:for_rent]) %>
       </div>
 
       <dl class="property-catalogue__totals">
         <div>
-          <dt>All</dt>
+          <dt><%= t("ui.properties.catalogue.totals.all") %></dt>
           <dd><%= number_with_delimiter(@catalogue_totals[:all], delimiter: ",") %></dd>
         </div>
         <div>
-          <dt>For sale</dt>
+          <dt><%= t("ui.properties.sale_statuses.for_sale") %></dt>
           <dd><%= number_with_delimiter(@catalogue_totals[:for_sale], delimiter: ",") %></dd>
         </div>
         <div>
-          <dt>For rent</dt>
+          <dt><%= t("ui.properties.sale_statuses.for_rent") %></dt>
           <dd><%= number_with_delimiter(@catalogue_totals[:for_rent], delimiter: ",") %></dd>
         </div>
       </dl>
@@ -51,16 +53,16 @@
     <section class="site-card property-catalogue__filters">
       <div class="property-results-panel__head">
         <div>
-          <p class="section-heading__eyebrow">Refine search</p>
-          <h2>Filter the property list</h2>
+          <p class="section-heading__eyebrow"><%= t("ui.properties.catalogue.filters_eyebrow") %></p>
+          <h2><%= t("ui.properties.catalogue.filters_title") %></h2>
         </div>
 
         <% if active_filter_labels.any? %>
-          <span class="badge badge--accent"><%= pluralize(active_filter_labels.count, "active filter") %></span>
+          <span class="badge badge--accent"><%= t("ui.properties.catalogue.active_filter_count", count: active_filter_labels.count) %></span>
         <% end %>
       </div>
 
-      <p class="property-catalogue__sidebar-copy">Narrow the list by listing type, area, town, bedrooms, and budget, then reset everything with one tap if you want to start over.</p>
+      <p class="property-catalogue__sidebar-copy"><%= t("ui.properties.catalogue.sidebar_copy") %></p>
 
       <%= render "properties/filters", url: properties_path, selected_sale_status: params[:sale_status], show_status_select: true %>
     </section>
@@ -70,14 +72,14 @@
     <section class="site-card property-results-panel">
       <div class="property-results-panel__head">
         <div>
-          <p class="section-heading__eyebrow">Live results</p>
-          <h2><%= pluralize(@total_properties, "property") %> ready to explore</h2>
+          <p class="section-heading__eyebrow"><%= t("ui.properties.catalogue.results_eyebrow") %></p>
+          <h2><%= t("ui.properties.catalogue.results_title", count: @total_properties) %></h2>
         </div>
 
         <div class="property-results-panel__meta">
           <span class="badge badge--neutral"><%= property_sort_label(@filters[:sort].presence || "recommended") %></span>
           <% if active_filter_labels.any? %>
-            <%= link_to "Clear all", properties_path, class: "button secondary hollow" %>
+            <%= link_to t("ui.common.clear_all"), properties_path, class: "button secondary hollow" %>
           <% end %>
         </div>
       </div>
@@ -89,7 +91,7 @@
           <% end %>
         </div>
       <% else %>
-        <p class="property-results-panel__empty-copy">Showing the full catalogue. Use the filter panel to narrow by location, price, and bedroom count.</p>
+        <p class="property-results-panel__empty-copy"><%= t("ui.properties.catalogue.empty_copy") %></p>
       <% end %>
 
       <div class="property-results-panel__pagination">

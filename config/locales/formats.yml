@@ -2,16 +2,53 @@ en:
   date:
     formats:
       calendar_day: "%a %d %b"
+      shared_date: "%d %B, %Y"
   time:
     formats:
       long: "%A, %d %B %Y at %H:%M"
+      shared_time: "%B %d %Y, %H:%M"
       time_only: "%H:%M"
 
 zh:
   date:
     formats:
       calendar_day: "%m月%d日"
+      shared_date: "%Y年%m月%d日"
   time:
     formats:
       long: "%Y年%m月%d日 %H:%M"
+      shared_time: "%Y年%m月%d日 %H:%M"
+      time_only: "%H:%M"
+
+de:
+  date:
+    formats:
+      calendar_day: "%d.%m."
+      shared_date: "%d.%m.%Y"
+  time:
+    formats:
+      long: "%d.%m.%Y %H:%M"
+      shared_time: "%d.%m.%Y, %H:%M"
+      time_only: "%H:%M"
+
+fr:
+  date:
+    formats:
+      calendar_day: "%d/%m"
+      shared_date: "%d/%m/%Y"
+  time:
+    formats:
+      long: "%d/%m/%Y %H:%M"
+      shared_time: "%d/%m/%Y %H:%M"
+      time_only: "%H:%M"
+
+it:
+  date:
+    formats:
+      calendar_day: "%d/%m"
+      shared_date: "%d/%m/%Y"
+  time:
+    formats:
+      long: "%d/%m/%Y %H:%M"
+      shared_time: "%d/%m/%Y %H:%M"
       time_only: "%H:%M"

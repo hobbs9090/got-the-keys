@@ -1,45 +1,45 @@
 <%= form_with url: url, method: :get, class: "property-filters", local: true, data: { testid: "property-filter-form" } do %>
   <% if show_status_select %>
     <div>
-      <%= label_tag :sale_status, "Listing type" %>
-      <%= select_tag :sale_status, options_for_select(Property::SALE_STATUS, selected_sale_status), include_blank: "All listings" %>
+      <%= label_tag :sale_status, t("ui.properties.filters.listing_type") %>
+      <%= select_tag :sale_status, options_for_select(property_sale_status_options, selected_sale_status), include_blank: t("ui.properties.filters.all_listings") %>
     </div>
   <% else %>
     <%= hidden_field_tag :sale_status, selected_sale_status %>
   <% end %>
 
   <div>
-    <%= label_tag :q, "Area, postcode or keyword" %>
-    <%= text_field_tag :q, params[:q], placeholder: "Try Sevenoaks, TN13 or garden", data: { testid: "property-search-query" } %>
+    <%= label_tag :q, t("ui.properties.filters.query_label") %>
+    <%= text_field_tag :q, params[:q], placeholder: t("ui.properties.filters.query_placeholder"), data: { testid: "property-search-query" } %>
   </div>
 
   <div>
-    <%= label_tag :town_city, "Town" %>
-    <%= select_tag :town_city, options_for_select(@available_towns, params[:town_city]), include_blank: "Any town" %>
+    <%= label_tag :town_city, t("ui.common.town") %>
+    <%= select_tag :town_city, options_for_select(@available_towns, params[:town_city]), include_blank: t("ui.properties.filters.any_town") %>
   </div>
 
   <div>
-    <%= label_tag :min_bedrooms, "Min bedrooms" %>
-    <%= select_tag :min_bedrooms, options_for_select([["Any", nil], [1, 1], [2, 2], [3, 3], [4, 4], ["5+", 5]], params[:min_bedrooms]) %>
+    <%= label_tag :min_bedrooms, t("ui.properties.filters.min_bedrooms") %>
+    <%= select_tag :min_bedrooms, options_for_select([[t("ui.common.any"), nil], [1, 1], [2, 2], [3, 3], [4, 4], ["5+", 5]], params[:min_bedrooms]) %>
   </div>
 
   <div>
-    <%= label_tag :min_price, "Min price" %>
+    <%= label_tag :min_price, t("ui.properties.filters.min_price") %>
     <%= number_field_tag :min_price, params[:min_price], min: 0, step: 5000, placeholder: "0" %>
   </div>
 
   <div>
-    <%= label_tag :max_price, "Max price" %>
+    <%= label_tag :max_price, t("ui.properties.filters.max_price") %>
     <%= number_field_tag :max_price, params[:max_price], min: 0, step: 5000, placeholder: "1000000" %>
   </div>
 
   <div>
-    <%= label_tag :sort, "Sort" %>
-    <%= select_tag :sort, options_for_select([["Recommended", "recommended"], ["Newest", "newest"], ["Price: low to high", "price_low"], ["Price: high to low", "price_high"], ["Bedrooms", "bedrooms_high"]], params[:sort].presence || "recommended") %>
+    <%= label_tag :sort, t("ui.properties.filters.sort") %>
+    <%= select_tag :sort, options_for_select(property_sort_options, params[:sort].presence || "recommended") %>
   </div>
 
   <div class="property-filters__actions">
-    <%= button_tag "Apply filters", class: "button primary", data: { testid: "apply-property-filters" } %>
-    <%= link_to "Reset", url, class: "button hollow secondary" %>
+    <%= button_tag t("ui.properties.filters.apply"), class: "button primary", data: { testid: "apply-property-filters" } %>
+    <%= link_to t("ui.common.reset"), url, class: "button hollow secondary" %>
   </div>
 <% end %>

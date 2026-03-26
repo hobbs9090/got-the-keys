@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= content_for?(:title) ? yield(:title) : "Admin | #{t('gotthekeys.gotthekeys')}" %></title>
+    <title><%= content_for?(:title) ? yield(:title) : t("ui.admin.layout.title", app_name: t("gotthekeys.gotthekeys")) %></title>
     <%= favicon_link_tag "favicon-house.svg", type: "image/svg+xml" %>
     <%= favicon_link_tag "favicon.ico", rel: "alternate icon" %>
     <%= csrf_meta_tags %>
@@ -17,7 +17,7 @@
       <aside class="admin-sidebar" data-testid="admin-sidebar">
         <div class="admin-sidebar__brand">
           <%= link_to admin_root_path, class: "admin-sidebar__brand-link" do %>
-            <span class="admin-sidebar__eyebrow">Admin Workspace</span>
+            <span class="admin-sidebar__eyebrow"><%= t("ui.admin.layout.sidebar_eyebrow") %></span>
             <strong><%= render "layouts/gotthekeys", class_name: "marketing-wordmark--admin", variant: :dark, width: 190 %></strong>
           <% end %>
         </div>
@@ -28,14 +28,14 @@
       <div class="admin-content-wrap">
         <header class="admin-topbar">
           <div>
-            <p class="admin-topbar__label">Active demo scenario</p>
+            <p class="admin-topbar__label"><%= t("ui.admin.layout.active_demo_scenario") %></p>
             <strong data-testid="active-demo-scenario"><%= active_demo_scenario_key.humanize %></strong>
           </div>
 
           <div class="admin-topbar__actions">
             <span class="admin-topbar__user"><%= current_admin.email %></span>
-            <%= link_to "View site", root_path, class: "button hollow small" %>
-            <%= link_to "Sign out", destroy_admin_session_path, class: "button alert hollow small", data: { turbo_method: :delete } %>
+            <%= link_to t("ui.admin.layout.view_site"), root_path, class: "button hollow small" %>
+            <%= link_to t("ui.site_header.sign_out"), destroy_admin_session_path, class: "button alert hollow small", data: { turbo_method: :delete } %>
           </div>
         </header>
 

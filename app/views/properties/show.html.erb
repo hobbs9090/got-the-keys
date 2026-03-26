@@ -3,13 +3,13 @@
 <section class="property-hero" data-testid="property-showcase">
   <div class="property-hero__content">
     <div class="property-hero__labels">
-      <span class="badge <%= @property.sale_status == Property::SALE_STATUSES[:for_sale] ? 'badge--accent' : 'badge--success' %>"><%= @property.sale_status %></span>
+      <span class="badge <%= @property.sale_status == Property::SALE_STATUSES[:for_sale] ? 'badge--accent' : 'badge--success' %>"><%= translated_sale_status(@property.sale_status) %></span>
       <% if @property.featured? %>
-        <span class="badge badge--warning">Featured</span>
+        <span class="badge badge--warning"><%= t("ui.common.featured") %></span>
       <% end %>
     </div>
 
-    <p class="property-hero__eyebrow"><%= @property.property_type %> in <%= @property.location_line %></p>
+    <p class="property-hero__eyebrow"><%= property_location_label(@property) %></p>
     <h1><%= @property.address_line_1 %></h1>
     <p class="property-hero__headline"><%= @property.headline %></p>
 
@@ -22,15 +22,15 @@
 
     <dl class="property-hero__meta">
       <div>
-        <dt>Bedrooms</dt>
+        <dt><%= t("properties.bedrooms") %></dt>
         <dd><%= format_bedrooms(@property) %></dd>
       </div>
       <div>
-        <dt>Bathrooms</dt>
-        <dd><%= pluralize(@property.bathrooms, "bathroom") %></dd>
+        <dt><%= t("ui.common.bathrooms") %></dt>
+        <dd><%= format_bathrooms(@property.bathrooms) %></dd>
       </div>
       <div>
-        <dt>Postcode</dt>
+        <dt><%= t("ui.common.postcode") %></dt>
         <dd><%= @property.postcode %></dd>
       </div>
     </dl>
@@ -43,18 +43,18 @@
 
 <section class="property-layout">
   <article class="property-panel">
-    <h2>Overview</h2>
+    <h2><%= t("ui.common.overview") %></h2>
     <p><%= @property.property_description %></p>
 
     <div class="property-address">
-      <h3>Address</h3>
+      <h3><%= t("ui.common.address") %></h3>
       <p><%= [@property.address_line_1, @property.address_line_2, @property.town_city, @property.county, @property.postcode, @property.country].reject(&:blank?).join(", ") %></p>
     </div>
   </article>
 
   <aside class="property-booking-panel" data-testid="booking-panel">
-    <h2>Book a viewing</h2>
-    <p>Pick a published slot to create a booking request. Admins can later confirm, reschedule, or cancel it from the appointment book.</p>
+    <h2><%= t("ui.common.book_a_viewing") %></h2>
+    <p><%= t("ui.properties.show.booking_body") %></p>
 
     <% if @available_slots.any? %>
       <ul class="slot-list">
@@ -62,16 +62,16 @@
           <li>
             <%= link_to new_property_appointment_path(@property, slot: slot.starts_at.iso8601), class: "slot-list__link", data: { testid: "slot-option-#{slot.starts_at.to_i}" } do %>
               <strong><%= formatted_date_time(slot.starts_at) %></strong>
-              <span><%= l(slot.ends_at, format: :time_only) %> finish</span>
+              <span><%= t("ui.properties.show.slot_finish", time: l(slot.ends_at, format: :time_only)) %></span>
             <% end %>
           </li>
         <% end %>
       </ul>
-      <%= link_to "Request a viewing", new_property_appointment_path(@property), class: "button primary expanded", data: { testid: "book-viewing-cta" } %>
+      <%= link_to t("ui.properties.show.request_viewing"), new_property_appointment_path(@property), class: "button primary expanded", data: { testid: "book-viewing-cta" } %>
     <% else %>
       <div class="empty-state">
-        <h3>No public slots available</h3>
-        <p>This is a useful QA edge case for testing empty booking states and fallback contact flows.</p>
+        <h3><%= t("ui.properties.show.no_slots_title") %></h3>
+        <p><%= t("ui.properties.show.no_slots_body") %></p>
       </div>
     <% end %>
   </aside>

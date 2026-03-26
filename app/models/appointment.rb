@@ -41,7 +41,7 @@ class Appointment < ApplicationRecord
   end
 
   def display_status
-    status.tr("_", " ").humanize
+    I18n.t("ui.appointments.statuses.#{status}", default: status.tr("_", " ").humanize)
   end
 
   def timeline

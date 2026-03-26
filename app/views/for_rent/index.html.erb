@@ -2,14 +2,14 @@
 
 <section class="page-hero">
   <div>
-    <p class="page-hero__eyebrow">For rent</p>
-    <h1>Homes available to rent</h1>
-    <p>Explore homes to let, compare availability, and test the renter viewing flow across a realistic catalogue.</p>
+    <p class="page-hero__eyebrow"><%= t("ui.for_rent.eyebrow") %></p>
+    <h1><%= t("ui.for_rent.hero_title") %></h1>
+    <p><%= t("ui.for_rent.hero_body") %></p>
   </div>
 
   <div class="page-hero__meta">
     <strong><%= number_with_delimiter(@total_for_rent, delimiter: ",") %></strong>
-    <span>rental listings</span>
+    <span><%= t("ui.for_rent.count_label", count: @total_for_rent) %></span>
   </div>
 </section>
 

@@ -1,18 +1,18 @@
-<p>Hello <%= @appointment.customer_name %>,</p>
+<p><%= t("ui.appointment_mailer.greeting", name: @appointment.customer_name) %></p>
 
-<p>Your viewing for <strong><%= @property.address_line_1 %></strong> has been updated.</p>
+<p><%= t("ui.appointment_mailer.updated_html", address: @property.address_line_1) %></p>
 
 <ul>
-  <li>Reference: <%= @appointment.public_reference %></li>
-  <li>Status: <%= @appointment.display_status %></li>
-  <li>Requested slot: <%= l(@appointment.requested_time, format: :long) %></li>
-  <li>Current slot: <%= l(@appointment.scheduled_at, format: :long) %></li>
+  <li><%= t("ui.appointment_mailer.reference", reference: @appointment.public_reference) %></li>
+  <li><%= t("ui.appointment_mailer.status", status: @appointment.display_status) %></li>
+  <li><%= t("ui.appointment_mailer.requested_slot", time: l(@appointment.requested_time, format: :long)) %></li>
+  <li><%= t("ui.appointment_mailer.current_slot", time: l(@appointment.scheduled_at, format: :long)) %></li>
 </ul>
 
 <% if @appointment.notes.present? %>
-  <p>Your notes: <%= @appointment.notes %></p>
+  <p><%= t("ui.appointment_mailer.notes", notes: @appointment.notes) %></p>
 <% end %>
 
-<p>You can revisit the appointment at any time using the secure appointment link sent after booking.</p>
+<p><%= t("ui.appointment_mailer.revisit") %></p>
 
-<p>Thank you,<br>GotTheKeys</p>
+<p><%= t("ui.appointment_mailer.thanks_html") %></p>

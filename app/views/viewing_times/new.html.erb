@@ -1,4 +1,4 @@
-<% title "New Viewing Time for #{@property.address_line_1}" %>
+<% title t("ui.legacy.new_viewing_time_title", address: @property.address_line_1) %>
 
 <div class="row">
 
@@ -24,8 +24,8 @@
             </li>
           </ol>
           <p>
-            <%= f.submit 'Update' %>
-            <%= link_to "Cancel", @property, class: 'button' %>
+            <%= f.submit t("ui.legacy.update") %>
+            <%= link_to t("ui.common.cancel"), @property, class: 'button' %>
           </p>
         </fieldset>
     <% end %>

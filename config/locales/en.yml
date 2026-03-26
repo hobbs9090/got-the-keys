@@ -26,6 +26,15 @@ en:
   bedroom: "bedroom"
   under_construction: "Under Construction"
 
+  languages:
+    label: "Language"
+    names:
+      en: "English"
+      de: "Deutsch"
+      fr: "Français"
+      it: "Italiano"
+      zh: "中文"
+
   activerecord:
     models:
       property: "Property"

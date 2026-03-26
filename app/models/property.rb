@@ -147,7 +147,7 @@ class Property < ApplicationRecord
   end
 
   def headline
-    listing_tagline.presence || "#{property_type} in #{town_city}"
+    listing_tagline.presence || I18n.t("ui.properties.headline_fallback", property_type:, town_city:)
   end
 
   def location_line
