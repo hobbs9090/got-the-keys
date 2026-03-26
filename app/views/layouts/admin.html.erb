@@ -15,7 +15,7 @@
     <div class="admin-layout">
       <aside class="admin-sidebar" data-testid="admin-sidebar">
         <div class="admin-sidebar__brand">
-          <%= link_to admin_root_path, class: "admin-sidebar__brand-link" do %>
+          <%= link_to root_path, class: "admin-sidebar__brand-link" do %>
             <span class="admin-sidebar__eyebrow"><%= t("ui.admin.layout.sidebar_eyebrow") %></span>
             <strong><%= render "layouts/gotthekeys", class_name: "marketing-wordmark--admin", variant: :dark, width: 190 %></strong>
           <% end %>
@@ -33,7 +33,7 @@
 
           <div class="admin-topbar__actions">
             <span class="admin-topbar__user"><%= current_admin.email %></span>
-            <%= link_to t("ui.admin.layout.view_site"), root_path, class: "button hollow small" %>
+            <%= link_to t("ui.admin.layout.view_site"), root_path, class: "button secondary hollow small" %>
             <%= link_to t("ui.site_header.sign_out"), destroy_admin_session_path, class: "button alert hollow small", data: { turbo_method: :delete } %>
           </div>
         </header>

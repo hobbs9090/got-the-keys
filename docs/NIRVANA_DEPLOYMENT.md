@@ -149,6 +149,10 @@ Example Apache snippet:
   SetEnv RAILS_SERVE_STATIC_FILES 1
   SetEnv SECRET_KEY_BASE your_generated_secret_here
 
+  <LocationMatch "^/assets/">
+    Header always set Cache-Control "public, max-age=31536000, immutable"
+  </LocationMatch>
+
   Header always set Strict-Transport-Security "max-age=31536000"
   SSLEngine on
   SSLCertificateFile /etc/letsencrypt/live/stevenhobbs.co.uk/fullchain.pem
@@ -157,7 +161,7 @@ Example Apache snippet:
 </VirtualHost>
 ```
 
-Adapt only the Ruby path, hostnames, and certificate paths if needed. The document root and app root should match the Capistrano layout above.
+Adapt only the Ruby path, hostnames, and certificate paths if needed. The document root and app root should match the Capistrano layout above. The `/assets/` cache header matters even though Rails can also serve static files, because Apache may serve precompiled assets directly before Passenger is involved.
 
 ## Capistrano Deploys
 
@@ -174,17 +178,15 @@ cd /Users/steven/Source/GitHub/rails_got_the_keys
 DEPLOY_USER=your_ssh_user bundle exec cap staging deploy
 ```
 
-To include build metadata in QA/admin diagnostics during a manual deploy:
+The staging deploy now stamps QA/admin release metadata automatically:
 
 ```bash
 cd /Users/steven/Source/GitHub/rails_got_the_keys
-APP_BUILD_SHA="$(git rev-parse --short HEAD)" \
-APP_BUILD_NUMBER="$(date +%s)" \
 DEPLOY_USER=your_ssh_user \
 bundle exec cap staging deploy
 ```
 
-The public footer still renders the semantic version from `VERSION`. Build metadata is optional and only appears on admin or QA-facing surfaces. Capistrano writes `APP_BUILD_SHA` and `APP_BUILD_NUMBER` into `shared/storage/build_info.json`, so Passenger can keep reporting the exact deployed build after restart.
+The public footer still renders the semantic version from `VERSION`. Admin and QA diagnostics now show the deploy-aware release version, Git SHA, and build number. Capistrano writes that metadata into `shared/storage/build_info.json`, so Passenger can keep reporting the exact deployed build after restart.
 
 Optional overrides:
 
@@ -201,7 +203,7 @@ The deploy now:
 
 - reuses shared `storage/`, `log/`, `tmp/`, `vendor/bundle/`, and `node_modules/`
 - installs npm dependencies before asset precompile
-- writes optional build metadata to `shared/storage/build_info.json`
+- writes deploy build metadata to `shared/storage/build_info.json`
 - restarts Passenger with `tmp/restart.txt`
 
 ### What `bin/deploy_staging` Does
@@ -270,7 +272,7 @@ In practical terms, Capistrano manages staging with this flow:
 5. `bundler:install` installs production gems into the shared bundle path.
 6. `deploy:npm_install` installs frontend packages into shared `node_modules/`.
 7. `deploy:compile_assets` precompiles the Rails frontend assets for the new release.
-8. `deploy:write_build_metadata` writes optional build info into `shared/storage/build_info.json`.
+8. `deploy:write_build_metadata` writes deploy build info into `shared/storage/build_info.json`.
 9. `passenger:restart` touches `tmp/restart.txt` so Passenger boots the new release.
 10. `deploy:cleanup` removes older releases beyond the configured retention window.
 
@@ -297,13 +299,13 @@ That rollback uses the preserved `releases/` history, so it only works while the
 Version reporting is split intentionally:
 
 - semantic version: read from the repo `VERSION` file
-- build SHA / build number: optional deploy metadata
+- build SHA / build number: deploy metadata written during every deploy
 
-During deploy, Capistrano writes `APP_BUILD_SHA` and `APP_BUILD_NUMBER` into:
+During deploy, Capistrano writes build metadata into:
 
 - `shared/storage/build_info.json`
 
-If those values are not provided, the file is removed. That keeps QA/admin release diagnostics accurate without baking environment-specific metadata into Git-tracked source files.
+The deploy task always records the deployed Git SHA. The build number defaults to the previous deployed build plus one, and if a higher `APP_BUILD_NUMBER` is provided it wins. That keeps QA/admin release diagnostics moving forward on every deploy without baking environment-specific metadata into Git-tracked source files.
 
 ## GitHub Actions Deployment
 

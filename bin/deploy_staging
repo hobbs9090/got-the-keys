@@ -34,7 +34,7 @@ git push --force "$DEPLOY_MIRROR_REMOTE" "${DEPLOY_SHA}:refs/heads/${DEPLOY_REF}
 export DEPLOY_USER DEPLOY_HOST DEPLOY_TO APP_HOST DEPLOY_REPO_URL
 export DEPLOY_BRANCH="$DEPLOY_REF"
 export APP_VERSION="${APP_VERSION:-}"
-export APP_BUILD_SHA="${APP_BUILD_SHA:-}"
+export APP_BUILD_SHA="${APP_BUILD_SHA:-$(git rev-parse --short "${DEPLOY_SHA}")}"
 export APP_BUILD_NUMBER="${APP_BUILD_NUMBER:-}"
 
 bundle exec cap staging deploy:check

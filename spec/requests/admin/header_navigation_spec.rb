@@ -39,9 +39,18 @@ RSpec.describe "Admin header navigation" do
 
     expect(response).to have_http_status(:ok)
 
-    link = parsed_html.at_css(".admin-topbar__actions a.button.hollow.small")
-    expect(link).to be_present
-    expect(link.text.strip).to eq("View site")
-    expect(link["href"]).to eq(root_path)
+    brand_link = parsed_html.at_css(".admin-sidebar__brand-link")
+    expect(brand_link).to be_present
+    expect(brand_link["href"]).to eq(root_path)
+
+    view_site_link = parsed_html.at_css(".admin-topbar__actions a.button.secondary.hollow.small")
+    expect(view_site_link).to be_present
+    expect(view_site_link.text.strip).to eq("View site")
+    expect(view_site_link["href"]).to eq(root_path)
+
+    sign_out_link = parsed_html.at_css(".admin-topbar__actions a.button.alert.hollow.small")
+    expect(sign_out_link).to be_present
+    expect(sign_out_link.text.strip).to eq("Sign out")
+    expect(sign_out_link["href"]).to eq(destroy_admin_session_path)
   end
 end
