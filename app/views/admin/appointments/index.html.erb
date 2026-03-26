@@ -8,9 +8,9 @@
       <p><%= t("ui.admin.appointments.hero_body") %></p>
     </div>
 
-    <div class="segmented-links">
+    <div class="admin-bookings-view-switch" data-testid="admin-bookings-view-switch">
       <% %w[agenda day week month].each do |mode| %>
-        <%= link_to t("ui.admin.appointments.views.#{mode}"), admin_bookings_path(request.query_parameters.merge(view: mode)), class: ("is-active" if @view_mode == mode) %>
+        <%= link_to t("ui.admin.appointments.views.#{mode}"), admin_bookings_path(request.query_parameters.merge(view: mode)), class: ["admin-bookings-view-switch__link", ("is-active" if @view_mode == mode)].compact.join(" "), data: { testid: "admin-bookings-view-#{mode}" } %>
       <% end %>
     </div>
   </div>

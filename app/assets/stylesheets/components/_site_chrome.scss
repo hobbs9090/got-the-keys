@@ -1,9 +1,11 @@
 .site-header {
+  box-sizing: border-box;
   margin: 0 auto;
-  max-width: 1320px;
-  padding: 1rem 1.5rem 0;
+  max-width: 1240px;
+  padding: 1rem var(--space-lg) 0;
   position: sticky;
   top: 0;
+  width: 100%;
   z-index: 30;
 }
 
@@ -96,7 +98,65 @@
 .site-header__actions {
   align-items: center;
   display: flex;
+  flex-wrap: wrap;
   gap: 0.7rem;
+  justify-content: flex-end;
+}
+
+.site-header__session {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.site-header__session-meta {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.site-header__account {
+  display: grid;
+  gap: 0.16rem;
+  justify-items: end;
+  max-width: 18rem;
+  text-align: right;
+}
+
+.site-header__account-heading {
+  align-items: center;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.38rem;
+  justify-content: flex-end;
+}
+
+.site-header__account-eyebrow {
+  color: rgba(16, 33, 63, 0.56);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.site-header__account-name {
+  color: #10213f;
+  font-size: 0.92rem;
+  line-height: 1;
+}
+
+.site-header__account-detail {
+  color: var(--color-muted);
+  font-size: 0.77rem;
+  line-height: 1.1;
+}
+
+.site-header__button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  justify-content: flex-end;
 }
 
 .language-dropdown {
@@ -313,6 +373,32 @@
   line-height: 1.5;
 }
 
+.site-footer__small {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.55rem;
+  justify-content: flex-end;
+}
+
+.site-footer__meta-copy {
+  flex: 1 1 18rem;
+}
+
+.site-footer__utility {
+  align-items: center;
+  display: inline-flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.site-footer__version::before {
+  color: rgba(255, 255, 255, 0.56);
+  content: "\00b7";
+  margin-right: 0.35rem;
+}
+
 .site-footer__small a {
   color: #fff;
   font-weight: 700;
@@ -361,6 +447,10 @@
   .site-footer__meta {
     align-items: start;
   }
+
+  .site-footer__small {
+    justify-content: flex-start;
+  }
 }
 
 @media (max-width: 760px) {
@@ -378,6 +468,20 @@
 
   .site-nav,
   .site-header__actions {
+    justify-content: flex-start;
+  }
+
+  .site-header__session-meta,
+  .site-header__button-group {
+    justify-content: flex-start;
+  }
+
+  .site-header__account {
+    justify-items: start;
+    text-align: left;
+  }
+
+  .site-header__account-heading {
     justify-content: flex-start;
   }
 

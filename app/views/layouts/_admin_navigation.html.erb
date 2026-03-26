@@ -7,9 +7,14 @@
     <li><%= admin_nav_link_to "Applications", admin_rental_applications_path, active: controller_path == "admin/rental_applications", data: { testid: "admin-rental-applications-link" } %></li>
     <li><%= admin_nav_link_to t("ui.admin.navigation.properties"), admin_properties_path, data: { testid: "admin-properties-link" } %></li>
     <li><%= admin_nav_link_to t("ui.admin.navigation.sellers"), admin_users_path, data: { testid: "admin-users-link" } %></li>
-    <li><%= admin_nav_link_to t("ui.admin.navigation.demo_data"), admin_demo_scenarios_path, data: { testid: "admin-demo-data-link" } %></li>
     <li><%= admin_nav_link_to t("ui.admin.navigation.notifications"), admin_notification_logs_path, data: { testid: "admin-notifications-link" } %></li>
     <li><%= admin_nav_link_to t("ui.admin.navigation.booking_rules"), admin_booking_configuration_path, data: { testid: "admin-booking-rules-link" } %></li>
+  </ul>
+
+  <div class="admin-nav__divider" data-testid="admin-nav-divider" aria-hidden="true"></div>
+
+  <ul class="vertical menu admin-nav__menu admin-nav__menu--utility" data-testid="admin-nav-utility">
+    <li><%= admin_nav_link_to t("ui.admin.navigation.demo_data"), admin_demo_scenarios_path, data: { testid: "admin-demo-data-link" } %></li>
     <li><%= admin_nav_link_to t("ui.admin.navigation.qa_guide"), admin_qa_path, data: { testid: "admin-qa-link" } %></li>
   </ul>
 </nav>

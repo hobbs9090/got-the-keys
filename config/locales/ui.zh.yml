@@ -4,6 +4,9 @@ zh:
       eyebrow: "房产平台"
       admin_bookings: "预约"
       admin_dashboard: "仪表盘"
+      account_eyebrow: "已登录"
+      admin_account_name: "管理员"
+      member_account_name: "业主账户"
       sign_out: "退出登录"
       add_property: "添加房源"
       profile: "个人资料"
@@ -499,6 +502,7 @@ zh:
           export: "已导出"
         scenario_keys:
           baseline: "基线"
+          custom_sevenoaks_westerham_catalogue: "精选 Sevenoaks 与 Westerham 房源目录"
           fully_booked_day: "满额日"
           high_volume_search: "高容量搜索"
           qa_edge_cases: "QA 边界情况"

@@ -1,0 +1,206 @@
+.about-hero {
+  align-items: stretch;
+  background:
+    radial-gradient(circle at top left, rgba(20, 87, 214, 0.12), transparent 32%),
+    linear-gradient(145deg, rgba(15, 139, 141, 0.09), rgba(255, 255, 255, 0.98) 58%);
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1.28fr) minmax(290px, 0.82fr);
+}
+
+.about-hero__content {
+  display: grid;
+  gap: 1rem;
+  max-width: 56rem;
+}
+
+.about-hero__copy {
+  font-size: 1.08rem;
+  max-width: 64ch;
+}
+
+.about-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 0.35rem;
+}
+
+.about-hero__panel {
+  align-content: start;
+  background: linear-gradient(180deg, rgba(15, 139, 141, 0.08), rgba(255, 255, 255, 0.98));
+  display: grid;
+  gap: 1rem;
+}
+
+.about-hero__panel h2 {
+  font-size: clamp(1.5rem, 2.15vw, 2rem);
+  line-height: 1.12;
+  margin: 0;
+}
+
+.about-hero__checklist,
+.about-control-list {
+  display: grid;
+  gap: 0.9rem;
+  margin: 0;
+}
+
+.about-hero__checklist li,
+.about-control-list li {
+  color: #23304a;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.about-hero__checklist li::before,
+.about-control-list li::before {
+  border-radius: 999px;
+  content: "";
+  height: 0.58rem;
+  left: 0;
+  position: absolute;
+  top: 0.6rem;
+  width: 0.58rem;
+}
+
+.about-hero__checklist li::before {
+  background: var(--color-primary);
+  box-shadow: 0 0 0 5px rgba(20, 87, 214, 0.11);
+}
+
+.about-control-list li::before {
+  background: #0f8b8d;
+  box-shadow: 0 0 0 5px rgba(15, 139, 141, 0.11);
+}
+
+.about-layout {
+  align-items: start;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1.58fr) minmax(290px, 0.8fr);
+  margin: 2rem 0 3rem;
+}
+
+.about-main,
+.about-sidebar {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.about-story {
+  align-items: stretch;
+  display: grid;
+  gap: 0;
+  grid-template-columns: minmax(280px, 0.92fr) minmax(0, 1.08fr);
+  overflow: hidden;
+  padding: 0;
+}
+
+.about-story__media {
+  min-height: 100%;
+}
+
+.about-story__image {
+  display: block;
+  height: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.about-story__body {
+  display: grid;
+  gap: 1rem;
+  padding: 1.6rem;
+}
+
+.about-story__body h2,
+.about-sidebar h2 {
+  line-height: 1.14;
+  margin: 0;
+}
+
+.about-values {
+  display: grid;
+  gap: 1rem;
+}
+
+.about-values__intro {
+  margin: 0;
+  max-width: 30rem;
+}
+
+.about-values__grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.about-value-card {
+  background:
+    linear-gradient(180deg, rgba(20, 87, 214, 0.07), rgba(255, 255, 255, 0.94)),
+    rgba(255, 255, 255, 0.95);
+  border-color: rgba(20, 87, 214, 0.12);
+  display: grid;
+  gap: 0.7rem;
+}
+
+.about-value-card h3,
+.about-sidebar__cta h2 {
+  font-size: 1.45rem;
+  line-height: 1.16;
+  margin: 0;
+}
+
+.about-value-card p,
+.about-sidebar__cta p {
+  margin: 0;
+}
+
+.about-sidebar {
+  align-content: start;
+}
+
+.about-sidebar__controls {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(15, 139, 141, 0.06));
+}
+
+.about-sidebar__note {
+  background: linear-gradient(180deg, rgba(255, 122, 24, 0.08), rgba(255, 255, 255, 0.98));
+  border-color: rgba(255, 122, 24, 0.16);
+}
+
+.about-sidebar__cta {
+  background: linear-gradient(160deg, rgba(20, 87, 214, 0.12), rgba(255, 255, 255, 0.98));
+  border-color: rgba(20, 87, 214, 0.15);
+}
+
+.about-sidebar__actions {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1.2rem;
+}
+
+.about-sidebar__actions .button {
+  margin-bottom: 0;
+}
+
+@media (max-width: 1100px) {
+  .about-hero,
+  .about-layout,
+  .about-story,
+  .about-values__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-hero__content {
+    max-width: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .about-hero__actions .button {
+    width: 100%;
+  }
+}

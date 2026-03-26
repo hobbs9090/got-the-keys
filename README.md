@@ -348,21 +348,22 @@ The repo currently ships with:
 - `documents_and_trust`
   Brochure downloads, private files, stale-listing cues, and delayed lead follow-up.
 
-## Known Credentials
+## Known Training Credentials
 
-When you load the `baseline` scenario:
+After `bin/rails db:seed`, the default `baseline` scenario loads intentionally non-sensitive training credentials.
 
-Admins:
+Admin sign-in: `/admins/sign_in`
 
 - `steven@gotthekeys.com` / `********`
-- `stevenhobbs@meeane.co.uk` / `********`
 
-Sellers:
+Normal user sign-in: `/users/sign_in`
 
-- `seller01@acme.com` / `********`
-- `seller02@acme.com` / `********`
-- `seller03@acme.com` / `********`
-- `seller04@acme.com` / `********`
+- `charlotte.hughes@example.com` / `********`
+- `daniel.mercer@example.com` / `********`
+- `matthew.wells@example.com` / `********`
+- `lucy.mcclure@example.com` / `********`
+
+These normal user accounts are the seller-side logins for the baseline properties. Other scenario packs may swap in different training users, but the admin QA guide at `/admin/qa` always shows the currently seeded personas.
 
 ## Public Booking Flow
 

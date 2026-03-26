@@ -1,4 +1,5 @@
 require "rails_helper"
+require "nokogiri"
 
 RSpec.describe "Admin appointments" do
   let(:admin) { FactoryBot.create(:admin, email: "steven@gotthekeys.com", password: "changeme", password_confirmation: "changeme") }
@@ -11,9 +12,15 @@ RSpec.describe "Admin appointments" do
 
   it "shows the admin-only bookings desk" do
     get admin_bookings_path
+    document = Nokogiri::HTML.parse(response.body)
+    view_switch = document.at_css('[data-testid="admin-bookings-view-switch"]')
 
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Bookings desk")
+    expect(view_switch).to be_present
+    expect(view_switch["class"]).to include("admin-bookings-view-switch")
+    expect(view_switch.css("a").map { |link| link.text.strip }).to eq(%w[Agenda Day Week Month])
+    expect(view_switch.at_css('[data-testid="admin-bookings-view-agenda"]')["class"]).to include("is-active")
   end
 
   it "redirects non-admin visitors away from the bookings desk" do

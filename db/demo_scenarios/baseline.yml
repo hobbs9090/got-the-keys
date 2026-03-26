@@ -25,10 +25,6 @@ admins:
     password: secret
     password_confirmation: secret
     language: en
-  - email: stevenhobbs@meeane.co.uk
-    password: secret
-    password_confirmation: secret
-    language: en
 users:
   - first_name: Charlotte
     last_name: Hughes
@@ -248,7 +244,7 @@ appointments:
     notes: Coming with my partner and a mortgage adviser.
     internal_notes: Confirmed by phone and keen on school catchment details.
   - property_key: tunbridge_garden_flat
-    assigned_admin_email: stevenhobbs@meeane.co.uk
+    assigned_admin_email: steven@gotthekeys.com
     customer_name: Jasmine Boyd
     customer_email: jasmine.boyd@example.com
     customer_phone: "07700 900333"
@@ -270,7 +266,7 @@ appointments:
     notes: Please cancel if the property is no longer available.
     internal_notes: Cancelled by customer after receiving another offer acceptance.
   - property_key: croydon_rental_loft
-    assigned_admin_email: stevenhobbs@meeane.co.uk
+    assigned_admin_email: steven@gotthekeys.com
     customer_name: Aisha Rahman
     customer_email: aisha.rahman@example.com
     customer_phone: "07700 900555"
@@ -282,7 +278,7 @@ appointments:
     notes: Interested in moving before the end of April.
     internal_notes: Strong fit for the property and requested application paperwork.
   - property_key: croydon_rental_loft
-    assigned_admin_email: stevenhobbs@meeane.co.uk
+    assigned_admin_email: steven@gotthekeys.com
     customer_name: Samir Patel
     customer_email: samir.patel@example.com
     customer_phone: "07700 900666"
@@ -302,7 +298,7 @@ enquiries:
     message: Please send over the brochure and let me know whether the study could work as a downstairs bedroom for an older parent.
     status: new
   - property_key: croydon_rental_loft
-    assigned_admin_email: stevenhobbs@meeane.co.uk
+    assigned_admin_email: steven@gotthekeys.com
     customer_name: Leon Grant
     customer_email: leon.grant@example.com
     customer_phone: ""

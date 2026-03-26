@@ -27,10 +27,10 @@
       <h2><%= t("ui.admin.dashboard.bookings_title") %></h2>
     </div>
 
-    <div class="segmented-links">
-      <%= link_to t("ui.admin.dashboard.all_bookings"), admin_bookings_path, class: "is-active" %>
-      <%= link_to t("ui.admin.dashboard.pending_action"), admin_bookings_path(status: "pending") %>
-      <%= link_to t("ui.admin.dashboard.this_week"), admin_bookings_path(view: "week", date: Date.current) %>
+    <div class="admin-dashboard__quick-links">
+      <%= link_to t("ui.admin.dashboard.all_bookings"), admin_bookings_path, class: "button primary admin-dashboard__quick-link" %>
+      <%= link_to t("ui.admin.dashboard.pending_action"), admin_bookings_path(status: "pending"), class: "button secondary hollow admin-dashboard__quick-link" %>
+      <%= link_to t("ui.admin.dashboard.this_week"), admin_bookings_path(view: "week", date: Date.current), class: "button secondary hollow admin-dashboard__quick-link" %>
     </div>
   </div>
 

@@ -7,10 +7,11 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     expect(page).to have_css('[data-carousel-bullet][data-slide="0"][aria-current="true"]')
     expect(page).to have_css('[data-carousel-slide].is-active[aria-hidden="false"]', count: 1)
     expect(page).to have_css("[data-carousel-next]")
+    expect(page).to have_css('[data-carousel-bullet][data-slide="1"][aria-current="true"]', wait: 7)
 
     page.execute_script("document.querySelector('[data-carousel-next]').click()")
 
-    expect(page).to have_css('[data-carousel-bullet][data-slide="1"][aria-current="true"]')
+    expect(page).to have_css('[data-carousel-bullet][data-slide="2"][aria-current="true"]')
     expect(page).to have_css('[data-carousel-slide].is-active[aria-hidden="false"]', count: 1)
 
     visit contact_us_path

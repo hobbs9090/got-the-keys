@@ -28,7 +28,11 @@ module Qa
     end
 
     def active_scenario_name
-      active_scenario_payload[:name].presence || BookingConfiguration.current.active_demo_scenario_key
+      active_scenario_payload[:name].presence || translated_scenario_key(BookingConfiguration.current.active_demo_scenario_key)
+    end
+
+    def translated_scenario_key(key)
+      I18n.t("ui.admin.demo_data.scenario_keys.#{key}", default: key.to_s.humanize)
     end
 
     def seeded_personas
