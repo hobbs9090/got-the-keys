@@ -52,6 +52,7 @@ zh:
       update: "更新"
       add_viewing_time: "添加看房时间"
       new_viewing_time_title: "%{address} 的新看房时间"
+      viewing_times_updated_notice: "可用看房时间已更新。"
       new_photos_title: "%{address} 的新照片"
       new_floor_plan_title: "%{address} 的新平面图"
       location_details_title: "%{address} 的位置详情"
@@ -211,6 +212,7 @@ zh:
         title: "预约看房：%{address}"
         eyebrow: "看房申请"
         hero_body: "选择一个已发布的时段，填写联系信息，然后创建一个可由后台确认、改期或取消的申请。"
+        submitted_notice: "预约申请已提交。我们会通过电子邮件向你发送更新。"
         preferred_slot: "偏好时段"
         choose_slot: "选择时段"
         notes_label: "还有什么需要我们知道的吗？"
@@ -223,6 +225,7 @@ zh:
         title: "预约 %{reference}"
         eyebrow: "预约详情"
         hero_body: "这里会持续显示你的预约时间线，方便你核对每次状态变化和时间戳。"
+        invalid_link_alert: "该预约链接无效。"
         summary_title: "预约摘要"
         duration_minutes:
           one: "1 分钟"
@@ -343,3 +346,189 @@ zh:
         bookings_count:
           one: "1 个预约"
           other: "%{count} 个预约"
+        show:
+          title: "预约 %{reference}"
+          eyebrow: "预约详情"
+          edit: "编辑"
+          summary_title: "摘要"
+          not_supplied: "未提供"
+          notes_title: "备注"
+          no_customer_notes: "客户未提供备注。"
+          no_internal_notes: "暂无内部备注。"
+          audit_trail_title: "审计记录"
+          customer_history_title: "客户历史"
+          no_customer_history: "未找到该客户的其他预约。"
+          actions:
+            complete: "完成"
+            no_show: "未到场"
+        edit:
+          title: "编辑预约 %{reference}"
+          eyebrow: "预约管理"
+          heading: "编辑预约 %{reference}"
+          customer_name: "客户姓名"
+          customer_email: "客户邮箱"
+          customer_phone: "客户电话"
+          duration_minutes: "时长（分钟）"
+          requested_time: "申请时间"
+          confirmed_slot: "确认时段"
+          customer_notes: "客户备注"
+          internal_notes: "内部备注"
+          save_changes: "保存更改"
+          back: "返回"
+      flash:
+        booking_rules_updated: "预约规则已更新。"
+        property_updated: "房源已更新。"
+        appointment_updated: "预约已更新。"
+        unsupported_appointment_status: "不支持的预约状态。"
+        appointment_marked: "预约已标记为 %{status}。"
+        applied_demo_scenario: "已应用演示场景 %{name}。"
+        restored_baseline_demo_scenario: "已恢复基线演示场景（%{name}）。"
+        imported_demo_scenario: "已导入演示场景 %{name}。"
+      properties:
+        index:
+          title: "房源"
+          eyebrow: "目录管理"
+          appointment_count:
+            one: "1 个预约"
+            other: "%{count} 个预约"
+          open: "打开"
+        show:
+          title: "房源 %{address}"
+          eyebrow: "房源详情"
+          edit_property: "编辑房源"
+          view_public_page: "查看公开页面"
+          summary_title: "房源摘要"
+          availability_windows_title: "可用时间窗口"
+          window_range: "%{start_time} 至 %{end_time}"
+          window_kinds:
+            open: "开放"
+            blackout: "关闭"
+          no_windows: "该房源还没有专属时间窗口，目前使用全局预约规则。"
+          booking_history_title: "房源预约历史"
+          no_bookings: "该房源还没有预约。"
+        edit:
+          title: "编辑房源 %{address}"
+          eyebrow: "目录管理"
+          heading: "编辑房源"
+      users:
+        index:
+          title: "卖家"
+          eyebrow: "客户与卖家管理"
+          property_count:
+            one: "1 套房源"
+            other: "%{count} 套房源"
+        show:
+          title: "卖家 %{name}"
+          eyebrow: "卖家资料"
+          account_details_title: "账户详情"
+          mobile: "手机"
+          properties: "房源"
+          listing_count:
+            one: "1 个房源"
+            other: "%{count} 个房源"
+          recent_booking_activity_title: "最近预约活动"
+          no_activity: "该卖家的房源暂时没有预约活动。"
+      notification_logs:
+        title: "通知日志"
+        eyebrow: "客户沟通"
+        no_recipient: "无收件人"
+        statuses:
+          sent: "已发送"
+          skipped: "已跳过"
+          failed: "失败"
+      booking_configuration:
+        title: "预约规则"
+        eyebrow: "预约配置"
+        slot_duration_minutes: "时段时长（分钟）"
+        lead_time_hours: "提前时间（小时）"
+        buffer_minutes: "预约间隔缓冲（分钟）"
+        office_opens_at: "开始办公时间"
+        office_closes_at: "结束办公时间"
+        open_weekdays: "开放工作日"
+        save: "保存预约规则"
+      demo_data:
+        title: "演示数据管理"
+        eyebrow: "可复现 QA 环境"
+        restore_baseline: "恢复基线"
+        import_scenario: "导入场景"
+        export_current_data: "导出当前数据"
+        diagnostics_title: "诊断信息"
+        last_demo_action_title: "最近一次演示操作"
+        no_actions: "尚未记录任何重置、导入或导出操作。"
+        preview_action: "预览"
+        counts:
+          properties:
+            one: "房源"
+            other: "房源"
+          bookings:
+            one: "预约"
+            other: "预约"
+          sellers:
+            one: "卖家"
+            other: "卖家"
+        labels:
+          active_scenario: "当前场景"
+          property_count: "房源"
+          user_count: "用户"
+          appointment_count: "预约"
+          notification_count: "通知日志"
+          last_demo_action: "最近一次演示操作"
+        preview_labels:
+          key: "键"
+          admin_count: "管理员"
+          user_count: "用户"
+          property_count: "房源"
+          availability_window_count: "可用时间窗口"
+          appointment_count: "预约"
+          appointment_statuses: "预约状态"
+        actions:
+          apply: "已应用"
+          restore: "已恢复"
+          import: "已导入"
+          export: "已导出"
+        scenario_keys:
+          baseline: "基线"
+          fully_booked_day: "满额日"
+          high_volume_search: "高容量搜索"
+          qa_edge_cases: "QA 边界情况"
+        preview:
+          title: "场景预览 %{name}"
+          eyebrow: "场景预览"
+          apply_scenario: "应用场景"
+          back_to_demo_data: "返回演示数据"
+        import:
+          title: "导入演示场景"
+          eyebrow: "演示数据导入"
+          heading: "在应用前先预览导入的场景"
+          upload_yaml_file: "上传 YAML 文件"
+          paste_yaml: "或粘贴 YAML"
+          yaml_placeholder: "key: imported_scenario\nname: Imported Scenario\n..."
+          preview_import: "预览导入"
+          back: "返回"
+        import_preview:
+          title: "导入预览 %{name}"
+          eyebrow: "导入预览"
+          apply_imported_scenario: "应用导入的场景"
+          back_to_import: "返回导入"
+          raw_yaml: "原始 YAML"
+    aardvarks:
+      index:
+        title: "Aardvark 列表"
+        new: "新建 aardvark"
+      new:
+        title: "新建 aardvark"
+      edit:
+        title: "编辑 aardvark"
+      actions:
+        show: "查看"
+        edit: "编辑"
+        destroy: "删除"
+        back: "返回"
+        confirm_destroy: "你确定吗？"
+      form:
+        error_summary:
+          one: "1 个错误导致该 aardvark 无法保存："
+          other: "%{count} 个错误导致该 aardvark 无法保存："
+      flash:
+        created: "Aardvark 已成功创建。"
+        updated: "Aardvark 已成功更新。"

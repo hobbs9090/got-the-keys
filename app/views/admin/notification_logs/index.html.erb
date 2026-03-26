@@ -1,10 +1,10 @@
-<% title "Notification log" %>
+<% title t("ui.admin.notification_logs.title") %>
 
 <section class="admin-section">
   <div class="section-heading">
     <div>
-      <p class="section-heading__eyebrow">Customer communication</p>
-      <h1>Notification log</h1>
+      <p class="section-heading__eyebrow"><%= t("ui.admin.notification_logs.eyebrow") %></p>
+      <h1><%= t("ui.admin.notification_logs.title") %></h1>
     </div>
   </div>
 
@@ -13,13 +13,13 @@
       <article class="admin-list__item">
         <div>
           <strong><%= log.subject %></strong>
-          <p><%= log.recipient_email.presence || "No recipient" %> · <%= formatted_date_time(log.created_at) %></p>
+          <p><%= log.recipient_email.presence || t("ui.admin.notification_logs.no_recipient") %> · <%= formatted_date_time(log.created_at) %></p>
           <% if log.appointment.present? %>
             <p><%= link_to log.appointment.public_reference, admin_appointment_path(log.appointment) %></p>
           <% end %>
         </div>
         <div class="admin-log-status">
-          <span class="<%= appointment_status_badge_class(log.status == 'failed' ? 'no_show' : log.status == 'sent' ? 'confirmed' : 'pending') %>"><%= log.status.humanize %></span>
+          <span class="<%= appointment_status_badge_class(admin_notification_badge_state(log.status)) %>"><%= admin_notification_status_label(log.status) %></span>
           <% if log.error_message.present? %>
             <p><%= log.error_message %></p>
           <% end %>

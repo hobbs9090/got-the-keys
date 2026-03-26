@@ -102,7 +102,7 @@
               <strong><%= log.subject %></strong>
               <p><%= log.recipient_email %> · <%= formatted_date_time(log.created_at) %></p>
             </div>
-            <span class="<%= appointment_status_badge_class(log.status == 'failed' ? 'no_show' : log.status == 'sent' ? 'confirmed' : 'pending') %>"><%= log.status.humanize %></span>
+            <span class="<%= appointment_status_badge_class(admin_notification_badge_state(log.status)) %>"><%= admin_notification_status_label(log.status) %></span>
           </div>
         <% end %>
       </div>
@@ -115,8 +115,8 @@
 <section class="admin-panel">
   <h2><%= t("ui.admin.dashboard.last_demo_data_action") %></h2>
   <% if @latest_demo_run.present? %>
-    <p><strong><%= @latest_demo_run.action_type.humanize %></strong> <%= t("ui.admin.dashboard.on") %> <%= formatted_date_time(@latest_demo_run.created_at) %></p>
-    <p><%= @latest_demo_run.summary_data&.fetch("name", @latest_demo_run.scenario_key.to_s.humanize) %></p>
+    <p><strong><%= admin_demo_action_label(@latest_demo_run.action_type) %></strong> <%= t("ui.admin.dashboard.on") %> <%= formatted_date_time(@latest_demo_run.created_at) %></p>
+    <p><%= @latest_demo_run.summary_data&.fetch("name", translated_demo_scenario_key(@latest_demo_run.scenario_key)) %></p>
   <% else %>
     <p class="empty-copy"><%= t("ui.admin.dashboard.no_demo_action") %></p>
   <% end %>

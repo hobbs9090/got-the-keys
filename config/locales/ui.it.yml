@@ -52,6 +52,7 @@ it:
       update: "Aggiorna"
       add_viewing_time: "Aggiungi fascia di visita"
       new_viewing_time_title: "Nuova fascia di visita per %{address}"
+      viewing_times_updated_notice: "Gli orari di visita disponibili sono stati aggiornati."
       new_photos_title: "Nuove foto per %{address}"
       new_floor_plan_title: "Nuova planimetria per %{address}"
       location_details_title: "Dettagli della posizione per %{address}"
@@ -211,6 +212,7 @@ it:
         title: "Prenota una visita per %{address}"
         eyebrow: "Richiesta di visita"
         hero_body: "Scegli una fascia pubblicata, aggiungi i tuoi contatti e crea una richiesta che lo staff potra confermare, riprogrammare o annullare."
+        submitted_notice: "La richiesta di appuntamento e stata inviata. Ti aggiorneremo via email."
         preferred_slot: "Fascia preferita"
         choose_slot: "Scegli una fascia"
         notes_label: "C'e qualcosa che dovremmo sapere?"
@@ -223,6 +225,7 @@ it:
         title: "Appuntamento %{reference}"
         eyebrow: "Dettagli appuntamento"
         hero_body: "La cronologia del tuo appuntamento resta visibile qui cosi puoi verificare ogni cambio di stato e ogni timestamp."
+        invalid_link_alert: "Questo link all'appuntamento non e valido."
         summary_title: "Riepilogo prenotazione"
         duration_minutes:
           one: "1 minuto"
@@ -247,3 +250,196 @@ it:
       notes: "Le tue note: %{notes}"
       revisit: "Puoi rivedere l'appuntamento in qualsiasi momento usando il link sicuro inviato dopo la prenotazione."
       thanks_html: "Grazie,<br>GotTheKeys"
+
+    admin:
+      dashboard:
+        on: "il"
+      appointments:
+        confirm: "Conferma"
+        cancel: "Annulla"
+        show:
+          title: "Appuntamento %{reference}"
+          eyebrow: "Dettagli appuntamento"
+          edit: "Modifica"
+          summary_title: "Riepilogo"
+          not_supplied: "Non fornito"
+          notes_title: "Note"
+          no_customer_notes: "Nessuna nota cliente fornita."
+          no_internal_notes: "Nessuna nota interna al momento."
+          audit_trail_title: "Cronologia audit"
+          customer_history_title: "Storico cliente"
+          no_customer_history: "Nessun'altra prenotazione trovata per questo cliente."
+          actions:
+            complete: "Completa"
+            no_show: "Assente"
+        edit:
+          title: "Modifica appuntamento %{reference}"
+          eyebrow: "Gestione prenotazioni"
+          heading: "Modifica appuntamento %{reference}"
+          customer_name: "Nome cliente"
+          customer_email: "Email cliente"
+          customer_phone: "Telefono cliente"
+          duration_minutes: "Durata (minuti)"
+          requested_time: "Orario richiesto"
+          confirmed_slot: "Fascia confermata"
+          customer_notes: "Note cliente"
+          internal_notes: "Note interne"
+          save_changes: "Salva modifiche"
+          back: "Indietro"
+      flash:
+        booking_rules_updated: "Regole di prenotazione aggiornate."
+        property_updated: "Immobile aggiornato."
+        appointment_updated: "Appuntamento aggiornato."
+        unsupported_appointment_status: "Stato appuntamento non supportato."
+        appointment_marked: "Appuntamento segnato come %{status}."
+        applied_demo_scenario: "Scenario demo %{name} applicato."
+        restored_baseline_demo_scenario: "Scenario demo di base (%{name}) ripristinato."
+        imported_demo_scenario: "Scenario demo %{name} importato."
+      properties:
+        index:
+          title: "Immobili"
+          eyebrow: "Gestione catalogo"
+          appointment_count:
+            one: "1 appuntamento"
+            other: "%{count} appuntamenti"
+          open: "Apri"
+        show:
+          title: "Immobile %{address}"
+          eyebrow: "Dettagli immobile"
+          edit_property: "Modifica immobile"
+          view_public_page: "Vedi pagina pubblica"
+          summary_title: "Riepilogo annuncio"
+          availability_windows_title: "Finestre di disponibilita"
+          window_range: "%{start_time} - %{end_time}"
+          window_kinds:
+            open: "Aperta"
+            blackout: "Bloccata"
+          no_windows: "Nessuna finestra specifica per questo immobile. Sono in uso le regole globali di prenotazione."
+          booking_history_title: "Storico prenotazioni immobile"
+          no_bookings: "Nessuna prenotazione per questo immobile al momento."
+        edit:
+          title: "Modifica immobile %{address}"
+          eyebrow: "Gestione catalogo"
+          heading: "Modifica immobile"
+      users:
+        index:
+          title: "Venditori"
+          eyebrow: "Gestione clienti e venditori"
+          property_count:
+            one: "1 immobile"
+            other: "%{count} immobili"
+        show:
+          title: "Venditore %{name}"
+          eyebrow: "Profilo venditore"
+          account_details_title: "Dettagli account"
+          mobile: "Cellulare"
+          properties: "Immobili"
+          listing_count:
+            one: "1 annuncio"
+            other: "%{count} annunci"
+          recent_booking_activity_title: "Attivita recenti di prenotazione"
+          no_activity: "Nessuna attivita di appuntamento sugli immobili di questo venditore."
+      notification_logs:
+        title: "Registro notifiche"
+        eyebrow: "Comunicazione clienti"
+        no_recipient: "Nessun destinatario"
+        statuses:
+          sent: "Inviata"
+          skipped: "Saltata"
+          failed: "Fallita"
+      booking_configuration:
+        title: "Regole di prenotazione"
+        eyebrow: "Configurazione prenotazioni"
+        slot_duration_minutes: "Durata fascia (minuti)"
+        lead_time_hours: "Preavviso (ore)"
+        buffer_minutes: "Buffer tra prenotazioni (minuti)"
+        office_opens_at: "L'ufficio apre alle"
+        office_closes_at: "L'ufficio chiude alle"
+        open_weekdays: "Giorni di apertura"
+        save: "Salva regole di prenotazione"
+      demo_data:
+        title: "Gestione dati demo"
+        eyebrow: "Ambiente QA deterministico"
+        restore_baseline: "Ripristina base"
+        import_scenario: "Importa scenario"
+        export_current_data: "Esporta dati correnti"
+        diagnostics_title: "Diagnostica"
+        last_demo_action_title: "Ultima azione demo"
+        no_actions: "Nessun reset, importazione o esportazione e ancora stato registrato."
+        preview_action: "Anteprima"
+        counts:
+          properties:
+            one: "immobile"
+            other: "immobili"
+          bookings:
+            one: "prenotazione"
+            other: "prenotazioni"
+          sellers:
+            one: "venditore"
+            other: "venditori"
+        labels:
+          active_scenario: "Scenario attivo"
+          property_count: "Immobili"
+          user_count: "Utenti"
+          appointment_count: "Appuntamenti"
+          notification_count: "Registri notifiche"
+          last_demo_action: "Ultima azione demo"
+        preview_labels:
+          key: "Chiave"
+          admin_count: "Amministratori"
+          user_count: "Utenti"
+          property_count: "Immobili"
+          availability_window_count: "Finestre di disponibilita"
+          appointment_count: "Appuntamenti"
+          appointment_statuses: "Stati appuntamento"
+        actions:
+          apply: "Applicato"
+          restore: "Ripristinato"
+          import: "Importato"
+          export: "Esportato"
+        scenario_keys:
+          baseline: "Base"
+          fully_booked_day: "Giornata completamente prenotata"
+          high_volume_search: "Ricerca ad alto volume"
+          qa_edge_cases: "Casi limite QA"
+        preview:
+          title: "Anteprima scenario %{name}"
+          eyebrow: "Anteprima scenario"
+          apply_scenario: "Applica scenario"
+          back_to_demo_data: "Torna ai dati demo"
+        import:
+          title: "Importa scenario demo"
+          eyebrow: "Importazione dati demo"
+          heading: "Anteprima di uno scenario importato prima di applicarlo"
+          upload_yaml_file: "Carica file YAML"
+          paste_yaml: "Oppure incolla YAML"
+          yaml_placeholder: "key: imported_scenario\nname: Imported Scenario\n..."
+          preview_import: "Anteprima importazione"
+          back: "Indietro"
+        import_preview:
+          title: "Anteprima importazione %{name}"
+          eyebrow: "Anteprima importazione"
+          apply_imported_scenario: "Applica scenario importato"
+          back_to_import: "Torna all'importazione"
+          raw_yaml: "YAML grezzo"
+    aardvarks:
+      index:
+        title: "Elenco aardvark"
+        new: "Nuovo aardvark"
+      new:
+        title: "Nuovo aardvark"
+      edit:
+        title: "Modifica aardvark"
+      actions:
+        show: "Mostra"
+        edit: "Modifica"
+        destroy: "Elimina"
+        back: "Indietro"
+        confirm_destroy: "Sei sicuro?"
+      form:
+        error_summary:
+          one: "1 errore ha impedito il salvataggio di questo aardvark:"
+          other: "%{count} errori hanno impedito il salvataggio di questo aardvark:"
+      flash:
+        created: "Aardvark creato correttamente."
+        updated: "Aardvark aggiornato correttamente."

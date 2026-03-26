@@ -1,4 +1,4 @@
-<h1>Listing aardvarks</h1>
+<h1><%= t("ui.aardvarks.index.title") %></h1>
 
 <table>
   <thead>
@@ -12,9 +12,9 @@
   <tbody>
     <% @aardvarks.each do |aardvark| %>
       <tr>
-        <td><%= link_to 'Show', aardvark %></td>
-        <td><%= link_to 'Edit', edit_aardvark_path(aardvark) %></td>
-        <td><%= link_to 'Destroy', aardvark, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
+        <td><%= link_to t("ui.aardvarks.actions.show"), aardvark %></td>
+        <td><%= link_to t("ui.aardvarks.actions.edit"), edit_aardvark_path(aardvark) %></td>
+        <td><%= link_to t("ui.aardvarks.actions.destroy"), aardvark, data: { turbo_method: :delete, turbo_confirm: t("ui.aardvarks.actions.confirm_destroy") } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -22,4 +22,4 @@
 
 <br>
 
-<%= link_to 'New Aardvark', new_aardvark_path %>
+<%= link_to t("ui.aardvarks.index.new"), new_aardvark_path %>

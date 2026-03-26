@@ -15,7 +15,7 @@ class Admin::PropertiesController < Admin::BaseController
 
   def update
     if @property.update(property_params)
-      redirect_to admin_property_path(@property), notice: "Property updated."
+      redirect_to admin_property_path(@property), notice: t("ui.admin.flash.property_updated")
     else
       render :edit, status: :unprocessable_entity
     end

@@ -28,7 +28,7 @@ class AardvarksController < ApplicationController
 
     respond_to do |format|
       if @aardvark.save
-        format.html { redirect_to @aardvark, notice: 'Aardvark was successfully created.' }
+        format.html { redirect_to @aardvark, notice: t("ui.aardvarks.flash.created") }
         format.json { render action: 'show', status: :created, location: @aardvark }
       else
         format.html { render action: 'new' }
@@ -42,7 +42,7 @@ class AardvarksController < ApplicationController
   def update
     respond_to do |format|
       if @aardvark.update(aardvark_params)
-        format.html { redirect_to @aardvark, notice: 'Aardvark was successfully updated.' }
+        format.html { redirect_to @aardvark, notice: t("ui.aardvarks.flash.updated") }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
