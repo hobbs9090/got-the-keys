@@ -7,6 +7,10 @@ RSpec.describe AdminHelper, type: :helper do
         expect(helper.translated_demo_scenario_key("fully_booked_day")).to eq("Voll ausgebuchter Tag")
       end
     end
+
+    it "uses a friendly label for the curated local catalogue" do
+      expect(helper.translated_demo_scenario_key("custom_sevenoaks_westerham_catalogue")).to eq("Curated Sevenoaks and Westerham catalogue")
+    end
   end
 
   describe "#admin_demo_value" do

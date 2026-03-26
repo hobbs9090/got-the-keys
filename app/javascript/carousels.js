@@ -6,6 +6,7 @@ const activateSlide = (carousel, nextIndex) => {
   if (!state) return;
 
   state.index = (nextIndex + state.slides.length) % state.slides.length;
+  state.track.style.transform = `translateX(-${state.index * 100}%)`;
 
   state.slides.forEach((slide, index) => {
     const active = index === state.index;
@@ -44,15 +45,18 @@ const setupCarousel = (carousel) => {
   const bullets = Array.from(carousel.querySelectorAll("[data-carousel-bullet]"));
   const previousButton = carousel.querySelector("[data-carousel-prev]");
   const nextButton = carousel.querySelector("[data-carousel-next]");
+  const track = carousel.querySelector(".hero-carousel__track");
 
-  if (slides.length === 0) return;
+  if (slides.length === 0 || !track) return;
 
   const state = {
     autoPlay: carousel.dataset.autoPlay,
     bullets,
     cleanup: [],
     index: slides.findIndex((slide) => slide.classList.contains("is-active")),
+    pointerInteracted: false,
     slides,
+    track,
     timer: null
   };
 
@@ -80,17 +84,28 @@ const setupCarousel = (carousel) => {
     state.cleanup.push([bullet, "click", handler]);
   });
 
-  ["mouseenter", "focusin"].forEach((eventName) => {
-    const handler = () => stopAutoplay(carousel);
-    carousel.addEventListener(eventName, handler);
-    state.cleanup.push([carousel, eventName, handler]);
-  });
+  const pointerMoveHandler = () => {
+    state.pointerInteracted = true;
+    stopAutoplay(carousel);
+  };
+  carousel.addEventListener("pointermove", pointerMoveHandler);
+  state.cleanup.push([carousel, "pointermove", pointerMoveHandler]);
 
-  ["mouseleave", "focusout"].forEach((eventName) => {
-    const handler = () => startAutoplay(carousel);
-    carousel.addEventListener(eventName, handler);
-    state.cleanup.push([carousel, eventName, handler]);
-  });
+  const focusInHandler = () => stopAutoplay(carousel);
+  carousel.addEventListener("focusin", focusInHandler);
+  state.cleanup.push([carousel, "focusin", focusInHandler]);
+
+  const pointerLeaveHandler = () => {
+    if (state.pointerInteracted) {
+      startAutoplay(carousel);
+    }
+  };
+  carousel.addEventListener("pointerleave", pointerLeaveHandler);
+  state.cleanup.push([carousel, "pointerleave", pointerLeaveHandler]);
+
+  const focusOutHandler = () => startAutoplay(carousel);
+  carousel.addEventListener("focusout", focusOutHandler);
+  state.cleanup.push([carousel, "focusout", focusOutHandler]);
 
   activateSlide(carousel, state.index);
   startAutoplay(carousel);

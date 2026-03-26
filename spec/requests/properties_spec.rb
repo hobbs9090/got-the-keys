@@ -7,11 +7,19 @@ describe "Properties" do
   describe "GET /properties" do
     it "should retrieve page" do
       get properties_path
+      document = Nokogiri::HTML(response.body)
+      footer_meta = document.at_css(".site-footer__small")
+      footer_brand = document.at_css(".site-footer__brand span")
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to match(%r{favicon-house-[^"]+\.svg})
       expect(response.body).not_to include("favicon.ico")
-      expect(response.body).to include(%(data-testid="public-app-version"))
+      expect(footer_brand).to be_present
+      expect(footer_brand.text.squish).to eq("© 2026 Steven Hobbs")
+      expect(footer_meta).to be_present
+      expect(footer_meta.at_css(%(a[href="#{cookie_policy_index_path(anchor: "cookie-preferences")}"]))).to be_present
+      expect(footer_meta.at_css(%([data-testid="public-app-version"]))).to be_present
+      expect(footer_meta.at_css(".site-footer__utility")&.text.to_s.squish).to eq("Cookie settings v#{Rails.configuration.x.got_the_keys.version}")
       expect(response.body).to include("v#{Rails.configuration.x.got_the_keys.version}")
     end
 
@@ -69,8 +77,23 @@ describe "Properties" do
   describe "GET /properties/1" do
     it "should retrieve page" do
       get property_path(property)
+      document = Nokogiri::HTML(response.body)
+      booking_panel = document.at_css(%([data-testid="booking-panel"]))
+      enquiry_panel = document.at_css(%([data-testid="property-enquiry-panel"]))
+      offer_panel = document.at_css(%([data-testid="property-offer-panel"]))
+      branch_panel = document.at_css(%([data-testid="property-branch-card"]))
 
       expect(response).to have_http_status(:ok)
+      expect(booking_panel).to be_present
+      expect(enquiry_panel).to be_present
+      expect(enquiry_panel["class"]).to include("empty-state")
+      expect(enquiry_panel["class"]).to include("property-booking-panel__support-card")
+      expect(offer_panel).to be_present
+      expect(offer_panel["class"]).to include("empty-state")
+      expect(offer_panel["class"]).to include("property-booking-panel__support-card")
+      expect(branch_panel).to be_present
+      expect(branch_panel["class"]).to include("empty-state")
+      expect(branch_panel["class"]).to include("property-booking-panel__support-card")
     end
 
     it "hides draft listings from public visitors" do

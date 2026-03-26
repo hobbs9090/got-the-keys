@@ -28,4 +28,20 @@ RSpec.describe "Public content pages", type: :request do
 
     expect(response).to redirect_to("/blog")
   end
+
+  it "renders the refreshed blog editorial layout" do
+    get "/blog"
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include('data-testid="blog-featured-post"')
+    expect(response.body).to include(I18n.t("blog.hero_title"))
+  end
+
+  it "renders the refreshed about us company layout" do
+    get "/about_us"
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include('data-testid="about-story-card"')
+    expect(response.body).to include(I18n.t("about_us.hero_title"))
+  end
 end

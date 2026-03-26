@@ -4,6 +4,9 @@ en:
       eyebrow: "Property Platform"
       admin_bookings: "Bookings"
       admin_dashboard: "Dashboard"
+      account_eyebrow: "Signed in"
+      admin_account_name: "Administrator"
+      member_account_name: "Seller account"
       sign_out: "Sign out"
       add_property: "Add property"
       profile: "Profile"
@@ -499,6 +502,7 @@ en:
           export: "Exported"
         scenario_keys:
           baseline: "Baseline"
+          custom_sevenoaks_westerham_catalogue: "Curated Sevenoaks and Westerham catalogue"
           fully_booked_day: "Fully booked day"
           high_volume_search: "High volume search"
           qa_edge_cases: "QA edge cases"

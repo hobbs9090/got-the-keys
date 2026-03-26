@@ -13,6 +13,9 @@ RSpec.describe "Admin demo scenarios" do
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Demo data management")
     expect(response.body).to include(%(data-testid="scenario-quick-reset-panel"))
+    expect(response.body).to include(%(data-testid="scenario-quick-reset-grid"))
+    expect(response.body).to include(%(data-testid="scenario-complexity-baseline"))
+    expect(response.body).to include(%(data-testid="scenario-actions-baseline"))
   end
 
   it "restores the baseline scenario" do

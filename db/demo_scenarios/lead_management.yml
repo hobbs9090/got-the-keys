@@ -24,10 +24,6 @@ admins:
     password: secret
     password_confirmation: secret
     language: en
-  - email: stevenhobbs@meeane.co.uk
-    password: secret
-    password_confirmation: secret
-    language: en
 users:
   - first_name: Priya
     last_name: Shah
@@ -92,7 +88,7 @@ enquiries:
     status: contacted
     internal_notes: Duplicate lead from same customer. Merge conversation notes before follow-up.
   - property_key: sevenoaks_lead_home
-    assigned_admin_email: stevenhobbs@meeane.co.uk
+    assigned_admin_email: steven@gotthekeys.com
     customer_name: Marcus Flynn
     customer_email: "marcus at invalid"
     customer_phone: "07700 902222"

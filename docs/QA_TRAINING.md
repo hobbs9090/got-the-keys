@@ -27,7 +27,6 @@ After `bin/rails db:seed`:
 Admins:
 
 - `steven@gotthekeys.com` / `secret`
-- `stevenhobbs@meeane.co.uk` / `secret`
 
 Sellers:
 
