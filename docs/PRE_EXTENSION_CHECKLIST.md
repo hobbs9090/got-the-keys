@@ -110,10 +110,10 @@ Treat the app as ready for major extension when all of these are true:
 
 ### Tasks
 
-- [ ] Extract appointment filtering/calendar query logic from `Admin::AppointmentsController`.
-- [ ] Extract property catalogue filtering/sorting logic from `PropertiesController`.
-- [ ] Decide whether each extracted object is a query object, form object, or presenter.
-- [ ] Add focused specs for the extracted objects before adding more filters/views.
+- [x] Extract appointment filtering/calendar query logic from `Admin::AppointmentsController`.
+- [x] Extract property catalogue filtering/sorting logic from `PropertiesController`.
+- [x] Decide whether each extracted object is a query object, form object, or presenter.
+- [x] Add focused specs for the extracted objects before adding more filters/views.
 
 ### Repo Hotspots
 

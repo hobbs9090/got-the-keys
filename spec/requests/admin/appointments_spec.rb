@@ -65,4 +65,33 @@ RSpec.describe "Admin appointments" do
     expect(response.body).to include("Zusammenfassung")
     expect(response.body).to include("Kundenhistorie")
   end
+
+  it "filters the bookings desk by status and customer email" do
+    matching_slot = next_booking_slot(hour: 12)
+    matching = FactoryBot.create(
+      :appointment,
+      :confirmed,
+      property:,
+      customer_name: "Filtered Match",
+      customer_email: "filtered.match@example.com",
+      requested_time: matching_slot,
+      scheduled_at: matching_slot
+    )
+    other_slot = next_booking_slot(hour: 14)
+    FactoryBot.create(
+      :appointment,
+      :pending,
+      property:,
+      customer_name: "Other Viewer",
+      customer_email: "other.viewer@example.com",
+      requested_time: other_slot,
+      scheduled_at: other_slot
+    )
+
+    get admin_bookings_path, params: { status: "confirmed", customer_email: "FILTERED.MATCH@example.com" }
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include(matching.customer_name)
+    expect(response.body).not_to include("Other Viewer")
+  end
 end
