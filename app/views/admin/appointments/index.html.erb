@@ -53,11 +53,11 @@
       <%= button_tag t("ui.common.apply"), class: "button primary" %>
       <%= link_to t("ui.common.reset"), admin_bookings_path(view: @view_mode), class: "button hollow secondary" %>
     </div>
-  <% end %>
+<% end %>
 </section>
 
 <% if @view_mode == "agenda" %>
-  <section class="admin-section">
+  <section class="admin-section admin-bookings-agenda-days" data-testid="admin-bookings-agenda-days">
     <% @appointments_by_day.each do |date, appointments| %>
       <article class="admin-panel">
         <h2><%= l(date, format: :long) %></h2>
