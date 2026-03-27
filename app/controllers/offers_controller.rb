@@ -12,7 +12,7 @@ class OffersController < ApplicationController
     @offer = @property.offers.new(offer_params)
 
     if @offer.save
-      redirect_to property_path(@property), notice: "Offer submitted. The team will review it shortly."
+      redirect_to property_path(@property), notice: t("ui.offers.flash.created")
     else
       render :new, status: :unprocessable_entity
     end
@@ -27,6 +27,6 @@ class OffersController < ApplicationController
   def ensure_sale_listing!
     return if @property.sale_status == Property::SALE_STATUSES[:for_sale]
 
-    redirect_to property_path(@property), alert: "Offers are only available on sale listings."
+    redirect_to property_path(@property), alert: t("ui.offers.alerts.sale_only")
   end
 end

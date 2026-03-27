@@ -22,12 +22,17 @@ en:
     common:
       apply: "Apply"
       any: "Any"
+      yes: "Yes"
       cancel: "Cancel"
       reset: "Reset"
       clear_all: "Clear all"
       featured: "Featured"
       view_property: "View property"
       book_a_viewing: "Book a viewing"
+      download: "Download"
+      remove: "Remove"
+      save: "Save"
+      back_to_listing: "Back to listing"
       town: "Town"
       bathrooms: "Bathrooms"
       postcode: "Postcode"
@@ -48,6 +53,12 @@ en:
       office_name: "GotTheKeys Limited"
       office_line_1: "123 Awesome Road"
       office_line_2: "Limpsfield, TN16 4AB"
+
+    branch_profile:
+      name: "Sevenoaks and Westerham office"
+      team_label: "Managed by the local GotTheKeys team"
+      response_time: "Usually replies within 1 business day"
+      hours: "Mon-Sat, 9:00-18:00"
 
     legacy:
       from: "From"
@@ -96,6 +107,23 @@ en:
     properties:
       headline_fallback: "%{property_type} in %{town_city}"
       in_location: "%{property_type} in %{location}"
+      trust_cues:
+        recently_updated: "Recently updated"
+        available_now: "Available now"
+        brochure_ready: "Brochure ready"
+      update_labels:
+        recently_updated: "Recently updated"
+        stale: "Needs a fresh update"
+        current: "Updated this month"
+      listing_states:
+        draft: "Draft"
+        review_pending: "Review pending"
+        published: "Published"
+        under_offer: "Under offer"
+        let_agreed: "Let agreed"
+        sold: "Sold"
+        let: "Let"
+        withdrawn: "Withdrawn"
       bedroom_count:
         one: "1 bedroom"
         other: "%{count} bedrooms"
@@ -125,6 +153,14 @@ en:
         filters_eyebrow: "Refine search"
         filters_title: "Filter the property list"
         sidebar_copy: "Narrow the list by listing type, area, town, bedrooms, and budget, then reset everything with one tap if you want to start over."
+        saved_search:
+          eyebrow: "Stay in the loop"
+          title: "Save this search"
+          body: "Capture the current filters and let the team alert you when matching homes come in."
+          email_placeholder: "you@example.com"
+          alerts_enabled: "Email me when new matching listings arrive"
+          submit: "Save search"
+        local_team_eyebrow: "Local team"
         results_eyebrow: "Live results"
         results_title:
           one: "1 property ready to explore"
@@ -152,6 +188,10 @@ en:
           price_high: "Price: high to low"
           bedrooms_high: "Bedrooms first"
       card:
+        available_now: "Available now"
+        available_from: "Available from %{date}"
+        area: "Area"
+        floor_area: "%{area} sq ft"
         next_slot: "Next slot: %{time}"
         no_slots: "No upcoming public slots published"
       empty:
@@ -159,11 +199,68 @@ en:
         title: "No properties match this search"
         body: "Try widening the area, bedrooms, or price range, or reset the filters to browse the full catalogue again."
       show:
+        available_from: "Available from"
+        key_facts_title: "Key facts"
+        trust_title: "Why this listing feels current"
+        brochure_assets_title: "Brochure assets"
+        primary_image: "Primary image"
+        photo: "Photo"
+        floor_plan: "Floor plan"
+        documents_title: "Documents and downloads"
         booking_body: "Pick a published slot to create a booking request. Admins can later confirm, reschedule, or cancel it from the appointment book."
         slot_finish: "%{time} finish"
         request_viewing: "Request a viewing"
         no_slots_title: "No public slots available"
         no_slots_body: "This is a useful QA edge case for testing empty booking states and fallback contact flows."
+        enquiry_title: "Need details first?"
+        enquiry_body: "Ask for brochure information, a landlord or seller callback, or clarification before you pick a viewing slot."
+        enquiry_cta: "Send an enquiry"
+        offer_title: "Ready to make an offer?"
+        offer_body: "Register your buying position and headline offer directly with the team."
+        offer_cta: "Submit an offer"
+        rental_application_title: "Want to apply to rent?"
+        rental_application_body: "Share your intended move-in timing and affordability notes with the lettings team."
+        rental_application_cta: "Start rental application"
+        seller_title: "Seller workspace"
+        readiness_summary: "complete · %{score}/%{total} readiness checks done"
+        done: "Done"
+        needed: "Needed"
+        edit_listing: "Edit listing"
+        manage_photos: "Manage photos"
+        manage_floor_plans: "Manage floor plans"
+        manage_documents: "Manage documents"
+        recent_lead_activity_title: "Recent lead activity"
+        no_enquiries: "No enquiries have come in for this listing yet."
+        recent_offers_title: "Recent offers"
+        no_offers: "No offers have been recorded yet."
+        recent_rental_applications_title: "Recent rental applications"
+        move_in: "move-in %{date}"
+        no_rental_applications: "No rental applications have been recorded yet."
+        recent_listing_activity_title: "Recent listing activity"
+        no_listing_activity: "No listing activity has been recorded yet."
+      activity_actions:
+        enquiry_created: "Enquiry created"
+        offer_created: "Offer created"
+        rental_application_created: "Rental application created"
+        property_document_created: "Document added"
+        property_document_updated: "Document updated"
+        property_document_removed: "Document removed"
+        property_document_downloaded: "Document downloaded"
+      facts:
+        tenure: "Tenure"
+        council_tax_band: "Council tax band"
+        furnishing: "Furnishing"
+        available_from: "Available from"
+        parking: "Parking"
+        outdoor_space: "Outdoor space"
+        epc_rating: "EPC rating"
+        floor_area: "Floor area"
+        floor_area_value: "%{area} sq ft"
+        deposit: "Deposit"
+        pets_allowed: "Pets allowed"
+        service_charge: "Service charge"
+        lease_length: "Lease length"
+        lease_length_value: "%{years} years"
       editor:
         new_title: "Add new Property"
         eyebrow: "Seller tools"
@@ -171,6 +268,19 @@ en:
         new_body: "Create a listing with richer metadata and booking-ready presentation."
         edit_heading: "Edit %{address}"
         edit_body: "Update the listing details, positioning, and metadata shown in the modern catalogue."
+        workflow_title: "Listing workflow"
+        core_details_title: "Core details"
+        facts_title: "Structured property facts"
+        floor_area_label: "Floor area (sq ft)"
+      seller:
+        checks:
+          headline: "Headline and summary"
+          media: "Photography"
+          floor_plan: "Floor plan"
+          facts: "Key facts"
+          contact: "Contact readiness"
+      flash:
+        not_public: "This listing is not currently public."
 
     for_sale:
       eyebrow: "For sale"
@@ -232,10 +342,248 @@ en:
         hero_body: "Your appointment timeline stays visible here so you can verify every status change and timestamp."
         invalid_link_alert: "That appointment link is not valid."
         summary_title: "Booking summary"
+        visit_outcome: "Visit outcome"
+        manage_title: "Manage your viewing"
+        manage_body: "You can reschedule or cancel this viewing online until %{time}."
+        request_new_time: "Request a new time"
+        cancel_viewing: "Cancel viewing"
+        self_service_closed: "The self-service window for this viewing has now closed."
         duration_minutes:
           one: "1 minute"
           other: "%{count} minutes"
         timeline_title: "Status timeline"
+      self_service:
+        title: "Manage viewing %{reference}"
+        eyebrow: "Manage your viewing"
+        body: "Choose a new slot or keep the current one. Self-service stays open until shortly after the booked time."
+        current_slot: "Current slot: <strong>%{time}</strong>"
+        status: "Status"
+        choose_slot: "Choose a new slot"
+        select_slot: "Select a new time"
+        submit: "Reschedule viewing"
+        back_to_appointment: "Back to appointment"
+        no_slots_title: "No slots available"
+        no_slots_body: "There are no self-service slots available right now. Please contact the office for help."
+        flash:
+          rescheduled: "Your viewing has been rescheduled."
+          cancelled: "Your viewing has been cancelled."
+          expired: "This self-service link has expired."
+      visit_outcomes:
+        attended: "Attended"
+        feedback_requested: "Feedback requested"
+        feedback_received: "Feedback received"
+      event_messages:
+        created: "Appointment requested for %{address} at %{time}."
+        status_changed: "Status changed from %{from_status} to %{to_status}."
+        moved: "Appointment moved from %{from_time} to %{to_time}."
+        internal_notes_updated: "Internal notes were updated."
+        customer_notes_updated: "Customer-facing notes were updated."
+        visit_outcome_marked: "Visit outcome marked as %{outcome}."
+      validation:
+        slot_unavailable: "is not available because it conflicts with another appointment or falls outside the booking rules"
+
+    enquiries:
+      title: "Enquire about %{address}"
+      eyebrow: "Property enquiry"
+      heading: "Ask about %{address}"
+      body: "Use this form if you want brochure details, a landlord or seller callback, or answers before booking a viewing."
+      fields:
+        source_type: "Enquiry type"
+        message: "Message"
+      submit: "Send enquiry"
+      next_steps_title: "What happens next?"
+      next_steps:
+        one: "The lead lands in the admin inbox immediately."
+        two: "The team can assign, qualify, and follow it up."
+        three: "You will get an acknowledgement email if you provide an email address."
+      statuses:
+        new: "New"
+        contacted: "Contacted"
+        qualified: "Qualified"
+        unqualified: "Unqualified"
+        archived: "Archived"
+      source_types:
+        general_enquiry: "General enquiry"
+        brochure_request: "Brochure request"
+        valuation_request: "Valuation request"
+        letting_enquiry: "Letting enquiry"
+      validation:
+        contact_required: "Add an email address or a phone number so we can reply."
+      flash:
+        created: "Thanks. Your enquiry has been sent to the team."
+      audit:
+        created: "Lead created from %{source} by %{name}."
+      mailer:
+        acknowledgement_subject: "We received your enquiry about %{address}"
+        internal_subject: "New %{source} for %{address}"
+        greeting: "Hi %{name},"
+        acknowledgement_body_html: "Thanks for getting in touch about <strong>%{address}</strong>. The team has your enquiry and will review it shortly."
+        lead_reference: "Lead reference: %{reference}"
+        enquiry_type: "Enquiry type: %{source}"
+        property: "Property: %{address}"
+        reply_body: "We will reply using the contact details you provided."
+        internal_intro: "A new property enquiry has been received."
+        customer: "Customer: %{name}"
+        email: "Email: %{email}"
+        phone: "Phone: %{phone}"
+        source: "Source: %{source}"
+        not_provided: "Not provided"
+
+    offers:
+      title: "Submit an offer for %{address}"
+      eyebrow: "Sales offer"
+      heading: "Submit an offer for %{address}"
+      body: "Use this form if you are ready to register an offer and share your buying position with the team."
+      fields:
+        amount: "Offer amount"
+        chain_position: "Buying position"
+        chain_position_placeholder: "Cash buyer, no onward chain"
+        notes: "Notes"
+      submit: "Submit offer"
+      statuses:
+        received: "received"
+        accepted: "accepted"
+        rejected: "rejected"
+        withdrawn: "withdrawn"
+        completed: "completed"
+      validation:
+        sale_listing_only: "must be a sale listing"
+      alerts:
+        sale_only: "Offers are only available on sale listings."
+      flash:
+        created: "Offer submitted. The team will review it shortly."
+      events:
+        received: "Offer received at %{amount}."
+        status_changed: "Offer status changed from %{from_status} to %{to_status}."
+      audit:
+        created: "Offer received from %{name} at %{amount}."
+
+    rental_applications:
+      title: "Start a rental application for %{address}"
+      eyebrow: "Rental application"
+      heading: "Start a rental application for %{address}"
+      body: "Use this form if you want to register as an applicant and share your intended move-in timing and affordability notes."
+      fields:
+        move_in_date: "Preferred move-in date"
+        guarantor_required: "I expect I may need a guarantor"
+        guarantor_available: "I already have a guarantor available"
+        affordability_notes: "Affordability notes"
+        notes: "Notes"
+      submit: "Submit rental application"
+      statuses:
+        received: "received"
+        referencing: "referencing"
+        approved: "approved"
+        rejected: "rejected"
+        withdrawn: "withdrawn"
+      validation:
+        rental_listing_only: "must be a rental listing"
+      alerts:
+        rental_only: "Rental applications are only available on rental listings."
+      flash:
+        created: "Rental application submitted. The team will review it shortly."
+      events:
+        received: "Rental application received for %{move_in_date}."
+        status_changed: "Application status changed from %{from_status} to %{to_status}."
+      audit:
+        created: "Rental application received from %{name} for move-in %{move_in_date}."
+
+    saved_searches:
+      notice:
+        one: "Saved search created for 1 matching listing."
+        other: "Saved search created for %{count} matching listings."
+      validation:
+        max_price: "must be greater than or equal to the minimum price"
+
+    photos:
+      title: "%{address} photos"
+      eyebrow: "Listing assets"
+      heading: "Manage photos"
+      body: "Set a primary image, keep the ordering tidy, and add brochure-ready captions for this listing."
+      add_title: "Add a photo"
+      current_title: "Current photos"
+      empty: "No photos have been added yet."
+      fields:
+        image_filename: "Image filename"
+        image_filename_placeholder: "hero_family_home.jpg"
+        caption: "Caption"
+        caption_placeholder: "Kitchen diner at dusk"
+        position: "Display order"
+        primary: "Use as primary image"
+        primary_image: "Primary image"
+      actions:
+        add: "Add photo"
+        remove_confirm: "Remove this photo?"
+      flash:
+        added: "Photo added."
+        updated: "Photo updated."
+        removed: "Photo removed."
+
+    floor_plans:
+      title: "%{address} floor plans"
+      eyebrow: "Listing assets"
+      heading: "Manage floor plans"
+      body: "Keep brochure attachments in order so buyers and tenants can review the layout quickly."
+      add_title: "Add a floor plan"
+      current_title: "Current floor plans"
+      empty: "No floor plans have been added yet."
+      fields:
+        label: "Label"
+        label_placeholder: "Ground floor"
+        file_name: "Filename"
+        file_name_placeholder: "ground_floor_plan.pdf"
+        position: "Display order"
+      actions:
+        add: "Add floor plan"
+        remove_confirm: "Remove this floor plan?"
+      flash:
+        added: "Floor plan added."
+        updated: "Floor plan updated."
+        removed: "Floor plan removed."
+
+    property_documents:
+      title: "Documents for %{address}"
+      heading: "Manage documents"
+      empty: "No brochure or compliance documents have been added yet."
+      add_title: "Add document"
+      edit_title: "Edit document"
+      public_visitor: "Public visitor"
+      fields:
+        title: "Title"
+        file_name: "File name"
+        file_name_placeholder: "brochure.pdf"
+        category: "Category"
+        visibility: "Visibility"
+        position: "Position"
+      actions:
+        add: "Add document"
+        save: "Save document"
+      categories:
+        brochure: "Brochure"
+        compliance: "Compliance"
+        landlord_attachment: "Landlord attachment"
+        vendor_attachment: "Vendor attachment"
+        epc: "EPC"
+        tenancy_info: "Tenancy info"
+      visibilities:
+        public: "Public"
+        private: "Private"
+      validation:
+        supported_file: "must reference a supported file"
+      alerts:
+        not_public: "This document is not available on the public page."
+      flash:
+        added: "Document added."
+        updated: "Document updated."
+        removed: "Document removed."
+      audit:
+        added: "%{category} document \"%{title}\" added."
+        updated: "Document \"%{title}\" was updated."
+        removed: "Document \"%{title}\" was removed."
+        downloaded: "Downloaded \"%{title}\"."
+
+    validation:
+      phone_number: "must be a valid phone number"
 
     appointment_mailer:
       subject: "GotTheKeys viewing %{action}: %{reference}"

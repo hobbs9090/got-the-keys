@@ -1,445 +1,826 @@
 de:
   ui:
     site_header:
-      eyebrow: "Immobilienplattform"
-      admin_bookings: "Buchungen"
-      admin_dashboard: "Dashboard"
-      sign_out: "Abmelden"
-      add_property: "Objekt hinzufügen"
-      profile: "Profil"
-      register: "Registrieren"
-      sign_in: "Anmelden"
-
+      eyebrow: Immobilienplattform
+      admin_bookings: Buchungen
+      admin_dashboard: Dashboard
+      sign_out: Abmelden
+      add_property: Objekt hinzufügen
+      profile: Profil
+      register: Registrieren
+      sign_in: Anmelden
     site_footer:
-      copy: "Moderne Immobiliensuche, Besichtigungstermine und deterministische QA-Szenarien in einer serverseitig gerenderten Rails-Anwendung, entwickelt für realistische Demos, Abnahmetests und Schulungen in KI-gestützter Browser-Automatisierung."
-
+      copy: Moderne Immobiliensuche, Besichtigungstermine und deterministische QA-Szenarien
+        in einer serverseitig gerenderten Rails-Anwendung, entwickelt für realistische
+        Demos, Abnahmetests und Schulungen in KI-gestützter Browser-Automatisierung.
     shared:
-      property_placeholder_alt: "Platzhalterbild für Immobilie"
-
+      property_placeholder_alt: Platzhalterbild für Immobilie
     common:
-      apply: "Anwenden"
-      any: "Beliebig"
-      cancel: "Abbrechen"
-      reset: "Zurücksetzen"
-      clear_all: "Alles löschen"
-      featured: "Empfohlen"
-      view_property: "Objekt ansehen"
-      book_a_viewing: "Besichtigung buchen"
-      town: "Ort"
-      bathrooms: "Bäder"
-      postcode: "Postleitzahl"
-      overview: "Überblick"
-      address: "Adresse"
-      property: "Objekt"
-      requested_slot: "Gewünschter Termin"
-      current_slot: "Aktueller Termin"
-      duration: "Dauer"
-      customer: "Kunde"
-      customer_notes: "Kundennotizen"
-      full_name: "Vollständiger Name"
-      email_address: "E-Mail-Adresse"
-      phone_number: "Telefonnummer"
-      status: "Status"
-
+      apply: Anwenden
+      any: Beliebig
+      cancel: Abbrechen
+      reset: Zurücksetzen
+      clear_all: Alles löschen
+      featured: Empfohlen
+      view_property: Objekt ansehen
+      book_a_viewing: Besichtigung buchen
+      town: Ort
+      bathrooms: Bäder
+      postcode: Postleitzahl
+      overview: Überblick
+      address: Adresse
+      property: Objekt
+      requested_slot: Gewünschter Termin
+      current_slot: Aktueller Termin
+      duration: Dauer
+      customer: Kunde
+      customer_notes: Kundennotizen
+      full_name: Vollständiger Name
+      email_address: E-Mail-Adresse
+      phone_number: Telefonnummer
+      status: Status
+      'yes': Ja
+      download: Herunterladen
+      remove: Entfernen
+      save: Speichern
+      back_to_listing: Zurück zum Inserat
     contact:
-      office_name: "GotTheKeys Limited"
-      office_line_1: "123 Awesome Road"
-      office_line_2: "Limpsfield, TN16 4AB"
-
+      office_name: GotTheKeys Limited
+      office_line_1: 123 Awesome Road
+      office_line_2: Limpsfield, TN16 4AB
     legacy:
-      from: "Von"
-      to: "Bis"
-      update: "Aktualisieren"
-      add_viewing_time: "Besichtigungszeit hinzufügen"
-      new_viewing_time_title: "Neue Besichtigungszeit für %{address}"
-      viewing_times_updated_notice: "Die verfügbaren Besichtigungszeiten wurden aktualisiert."
-      new_photos_title: "Neue Fotos für %{address}"
-      new_floor_plan_title: "Neuer Grundriss für %{address}"
-      location_details_title: "Standortdetails für %{address}"
-
+      from: Von
+      to: Bis
+      update: Aktualisieren
+      add_viewing_time: Besichtigungszeit hinzufügen
+      new_viewing_time_title: Neue Besichtigungszeit für %{address}
+      viewing_times_updated_notice: Die verfügbaren Besichtigungszeiten wurden aktualisiert.
+      new_photos_title: Neue Fotos für %{address}
+      new_floor_plan_title: Neuer Grundriss für %{address}
+      location_details_title: Standortdetails für %{address}
     welcome:
       carousel:
-        previous: "Vorherige Folie"
-        next: "Nächste Folie"
-        first: "Erste Folie"
-        second: "Zweite Folie"
-        third: "Dritte Folie"
-        fourth: "Vierte Folie"
-        fifth: "Fünfte Folie"
-      hero_eyebrow: "Moderne Immobiliensuche und Terminbuchung"
-      hero_title: "Bieten Sie Käufern und Mietern eine hochwertige Website und gleichzeitig ein deterministisches Automatisierungs-Setup für QA-Teams."
-      primary_cta: "Immobilien ansehen"
-      admin_cta: "Buchungsdesk öffnen"
+        previous: Vorherige Folie
+        next: Nächste Folie
+        first: Erste Folie
+        second: Zweite Folie
+        third: Dritte Folie
+        fourth: Vierte Folie
+        fifth: Fünfte Folie
+      hero_eyebrow: Moderne Immobiliensuche und Terminbuchung
+      hero_title: Bieten Sie Käufern und Mietern eine hochwertige Website und gleichzeitig
+        ein deterministisches Automatisierungs-Setup für QA-Teams.
+      primary_cta: Immobilien ansehen
+      admin_cta: Buchungsdesk öffnen
       metric_labels:
-        properties: "Objekte"
-        for_sale: "Zum Verkauf"
-        for_rent: "Zur Miete"
-        upcoming_viewings: "Bevorstehende Besichtigungen"
-      featured_eyebrow: "Ausgewählte Inserate"
-      featured_title: "Glaubwürdige, reaktionsschnelle Immobilienkarten mit integrierter Buchungslogik"
-      featured_action: "Gesamten Katalog ansehen"
-      insights_label: "Plattform-Einblicke"
-      qa_title: "Für QA-Training gebaut"
+        properties: Objekte
+        for_sale: Zum Verkauf
+        for_rent: Zur Miete
+        upcoming_viewings: Bevorstehende Besichtigungen
+      featured_eyebrow: Ausgewählte Inserate
+      featured_title: Glaubwürdige, reaktionsschnelle Immobilienkarten mit integrierter
+        Buchungslogik
+      featured_action: Gesamten Katalog ansehen
+      insights_label: Plattform-Einblicke
+      qa_title: Für QA-Training gebaut
       qa_points:
-        selectors: "Stabile semantische Selektoren für die wichtigsten Buchungs- und Admin-Steuerelemente."
-        scenarios: "Deterministische Demo-Szenarien für Happy Paths, Konflikte, Leerzustände und umfangreiche Suchen."
-        audit: "Sichtbare Audit-Trails und Benachrichtigungsprotokolle erleichtern die Prüfung von Statuswechseln."
-      shared_host_title: "Für Shared Hosting geeignet"
+        selectors: Stabile semantische Selektoren für die wichtigsten Buchungs- und
+          Admin-Steuerelemente.
+        scenarios: Deterministische Demo-Szenarien für Happy Paths, Konflikte, Leerzustände
+          und umfangreiche Suchen.
+        audit: Sichtbare Audit-Trails und Benachrichtigungsprotokolle erleichtern
+          die Prüfung von Statuswechseln.
+      shared_host_title: Für Shared Hosting geeignet
       shared_host_points:
-        stack: "Serverseitig gerendertes Rails unter Apache + Passenger."
-        dependencies: "Keine Annahmen zu Redis, Sidekiq, Docker oder dauerhaft laufenden Workern."
-        enhancement: "Progressive Enhancement mit Foundation, Turbo und klassischen Formularen."
-
+        stack: Serverseitig gerendertes Rails unter Apache + Passenger.
+        dependencies: Keine Annahmen zu Redis, Sidekiq, Docker oder dauerhaft laufenden
+          Workern.
+        enhancement: Progressive Enhancement mit Foundation, Turbo und klassischen
+          Formularen.
     properties:
       headline_fallback: "%{property_type} in %{town_city}"
       in_location: "%{property_type} in %{location}"
       bedroom_count:
-        one: "1 Schlafzimmer"
+        one: 1 Schlafzimmer
         other: "%{count} Schlafzimmer"
       bathroom_count:
-        one: "1 Bad"
+        one: 1 Bad
         other: "%{count} Bäder"
       sale_statuses:
-        for_sale: "Zum Verkauf"
-        for_rent: "Zur Miete"
+        for_sale: Zum Verkauf
+        for_rent: Zur Miete
       catalogue:
-        eyebrow: "Immobilienkatalog"
-        hero_title: "Moderne Inserate mit live verfügbaren Besichtigungsterminen durchsuchen"
-        hero_body: "Suchen Sie nach Gebiet, Preis und Schlafzimmeranzahl und buchen Sie dann direkt von der Objektseite eine Besichtigung."
+        eyebrow: Immobilienkatalog
+        hero_title: Moderne Inserate mit live verfügbaren Besichtigungsterminen durchsuchen
+        hero_body: Suchen Sie nach Gebiet, Preis und Schlafzimmeranzahl und buchen
+          Sie dann direkt von der Objektseite eine Besichtigung.
         active_filter_count:
-          one: "1 aktiver Filter"
+          one: 1 aktiver Filter
           other: "%{count} aktive Filter"
-        overview_badge: "Katalogübersicht"
+        overview_badge: Katalogübersicht
         matching_properties:
-          one: "passendes Objekt"
-          other: "passende Objekte"
-        browse_eyebrow: "Durchsuchen"
-        browse_title: "Zwischen Katalogansichten wechseln"
-        browse_body: "Nutzen Sie hier den vollständigen Katalog oder springen Sie direkt zu Kauf- oder Mietobjekten, wenn Sie Ihre Richtung bereits kennen."
-        all_listings: "Alle Inserate"
+          one: passendes Objekt
+          other: passende Objekte
+        browse_eyebrow: Durchsuchen
+        browse_title: Zwischen Katalogansichten wechseln
+        browse_body: Nutzen Sie hier den vollständigen Katalog oder springen Sie direkt
+          zu Kauf- oder Mietobjekten, wenn Sie Ihre Richtung bereits kennen.
+        all_listings: Alle Inserate
         totals:
-          all: "Alle"
-        filters_eyebrow: "Suche verfeinern"
-        filters_title: "Objektliste filtern"
-        sidebar_copy: "Grenzen Sie die Liste nach Inserattyp, Gebiet, Ort, Schlafzimmern und Budget ein und setzen Sie alles bei Bedarf mit einem Klick zurück."
-        results_eyebrow: "Live-Ergebnisse"
+          all: Alle
+        filters_eyebrow: Suche verfeinern
+        filters_title: Objektliste filtern
+        sidebar_copy: Grenzen Sie die Liste nach Inserattyp, Gebiet, Ort, Schlafzimmern
+          und Budget ein und setzen Sie alles bei Bedarf mit einem Klick zurück.
+        results_eyebrow: Live-Ergebnisse
         results_title:
-          one: "1 Objekt bereit zur Erkundung"
+          one: 1 Objekt bereit zur Erkundung
           other: "%{count} Objekte bereit zur Erkundung"
-        empty_copy: "Der vollständige Katalog wird angezeigt. Verwenden Sie die Filterleiste, um nach Lage, Preis und Schlafzimmeranzahl einzugrenzen."
+        empty_copy: Der vollständige Katalog wird angezeigt. Verwenden Sie die Filterleiste,
+          um nach Lage, Preis und Schlafzimmeranzahl einzugrenzen.
+        saved_search:
+          eyebrow: Auf dem Laufenden bleiben
+          title: Diese Suche speichern
+          body: Speichern Sie die aktuellen Filter und lassen Sie sich informieren,
+            wenn passende Immobilien verfügbar sind.
+          email_placeholder: you@example.com
+          alerts_enabled: Per E-Mail benachrichtigen, wenn neue passende Inserate
+            eintreffen
+          submit: Suche speichern
+        local_team_eyebrow: Lokales Team
       filters:
-        listing_type: "Inserattyp"
-        all_listings: "Alle Inserate"
-        query_label: "Gebiet, Postleitzahl oder Stichwort"
-        query_placeholder: "Versuchen Sie Sevenoaks, TN13 oder garden"
-        any_town: "Beliebiger Ort"
-        min_bedrooms: "Min. Schlafzimmer"
-        min_price: "Mindestpreis"
-        max_price: "Höchstpreis"
-        sort: "Sortierung"
-        apply: "Filter anwenden"
-        search_chip: "Suche: %{query}"
+        listing_type: Inserattyp
+        all_listings: Alle Inserate
+        query_label: Gebiet, Postleitzahl oder Stichwort
+        query_placeholder: Versuchen Sie Sevenoaks, TN13 oder garden
+        any_town: Beliebiger Ort
+        min_bedrooms: Min. Schlafzimmer
+        min_price: Mindestpreis
+        max_price: Höchstpreis
+        sort: Sortierung
+        apply: Filter anwenden
+        search_chip: 'Suche: %{query}'
         min_bedrooms_chip: "%{count}+ Schlafzimmer"
-        min_price_chip: "Ab %{price}"
-        max_price_chip: "Bis %{price}"
+        min_price_chip: Ab %{price}
+        max_price_chip: Bis %{price}
         sort_options:
-          recommended: "Empfohlen"
-          newest: "Neueste zuerst"
-          price_low: "Preis: aufsteigend"
-          price_high: "Preis: absteigend"
-          bedrooms_high: "Schlafzimmer zuerst"
+          recommended: Empfohlen
+          newest: Neueste zuerst
+          price_low: 'Preis: aufsteigend'
+          price_high: 'Preis: absteigend'
+          bedrooms_high: Schlafzimmer zuerst
       card:
-        next_slot: "Nächster Termin: %{time}"
-        no_slots: "Keine kommenden öffentlichen Termine veröffentlicht"
+        next_slot: 'Nächster Termin: %{time}'
+        no_slots: Keine kommenden öffentlichen Termine veröffentlicht
+        available_now: Sofort verfügbar
+        available_from: Verfügbar ab %{date}
+        area: Fläche
+        floor_area: "%{area} sq ft"
       empty:
-        eyebrow: "Keine Treffer"
-        title: "Keine Objekte entsprechen dieser Suche"
-        body: "Erweitern Sie Gebiet, Schlafzimmer oder Preisbereich oder setzen Sie die Filter zurück, um wieder den gesamten Katalog zu sehen."
+        eyebrow: Keine Treffer
+        title: Keine Objekte entsprechen dieser Suche
+        body: Erweitern Sie Gebiet, Schlafzimmer oder Preisbereich oder setzen Sie
+          die Filter zurück, um wieder den gesamten Katalog zu sehen.
       show:
-        booking_body: "Wählen Sie einen veröffentlichten Termin, um eine Buchungsanfrage zu erstellen. Admins können sie später im Terminbuch bestätigen, verschieben oder stornieren."
-        slot_finish: "Ende %{time}"
-        request_viewing: "Besichtigung anfragen"
-        no_slots_title: "Keine öffentlichen Termine verfügbar"
-        no_slots_body: "Das ist ein hilfreicher QA-Grenzfall zum Testen leerer Buchungszustände und alternativer Kontaktwege."
+        booking_body: Wählen Sie einen veröffentlichten Termin, um eine Buchungsanfrage
+          zu erstellen. Admins können sie später im Terminbuch bestätigen, verschieben
+          oder stornieren.
+        slot_finish: Ende %{time}
+        request_viewing: Besichtigung anfragen
+        no_slots_title: Keine öffentlichen Termine verfügbar
+        no_slots_body: Das ist ein hilfreicher QA-Grenzfall zum Testen leerer Buchungszustände
+          und alternativer Kontaktwege.
+        available_from: Verfügbar ab
+        key_facts_title: Wichtige Fakten
+        trust_title: Warum dieses Inserat aktuell wirkt
+        brochure_assets_title: Exposé-Material
+        primary_image: Hauptbild
+        photo: Foto
+        floor_plan: Grundriss
+        documents_title: Dokumente und Downloads
+        enquiry_title: Erst mehr Details?
+        enquiry_body: Fragen Sie nach Exposé-Informationen, einem Rückruf oder weiteren
+          Details, bevor Sie einen Besichtigungstermin wählen.
+        enquiry_cta: Anfrage senden
+        offer_title: Bereit, ein Angebot abzugeben?
+        offer_body: Übermitteln Sie direkt an das Team Ihre Kaufposition und Ihr Kernangebot.
+        offer_cta: Angebot senden
+        rental_application_title: Möchten Sie sich zur Miete bewerben?
+        rental_application_body: Teilen Sie dem Vermietungsteam Ihren gewünschten
+          Einzugstermin und Ihre Finanzierungsnotizen mit.
+        rental_application_cta: Mietantrag starten
+        seller_title: Verkäuferbereich
+        readiness_summary: vollständig · %{score}/%{total} Bereitschaftspunkte erledigt
+        done: Erledigt
+        needed: Offen
+        edit_listing: Inserat bearbeiten
+        manage_photos: Fotos verwalten
+        manage_floor_plans: Grundrisse verwalten
+        manage_documents: Dokumente verwalten
+        recent_lead_activity_title: Aktuelle Lead-Aktivität
+        no_enquiries: Für dieses Inserat sind noch keine Anfragen eingegangen.
+        recent_offers_title: Aktuelle Angebote
+        no_offers: Es wurden noch keine Angebote erfasst.
+        recent_rental_applications_title: Aktuelle Mietanträge
+        move_in: Einzug %{date}
+        no_rental_applications: Es wurden noch keine Mietanträge erfasst.
+        recent_listing_activity_title: Aktuelle Inseratsaktivität
+        no_listing_activity: Für dieses Inserat wurde noch keine Aktivität erfasst.
       editor:
-        new_title: "Neues Objekt hinzufügen"
-        eyebrow: "Verkäufer-Tools"
-        new_heading: "Objekt hinzufügen"
-        new_body: "Erstellen Sie ein Inserat mit reicheren Metadaten und buchungsfähiger Darstellung."
+        new_title: Neues Objekt hinzufügen
+        eyebrow: Verkäufer-Tools
+        new_heading: Objekt hinzufügen
+        new_body: Erstellen Sie ein Inserat mit reicheren Metadaten und buchungsfähiger
+          Darstellung.
         edit_heading: "%{address} bearbeiten"
-        edit_body: "Aktualisieren Sie die Objektdetails, Positionierung und Metadaten, die im modernen Katalog angezeigt werden."
-
+        edit_body: Aktualisieren Sie die Objektdetails, Positionierung und Metadaten,
+          die im modernen Katalog angezeigt werden.
+        workflow_title: Arbeitsablauf des Inserats
+        core_details_title: Kerndetails
+        facts_title: Strukturierte Objektdaten
+        floor_area_label: Wohnfläche (sq ft)
+      trust_cues:
+        recently_updated: Kürzlich aktualisiert
+        available_now: Sofort verfügbar
+        brochure_ready: Exposé bereit
+      update_labels:
+        recently_updated: Kürzlich aktualisiert
+        stale: Braucht eine Aktualisierung
+        current: Diesen Monat aktualisiert
+      listing_states:
+        draft: Entwurf
+        review_pending: Prüfung ausstehend
+        published: Veröffentlicht
+        under_offer: Unter Angebot
+        let_agreed: Vermietung vereinbart
+        sold: Verkauft
+        let: Vermietet
+        withdrawn: Zurückgezogen
+      activity_actions:
+        enquiry_created: Anfrage erstellt
+        offer_created: Angebot erstellt
+        rental_application_created: Mietantrag erstellt
+        property_document_created: Dokument hinzugefügt
+        property_document_updated: Dokument aktualisiert
+        property_document_removed: Dokument entfernt
+        property_document_downloaded: Dokument heruntergeladen
+      facts:
+        tenure: Eigentumsform
+        council_tax_band: Council-Tax-Band
+        furnishing: Möblierung
+        available_from: Verfügbar ab
+        parking: Parken
+        outdoor_space: Außenbereich
+        epc_rating: EPC-Einstufung
+        floor_area: Wohnfläche
+        floor_area_value: "%{area} sq ft"
+        deposit: Kaution
+        pets_allowed: Haustiere erlaubt
+        service_charge: Servicegebühr
+        lease_length: Laufzeit
+        lease_length_value: "%{years} Jahre"
+      seller:
+        checks:
+          headline: Überschrift und Zusammenfassung
+          media: Fotografie
+          floor_plan: Grundriss
+          facts: Wichtige Fakten
+          contact: Kontaktbereitschaft
+      flash:
+        not_public: Dieses Inserat ist derzeit nicht öffentlich.
     for_sale:
-      eyebrow: "Zum Verkauf"
-      hero_title: "Häuser zum Kauf"
-      hero_body: "Nutzen Sie die Filter, um Bestand nach Gebiet, Schlafzimmern und Preis zu finden, und wechseln Sie dann von der Objektseite in den Buchungsablauf."
+      eyebrow: Zum Verkauf
+      hero_title: Häuser zum Kauf
+      hero_body: Nutzen Sie die Filter, um Bestand nach Gebiet, Schlafzimmern und
+        Preis zu finden, und wechseln Sie dann von der Objektseite in den Buchungsablauf.
       count_label:
-        one: "Verkaufsinserat"
-        other: "Verkaufsinserate"
-
+        one: Verkaufsinserat
+        other: Verkaufsinserate
     for_rent:
-      eyebrow: "Zur Miete"
-      hero_title: "Häuser zur Miete"
-      hero_body: "Entdecken Sie Mietobjekte, vergleichen Sie Verfügbarkeiten und testen Sie den Besichtigungsablauf für Mieter in einem realistischen Katalog."
+      eyebrow: Zur Miete
+      hero_title: Häuser zur Miete
+      hero_body: Entdecken Sie Mietobjekte, vergleichen Sie Verfügbarkeiten und testen
+        Sie den Besichtigungsablauf für Mieter in einem realistischen Katalog.
       count_label:
-        one: "Mietinserat"
-        other: "Mietinserate"
-
+        one: Mietinserat
+        other: Mietinserate
     search:
-      eyebrow: "Immobiliensuche"
-      hero_title: "Inserate und Terminverfügbarkeit gemeinsam durchsuchen"
-      hero_body: "Finden Sie realistische Happy Paths, Leerzustände und Paginierungsszenarien für QA-Automatisierung."
+      eyebrow: Immobiliensuche
+      hero_title: Inserate und Terminverfügbarkeit gemeinsam durchsuchen
+      hero_body: Finden Sie realistische Happy Paths, Leerzustände und Paginierungsszenarien
+        für QA-Automatisierung.
       results_count:
-        one: "Ergebnis"
-        other: "Ergebnisse"
-
+        one: Ergebnis
+        other: Ergebnisse
     appointments:
       statuses:
-        pending: "Ausstehend"
-        confirmed: "Bestätigt"
-        rescheduled: "Verschoben"
-        cancelled: "Storniert"
-        completed: "Abgeschlossen"
-        no_show: "Nicht erschienen"
+        pending: Ausstehend
+        confirmed: Bestätigt
+        rescheduled: Verschoben
+        cancelled: Storniert
+        completed: Abgeschlossen
+        no_show: Nicht erschienen
       events:
-        created: "Erstellt"
-        confirmed: "Bestätigt"
-        rescheduled: "Verschoben"
-        cancelled: "Storniert"
-        completed: "Abgeschlossen"
-        no_show: "Nicht erschienen"
-        internal_note_added: "Interne Notiz hinzugefügt"
-        customer_note_updated: "Kundennotiz aktualisiert"
+        created: Erstellt
+        confirmed: Bestätigt
+        rescheduled: Verschoben
+        cancelled: Storniert
+        completed: Abgeschlossen
+        no_show: Nicht erschienen
+        internal_note_added: Interne Notiz hinzugefügt
+        customer_note_updated: Kundennotiz aktualisiert
       new:
-        title: "Besichtigung für %{address} buchen"
-        eyebrow: "Besichtigungsanfrage"
-        hero_body: "Wählen Sie einen veröffentlichten Termin, fügen Sie Ihre Kontaktdaten hinzu und erstellen Sie eine Anfrage, die vom Team bestätigt, verschoben oder storniert werden kann."
-        submitted_notice: "Die Terminanfrage wurde gesendet. Wir informieren Sie per E-Mail über Updates."
-        preferred_slot: "Bevorzugter Termin"
-        choose_slot: "Termin wählen"
-        notes_label: "Gibt es etwas, das wir wissen sollten?"
-        notes_placeholder: "Barrierefreiheitsbedarf, Hinweise zur Ankunft oder Fragen an das Team."
-        submit: "Anfrage senden"
-        back_to_property: "Zurück zum Objekt"
-        no_slots_title: "Keine Termine veröffentlicht"
-        no_slots_body: "Für dieses Objekt gibt es derzeit keine öffentlichen Besichtigungstermine. In manchen QA-Szenarien ist das beabsichtigt, daher wird der Leerzustand klar dargestellt."
+        title: Besichtigung für %{address} buchen
+        eyebrow: Besichtigungsanfrage
+        hero_body: Wählen Sie einen veröffentlichten Termin, fügen Sie Ihre Kontaktdaten
+          hinzu und erstellen Sie eine Anfrage, die vom Team bestätigt, verschoben
+          oder storniert werden kann.
+        submitted_notice: Die Terminanfrage wurde gesendet. Wir informieren Sie per
+          E-Mail über Updates.
+        preferred_slot: Bevorzugter Termin
+        choose_slot: Termin wählen
+        notes_label: Gibt es etwas, das wir wissen sollten?
+        notes_placeholder: Barrierefreiheitsbedarf, Hinweise zur Ankunft oder Fragen
+          an das Team.
+        submit: Anfrage senden
+        back_to_property: Zurück zum Objekt
+        no_slots_title: Keine Termine veröffentlicht
+        no_slots_body: Für dieses Objekt gibt es derzeit keine öffentlichen Besichtigungstermine.
+          In manchen QA-Szenarien ist das beabsichtigt, daher wird der Leerzustand
+          klar dargestellt.
       show:
-        title: "Termin %{reference}"
-        eyebrow: "Termindetails"
-        hero_body: "Ihre Terminchronik bleibt hier sichtbar, damit Sie jede Statusänderung und jeden Zeitstempel nachvollziehen können."
-        invalid_link_alert: "Dieser Terminlink ist ungültig."
-        summary_title: "Buchungsübersicht"
+        title: Termin %{reference}
+        eyebrow: Termindetails
+        hero_body: Ihre Terminchronik bleibt hier sichtbar, damit Sie jede Statusänderung
+          und jeden Zeitstempel nachvollziehen können.
+        invalid_link_alert: Dieser Terminlink ist ungültig.
+        summary_title: Buchungsübersicht
         duration_minutes:
-          one: "1 Minute"
+          one: 1 Minute
           other: "%{count} Minuten"
-        timeline_title: "Statusverlauf"
-
+        timeline_title: Statusverlauf
+        visit_outcome: Besuchsergebnis
+        manage_title: Ihre Besichtigung verwalten
+        manage_body: Sie können diese Besichtigung bis %{time} online verschieben
+          oder stornieren.
+        request_new_time: Neue Zeit anfragen
+        cancel_viewing: Besichtigung stornieren
+        self_service_closed: Das Self-Service-Fenster für diese Besichtigung ist jetzt
+          geschlossen.
+      self_service:
+        title: Besichtigung %{reference} verwalten
+        eyebrow: Ihre Besichtigung verwalten
+        body: Wählen Sie einen neuen Termin oder behalten Sie den aktuellen. Self-Service
+          bleibt bis kurz nach dem gebuchten Termin offen.
+        current_slot: 'Aktueller Termin: <strong>%{time}</strong>'
+        status: Status
+        choose_slot: Neuen Termin wählen
+        select_slot: Neue Zeit auswählen
+        submit: Besichtigung verschieben
+        back_to_appointment: Zurück zur Buchung
+        no_slots_title: Keine Termine verfügbar
+        no_slots_body: Derzeit sind keine Self-Service-Termine verfügbar. Bitte kontaktieren
+          Sie das Büro.
+        flash:
+          rescheduled: Ihre Besichtigung wurde verschoben.
+          cancelled: Ihre Besichtigung wurde storniert.
+          expired: Dieser Self-Service-Link ist abgelaufen.
+      visit_outcomes:
+        attended: Teilgenommen
+        feedback_requested: Feedback angefragt
+        feedback_received: Feedback erhalten
+      event_messages:
+        created: Termin für %{address} um %{time} angefragt.
+        status_changed: Status von %{from_status} zu %{to_status} geändert.
+        moved: Termin von %{from_time} auf %{to_time} verschoben.
+        internal_notes_updated: Interne Notizen wurden aktualisiert.
+        customer_notes_updated: Kundennotizen wurden aktualisiert.
+        visit_outcome_marked: Besuchsergebnis als %{outcome} markiert.
+      validation:
+        slot_unavailable: ist nicht verfügbar, weil es mit einem anderen Termin kollidiert
+          oder außerhalb der Buchungsregeln liegt
     appointment_mailer:
-      subject: "GotTheKeys Besichtigung %{action}: %{reference}"
+      subject: 'GotTheKeys Besichtigung %{action}: %{reference}'
       actions:
-        request_received: "Anfrage eingegangen"
-        confirmed: "bestätigt"
-        cancelled: "storniert"
-        completed: "abgeschlossen"
-        marked_as_missed: "als versäumt markiert"
-        updated: "aktualisiert"
-      greeting: "Hallo %{name},"
-      updated_html: "Ihre Besichtigung für <strong>%{address}</strong> wurde aktualisiert."
-      reference: "Referenz: %{reference}"
-      status: "Status: %{status}"
-      requested_slot: "Gewünschter Termin: %{time}"
-      current_slot: "Aktueller Termin: %{time}"
-      notes: "Ihre Notizen: %{notes}"
-      revisit: "Sie können den Termin jederzeit über den sicheren Link erneut aufrufen, den Sie nach der Buchung erhalten haben."
-      thanks_html: "Vielen Dank,<br>GotTheKeys"
-
+        request_received: Anfrage eingegangen
+        confirmed: bestätigt
+        cancelled: storniert
+        completed: abgeschlossen
+        marked_as_missed: als versäumt markiert
+        updated: aktualisiert
+      greeting: Hallo %{name},
+      updated_html: Ihre Besichtigung für <strong>%{address}</strong> wurde aktualisiert.
+      reference: 'Referenz: %{reference}'
+      status: 'Status: %{status}'
+      requested_slot: 'Gewünschter Termin: %{time}'
+      current_slot: 'Aktueller Termin: %{time}'
+      notes: 'Ihre Notizen: %{notes}'
+      revisit: Sie können den Termin jederzeit über den sicheren Link erneut aufrufen,
+        den Sie nach der Buchung erhalten haben.
+      thanks_html: Vielen Dank,<br>GotTheKeys
     admin:
       dashboard:
-        on: "am"
+        true: am
       appointments:
-        confirm: "Bestätigen"
-        cancel: "Stornieren"
+        confirm: Bestätigen
+        cancel: Stornieren
         show:
-          title: "Termin %{reference}"
-          eyebrow: "Termindetails"
-          edit: "Bearbeiten"
-          summary_title: "Zusammenfassung"
-          not_supplied: "Nicht angegeben"
-          notes_title: "Notizen"
-          no_customer_notes: "Keine Kundennotizen angegeben."
-          no_internal_notes: "Noch keine internen Notizen."
-          audit_trail_title: "Prüfverlauf"
-          customer_history_title: "Kundenhistorie"
-          no_customer_history: "Keine weiteren Buchungen für diesen Kunden gefunden."
+          title: Termin %{reference}
+          eyebrow: Termindetails
+          edit: Bearbeiten
+          summary_title: Zusammenfassung
+          not_supplied: Nicht angegeben
+          notes_title: Notizen
+          no_customer_notes: Keine Kundennotizen angegeben.
+          no_internal_notes: Noch keine internen Notizen.
+          audit_trail_title: Prüfverlauf
+          customer_history_title: Kundenhistorie
+          no_customer_history: Keine weiteren Buchungen für diesen Kunden gefunden.
           actions:
-            complete: "Abschließen"
-            no_show: "Nicht erschienen"
+            complete: Abschließen
+            no_show: Nicht erschienen
         edit:
-          title: "Termin %{reference} bearbeiten"
-          eyebrow: "Terminverwaltung"
-          heading: "Termin %{reference} bearbeiten"
-          customer_name: "Kundenname"
-          customer_email: "Kunden-E-Mail"
-          customer_phone: "Kundentelefon"
-          duration_minutes: "Dauer (Minuten)"
-          requested_time: "Gewünschte Zeit"
-          confirmed_slot: "Bestätigter Termin"
-          customer_notes: "Kundennotizen"
-          internal_notes: "Interne Notizen"
-          save_changes: "Änderungen speichern"
-          back: "Zurück"
+          title: Termin %{reference} bearbeiten
+          eyebrow: Terminverwaltung
+          heading: Termin %{reference} bearbeiten
+          customer_name: Kundenname
+          customer_email: Kunden-E-Mail
+          customer_phone: Kundentelefon
+          duration_minutes: Dauer (Minuten)
+          requested_time: Gewünschte Zeit
+          confirmed_slot: Bestätigter Termin
+          customer_notes: Kundennotizen
+          internal_notes: Interne Notizen
+          save_changes: Änderungen speichern
+          back: Zurück
       flash:
-        booking_rules_updated: "Buchungsregeln aktualisiert."
-        property_updated: "Objekt aktualisiert."
-        appointment_updated: "Termin aktualisiert."
-        unsupported_appointment_status: "Nicht unterstützter Terminstatus."
-        appointment_marked: "Termin als %{status} markiert."
-        demo_scenario_confirmation_required: "Gib %{phrase} exakt ein, um diesen Seed-Daten-Reset auszuführen."
-        applied_demo_scenario: "Demodatenszenario %{name} angewendet."
-        restored_baseline_demo_scenario: "Basis-Demodatenszenario (%{name}) wiederhergestellt."
-        imported_demo_scenario: "Demodatenszenario %{name} importiert."
+        booking_rules_updated: Buchungsregeln aktualisiert.
+        property_updated: Objekt aktualisiert.
+        appointment_updated: Termin aktualisiert.
+        unsupported_appointment_status: Nicht unterstützter Terminstatus.
+        appointment_marked: Termin als %{status} markiert.
+        demo_scenario_confirmation_required: Gib %{phrase} exakt ein, um diesen Seed-Daten-Reset
+          auszuführen.
+        applied_demo_scenario: Demodatenszenario %{name} angewendet.
+        restored_baseline_demo_scenario: Basis-Demodatenszenario (%{name}) wiederhergestellt.
+        imported_demo_scenario: Demodatenszenario %{name} importiert.
       properties:
         index:
-          title: "Objekte"
-          eyebrow: "Katalogverwaltung"
+          title: Objekte
+          eyebrow: Katalogverwaltung
           appointment_count:
-            one: "1 Termin"
+            one: 1 Termin
             other: "%{count} Termine"
-          open: "Öffnen"
+          open: Öffnen
         show:
-          title: "Objekt %{address}"
-          eyebrow: "Objektdetails"
-          edit_property: "Objekt bearbeiten"
-          view_public_page: "Öffentliche Seite ansehen"
-          summary_title: "Zusammenfassung des Inserats"
-          availability_windows_title: "Verfügbarkeitsfenster"
+          title: Objekt %{address}
+          eyebrow: Objektdetails
+          edit_property: Objekt bearbeiten
+          view_public_page: Öffentliche Seite ansehen
+          summary_title: Zusammenfassung des Inserats
+          availability_windows_title: Verfügbarkeitsfenster
           window_range: "%{start_time} bis %{end_time}"
           window_kinds:
-            open: "Offen"
-            blackout: "Gesperrt"
-          no_windows: "Für dieses Objekt gibt es noch keine eigenen Zeitfenster. Es gelten die globalen Buchungsregeln."
-          booking_history_title: "Buchungshistorie des Objekts"
-          no_bookings: "Für dieses Objekt gibt es noch keine Buchungen."
+            open: Offen
+            blackout: Gesperrt
+          no_windows: Für dieses Objekt gibt es noch keine eigenen Zeitfenster. Es
+            gelten die globalen Buchungsregeln.
+          booking_history_title: Buchungshistorie des Objekts
+          no_bookings: Für dieses Objekt gibt es noch keine Buchungen.
         edit:
-          title: "Objekt %{address} bearbeiten"
-          eyebrow: "Katalogverwaltung"
-          heading: "Objekt bearbeiten"
+          title: Objekt %{address} bearbeiten
+          eyebrow: Katalogverwaltung
+          heading: Objekt bearbeiten
       users:
         index:
-          title: "Verkäufer"
-          eyebrow: "Kunden- und Verkäuferverwaltung"
-          no_results: "Keine Verkäufer entsprechen dieser Suche."
+          title: Verkäufer
+          eyebrow: Kunden- und Verkäuferverwaltung
+          no_results: Keine Verkäufer entsprechen dieser Suche.
           search:
-            label: "Verkäufer suchen"
-            placeholder: "Name, E-Mail oder Mobilnummer"
-            submit: "Suchen"
-            clear: "Zurücksetzen"
+            label: Verkäufer suchen
+            placeholder: Name, E-Mail oder Mobilnummer
+            submit: Suchen
+            clear: Zurücksetzen
           property_count:
-            one: "1 Objekt"
+            one: 1 Objekt
             other: "%{count} Objekte"
         show:
-          title: "Verkäufer %{name}"
-          eyebrow: "Verkäuferprofil"
-          account_details_title: "Kontodetails"
-          mobile: "Mobil"
-          properties: "Objekte"
+          title: Verkäufer %{name}
+          eyebrow: Verkäuferprofil
+          account_details_title: Kontodetails
+          mobile: Mobil
+          properties: Objekte
           listing_count:
-            one: "1 Inserat"
+            one: 1 Inserat
             other: "%{count} Inserate"
-          recent_booking_activity_title: "Letzte Buchungsaktivität"
-          no_activity: "Auf den Objekten dieses Verkäufers gibt es noch keine Terminaktivität."
+          recent_booking_activity_title: Letzte Buchungsaktivität
+          no_activity: Auf den Objekten dieses Verkäufers gibt es noch keine Terminaktivität.
       notification_logs:
-        title: "Benachrichtigungsprotokoll"
-        eyebrow: "Kundenkommunikation"
-        no_recipient: "Kein Empfänger"
+        title: Benachrichtigungsprotokoll
+        eyebrow: Kundenkommunikation
+        no_recipient: Kein Empfänger
         statuses:
-          sent: "Gesendet"
-          skipped: "Übersprungen"
-          failed: "Fehlgeschlagen"
+          sent: Gesendet
+          skipped: Übersprungen
+          failed: Fehlgeschlagen
       booking_configuration:
-        title: "Buchungsregeln"
-        eyebrow: "Buchungskonfiguration"
-        slot_duration_minutes: "Dauer des Zeitfensters (Minuten)"
-        lead_time_hours: "Vorlaufzeit (Stunden)"
-        buffer_minutes: "Puffer zwischen Buchungen (Minuten)"
-        office_opens_at: "Büro öffnet um"
-        office_closes_at: "Büro schließt um"
-        open_weekdays: "Geöffnete Wochentage"
-        save: "Buchungsregeln speichern"
+        title: Buchungsregeln
+        eyebrow: Buchungskonfiguration
+        slot_duration_minutes: Dauer des Zeitfensters (Minuten)
+        lead_time_hours: Vorlaufzeit (Stunden)
+        buffer_minutes: Puffer zwischen Buchungen (Minuten)
+        office_opens_at: Büro öffnet um
+        office_closes_at: Büro schließt um
+        open_weekdays: Geöffnete Wochentage
+        save: Buchungsregeln speichern
       demo_data:
-        title: "Demodatenverwaltung"
-        eyebrow: "Deterministische QA-Umgebung"
-        restore_baseline: "Basis wiederherstellen"
-        import_scenario: "Szenario importieren"
-        export_current_data: "Aktuelle Daten exportieren"
-        diagnostics_title: "Diagnose"
-        last_demo_action_title: "Letzte Demo-Aktion"
-        no_actions: "Es wurden noch keine Zurücksetzungen, Importe oder Exporte aufgezeichnet."
-        preview_action: "Vorschau"
+        title: Demodatenverwaltung
+        eyebrow: Deterministische QA-Umgebung
+        restore_baseline: Basis wiederherstellen
+        import_scenario: Szenario importieren
+        export_current_data: Aktuelle Daten exportieren
+        diagnostics_title: Diagnose
+        last_demo_action_title: Letzte Demo-Aktion
+        no_actions: Es wurden noch keine Zurücksetzungen, Importe oder Exporte aufgezeichnet.
+        preview_action: Vorschau
         seed_resets:
-          eyebrow: "Gefahrenbereich"
-          title: "Seed-Daten-Resets"
-          description: "Jeder Reset baut den Trainingsdatenbestand für eine bestimmte Probe neu auf. Gib vor dem Start exakt den Szenarioschlüssel ein."
-          badge: "Eingabesperre"
-          preview: "Reset-Vorschau"
+          eyebrow: Gefahrenbereich
+          title: Seed-Daten-Resets
+          description: Jeder Reset baut den Trainingsdatenbestand für eine bestimmte
+            Probe neu auf. Gib vor dem Start exakt den Szenarioschlüssel ein.
+          badge: Eingabesperre
+          preview: Reset-Vorschau
           field_label: "%{phrase} eingeben, um fortzufahren"
-          type_to_continue_html: "Gib %{phrase} exakt ein, um diesen Reset freizuschalten."
-          apply: "Reset ausführen"
+          type_to_continue_html: Gib %{phrase} exakt ein, um diesen Reset freizuschalten.
+          apply: Reset ausführen
         counts:
           properties:
-            one: "Objekt"
-            other: "Objekte"
+            one: Objekt
+            other: Objekte
           bookings:
-            one: "Buchung"
-            other: "Buchungen"
+            one: Buchung
+            other: Buchungen
           sellers:
-            one: "Verkäufer"
-            other: "Verkäufer"
+            one: Verkäufer
+            other: Verkäufer
         labels:
-          active_scenario: "Aktives Szenario"
-          property_count: "Objekte"
-          user_count: "Benutzer"
-          appointment_count: "Termine"
-          notification_count: "Benachrichtigungsprotokolle"
-          last_demo_action: "Letzte Demo-Aktion"
+          active_scenario: Aktives Szenario
+          property_count: Objekte
+          user_count: Benutzer
+          appointment_count: Termine
+          notification_count: Benachrichtigungsprotokolle
+          last_demo_action: Letzte Demo-Aktion
         preview_labels:
-          key: "Schlüssel"
-          admin_count: "Administratoren"
-          user_count: "Benutzer"
-          property_count: "Objekte"
-          availability_window_count: "Verfügbarkeitsfenster"
-          appointment_count: "Termine"
-          appointment_statuses: "Terminstatus"
+          key: Schlüssel
+          admin_count: Administratoren
+          user_count: Benutzer
+          property_count: Objekte
+          availability_window_count: Verfügbarkeitsfenster
+          appointment_count: Termine
+          appointment_statuses: Terminstatus
         actions:
-          apply: "Angewendet"
-          restore: "Wiederhergestellt"
-          import: "Importiert"
-          export: "Exportiert"
+          apply: Angewendet
+          restore: Wiederhergestellt
+          import: Importiert
+          export: Exportiert
         scenario_keys:
-          baseline: "Basis"
-          custom_sevenoaks_westerham_catalogue: "Kuratiertes Sevenoaks- und Westerham-Katalog"
-          fully_booked_day: "Voll ausgebuchter Tag"
-          high_volume_search: "Suche mit hohem Volumen"
-          qa_edge_cases: "QA-Grenzfälle"
+          baseline: Basis
+          custom_sevenoaks_westerham_catalogue: Kuratiertes Sevenoaks- und Westerham-Katalog
+          fully_booked_day: Voll ausgebuchter Tag
+          high_volume_search: Suche mit hohem Volumen
+          qa_edge_cases: QA-Grenzfälle
         preview:
-          title: "Szenariovorschau %{name}"
-          eyebrow: "Szenariovorschau"
-          apply_scenario: "Szenario anwenden"
-          back_to_demo_data: "Zurück zu den Demodaten"
-          quick_reset_title: "Seed-Daten-Reset"
-          quick_reset_body: "Diese Probe baut den gesamten Trainingsdatenbestand neu auf. Bestätige den exakten Szenarioschlüssel, bevor du sie startest."
+          title: Szenariovorschau %{name}
+          eyebrow: Szenariovorschau
+          apply_scenario: Szenario anwenden
+          back_to_demo_data: Zurück zu den Demodaten
+          quick_reset_title: Seed-Daten-Reset
+          quick_reset_body: Diese Probe baut den gesamten Trainingsdatenbestand neu
+            auf. Bestätige den exakten Szenarioschlüssel, bevor du sie startest.
         import:
-          title: "Demodatenszenario importieren"
-          eyebrow: "Import von Demodaten"
-          heading: "Importiertes Szenario vor dem Anwenden prüfen"
-          upload_yaml_file: "YAML-Datei hochladen"
-          paste_yaml: "Oder YAML einfügen"
-          yaml_placeholder: "key: imported_scenario\nname: Imported Scenario\n..."
-          preview_import: "Importvorschau"
-          back: "Zurück"
+          title: Demodatenszenario importieren
+          eyebrow: Import von Demodaten
+          heading: Importiertes Szenario vor dem Anwenden prüfen
+          upload_yaml_file: YAML-Datei hochladen
+          paste_yaml: Oder YAML einfügen
+          yaml_placeholder: |-
+            key: imported_scenario
+            name: Imported Scenario
+            ...
+          preview_import: Importvorschau
+          back: Zurück
         import_preview:
-          title: "Importvorschau %{name}"
-          eyebrow: "Importvorschau"
-          apply_imported_scenario: "Importiertes Szenario anwenden"
-          back_to_import: "Zurück zum Import"
-          raw_yaml: "Rohes YAML"
+          title: Importvorschau %{name}
+          eyebrow: Importvorschau
+          apply_imported_scenario: Importiertes Szenario anwenden
+          back_to_import: Zurück zum Import
+          raw_yaml: Rohes YAML
+    branch_profile:
+      name: Büro Sevenoaks und Westerham
+      team_label: Betreut vom lokalen GotTheKeys-Team
+      response_time: Antwort in der Regel innerhalb eines Werktags
+      hours: Mo-Sa, 9:00-18:00
+    enquiries:
+      title: Anfrage zu %{address}
+      eyebrow: Objektanfrage
+      heading: Fragen zu %{address}
+      body: Verwenden Sie dieses Formular, wenn Sie Exposé-Details, einen Rückruf
+        oder Antworten vor der Buchung einer Besichtigung möchten.
+      fields:
+        source_type: Anfrageart
+        message: Nachricht
+      submit: Anfrage senden
+      next_steps_title: Wie geht es weiter?
+      next_steps:
+        one: Der Lead landet sofort im Admin-Postfach.
+        two: Das Team kann ihn zuweisen, qualifizieren und weiterverfolgen.
+        three: Sie erhalten eine Bestätigungs-E-Mail, wenn Sie eine E-Mail-Adresse
+          angeben.
+      statuses:
+        new: Neu
+        contacted: Kontaktiert
+        qualified: Qualifiziert
+        unqualified: Nicht qualifiziert
+        archived: Archiviert
+      source_types:
+        general_enquiry: Allgemeine Anfrage
+        brochure_request: Exposé-Anfrage
+        valuation_request: Bewertungsanfrage
+        letting_enquiry: Mietanfrage
+      validation:
+        contact_required: Fügen Sie eine E-Mail-Adresse oder Telefonnummer hinzu,
+          damit wir antworten können.
+      flash:
+        created: Danke. Ihre Anfrage wurde an das Team gesendet.
+      audit:
+        created: Lead aus %{source} von %{name} erstellt.
+      mailer:
+        acknowledgement_subject: Wir haben Ihre Anfrage zu %{address} erhalten
+        internal_subject: Neue %{source} für %{address}
+        greeting: Hallo %{name},
+        acknowledgement_body_html: Vielen Dank für Ihre Anfrage zu <strong>%{address}</strong>.
+          Das Team hat Ihre Anfrage erhalten und prüft sie in Kürze.
+        lead_reference: 'Lead-Referenz: %{reference}'
+        enquiry_type: 'Anfrageart: %{source}'
+        property: 'Objekt: %{address}'
+        reply_body: Wir antworten über die von Ihnen angegebenen Kontaktdaten.
+        internal_intro: Eine neue Objektanfrage ist eingegangen.
+        customer: 'Kunde: %{name}'
+        email: 'E-Mail: %{email}'
+        phone: 'Telefon: %{phone}'
+        source: 'Quelle: %{source}'
+        not_provided: Nicht angegeben
+    offers:
+      title: Angebot für %{address} abgeben
+      eyebrow: Kaufangebot
+      heading: Angebot für %{address} abgeben
+      body: Verwenden Sie dieses Formular, wenn Sie ein Angebot registrieren und Ihre
+        Kaufposition mit dem Team teilen möchten.
+      fields:
+        amount: Angebotssumme
+        chain_position: Kaufposition
+        chain_position_placeholder: Barzahler, keine Anschlusskette
+        notes: Notizen
+      submit: Angebot senden
+      statuses:
+        received: eingegangen
+        accepted: angenommen
+        rejected: abgelehnt
+        withdrawn: zurückgezogen
+        completed: abgeschlossen
+      validation:
+        sale_listing_only: muss ein Verkaufsobjekt sein
+      alerts:
+        sale_only: Angebote sind nur bei Verkaufsobjekten verfügbar.
+      flash:
+        created: Angebot eingereicht. Das Team prüft es in Kürze.
+      events:
+        received: Angebot über %{amount} eingegangen.
+        status_changed: Angebotsstatus von %{from_status} zu %{to_status} geändert.
+      audit:
+        created: Angebot von %{name} über %{amount} eingegangen.
+    rental_applications:
+      title: Mietantrag für %{address} starten
+      eyebrow: Mietantrag
+      heading: Mietantrag für %{address} starten
+      body: Verwenden Sie dieses Formular, wenn Sie sich als Bewerber registrieren
+        und Ihren gewünschten Einzugstermin sowie Hinweise zur Finanzierbarkeit mitteilen
+        möchten.
+      fields:
+        move_in_date: Bevorzugtes Einzugsdatum
+        guarantor_required: Ich erwarte, dass ich eventuell einen Bürgen brauche
+        guarantor_available: Ich habe bereits einen Bürgen
+        affordability_notes: Hinweise zur Finanzierbarkeit
+        notes: Notizen
+      submit: Mietantrag senden
+      statuses:
+        received: eingegangen
+        referencing: in Prüfung
+        approved: genehmigt
+        rejected: abgelehnt
+        withdrawn: zurückgezogen
+      validation:
+        rental_listing_only: muss ein Mietobjekt sein
+      alerts:
+        rental_only: Mietanträge sind nur bei Mietobjekten verfügbar.
+      flash:
+        created: Mietantrag eingereicht. Das Team prüft ihn in Kürze.
+      events:
+        received: Mietantrag für %{move_in_date} eingegangen.
+        status_changed: Antragsstatus von %{from_status} zu %{to_status} geändert.
+      audit:
+        created: Mietantrag von %{name} für Einzug %{move_in_date} eingegangen.
+    saved_searches:
+      notice:
+        one: Gespeicherte Suche für 1 passendes Inserat erstellt.
+        other: Gespeicherte Suche für %{count} passende Inserate erstellt.
+      validation:
+        max_price: muss größer oder gleich dem Mindestpreis sein
+    photos:
+      title: Fotos für %{address}
+      eyebrow: Inseratsmedien
+      heading: Fotos verwalten
+      body: Legen Sie ein Hauptbild fest, halten Sie die Reihenfolge sauber und ergänzen
+        Sie Exposé-taugliche Bildunterschriften.
+      add_title: Foto hinzufügen
+      current_title: Aktuelle Fotos
+      empty: Es wurden noch keine Fotos hinzugefügt.
+      fields:
+        image_filename: Bilddatei
+        image_filename_placeholder: hero_family_home.jpg
+        caption: Bildunterschrift
+        caption_placeholder: Wohnküche in der Abendsonne
+        position: Reihenfolge
+        primary: Als Hauptbild verwenden
+        primary_image: Hauptbild
+      actions:
+        add: Foto hinzufügen
+        remove_confirm: Dieses Foto entfernen?
+      flash:
+        added: Foto hinzugefügt.
+        updated: Foto aktualisiert.
+        removed: Foto entfernt.
+    floor_plans:
+      title: Grundrisse für %{address}
+      eyebrow: Inseratsmedien
+      heading: Grundrisse verwalten
+      body: Halten Sie Exposé-Anhänge in Ordnung, damit Interessenten den Grundriss
+        schnell prüfen können.
+      add_title: Grundriss hinzufügen
+      current_title: Aktuelle Grundrisse
+      empty: Es wurden noch keine Grundrisse hinzugefügt.
+      fields:
+        label: Bezeichnung
+        label_placeholder: Erdgeschoss
+        file_name: Dateiname
+        file_name_placeholder: grundriss_eg.pdf
+        position: Reihenfolge
+      actions:
+        add: Grundriss hinzufügen
+        remove_confirm: Diesen Grundriss entfernen?
+      flash:
+        added: Grundriss hinzugefügt.
+        updated: Grundriss aktualisiert.
+        removed: Grundriss entfernt.
+    property_documents:
+      title: Dokumente für %{address}
+      heading: Dokumente verwalten
+      empty: Es wurden noch keine Exposé- oder Compliance-Dokumente hinzugefügt.
+      add_title: Dokument hinzufügen
+      edit_title: Dokument bearbeiten
+      public_visitor: Öffentlicher Besucher
+      fields:
+        title: Titel
+        file_name: Dateiname
+        file_name_placeholder: brochure.pdf
+        category: Kategorie
+        visibility: Sichtbarkeit
+        position: Position
+      actions:
+        add: Dokument hinzufügen
+        save: Dokument speichern
+      categories:
+        brochure: Exposé
+        compliance: Compliance
+        landlord_attachment: Vermieter-Anhang
+        vendor_attachment: Verkäufer-Anhang
+        epc: EPC
+        tenancy_info: Mietinformationen
+      visibilities:
+        public: Öffentlich
+        private: Privat
+      validation:
+        supported_file: muss auf eine unterstützte Datei verweisen
+      alerts:
+        not_public: Dieses Dokument ist auf der öffentlichen Seite nicht verfügbar.
+      flash:
+        added: Dokument hinzugefügt.
+        updated: Dokument aktualisiert.
+        removed: Dokument entfernt.
+      audit:
+        added: '%{category}-Dokument "%{title}" hinzugefügt.'
+        updated: Dokument "%{title}" wurde aktualisiert.
+        removed: Dokument "%{title}" wurde entfernt.
+        downloaded: '"%{title}" heruntergeladen.'
+    validation:
+      phone_number: muss eine gültige Telefonnummer sein

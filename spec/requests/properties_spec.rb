@@ -143,6 +143,19 @@ describe "Properties" do
       expect(document.at_css(%([data-testid="listing-workflow-panel"]))).to be_present
       expect(document.at_css(%([data-testid="listing-facts-panel"]))).to be_present
     end
+
+    it "renders localized seller listing form copy for the signed-in language" do
+      user.update!(language: "de")
+      sign_in user
+
+      get new_property_path
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(I18n.t("ui.properties.editor.workflow_title", locale: :de))
+      expect(response.body).to include(I18n.t("ui.properties.editor.fields.listing_state", locale: :de))
+      expect(response.body).to include(I18n.t("ui.properties.editor.submit", locale: :de))
+      expect(response.body).to include(I18n.t("ui.properties.editor.placeholders.listing_tagline", locale: :de))
+    end
   end
 
   describe "GET /properties/1/photos" do

@@ -22,9 +22,19 @@ RSpec.describe "Devise entry pages", type: :request do
 
   it "renders the registration page" do
     get new_user_registration_path
+    document = Nokogiri::HTML.parse(response.body)
+    contact_fields = document.at_css(".auth-form__contact-fields")
+    password_fields = document.at_css(".auth-form__password-fields")
 
     expect(response).to have_http_status(:ok)
     expect_shared_auth_card_layout
+    expect(contact_fields).to be_present
+    expect(contact_fields["class"]).to include("form-grid__full")
+    expect(contact_fields.at_css('input[name="user[mobile_number]"]')).to be_present
+    expect(contact_fields.at_css('input[type="email"]')).to be_present
+    expect(password_fields).to be_present
+    expect(password_fields["class"]).to include("form-grid__full")
+    expect(password_fields.css('input[type="password"]').count).to eq(2)
     expect(response.body).not_to include("marketing-wordmark--hero")
     expect(response.body).to include("Register")
     expect(response.body).to include("English")
