@@ -20,6 +20,13 @@ RSpec.describe "Devise entry pages", type: :request do
     expect(document.at_css(".auth-form__actions")).to be_present
   end
 
+  def switch_language(locale, return_to:)
+    get new_language_path(language: locale.to_s, return_to: return_to),
+        headers: { "HTTP_REFERER" => return_to }
+
+    expect(response).to redirect_to(return_to)
+  end
+
   it "renders the registration page" do
     get new_user_registration_path
     document = Nokogiri::HTML.parse(response.body)
@@ -78,5 +85,61 @@ RSpec.describe "Devise entry pages", type: :request do
     expect_shared_auth_card_layout
     expect(response.body).not_to include("marketing-wordmark--hero")
     expect(response.body).to include("Resend unlock instructions")
+  end
+
+  it "renders the guest auth pages in the selected non-English locale" do
+    localized_pages = [
+      {
+        path: new_user_registration_path,
+        keys: ["devise.views.registrations.new.title", "helpers.label.user.email", "devise.views.registrations.new.form_intro"]
+      },
+      {
+        path: new_user_session_path,
+        keys: ["devise.views.sessions.new.title", "helpers.label.user.password", "devise.views.sessions.new.form_intro"]
+      },
+      {
+        path: new_admin_session_path,
+        keys: ["devise.views.links.sign_in_as_admin", "helpers.label.admin.password", "devise.views.sessions.new.form_intro"]
+      },
+      {
+        path: new_user_password_path,
+        keys: ["devise.views.passwords.new.title", "helpers.label.user.email", "devise.views.passwords.new.form_intro"]
+      },
+      {
+        path: new_user_unlock_path,
+        keys: ["devise.views.unlocks.new.title", "helpers.label.user.email", "devise.views.unlocks.new.form_intro"]
+      }
+    ]
+
+    %i[de fr it].each do |locale|
+      localized_pages.each do |page|
+        switch_language(locale, return_to: page[:path])
+        get page[:path]
+        document = Nokogiri::HTML.parse(response.body)
+
+        expect(response).to have_http_status(:ok)
+        expect_shared_auth_card_layout
+        expect(response.body).to include(%(lang="#{locale}"))
+
+        page[:keys].each do |key|
+          expect(document.text).to include(I18n.t(key, locale: locale))
+        end
+      end
+    end
+  end
+
+  it "renders the account edit page in the signed-in user's language" do
+    user = FactoryBot.create(:user, language: "de")
+
+    sign_in user
+    get edit_user_registration_path
+    document = Nokogiri::HTML.parse(response.body)
+
+    expect(response).to have_http_status(:ok)
+    expect_shared_auth_card_layout
+    expect(response.body).to include('lang="de"')
+    expect(document.text).to include(I18n.t("devise.views.registrations.edit.title", locale: :de))
+    expect(document.text).to include(I18n.t("helpers.label.user.current_password", locale: :de))
+    expect(document.text).to include(I18n.t("devise.views.registrations.edit.cancel_action", locale: :de))
   end
 end
