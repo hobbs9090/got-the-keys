@@ -39,7 +39,8 @@ It is designed to feel like a credible small business product while also being p
 
 - Ruby `3.4.7`
 - Rails `8.1.3`
-- SQLite `2.1.x`
+- SQLite `2.1.x` for local/default shared-host flows
+- PostgreSQL for containerized production deployments
 - Puma `7.2.x`
 - Active Job for notification delivery
 - Foundation Sites `6.9.0` as the CSS framework layer
@@ -55,7 +56,8 @@ It is designed to feel like a credible small business product while also being p
 - Appointment notifications now enqueue `AppointmentNotificationJob` after commit instead of sending synchronously on the request path.
 - The frontend runtime now flows through the bundled `app/javascript/application.js`; legacy Sprockets-managed JavaScript and app-authored jQuery/Foundation JS usage have been removed.
 - Component and page styles now live under `app/assets/stylesheets/components/` and `app/assets/stylesheets/pages/`, with matching partials in `app/views/`.
-- SQLite plus Apache/Passenger shared hosting remain the default deployment posture until measured scale or operational pain justifies a move.
+- SQLite plus Apache/Passenger shared hosting remain the default low-complexity posture for the existing shared-host path.
+- DSM-hosted containerized production with PostgreSQL is now scaffolded alongside that path, designed to sit behind an existing Apache + Let's Encrypt edge.
 
 ## App Versioning
 
@@ -93,6 +95,8 @@ It is designed to feel like a credible small business product while also being p
   Version-controlled scenario definitions used by `db:seed` and the admin demo-data UI.
 - `docs/NIRVANA_DEPLOYMENT.md`
   Apache + Passenger deployment guide for shared hosting.
+- `docs/SYNOLOGY_CONTAINER_DEPLOYMENT.md`
+  Docker deployment guide for running the app behind an existing Apache + Let's Encrypt Linux VM edge with PostgreSQL.
 - `docs/BACKGROUND_JOB_POLICY.md`
   Explicit rules for what background work is safe on the current `:async` setup and when to revisit a durable backend.
 - `docs/MODERNIZATION_AUDIT.md`
