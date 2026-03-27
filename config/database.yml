@@ -19,10 +19,17 @@ test: &test
   timeout: 5000
 
 production:
+  <% if ENV["DATABASE_URL"].present? || ENV.fetch("DB_ADAPTER", nil) == "postgresql" %>
+  adapter: postgresql
+  encoding: unicode
+  url: <%= ENV["DATABASE_URL"] %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
+  <% else %>
   adapter: sqlite3
   database: <%= ENV.fetch("DATABASE_PATH", "storage/production.sqlite3") %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
   timeout: 5000
+  <% end %>
 
 #production:
 #  host: beatles.fritz.box
