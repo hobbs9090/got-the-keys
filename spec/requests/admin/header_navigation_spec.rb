@@ -44,6 +44,8 @@ RSpec.describe "Admin header navigation" do
 
     topbar = topbar_wrap.at_css(".admin-topbar")
     expect(topbar).to be_present
+    expect(topbar.at_css(".admin-topbar__corner [data-testid='language-dropdown']")).to be_present
+    expect(topbar.at_css(".admin-topbar__main")).to be_present
 
     brand_link = parsed_html.at_css(".admin-sidebar__brand-link")
     expect(brand_link).to be_present
@@ -51,12 +53,15 @@ RSpec.describe "Admin header navigation" do
     expect(brand_link.at_css(".admin-sidebar__eyebrow")&.text&.strip).to eq(I18n.t("ui.site_header.eyebrow"))
     expect(brand_link.at_css(".marketing-wordmark--header")).to be_present
 
-    view_site_link = topbar.at_css(".admin-topbar__actions a.button.secondary.hollow.admin-topbar__action")
+    session_panel = topbar.at_css(".admin-topbar__session")
+    expect(session_panel).to be_present
+
+    view_site_link = session_panel.at_css(".admin-topbar__actions a.button.secondary.hollow.admin-topbar__action")
     expect(view_site_link).to be_present
     expect(view_site_link.text.strip).to eq("View site")
     expect(view_site_link["href"]).to eq(root_path)
 
-    admin_user = topbar.at_css(".admin-topbar__user.site-header__account")
+    admin_user = session_panel.at_css(".admin-topbar__user.site-header__account")
     expect(admin_user).to be_present
     expect(admin_user.at_css(".site-header__account-heading")).to be_present
     expect(admin_user.text).to include("Signed in")
@@ -80,7 +85,7 @@ RSpec.describe "Admin header navigation" do
     expect(utility_nav).to be_present
 
     utility_texts = utility_nav.css("a").map { |link| link.text.strip }
-    expect(utility_texts).to eq(["Demo Data", "QA Guide"])
+    expect(utility_texts).to eq(["Demo Data", "Security", "QA Guide"])
 
     divider = parsed_html.at_css('[data-testid="admin-nav-divider"]')
     expect(divider).to be_present
@@ -89,11 +94,15 @@ RSpec.describe "Admin header navigation" do
     expect(demo_data_link).to be_present
     expect(demo_data_link["href"]).to eq(admin_demo_scenarios_path)
 
+    security_link = utility_nav.at_css('[data-testid="admin-security-link"]')
+    expect(security_link).to be_present
+    expect(security_link["href"]).to eq(admin_security_path)
+
     qa_link = utility_nav.at_css('[data-testid="admin-qa-link"]')
     expect(qa_link).to be_present
     expect(qa_link["href"]).to eq(admin_qa_path)
 
-    sign_out_link = topbar.at_css(".admin-topbar__actions a.button.alert.hollow.admin-topbar__action")
+    sign_out_link = session_panel.at_css(".admin-topbar__actions a.button.alert.hollow.admin-topbar__action")
     expect(sign_out_link).to be_present
     expect(sign_out_link.text.strip).to eq("Sign out")
     expect(sign_out_link["href"]).to eq(destroy_admin_session_path)

@@ -27,22 +27,31 @@
       <div class="admin-content-wrap">
         <div class="admin-topbar-wrap">
           <header class="admin-topbar">
-            <div>
-              <p class="admin-topbar__label"><%= t("ui.admin.layout.active_demo_scenario") %></p>
-              <strong data-testid="active-demo-scenario"><%= translated_demo_scenario_key(active_demo_scenario_key) %></strong>
+            <div class="admin-topbar__corner">
+              <%= render "layouts/language_dropdown" %>
             </div>
 
-            <div class="admin-topbar__actions">
-              <% account_summary = header_account_summary %>
-              <div class="site-header__account admin-topbar__user" data-testid="admin-account-summary">
-                <div class="site-header__account-heading">
-                  <span class="site-header__account-eyebrow"><%= account_summary[:eyebrow] %></span>
-                  <strong class="site-header__account-name"><%= account_summary[:name] %></strong>
-                </div>
-                <span class="site-header__account-detail" title="<%= account_summary[:detail] %>"><%= account_summary[:detail] %></span>
+            <div class="admin-topbar__main">
+              <div class="admin-topbar__context">
+                <p class="admin-topbar__label"><%= t("ui.admin.layout.active_demo_scenario") %></p>
+                <strong data-testid="active-demo-scenario"><%= translated_demo_scenario_key(active_demo_scenario_key) %></strong>
               </div>
-              <%= link_to t("ui.admin.layout.view_site"), root_path, class: "button secondary hollow admin-topbar__action" %>
-              <%= link_to t("ui.site_header.sign_out"), destroy_admin_session_path, class: "button alert hollow admin-topbar__action", data: { turbo_method: :delete } %>
+
+              <div class="admin-topbar__session">
+                <% account_summary = header_account_summary %>
+                <div class="site-header__account admin-topbar__user" data-testid="admin-account-summary">
+                  <div class="site-header__account-heading">
+                    <span class="site-header__account-eyebrow"><%= account_summary[:eyebrow] %></span>
+                    <strong class="site-header__account-name"><%= account_summary[:name] %></strong>
+                  </div>
+                  <span class="site-header__account-detail" title="<%= account_summary[:detail] %>"><%= account_summary[:detail] %></span>
+                </div>
+
+                <div class="admin-topbar__actions">
+                  <%= link_to t("ui.admin.layout.view_site"), root_path, class: "button secondary hollow admin-topbar__action" %>
+                  <%= link_to t("ui.site_header.sign_out"), destroy_admin_session_path, class: "button alert hollow admin-topbar__action", data: { turbo_method: :delete } %>
+                </div>
+              </div>
             </div>
           </header>
         </div>

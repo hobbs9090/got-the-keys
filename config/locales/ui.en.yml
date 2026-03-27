@@ -269,6 +269,7 @@ en:
         properties: "Properties"
         sellers: "Sellers"
         demo_data: "Demo Data"
+        security: "Security"
         qa_guide: "QA Guide"
         notifications: "Notifications"
         booking_rules: "Booking Rules"
@@ -304,6 +305,10 @@ en:
           - "Reschedule an appointment into an occupied slot and verify the conflict validation message."
           - "Restore the baseline dataset, then switch to the fully booked scenario and verify the empty-slot state."
           - "Export the current dataset, import it back through the preview screen, and confirm the diagnostics panel updates."
+        admin_two_factor:
+          title: "Admin 2FA mode"
+          confirmation_required: "Type DISABLE to confirm switching the global admin 2FA mode to disabled."
+          updated_notice: "Updated the global admin 2FA mode."
         selectors_title: "Automation-friendly selectors"
         selectors:
           property_card: "`data-testid=\"property-card\"` on listing cards"
@@ -312,6 +317,23 @@ en:
           admin_appointment_row: "`data-testid=\"admin-appointment-row\"` on agenda rows"
           active_demo_scenario: "`data-testid=\"active-demo-scenario\"` on the admin shell"
         available_scenarios_title: "Available scenarios"
+      security:
+        title: "Admin security"
+        enrollment_started_notice: "Generated a fresh authenticator setup for this admin."
+        enabled_notice: "Two-factor authentication is now enabled for this admin."
+        disabled_notice: "Two-factor authentication has been disabled for this admin."
+        backup_codes_regenerated_notice: "Generated a new set of backup codes."
+        already_enabled: "Two-factor authentication is already enabled for this admin."
+        not_enabled: "Two-factor authentication is not enabled for this admin."
+        enrollment_expired: "Your setup session expired. Start setup again to generate a new secret."
+        invalid_code: "Enter a valid authenticator code."
+        modes:
+          disabled: "Disabled"
+          optional: "Optional"
+        audit_actions:
+          admin_two_factor_enrollment_completed: "2FA enrollment completed"
+          admin_two_factor_disabled: "2FA disabled"
+          admin_two_factor_backup_codes_regenerated: "Backup codes regenerated"
       dashboard:
         title: "Admin dashboard"
         eyebrow: "Operations overview"

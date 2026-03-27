@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_in, keys: %i[otp_attempt])
     devise_parameter_sanitizer.permit(
       :sign_up,
       keys: %i[first_name last_name mobile_number email password password_confirmation language terms_of_service]

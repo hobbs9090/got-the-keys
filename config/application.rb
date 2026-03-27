@@ -25,7 +25,7 @@ module GotTheKeys
       fr: :en,
       it: :en
     }
-    config.filter_parameters += %i[password password_confirmation]
+    config.filter_parameters += %i[password password_confirmation otp_attempt]
     config.x.got_the_keys.available_languages = %w[en de fr it zh].freeze
     config.x.got_the_keys.exchange_rate_gbp_to_cny = 9.368
     config.x.got_the_keys.version = semantic_version

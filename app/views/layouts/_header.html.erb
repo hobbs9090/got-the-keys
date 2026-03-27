@@ -1,27 +1,6 @@
 <% account_summary = header_account_summary %>
 <% language_switcher = capture do %>
-  <div class="language-dropdown" data-testid="language-dropdown">
-    <details class="language-dropdown__details">
-      <summary class="language-dropdown__summary" aria-label="<%= "#{language_switcher_label}: #{current_language_label}" %>">
-        <span class="language-dropdown__summary-value">
-          <%= image_tag current_language_flag_asset, alt: "", class: "language-dropdown__flag", size: "16x11" %>
-          <span class="language-dropdown__summary-code"><%= current_language_code %></span>
-        </span>
-      </summary>
-
-      <div class="language-dropdown__menu" aria-label="<%= language_switcher_label %>">
-        <% language_menu_options.each do |option| %>
-          <%= link_to new_language_path(language: option[:code], return_to: request.fullpath),
-                      class: class_names("language-dropdown__option", "is-active": option[:code] == I18n.locale.to_s),
-                      data: { turbo: false, testid: "language-option-#{option[:code]}" },
-                      "aria-current": ("true" if option[:code] == I18n.locale.to_s) do %>
-            <%= image_tag option[:flag_asset], alt: "", class: "language-dropdown__flag", size: "16x11" %>
-            <span><%= option[:label] %></span>
-          <% end %>
-        <% end %>
-      </div>
-    </details>
-  </div>
+  <%= render "layouts/language_dropdown" %>
 <% end %>
 
 <header class="site-header" data-testid="site-header">

@@ -1,5 +1,13 @@
 <% admin_sign_in = request.fullpath.match?(/^\/admins/) %>
 <% session_title = admin_sign_in ? t('devise.views.links.sign_in_as_admin') : t('devise.views.sessions.new.title') %>
+<%
+  admin_otp_prompt =
+    if admin_sign_in && BookingConfiguration.current.admin_two_factor_optional? && resource.email.present?
+      Admin.find_for_database_authentication(email: resource.email.to_s)&.two_factor_enrolled?
+    else
+      false
+    end
+%>
 <% title session_title %>
 
 <section class="auth-shell auth-shell--signin">
@@ -43,6 +51,15 @@
           <%= f.password_field :password, required: true, autocomplete: "current-password", **form_control_options(resource, :password) %>
           <%= field_error_messages(resource, :password) %>
         </div>
+
+        <% if admin_otp_prompt %>
+          <div>
+            <%= f.label :otp_attempt, t("devise.views.sessions.new.otp_attempt", default: "Verification code or backup code"), **form_label_options(resource, :otp_attempt) %>
+            <%= f.text_field :otp_attempt, autocomplete: "one-time-code", autocapitalize: "off", spellcheck: false, maxlength: 64, **form_control_options(resource, :otp_attempt) %>
+            <p class="help-text"><%= t("devise.views.sessions.new.otp_attempt_hint", default: "Enter an authenticator code or one of your backup codes.") %></p>
+            <%= field_error_messages(resource, :otp_attempt) %>
+          </div>
+        <% end %>
 
         <% if devise_mapping.rememberable? %>
           <div class="auth-form__checkbox auth-form__checkbox--compact">

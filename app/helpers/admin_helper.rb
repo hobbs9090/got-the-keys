@@ -1,4 +1,24 @@
 module AdminHelper
+  def admin_two_factor_qr_svg(uri)
+    RQRCode::QRCode.new(uri, level: :m).as_svg(
+      color: "10213f",
+      fill: "ffffff",
+      module_size: 5,
+      shape_rendering: "crispEdges",
+      standalone: false,
+      use_path: true,
+      viewbox: true
+    ).html_safe
+  end
+
+  def admin_two_factor_mode_label(value)
+    t("ui.admin.security.modes.#{value}", default: value.to_s.humanize)
+  end
+
+  def admin_two_factor_audit_action_label(action)
+    t("ui.admin.security.audit_actions.#{action}", default: action.to_s.humanize)
+  end
+
   def translated_demo_scenario_key(key)
     t("ui.admin.demo_data.scenario_keys.#{key}", default: key.to_s.humanize)
   end

@@ -10,12 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_26_210000) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_27_100000) do
   create_table "admins", force: :cascade do |t|
+    t.integer "consumed_timestep"
     t.datetime "created_at", precision: nil
     t.string "email"
     t.string "encrypted_password"
     t.string "language"
+    t.json "otp_backup_codes"
+    t.boolean "otp_required_for_login", default: false, null: false
+    t.string "otp_secret"
     t.datetime "updated_at", precision: nil
   end
 
@@ -98,6 +102,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_210000) do
 
   create_table "booking_configurations", force: :cascade do |t|
     t.string "active_demo_scenario_key", default: "baseline", null: false
+    t.string "admin_two_factor_mode", default: "disabled", null: false
     t.integer "buffer_minutes", default: 15, null: false
     t.datetime "created_at", null: false
     t.datetime "last_demo_data_action_at"

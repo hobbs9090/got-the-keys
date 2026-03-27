@@ -12,8 +12,10 @@ gem 'jsbundling-rails'
 gem 'turbo-rails'
 gem 'jbuilder', '~> 2.14'
 gem 'devise', '~> 5.0'
+gem 'devise-two-factor', '~> 6.4'
 gem 'kaminari', '~> 1.2'
 gem 'openai', '~> 0.56.0'
+gem 'rqrcode', '~> 3.0'
 
 group :doc do
   gem 'sdoc', require: false
