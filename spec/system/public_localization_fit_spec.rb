@@ -3,6 +3,9 @@ require "rails_helper"
 RSpec.describe "Public localization and footer fit", type: :system, js: true do
   let(:pages) do
     [
+      { path: -> { legal_index_path }, key: "legal.blurb" },
+      { path: -> { cookie_policy_index_path }, key: "cookie_policy.hero_body" },
+      { path: -> { how_it_works_path }, key: "how_it_works.hero_title" },
       { path: -> { about_us_path }, key: "about_us.hero_title" },
       { path: -> { contact_us_path }, key: "contact_us.get_in_touch" },
       { path: -> { blog_index_path }, key: "blog.hero_title" }

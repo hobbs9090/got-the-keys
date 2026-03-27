@@ -11,9 +11,21 @@ RSpec.describe "Admin appointments" do
   end
 
   it "shows the admin-only bookings desk" do
+    FactoryBot.create(
+      :appointment,
+      property:,
+      customer_name: "Row Check",
+      customer_email: "row.check@example.com",
+      requested_time: next_booking_slot(hour: 10),
+      scheduled_at: next_booking_slot(hour: 10),
+      status: "rescheduled"
+    )
+
     get admin_bookings_path
     document = Nokogiri::HTML.parse(response.body)
     view_switch = document.at_css('[data-testid="admin-bookings-view-switch"]')
+    agenda_list = document.at_css('[data-testid="admin-bookings-agenda-list"]')
+    first_actions = document.at_css('[data-testid="admin-bookings-row-actions"]')
 
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Bookings desk")
@@ -21,6 +33,11 @@ RSpec.describe "Admin appointments" do
     expect(view_switch["class"]).to include("admin-bookings-view-switch")
     expect(view_switch.css("a").map { |link| link.text.strip }).to eq(%w[Agenda Day Week Month])
     expect(view_switch.at_css('[data-testid="admin-bookings-view-agenda"]')["class"]).to include("is-active")
+    expect(agenda_list).to be_present
+    expect(agenda_list["class"]).to include("admin-bookings-agenda-list")
+    expect(first_actions).to be_present
+    expect(first_actions["class"]).to include("admin-bookings-row__actions")
+    expect(first_actions.at_css(".admin-bookings-row__pill")).to be_present
   end
 
   it "redirects non-admin visitors away from the bookings desk" do

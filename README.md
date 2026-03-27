@@ -108,6 +108,70 @@ It is designed to feel like a credible small business product while also being p
 - `docs/QA_TRAINING.md`
   QA walkthroughs, selectors, scenarios, and known credentials.
 
+## File Structure At A Glance
+
+```text
+.
+|- app/
+|  |- assets/
+|  |  |- images/
+|  |  `- stylesheets/
+|  |- controllers/
+|  |  `- admin/
+|  |- helpers/
+|  |- javascript/
+|  |- jobs/
+|  |- mailers/
+|  |- models/
+|  |- services/
+|  |  |- admin/
+|  |  |- demo_data/
+|  |  `- qa/
+|  `- views/
+|     |- admin/
+|     |- devise/
+|     |- layouts/
+|     |- properties/
+|     `- shared/
+|- config/
+|  |- deploy/
+|  |- environments/
+|  |- initializers/
+|  `- locales/
+|- db/
+|  |- demo_scenarios/
+|  `- migrate/
+|- docs/
+|- lib/
+|  |- capistrano/
+|  |- ci/
+|  `- tasks/
+|- script/
+|- spec/
+|  |- factories/
+|  |- requests/
+|  |- services/
+|  `- system/
+|- .githooks/
+|- Dockerfile
+|- compose.synology.yml
+`- README.md
+```
+
+- `app/controllers/` holds the server-rendered product and admin endpoints; `app/controllers/admin/` is the protected Admin Workspace.
+- `app/models/` is the main domain layer for properties, appointments, offers, rental applications, saved searches, and supporting records.
+- `app/services/` contains orchestration and business-process code that does not fit cleanly in models or controllers. `app/services/demo_data/` drives YAML scenario loading and validation, while `app/services/qa/` supports the training harness.
+- `app/views/` is the primary UI layer. Public pages, Devise entry screens, shared partials, and admin surfaces are grouped by route area.
+- `app/assets/stylesheets/` contains the SCSS source for the server-rendered UI. Component partials live under `components/`, page-level styling under `pages/`, and the bundled entrypoint pulls them together.
+- `app/javascript/` contains the bundled frontend runtime for Turbo and app-authored JavaScript modules.
+- `config/locales/` holds the translation files for English plus the supported non-English locales.
+- `db/demo_scenarios/` contains the deterministic YAML seed packs used for demos, QA resets, and repeatable local setup.
+- `docs/` is where longer operational and architecture notes live, including deployment, booking architecture, QA training, and modernization guidance.
+- `lib/ci/` contains repo-specific CI guardrails, and `lib/tasks/` contains custom Rake tasks.
+- `script/` is for one-off operational helpers such as curated catalogue refresh scripts.
+- `spec/requests/` covers server-rendered responses and HTML contracts, `spec/system/` covers browser journeys, and the remaining spec folders cover unit-level behavior.
+- `.githooks/pre-push` runs the full RSpec suite before pushes, matching the workflow described in the setup section below.
+
 ## Local Setup
 
 ### Prerequisites
