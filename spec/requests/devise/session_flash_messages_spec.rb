@@ -2,8 +2,16 @@ require "rails_helper"
 require "nokogiri"
 
 RSpec.describe "Devise session flash messages" do
+  def flash_document
+    Nokogiri::HTML.parse(response.body)
+  end
+
   def flash_text
-    Nokogiri::HTML.parse(response.body).at_css("[data-testid='flash-stack']")&.text&.strip
+    flash_document.at_css("[data-testid='flash-stack']")&.text&.strip
+  end
+
+  def notice_flash
+    flash_document.at_css("[data-testid='flash-notice']")
   end
 
   it "shows an admin-specific sign-in notice" do
@@ -17,6 +25,8 @@ RSpec.describe "Devise session flash messages" do
 
     expect(response).to have_http_status(:ok)
     expect(flash_text).to include("Signed in successfully as Admin.")
+    expect(notice_flash).to be_present
+    expect(notice_flash["data-auto-dismiss-after"]).to eq("5000")
   end
 
   it "keeps the generic member sign-in notice" do
@@ -30,5 +40,7 @@ RSpec.describe "Devise session flash messages" do
 
     expect(response).to have_http_status(:ok)
     expect(flash_text).to include("Signed in successfully.")
+    expect(notice_flash).to be_present
+    expect(notice_flash["data-auto-dismiss-after"]).to eq("5000")
   end
 end

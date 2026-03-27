@@ -1,7 +1,27 @@
 <% if flash.any? %>
   <div class="flash-stack" data-testid="flash-stack">
     <% flash.each do |key, value| %>
-      <%= content_tag(:div, value, class: "flash flash--#{key}") %>
+      <% flash_data = { testid: "flash-#{key}" } %>
+      <% flash_data[:auto_dismiss_after] = 5000 if key.to_s == "notice" %>
+      <%= content_tag(:div, value, class: "flash flash--#{key}", data: flash_data) %>
     <% end %>
   </div>
+
+  <%= javascript_tag nonce: true do %>
+    document.querySelectorAll("[data-auto-dismiss-after]").forEach((flash) => {
+      const dismissAfter = Number.parseInt(flash.dataset.autoDismissAfter || "", 10);
+      if (!Number.isFinite(dismissAfter) || dismissAfter <= 0) return;
+
+      window.setTimeout(() => {
+        if (!flash.isConnected) return;
+
+        const flashStack = flash.closest("[data-testid='flash-stack']");
+        flash.remove();
+
+        if (flashStack && flashStack.childElementCount === 0) {
+          flashStack.remove();
+        }
+      }, dismissAfter);
+    });
+  <% end %>
 <% end %>

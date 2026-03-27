@@ -1,6 +1,5 @@
 <% admin_sign_in = request.fullpath.match?(/^\/admins/) %>
 <% session_title = admin_sign_in ? t('devise.views.links.sign_in_as_admin') : t('devise.views.sessions.new.title') %>
-<% session_title_class = admin_sign_in ? "auth-form-card__title auth-form-card__title--admin" : "auth-form-card__title" %>
 <% title session_title %>
 
 <section class="auth-shell auth-shell--signin">
@@ -24,7 +23,7 @@
     <div class="auth-form-card__header">
       <div>
         <p class="section-heading__eyebrow"><%= t('devise.views.sessions.new.form_badge') %></p>
-        <h2 class="<%= session_title_class %>"><%= session_title %></h2>
+        <h2 class="auth-form-card__title"><%= session_title %></h2>
       </div>
       <p class="auth-form-card__intro"><%= t('devise.views.sessions.new.form_intro') %></p>
     </div>

@@ -14,7 +14,19 @@ RSpec.describe "Admin dashboard", type: :request do
     expect(response).to have_http_status(:ok)
 
     document = Nokogiri::HTML.parse(response.body)
+    status_grid = document.at_css('[data-testid="admin-dashboard-status-grid"]')
     quick_links = document.css(".admin-dashboard__quick-links a")
+    status_cards = document.css('[data-testid^="admin-status-card-"]')
+
+    expect(status_grid).to be_present
+    expect(status_cards.map { |card| card.at_css(".admin-dashboard__status-label")&.text&.strip }).to eq(
+      ["Properties", "Upcoming appointments", "Pending actions", "Customers", "Open leads"]
+    )
+
+    status_cards.each do |card|
+      expect(card["class"]).to include("admin-dashboard__status-card")
+      expect(card.at_css(".admin-dashboard__status-value")).to be_present
+    end
 
     expect(quick_links.map { |link| link.text.strip }).to eq(["All bookings", "Pending action", "This week"])
     expect(quick_links.first["class"]).to include("button")

@@ -8,6 +8,7 @@ describe "Properties" do
     it "should retrieve page" do
       get properties_path
       document = Nokogiri::HTML(response.body)
+      footer_copy = document.at_css(".site-footer__copy")
       footer_meta = document.at_css(".site-footer__small")
       footer_brand = document.at_css(".site-footer__brand span")
 
@@ -16,7 +17,10 @@ describe "Properties" do
       expect(response.body).not_to include("favicon.ico")
       expect(footer_brand).to be_present
       expect(footer_brand.text.squish).to eq("© 2026 Steven Hobbs")
+      expect(footer_copy).to be_present
+      expect(footer_copy.text.squish).to eq("Modern property discovery, appointment booking, and deterministic QA scenarios in one server-rendered Rails application. Built for realistic demos, acceptance testing, and AI-driven browser automation training.")
       expect(footer_meta).to be_present
+      expect(footer_meta.at_css(".site-footer__meta-copy")).not_to be_present
       expect(footer_meta.at_css(%(a[href="#{cookie_policy_index_path(anchor: "cookie-preferences")}"]))).to be_present
       expect(footer_meta.at_css(%([data-testid="public-app-version"]))).to be_present
       expect(footer_meta.at_css(".site-footer__utility")&.text.to_s.squish).to eq("Cookie settings v#{Rails.configuration.x.got_the_keys.version}")
