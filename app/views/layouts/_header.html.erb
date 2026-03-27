@@ -65,8 +65,10 @@
         </div>
       <% else %>
         <%= language_switcher %>
-        <%= link_to t("ui.site_header.register"), new_user_registration_path, class: "button secondary hollow", id: "register" %>
-        <%= link_to t("ui.site_header.sign_in"), new_user_session_path, class: "button primary", id: "sign_in" %>
+        <div class="site-header__guest-actions" data-testid="guest-header-actions">
+          <%= link_to t("ui.site_header.register"), new_user_registration_path, class: "button secondary hollow", id: "register" %>
+          <%= link_to t("ui.site_header.sign_in"), new_user_session_path, class: "button primary", id: "sign_in" %>
+        </div>
       <% end %>
     </div>
   </div>

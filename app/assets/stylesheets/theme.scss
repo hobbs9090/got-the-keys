@@ -1307,29 +1307,24 @@ a:focus {
 .auth-shell {
   align-items: start;
   display: grid;
-  gap: 1.5rem;
-  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.1fr);
+  gap: 1.75rem;
+  grid-template-columns: minmax(320px, 0.94fr) minmax(0, 1.06fr);
   margin: 2rem auto 0;
-  max-width: 1120px;
-}
-
-.auth-shell--signin {
-  max-width: 1080px;
+  max-width: 1240px;
 }
 
 .auth-shell--compact {
-  grid-template-columns: minmax(260px, 0.96fr) minmax(0, 0.84fr);
-  max-width: 980px;
+  grid-template-columns: minmax(320px, 0.94fr) minmax(0, 1.06fr);
 }
 
 .auth-panel,
 .auth-form-card {
-  padding: 1.5rem;
+  padding: clamp(1.4rem, 1rem + 1vw, 1.8rem);
 }
 
 .auth-panel {
   display: grid;
-  gap: 1rem;
+  gap: 1.1rem;
 }
 
 .auth-panel--registration {
@@ -1405,18 +1400,20 @@ a:focus {
 
 .auth-form-card {
   display: grid;
-  gap: 1.2rem;
+  gap: 1.35rem;
 }
 
 .auth-form-card__header {
-  align-items: end;
+  align-items: start;
   display: flex;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: 0.85rem 1.2rem;
   justify-content: space-between;
 }
 
 .auth-form-card__intro {
   color: var(--color-muted);
+  flex: 1 1 18rem;
   max-width: 38ch;
 }
 
@@ -1528,13 +1525,16 @@ a:focus {
 
 .auth-form__actions {
   align-items: end;
+  flex-wrap: wrap;
   gap: 1.25rem;
 }
 
 .auth-form__note {
   color: var(--color-muted);
+  flex: 1 1 auto;
   margin: 0;
   max-width: 58ch;
+  min-width: 0;
 }
 
 .auth-form__submit {
@@ -1542,6 +1542,7 @@ a:focus {
   border: 0;
   box-shadow: 0 18px 32px rgba(20, 87, 214, 0.22);
   display: inline-flex;
+  flex-shrink: 0;
   justify-content: center;
   min-height: 3.6rem;
   min-width: 12rem;
