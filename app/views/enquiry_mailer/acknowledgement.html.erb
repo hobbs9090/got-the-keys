@@ -1,11 +1,11 @@
-<p>Hi <%= @enquiry.customer_name %>,</p>
+<p><%= t("ui.enquiries.mailer.greeting", name: @enquiry.customer_name) %></p>
 
-<p>Thanks for getting in touch about <strong><%= @property.address_line_1 %></strong>. The team has your enquiry and will review it shortly.</p>
+<p><%= t("ui.enquiries.mailer.acknowledgement_body_html", address: @property.address_line_1) %></p>
 
 <ul>
-  <li>Lead reference: <%= @enquiry.lead_reference %></li>
-  <li>Enquiry type: <%= @enquiry.display_source %></li>
-  <li>Property: <%= @property.address_line_1 %>, <%= @property.town_city %></li>
+  <li><%= t("ui.enquiries.mailer.lead_reference", reference: @enquiry.lead_reference) %></li>
+  <li><%= t("ui.enquiries.mailer.enquiry_type", source: @enquiry.display_source) %></li>
+  <li><%= t("ui.enquiries.mailer.property", address: [@property.address_line_1, @property.town_city].compact.join(", ")) %></li>
 </ul>
 
-<p>We will reply using the contact details you provided.</p>
+<p><%= t("ui.enquiries.mailer.reply_body") %></p>

@@ -1,15 +1,15 @@
-<% title "Documents for #{@property.address_line_1}" %>
+<% title t("ui.property_documents.title", address: @property.address_line_1) %>
 
 <section class="property-layout">
   <article class="property-panel">
     <div class="section-heading">
       <div>
-        <p class="section-heading__eyebrow">Seller workspace</p>
-        <h2>Manage documents</h2>
+        <p class="section-heading__eyebrow"><%= t("ui.properties.show.seller_title") %></p>
+        <h2><%= t("ui.property_documents.heading") %></h2>
       </div>
 
       <div class="section-heading__actions">
-        <%= link_to "Back to listing", property_path(@property), class: "button hollow secondary" %>
+        <%= link_to t("ui.common.back_to_listing"), property_path(@property), class: "button hollow secondary" %>
       </div>
     </div>
 
@@ -19,83 +19,83 @@
           <div class="admin-list__item">
             <div>
               <strong><%= document.title %></strong>
-              <p><%= document.category_label %> · <%= document.visibility.humanize %> · <%= document.file_name %></p>
+              <p><%= document.category_label %> · <%= document.visibility_label %> · <%= document.file_name %></p>
             </div>
             <div class="admin-inline-actions">
-              <%= link_to "Download", download_property_property_document_path(@property, document), class: "button hollow secondary" %>
-              <%= button_to "Remove", property_property_document_path(@property, document), method: :delete, class: "button alert hollow" %>
+              <%= link_to t("ui.common.download"), download_property_property_document_path(@property, document), class: "button hollow secondary" %>
+              <%= button_to t("ui.common.remove"), property_property_document_path(@property, document), method: :delete, class: "button alert hollow" %>
             </div>
           </div>
         <% end %>
       </div>
     <% else %>
-      <p class="empty-copy">No brochure or compliance documents have been added yet.</p>
+      <p class="empty-copy"><%= t("ui.property_documents.empty") %></p>
     <% end %>
   </article>
 
   <aside class="property-booking-panel">
-    <h2>Add document</h2>
+    <h2><%= t("ui.property_documents.add_title") %></h2>
 
     <%= form_with model: [@property, @new_property_document] do |f| %>
       <%= render "shared/errors", object: @new_property_document %>
 
       <div class="form-grid">
         <div class="form-grid__full">
-          <%= f.label :title, "Title" %>
+          <%= f.label :title, t("ui.property_documents.fields.title") %>
           <%= f.text_field :title %>
         </div>
         <div class="form-grid__full">
-          <%= f.label :file_name, "File name" %>
-          <%= f.text_field :file_name, placeholder: "brochure.pdf" %>
+          <%= f.label :file_name, t("ui.property_documents.fields.file_name") %>
+          <%= f.text_field :file_name, placeholder: t("ui.property_documents.fields.file_name_placeholder") %>
         </div>
         <div>
-          <%= f.label :category, "Category" %>
+          <%= f.label :category, t("ui.property_documents.fields.category") %>
           <%= f.select :category, property_document_category_options %>
         </div>
         <div>
-          <%= f.label :visibility, "Visibility" %>
+          <%= f.label :visibility, t("ui.property_documents.fields.visibility") %>
           <%= f.select :visibility, property_document_visibility_options %>
         </div>
         <div>
-          <%= f.label :position, "Position" %>
+          <%= f.label :position, t("ui.property_documents.fields.position") %>
           <%= f.number_field :position, min: 0 %>
         </div>
       </div>
 
       <div class="form-actions">
-        <%= f.submit "Add document", class: "button primary expanded" %>
+        <%= f.submit t("ui.property_documents.actions.add"), class: "button primary expanded" %>
       </div>
     <% end %>
 
     <% if defined?(@edited_property_document) && @edited_property_document.present? %>
       <hr>
-      <h3>Edit document</h3>
+      <h3><%= t("ui.property_documents.edit_title") %></h3>
       <%= form_with model: [@property, @edited_property_document] do |f| %>
         <div class="form-grid">
           <div class="form-grid__full">
-            <%= f.label :title, "Title" %>
+            <%= f.label :title, t("ui.property_documents.fields.title") %>
             <%= f.text_field :title %>
           </div>
           <div class="form-grid__full">
-            <%= f.label :file_name, "File name" %>
+            <%= f.label :file_name, t("ui.property_documents.fields.file_name") %>
             <%= f.text_field :file_name %>
           </div>
           <div>
-            <%= f.label :category, "Category" %>
+            <%= f.label :category, t("ui.property_documents.fields.category") %>
             <%= f.select :category, property_document_category_options %>
           </div>
           <div>
-            <%= f.label :visibility, "Visibility" %>
+            <%= f.label :visibility, t("ui.property_documents.fields.visibility") %>
             <%= f.select :visibility, property_document_visibility_options %>
           </div>
           <div>
-            <%= f.label :position, "Position" %>
+            <%= f.label :position, t("ui.property_documents.fields.position") %>
             <%= f.number_field :position, min: 0 %>
           </div>
         </div>
 
         <div class="form-actions">
-          <%= f.submit "Save document", class: "button primary expanded" %>
+          <%= f.submit t("ui.property_documents.actions.save"), class: "button primary expanded" %>
         </div>
       <% end %>
     <% end %>

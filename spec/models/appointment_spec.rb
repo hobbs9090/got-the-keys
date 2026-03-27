@@ -140,6 +140,6 @@ RSpec.describe Appointment do
     appointment.update!(visit_outcome: "feedback_requested", admin: admin)
 
     expect(appointment.timeline.last.event_type).to eq("feedback_requested")
-    expect(appointment.timeline.last.message).to include("feedback requested")
+    expect(appointment.timeline.last.message).to include(I18n.t("ui.appointments.visit_outcomes.feedback_requested"))
   end
 end

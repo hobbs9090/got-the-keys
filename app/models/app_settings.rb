@@ -11,12 +11,12 @@ module AppSettings
 
   def primary_branch_profile
     {
-      name: "Sevenoaks and Westerham office",
-      team_label: "Managed by the local GotTheKeys team",
+      name: I18n.t("ui.branch_profile.name"),
+      team_label: I18n.t("ui.branch_profile.team_label"),
       phone: "01732 650010",
       email: "hello@gotthekeys.com",
-      response_time: "Usually replies within 1 business day",
-      hours: "Mon-Sat, 9:00-18:00"
+      response_time: I18n.t("ui.branch_profile.response_time"),
+      hours: I18n.t("ui.branch_profile.hours")
     }
   end
 end

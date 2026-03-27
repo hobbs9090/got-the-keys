@@ -36,6 +36,6 @@ class SavedSearch < ApplicationRecord
     return if min_price.blank? || max_price.blank?
     return if max_price >= min_price
 
-    errors.add(:max_price, "must be greater than or equal to the minimum price")
+    errors.add(:max_price, I18n.t("ui.saved_searches.validation.max_price"))
   end
 end

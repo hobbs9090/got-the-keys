@@ -12,7 +12,7 @@ class EnquiriesController < ApplicationController
     @enquiry = @property.enquiries.new(enquiry_params)
 
     if @enquiry.save
-      redirect_to property_path(@property), notice: "Thanks. Your enquiry has been sent to the team."
+      redirect_to property_path(@property), notice: t("ui.enquiries.flash.created")
     else
       render :new, status: :unprocessable_entity
     end
@@ -25,6 +25,6 @@ class EnquiriesController < ApplicationController
   end
 
   def ensure_property_is_visible!
-    redirect_to properties_path, alert: "This listing is not currently public." unless @property.publicly_visible?
+    redirect_to properties_path, alert: t("ui.properties.flash.not_public") unless @property.publicly_visible?
   end
 end
