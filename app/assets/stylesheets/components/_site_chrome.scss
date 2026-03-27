@@ -2,7 +2,7 @@
   box-sizing: border-box;
   margin: 0 auto;
   max-width: 1240px;
-  padding: 1rem var(--space-lg) 0;
+  padding: 1rem var(--space-site-shell) 0;
   position: sticky;
   top: 0;
   width: 100%;
@@ -19,7 +19,7 @@
   display: flex;
   gap: 1.2rem;
   justify-content: space-between;
-  padding: 0.9rem 1.3rem;
+  padding: var(--space-header-panel-y) var(--space-header-panel-x);
 }
 
 .site-brand {
@@ -101,70 +101,87 @@
   flex-wrap: wrap;
   gap: 0.7rem;
   justify-content: flex-end;
+  min-width: 0;
 }
 
 .site-header__session {
-  display: grid;
-  gap: 0.45rem;
+  align-items: center;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.6rem;
+  justify-content: flex-end;
+  min-width: 0;
 }
 
 .site-header__session-meta {
   align-items: center;
   display: flex;
-  gap: 0.75rem;
+  flex-wrap: nowrap;
+  gap: 0.65rem;
   justify-content: flex-end;
+  min-width: 0;
 }
 
 .site-header__account {
   display: grid;
-  gap: 0.16rem;
+  flex: 0 1 13.75rem;
+  gap: 0.08rem;
   justify-items: end;
-  max-width: 18rem;
+  max-width: 13.75rem;
+  min-width: 0;
   text-align: right;
 }
 
 .site-header__account-heading {
-  align-items: center;
+  align-items: baseline;
   display: inline-flex;
   flex-wrap: wrap;
-  gap: 0.38rem;
+  gap: 0.32rem;
   justify-content: flex-end;
 }
 
 .site-header__account-eyebrow {
   color: rgba(16, 33, 63, 0.56);
-  font-size: 0.64rem;
+  font-size: 0.58rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.11em;
   line-height: 1;
   text-transform: uppercase;
 }
 
 .site-header__account-name {
   color: #10213f;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   line-height: 1;
 }
 
 .site-header__account-detail {
   color: var(--color-muted);
-  font-size: 0.77rem;
-  line-height: 1.1;
+  display: block;
+  font-size: 0.75rem;
+  line-height: 1.05;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .site-header__button-group {
+  align-items: center;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 0.7rem;
   justify-content: flex-end;
+  min-width: 0;
 }
 
 .site-header__guest-actions {
   align-items: center;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 0.7rem;
   justify-content: flex-end;
+  min-width: 0;
 }
 
 .language-dropdown {
@@ -302,7 +319,7 @@
 .flash-stack {
   margin: 1.25rem auto 0;
   max-width: 1240px;
-  padding: 0 1.5rem;
+  padding: 0 var(--space-site-shell);
 }
 
 .flash {
@@ -327,7 +344,7 @@
 
 .site-footer {
   margin-top: 2.25rem;
-  padding: 0 1.5rem 1.4rem;
+  padding: 0 var(--space-site-shell) 1.4rem;
 }
 
 .site-footer__inner {
@@ -482,7 +499,15 @@
   .site-header__session-meta,
   .site-header__button-group,
   .site-header__guest-actions {
+    flex-wrap: wrap;
     justify-content: flex-start;
+  }
+
+  .site-header__session {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 100%;
   }
 
   .site-header__account {

@@ -395,6 +395,7 @@ en:
         appointment_updated: "Appointment updated."
         unsupported_appointment_status: "Unsupported appointment status."
         appointment_marked: "Appointment marked as %{status}."
+        demo_scenario_confirmation_required: "Type %{phrase} exactly to run this seed reset."
         applied_demo_scenario: "Applied demo scenario %{name}."
         restored_baseline_demo_scenario: "Restored baseline demo scenario (%{name})."
         imported_demo_scenario: "Imported demo scenario %{name}."
@@ -428,6 +429,12 @@ en:
         index:
           title: "Sellers"
           eyebrow: "Customer and seller management"
+          no_results: "No sellers match this search."
+          search:
+            label: "Search sellers"
+            placeholder: "Name, email, or mobile"
+            submit: "Search"
+            clear: "Clear"
           property_count:
             one: "1 property"
             other: "%{count} properties"
@@ -470,6 +477,15 @@ en:
         last_demo_action_title: "Last demo action"
         no_actions: "No resets, imports, or exports have been recorded yet."
         preview_action: "Preview"
+        seed_resets:
+          eyebrow: "Danger zone"
+          title: "Seed data resets"
+          description: "Each reset rebuilds the training dataset for a specific rehearsal. Type the exact scenario key before running one."
+          badge: "Typed gate"
+          preview: "Preview reset"
+          field_label: "Type %{phrase} to continue"
+          type_to_continue_html: "Type %{phrase} exactly to unlock this reset."
+          apply: "Run reset"
         counts:
           properties:
             one: "property"
@@ -511,6 +527,8 @@ en:
           eyebrow: "Scenario preview"
           apply_scenario: "Apply scenario"
           back_to_demo_data: "Back to demo data"
+          quick_reset_title: "Seed data reset"
+          quick_reset_body: "This rehearsal rebuilds the entire training dataset. Confirm the exact scenario key before you run it."
         import:
           title: "Import demo scenario"
           eyebrow: "Demo data import"

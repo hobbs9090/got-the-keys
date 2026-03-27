@@ -3,6 +3,16 @@ module AdminHelper
     t("ui.admin.demo_data.scenario_keys.#{key}", default: key.to_s.humanize)
   end
 
+  def admin_demo_confirmation_phrase(key_or_scenario)
+    key = key_or_scenario.is_a?(Hash) ? key_or_scenario.fetch(:key) : key_or_scenario
+
+    key.to_s
+  end
+
+  def admin_demo_confirmation_pattern(key_or_scenario)
+    Regexp.escape(admin_demo_confirmation_phrase(key_or_scenario))
+  end
+
   def admin_demo_action_label(action_type)
     t("ui.admin.demo_data.actions.#{action_type}", default: action_type.to_s.humanize)
   end

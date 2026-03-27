@@ -31,6 +31,7 @@ RSpec.describe "Devise entry pages", type: :request do
 
     expect(response).to have_http_status(:ok)
     expect_shared_auth_card_layout
+    expect(response.body).not_to include("marketing-wordmark--hero")
     expect(response.body).to include("Sign in")
   end
 
@@ -39,6 +40,7 @@ RSpec.describe "Devise entry pages", type: :request do
 
     expect(response).to have_http_status(:ok)
     expect_shared_auth_card_layout
+    expect(response.body).not_to include("marketing-wordmark--hero")
     expect(response.body).to include("Sign in as Administrator")
   end
 
@@ -47,6 +49,7 @@ RSpec.describe "Devise entry pages", type: :request do
 
     expect(response).to have_http_status(:ok)
     expect_shared_auth_card_layout
+    expect(response.body).not_to include("marketing-wordmark--hero")
     expect(response.body).to include("Forgot Password")
   end
 
@@ -55,6 +58,7 @@ RSpec.describe "Devise entry pages", type: :request do
 
     expect(response).to have_http_status(:ok)
     expect_shared_auth_card_layout
+    expect(response.body).not_to include("marketing-wordmark--hero")
     expect(response.body).to include("Resend unlock instructions")
   end
 end

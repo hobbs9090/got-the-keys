@@ -3,8 +3,8 @@ class Admin::DemoScenariosController < Admin::BaseController
 
   def index
     @scenarios = @scenario_loader.scenarios
-    @scenario_groups = @scenarios.group_by { |scenario| scenario.dig(:qa, :family) }
     @quick_reset_scenarios = @scenarios.select { |scenario| scenario.dig(:qa, :quick_reset) }
+    @scenario_groups = @scenarios.reject { |scenario| scenario.dig(:qa, :quick_reset) }.group_by { |scenario| scenario.dig(:qa, :family) }
     @latest_run = DemoScenarioRun.recent_first.first
     @diagnostics = diagnostics_payload
   end
@@ -14,16 +14,24 @@ class Admin::DemoScenariosController < Admin::BaseController
   end
 
   def apply
+    scenario = @scenario_loader.preview(params[:id])
+    return if reject_unconfirmed_demo_scenario!(scenario)
+
     actor_email = current_admin.email
-    summary = @scenario_loader.apply_catalog!(key: params[:id], actor_email:)
+    summary = @scenario_loader.apply_catalog!(key: scenario.fetch(:key), actor_email:)
     reauthenticate_admin(actor_email)
 
-    redirect_to admin_demo_scenarios_path, notice: t("ui.admin.flash.applied_demo_scenario", name: summary.fetch(:name))
+    notice_key = scenario.fetch(:key) == "baseline" ? "ui.admin.flash.restored_baseline_demo_scenario" : "ui.admin.flash.applied_demo_scenario"
+
+    redirect_to admin_demo_scenarios_path, notice: t(notice_key, name: summary.fetch(:name))
   rescue StandardError => error
     redirect_to admin_demo_scenarios_path, alert: error.message
   end
 
   def restore_baseline
+    scenario = @scenario_loader.preview("baseline")
+    return if reject_unconfirmed_demo_scenario!(scenario)
+
     actor_email = current_admin.email
     summary = @scenario_loader.apply_catalog!(key: "baseline", actor_email:)
     reauthenticate_admin(actor_email)
@@ -88,6 +96,27 @@ class Admin::DemoScenariosController < Admin::BaseController
       mail_delivery_mode: ActionMailer::Base.delivery_method.to_s,
       job_adapter: ActiveJob::Base.queue_adapter.class.name.demodulize.underscore
     }
+  end
+
+  def reject_unconfirmed_demo_scenario!(scenario)
+    return false unless scenario.dig(:qa, :quick_reset)
+    return false if params[:confirm_demo_scenario].to_s == scenario.fetch(:key).to_s
+
+    redirect_to(
+      demo_scenario_return_path(scenario.fetch(:key)),
+      alert: t("ui.admin.flash.demo_scenario_confirmation_required", phrase: scenario.fetch(:key))
+    )
+
+    true
+  end
+
+  def demo_scenario_return_path(scenario_key)
+    preview_path = admin_demo_scenario_path(scenario_key)
+    requested_path = params[:return_to].to_s
+
+    return requested_path if [admin_demo_scenarios_path, preview_path].include?(requested_path)
+
+    admin_demo_scenarios_path
   end
 
   def reauthenticate_admin(email)

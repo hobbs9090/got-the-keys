@@ -37,6 +37,7 @@ RSpec.describe "Header account details", type: :request do
     account_summary = session_panel.at_css('[data-testid="header-account-summary"]')
     expect(account_summary).to be_present
     expect(account_summary.at_css(".site-header__account-heading")).to be_present
+    expect(account_summary.at_css(".site-header__account-detail")["title"]).to eq(admin.email)
     expect(account_summary.text).to include("Administrator")
     expect(account_summary.text).to include(admin.email)
 
@@ -62,6 +63,7 @@ RSpec.describe "Header account details", type: :request do
     account_summary = session_panel.at_css('[data-testid="header-account-summary"]')
     expect(account_summary).to be_present
     expect(account_summary.at_css(".site-header__account-heading")).to be_present
+    expect(account_summary.at_css(".site-header__account-detail")["title"]).to eq(user.email)
     expect(account_summary.text).to include("Taylor Stone")
     expect(account_summary.text).to include(user.email)
 

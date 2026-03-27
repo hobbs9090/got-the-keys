@@ -295,6 +295,7 @@ de:
         appointment_updated: "Termin aktualisiert."
         unsupported_appointment_status: "Nicht unterstützter Terminstatus."
         appointment_marked: "Termin als %{status} markiert."
+        demo_scenario_confirmation_required: "Gib %{phrase} exakt ein, um diesen Seed-Daten-Reset auszuführen."
         applied_demo_scenario: "Demodatenszenario %{name} angewendet."
         restored_baseline_demo_scenario: "Basis-Demodatenszenario (%{name}) wiederhergestellt."
         imported_demo_scenario: "Demodatenszenario %{name} importiert."
@@ -328,6 +329,12 @@ de:
         index:
           title: "Verkäufer"
           eyebrow: "Kunden- und Verkäuferverwaltung"
+          no_results: "Keine Verkäufer entsprechen dieser Suche."
+          search:
+            label: "Verkäufer suchen"
+            placeholder: "Name, E-Mail oder Mobilnummer"
+            submit: "Suchen"
+            clear: "Zurücksetzen"
           property_count:
             one: "1 Objekt"
             other: "%{count} Objekte"
@@ -370,6 +377,15 @@ de:
         last_demo_action_title: "Letzte Demo-Aktion"
         no_actions: "Es wurden noch keine Zurücksetzungen, Importe oder Exporte aufgezeichnet."
         preview_action: "Vorschau"
+        seed_resets:
+          eyebrow: "Gefahrenbereich"
+          title: "Seed-Daten-Resets"
+          description: "Jeder Reset baut den Trainingsdatenbestand für eine bestimmte Probe neu auf. Gib vor dem Start exakt den Szenarioschlüssel ein."
+          badge: "Eingabesperre"
+          preview: "Reset-Vorschau"
+          field_label: "%{phrase} eingeben, um fortzufahren"
+          type_to_continue_html: "Gib %{phrase} exakt ein, um diesen Reset freizuschalten."
+          apply: "Reset ausführen"
         counts:
           properties:
             one: "Objekt"
@@ -411,6 +427,8 @@ de:
           eyebrow: "Szenariovorschau"
           apply_scenario: "Szenario anwenden"
           back_to_demo_data: "Zurück zu den Demodaten"
+          quick_reset_title: "Seed-Daten-Reset"
+          quick_reset_body: "Diese Probe baut den gesamten Trainingsdatenbestand neu auf. Bestätige den exakten Szenarioschlüssel, bevor du sie startest."
         import:
           title: "Demodatenszenario importieren"
           eyebrow: "Import von Demodaten"

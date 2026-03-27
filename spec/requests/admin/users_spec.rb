@@ -1,0 +1,68 @@
+require "rails_helper"
+require "nokogiri"
+
+RSpec.describe "Admin users", type: :request do
+  let(:admin) { FactoryBot.create(:admin, email: "users-admin@gotthekeys.com", password: "changeme", password_confirmation: "changeme") }
+
+  before do
+    sign_in admin
+  end
+
+  def parsed_html
+    Nokogiri::HTML.parse(response.body)
+  end
+
+  it "shows a seller search form on the index" do
+    get admin_users_path
+
+    expect(response).to have_http_status(:ok)
+
+    search_form = parsed_html.at_css('[data-testid="admin-users-search"]')
+    expect(search_form).to be_present
+    expect(search_form["action"]).to eq(admin_users_path)
+
+    search_input = search_form.at_css('[data-testid="admin-users-search-input"]')
+    expect(search_input).to be_present
+    expect(search_input["placeholder"]).to eq("Name, email, or mobile")
+
+    clear_link = search_form.at_css('[data-testid="admin-users-search-clear"]')
+    expect(clear_link).to be_present
+    expect(clear_link["href"]).to eq(admin_users_path)
+  end
+
+  it "filters sellers by full name" do
+    matching_user = FactoryBot.create(:user, first_name: "Taylor", last_name: "Stone", email: "taylor.stone@example.com")
+    non_matching_user = FactoryBot.create(:user, first_name: "Morgan", last_name: "Lake", email: "morgan@example.com")
+
+    get admin_users_path, params: { q: "Taylor Stone" }
+
+    expect(response).to have_http_status(:ok)
+
+    row_ids = parsed_html.css('[data-testid^="admin-user-row-"]').map { |row| row["data-testid"] }
+    expect(row_ids).to include("admin-user-row-#{matching_user.id}")
+    expect(row_ids).not_to include("admin-user-row-#{non_matching_user.id}")
+
+    search_input = parsed_html.at_css('[data-testid="admin-users-search-input"]')
+    expect(search_input["value"]).to eq("Taylor Stone")
+  end
+
+  it "filters sellers by email and shows an empty state when there are no matches" do
+    FactoryBot.create(:user, first_name: "Taylor", last_name: "Stone", email: "taylor.stone@example.com")
+    matching_user = FactoryBot.create(:user, first_name: "Casey", last_name: "Blue", email: "casey.blue@example.com")
+
+    get admin_users_path, params: { q: "casey.blue@" }
+
+    expect(response).to have_http_status(:ok)
+
+    row_ids = parsed_html.css('[data-testid^="admin-user-row-"]').map { |row| row["data-testid"] }
+    expect(row_ids).to eq(["admin-user-row-#{matching_user.id}"])
+
+    get admin_users_path, params: { q: "nobody here" }
+
+    expect(response).to have_http_status(:ok)
+
+    empty_copy = parsed_html.at_css(".empty-copy")
+    expect(empty_copy).to be_present
+    expect(empty_copy.text.strip).to eq("No sellers match this search.")
+  end
+end

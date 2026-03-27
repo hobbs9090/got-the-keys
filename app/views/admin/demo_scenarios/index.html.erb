@@ -8,7 +8,6 @@
     </div>
 
     <div class="section-heading__actions">
-      <%= button_to t("ui.admin.demo_data.restore_baseline"), restore_baseline_admin_demo_scenarios_path, method: :post, class: "button warning" %>
       <%= link_to t("ui.admin.demo_data.import_scenario"), import_admin_demo_scenarios_path, class: "button hollow secondary" %>
       <%= link_to t("ui.admin.demo_data.export_current_data"), export_admin_demo_scenarios_path, class: "button hollow primary" %>
     </div>
@@ -40,17 +39,16 @@
 </section>
 
 <% if @quick_reset_scenarios.any? %>
-  <section class="admin-panel admin-demo-quick-reset" data-testid="scenario-quick-reset-panel">
-    <h2>Quick reset packs</h2>
-    <p>Use these one-click resets for the most common training sessions.</p>
-    <div class="admin-demo-quick-reset__grid" data-testid="scenario-quick-reset-grid">
+  <section class="admin-panel admin-demo-danger-zone" data-testid="scenario-seed-reset-panel">
+    <div class="admin-demo-danger-zone__header">
+      <p class="admin-demo-danger-zone__eyebrow"><%= t("ui.admin.demo_data.seed_resets.eyebrow") %></p>
+      <h2><%= t("ui.admin.demo_data.seed_resets.title") %></h2>
+      <p><%= t("ui.admin.demo_data.seed_resets.description") %></p>
+    </div>
+
+    <div class="admin-demo-danger-zone__list" data-testid="scenario-seed-reset-list">
       <% @quick_reset_scenarios.each do |scenario| %>
-        <%= button_to scenario.fetch(:name),
-                      apply_admin_demo_scenario_path(scenario.fetch(:key)),
-                      method: :post,
-                      class: "button hollow secondary admin-demo-quick-reset__button",
-                      form_class: "admin-demo-quick-reset__form",
-                      data: { testid: "quick-reset-#{scenario.fetch(:key).dasherize}" } %>
+        <%= render "seed_reset_gate", scenario:, return_to: admin_demo_scenarios_path %>
       <% end %>
     </div>
   </section>

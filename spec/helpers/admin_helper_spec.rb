@@ -13,6 +13,18 @@ RSpec.describe AdminHelper, type: :helper do
     end
   end
 
+  describe "#admin_demo_confirmation_phrase" do
+    it "uses the scenario key as the typed confirmation phrase" do
+      expect(helper.admin_demo_confirmation_phrase(key: "qa_edge_cases")).to eq("qa_edge_cases")
+    end
+  end
+
+  describe "#admin_demo_confirmation_pattern" do
+    it "returns a safe exact-match pattern for the phrase" do
+      expect(helper.admin_demo_confirmation_pattern("deal_progression")).to eq("deal_progression")
+    end
+  end
+
   describe "#admin_demo_value" do
     it "translates appointment status hashes" do
       I18n.with_locale(:fr) do

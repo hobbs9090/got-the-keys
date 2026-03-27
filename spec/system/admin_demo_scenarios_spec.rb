@@ -9,14 +9,15 @@ RSpec.describe "Admin demo scenarios", type: :system do
     click_button "Sign in"
   end
 
-  it "restores the baseline scenario from the admin area" do
+  it "restores the baseline scenario from the admin area with the typed gate" do
     admin = FactoryBot.create(:admin, email: "steven@gotthekeys.com", password: "changeme", password_confirmation: "changeme")
 
     sign_in_as(admin)
 
     expect(page).to have_text("Demo data management")
     expect(page).to have_css('[data-testid="active-demo-scenario"]', text: "Baseline")
-    expect(page).to have_css('[data-testid="scenario-quick-reset-panel"]')
+    expect(page).to have_css('[data-testid="scenario-seed-reset-panel"]')
+    expect(page).to have_text("Seed data resets")
 
     within(:xpath, "//article[contains(., 'Fully Booked Day')]") do
       click_button "Apply"
@@ -25,7 +26,10 @@ RSpec.describe "Admin demo scenarios", type: :system do
     expect(page).to have_text("Applied demo scenario Fully Booked Day.")
     expect(page).to have_css('[data-testid="active-demo-scenario"]', text: "Fully booked day")
 
-    click_button "Restore baseline"
+    within('[data-testid="scenario-seed-reset-baseline"]') do
+      fill_in "Type baseline to continue", with: "baseline"
+      click_button "Run reset"
+    end
 
     expect(page).to have_text("Restored baseline demo scenario (Baseline Demo Estate).")
     expect(page).to have_css('[data-testid="active-demo-scenario"]', text: "Baseline")

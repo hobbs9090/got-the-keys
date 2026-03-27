@@ -395,6 +395,7 @@ zh:
         appointment_updated: "预约已更新。"
         unsupported_appointment_status: "不支持的预约状态。"
         appointment_marked: "预约已标记为 %{status}。"
+        demo_scenario_confirmation_required: "请准确输入 %{phrase} 后再执行这次 Seed 数据重置。"
         applied_demo_scenario: "已应用演示场景 %{name}。"
         restored_baseline_demo_scenario: "已恢复基线演示场景（%{name}）。"
         imported_demo_scenario: "已导入演示场景 %{name}。"
@@ -428,6 +429,12 @@ zh:
         index:
           title: "卖家"
           eyebrow: "客户与卖家管理"
+          no_results: "没有卖家符合当前搜索。"
+          search:
+            label: "搜索卖家"
+            placeholder: "姓名、邮箱或手机号"
+            submit: "搜索"
+            clear: "清除"
           property_count:
             one: "1 套房源"
             other: "%{count} 套房源"
@@ -470,6 +477,15 @@ zh:
         last_demo_action_title: "最近一次演示操作"
         no_actions: "尚未记录任何重置、导入或导出操作。"
         preview_action: "预览"
+        seed_resets:
+          eyebrow: "高风险区"
+          title: "Seed 数据重置"
+          description: "每次重置都会为特定演练重建整套训练数据。执行前必须输入完全一致的场景键。"
+          badge: "输入闸门"
+          preview: "预览重置"
+          field_label: "输入 %{phrase} 以继续"
+          type_to_continue_html: "请准确输入 %{phrase} 以解锁这次重置。"
+          apply: "执行重置"
         counts:
           properties:
             one: "房源"
@@ -511,6 +527,8 @@ zh:
           eyebrow: "场景预览"
           apply_scenario: "应用场景"
           back_to_demo_data: "返回演示数据"
+          quick_reset_title: "Seed 数据重置"
+          quick_reset_body: "这次演练会重建整套训练数据。执行前请确认准确的场景键。"
         import:
           title: "导入演示场景"
           eyebrow: "演示数据导入"

@@ -120,6 +120,27 @@ describe "Properties" do
     end
   end
 
+  describe "GET /properties/new" do
+    it "renders the seller listing form with spaced sections" do
+      sign_in user
+
+      get new_property_path
+
+      document = Nokogiri::HTML(response.body)
+      form = document.at_css(%([data-testid="property-listing-form"]))
+      actions = form.at_css(".form-actions")
+
+      expect(response).to have_http_status(:ok)
+      expect(form).to be_present
+      expect(form["class"]).to include("stacked-form")
+      expect(form["class"]).to include("property-listing-form")
+      expect(actions).to be_present
+      expect(actions["class"]).to include("property-listing-form__actions")
+      expect(document.at_css(%([data-testid="listing-workflow-panel"]))).to be_present
+      expect(document.at_css(%([data-testid="listing-facts-panel"]))).to be_present
+    end
+  end
+
   describe "GET /properties/1/photos" do
     it "should retrieve page" do
       get property_photos_path(property)
