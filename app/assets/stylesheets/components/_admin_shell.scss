@@ -60,12 +60,38 @@
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: var(--radius-lg);
   box-shadow: var(--color-shadow);
+  display: grid;
+  gap: 0.85rem;
   margin: 0 auto;
   padding: var(--space-header-panel-y) var(--space-header-panel-x);
 }
 
 .admin-topbar .button {
   border-radius: 1rem;
+}
+
+.admin-topbar__corner {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.admin-topbar__main {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.admin-topbar__context {
+  min-width: 0;
+}
+
+.admin-topbar__session {
+  align-items: center;
+  display: flex;
+  gap: 0.8rem;
+  justify-content: flex-end;
+  min-width: 0;
 }
 
 .admin-topbar__actions {
@@ -78,8 +104,26 @@
 }
 
 .admin-topbar__user {
-  flex: 0 1 13.75rem;
+  align-items: center;
+  display: flex;
+  flex: 0 1 auto;
+  gap: 0.45rem;
+  justify-items: start;
+  max-width: none;
   min-width: 0;
+  text-align: left;
+}
+
+.admin-topbar__user .site-header__account-heading {
+  gap: 0.4rem;
+  justify-content: flex-start;
+}
+
+.admin-topbar__user .site-header__account-detail {
+  display: inline;
+  font-size: 0.82rem;
+  line-height: 1.1;
+  max-width: 15rem;
 }
 
 .admin-topbar__action {
@@ -465,7 +509,16 @@
 
   .admin-topbar {
     align-items: stretch;
+  }
+
+  .admin-topbar__main,
+  .admin-topbar__session {
+    align-items: flex-start;
     flex-direction: column;
+  }
+
+  .admin-topbar__corner {
+    justify-content: flex-start;
   }
 
   .admin-topbar__actions {
@@ -474,16 +527,19 @@
   }
 
   .admin-topbar__user {
+    align-items: flex-start;
     flex-basis: auto;
-  }
-
-  .admin-topbar__actions .site-header__account {
-    justify-items: start;
+    flex-direction: column;
     text-align: left;
   }
 
-  .admin-topbar__actions .site-header__account-heading {
+  .admin-topbar__user .site-header__account-heading {
     justify-content: flex-start;
+  }
+
+  .admin-topbar__user .site-header__account-detail {
+    display: block;
+    max-width: 100%;
   }
 
   .admin-dashboard__quick-links {

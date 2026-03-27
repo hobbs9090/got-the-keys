@@ -50,6 +50,7 @@ RSpec.describe "Devise entry pages", type: :request do
     expect_shared_auth_card_layout
     expect(response.body).not_to include("marketing-wordmark--hero")
     expect(response.body).to include("Sign in as Administrator")
+    expect(response.body).not_to include("Verification code or backup code")
   end
 
   it "renders the forgot password page" do
