@@ -159,6 +159,14 @@
   justify-content: flex-end;
 }
 
+.site-header__guest-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  justify-content: flex-end;
+}
+
 .language-dropdown {
   position: relative;
 }
@@ -472,7 +480,8 @@
   }
 
   .site-header__session-meta,
-  .site-header__button-group {
+  .site-header__button-group,
+  .site-header__guest-actions {
     justify-content: flex-start;
   }
 
