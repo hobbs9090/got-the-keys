@@ -14,8 +14,7 @@ en:
       sign_in: "Sign in"
 
     site_footer:
-      copy: "Modern property discovery, appointment booking, and deterministic QA scenarios in one server-rendered Rails application."
-      meta_copy: "Built for realistic demos, acceptance testing, and training in AI-driven browser automation."
+      copy: "Modern property discovery, appointment booking, and deterministic QA scenarios in one server-rendered Rails application. Built for realistic demos, acceptance testing, and AI-driven browser automation training."
 
     shared:
       property_placeholder_alt: "Property placeholder image"
@@ -322,6 +321,7 @@ en:
           upcoming_appointments: "Upcoming appointments"
           pending_actions: "Pending actions"
           customers: "Customers"
+          open_leads: "Open leads"
         bookings_eyebrow: "Admin-only section"
         bookings_title: "Booking visibility and control"
         all_bookings: "All bookings"

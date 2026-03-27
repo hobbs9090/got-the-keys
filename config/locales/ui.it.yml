@@ -11,8 +11,7 @@ it:
       sign_in: "Accedi"
 
     site_footer:
-      copy: "Scoperta immobiliare moderna, prenotazione visite e scenari QA deterministici in un'unica applicazione Rails renderizzata lato server."
-      meta_copy: "Progettato per demo realistiche, test di accettazione e formazione sull'automazione del browser guidata dall'IA."
+      copy: "Scoperta immobiliare moderna, prenotazione visite e scenari QA deterministici in un'unica applicazione Rails renderizzata lato server, progettata per demo realistiche, test di accettazione e formazione sull'automazione del browser guidata dall'IA."
 
     shared:
       property_placeholder_alt: "Immagine segnaposto dell'immobile"

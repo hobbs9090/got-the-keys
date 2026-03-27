@@ -11,8 +11,7 @@ de:
       sign_in: "Anmelden"
 
     site_footer:
-      copy: "Moderne Immobiliensuche, Besichtigungstermine und deterministische QA-Szenarien in einer serverseitig gerenderten Rails-Anwendung."
-      meta_copy: "Entwickelt für realistische Demos, Abnahmetests und Schulungen in KI-gestützter Browser-Automatisierung."
+      copy: "Moderne Immobiliensuche, Besichtigungstermine und deterministische QA-Szenarien in einer serverseitig gerenderten Rails-Anwendung, entwickelt für realistische Demos, Abnahmetests und Schulungen in KI-gestützter Browser-Automatisierung."
 
     shared:
       property_placeholder_alt: "Platzhalterbild für Immobilie"

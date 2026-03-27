@@ -11,8 +11,7 @@ fr:
       sign_in: "Se connecter"
 
     site_footer:
-      copy: "Decouverte immobiliere moderne, prise de rendez-vous et scenarios QA deterministes dans une seule application Rails rendue cote serveur."
-      meta_copy: "Concu pour des demos realistes, des tests d'acceptation et la formation a l'automatisation de navigateur pilotee par l'IA."
+      copy: "Decouverte immobiliere moderne, prise de rendez-vous et scenarios QA deterministes dans une seule application Rails rendue cote serveur, concue pour des demos realistes, des tests d'acceptation et la formation a l'automatisation de navigateur pilotee par l'IA."
 
     shared:
       property_placeholder_alt: "Image de remplacement du bien"

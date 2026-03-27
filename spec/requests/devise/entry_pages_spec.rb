@@ -4,11 +4,19 @@ require "nokogiri"
 RSpec.describe "Devise entry pages", type: :request do
   def expect_shared_auth_card_layout
     document = Nokogiri::HTML.parse(response.body)
+    header = document.at_css(".auth-form-card__header")
+    title = header&.at_css(".auth-form-card__title")
+    intro = header&.at_css(".auth-form-card__intro")
+    header_children = header&.element_children || []
 
     expect(document.at_css(".auth-shell")).to be_present
     expect(document.at_css(".auth-panel.site-card")).to be_present
     expect(document.at_css(".auth-form-card.site-card")).to be_present
-    expect(document.at_css(".auth-form-card__header")).to be_present
+    expect(header).to be_present
+    expect(title).to be_present
+    expect(intro).to be_present
+    expect(header_children.first.at_css(".auth-form-card__title")).to be_present
+    expect(header_children[1]["class"]).to include("auth-form-card__intro")
     expect(document.at_css(".auth-form__actions")).to be_present
   end
 

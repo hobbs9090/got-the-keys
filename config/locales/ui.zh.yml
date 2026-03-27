@@ -14,8 +14,7 @@ zh:
       sign_in: "登录"
 
     site_footer:
-      copy: "在同一个服务端渲染的 Rails 应用中，整合现代房源浏览、预约看房和可重复的 QA 场景。"
-      meta_copy: "为真实演示、验收测试和 AI 驱动浏览器自动化训练而构建。"
+      copy: "在同一个服务端渲染的 Rails 应用中，整合现代房源浏览、预约看房和可重复的 QA 场景，并为真实演示、验收测试与 AI 驱动的浏览器自动化训练而构建。"
 
     shared:
       property_placeholder_alt: "房源占位图"
@@ -322,6 +321,7 @@ zh:
           upcoming_appointments: "即将到来的预约"
           pending_actions: "待处理事项"
           customers: "客户"
+          open_leads: "开放线索"
         bookings_eyebrow: "仅限管理员"
         bookings_title: "预约可见性与控制"
         all_bookings: "全部预约"
