@@ -45,5 +45,24 @@ RSpec.describe "Welcome", type: :request do
       expect(property_links).to eq([newest.address_line_1, middle.address_line_1, older.address_line_1])
       expect(property_links).not_to include(omitted.address_line_1)
     end
+
+    it "tops up the homepage cards when there are fewer than three featured listings" do
+      user = FactoryBot.create(:user)
+      featured_newest = create_property(user:, address_line_1: "1 Featured Lane", featured: true, updated_at: 1.day.ago)
+      featured_older = create_property(user:, address_line_1: "2 Featured Close", featured: true, updated_at: 2.days.ago)
+      fallback = create_property(user:, address_line_1: "3 Harbour Approach", featured: false, updated_at: 3.hours.ago)
+      omitted = create_property(user:, address_line_1: "4 Garden Square", featured: false, updated_at: 2.days.ago)
+
+      get root_path
+
+      expect(response).to have_http_status(:ok)
+
+      document = Nokogiri::HTML.parse(response.body)
+      property_links = document.css('[data-testid^="property-card-link-"]').map { |link| link.text.strip }
+
+      expect(property_links).to eq([featured_newest.address_line_1, featured_older.address_line_1, fallback.address_line_1])
+      expect(property_links).not_to include(omitted.address_line_1)
+      expect(document.css('[data-testid="property-card"]').count).to eq(3)
+    end
   end
 end

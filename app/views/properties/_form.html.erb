@@ -2,7 +2,7 @@
 <% cancel_path = local_assigns.fetch(:cancel_path, properties_path) %>
 <% allow_destroy = local_assigns.fetch(:allow_destroy, true) %>
 
-<%= form_with model: form_model, data: { testid: "property-listing-form" } do |f| %>
+<%= form_with model: form_model, class: "stacked-form property-listing-form", data: { testid: "property-listing-form" } do |f| %>
   <%= render "shared/errors", object: form_model %>
 
   <section class="property-panel" data-testid="listing-workflow-panel">
@@ -161,7 +161,7 @@
     </div>
   </section>
 
-  <div class="form-actions">
+  <div class="form-actions property-listing-form__actions">
     <%= f.submit class: "button primary" %>
     <%= link_to t('helpers.label.property.cancel'), cancel_path, class: 'button hollow secondary' %>
     <% if allow_destroy && !current_page?(controller: 'properties', action: 'new') %>

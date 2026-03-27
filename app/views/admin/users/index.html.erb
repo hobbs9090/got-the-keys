@@ -7,16 +7,35 @@
       <h1><%= t("ui.admin.users.index.title") %></h1>
     </div>
   </div>
+</section>
 
-  <div class="admin-list">
-    <% @users.each do |user| %>
-      <div class="admin-list__item">
-        <div>
-          <%= link_to user.full_name.presence || user.email, admin_user_path(user) %>
-          <p><%= user.email %> · <%= t("ui.admin.users.index.property_count", count: user.properties.count) %></p>
+<section class="admin-panel">
+  <%= form_with url: admin_users_path, method: :get, class: "admin-filter-form", local: true, data: { testid: "admin-users-search" } do |f| %>
+    <div>
+      <%= f.label :q, t("ui.admin.users.index.search.label") %>
+      <%= f.search_field :q, value: @query, placeholder: t("ui.admin.users.index.search.placeholder"), data: { testid: "admin-users-search-input" } %>
+    </div>
+    <div class="admin-filter-form__actions">
+      <%= f.submit t("ui.admin.users.index.search.submit"), class: "button primary", data: { testid: "admin-users-search-submit" } %>
+      <%= link_to t("ui.admin.users.index.search.clear"), admin_users_path, class: "button hollow secondary", data: { testid: "admin-users-search-clear" } %>
+    </div>
+  <% end %>
+</section>
+
+<section class="admin-panel">
+  <% if @users.any? %>
+    <div class="admin-list">
+      <% @users.each do |user| %>
+        <div class="admin-list__item" data-testid="admin-user-row-<%= user.id %>">
+          <div>
+            <%= link_to user.full_name.presence || user.email, admin_user_path(user) %>
+            <p><%= user.email %> · <%= t("ui.admin.users.index.property_count", count: user.properties.count) %></p>
+          </div>
+          <span class="badge badge--neutral"><%= user.language.upcase %></span>
         </div>
-        <span class="badge badge--neutral"><%= user.language.upcase %></span>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="empty-copy"><%= t("ui.admin.users.index.no_results") %></p>
+  <% end %>
 </section>

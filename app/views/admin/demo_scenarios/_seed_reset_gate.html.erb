@@ -1,0 +1,58 @@
+<% scenario_key = scenario.fetch(:key).to_s %>
+<% scenario_slug = scenario_key.dasherize %>
+<% confirmation_phrase = admin_demo_confirmation_phrase(scenario) %>
+<% field_id = "confirm-demo-scenario-#{scenario_slug}" %>
+<% hint_id = "#{field_id}-hint" %>
+<% show_preview_link = local_assigns.fetch(:show_preview_link, true) %>
+
+<article class="admin-demo-danger-zone__item" data-testid="scenario-seed-reset-<%= scenario_slug %>">
+  <div class="admin-demo-danger-zone__content">
+    <div class="admin-demo-danger-zone__title-row">
+      <div class="admin-demo-danger-zone__title-copy">
+        <h3><%= scenario.fetch(:name) %></h3>
+        <p><%= scenario.fetch(:description) %></p>
+      </div>
+
+      <span class="badge badge--danger"><%= t("ui.admin.demo_data.seed_resets.badge") %></span>
+    </div>
+
+    <ul class="detail-inline-list admin-demo-danger-zone__meta">
+      <li><strong>Journey</strong>: <%= scenario.dig(:qa, :intended_journey) %></li>
+      <li><strong>Risk</strong>: <%= scenario.dig(:qa, :risk_type).to_s.humanize %></li>
+      <li><strong>Locales</strong>: <%= Array(scenario.dig(:qa, :locale_coverage)).join(", ") %></li>
+    </ul>
+
+    <p class="admin-demo-danger-zone__hint" id="<%= hint_id %>">
+      <%= t("ui.admin.demo_data.seed_resets.type_to_continue_html", phrase: content_tag(:span, confirmation_phrase, class: "admin-demo-danger-zone__phrase")) %>
+    </p>
+  </div>
+
+  <div class="admin-demo-danger-zone__actions">
+    <% if show_preview_link %>
+      <%= link_to t("ui.admin.demo_data.seed_resets.preview"), admin_demo_scenario_path(scenario_key), class: "button hollow secondary" %>
+    <% end %>
+
+    <%= form_with url: apply_admin_demo_scenario_path(scenario_key), method: :post, local: true, class: "admin-demo-danger-zone__form", data: { testid: "scenario-seed-reset-form-#{scenario_slug}" } do %>
+      <%= hidden_field_tag :return_to, return_to %>
+
+      <div class="admin-demo-danger-zone__field">
+        <%= label_tag field_id, t("ui.admin.demo_data.seed_resets.field_label", phrase: confirmation_phrase) %>
+        <%= text_field_tag :confirm_demo_scenario,
+                           nil,
+                           id: field_id,
+                           class: "admin-demo-danger-zone__input",
+                           required: true,
+                           pattern: admin_demo_confirmation_pattern(confirmation_phrase),
+                           title: t("ui.admin.demo_data.seed_resets.field_label", phrase: confirmation_phrase),
+                           placeholder: confirmation_phrase,
+                           autocomplete: "off",
+                           autocapitalize: "none",
+                           spellcheck: false,
+                           aria: { describedby: hint_id },
+                           data: { testid: "scenario-seed-reset-input-#{scenario_slug}" } %>
+      </div>
+
+      <%= button_tag t("ui.admin.demo_data.seed_resets.apply"), class: "button alert admin-demo-danger-zone__submit", data: { testid: "scenario-seed-reset-apply-#{scenario_slug}" } %>
+    <% end %>
+  </div>
+</article>

@@ -295,6 +295,7 @@ fr:
         appointment_updated: "Le rendez-vous a ete mis a jour."
         unsupported_appointment_status: "Statut de rendez-vous non pris en charge."
         appointment_marked: "Le rendez-vous a ete marque comme %{status}."
+        demo_scenario_confirmation_required: "Saisissez exactement %{phrase} pour lancer cette reinitialisation seed."
         applied_demo_scenario: "Scenario de demo %{name} applique."
         restored_baseline_demo_scenario: "Scenario de demo de base (%{name}) restaure."
         imported_demo_scenario: "Scenario de demo %{name} importe."
@@ -328,6 +329,12 @@ fr:
         index:
           title: "Vendeurs"
           eyebrow: "Gestion des clients et vendeurs"
+          no_results: "Aucun vendeur ne correspond a cette recherche."
+          search:
+            label: "Rechercher des vendeurs"
+            placeholder: "Nom, e-mail ou mobile"
+            submit: "Rechercher"
+            clear: "Effacer"
           property_count:
             one: "1 bien"
             other: "%{count} biens"
@@ -370,6 +377,15 @@ fr:
         last_demo_action_title: "Derniere action de demo"
         no_actions: "Aucune reinitialisation, importation ou exportation n'a encore ete enregistree."
         preview_action: "Apercu"
+        seed_resets:
+          eyebrow: "Zone sensible"
+          title: "Reinitialisations des donnees seed"
+          description: "Chaque reinitialisation reconstruit l'ensemble des donnees de formation pour une repetition precise. Saisissez exactement la cle du scenario avant de lancer l'action."
+          badge: "Verrou de saisie"
+          preview: "Apercu du reset"
+          field_label: "Saisissez %{phrase} pour continuer"
+          type_to_continue_html: "Saisissez exactement %{phrase} pour deverrouiller cette reinitialisation."
+          apply: "Lancer le reset"
         counts:
           properties:
             one: "bien"
@@ -411,6 +427,8 @@ fr:
           eyebrow: "Apercu du scenario"
           apply_scenario: "Appliquer le scenario"
           back_to_demo_data: "Retour aux donnees de demo"
+          quick_reset_title: "Reinitialisation des donnees seed"
+          quick_reset_body: "Cette repetition reconstruit tout le jeu de donnees de formation. Confirmez la cle exacte du scenario avant de la lancer."
         import:
           title: "Importer un scenario de demo"
           eyebrow: "Import de donnees de demo"

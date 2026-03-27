@@ -295,6 +295,7 @@ it:
         appointment_updated: "Appuntamento aggiornato."
         unsupported_appointment_status: "Stato appuntamento non supportato."
         appointment_marked: "Appuntamento segnato come %{status}."
+        demo_scenario_confirmation_required: "Digita esattamente %{phrase} per eseguire questo reset dei dati seed."
         applied_demo_scenario: "Scenario demo %{name} applicato."
         restored_baseline_demo_scenario: "Scenario demo di base (%{name}) ripristinato."
         imported_demo_scenario: "Scenario demo %{name} importato."
@@ -328,6 +329,12 @@ it:
         index:
           title: "Venditori"
           eyebrow: "Gestione clienti e venditori"
+          no_results: "Nessun venditore corrisponde a questa ricerca."
+          search:
+            label: "Cerca venditori"
+            placeholder: "Nome, email o cellulare"
+            submit: "Cerca"
+            clear: "Cancella"
           property_count:
             one: "1 immobile"
             other: "%{count} immobili"
@@ -370,6 +377,15 @@ it:
         last_demo_action_title: "Ultima azione demo"
         no_actions: "Nessun reset, importazione o esportazione e ancora stato registrato."
         preview_action: "Anteprima"
+        seed_resets:
+          eyebrow: "Zona sensibile"
+          title: "Reset dei dati seed"
+          description: "Ogni reset ricostruisce il set di dati di training per una prova specifica. Inserisci la chiave esatta dello scenario prima di eseguirlo."
+          badge: "Blocco digitazione"
+          preview: "Anteprima reset"
+          field_label: "Digita %{phrase} per continuare"
+          type_to_continue_html: "Digita esattamente %{phrase} per sbloccare questo reset."
+          apply: "Esegui reset"
         counts:
           properties:
             one: "immobile"
@@ -411,6 +427,8 @@ it:
           eyebrow: "Anteprima scenario"
           apply_scenario: "Applica scenario"
           back_to_demo_data: "Torna ai dati demo"
+          quick_reset_title: "Reset dei dati seed"
+          quick_reset_body: "Questa prova ricostruisce l'intero set di dati di training. Conferma la chiave esatta dello scenario prima di eseguirla."
         import:
           title: "Importa scenario demo"
           eyebrow: "Importazione dati demo"

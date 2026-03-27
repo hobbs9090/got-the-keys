@@ -39,19 +39,30 @@ RSpec.describe "Admin header navigation" do
 
     expect(response).to have_http_status(:ok)
 
+    topbar_wrap = parsed_html.at_css(".admin-topbar-wrap")
+    expect(topbar_wrap).to be_present
+
+    topbar = topbar_wrap.at_css(".admin-topbar")
+    expect(topbar).to be_present
+
     brand_link = parsed_html.at_css(".admin-sidebar__brand-link")
     expect(brand_link).to be_present
     expect(brand_link["href"]).to eq(root_path)
+    expect(brand_link.at_css(".admin-sidebar__eyebrow")&.text&.strip).to eq(I18n.t("ui.site_header.eyebrow"))
+    expect(brand_link.at_css(".marketing-wordmark--header")).to be_present
 
-    view_site_link = parsed_html.at_css(".admin-topbar__actions a.button.secondary.hollow.admin-topbar__action")
+    view_site_link = topbar.at_css(".admin-topbar__actions a.button.secondary.hollow.admin-topbar__action")
     expect(view_site_link).to be_present
     expect(view_site_link.text.strip).to eq("View site")
     expect(view_site_link["href"]).to eq(root_path)
 
-    admin_user = parsed_html.at_css(".admin-topbar__user")
+    admin_user = topbar.at_css(".admin-topbar__user.site-header__account")
     expect(admin_user).to be_present
-    expect(admin_user.text.strip).to eq(admin.email)
-    expect(admin_user["title"]).to eq(admin.email)
+    expect(admin_user.at_css(".site-header__account-heading")).to be_present
+    expect(admin_user.text).to include("Signed in")
+    expect(admin_user.text).to include("Administrator")
+    expect(admin_user.text).to include(admin.email)
+    expect(admin_user.at_css(".site-header__account-detail")["title"]).to eq(admin.email)
 
     lead_link = parsed_html.at_css('[data-testid="admin-enquiries-link"]')
     expect(lead_link).to be_present
@@ -82,7 +93,7 @@ RSpec.describe "Admin header navigation" do
     expect(qa_link).to be_present
     expect(qa_link["href"]).to eq(admin_qa_path)
 
-    sign_out_link = parsed_html.at_css(".admin-topbar__actions a.button.alert.hollow.admin-topbar__action")
+    sign_out_link = topbar.at_css(".admin-topbar__actions a.button.alert.hollow.admin-topbar__action")
     expect(sign_out_link).to be_present
     expect(sign_out_link.text.strip).to eq("Sign out")
     expect(sign_out_link["href"]).to eq(destroy_admin_session_path)
