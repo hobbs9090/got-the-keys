@@ -31,7 +31,7 @@
       <span class="site-brand__wordmark"><%= render "layouts/gotthekeys", class_name: "marketing-wordmark--header", width: 228 %></span>
     <% end %>
 
-    <nav class="site-nav" aria-label="Primary" data-testid="site-nav">
+    <nav class="site-nav" aria-label="<%= t("ui.site_header.primary_navigation") %>" data-testid="site-nav">
       <%= link_to t('for_sale.title'), for_sale_index_path, class: ("is-active" if controller_name == "for_sale") %>
       <%= link_to t('for_rent.title'), for_rent_index_path, class: ("is-active" if controller_name == "for_rent") %>
       <%= link_to t('search.title'), searches_path, class: ("is-active" if controller_name == "searches") %>

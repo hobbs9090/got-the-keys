@@ -12,7 +12,7 @@ class Offer < ApplicationRecord
 
   validates :public_reference, :buyer_name, :buyer_email, :buyer_phone, :amount, :status, presence: true
   validates :buyer_email, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :buyer_phone, format: { with: PHONE_FORMAT, message: "must be a valid phone number" }
+  validates :buyer_phone, format: { with: PHONE_FORMAT, message: ->(_record, _data) { I18n.t("ui.validation.phone_number") } }
   validates :amount, numericality: { only_integer: true, greater_than: 0 }
   validates :status, inclusion: { in: STATUSES }
   validates :buyer_name, length: { maximum: 100 }
@@ -48,7 +48,7 @@ class Offer < ApplicationRecord
   def sale_listing_only
     return if property.blank? || property.sale_status == Property::SALE_STATUSES[:for_sale]
 
-    errors.add(:property, "must be a sale listing")
+    errors.add(:property, I18n.t("ui.offers.validation.sale_listing_only"))
   end
 
   def record_creation_event
@@ -56,7 +56,10 @@ class Offer < ApplicationRecord
       admin:,
       event_type: "received",
       to_status: status,
-      message: "Offer received at #{ApplicationController.helpers.number_to_currency(amount, unit: '£', precision: 0)}.",
+      message: I18n.t(
+        "ui.offers.events.received",
+        amount: ApplicationController.helpers.number_to_currency(amount, unit: "£", precision: 0)
+      ),
       occurred_at: created_at
     )
   end
@@ -68,7 +71,11 @@ class Offer < ApplicationRecord
       event_type: to_status,
       from_status: from_status,
       to_status: to_status,
-      message: "Offer status changed from #{from_status.to_s.humanize.downcase} to #{to_status.to_s.humanize.downcase}.",
+      message: I18n.t(
+        "ui.offers.events.status_changed",
+        from_status: I18n.t("ui.offers.statuses.#{from_status}", default: from_status.to_s.humanize.downcase),
+        to_status: I18n.t("ui.offers.statuses.#{to_status}", default: to_status.to_s.humanize.downcase)
+      ),
       occurred_at: updated_at
     )
   end
@@ -90,7 +97,11 @@ class Offer < ApplicationRecord
       property: property,
       actor_label: buyer_email,
       action: "offer_created",
-      message: "Offer received from #{buyer_name} at #{ApplicationController.helpers.number_to_currency(amount, unit: '£', precision: 0)}."
+      message: I18n.t(
+        "ui.offers.audit.created",
+        name: buyer_name,
+        amount: ApplicationController.helpers.number_to_currency(amount, unit: "£", precision: 0)
+      )
     )
   end
 end

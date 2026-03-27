@@ -36,7 +36,7 @@
       </div>
       <% if @property.available_from.present? %>
         <div>
-          <dt>Available from</dt>
+          <dt><%= t("ui.properties.show.available_from") %></dt>
           <dd><%= l(@property.available_from, format: :long) %></dd>
         </div>
       <% end %>
@@ -55,7 +55,7 @@
 
     <% if property_fact_rows(@property).any? %>
       <div class="property-address">
-        <h3>Key facts</h3>
+        <h3><%= t("ui.properties.show.key_facts_title") %></h3>
         <dl class="detail-list">
           <% property_fact_rows(@property).each do |label, value| %>
             <div>
@@ -73,7 +73,7 @@
     </div>
 
     <div class="property-address" data-testid="property-trust-panel">
-      <h3>Why this listing feels current</h3>
+      <h3><%= t("ui.properties.show.trust_title") %></h3>
       <ul class="detail-inline-list">
         <% property_trust_cues(@property).each do |cue| %>
           <li><%= cue %></li>
@@ -85,13 +85,13 @@
     <% brochure_assets = @property.ordered_photos.limit(6) %>
     <% if brochure_assets.any? || @property.ordered_floor_plans.any? %>
       <div class="property-address">
-        <h3>Brochure assets</h3>
+        <h3><%= t("ui.properties.show.brochure_assets_title") %></h3>
         <ul class="detail-inline-list">
           <% brochure_assets.each do |photo| %>
-            <li><strong><%= photo.primary? ? "Primary image" : "Photo" %></strong>: <%= photo.image_filename %></li>
+            <li><strong><%= photo.primary? ? t("ui.properties.show.primary_image") : t("ui.properties.show.photo") %></strong>: <%= photo.image_filename %></li>
           <% end %>
           <% @property.ordered_floor_plans.each do |floor_plan| %>
-            <li><strong>Floor plan</strong>: <%= floor_plan.label.presence || floor_plan.floor_plans %></li>
+            <li><strong><%= t("ui.properties.show.floor_plan") %></strong>: <%= floor_plan.label.presence || floor_plan.floor_plans %></li>
           <% end %>
         </ul>
       </div>
@@ -99,13 +99,13 @@
 
     <% if @public_documents.any? %>
       <div class="property-address" data-testid="property-documents-panel">
-        <h3>Documents and downloads</h3>
+        <h3><%= t("ui.properties.show.documents_title") %></h3>
         <ul class="detail-inline-list">
           <% @public_documents.each do |document| %>
             <li>
               <strong><%= document.title %></strong>
               (<%= document.category_label %>)
-              <%= link_to "Download", download_property_property_document_path(@property, document), class: "button hollow secondary tiny", data: { testid: "property-document-download-#{document.id}" } %>
+              <%= link_to t("ui.common.download"), download_property_property_document_path(@property, document), class: "button hollow secondary tiny", data: { testid: "property-document-download-#{document.id}" } %>
             </li>
           <% end %>
         </ul>
@@ -137,22 +137,22 @@
     <% end %>
 
     <div class="empty-state property-booking-panel__support-card" data-testid="property-enquiry-panel">
-      <h3>Need details first?</h3>
-      <p>Ask for brochure information, a landlord or seller callback, or clarification before you pick a viewing slot.</p>
-      <%= link_to "Send an enquiry", new_property_enquiry_path(@property), class: "button hollow secondary expanded", data: { testid: "open-enquiry-form" } %>
+      <h3><%= t("ui.properties.show.enquiry_title") %></h3>
+      <p><%= t("ui.properties.show.enquiry_body") %></p>
+      <%= link_to t("ui.properties.show.enquiry_cta"), new_property_enquiry_path(@property), class: "button hollow secondary expanded", data: { testid: "open-enquiry-form" } %>
     </div>
 
     <% if @property.sale_status == Property::SALE_STATUSES[:for_sale] %>
       <div class="empty-state property-booking-panel__support-card" data-testid="property-offer-panel">
-        <h3>Ready to make an offer?</h3>
-        <p>Register your buying position and headline offer directly with the team.</p>
-        <%= link_to "Submit an offer", new_property_offer_path(@property), class: "button primary expanded", data: { testid: "open-offer-form" } %>
+        <h3><%= t("ui.properties.show.offer_title") %></h3>
+        <p><%= t("ui.properties.show.offer_body") %></p>
+        <%= link_to t("ui.properties.show.offer_cta"), new_property_offer_path(@property), class: "button primary expanded", data: { testid: "open-offer-form" } %>
       </div>
     <% elsif @property.sale_status == Property::SALE_STATUSES[:for_rent] %>
       <div class="empty-state property-booking-panel__support-card" data-testid="property-rental-application-panel">
-        <h3>Want to apply to rent?</h3>
-        <p>Share your intended move-in timing and affordability notes with the lettings team.</p>
-        <%= link_to "Start rental application", new_property_rental_application_path(@property), class: "button primary expanded", data: { testid: "open-rental-application-form" } %>
+        <h3><%= t("ui.properties.show.rental_application_title") %></h3>
+        <p><%= t("ui.properties.show.rental_application_body") %></p>
+        <%= link_to t("ui.properties.show.rental_application_cta"), new_property_rental_application_path(@property), class: "button primary expanded", data: { testid: "open-rental-application-form" } %>
       </div>
     <% end %>
 
@@ -169,23 +169,23 @@
 <% if current_user == @property.user %>
   <section class="property-layout">
     <article class="property-panel" data-testid="seller-listing-workspace">
-      <h2>Seller workspace</h2>
-      <p><strong><%= @property.listing_completeness_percentage %>% complete</strong> · <%= @property.listing_completeness_score %>/<%= @property.listing_completeness_checks.size %> readiness checks done</p>
+      <h2><%= t("ui.properties.show.seller_title") %></h2>
+      <p><strong><%= @property.listing_completeness_percentage %>%</strong> <%= t("ui.properties.show.readiness_summary", score: @property.listing_completeness_score, total: @property.listing_completeness_checks.size) %></p>
       <ul class="detail-inline-list" data-testid="seller-listing-checklist">
         <% @property.listing_completeness_checks.each do |check| %>
           <li class="<%= check[:complete] ? 'text-success' : 'text-danger' %>">
-            <strong><%= check[:complete] ? "Done" : "Needed" %></strong>: <%= check[:label] %>
+            <strong><%= check[:complete] ? t("ui.properties.show.done") : t("ui.properties.show.needed") %></strong>: <%= check[:label] %>
           </li>
         <% end %>
       </ul>
       <div class="section-heading__actions">
-        <%= link_to "Edit listing", edit_property_path(@property), class: "button primary" %>
-        <%= link_to "Manage photos", property_photos_path(@property), class: "button hollow secondary", data: { testid: "manage-photos-link" } %>
-        <%= link_to "Manage floor plans", property_floor_plans_path(@property), class: "button hollow secondary" %>
-        <%= link_to "Manage documents", property_property_documents_path(@property), class: "button hollow secondary", data: { testid: "manage-documents-link" } %>
+        <%= link_to t("ui.properties.show.edit_listing"), edit_property_path(@property), class: "button primary" %>
+        <%= link_to t("ui.properties.show.manage_photos"), property_photos_path(@property), class: "button hollow secondary", data: { testid: "manage-photos-link" } %>
+        <%= link_to t("ui.properties.show.manage_floor_plans"), property_floor_plans_path(@property), class: "button hollow secondary" %>
+        <%= link_to t("ui.properties.show.manage_documents"), property_property_documents_path(@property), class: "button hollow secondary", data: { testid: "manage-documents-link" } %>
       </div>
 
-      <h3>Recent lead activity</h3>
+      <h3><%= t("ui.properties.show.recent_lead_activity_title") %></h3>
       <% if @recent_enquiries.any? %>
         <ul class="detail-inline-list" data-testid="seller-recent-enquiries">
           <% @recent_enquiries.each do |enquiry| %>
@@ -198,54 +198,54 @@
           <% end %>
         </ul>
       <% else %>
-        <p class="empty-copy">No enquiries have come in for this listing yet.</p>
+        <p class="empty-copy"><%= t("ui.properties.show.no_enquiries") %></p>
       <% end %>
 
       <% if @property.sale_status == Property::SALE_STATUSES[:for_sale] %>
-        <h3>Recent offers</h3>
+        <h3><%= t("ui.properties.show.recent_offers_title") %></h3>
         <% if @recent_offers.any? %>
           <ul class="detail-inline-list" data-testid="seller-recent-offers">
             <% @recent_offers.each do |offer| %>
               <li>
                 <strong><%= offer.buyer_name %></strong>:
                 <%= number_to_currency(offer.amount, unit: "£", precision: 0) %>,
-                <%= offer.status.humanize.downcase %>
+                <%= t("ui.offers.statuses.#{offer.status}", default: offer.status.humanize.downcase) %>
               </li>
             <% end %>
           </ul>
         <% else %>
-          <p class="empty-copy">No offers have been recorded yet.</p>
+          <p class="empty-copy"><%= t("ui.properties.show.no_offers") %></p>
         <% end %>
       <% elsif @property.sale_status == Property::SALE_STATUSES[:for_rent] %>
-        <h3>Recent rental applications</h3>
+        <h3><%= t("ui.properties.show.recent_rental_applications_title") %></h3>
         <% if @recent_rental_applications.any? %>
           <ul class="detail-inline-list" data-testid="seller-recent-rental-applications">
             <% @recent_rental_applications.each do |application| %>
               <li>
                 <strong><%= application.applicant_name %></strong>:
-                <%= application.status.humanize.downcase %>,
-                move-in <%= application.move_in_date %>
+                <%= t("ui.rental_applications.statuses.#{application.status}", default: application.status.humanize.downcase) %>,
+                <%= t("ui.properties.show.move_in", date: l(application.move_in_date, format: :long)) %>
               </li>
             <% end %>
           </ul>
         <% else %>
-          <p class="empty-copy">No rental applications have been recorded yet.</p>
+          <p class="empty-copy"><%= t("ui.properties.show.no_rental_applications") %></p>
         <% end %>
       <% end %>
 
-      <h3>Recent listing activity</h3>
+      <h3><%= t("ui.properties.show.recent_listing_activity_title") %></h3>
       <% if @recent_activity.any? %>
         <ol class="timeline" data-testid="seller-property-activity-timeline">
           <% @recent_activity.each do |entry| %>
             <li>
-              <strong><%= entry.action.to_s.tr("_", " ").humanize %></strong>
+              <strong><%= property_activity_action_label(entry.action) %></strong>
               <span><%= formatted_date_time(entry.occurred_at) %></span>
               <p><%= entry.message %></p>
             </li>
           <% end %>
         </ol>
       <% else %>
-        <p class="empty-copy">No listing activity has been recorded yet.</p>
+        <p class="empty-copy"><%= t("ui.properties.show.no_listing_activity") %></p>
       <% end %>
     </article>
   </section>

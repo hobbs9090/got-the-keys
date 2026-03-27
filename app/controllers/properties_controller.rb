@@ -81,7 +81,7 @@ class PropertiesController < ApplicationController
     return if current_admin.present?
     return if current_user == @property.user
 
-    redirect_to properties_path, alert: "This listing is not currently public."
+    redirect_to properties_path, alert: t("ui.properties.flash.not_public")
   end
 
   def saved_search_defaults

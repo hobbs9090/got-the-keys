@@ -1,47 +1,47 @@
-<% title "#{@property.address_line_1} photos" %>
+<% title t("ui.photos.title", address: @property.address_line_1) %>
 
 <section class="page-hero">
   <div>
-    <p class="page-hero__eyebrow">Listing assets</p>
-    <h1>Manage photos</h1>
-    <p>Set a primary image, keep the ordering tidy, and add brochure-ready captions for this listing.</p>
+    <p class="page-hero__eyebrow"><%= t("ui.photos.eyebrow") %></p>
+    <h1><%= t("ui.photos.heading") %></h1>
+    <p><%= t("ui.photos.body") %></p>
   </div>
 </section>
 
 <section class="page-section">
   <article class="property-panel">
-    <h2>Add a photo</h2>
+    <h2><%= t("ui.photos.add_title") %></h2>
     <%= render "shared/errors", object: @new_photo %>
 
     <%= form_with model: [@property, @new_photo] do |f| %>
       <div class="form-grid">
         <div>
-          <%= f.label :image_filename, "Image filename" %>
-          <%= f.text_field :image_filename, placeholder: "hero_family_home.jpg" %>
+          <%= f.label :image_filename, t("ui.photos.fields.image_filename") %>
+          <%= f.text_field :image_filename, placeholder: t("ui.photos.fields.image_filename_placeholder") %>
         </div>
         <div>
-          <%= f.label :caption, "Caption" %>
-          <%= f.text_field :caption, placeholder: "Kitchen diner at dusk" %>
+          <%= f.label :caption, t("ui.photos.fields.caption") %>
+          <%= f.text_field :caption, placeholder: t("ui.photos.fields.caption_placeholder") %>
         </div>
         <div>
-          <%= f.label :position, "Display order" %>
+          <%= f.label :position, t("ui.photos.fields.position") %>
           <%= f.number_field :position, min: 0, step: 1 %>
         </div>
         <div class="form-grid__checkbox">
           <%= f.check_box :primary %>
-          <%= f.label :primary, "Use as primary image", class: "checkbox-label" %>
+          <%= f.label :primary, t("ui.photos.fields.primary"), class: "checkbox-label" %>
         </div>
       </div>
 
       <div class="form-actions">
-        <%= f.submit "Add photo", class: "button primary", data: { testid: "add-photo-button" } %>
-        <%= link_to "Back to listing", edit_property_path(@property), class: "button hollow secondary" %>
+        <%= f.submit t("ui.photos.actions.add"), class: "button primary", data: { testid: "add-photo-button" } %>
+        <%= link_to t("ui.common.back_to_listing"), edit_property_path(@property), class: "button hollow secondary" %>
       </div>
     <% end %>
   </article>
 
   <article class="property-panel">
-    <h2>Current photos</h2>
+    <h2><%= t("ui.photos.current_title") %></h2>
     <% if @photos.any? %>
       <div class="admin-list">
         <% @photos.each do |photo| %>
@@ -51,28 +51,28 @@
               <%= form_with model: [@property, photo_form], method: :patch do |f| %>
                 <div class="form-grid">
                   <div>
-                    <%= f.label :image_filename, "Image filename" %>
+                    <%= f.label :image_filename, t("ui.photos.fields.image_filename") %>
                     <%= f.text_field :image_filename %>
                   </div>
                   <div>
-                    <%= f.label :caption, "Caption" %>
+                    <%= f.label :caption, t("ui.photos.fields.caption") %>
                     <%= f.text_field :caption %>
                   </div>
                   <div>
-                    <%= f.label :position, "Display order" %>
+                    <%= f.label :position, t("ui.photos.fields.position") %>
                     <%= f.number_field :position, min: 0, step: 1 %>
                   </div>
                   <div class="form-grid__checkbox">
                     <%= f.check_box :primary %>
-                    <%= f.label :primary, "Primary image", class: "checkbox-label" %>
+                    <%= f.label :primary, t("ui.photos.fields.primary_image"), class: "checkbox-label" %>
                   </div>
                 </div>
                 <div class="form-actions">
-                  <%= f.submit "Save", class: "button primary hollow" %>
-                  <%= link_to "Remove",
+                  <%= f.submit t("ui.common.save"), class: "button primary hollow" %>
+                  <%= link_to t("ui.common.remove"),
                               property_photo_path(@property, photo),
                               class: "button alert hollow",
-                              data: { turbo_method: :delete, turbo_confirm: "Remove this photo?" } %>
+                              data: { turbo_method: :delete, turbo_confirm: t("ui.photos.actions.remove_confirm") } %>
                 </div>
               <% end %>
             </div>
@@ -80,7 +80,7 @@
         <% end %>
       </div>
     <% else %>
-      <p class="empty-copy">No photos have been added yet.</p>
+      <p class="empty-copy"><%= t("ui.photos.empty") %></p>
     <% end %>
   </article>
 </section>

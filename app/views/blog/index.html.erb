@@ -1,10 +1,10 @@
 <% title t('blog.title') %>
 <%
 featured_story = {
-  category: t('blog.featured_category', default: 'Lead quality'),
+  category: t('blog.featured_category'),
   title: t('blog.blog_post_title'),
-  byline: t('blog.blog_post_header', default: 'Written by The GotTheKeys Team on March 18, 2015.'),
-  read_time: t('blog.read_time', default: '5 min read'),
+  byline: t('blog.blog_post_header'),
+  read_time: t('blog.read_time'),
   paragraphs: [
     t('blog.paragraph_1'),
     t('blog.paragraph_2'),
@@ -12,62 +12,62 @@ featured_story = {
     t('blog.paragraph_4')
   ],
   takeaways: [
-    t('blog.takeaway_1', default: 'Lead with sharper photography and a stronger opening paragraph.'),
-    t('blog.takeaway_2', default: 'Price with local evidence so the listing earns trust quickly.'),
-    t('blog.takeaway_3', default: 'Make brochures, floor plans, and booking actions easy to find.')
+    t('blog.takeaway_1'),
+    t('blog.takeaway_2'),
+    t('blog.takeaway_3')
   ]
 }
 
 story_cards = [
   {
-    category: t('blog.story_1_category', default: 'Response time'),
-    title: t('blog.story_1_title', default: 'Why quick follow-up still decides whether serious buyers stay engaged'),
-    excerpt: t('blog.story_1_excerpt', default: 'The first useful reply matters more than the perfect reply. We look at what buyers expect in the first working day and how that changes conversion.'),
+    category: t('blog.story_1_category'),
+    title: t('blog.story_1_title'),
+    excerpt: t('blog.story_1_excerpt'),
     image: ['hero_5.jpg', 'hero_5@2x.jpg']
   },
   {
-    category: t('blog.story_2_category', default: 'Marketing assets'),
-    title: t('blog.story_2_title', default: 'Brochure, floor plan, or both? The answer is usually yes'),
-    excerpt: t('blog.story_2_excerpt', default: 'When a listing answers the obvious questions before the viewer has to ask them, the next click is far more likely to become a worthwhile enquiry.'),
+    category: t('blog.story_2_category'),
+    title: t('blog.story_2_title'),
+    excerpt: t('blog.story_2_excerpt'),
     image: ['welcome_1.jpg', nil]
   }
 ]
 
 topic_tags = [
-  t('blog.topic_1', default: 'pricing strategy'),
-  t('blog.topic_2', default: 'brochure packs'),
-  t('blog.topic_3', default: 'response time'),
-  t('blog.topic_4', default: 'viewing conversion'),
-  t('blog.topic_5', default: 'trust signals'),
-  t('blog.topic_6', default: 'listing copy')
+  t('blog.topic_1'),
+  t('blog.topic_2'),
+  t('blog.topic_3'),
+  t('blog.topic_4'),
+  t('blog.topic_5'),
+  t('blog.topic_6')
 ]
 
 editorial_points = [
-  t('blog.editorial_point_1', default: 'We focus on practical listing decisions rather than vanity metrics.'),
-  t('blog.editorial_point_2', default: 'Every recommendation should make the next buyer action easier.'),
-  t('blog.editorial_point_3', default: 'If a change improves clarity, trust, or response quality, it usually belongs on the page.')
+  t('blog.editorial_point_1'),
+  t('blog.editorial_point_2'),
+  t('blog.editorial_point_3')
 ]
 %>
 
 <section class="page-hero blog-hero">
   <div class="blog-hero__content">
-    <p class="page-hero__eyebrow"><%= t('blog.hero_eyebrow', default: 'Editorial') %></p>
-    <h1><%= t('blog.hero_title', default: 'Advice for property pages that feel clearer, more useful, and easier to act on') %></h1>
-    <p class="blog-hero__copy"><%= t('blog.hero_body', default: 'Short, practical notes from the GotTheKeys team on what helps listings earn trust, generate better enquiries, and move viewers toward a confident next step.') %></p>
+    <p class="page-hero__eyebrow"><%= t('blog.hero_eyebrow') %></p>
+    <h1><%= t('blog.hero_title') %></h1>
+    <p class="blog-hero__copy"><%= t('blog.hero_body') %></p>
 
     <div class="blog-hero__actions">
-      <%= link_to t('blog.primary_cta', default: 'Browse homes'), properties_path, class: 'button primary large' %>
-      <%= link_to t('blog.secondary_cta', default: 'Talk to the team'), contact_us_path, class: 'button secondary hollow large' %>
+      <%= link_to t('blog.primary_cta'), properties_path, class: 'button primary large' %>
+      <%= link_to t('blog.secondary_cta'), contact_us_path, class: 'button secondary hollow large' %>
     </div>
   </div>
 
   <aside class="site-card blog-hero__panel">
-    <span class="badge badge--neutral"><%= t('blog.hero_panel_badge', default: 'This week') %></span>
-    <h2><%= t('blog.hero_panel_title', default: 'The themes readers keep coming back to') %></h2>
+    <span class="badge badge--neutral"><%= t('blog.hero_panel_badge') %></span>
+    <h2><%= t('blog.hero_panel_title') %></h2>
     <ul class="blog-hero__checklist no-bullet">
-      <li><%= t('blog.hero_panel_point_1', default: 'How pricing affects trust in the first 10 seconds') %></li>
-      <li><%= t('blog.hero_panel_point_2', default: 'Why brochure and floor-plan access still matter') %></li>
-      <li><%= t('blog.hero_panel_point_3', default: 'What faster follow-up changes for serious enquiries') %></li>
+      <li><%= t('blog.hero_panel_point_1') %></li>
+      <li><%= t('blog.hero_panel_point_2') %></li>
+      <li><%= t('blog.hero_panel_point_3') %></li>
     </ul>
   </aside>
 </section>
@@ -96,8 +96,8 @@ editorial_points = [
           </div>
 
           <aside class="blog-feature__takeaways">
-            <p class="section-heading__eyebrow"><%= t('blog.takeaways_eyebrow', default: 'Key takeaways') %></p>
-            <h3><%= t('blog.takeaways_title', default: 'What tends to improve enquiry quality fastest') %></h3>
+            <p class="section-heading__eyebrow"><%= t('blog.takeaways_eyebrow') %></p>
+            <h3><%= t('blog.takeaways_title') %></h3>
             <ul class="blog-takeaway-list no-bullet">
               <% featured_story[:takeaways].each do |item| %>
                 <li><%= item %></li>
@@ -110,9 +110,9 @@ editorial_points = [
 
     <section class="blog-story-grid" aria-labelledby="blog-story-grid-title">
       <header class="blog-story-grid__header">
-        <p class="section-heading__eyebrow"><%= t('blog.story_grid_eyebrow', default: 'More from the journal') %></p>
-        <h2 id="blog-story-grid-title"><%= t('blog.story_grid_title', default: 'Further ways to tighten a listing before the next enquiry arrives') %></h2>
-        <p class="blog-story-grid__intro"><%= t('blog.story_grid_body', default: 'A few more short reads on the small operational details that often shape trust, clarity, and conversion.') %></p>
+        <p class="section-heading__eyebrow"><%= t('blog.story_grid_eyebrow') %></p>
+        <h2 id="blog-story-grid-title"><%= t('blog.story_grid_title') %></h2>
+        <p class="blog-story-grid__intro"><%= t('blog.story_grid_body') %></p>
       </header>
 
       <div class="blog-story-grid__cards">
@@ -136,8 +136,8 @@ editorial_points = [
 
   <aside class="blog-sidebar">
     <section class="site-card blog-sidebar__topics">
-      <p class="section-heading__eyebrow"><%= t('blog.topics_eyebrow', default: 'Popular themes') %></p>
-      <h2><%= t('blog.topics_title', default: 'What the editorial team keeps circling back to') %></h2>
+      <p class="section-heading__eyebrow"><%= t('blog.topics_eyebrow') %></p>
+      <h2><%= t('blog.topics_title') %></h2>
 
       <div class="blog-topic-cloud">
         <% topic_tags.each do |topic| %>
@@ -147,8 +147,8 @@ editorial_points = [
     </section>
 
     <section class="site-card blog-sidebar__editorial">
-      <p class="section-heading__eyebrow"><%= t('blog.editorial_eyebrow', default: 'Editorial note') %></p>
-      <h2><%= t('blog.editorial_title', default: 'Practical beats noisy') %></h2>
+      <p class="section-heading__eyebrow"><%= t('blog.editorial_eyebrow') %></p>
+      <h2><%= t('blog.editorial_title') %></h2>
       <ol class="timeline">
         <% editorial_points.each do |point| %>
           <li><p><%= point %></p></li>
@@ -157,13 +157,13 @@ editorial_points = [
     </section>
 
     <section class="site-card blog-sidebar__cta">
-      <p class="section-heading__eyebrow"><%= t('blog.cta_eyebrow', default: 'Need help with a live listing?') %></p>
-      <h2><%= t('blog.cta_title', default: 'Put the same clarity to work on a real property page') %></h2>
-      <p><%= t('blog.cta_body', default: 'If you want better photography, sharper copy, or a cleaner enquiry path, the team can help you tighten the listing without turning it into marketing fluff.') %></p>
+      <p class="section-heading__eyebrow"><%= t('blog.cta_eyebrow') %></p>
+      <h2><%= t('blog.cta_title') %></h2>
+      <p><%= t('blog.cta_body') %></p>
 
       <div class="blog-sidebar__actions">
-        <%= link_to t('blog.cta_primary', default: 'Contact the team'), contact_us_path, class: 'button primary expanded' %>
-        <%= link_to t('blog.cta_secondary', default: 'See current listings'), properties_path, class: 'button secondary hollow expanded' %>
+        <%= link_to t('blog.cta_primary'), contact_us_path, class: 'button primary expanded' %>
+        <%= link_to t('blog.cta_secondary'), properties_path, class: 'button secondary hollow expanded' %>
       </div>
     </section>
   </aside>

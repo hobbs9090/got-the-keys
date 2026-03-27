@@ -6,90 +6,90 @@
   <%= render "shared/errors", object: form_model %>
 
   <section class="property-panel" data-testid="listing-workflow-panel">
-    <h2>Listing workflow</h2>
+    <h2><%= t("ui.properties.editor.workflow_title") %></h2>
     <div class="form-grid">
       <div>
-        <%= f.label :listing_state, "Listing status", **form_label_options(form_model, :listing_state) %>
+        <%= f.label :listing_state, t("ui.properties.editor.fields.listing_state"), **form_label_options(form_model, :listing_state) %>
         <%= f.select :listing_state, property_listing_state_options, {}, form_control_options(form_model, :listing_state, classes: nil, data: { testid: "listing-state-select" }) %>
         <%= field_error_messages(form_model, :listing_state) %>
       </div>
       <div>
-        <%= f.label :sale_status, nil, **form_label_options(form_model, :sale_status) %>
+        <%= f.label :sale_status, t("ui.properties.editor.fields.sale_status"), **form_label_options(form_model, :sale_status) %>
         <%= f.select :sale_status, Property::SALE_STATUS, { prompt: t('properties.pick_one') }, form_control_options(form_model, :sale_status, classes: nil) %>
         <%= field_error_messages(form_model, :sale_status) %>
       </div>
       <div class="form-grid__checkbox">
         <%= f.check_box :featured %>
-        <%= f.label :featured, "Feature this listing", class: "checkbox-label" %>
+        <%= f.label :featured, t("ui.properties.editor.fields.featured"), class: "checkbox-label" %>
       </div>
     </div>
   </section>
 
   <section class="property-panel">
-    <h2>Core details</h2>
+    <h2><%= t("ui.properties.editor.core_details_title") %></h2>
   <div class="form-grid">
     <div>
-      <%= f.label :address_line_1, nil, **form_label_options(form_model, :address_line_1) %>
+      <%= f.label :address_line_1, t("ui.properties.editor.fields.address_line_1"), **form_label_options(form_model, :address_line_1) %>
       <%= f.text_field :address_line_1, autofocus: true, required: true, maxlength: 50, **form_control_options(form_model, :address_line_1) %>
       <%= field_error_messages(form_model, :address_line_1) %>
     </div>
     <div>
-      <%= f.label :address_line_2, nil, **form_label_options(form_model, :address_line_2) %>
+      <%= f.label :address_line_2, t("ui.properties.editor.fields.address_line_2"), **form_label_options(form_model, :address_line_2) %>
       <%= f.text_field :address_line_2, maxlength: 50, **form_control_options(form_model, :address_line_2) %>
       <%= field_error_messages(form_model, :address_line_2) %>
     </div>
     <div>
-      <%= f.label :town_city, nil, **form_label_options(form_model, :town_city) %>
+      <%= f.label :town_city, t("ui.properties.editor.fields.town_city"), **form_label_options(form_model, :town_city) %>
       <%= f.text_field :town_city, required: true, maxlength: 50, **form_control_options(form_model, :town_city) %>
       <%= field_error_messages(form_model, :town_city) %>
     </div>
     <div>
-      <%= f.label :county, nil, **form_label_options(form_model, :county) %>
+      <%= f.label :county, t("ui.properties.editor.fields.county"), **form_label_options(form_model, :county) %>
       <%= f.text_field :county, required: true, maxlength: 50, **form_control_options(form_model, :county) %>
       <%= field_error_messages(form_model, :county) %>
     </div>
     <div>
-      <%= f.label :postcode, nil, **form_label_options(form_model, :postcode) %>
+      <%= f.label :postcode, t("ui.properties.editor.fields.postcode"), **form_label_options(form_model, :postcode) %>
       <%= f.text_field :postcode, required: true, maxlength: 50, **form_control_options(form_model, :postcode) %>
       <%= field_error_messages(form_model, :postcode) %>
     </div>
     <div>
-      <%= f.label :country, nil, **form_label_options(form_model, :country) %>
+      <%= f.label :country, t("ui.properties.editor.fields.country"), **form_label_options(form_model, :country) %>
       <%= f.text_field :country, required: true, maxlength: 50, **form_control_options(form_model, :country) %>
       <%= field_error_messages(form_model, :country) %>
     </div>
     <div>
-      <%= f.label :property_type, "Property type", **form_label_options(form_model, :property_type) %>
+      <%= f.label :property_type, t("ui.properties.editor.fields.property_type"), **form_label_options(form_model, :property_type) %>
       <%= f.text_field :property_type, required: true, maxlength: 50, **form_control_options(form_model, :property_type) %>
       <%= field_error_messages(form_model, :property_type) %>
     </div>
     <div>
-      <%= f.label :listing_tagline, "Tagline", **form_label_options(form_model, :listing_tagline) %>
-      <%= f.text_field :listing_tagline, placeholder: "A calm family home close to the station", maxlength: 120, **form_control_options(form_model, :listing_tagline) %>
+      <%= f.label :listing_tagline, t("ui.properties.editor.fields.listing_tagline"), **form_label_options(form_model, :listing_tagline) %>
+      <%= f.text_field :listing_tagline, placeholder: t("ui.properties.editor.placeholders.listing_tagline"), maxlength: 120, **form_control_options(form_model, :listing_tagline) %>
       <%= field_error_messages(form_model, :listing_tagline) %>
     </div>
     <div>
-      <%= f.label :bedrooms, nil, **form_label_options(form_model, :bedrooms) %>
+      <%= f.label :bedrooms, t("ui.properties.editor.fields.bedrooms"), **form_label_options(form_model, :bedrooms) %>
       <%= f.number_field :bedrooms, min: 0, step: 1, required: true, **form_control_options(form_model, :bedrooms) %>
       <%= field_error_messages(form_model, :bedrooms) %>
     </div>
     <div>
-      <%= f.label :bathrooms, "Bathrooms", **form_label_options(form_model, :bathrooms) %>
+      <%= f.label :bathrooms, t("ui.properties.editor.fields.bathrooms"), **form_label_options(form_model, :bathrooms) %>
       <%= f.number_field :bathrooms, min: 1, step: 1, required: true, **form_control_options(form_model, :bathrooms) %>
       <%= field_error_messages(form_model, :bathrooms) %>
     </div>
     <div>
-      <%= f.label :asking_price, nil, **form_label_options(form_model, :asking_price) %>
+      <%= f.label :asking_price, t("ui.properties.editor.fields.asking_price"), **form_label_options(form_model, :asking_price) %>
       <%= f.number_field :asking_price, min: 0, step: 1000, required: true, **form_control_options(form_model, :asking_price) %>
       <%= field_error_messages(form_model, :asking_price) %>
     </div>
     <div>
-      <%= f.label :image_file_name, nil, **form_label_options(form_model, :image_file_name) %>
-      <%= f.text_field :image_file_name, placeholder: "property_placeholder_listing.svg", **form_control_options(form_model, :image_file_name) %>
+      <%= f.label :image_file_name, t("ui.properties.editor.fields.image_file_name"), **form_label_options(form_model, :image_file_name) %>
+      <%= f.text_field :image_file_name, placeholder: t("ui.properties.editor.placeholders.image_file_name"), **form_control_options(form_model, :image_file_name) %>
       <%= field_error_messages(form_model, :image_file_name) %>
     </div>
     <div class="form-grid__full">
-      <%= f.label :property_description, nil, **form_label_options(form_model, :property_description) %>
+      <%= f.label :property_description, t("ui.properties.editor.fields.property_description"), **form_label_options(form_model, :property_description) %>
       <%= f.text_area :property_description, rows: 10, required: true, maxlength: 5000, **form_control_options(form_model, :property_description) %>
       <%= field_error_messages(form_model, :property_description) %>
     </div>
@@ -97,78 +97,78 @@
   </section>
 
   <section class="property-panel" data-testid="listing-facts-panel">
-    <h2>Structured property facts</h2>
+    <h2><%= t("ui.properties.editor.facts_title") %></h2>
     <div class="form-grid">
       <div>
-        <%= f.label :tenure, "Tenure", **form_label_options(form_model, :tenure) %>
-        <%= f.text_field :tenure, placeholder: "Freehold", **form_control_options(form_model, :tenure) %>
+        <%= f.label :tenure, t("ui.properties.editor.fields.tenure"), **form_label_options(form_model, :tenure) %>
+        <%= f.text_field :tenure, placeholder: t("ui.properties.editor.placeholders.tenure"), **form_control_options(form_model, :tenure) %>
         <%= field_error_messages(form_model, :tenure) %>
       </div>
       <div>
-        <%= f.label :council_tax_band, "Council tax band", **form_label_options(form_model, :council_tax_band) %>
-        <%= f.text_field :council_tax_band, placeholder: "F", **form_control_options(form_model, :council_tax_band) %>
+        <%= f.label :council_tax_band, t("ui.properties.editor.fields.council_tax_band"), **form_label_options(form_model, :council_tax_band) %>
+        <%= f.text_field :council_tax_band, placeholder: t("ui.properties.editor.placeholders.council_tax_band"), **form_control_options(form_model, :council_tax_band) %>
         <%= field_error_messages(form_model, :council_tax_band) %>
       </div>
       <div>
-        <%= f.label :furnishing, "Furnishing", **form_label_options(form_model, :furnishing) %>
-        <%= f.text_field :furnishing, placeholder: "Unfurnished", **form_control_options(form_model, :furnishing) %>
+        <%= f.label :furnishing, t("ui.properties.editor.fields.furnishing"), **form_label_options(form_model, :furnishing) %>
+        <%= f.text_field :furnishing, placeholder: t("ui.properties.editor.placeholders.furnishing"), **form_control_options(form_model, :furnishing) %>
         <%= field_error_messages(form_model, :furnishing) %>
       </div>
       <div>
-        <%= f.label :available_from, "Available from", **form_label_options(form_model, :available_from) %>
+        <%= f.label :available_from, t("ui.properties.facts.available_from"), **form_label_options(form_model, :available_from) %>
         <%= f.date_field :available_from, **form_control_options(form_model, :available_from) %>
         <%= field_error_messages(form_model, :available_from) %>
       </div>
       <div>
-        <%= f.label :parking, "Parking", **form_label_options(form_model, :parking) %>
-        <%= f.text_field :parking, placeholder: "Driveway", **form_control_options(form_model, :parking) %>
+        <%= f.label :parking, t("ui.properties.editor.fields.parking"), **form_label_options(form_model, :parking) %>
+        <%= f.text_field :parking, placeholder: t("ui.properties.editor.placeholders.parking"), **form_control_options(form_model, :parking) %>
         <%= field_error_messages(form_model, :parking) %>
       </div>
       <div>
-        <%= f.label :outdoor_space, "Outdoor space", **form_label_options(form_model, :outdoor_space) %>
-        <%= f.text_field :outdoor_space, placeholder: "Rear garden", **form_control_options(form_model, :outdoor_space) %>
+        <%= f.label :outdoor_space, t("ui.properties.editor.fields.outdoor_space"), **form_label_options(form_model, :outdoor_space) %>
+        <%= f.text_field :outdoor_space, placeholder: t("ui.properties.editor.placeholders.outdoor_space"), **form_control_options(form_model, :outdoor_space) %>
         <%= field_error_messages(form_model, :outdoor_space) %>
       </div>
       <div>
-        <%= f.label :epc_rating, "EPC rating", **form_label_options(form_model, :epc_rating) %>
-        <%= f.text_field :epc_rating, placeholder: "C", **form_control_options(form_model, :epc_rating) %>
+        <%= f.label :epc_rating, t("ui.properties.editor.fields.epc_rating"), **form_label_options(form_model, :epc_rating) %>
+        <%= f.text_field :epc_rating, placeholder: t("ui.properties.editor.placeholders.epc_rating"), **form_control_options(form_model, :epc_rating) %>
         <%= field_error_messages(form_model, :epc_rating) %>
       </div>
       <div>
-        <%= f.label :floor_area_sq_ft, "Floor area (sq ft)", **form_label_options(form_model, :floor_area_sq_ft) %>
+        <%= f.label :floor_area_sq_ft, t("ui.properties.editor.floor_area_label"), **form_label_options(form_model, :floor_area_sq_ft) %>
         <%= f.number_field :floor_area_sq_ft, min: 0, step: 1, **form_control_options(form_model, :floor_area_sq_ft) %>
         <%= field_error_messages(form_model, :floor_area_sq_ft) %>
       </div>
       <div>
-        <%= f.label :deposit_amount, "Deposit", **form_label_options(form_model, :deposit_amount) %>
+        <%= f.label :deposit_amount, t("ui.properties.editor.fields.deposit_amount"), **form_label_options(form_model, :deposit_amount) %>
         <%= f.number_field :deposit_amount, min: 0, step: 50, **form_control_options(form_model, :deposit_amount) %>
         <%= field_error_messages(form_model, :deposit_amount) %>
       </div>
       <div>
-        <%= f.label :service_charge_amount, "Service charge", **form_label_options(form_model, :service_charge_amount) %>
+        <%= f.label :service_charge_amount, t("ui.properties.editor.fields.service_charge_amount"), **form_label_options(form_model, :service_charge_amount) %>
         <%= f.number_field :service_charge_amount, min: 0, step: 50, **form_control_options(form_model, :service_charge_amount) %>
         <%= field_error_messages(form_model, :service_charge_amount) %>
       </div>
       <div>
-        <%= f.label :lease_length_years, "Lease length (years)", **form_label_options(form_model, :lease_length_years) %>
+        <%= f.label :lease_length_years, t("ui.properties.editor.fields.lease_length_years"), **form_label_options(form_model, :lease_length_years) %>
         <%= f.number_field :lease_length_years, min: 0, step: 1, **form_control_options(form_model, :lease_length_years) %>
         <%= field_error_messages(form_model, :lease_length_years) %>
       </div>
       <div class="form-grid__checkbox">
         <%= f.check_box :pets_allowed %>
-        <%= f.label :pets_allowed, "Pets allowed", class: "checkbox-label" %>
+        <%= f.label :pets_allowed, t("ui.properties.editor.fields.pets_allowed"), class: "checkbox-label" %>
       </div>
     </div>
   </section>
 
   <div class="form-actions property-listing-form__actions">
-    <%= f.submit class: "button primary" %>
-    <%= link_to t('helpers.label.property.cancel'), cancel_path, class: 'button hollow secondary' %>
+    <%= f.submit t("ui.properties.editor.submit"), class: "button primary" %>
+    <%= link_to t("ui.common.cancel"), cancel_path, class: "button hollow secondary" %>
     <% if allow_destroy && !current_page?(controller: 'properties', action: 'new') %>
-      <%= link_to t('helpers.label.property.delete_property'),
+      <%= link_to t("ui.properties.editor.delete_property"),
                   @property,
                   class: 'button alert hollow',
-                  data: { turbo_method: :delete, turbo_confirm: t('helpers.label.property.are_you_sure') } %>
+                  data: { turbo_method: :delete, turbo_confirm: t("ui.properties.editor.confirm_delete") } %>
     <% end %>
   </div>
 <% end %>
