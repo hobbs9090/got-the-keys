@@ -27,7 +27,7 @@ class Enquiry < ApplicationRecord
   validates :source_type, inclusion: { in: SOURCE_TYPES }
   validates :customer_name, length: { maximum: 100 }
   validates :customer_email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
-  validates :customer_phone, format: { with: PHONE_FORMAT, message: "must be a valid phone number" }, allow_blank: true
+  validates :customer_phone, format: { with: PHONE_FORMAT, message: ->(_record, _data) { I18n.t("ui.validation.phone_number") } }, allow_blank: true
   validates :message, length: { minimum: 20, maximum: 3000 }
   validates :internal_notes, length: { maximum: 3000 }, allow_blank: true
   validate :email_or_phone_present
@@ -52,11 +52,11 @@ class Enquiry < ApplicationRecord
   end
 
   def display_status
-    status.to_s.tr("_", " ").humanize
+    I18n.t("ui.enquiries.statuses.#{status}", default: status.to_s.tr("_", " ").humanize)
   end
 
   def display_source
-    source_type.to_s.tr("_", " ").humanize
+    I18n.t("ui.enquiries.source_types.#{source_type}", default: source_type.to_s.tr("_", " ").humanize)
   end
 
   private
@@ -77,7 +77,7 @@ class Enquiry < ApplicationRecord
   def email_or_phone_present
     return if customer_email.present? || customer_phone.present?
 
-    errors.add(:base, "Add an email address or a phone number so we can reply.")
+    errors.add(:base, I18n.t("ui.enquiries.validation.contact_required"))
   end
 
   def flag_suspected_spam
@@ -113,7 +113,7 @@ class Enquiry < ApplicationRecord
       property: property,
       actor_label: customer_email.presence || customer_name,
       action: "enquiry_created",
-      message: "Lead created from #{display_source.downcase} by #{customer_name}."
+      message: I18n.t("ui.enquiries.audit.created", source: display_source.downcase, name: customer_name)
     )
   end
 end

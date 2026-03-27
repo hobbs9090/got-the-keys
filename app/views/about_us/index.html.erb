@@ -2,48 +2,48 @@
 <%
 principles = [
   {
-    title: t('about_us.value_1_title', default: 'Owner-led, not agency-led'),
-    body: t('about_us.value_1_body', default: 'The platform is designed so owners can shape the listing, the pace of updates, and the enquiry flow without losing visibility.')
+    title: t('about_us.value_1_title'),
+    body: t('about_us.value_1_body')
   },
   {
-    title: t('about_us.value_2_title', default: 'Clearer marketing, better enquiries'),
-    body: t('about_us.value_2_body', default: 'We care about clearer copy, useful photos, and next-step actions that turn attention into serious buyer or tenant conversations.')
+    title: t('about_us.value_2_title'),
+    body: t('about_us.value_2_body')
   },
   {
-    title: t('about_us.value_3_title', default: 'More transparency around obligations'),
-    body: t('about_us.value_3_body', default: 'The service should reduce avoidable confusion, including where traditional agency terms still affect what happens next.')
+    title: t('about_us.value_3_title'),
+    body: t('about_us.value_3_body')
   }
 ]
 
 owner_controls = [
-  t('about_us.control_1', default: 'How the property is described and refreshed'),
-  t('about_us.control_2', default: 'When photos, brochures, and floor plans are updated'),
-  t('about_us.control_3', default: 'How quickly enquiries are answered and routed'),
-  t('about_us.control_4', default: 'When viewings can happen and how they are confirmed')
+  t('about_us.control_1'),
+  t('about_us.control_2'),
+  t('about_us.control_3'),
+  t('about_us.control_4')
 ]
 %>
 
 <section class="page-hero about-hero">
   <div class="about-hero__content">
-    <p class="page-hero__eyebrow"><%= t('about_us.hero_eyebrow', default: 'About the platform') %></p>
-    <h1><%= t('about_us.hero_title', default: 'A more direct property platform for owners who want clarity, control, and fewer avoidable delays') %></h1>
+    <p class="page-hero__eyebrow"><%= t('about_us.hero_eyebrow') %></p>
+    <h1><%= t('about_us.hero_title') %></h1>
     <p class="about-hero__copy"><%= t('about_us.blurb') %></p>
 
     <div class="about-hero__actions">
-      <%= link_to t('about_us.primary_cta', default: 'Browse homes'), properties_path, class: 'button primary large' %>
-      <%= link_to t('about_us.secondary_cta', default: 'Talk to the team'), contact_us_path, class: 'button secondary hollow large' %>
+      <%= link_to t('about_us.primary_cta'), properties_path, class: 'button primary large' %>
+      <%= link_to t('about_us.secondary_cta'), contact_us_path, class: 'button secondary hollow large' %>
     </div>
   </div>
 
   <aside class="site-card about-hero__panel">
-    <span class="badge badge--neutral"><%= t('about_us.hero_panel_badge', default: 'Why it exists') %></span>
-    <h2><%= t('about_us.hero_panel_title', default: 'Built for owners who want professional presentation without handing over the entire process') %></h2>
-    <p><%= t('about_us.hero_panel_body', default: 'GotTheKeys was shaped around a simple idea: the person closest to the property should still be able to steer the listing, the information, and the response flow.') %></p>
+    <span class="badge badge--neutral"><%= t('about_us.hero_panel_badge') %></span>
+    <h2><%= t('about_us.hero_panel_title') %></h2>
+    <p><%= t('about_us.hero_panel_body') %></p>
 
     <ul class="about-hero__checklist no-bullet">
-      <li><%= t('about_us.hero_point_1', default: 'Keep the listing accurate as the market changes') %></li>
-      <li><%= t('about_us.hero_point_2', default: 'Make it easier for serious buyers or tenants to act') %></li>
-      <li><%= t('about_us.hero_point_3', default: 'Reduce the opacity that often surrounds pricing, viewings, and handoff') %></li>
+      <li><%= t('about_us.hero_point_1') %></li>
+      <li><%= t('about_us.hero_point_2') %></li>
+      <li><%= t('about_us.hero_point_3') %></li>
     </ul>
   </aside>
 </section>
@@ -56,8 +56,8 @@ owner_controls = [
       </div>
 
       <div class="about-story__body">
-        <p class="section-heading__eyebrow"><%= t('about_us.story_eyebrow', default: 'Our approach') %></p>
-        <h2><%= t('about_us.story_title', default: 'Built to make the essential parts of selling or letting feel less fragmented') %></h2>
+        <p class="section-heading__eyebrow"><%= t('about_us.story_eyebrow') %></p>
+        <h2><%= t('about_us.story_title') %></h2>
         <p><%= t('about_us.paragraph_1') %></p>
         <p><%= t('about_us.paragraph_2') %></p>
       </div>
@@ -66,10 +66,10 @@ owner_controls = [
     <section class="about-values" aria-labelledby="about-values-title">
       <div class="section-heading">
         <div>
-          <p class="section-heading__eyebrow"><%= t('about_us.values_eyebrow', default: 'What we optimise for') %></p>
-          <h2 id="about-values-title"><%= t('about_us.values_title', default: 'A better listing workflow usually comes from a few simple principles') %></h2>
+          <p class="section-heading__eyebrow"><%= t('about_us.values_eyebrow') %></p>
+          <h2 id="about-values-title"><%= t('about_us.values_title') %></h2>
         </div>
-        <p class="about-values__intro"><%= t('about_us.values_intro', default: 'The goal is not more noise. It is a better route from accurate information to a serious conversation and then a confirmed next step.') %></p>
+        <p class="about-values__intro"><%= t('about_us.values_intro') %></p>
       </div>
 
       <div class="about-values__grid">
@@ -85,8 +85,8 @@ owner_controls = [
 
   <aside class="about-sidebar">
     <section class="site-card about-sidebar__controls">
-      <p class="section-heading__eyebrow"><%= t('about_us.controls_eyebrow', default: 'What owners keep control of') %></p>
-      <h2><%= t('about_us.controls_title', default: 'The platform is designed to keep the practical levers visible') %></h2>
+      <p class="section-heading__eyebrow"><%= t('about_us.controls_eyebrow') %></p>
+      <h2><%= t('about_us.controls_title') %></h2>
 
       <ul class="about-control-list no-bullet">
         <% owner_controls.each do |control| %>
@@ -96,19 +96,19 @@ owner_controls = [
     </section>
 
     <section class="site-card about-sidebar__note">
-      <p class="section-heading__eyebrow"><%= t('about_us.note_eyebrow', default: 'Important context') %></p>
-      <h2><%= t('about_us.note_title', default: 'Traditional agency terms can still matter') %></h2>
+      <p class="section-heading__eyebrow"><%= t('about_us.note_eyebrow') %></p>
+      <h2><%= t('about_us.note_title') %></h2>
       <p><%= t('about_us.paragraph_3') %></p>
     </section>
 
     <section class="site-card about-sidebar__cta">
-      <p class="section-heading__eyebrow"><%= t('about_us.cta_eyebrow', default: 'Want to see the product in context?') %></p>
-      <h2><%= t('about_us.cta_title', default: 'Explore the live listings or speak to the team directly') %></h2>
-      <p><%= t('about_us.cta_body', default: 'If you want a clearer picture of how the platform works in practice, the best next step is to browse current listings or send the team a direct enquiry.') %></p>
+      <p class="section-heading__eyebrow"><%= t('about_us.cta_eyebrow') %></p>
+      <h2><%= t('about_us.cta_title') %></h2>
+      <p><%= t('about_us.cta_body') %></p>
 
       <div class="about-sidebar__actions">
-        <%= link_to t('about_us.cta_primary', default: 'Browse listings'), properties_path, class: 'button primary expanded' %>
-        <%= link_to t('about_us.cta_secondary', default: 'Contact the team'), contact_us_path, class: 'button secondary hollow expanded' %>
+        <%= link_to t('about_us.cta_primary'), properties_path, class: 'button primary expanded' %>
+        <%= link_to t('about_us.cta_secondary'), contact_us_path, class: 'button secondary hollow expanded' %>
       </div>
     </section>
   </aside>

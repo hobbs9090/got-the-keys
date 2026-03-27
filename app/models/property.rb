@@ -208,27 +208,27 @@ class Property < ApplicationRecord
     [
       {
         key: :headline,
-        label: "Headline and summary",
+        label: I18n.t("ui.properties.seller.checks.headline"),
         complete: listing_tagline.present? && property_description.to_s.length >= 80
       },
       {
         key: :media,
-        label: "Photography",
+        label: I18n.t("ui.properties.seller.checks.media"),
         complete: ordered_photos.any? || image_file_name.present?
       },
       {
         key: :floor_plan,
-        label: "Floor plan",
+        label: I18n.t("ui.properties.seller.checks.floor_plan"),
         complete: ordered_floor_plans.any?
       },
       {
         key: :facts,
-        label: "Key facts",
+        label: I18n.t("ui.properties.seller.checks.facts"),
         complete: [tenure, council_tax_band, epc_rating, floor_area_sq_ft].all?(&:present?)
       },
       {
         key: :contact,
-        label: "Contact readiness",
+        label: I18n.t("ui.properties.seller.checks.contact"),
         complete: user.email.present? && user.mobile_number.present?
       }
     ]

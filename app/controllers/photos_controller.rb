@@ -21,7 +21,7 @@ class PhotosController < ApplicationController
     @new_photo.primary = true if @property.photos.none?
 
     if @new_photo.save
-      redirect_to property_photos_path(@property), notice: "Photo added."
+      redirect_to property_photos_path(@property), notice: t("ui.photos.flash.added")
     else
       render :index, status: :unprocessable_entity
     end
@@ -33,7 +33,7 @@ class PhotosController < ApplicationController
     @edited_photo = @photo
 
     if @photo.update(photo_params)
-      redirect_to property_photos_path(@property), notice: "Photo updated."
+      redirect_to property_photos_path(@property), notice: t("ui.photos.flash.updated")
     else
       render :index, status: :unprocessable_entity
     end
@@ -41,7 +41,7 @@ class PhotosController < ApplicationController
 
   def destroy
     @photo.destroy
-    redirect_to property_photos_path(@property), notice: "Photo removed."
+    redirect_to property_photos_path(@property), notice: t("ui.photos.flash.removed")
   end
 
   private

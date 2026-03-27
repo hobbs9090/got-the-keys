@@ -20,7 +20,7 @@ class FloorPlansController < ApplicationController
     @new_floor_plan = @property.floor_plans.new(floor_plan_params)
 
     if @new_floor_plan.save
-      redirect_to property_floor_plans_path(@property), notice: "Floor plan added."
+      redirect_to property_floor_plans_path(@property), notice: t("ui.floor_plans.flash.added")
     else
       render :index, status: :unprocessable_entity
     end
@@ -32,7 +32,7 @@ class FloorPlansController < ApplicationController
     @edited_floor_plan = @floor_plan
 
     if @floor_plan.update(floor_plan_params)
-      redirect_to property_floor_plans_path(@property), notice: "Floor plan updated."
+      redirect_to property_floor_plans_path(@property), notice: t("ui.floor_plans.flash.updated")
     else
       render :index, status: :unprocessable_entity
     end
@@ -40,7 +40,7 @@ class FloorPlansController < ApplicationController
 
   def destroy
     @floor_plan.destroy
-    redirect_to property_floor_plans_path(@property), notice: "Floor plan removed."
+    redirect_to property_floor_plans_path(@property), notice: t("ui.floor_plans.flash.removed")
   end
 
   private

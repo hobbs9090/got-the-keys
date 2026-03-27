@@ -19,6 +19,7 @@ RSpec.describe "Admin demo scenarios" do
     expect(response.body).to include("Demo data management")
     expect(response.body).to include("Seed data resets")
     expect(response.body).not_to include("Quick reset packs")
+    expect(response.body).not_to include("Typed gate")
 
     seed_reset_panel = parsed_html.at_css('[data-testid="scenario-seed-reset-panel"]')
     expect(seed_reset_panel).to be_present
@@ -82,6 +83,7 @@ RSpec.describe "Admin demo scenarios" do
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Seed data reset")
     expect(response.body).not_to include("Apply scenario")
+    expect(response.body).not_to include("Typed gate")
 
     preview_reset = parsed_html.at_css('[data-testid="scenario-seed-reset-preview-panel"]')
     expect(preview_reset).to be_present

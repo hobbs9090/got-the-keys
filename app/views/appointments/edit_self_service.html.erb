@@ -1,18 +1,18 @@
-<% title "Manage viewing #{@appointment.public_reference}" %>
+<% title t("ui.appointments.self_service.title", reference: @appointment.public_reference) %>
 
 <section class="page-hero">
   <div>
-    <p class="page-hero__eyebrow">Manage your viewing</p>
+    <p class="page-hero__eyebrow"><%= t("ui.appointments.self_service.eyebrow") %></p>
     <h1><%= @appointment.public_reference %></h1>
-    <p>Choose a new slot or keep the current one. Self-service stays open until shortly after the booked time.</p>
+    <p><%= t("ui.appointments.self_service.body") %></p>
   </div>
 </section>
 
 <section class="property-layout">
   <article class="property-panel">
     <h2><%= @appointment.property.address_line_1 %></h2>
-    <p>Current slot: <strong><%= formatted_date_time(@appointment.scheduled_at) %></strong></p>
-    <p>Status: <span class="<%= appointment_status_badge_class(@appointment.status) %>"><%= @appointment.display_status %></span></p>
+    <p><%= t("ui.appointments.self_service.current_slot", time: formatted_date_time(@appointment.scheduled_at)) %></p>
+    <p><%= t("ui.appointments.self_service.status") %>: <span class="<%= appointment_status_badge_class(@appointment.status) %>"><%= @appointment.display_status %></span></p>
   </article>
 
   <aside class="property-booking-panel">
@@ -21,23 +21,23 @@
     <% if @available_slots.any? %>
       <%= form_with model: @appointment, url: reschedule_self_service_appointment_path(@appointment, token: @appointment.access_token), method: :patch, data: { testid: "self-service-reschedule-form" } do |f| %>
         <div>
-          <%= f.label :requested_time, "Choose a new slot", **form_label_options(@appointment, :requested_time) %>
+          <%= f.label :requested_time, t("ui.appointments.self_service.choose_slot"), **form_label_options(@appointment, :requested_time) %>
           <%= f.select :requested_time,
                        options_for_select(@available_slots.map { |slot| [slot.label, slot.starts_at.iso8601] }),
-                       { prompt: "Select a new time" },
+                       { prompt: t("ui.appointments.self_service.select_slot") },
                        form_control_options(@appointment, :requested_time, data: { testid: "self-service-slot-select" }) %>
           <%= field_error_messages(@appointment, :requested_time) %>
         </div>
 
         <div class="form-actions">
-          <%= f.submit "Reschedule viewing", class: "button primary expanded", data: { testid: "self-service-reschedule-button" } %>
-          <%= link_to "Back to appointment", appointment_path(@appointment, token: @appointment.access_token), class: "button hollow secondary expanded" %>
+          <%= f.submit t("ui.appointments.self_service.submit"), class: "button primary expanded", data: { testid: "self-service-reschedule-button" } %>
+          <%= link_to t("ui.appointments.self_service.back_to_appointment"), appointment_path(@appointment, token: @appointment.access_token), class: "button hollow secondary expanded" %>
         </div>
       <% end %>
     <% else %>
       <div class="empty-state">
-        <h2>No slots available</h2>
-        <p>There are no self-service slots available right now. Please contact the office for help.</p>
+        <h2><%= t("ui.appointments.self_service.no_slots_title") %></h2>
+        <p><%= t("ui.appointments.self_service.no_slots_body") %></p>
       </div>
     <% end %>
   </aside>

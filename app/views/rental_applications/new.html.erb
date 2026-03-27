@@ -1,58 +1,58 @@
-<% title "Start a rental application for #{@property.address_line_1}" %>
+<% title t("ui.rental_applications.title", address: @property.address_line_1) %>
 
 <section class="property-layout">
   <article class="property-panel">
-    <p class="section-heading__eyebrow">Rental application</p>
-    <h1>Start a rental application for <%= @property.address_line_1 %></h1>
-    <p>Use this form if you want to register as an applicant and share your intended move-in timing and affordability notes.</p>
+    <p class="section-heading__eyebrow"><%= t("ui.rental_applications.eyebrow") %></p>
+    <h1><%= t("ui.rental_applications.heading", address: @property.address_line_1) %></h1>
+    <p><%= t("ui.rental_applications.body") %></p>
 
     <%= form_with model: [@property, @rental_application], data: { testid: "property-rental-application-form" } do |f| %>
       <%= render "shared/errors", object: @rental_application %>
 
       <div class="form-grid">
         <div>
-          <%= f.label :applicant_name, "Your name", **form_label_options(@rental_application, :applicant_name) %>
+          <%= f.label :applicant_name, t("ui.common.full_name"), **form_label_options(@rental_application, :applicant_name) %>
           <%= f.text_field :applicant_name, required: true, data: { testid: "rental-applicant-name" }, **form_control_options(@rental_application, :applicant_name) %>
           <%= field_error_messages(@rental_application, :applicant_name) %>
         </div>
         <div>
-          <%= f.label :applicant_email, "Email address", **form_label_options(@rental_application, :applicant_email) %>
+          <%= f.label :applicant_email, t("ui.common.email_address"), **form_label_options(@rental_application, :applicant_email) %>
           <%= f.email_field :applicant_email, required: true, data: { testid: "rental-applicant-email" }, **form_control_options(@rental_application, :applicant_email) %>
           <%= field_error_messages(@rental_application, :applicant_email) %>
         </div>
         <div>
-          <%= f.label :applicant_phone, "Phone number", **form_label_options(@rental_application, :applicant_phone) %>
+          <%= f.label :applicant_phone, t("ui.common.phone_number"), **form_label_options(@rental_application, :applicant_phone) %>
           <%= f.telephone_field :applicant_phone, required: true, data: { testid: "rental-applicant-phone" }, **form_control_options(@rental_application, :applicant_phone) %>
           <%= field_error_messages(@rental_application, :applicant_phone) %>
         </div>
         <div>
-          <%= f.label :move_in_date, "Preferred move-in date", **form_label_options(@rental_application, :move_in_date) %>
+          <%= f.label :move_in_date, t("ui.rental_applications.fields.move_in_date"), **form_label_options(@rental_application, :move_in_date) %>
           <%= f.date_field :move_in_date, required: true, data: { testid: "rental-move-in-date" }, **form_control_options(@rental_application, :move_in_date) %>
           <%= field_error_messages(@rental_application, :move_in_date) %>
         </div>
         <div class="form-grid__checkbox">
           <%= f.check_box :guarantor_required, data: { testid: "rental-guarantor-required" } %>
-          <%= f.label :guarantor_required, "I expect I may need a guarantor", class: "checkbox-label" %>
+          <%= f.label :guarantor_required, t("ui.rental_applications.fields.guarantor_required"), class: "checkbox-label" %>
         </div>
         <div class="form-grid__checkbox">
           <%= f.check_box :guarantor_available, data: { testid: "rental-guarantor-available" } %>
-          <%= f.label :guarantor_available, "I already have a guarantor available", class: "checkbox-label" %>
+          <%= f.label :guarantor_available, t("ui.rental_applications.fields.guarantor_available"), class: "checkbox-label" %>
         </div>
         <div class="form-grid__full">
-          <%= f.label :affordability_notes, "Affordability notes", **form_label_options(@rental_application, :affordability_notes) %>
+          <%= f.label :affordability_notes, t("ui.rental_applications.fields.affordability_notes"), **form_label_options(@rental_application, :affordability_notes) %>
           <%= f.text_area :affordability_notes, rows: 4, data: { testid: "rental-affordability-notes" }, **form_control_options(@rental_application, :affordability_notes) %>
           <%= field_error_messages(@rental_application, :affordability_notes) %>
         </div>
         <div class="form-grid__full">
-          <%= f.label :notes, "Notes", **form_label_options(@rental_application, :notes) %>
+          <%= f.label :notes, t("ui.rental_applications.fields.notes"), **form_label_options(@rental_application, :notes) %>
           <%= f.text_area :notes, rows: 4, data: { testid: "rental-notes" }, **form_control_options(@rental_application, :notes) %>
           <%= field_error_messages(@rental_application, :notes) %>
         </div>
       </div>
 
       <div class="form-actions">
-        <%= f.submit "Submit rental application", class: "button primary", data: { testid: "submit-rental-application-button" } %>
-        <%= link_to "Back to property", property_path(@property), class: "button hollow secondary" %>
+        <%= f.submit t("ui.rental_applications.submit"), class: "button primary", data: { testid: "submit-rental-application-button" } %>
+        <%= link_to t("ui.appointments.new.back_to_property"), property_path(@property), class: "button hollow secondary" %>
       </div>
     <% end %>
   </article>

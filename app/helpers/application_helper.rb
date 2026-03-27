@@ -27,7 +27,7 @@ module ApplicationHelper
   end
 
   def enquiry_source_label(source_type)
-    source_type.to_s.tr("_", " ").humanize
+    I18n.t("ui.enquiries.source_types.#{source_type}", default: source_type.to_s.tr("_", " ").humanize)
   end
 
   def offer_status_badge_class(status)

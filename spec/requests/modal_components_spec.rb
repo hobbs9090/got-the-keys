@@ -15,6 +15,7 @@ RSpec.describe "Modal components" do
     expect(modal).to be_present
     expect(modal.has_attribute?("hidden")).to be(true)
     expect(modal.at_css("[data-modal-close]")).to be_present
+    expect(modal.at_css(".site-modal__close")["aria-label"]).to eq(I18n.t("ui.common.close_dialog"))
   end
 
   it "uses the shared modal contract on the registration page" do

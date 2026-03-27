@@ -38,13 +38,13 @@ class AppointmentsController < ApplicationController
 
     if requested_time.blank?
       @available_slots = @appointment.property.next_available_slots(limit: 10, excluding_appointment: @appointment)
-      @appointment.errors.add(:requested_time, "Choose a new slot.")
+      @appointment.errors.add(:requested_time, t("ui.appointments.self_service.choose_slot"))
       render :edit_self_service, status: :unprocessable_entity
       return
     end
 
     if @appointment.update(requested_time:, scheduled_at: requested_time, status: "rescheduled")
-      redirect_to appointment_path(@appointment, token: @appointment.access_token), notice: "Your viewing has been rescheduled."
+      redirect_to appointment_path(@appointment, token: @appointment.access_token), notice: t("ui.appointments.self_service.flash.rescheduled")
     else
       @available_slots = @appointment.property.next_available_slots(limit: 10, excluding_appointment: @appointment)
       render :edit_self_service, status: :unprocessable_entity
@@ -53,7 +53,7 @@ class AppointmentsController < ApplicationController
 
   def cancel_self_service
     if @appointment.update(status: "cancelled")
-      redirect_to appointment_path(@appointment, token: @appointment.access_token), notice: "Your viewing has been cancelled."
+      redirect_to appointment_path(@appointment, token: @appointment.access_token), notice: t("ui.appointments.self_service.flash.cancelled")
     else
       redirect_to appointment_path(@appointment, token: @appointment.access_token), alert: @appointment.errors.full_messages.to_sentence
     end
@@ -84,7 +84,7 @@ class AppointmentsController < ApplicationController
     return if current_admin.present?
     return if @appointment.manageable_by_customer?
 
-    redirect_to appointment_path(@appointment, token: @appointment.access_token), alert: "This self-service link has expired."
+    redirect_to appointment_path(@appointment, token: @appointment.access_token), alert: t("ui.appointments.self_service.flash.expired")
   end
 
   def preselected_slot

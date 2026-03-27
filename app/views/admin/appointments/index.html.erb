@@ -53,15 +53,15 @@
       <%= button_tag t("ui.common.apply"), class: "button primary" %>
       <%= link_to t("ui.common.reset"), admin_bookings_path(view: @view_mode), class: "button hollow secondary" %>
     </div>
-  <% end %>
+<% end %>
 </section>
 
 <% if @view_mode == "agenda" %>
-  <section class="admin-section">
+  <section class="admin-section admin-bookings-agenda-days" data-testid="admin-bookings-agenda-days">
     <% @appointments_by_day.each do |date, appointments| %>
       <article class="admin-panel">
         <h2><%= l(date, format: :long) %></h2>
-        <div class="admin-list">
+        <div class="admin-list admin-bookings-agenda-list" data-testid="admin-bookings-agenda-list">
           <% appointments.each do |appointment| %>
             <div class="admin-list__item" data-testid="admin-appointment-row">
               <div>
@@ -69,13 +69,13 @@
                 <p><%= appointment.property.address_line_1 %> · <%= formatted_date_time(appointment.scheduled_at) %></p>
               </div>
 
-              <div class="admin-inline-actions">
-                <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+              <div class="admin-inline-actions admin-bookings-row__actions" data-testid="admin-bookings-row-actions">
+                <span class="<%= [appointment_status_badge_class(appointment.status), "admin-bookings-row__pill"].join(" ") %>"><%= appointment.display_status %></span>
                 <% if appointment.visit_outcome.present? %>
-                  <span class="badge badge--neutral"><%= appointment.visit_outcome.to_s.humanize %></span>
+                  <span class="badge badge--neutral admin-bookings-row__pill"><%= appointment.visit_outcome.to_s.humanize %></span>
                 <% end %>
-                <%= button_to t("ui.admin.appointments.confirm"), transition_admin_appointment_path(appointment, status: "confirmed"), method: :patch, class: "button tiny success hollow" unless appointment.status == "confirmed" %>
-                <%= button_to t("ui.admin.appointments.cancel"), transition_admin_appointment_path(appointment, status: "cancelled"), method: :patch, class: "button tiny alert hollow" unless appointment.status == "cancelled" %>
+                <%= button_to t("ui.admin.appointments.confirm"), transition_admin_appointment_path(appointment, status: "confirmed"), method: :patch, class: "button success hollow admin-bookings-row__action" unless appointment.status == "confirmed" %>
+                <%= button_to t("ui.admin.appointments.cancel"), transition_admin_appointment_path(appointment, status: "cancelled"), method: :patch, class: "button alert hollow admin-bookings-row__action" unless appointment.status == "cancelled" %>
               </div>
             </div>
           <% end %>

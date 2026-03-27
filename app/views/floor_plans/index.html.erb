@@ -1,43 +1,43 @@
-<% title "#{@property.address_line_1} floor plans" %>
+<% title t("ui.floor_plans.title", address: @property.address_line_1) %>
 
 <section class="page-hero">
   <div>
-    <p class="page-hero__eyebrow">Listing assets</p>
-    <h1>Manage floor plans</h1>
-    <p>Keep brochure attachments in order so buyers and tenants can review the layout quickly.</p>
+    <p class="page-hero__eyebrow"><%= t("ui.floor_plans.eyebrow") %></p>
+    <h1><%= t("ui.floor_plans.heading") %></h1>
+    <p><%= t("ui.floor_plans.body") %></p>
   </div>
 </section>
 
 <section class="page-section">
   <article class="property-panel">
-    <h2>Add a floor plan</h2>
+    <h2><%= t("ui.floor_plans.add_title") %></h2>
     <%= render "shared/errors", object: @new_floor_plan %>
 
     <%= form_with model: [@property, @new_floor_plan] do |f| %>
       <div class="form-grid">
         <div>
-          <%= f.label :label, "Label" %>
-          <%= f.text_field :label, placeholder: "Ground floor" %>
+          <%= f.label :label, t("ui.floor_plans.fields.label") %>
+          <%= f.text_field :label, placeholder: t("ui.floor_plans.fields.label_placeholder") %>
         </div>
         <div>
-          <%= f.label :floor_plans, "Filename" %>
-          <%= f.text_field :floor_plans, placeholder: "ground_floor_plan.pdf" %>
+          <%= f.label :floor_plans, t("ui.floor_plans.fields.file_name") %>
+          <%= f.text_field :floor_plans, placeholder: t("ui.floor_plans.fields.file_name_placeholder") %>
         </div>
         <div>
-          <%= f.label :position, "Display order" %>
+          <%= f.label :position, t("ui.floor_plans.fields.position") %>
           <%= f.number_field :position, min: 0, step: 1 %>
         </div>
       </div>
 
       <div class="form-actions">
-        <%= f.submit "Add floor plan", class: "button primary" %>
-        <%= link_to "Back to listing", edit_property_path(@property), class: "button hollow secondary" %>
+        <%= f.submit t("ui.floor_plans.actions.add"), class: "button primary" %>
+        <%= link_to t("ui.common.back_to_listing"), edit_property_path(@property), class: "button hollow secondary" %>
       </div>
     <% end %>
   </article>
 
   <article class="property-panel">
-    <h2>Current floor plans</h2>
+    <h2><%= t("ui.floor_plans.current_title") %></h2>
     <% if @floor_plans.any? %>
       <div class="admin-list">
         <% @floor_plans.each do |floor_plan| %>
@@ -47,24 +47,24 @@
               <%= form_with model: [@property, floor_plan_form], method: :patch do |f| %>
                 <div class="form-grid">
                   <div>
-                    <%= f.label :label, "Label" %>
+                    <%= f.label :label, t("ui.floor_plans.fields.label") %>
                     <%= f.text_field :label %>
                   </div>
                   <div>
-                    <%= f.label :floor_plans, "Filename" %>
+                    <%= f.label :floor_plans, t("ui.floor_plans.fields.file_name") %>
                     <%= f.text_field :floor_plans %>
                   </div>
                   <div>
-                    <%= f.label :position, "Display order" %>
+                    <%= f.label :position, t("ui.floor_plans.fields.position") %>
                     <%= f.number_field :position, min: 0, step: 1 %>
                   </div>
                 </div>
                 <div class="form-actions">
-                  <%= f.submit "Save", class: "button primary hollow" %>
-                  <%= link_to "Remove",
+                  <%= f.submit t("ui.common.save"), class: "button primary hollow" %>
+                  <%= link_to t("ui.common.remove"),
                               property_floor_plan_path(@property, floor_plan),
                               class: "button alert hollow",
-                              data: { turbo_method: :delete, turbo_confirm: "Remove this floor plan?" } %>
+                              data: { turbo_method: :delete, turbo_confirm: t("ui.floor_plans.actions.remove_confirm") } %>
                 </div>
               <% end %>
             </div>
@@ -72,7 +72,7 @@
         <% end %>
       </div>
     <% else %>
-      <p class="empty-copy">No floor plans have been added yet.</p>
+      <p class="empty-copy"><%= t("ui.floor_plans.empty") %></p>
     <% end %>
   </article>
 </section>

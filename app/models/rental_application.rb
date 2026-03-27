@@ -12,7 +12,7 @@ class RentalApplication < ApplicationRecord
 
   validates :public_reference, :applicant_name, :applicant_email, :applicant_phone, :move_in_date, :status, presence: true
   validates :applicant_email, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :applicant_phone, format: { with: PHONE_FORMAT, message: "must be a valid phone number" }
+  validates :applicant_phone, format: { with: PHONE_FORMAT, message: ->(_record, _data) { I18n.t("ui.validation.phone_number") } }
   validates :status, inclusion: { in: STATUSES }
   validates :applicant_name, length: { maximum: 100 }
   validates :affordability_notes, :notes, :internal_notes, length: { maximum: 3000 }, allow_blank: true
@@ -46,7 +46,7 @@ class RentalApplication < ApplicationRecord
   def rental_listing_only
     return if property.blank? || property.sale_status == Property::SALE_STATUSES[:for_rent]
 
-    errors.add(:property, "must be a rental listing")
+    errors.add(:property, I18n.t("ui.rental_applications.validation.rental_listing_only"))
   end
 
   def record_creation_event
@@ -54,7 +54,7 @@ class RentalApplication < ApplicationRecord
       admin:,
       event_type: "received",
       to_status: status,
-      message: "Rental application received for #{move_in_date}.",
+      message: I18n.t("ui.rental_applications.events.received", move_in_date: I18n.l(move_in_date, format: :long)),
       occurred_at: created_at
     )
   end
@@ -66,7 +66,11 @@ class RentalApplication < ApplicationRecord
       event_type: to_status,
       from_status: from_status,
       to_status: to_status,
-      message: "Application status changed from #{from_status.to_s.humanize.downcase} to #{to_status.to_s.humanize.downcase}.",
+      message: I18n.t(
+        "ui.rental_applications.events.status_changed",
+        from_status: I18n.t("ui.rental_applications.statuses.#{from_status}", default: from_status.to_s.humanize.downcase),
+        to_status: I18n.t("ui.rental_applications.statuses.#{to_status}", default: to_status.to_s.humanize.downcase)
+      ),
       occurred_at: updated_at
     )
   end
@@ -86,7 +90,11 @@ class RentalApplication < ApplicationRecord
       property: property,
       actor_label: applicant_email,
       action: "rental_application_created",
-      message: "Rental application received from #{applicant_name} for move-in #{move_in_date}."
+      message: I18n.t(
+        "ui.rental_applications.audit.created",
+        name: applicant_name,
+        move_in_date: I18n.l(move_in_date, format: :long)
+      )
     )
   end
 end
