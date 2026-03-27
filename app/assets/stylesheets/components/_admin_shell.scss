@@ -218,20 +218,32 @@
   color: var(--color-primary-strong);
 }
 
+.admin-bookings-agenda-days {
+  display: grid;
+  gap: 1.35rem;
+}
+
+.admin-bookings-agenda-days .admin-panel {
+  margin: 0;
+}
+
 .admin-bookings-agenda-list {
   gap: 0.7rem;
+  padding: 0.15rem 0 0;
 }
 
 .admin-bookings-agenda-list .admin-list__item {
   align-items: center;
   background: rgba(255, 255, 255, 0.58);
   border: 1px solid rgba(20, 37, 63, 0.08);
+  border-bottom: 0;
   border-radius: var(--radius-md);
+  box-shadow: 0 10px 24px rgba(16, 33, 63, 0.04);
   padding: 0.9rem 1rem;
 }
 
 .admin-bookings-agenda-list .admin-list__item:last-child {
-  border-bottom: 1px solid rgba(20, 37, 63, 0.08);
+  border-bottom: 0;
 }
 
 .admin-bookings-row__actions {

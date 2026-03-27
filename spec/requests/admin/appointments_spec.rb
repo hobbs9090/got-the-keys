@@ -24,6 +24,7 @@ RSpec.describe "Admin appointments" do
     get admin_bookings_path
     document = Nokogiri::HTML.parse(response.body)
     view_switch = document.at_css('[data-testid="admin-bookings-view-switch"]')
+    agenda_days = document.at_css('[data-testid="admin-bookings-agenda-days"]')
     agenda_list = document.at_css('[data-testid="admin-bookings-agenda-list"]')
     first_actions = document.at_css('[data-testid="admin-bookings-row-actions"]')
 
@@ -33,6 +34,8 @@ RSpec.describe "Admin appointments" do
     expect(view_switch["class"]).to include("admin-bookings-view-switch")
     expect(view_switch.css("a").map { |link| link.text.strip }).to eq(%w[Agenda Day Week Month])
     expect(view_switch.at_css('[data-testid="admin-bookings-view-agenda"]')["class"]).to include("is-active")
+    expect(agenda_days).to be_present
+    expect(agenda_days["class"]).to include("admin-bookings-agenda-days")
     expect(agenda_list).to be_present
     expect(agenda_list["class"]).to include("admin-bookings-agenda-list")
     expect(first_actions).to be_present
