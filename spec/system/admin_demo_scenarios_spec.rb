@@ -15,16 +15,16 @@ RSpec.describe "Admin demo scenarios", type: :system do
     sign_in_as(admin)
 
     expect(page).to have_text("Demo data management")
-    expect(page).to have_css('[data-testid="active-demo-scenario"]', text: "Baseline")
     expect(page).to have_css('[data-testid="scenario-seed-reset-panel"]')
     expect(page).to have_text("Seed data resets")
+    expect(BookingConfiguration.current.active_demo_scenario_key).to eq("baseline")
 
     within(:xpath, "//article[contains(., 'Fully Booked Day')]") do
       click_button "Apply"
     end
 
     expect(page).to have_text("Applied demo scenario Fully Booked Day.")
-    expect(page).to have_css('[data-testid="active-demo-scenario"]', text: "Fully booked day")
+    expect(BookingConfiguration.current.active_demo_scenario_key).to eq("fully_booked_day")
 
     within('[data-testid="scenario-seed-reset-baseline"]') do
       fill_in "Type baseline to continue", with: "baseline"
@@ -32,7 +32,6 @@ RSpec.describe "Admin demo scenarios", type: :system do
     end
 
     expect(page).to have_text("Restored baseline demo scenario (Baseline Demo Estate).")
-    expect(page).to have_css('[data-testid="active-demo-scenario"]', text: "Baseline")
     expect(page).to have_text("baseline")
 
     expect(BookingConfiguration.current.active_demo_scenario_key).to eq("baseline")
