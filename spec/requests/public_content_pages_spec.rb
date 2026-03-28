@@ -36,6 +36,8 @@ RSpec.describe "Public content pages", type: :request do
     expect(response).to have_http_status(:ok)
     expect(response.body).to include('data-testid="blog-featured-post"')
     expect(response.body).to include(I18n.t("blog.hero_title"))
+    expect(response.body.scan('data-testid="blog-story-card"').count).to eq(3)
+    expect(response.body).to include(I18n.t("blog.story_3_title"))
   end
 
   it "renders the refreshed about us company layout" do

@@ -23,6 +23,8 @@
   --space-sm: 0.75rem;
   --space-md: 1rem;
   --space-lg: 1.5rem;
+  --space-panel-padding: 1.5rem;
+  --space-panel-padding-compact: 1.35rem;
   --space-site-shell: 1.25rem;
   --space-header-panel-y: 0.78rem;
   --space-header-panel-x: 1.1rem;
@@ -362,7 +364,7 @@ a:focus {
 .page-hero,
 .property-card,
 #errors {
-  padding: 1.5rem;
+  padding: var(--space-panel-padding);
 }
 
 .section-heading,
@@ -470,7 +472,7 @@ a:focus {
   border-radius: var(--radius-lg);
   color: var(--color-ink);
   margin: 0;
-  padding: 1.35rem;
+  padding: var(--space-panel-padding-compact);
 }
 
 .legal-callout h3,
@@ -1121,6 +1123,8 @@ a:focus {
     linear-gradient(145deg, rgba(10, 56, 136, 0.95), rgba(25, 114, 125, 0.92) 54%, rgba(255, 122, 24, 0.92));
   display: grid;
   gap: 1rem;
+  grid-template-rows: minmax(320px, 1fr) auto;
+  min-height: 100%;
   overflow: hidden;
   padding: 0;
   position: relative;
@@ -1138,6 +1142,7 @@ a:focus {
 
 .contact-hero__image {
   display: block;
+  height: 100%;
   min-height: 100%;
   object-fit: cover;
   width: 100%;
@@ -1776,7 +1781,7 @@ a:focus {
   display: grid;
   gap: 0.55rem;
   margin: 0;
-  padding: 1.35rem;
+  padding: var(--space-panel-padding-compact);
 }
 
 .property-catalogue-hero__meta {
@@ -2426,11 +2431,11 @@ a:focus {
 
 .panel,
 .site-card {
-  background: rgba(255, 255, 255, 0.86);
+  background-color: rgba(255, 255, 255, 0.86);
   border: 1px solid rgba(20, 37, 63, 0.08);
   border-radius: var(--radius-lg);
   box-shadow: var(--color-shadow);
-  padding: 1.4rem;
+  padding: var(--space-panel-padding);
 }
 
 .panel img,

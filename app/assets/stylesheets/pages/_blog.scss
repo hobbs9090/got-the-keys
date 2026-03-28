@@ -187,7 +187,7 @@
 .blog-story-grid__cards {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .blog-story-card {
@@ -266,6 +266,12 @@
 
   .blog-hero__content {
     max-width: none;
+  }
+}
+
+@media (max-width: 980px) {
+  .blog-story-grid__cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

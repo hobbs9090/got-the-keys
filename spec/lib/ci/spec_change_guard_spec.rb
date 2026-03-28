@@ -36,6 +36,22 @@ RSpec.describe Ci::SpecChangeGuard do
       expect(result.success?).to be(true)
     end
 
+    it 'ignores deleted product files when no live code remains changed' do
+      result = described_class.new(
+        changed_files: [{ path: 'app/helpers/blog_helper.rb', status: 'D' }]
+      ).evaluate
+
+      expect(result.success?).to be(true)
+    end
+
+    it 'ignores deletion-only product edits when no live code remains changed' do
+      result = described_class.new(
+        changed_files: [{ path: 'app/helpers/shared_helper.rb', status: 'M', additions: 0, deletions: 8 }]
+      ).evaluate
+
+      expect(result.success?).to be(true)
+    end
+
     it 'requires spec updates for lib changes outside exempt task paths' do
       result = described_class.new(
         changed_files: ['lib/release_build_metadata.rb']
