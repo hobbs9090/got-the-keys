@@ -12,21 +12,78 @@ def read_event_payload(path)
 end
 
 def git_changed_files(range)
-  args =
+  status_args =
     case range.diff_mode
     when :three_dot
-      ['diff', '--name-only', "#{range.base_sha}...#{range.head_sha}"]
+      ['diff', '--name-status', "#{range.base_sha}...#{range.head_sha}"]
     when :two_dot
-      ['diff', '--name-only', range.base_sha, range.head_sha]
+      ['diff', '--name-status', range.base_sha, range.head_sha]
     else
-      ['diff-tree', '--no-commit-id', '--name-only', '--root', '-r', range.head_sha]
+      ['diff-tree', '--no-commit-id', '--name-status', '--root', '-r', range.head_sha]
     end
 
-  stdout, stderr, status = Open3.capture3('git', *args)
-  return stdout.lines.map(&:strip).reject(&:empty?) if status.success?
+  numstat_args =
+    case range.diff_mode
+    when :three_dot
+      ['diff', '--numstat', "#{range.base_sha}...#{range.head_sha}"]
+    when :two_dot
+      ['diff', '--numstat', range.base_sha, range.head_sha]
+    else
+      ['diff-tree', '--no-commit-id', '--numstat', '--root', '-r', range.head_sha]
+    end
 
-  warn stderr
-  abort "Unable to determine changed files for spec coverage guard."
+  status_stdout, status_stderr, status_result = Open3.capture3('git', *status_args)
+  unless status_result.success?
+    warn status_stderr
+    abort "Unable to determine changed files for spec coverage guard."
+  end
+
+  numstat_stdout, numstat_stderr, numstat_result = Open3.capture3('git', *numstat_args)
+  unless numstat_result.success?
+    warn numstat_stderr
+    abort "Unable to determine changed file stats for spec coverage guard."
+  end
+
+  merge_change_metadata(
+    status_stdout.lines.filter_map { |line| parse_changed_file_status(line) },
+    numstat_stdout.lines.filter_map { |line| parse_changed_file_counts(line) }
+  )
+end
+
+def parse_changed_file_status(line)
+  parts = line.split("\t").map(&:strip).reject(&:empty?)
+  return if parts.empty?
+
+  status = parts.shift
+  path = parts.last
+  return if path.nil? || path.empty?
+
+  { path: path, status: status }
+end
+
+def parse_changed_file_counts(line)
+  parts = line.split("\t").map(&:strip).reject(&:empty?)
+  return if parts.length < 3
+
+  additions, deletions = parts.shift(2)
+  path = parts.last
+  return if path.nil? || path.empty?
+
+  {
+    path: path,
+    additions: additions.match?(/\A\d+\z/) ? additions.to_i : nil,
+    deletions: deletions.match?(/\A\d+\z/) ? deletions.to_i : nil
+  }
+end
+
+def merge_change_metadata(status_entries, count_entries)
+  counts_by_path = count_entries.each_with_object({}) do |entry, result|
+    result[entry[:path]] = entry
+  end
+
+  status_entries.map do |entry|
+    entry.merge(counts_by_path.fetch(entry[:path], {}))
+  end
 end
 
 def git_file_exists_at?(sha, path)

@@ -1,6 +1,40 @@
 # frozen_string_literal: true
 
 module Ci
+  class ChangedFiles
+    Entry = Struct.new(:path, :status, :additions, :deletions, keyword_init: true) do
+      def deleted?
+        status.to_s.start_with?('D')
+      end
+
+      def deletion_only?
+        additions.to_i.zero? && deletions.to_i.positive?
+      end
+    end
+
+    def self.normalize(changed_files)
+      Array(changed_files).filter_map do |entry|
+        case entry
+        when String
+          path = entry.strip
+          next if path.empty?
+
+          Entry.new(path: path, status: nil)
+        when Hash
+          path = entry[:path] || entry['path']
+          next if path.to_s.strip.empty?
+
+          Entry.new(
+            path: path.to_s.strip,
+            status: entry[:status] || entry['status'],
+            additions: entry[:additions] || entry['additions'],
+            deletions: entry[:deletions] || entry['deletions']
+          )
+        end
+      end.uniq(&:path)
+    end
+  end
+
   class ChangeRange
     NULL_SHA = '0' * 40
 
@@ -55,13 +89,13 @@ module Ci
     SPEC_PREFIX = 'spec/'
 
     def initialize(changed_files:, monitored_prefixes: MONITORED_PREFIXES, exempt_prefixes: EXEMPT_PREFIXES)
-      @changed_files = Array(changed_files).map(&:to_s).reject(&:empty?).uniq.sort
+      @changed_files = ChangedFiles.normalize(changed_files)
       @monitored_prefixes = monitored_prefixes
       @exempt_prefixes = exempt_prefixes
     end
 
     def evaluate
-      relevant_paths = changed_files.select { |path| monitored?(path) && !exempt?(path) }
+      relevant_paths = active_paths.select { |path| monitored?(path) && !exempt?(path) }
 
       return success('No product code changes requiring spec updates were detected.') if relevant_paths.empty?
       return success('Spec updates detected alongside product code changes.', relevant_paths) if spec_changes?
@@ -73,6 +107,10 @@ module Ci
 
     attr_reader :changed_files, :monitored_prefixes, :exempt_prefixes
 
+    def active_paths
+      @active_paths ||= changed_files.reject { |entry| entry.deleted? || entry.deletion_only? }.map(&:path).sort
+    end
+
     def monitored?(path)
       monitored_prefixes.any? { |prefix| path.start_with?(prefix) }
     end
@@ -82,7 +120,7 @@ module Ci
     end
 
     def spec_changes?
-      changed_files.any? { |path| path.start_with?(SPEC_PREFIX) }
+      active_paths.any? { |path| path.start_with?(SPEC_PREFIX) }
     end
 
     def success(message, covered_paths = [])
@@ -111,7 +149,7 @@ module Ci
     ACTION_DEFINITION = /\Adef\s+([a-z_]\w*[!?=]?)(?:\s*\(|\z)/.freeze
 
     def initialize(changed_files:, before_reader:, after_reader:, request_system_prefixes: REQUEST_SYSTEM_PREFIXES)
-      @changed_files = Array(changed_files).map(&:to_s).reject(&:empty?).uniq.sort
+      @changed_files = ChangedFiles.normalize(changed_files)
       @before_reader = before_reader
       @after_reader = after_reader
       @request_system_prefixes = request_system_prefixes
@@ -130,8 +168,12 @@ module Ci
 
     attr_reader :changed_files, :before_reader, :after_reader, :request_system_prefixes
 
+    def active_paths
+      @active_paths ||= changed_files.reject(&:deleted?).map(&:path).sort
+    end
+
     def added_actions_by_controller
-      changed_files.each_with_object({}) do |path, result|
+      active_paths.each_with_object({}) do |path, result|
         next unless top_level_controller?(path)
 
         before_actions = public_actions(before_reader.call(path))
@@ -147,7 +189,7 @@ module Ci
     end
 
     def request_or_system_changes?
-      changed_files.any? do |path|
+      active_paths.any? do |path|
         request_system_prefixes.any? { |prefix| path.start_with?(prefix) }
       end
     end
