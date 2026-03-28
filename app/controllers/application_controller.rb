@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   helper AppVersionHelper
   helper_method :available_languages, :booking_configuration, :chinese_locale?,
                 :cookie_consent_choice, :cookie_consent_pending?, :cookie_consent_all?,
-                :cookie_consent_essential_only?
+                :cookie_consent_essential_only?, :homepage_from_admin_referrer?
 
   protected
 
@@ -55,5 +55,14 @@ class ApplicationController < ActionController::Base
   def set_user_language
     preferred_language = current_user&.language || current_admin&.language || session[:language]
     I18n.locale = available_languages.include?(preferred_language.to_s) ? preferred_language : I18n.default_locale
+  end
+
+  def homepage_from_admin_referrer?
+    return false unless controller_path == "welcome"
+    return false if request.referer.blank?
+
+    URI.parse(request.referer).path.match?(%r{\A/admin(?:/|$)})
+  rescue URI::InvalidURIError
+    false
   end
 end

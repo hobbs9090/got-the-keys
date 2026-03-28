@@ -1,7 +1,11 @@
 .admin-layout {
+  box-sizing: border-box;
   display: grid;
   grid-template-columns: 280px minmax(0, 1fr);
+  margin: 0 auto;
+  max-width: 1240px;
   min-height: 100vh;
+  width: 100%;
 }
 
 .admin-sidebar {
@@ -46,6 +50,13 @@
   margin: 0.2rem 0;
 }
 
+.admin-nav__divider--utility {
+  display: block;
+  height: 0;
+  margin: 0.45rem 0 0.3rem;
+  width: 100%;
+}
+
 .admin-topbar-wrap {
   box-sizing: border-box;
   margin: 0 auto 1rem;
@@ -54,14 +65,19 @@
   width: 100%;
 }
 
+.admin-content-wrap {
+  min-width: 0;
+}
+
 .admin-topbar {
+  align-items: flex-start;
   backdrop-filter: blur(14px);
   background: rgba(255, 255, 255, 0.76);
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: var(--radius-lg);
   box-shadow: var(--color-shadow);
-  display: grid;
-  gap: 0.85rem;
+  display: flex;
+  justify-content: flex-end;
   margin: 0 auto;
   padding: var(--space-header-panel-y) var(--space-header-panel-x);
 }
@@ -70,65 +86,67 @@
   border-radius: 1rem;
 }
 
-.admin-topbar__corner {
+.admin-topbar__main {
+  align-items: flex-start;
   display: flex;
   justify-content: flex-end;
-}
-
-.admin-topbar__main {
-  align-items: center;
-  display: flex;
-  gap: 1rem;
-  justify-content: space-between;
-}
-
-.admin-topbar__context {
-  min-width: 0;
+  margin-left: auto;
+  width: auto;
 }
 
 .admin-topbar__session {
-  align-items: center;
-  display: flex;
-  gap: 0.8rem;
-  justify-content: flex-end;
+  margin-left: auto;
   min-width: 0;
 }
 
 .admin-topbar__actions {
-  align-items: center;
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 0.7rem;
+  min-width: 0;
+}
+
+.admin-topbar__session .site-header__actions-top,
+.admin-topbar__session .site-header__actions-row,
+.admin-topbar__session .site-header__button-group {
   justify-content: flex-end;
-  min-width: 0;
-}
-
-.admin-topbar__user {
-  align-items: center;
-  display: flex;
-  flex: 0 1 auto;
-  gap: 0.45rem;
-  justify-items: start;
-  max-width: none;
-  min-width: 0;
-  text-align: left;
-}
-
-.admin-topbar__user .site-header__account-heading {
-  gap: 0.4rem;
-  justify-content: flex-start;
-}
-
-.admin-topbar__user .site-header__account-detail {
-  display: inline;
-  font-size: 0.82rem;
-  line-height: 1.1;
-  max-width: 15rem;
 }
 
 .admin-topbar__action {
   margin-bottom: 0;
   white-space: nowrap;
+}
+
+.admin-section > .section-heading {
+  align-items: end;
+  display: grid;
+  gap: 1rem 1.5rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin-bottom: 1.5rem;
+}
+
+.admin-section > .section-heading > :first-child {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.admin-section > .section-heading > :first-child > h1,
+.admin-section > .section-heading > :first-child > h2,
+.admin-section > .section-heading > :first-child > p {
+  margin-bottom: 0;
+}
+
+.admin-section > .section-heading > :first-child > :not(.section-heading__eyebrow):last-child {
+  max-width: 46rem;
+}
+
+.admin-section > .section-heading > :not(:first-child) {
+  justify-self: end;
+}
+
+.admin-section > .section-heading > .section-heading__actions {
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: flex-end;
 }
 
 .admin-dashboard__quick-links {
@@ -398,17 +416,19 @@
 
 .admin-demo-danger-zone__list {
   display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding-top: 1.25rem;
 }
 
 .admin-demo-danger-zone__item {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(180, 35, 24, 0.12);
+  border-radius: var(--radius-md);
   display: grid;
-  gap: 1rem 1.4rem;
-  grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
-  padding: 1.25rem 0;
-}
-
-.admin-demo-danger-zone__item + .admin-demo-danger-zone__item {
-  border-top: 1px solid rgba(180, 35, 24, 0.12);
+  gap: 0.95rem;
+  grid-template-columns: 1fr;
+  padding: 1rem;
 }
 
 .admin-demo-danger-zone__content {
@@ -460,7 +480,7 @@
 }
 
 .admin-demo-danger-zone__actions {
-  align-self: end;
+  align-self: stretch;
   display: grid;
   gap: 0.8rem;
   justify-self: stretch;
@@ -573,35 +593,27 @@
     align-items: stretch;
   }
 
-  .admin-topbar__main,
-  .admin-topbar__session {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .admin-topbar__corner {
-    justify-content: flex-start;
-  }
-
   .admin-topbar__actions {
-    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .admin-section > .section-heading {
+    align-items: start;
+    grid-template-columns: 1fr;
+    margin-bottom: 1.2rem;
+  }
+
+  .admin-section > .section-heading > :not(:first-child) {
+    justify-self: start;
+    width: 100%;
+  }
+
+  .admin-section > .section-heading > .section-heading__actions {
     justify-content: flex-start;
   }
 
-  .admin-topbar__user {
-    align-items: flex-start;
-    flex-basis: auto;
-    flex-direction: column;
-    text-align: left;
-  }
-
-  .admin-topbar__user .site-header__account-heading {
+  .admin-topbar__main {
     justify-content: flex-start;
-  }
-
-  .admin-topbar__user .site-header__account-detail {
-    display: block;
-    max-width: 100%;
   }
 
   .admin-dashboard__quick-links {
@@ -632,6 +644,10 @@
 
   .admin-demo-scenario-card__complexity {
     justify-self: start;
+  }
+
+  .admin-demo-danger-zone__list {
+    grid-template-columns: 1fr;
   }
 
   .admin-demo-danger-zone__item {
