@@ -17,20 +17,21 @@
     </nav>
 
     <div class="site-header__actions">
-      <% if account_summary.present? %>
-        <div class="site-header__session">
-          <div class="site-header__session-meta">
-            <div class="site-header__account" data-testid="header-account-summary">
-              <div class="site-header__account-heading">
-                <span class="site-header__account-eyebrow"><%= account_summary[:eyebrow] %></span>
-                <strong class="site-header__account-name"><%= account_summary[:name] %></strong>
-              </div>
-              <span class="site-header__account-detail" title="<%= account_summary[:detail] %>"><%= account_summary[:detail] %></span>
+      <div class="site-header__actions-top">
+        <% if account_summary.present? %>
+          <div class="site-header__account" data-testid="header-account-summary">
+            <div class="site-header__account-heading">
+              <span class="site-header__account-eyebrow"><%= account_summary[:eyebrow] %></span>
+              <strong class="site-header__account-name"><%= account_summary[:name] %></strong>
             </div>
-
-            <%= language_switcher %>
+            <span class="site-header__account-detail" title="<%= account_summary[:detail] %>"><%= account_summary[:detail] %></span>
           </div>
+        <% end %>
+        <%= language_switcher %>
+      </div>
 
+      <% if account_summary.present? %>
+        <div class="site-header__actions-row">
           <div class="site-header__button-group">
             <% if admin_signed_in? %>
               <%= link_to t("ui.site_header.admin_dashboard"), admin_dashboard_entry_path, class: "button primary", data: { testid: "admin-bookings-entry-link" } %>
@@ -43,10 +44,11 @@
           </div>
         </div>
       <% else %>
-        <%= language_switcher %>
-        <div class="site-header__guest-actions" data-testid="guest-header-actions">
-          <%= link_to t("ui.site_header.register"), new_user_registration_path, class: "button secondary hollow", id: "register" %>
-          <%= link_to t("ui.site_header.sign_in"), new_user_session_path, class: "button primary", id: "sign_in" %>
+        <div class="site-header__actions-row">
+          <div class="site-header__guest-actions" data-testid="guest-header-actions">
+            <%= link_to t("ui.site_header.register"), new_user_registration_path, class: "button secondary hollow", id: "register" %>
+            <%= link_to t("ui.site_header.sign_in"), new_user_session_path, class: "button primary", id: "sign_in" %>
+          </div>
         </div>
       <% end %>
     </div>
