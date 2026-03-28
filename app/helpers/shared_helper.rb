@@ -19,14 +19,6 @@ module SharedHelper
     pixel_density_image_tag('hero_5.jpg', retina_source: 'hero_5@2x.jpg')
   end
 
-  def welcome_image_1
-    image_tag('welcome_1.jpg')
-  end
-
-  def welcome_image_2
-    image_tag('welcome_2.jpg')
-  end
-
   def world_image
     pixel_density_image_tag('placeholder_world.jpg', retina_source: 'placeholder_world@2x.jpg')
   end
@@ -37,10 +29,6 @@ module SharedHelper
 
   def steven_image
     pixel_density_image_tag('steven_face.jpg', retina_source: 'steven_face@2x.jpg')
-  end
-
-  def square_image
-    image_tag('placeholder_square.jpg')
   end
 
   def under_construction_image

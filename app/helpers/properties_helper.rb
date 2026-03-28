@@ -1,9 +1,4 @@
 module PropertiesHelper
-  def cache_key_for_properties_total
-    max_updated_at = Property.maximum(:updated_at)
-    "properties/all-#{max_updated_at}"
-  end
-
   def small_image_for(property)
     image_name = property.hero_image_name
 
