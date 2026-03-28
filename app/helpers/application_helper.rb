@@ -59,6 +59,7 @@ module ApplicationHelper
   def admin_nav_link_to(name, path, active: nil, **options)
     is_active = active.nil? ? current_page?(path) : active
     classes = [options.delete(:class), ("is-active" if is_active)].compact.join(" ")
+    options["aria-current"] = "page" if is_active
     link_to(name, path, **options.merge(class: classes))
   end
 

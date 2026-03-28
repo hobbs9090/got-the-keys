@@ -1,14 +1,16 @@
 module AdminHelper
   def admin_two_factor_qr_svg(uri)
-    RQRCode::QRCode.new(uri, level: :m).as_svg(
+    svg_markup = RQRCode::QRCode.new(uri, level: :m).as_svg(
       color: "10213f",
       fill: "ffffff",
       module_size: 5,
       shape_rendering: "crispEdges",
-      standalone: false,
+      standalone: true,
       use_path: true,
       viewbox: true
-    ).html_safe
+    )
+
+    svg_markup.sub(/\A<\?xml[^>]+>\s*/, "").html_safe
   end
 
   def admin_two_factor_mode_label(value)

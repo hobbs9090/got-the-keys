@@ -4,7 +4,7 @@ GotTheKeys::Application.routes.draw do
 
   devise_for :users, path_names: {sign_up: "register"}
 
-  devise_for :admins, except: [:update, :destroy, :new, :create, :show, :edit]
+  devise_for :admins, except: [:update, :destroy, :new, :create, :show, :edit], controllers: { sessions: "admin/sessions" }
 
   namespace :admin do
     root 'dashboard#index'

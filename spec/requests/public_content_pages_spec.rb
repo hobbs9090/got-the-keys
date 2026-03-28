@@ -20,6 +20,7 @@ RSpec.describe "Public content pages", type: :request do
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include(page[:text])
+      expect(response.body).not_to include('role="content"')
     end
   end
 

@@ -45,6 +45,8 @@ RSpec.describe "Admin header navigation" do
 
     topbar_wrap = parsed_html.at_css(".admin-topbar-wrap")
     expect(topbar_wrap).to be_present
+    expect(parsed_html.at_css('a.skip-link')["href"]).to eq("#admin-main-content")
+    expect(parsed_html.at_css("main#admin-main-content[tabindex='-1']")).to be_present
 
     topbar = topbar_wrap.at_css(".admin-topbar")
     expect(topbar).to be_present
@@ -86,6 +88,7 @@ RSpec.describe "Admin header navigation" do
     lead_link = parsed_html.at_css('[data-testid="admin-enquiries-link"]')
     expect(lead_link).to be_present
     expect(lead_link["href"]).to eq(admin_enquiries_path)
+    expect(lead_link["aria-current"]).to eq("page")
 
     offers_link = parsed_html.at_css('[data-testid="admin-offers-link"]')
     expect(offers_link).to be_present
@@ -97,6 +100,10 @@ RSpec.describe "Admin header navigation" do
 
     utility_nav = parsed_html.at_css('[data-testid="admin-nav-utility"]')
     expect(utility_nav).to be_present
+
+    utility_title = parsed_html.at_css('[data-testid="admin-nav-utility-title"]')
+    expect(utility_title).to be_present
+    expect(utility_title.text.strip).to eq("QA Area")
 
     utility_texts = utility_nav.css("a").map { |link| link.text.strip }
     expect(utility_texts).to eq(["Demo Data", "Security", "QA Guide"])
@@ -112,10 +119,7 @@ RSpec.describe "Admin header navigation" do
     expect(security_link).to be_present
     expect(security_link["href"]).to eq(admin_security_path)
 
-    utility_divider = utility_nav.at_css('[data-testid="admin-nav-utility-divider"]')
-    expect(utility_divider).to be_present
-    expect(utility_divider.previous_element&.at_css("a")&.[]("data-testid")).to eq("admin-security-link")
-    expect(utility_divider.next_element&.at_css("a")&.[]("data-testid")).to eq("admin-qa-link")
+    expect(utility_nav.at_css('[data-testid="admin-nav-utility-divider"]')).not_to be_present
 
     qa_link = utility_nav.at_css('[data-testid="admin-qa-link"]')
     expect(qa_link).to be_present

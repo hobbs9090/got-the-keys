@@ -37,7 +37,11 @@
     </div>
 
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "stacked-form auth-form", data: { turbo: false } }) do |f| %>
-      <%= devise_error_messages! %>
+      <% if resource.errors[:base].any? %>
+        <div class="auth-form__hint" role="alert" aria-live="polite">
+          <%= resource.errors[:base].to_sentence %>
+        </div>
+      <% end %>
 
       <div class="auth-form__stack">
         <div>
@@ -56,7 +60,7 @@
           <div>
             <%= f.label :otp_attempt, t("devise.views.sessions.new.otp_attempt", default: "Verification code or backup code"), **form_label_options(resource, :otp_attempt) %>
             <%= f.text_field :otp_attempt, autocomplete: "one-time-code", autocapitalize: "off", spellcheck: false, maxlength: 64, **form_control_options(resource, :otp_attempt) %>
-            <p class="help-text"><%= t("devise.views.sessions.new.otp_attempt_hint", default: "Enter an authenticator code or one of your backup codes.") %></p>
+            <p class="help-text auth-form__hint"><%= t("devise.views.sessions.new.otp_attempt_hint", default: "Enter an authenticator code or one of your backup codes.") %></p>
             <%= field_error_messages(resource, :otp_attempt) %>
           </div>
         <% end %>

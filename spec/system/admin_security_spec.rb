@@ -37,6 +37,8 @@ RSpec.describe "Admin security", type: :system do
 
     click_button "Begin setup"
 
+    expect(page).to have_css('[data-testid="admin-security-qr"] svg')
+
     manual_key = find('[data-testid="admin-security-manual-key"]').text.strip
     otp_attempt = ROTP::TOTP.new(manual_key).at(Time.current)
 
@@ -46,6 +48,8 @@ RSpec.describe "Admin security", type: :system do
     expect(page).to have_text("Two-factor authentication is now enabled for this admin.")
     expect(page).to have_css('[data-testid="admin-security-backup-codes-panel"]')
     expect(page).to have_css('[data-testid="admin-security-backup-codes"]')
+    expect(page).to have_no_css('[data-testid="flash-admin_security_backup_codes"]')
+    expect(page).to have_css('[data-testid="admin-security-backup-code"]', count: Admin.otp_number_of_backup_codes)
     expect(page).to have_text("Enrolled")
 
     admin.reload

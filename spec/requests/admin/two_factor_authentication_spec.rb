@@ -57,14 +57,28 @@ RSpec.describe "Admin two-factor authentication", type: :request do
 
     sign_in_admin
 
-    expect(response).to have_http_status(:ok)
-    expect(response.body).to include("Invalid email or password.")
+    expect(response).to have_http_status(:unprocessable_content)
+    expect(response.body).to include("Enter your verification code or a backup code to finish signing in.")
     expect(response.body).to include("Verification code or backup code")
     expect(response.body).to include("Enter an authenticator code or one of your backup codes.")
+    expect(response.body).not_to include("Invalid email or password.")
+    expect(response.body).not_to include("error prohibited this admin from being saved")
 
     sign_in_admin(otp_attempt: current_otp_for(secret))
 
     expect(response).to redirect_to(admin_root_path)
+  end
+
+  it "treats a blank OTP field as a missing code when the password is otherwise correct" do
+    enroll_admin!(admin)
+    BookingConfiguration.current.update!(admin_two_factor_mode: "optional")
+
+    post admin_session_path, params: { admin: { email: admin.email, password:, otp_attempt: "" } }
+
+    expect(response).to have_http_status(:unprocessable_content)
+    expect(response.body).to include("Enter your verification code or a backup code to finish signing in.")
+    expect(response.body).not_to include("Invalid email or password.")
+    expect(response.body).not_to include("error prohibited this admin from being saved")
   end
 
   it "accepts backup codes once each" do
@@ -90,7 +104,9 @@ RSpec.describe "Admin two-factor authentication", type: :request do
 
     booking_configuration.update!(admin_two_factor_mode: "optional")
     sign_in_admin
-    expect(response).to have_http_status(:ok)
+    expect(response).to have_http_status(:unprocessable_content)
+    expect(response.body).to include("Enter your verification code or a backup code to finish signing in.")
+    expect(response.body).not_to include("error prohibited this admin from being saved")
 
     booking_configuration.update!(admin_two_factor_mode: "disabled")
     sign_in_admin
@@ -100,7 +116,9 @@ RSpec.describe "Admin two-factor authentication", type: :request do
 
     booking_configuration.update!(admin_two_factor_mode: "optional")
     sign_in_admin
-    expect(response).to have_http_status(:ok)
+    expect(response).to have_http_status(:unprocessable_content)
+    expect(response.body).to include("Enter your verification code or a backup code to finish signing in.")
+    expect(response.body).not_to include("error prohibited this admin from being saved")
 
     sign_in_admin(otp_attempt: current_otp_for(secret))
     expect(response).to redirect_to(admin_root_path)
