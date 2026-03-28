@@ -1,0 +1,42 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative "../lib/ci/locale_health"
+
+health = Ci::LocaleHealth.new(root: File.expand_path("..", __dir__))
+missing = health.missing_keys
+interpolations = health.inconsistent_interpolations
+
+has_missing = missing.values.any?(&:any?)
+has_interpolation_errors = interpolations.values.any?(&:any?)
+
+if has_missing
+  warn "Missing translated keys compared with English:"
+  missing.each do |locale, keys|
+    next if keys.empty?
+
+    warn ""
+    warn "[#{locale}]"
+    keys.each { |key| warn key }
+  end
+end
+
+if has_interpolation_errors
+  warn ""
+  warn "Interpolation mismatches:"
+  interpolations.each do |locale, mismatches|
+    next if mismatches.empty?
+
+    warn ""
+    warn "[#{locale}]"
+    mismatches.each do |mismatch|
+      warn "#{mismatch[:key]} expected=#{mismatch[:expected].join(',')} actual=#{mismatch[:actual].join(',')}"
+    end
+  end
+end
+
+if has_missing || has_interpolation_errors
+  exit 1
+end
+
+puts "Locale health OK for #{Ci::LocaleHealth::TARGET_LOCALES.join(', ')}."

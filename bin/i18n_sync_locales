@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative "../lib/ci/locale_health"
+
+health = Ci::LocaleHealth.new(root: File.expand_path("..", __dir__))
+summary = health.sync_generated!
+
+summary.each do |locale, keys|
+  puts "#{locale}: wrote #{keys.length} generated fallback keys"
+end

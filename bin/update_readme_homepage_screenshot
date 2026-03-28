@@ -1,0 +1,113 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "bundler/setup"
+require "fileutils"
+require "selenium-webdriver"
+
+module ReadmeHomepageScreenshot
+  module_function
+
+  def run
+    Selenium::WebDriver.logger.level = :error
+
+    output_path = File.expand_path(ENV.fetch("README_SCREENSHOT_PATH", "docs/readme/homepage.png"), Dir.pwd)
+    url = ENV.fetch("README_SCREENSHOT_URL", "http://127.0.0.1:3000/")
+    width = Integer(ENV.fetch("README_SCREENSHOT_WIDTH", "1440"))
+    height = Integer(ENV.fetch("README_SCREENSHOT_HEIGHT", "1600"))
+    delay = Float(ENV.fetch("README_SCREENSHOT_DELAY", "0.8"))
+
+    FileUtils.mkdir_p(File.dirname(output_path))
+
+    driver = Selenium::WebDriver.for(detected_browser, options: browser_options(width, height))
+    driver.manage.window.resize_to(width, height)
+    driver.navigate.to(url)
+    sleep(delay)
+    dismiss_cookie_banner(driver)
+    sleep(delay)
+    driver.save_screenshot(output_path)
+
+    puts "Saved homepage screenshot to #{output_path}"
+  ensure
+    driver&.quit
+  end
+
+  def dismiss_cookie_banner(driver)
+    button = Selenium::WebDriver::Wait.new(timeout: 2).until do
+      driver.find_elements(css: ".cookie-banner input[type='submit'], .cookie-banner button").find do |element|
+        element.displayed? && accept_all_button?(element)
+      end
+    end
+
+    button.click
+  rescue Selenium::WebDriver::Error::TimeoutError
+    nil
+  end
+
+  def accept_all_button?(element)
+    [element.text, element.attribute("value")].compact.any? { |value| value.strip == "Accept all" }
+  end
+
+  def detected_browser
+    preferred = ENV["README_SCREENSHOT_BROWSER"]&.strip&.downcase
+    return preferred.to_sym if %w[firefox chrome].include?(preferred)
+
+    return :firefox if browser_available?(:firefox)
+    return :chrome if browser_available?(:chrome)
+
+    abort "Install Firefox or Chrome, or set README_SCREENSHOT_BROWSER=firefox|chrome."
+  end
+
+  def browser_available?(browser)
+    browser_binary_path(browser) || browser_installed?(browser_command_name(browser))
+  end
+
+  def browser_installed?(name)
+    system("command -v #{name} >/dev/null 2>&1")
+  end
+
+  def browser_command_name(browser)
+    case browser
+    when :firefox then "firefox"
+    when :chrome then "google-chrome"
+    end
+  end
+
+  def browser_binary_path(browser)
+    candidates =
+      case browser
+      when :firefox
+        ["/Applications/Firefox.app/Contents/MacOS/firefox"]
+      when :chrome
+        [
+          "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+          "/Applications/Chromium.app/Contents/MacOS/Chromium"
+        ]
+      else
+        []
+      end
+
+    candidates.find { |path| File.executable?(path) }
+  end
+
+  def browser_options(width, height)
+    case detected_browser
+    when :firefox
+      Selenium::WebDriver::Firefox::Options.new(args: ["-headless"]).tap do |options|
+        options.binary = browser_binary_path(:firefox) if browser_binary_path(:firefox)
+        options.add_argument("--width=#{width}")
+        options.add_argument("--height=#{height}")
+      end
+    when :chrome
+      Selenium::WebDriver::Chrome::Options.new.tap do |options|
+        options.binary = browser_binary_path(:chrome) if browser_binary_path(:chrome)
+        options.add_argument("--headless=new")
+        options.add_argument("--disable-gpu")
+        options.add_argument("--hide-scrollbars")
+        options.add_argument("--window-size=#{width},#{height}")
+      end
+    end
+  end
+end
+
+ReadmeHomepageScreenshot.run if $PROGRAM_NAME == __FILE__
