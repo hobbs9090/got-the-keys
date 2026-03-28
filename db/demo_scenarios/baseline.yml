@@ -122,7 +122,7 @@ properties:
     bedrooms: 3
     bathrooms: 2
     sale_status: For Sale
-    listing_state: review_pending
+    listing_state: published
     asking_price: 675000
     featured: false
     tenure: Freehold
@@ -156,6 +156,29 @@ properties:
     floor_area_sq_ft: 980
     deposit_amount: 2250
     pets_allowed: false
+property_batches:
+  - key_prefix: baseline_sale
+    count: 37
+    owner_emails:
+      - charlotte.hughes@example.com
+      - daniel.mercer@example.com
+      - matthew.wells@example.com
+      - lucy.mcclure@example.com
+    sale_status: For Sale
+    listing_state: published
+    featured: false
+    random_seed: 2026032801
+  - key_prefix: baseline_rental
+    count: 59
+    owner_emails:
+      - charlotte.hughes@example.com
+      - daniel.mercer@example.com
+      - matthew.wells@example.com
+      - lucy.mcclure@example.com
+    sale_status: For Rent
+    listing_state: published
+    featured: false
+    random_seed: 2026032802
 photos:
   - property_key: sevenoaks_family_home
     image_filename: hero_1.jpg
@@ -221,6 +244,15 @@ availability_windows:
     ends_at: "today+9d 15:30"
     kind: open
     label: Friday lettings viewings
+availability_window_batches:
+  - property_key_prefixes: [baseline_sale, baseline_rental]
+    start_day_offset: 11
+    start_time: "09:00"
+    duration_minutes: 360
+    cadence_days: 1
+    kind: open
+    capacity: 1
+    label_prefix: Guided viewing availability
 appointments:
   - property_key: sevenoaks_family_home
     assigned_admin_email: steven@gotthekeys.com
@@ -288,6 +320,21 @@ appointments:
     status: no_show
     notes: Please call if I am delayed.
     internal_notes: Did not arrive and could not be reached after two calls.
+appointment_batches:
+  - property_key_prefixes: [baseline_sale]
+    count: 14
+    assigned_admin_email: steven@gotthekeys.com
+    status_cycle: [pending, confirmed, rescheduled, completed, cancelled]
+    start_day_offset: 8
+    start_time: "09:00"
+    cadence_hours: 2
+  - property_key_prefixes: [baseline_rental]
+    count: 20
+    assigned_admin_email: steven@gotthekeys.com
+    status_cycle: [pending, confirmed, completed, no_show]
+    start_day_offset: 9
+    start_time: "09:30"
+    cadence_hours: 2
 enquiries:
   - property_key: sevenoaks_family_home
     assigned_admin_email: steven@gotthekeys.com
@@ -306,3 +353,24 @@ enquiries:
     message: I am relocating for work in May and want to check the move-in timing, furnished inventory, and whether there is flexibility on the initial tenancy length.
     status: contacted
     internal_notes: Replied with current availability and referencing outline.
+enquiry_batches:
+  - property_key_prefixes: [baseline_sale]
+    count: 15
+    assigned_admin_email: steven@gotthekeys.com
+    status_cycle: [new, contacted, qualified]
+    source_type_cycle: [brochure_request, general_enquiry, valuation_request]
+  - property_key_prefixes: [baseline_rental]
+    count: 23
+    assigned_admin_email: steven@gotthekeys.com
+    status_cycle: [new, contacted, qualified, archived]
+    source_type_cycle: [letting_enquiry, general_enquiry]
+offer_batches:
+  - property_key_prefixes: [baseline_sale]
+    count: 10
+    assigned_admin_email: steven@gotthekeys.com
+    status_cycle: [received, accepted, rejected, withdrawn]
+rental_application_batches:
+  - property_key_prefixes: [baseline_rental]
+    count: 14
+    assigned_admin_email: steven@gotthekeys.com
+    status_cycle: [received, referencing, approved, rejected, withdrawn]

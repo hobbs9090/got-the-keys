@@ -207,12 +207,12 @@ module DemoData
       @random = random
     end
 
-    def build_batch(count:)
-      Array.new(count) { |index| build(index: index) }
+    def build_batch(count:, sale_status: nil, starting_index: 0, featured: nil)
+      Array.new(count) { |index| build(index: starting_index + index, sale_status:, featured:) }
     end
 
-    def build(index:)
-      sale_status = weighted_pick([['For Sale', 3], ['For Rent', 2]])
+    def build(index:, sale_status: nil, featured: nil)
+      sale_status ||= weighted_pick([['For Sale', 3], ['For Rent', 2]])
       area = AREA_CATALOG.sample(random: random)
       property_type = property_type_for(sale_status)
       bedrooms = bedrooms_for(property_type, sale_status)
@@ -242,7 +242,7 @@ module DemoData
         bathrooms: bathrooms,
         sale_status: sale_status,
         asking_price: base_price,
-        featured: index % 6 == 0,
+        featured: featured.nil? ? index % 6 == 0 : featured,
         prompt_context: {
           property_type: property_type,
           nearby: area.fetch(:nearby),

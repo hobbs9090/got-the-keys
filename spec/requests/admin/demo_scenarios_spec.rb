@@ -42,8 +42,9 @@ RSpec.describe "Admin demo scenarios" do
 
     expect(response).to redirect_to(admin_demo_scenarios_path)
     expect(BookingConfiguration.current.active_demo_scenario_key).to eq("baseline")
-    expect(Property.count).to eq(4)
-    expect(Appointment.count).to eq(6)
+    expect(Property.count).to eq(100)
+    expect(Appointment.count).to eq(40)
+    expect(Enquiry.count).to eq(40)
   end
 
   it "rejects quick reset requests without the typed gate phrase" do
