@@ -1,6 +1,24 @@
 const modalState = new WeakMap();
 const triggerState = new WeakMap();
 let escapeHandlerBound = false;
+const focusableSelector = [
+  "a[href]:not([tabindex='-1'])",
+  "button:not([disabled]):not([tabindex='-1'])",
+  "input:not([disabled]):not([type='hidden']):not([tabindex='-1'])",
+  "select:not([disabled]):not([tabindex='-1'])",
+  "textarea:not([disabled]):not([tabindex='-1'])",
+  "[tabindex]:not([tabindex='-1'])"
+].join(", ");
+
+const focusableElementsFor = (modal) =>
+  Array.from(modal.querySelectorAll(focusableSelector)).filter(
+    (element) => !element.hidden && element.getAttribute("aria-hidden") !== "true" && element.offsetParent !== null
+  );
+
+const focusFirstElement = (modal) => {
+  const focusTarget = focusableElementsFor(modal)[0] || modal.querySelector(".site-modal__dialog");
+  focusTarget?.focus();
+};
 
 const closeModal = (modal, restoreFocus = true) => {
   const state = modalState.get(modal);
@@ -25,11 +43,11 @@ const openModal = (modal, trigger) => {
   modal.hidden = false;
   modal.setAttribute("aria-hidden", "false");
   document.body.classList.add("site-modal-open");
+  focusFirstElement(modal);
 
-  window.requestAnimationFrame(() => {
-    const focusTarget = modal.querySelector("[data-modal-close]") || modal.querySelector("a, button, input, select, textarea");
-    focusTarget?.focus();
-  });
+  window.setTimeout(() => {
+    focusFirstElement(modal);
+  }, 40);
 };
 
 const setupModal = (modal) => {
@@ -43,6 +61,38 @@ const setupModal = (modal) => {
     target.addEventListener("click", handler);
     cleanup.push([target, "click", handler]);
   });
+
+  const keydownHandler = (event) => {
+    if (event.key !== "Tab") return;
+
+    const focusable = focusableElementsFor(modal);
+    if (focusable.length === 0) {
+      event.preventDefault();
+      modal.querySelector(".site-modal__dialog")?.focus();
+      return;
+    }
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    const activeElement = document.activeElement;
+
+    if (event.shiftKey) {
+      if (activeElement === first || !modal.contains(activeElement)) {
+        event.preventDefault();
+        last.focus();
+      }
+
+      return;
+    }
+
+    if (activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
+
+  modal.addEventListener("keydown", keydownHandler);
+  cleanup.push([modal, "keydown", keydownHandler]);
 
   modalState.set(modal, { cleanup, lastTrigger: null });
 };

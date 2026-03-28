@@ -45,6 +45,15 @@
   padding-top: 0.1rem;
 }
 
+.admin-nav__section-title {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
 .admin-nav__divider {
   border-top: 1px solid rgba(255, 255, 255, 0.14);
   margin: 0.2rem 0;
@@ -417,7 +426,7 @@
 .admin-demo-danger-zone__list {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   padding-top: 1.25rem;
 }
 
@@ -427,7 +436,7 @@
   border-radius: var(--radius-md);
   display: grid;
   gap: 0.95rem;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 22rem);
   padding: 1rem;
 }
 

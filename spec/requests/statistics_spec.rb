@@ -20,6 +20,7 @@ RSpec.describe "Statistics" do
 
       expect(response).to have_http_status(:ok)
       expect(response.body).not_to include("charts.js")
+      expect(response.body).not_to include('role="content"')
 
       document = Nokogiri::HTML.parse(response.body)
       charts = document.css("[data-statistics-chart]")

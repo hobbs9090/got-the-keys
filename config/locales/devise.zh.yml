@@ -17,6 +17,7 @@ zh:
       unauthenticated: '继续操作前请注册或者登录.'
       unconfirmed: '继续操作前请先激活您的帐号.'
       locked: '您的帐号已被锁定.'
+      admin_otp_attempt_missing: '请输入验证码或备用代码以完成登录。'
       invalid: '邮箱或密码错误'
       invalid_token: '电子邮件、密码或验证码无效.'
       timeout: '您已登录超时，请重新登录.'

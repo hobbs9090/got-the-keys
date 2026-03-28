@@ -22,6 +22,7 @@ en:
     common:
       apply: "Apply"
       any: "Any"
+      skip_to_content: "Skip to main content"
       yes: "Yes"
       cancel: "Cancel"
       reset: "Reset"
@@ -618,6 +619,7 @@ en:
         sellers: "Sellers"
         demo_data: "Demo Data"
         security: "Security"
+        qa_area: "QA Area"
         qa_guide: "QA Guide"
         notifications: "Notifications"
         booking_rules: "Booking Rules"

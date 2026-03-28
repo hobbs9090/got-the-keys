@@ -97,7 +97,13 @@
     <article class="admin-panel admin-security-backup-codes" data-testid="admin-security-backup-codes-panel">
       <h2><%= t("ui.admin.security.backup_codes_title", default: "Backup codes") %></h2>
       <p><%= t("ui.admin.security.backup_codes_body", default: "Save these single-use backup codes somewhere safe now. They will not be shown again after you leave this page.") %></p>
-      <div class="code-block" data-testid="admin-security-backup-codes"><%= @fresh_backup_codes.join("\n") %></div>
+      <ol class="admin-security-backup-codes__list" data-testid="admin-security-backup-codes">
+        <% @fresh_backup_codes.each do |backup_code| %>
+          <li class="admin-security-backup-codes__item" data-testid="admin-security-backup-code">
+            <code><%= backup_code %></code>
+          </li>
+        <% end %>
+      </ol>
     </article>
   <% else %>
     <article class="admin-panel">

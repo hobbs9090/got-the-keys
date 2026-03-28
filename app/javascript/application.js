@@ -3,12 +3,14 @@ import "@hotwired/turbo-rails";
 import { bootCarousels, teardownCarousels } from "./carousels";
 import { bootModals, teardownModals } from "./modals";
 import { bootResponsiveTables, teardownResponsiveTables } from "./responsive_tables";
+import { bootSkipLinks, teardownSkipLinks } from "./skip_links";
 import { bootStatisticsCharts, teardownStatisticsCharts } from "./statistics_charts";
 
 const bootApplication = () => {
   bootCarousels();
   bootModals();
   bootResponsiveTables();
+  bootSkipLinks();
   bootStatisticsCharts();
 };
 
@@ -16,6 +18,7 @@ const teardownApplication = () => {
   teardownCarousels();
   teardownModals();
   teardownResponsiveTables();
+  teardownSkipLinks();
   teardownStatisticsCharts();
 };
 

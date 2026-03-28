@@ -163,6 +163,7 @@ describe "Properties" do
       get property_photos_path(property)
 
       expect(response).to have_http_status(:ok)
+      expect(response.body).not_to include('role="content"')
     end
 
     it "lets the owner create a marketing photo" do
@@ -188,6 +189,7 @@ describe "Properties" do
       get property_floor_plans_path(property)
 
       expect(response).to have_http_status(:ok)
+      expect(response.body).not_to include('role="content"')
     end
 
     it "lets the owner create a floor plan" do
@@ -223,6 +225,28 @@ describe "Properties" do
       get location_path(property)
 
       expect(response).to have_http_status(:ok)
+      expect(response.body).not_to include('role="content"')
+      expect(response.body).to include(%(alt="Map showing the area around #{property.address_line_1}"))
+    end
+  end
+
+  describe "viewing times pages" do
+    before do
+      sign_in user
+    end
+
+    it "renders the viewing times index without invalid ARIA roles" do
+      get property_viewing_times_path(property)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).not_to include('role="content"')
+    end
+
+    it "renders the new viewing time page without invalid ARIA roles" do
+      get new_property_viewing_time_path(property)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).not_to include('role="content"')
     end
   end
 
