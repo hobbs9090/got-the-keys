@@ -4,6 +4,18 @@ GotTheKeys is a modern Rails 8 property website, appointment-booking app, and QA
 
 It is designed to feel like a credible small business product while also being predictable enough for acceptance testing, browser automation exercises, and trainer-led demos. The app stays server-rendered, uses Foundation Sites as a CSS layer with bundled Turbo/vanilla JavaScript, and remains practical to deploy on an Apache + Passenger shared host.
 
+## Homepage Snapshot
+
+![GotTheKeys homepage](docs/readme/homepage.png)
+
+Refresh this screenshot after homepage UI changes with:
+
+```bash
+bin/update_readme_homepage_screenshot
+```
+
+The script captures `http://127.0.0.1:3000/` and writes `docs/readme/homepage.png`.
+
 ## What The App Does
 
 - Public marketing and property pages with responsive componentized styling.
@@ -164,7 +176,7 @@ It is designed to feel like a credible small business product while also being p
 - `app/views/` is the primary UI layer. Public pages, Devise entry screens, shared partials, and admin surfaces are grouped by route area.
 - `app/assets/stylesheets/` contains the SCSS source for the server-rendered UI. Component partials live under `components/`, page-level styling under `pages/`, and the bundled entrypoint pulls them together.
 - `app/javascript/` contains the bundled frontend runtime for Turbo and app-authored JavaScript modules.
-- `config/locales/` holds the translation files for English plus the supported non-English locales.
+- `config/locales/` holds the curated translation files for English plus the supported non-English locales. `config/locales/generated/` holds generated fallback overlays for missing non-English keys.
 - `db/demo_scenarios/` contains the deterministic YAML seed packs used for demos, QA resets, and repeatable local setup.
 - `docs/` is where longer operational and architecture notes live, including deployment, booking architecture, QA training, and modernization guidance.
 - `lib/ci/` contains repo-specific CI guardrails, and `lib/tasks/` contains custom Rake tasks.
@@ -213,6 +225,25 @@ Preferred spec types for new work:
 - avoid adding new controller specs or legacy `spec/features` coverage
 
 To make that rule block merges, mark the `CI` workflow as a required status check in your GitHub branch protection settings for `main`/`master`.
+
+### Localization Workflow
+
+English is the source of truth for site copy.
+
+When English strings change:
+
+1. Update the English copy first.
+2. Run `bin/i18n_sync_locales` to generate missing non-English fallback keys into `config/locales/generated/`.
+3. Review the generated overlay changes.
+4. Run `bin/i18n_health` to verify locale coverage and interpolation consistency.
+5. Commit the English copy change together with the generated locale overlay updates.
+
+Notes:
+
+- CI runs `bin/i18n_health`, so missing locale coverage or broken interpolation placeholders will fail the build.
+- The generated overlays are intentionally separate from the curated locale files so translators can improve locale-specific copy later without fighting large automatic rewrites.
+- When a human translation is added to a curated locale file under `config/locales/`, rerun `bin/i18n_sync_locales` and the generated overlay will shrink automatically.
+- See `docs/LOCALIZATION_WORKFLOW.md` for the dedicated workflow note.
 
 ### Run The App
 

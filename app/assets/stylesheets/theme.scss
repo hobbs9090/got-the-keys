@@ -879,6 +879,10 @@ a:focus {
   line-height: 1.5;
 }
 
+.how-hero__checklist li {
+  color: rgba(255, 255, 255, 0.92);
+}
+
 .how-hero__checklist li::before,
 .how-checklist li::before {
   background: rgba(255, 255, 255, 0.92);
