@@ -5,6 +5,12 @@ module DemoData
     SCENARIO_FAMILIES = %w[happy_path edge_cases high_volume multilingual accessibility flaky_operator_workflow].freeze
     COMPLEXITY_LEVELS = %w[foundational intermediate advanced].freeze
     REQUIRED_PROPERTY_KEYS = %i[key owner_email address_line_1 town_city county postcode country property_description bedrooms sale_status asking_price].freeze
+    REQUIRED_PROPERTY_BATCH_KEYS = %i[key_prefix count owner_emails sale_status].freeze
+    REQUIRED_COUNT_BATCH_KEYS = %i[count].freeze
+
+    def initialize(activity_generator: ScenarioActivityGenerator.new)
+      @activity_generator = activity_generator
+    end
 
     def validate!(payload)
       scenario = payload.deep_symbolize_keys
@@ -13,7 +19,7 @@ module DemoData
 
       admins = normalize_admins(Array(scenario[:admins]))
       users = normalize_users(Array(scenario[:users]))
-      properties = normalize_properties(Array(scenario[:properties]))
+      properties = normalize_properties(expand_property_specs(scenario))
       property_index = properties.index_by { |property| property.fetch(:key) }
       admin_emails = admins.map { |admin| admin.fetch(:email) }
       user_emails = users.map { |user| user.fetch(:email) }
@@ -31,25 +37,49 @@ module DemoData
       photos = normalize_photos(Array(scenario[:photos]), property_index:)
       floor_plans = normalize_floor_plans(Array(scenario[:floor_plans]), property_index:)
       property_documents = normalize_property_documents(Array(scenario[:property_documents]), property_index:)
-      availability_windows = normalize_availability_windows(Array(scenario[:availability_windows]), property_index:)
+      availability_windows = normalize_availability_windows(
+        expand_availability_window_specs(
+          Array(scenario[:availability_windows]),
+          Array(scenario[:availability_window_batches]),
+          properties: properties
+        ),
+        property_index:
+      )
       appointments = normalize_appointments(
-        Array(scenario[:appointments]),
+        expand_appointment_specs(
+          Array(scenario[:appointments]),
+          Array(scenario[:appointment_batches]),
+          properties: properties,
+          default_duration_minutes: scenario.dig(:booking_configuration, :slot_duration_minutes) || BookingConfiguration.current.slot_duration_minutes
+        ),
         property_index:,
         admin_emails:,
         default_duration_minutes: scenario.dig(:booking_configuration, :slot_duration_minutes) || BookingConfiguration.current.slot_duration_minutes
       )
       enquiries = normalize_enquiries(
-        Array(scenario[:enquiries]),
+        expand_enquiry_specs(
+          Array(scenario[:enquiries]),
+          Array(scenario[:enquiry_batches]),
+          properties: properties
+        ),
         property_index:,
         admin_emails:
       )
       offers = normalize_offers(
-        Array(scenario[:offers]),
+        expand_offer_specs(
+          Array(scenario[:offers]),
+          Array(scenario[:offer_batches]),
+          properties: properties
+        ),
         property_index:,
         admin_emails:
       )
       rental_applications = normalize_rental_applications(
-        Array(scenario[:rental_applications]),
+        expand_rental_application_specs(
+          Array(scenario[:rental_applications]),
+          Array(scenario[:rental_application_batches]),
+          properties: properties
+        ),
         property_index:,
         admin_emails:
       )
@@ -101,6 +131,8 @@ module DemoData
     end
 
     private
+
+    attr_reader :activity_generator
 
     def normalize_qa_metadata(metadata)
       payload = metadata.deep_symbolize_keys
@@ -206,6 +238,190 @@ module DemoData
           published_at: property[:published_at].present? ? parse_time!(property[:published_at]) : nil
         }
       end
+    end
+
+    def expand_property_specs(scenario)
+      properties = Array(scenario[:properties]).map { |property| property.deep_symbolize_keys }
+      property_batches = Array(scenario[:property_batches]).map { |batch| batch.deep_symbolize_keys }
+      return properties if property_batches.empty?
+
+      property_batches.each_with_object(properties) do |batch, expanded_properties|
+        validate_presence!(batch, *REQUIRED_PROPERTY_BATCH_KEYS)
+
+        key_prefix = batch.fetch(:key_prefix).to_s.downcase.gsub(/[^a-z0-9]+/, "_").gsub(/\A_+|_+\z/, "")
+        raise ValidationError, "Property batch key prefix cannot be blank" if key_prefix.blank?
+
+        count = Integer(batch.fetch(:count))
+        raise ValidationError, "Property batch #{key_prefix} count must be greater than zero" if count <= 0
+
+        owner_emails = Array(batch.fetch(:owner_emails)).map(&:to_s).reject(&:blank?)
+        raise ValidationError, "Property batch #{key_prefix} must include at least one owner email" if owner_emails.empty?
+
+        sale_status = batch.fetch(:sale_status)
+        raise ValidationError, "Unsupported property batch sale status #{sale_status.inspect}" unless Property::SALE_STATUS.include?(sale_status)
+
+        listing_state = batch.fetch(:listing_state, "published")
+        raise ValidationError, "Unsupported property batch listing state #{listing_state.inspect}" unless Property::LISTING_STATES.include?(listing_state)
+
+        featured = batch.key?(:featured) ? ActiveModel::Type::Boolean.new.cast(batch[:featured]) : nil
+        random_seed = Integer(batch.fetch(:random_seed, 0))
+        generator = PropertyBlueprintGenerator.new(random: Random.new(random_seed))
+
+        generator.build_batch(count:, sale_status:, featured:).each_with_index do |blueprint, index|
+          sequence = index + 1
+
+          expanded_properties << blueprint.except(:prompt_context).merge(
+            key: "#{key_prefix}_#{format('%03d', sequence)}",
+            owner_email: owner_emails[index % owner_emails.length],
+            listing_state:
+          )
+        end
+      end
+    end
+
+    def expand_availability_window_specs(explicit_specs, batches, properties:)
+      expanded = explicit_specs.map { |spec| spec.deep_symbolize_keys }
+      return expanded if batches.empty?
+
+      batches.each do |batch|
+        batch = batch.deep_symbolize_keys
+        selected_properties = select_batch_properties!(batch, properties, label: "availability window batch")
+
+        expanded.concat(
+          activity_generator.availability_windows(
+            properties: selected_properties,
+            start_day_offset: Integer(batch.fetch(:start_day_offset, 10)),
+            start_time: batch.fetch(:start_time, "09:00"),
+            duration_minutes: Integer(batch.fetch(:duration_minutes, 360)),
+            cadence_days: Integer(batch.fetch(:cadence_days, 1)),
+            kind: batch.fetch(:kind, "open"),
+            capacity: Integer(batch.fetch(:capacity, 1)),
+            label_prefix: batch.fetch(:label_prefix, "Generated viewing availability")
+          )
+        )
+      end
+
+      expanded
+    end
+
+    def expand_appointment_specs(explicit_specs, batches, properties:, default_duration_minutes:)
+      expanded = explicit_specs.map { |spec| spec.deep_symbolize_keys }
+      return expanded if batches.empty?
+
+      batches.each do |batch|
+        batch = batch.deep_symbolize_keys
+        validate_presence!(batch, *REQUIRED_COUNT_BATCH_KEYS)
+        selected_properties = select_batch_properties!(batch, properties, label: "appointment batch")
+
+        expanded.concat(
+          activity_generator.appointments(
+            properties: selected_properties,
+            count: Integer(batch.fetch(:count)),
+            assigned_admin_email: batch[:assigned_admin_email],
+            duration_minutes: Integer(batch.fetch(:duration_minutes, default_duration_minutes)),
+            status_cycle: Array(batch.fetch(:status_cycle, %w[pending confirmed completed])),
+            start_day_offset: Integer(batch.fetch(:start_day_offset, 8)),
+            start_time: batch.fetch(:start_time, "09:00"),
+            cadence_hours: Integer(batch.fetch(:cadence_hours, 2))
+          )
+        )
+      end
+
+      expanded
+    end
+
+    def expand_enquiry_specs(explicit_specs, batches, properties:)
+      expanded = explicit_specs.map { |spec| spec.deep_symbolize_keys }
+      return expanded if batches.empty?
+
+      batches.each do |batch|
+        batch = batch.deep_symbolize_keys
+        validate_presence!(batch, *REQUIRED_COUNT_BATCH_KEYS)
+        selected_properties = select_batch_properties!(batch, properties, label: "enquiry batch")
+
+        expanded.concat(
+          activity_generator.enquiries(
+            properties: selected_properties,
+            count: Integer(batch.fetch(:count)),
+            assigned_admin_email: batch[:assigned_admin_email],
+            status_cycle: Array(batch.fetch(:status_cycle, %w[new contacted qualified])),
+            source_type_cycle: Array(batch.fetch(:source_type_cycle, %w[general_enquiry brochure_request]))
+          )
+        )
+      end
+
+      expanded
+    end
+
+    def expand_offer_specs(explicit_specs, batches, properties:)
+      expanded = explicit_specs.map { |spec| spec.deep_symbolize_keys }
+      return expanded if batches.empty?
+
+      batches.each do |batch|
+        batch = batch.deep_symbolize_keys
+        validate_presence!(batch, *REQUIRED_COUNT_BATCH_KEYS)
+        selected_properties = select_batch_properties!(batch, properties, label: "offer batch")
+
+        expanded.concat(
+          activity_generator.offers(
+            properties: selected_properties,
+            count: Integer(batch.fetch(:count)),
+            assigned_admin_email: batch[:assigned_admin_email],
+            status_cycle: Array(batch.fetch(:status_cycle, %w[received accepted rejected withdrawn]))
+          )
+        )
+      end
+
+      expanded
+    end
+
+    def expand_rental_application_specs(explicit_specs, batches, properties:)
+      expanded = explicit_specs.map { |spec| spec.deep_symbolize_keys }
+      return expanded if batches.empty?
+
+      batches.each do |batch|
+        batch = batch.deep_symbolize_keys
+        validate_presence!(batch, *REQUIRED_COUNT_BATCH_KEYS)
+        selected_properties = select_batch_properties!(batch, properties, label: "rental application batch")
+
+        expanded.concat(
+          activity_generator.rental_applications(
+            properties: selected_properties,
+            count: Integer(batch.fetch(:count)),
+            assigned_admin_email: batch[:assigned_admin_email],
+            status_cycle: Array(batch.fetch(:status_cycle, %w[received referencing approved rejected withdrawn]))
+          )
+        )
+      end
+
+      expanded
+    end
+
+    def select_batch_properties!(batch, properties, label:)
+      selected = properties
+
+      if batch[:property_keys].present?
+        requested_keys = Array(batch[:property_keys]).map(&:to_s)
+        selected = selected.select { |property| requested_keys.include?(property.fetch(:key).to_s) }
+      end
+
+      if batch[:property_key_prefixes].present?
+        prefixes = Array(batch[:property_key_prefixes]).map(&:to_s)
+        selected = selected.select { |property| prefixes.any? { |prefix| property.fetch(:key).to_s.start_with?(prefix) } }
+      end
+
+      if batch[:sale_status].present?
+        selected = selected.select { |property| property.fetch(:sale_status) == batch.fetch(:sale_status) }
+      end
+
+      if batch[:listing_states].present?
+        listing_states = Array(batch[:listing_states]).map(&:to_s)
+        selected = selected.select { |property| listing_states.include?(property.fetch(:listing_state).to_s) }
+      end
+
+      raise ValidationError, "No properties matched #{label}" if selected.empty?
+
+      selected.sort_by { |property| property.fetch(:key).to_s }
     end
 
     def normalize_photos(photos, property_index:)
