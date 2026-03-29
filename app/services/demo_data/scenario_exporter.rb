@@ -107,6 +107,8 @@ module DemoData
         pets_allowed: property.pets_allowed,
         service_charge_amount: property.service_charge_amount,
         lease_length_years: property.lease_length_years,
+        year_built: property.year_built,
+        refurbished_year: property.refurbished_year,
         created_at: property.created_at.iso8601,
         updated_at: property.updated_at.iso8601,
         published_at: property.published_at&.iso8601

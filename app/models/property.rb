@@ -45,8 +45,16 @@ class Property < ApplicationRecord
   validates :tenure, :council_tax_band, :furnishing, :parking, :outdoor_space, :epc_rating, length: { maximum: 60 }, allow_blank: true
   validates :floor_area_sq_ft, :deposit_amount, :service_charge_amount, :lease_length_years,
             numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_blank: true
+  validates :year_built, :refurbished_year,
+            numericality: {
+              only_integer: true,
+              greater_than_or_equal_to: 1700,
+              less_than_or_equal_to: Date.current.year + 1
+            },
+            allow_blank: true
 
   before_validation :apply_listing_defaults
+  validate :refurbished_year_not_before_year_built
 
   scope :for_sale, -> { where(sale_status: SALE_STATUSES[:for_sale]) }
   scope :for_rent, -> { where(sale_status: SALE_STATUSES[:for_rent]) }
@@ -282,5 +290,12 @@ class Property < ApplicationRecord
   def apply_listing_defaults
     self.listing_state ||= "published"
     self.published_at ||= Time.current if listing_state.in?(PUBLIC_LISTING_STATES) && published_at.blank?
+  end
+
+  def refurbished_year_not_before_year_built
+    return if refurbished_year.blank? || year_built.blank?
+    return if refurbished_year >= year_built
+
+    errors.add(:refurbished_year, "must be greater than or equal to the year built")
   end
 end

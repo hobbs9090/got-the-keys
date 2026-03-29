@@ -120,6 +120,16 @@
         <%= field_error_messages(form_model, :available_from) %>
       </div>
       <div>
+        <%= f.label :year_built, t("ui.properties.editor.fields.year_built"), **form_label_options(form_model, :year_built) %>
+        <%= f.number_field :year_built, min: 1700, max: Date.current.year + 1, step: 1, placeholder: t("ui.properties.editor.placeholders.year_built"), **form_control_options(form_model, :year_built) %>
+        <%= field_error_messages(form_model, :year_built) %>
+      </div>
+      <div>
+        <%= f.label :refurbished_year, t("ui.properties.editor.fields.refurbished_year"), **form_label_options(form_model, :refurbished_year) %>
+        <%= f.number_field :refurbished_year, min: 1700, max: Date.current.year + 1, step: 1, placeholder: t("ui.properties.editor.placeholders.refurbished_year"), **form_control_options(form_model, :refurbished_year) %>
+        <%= field_error_messages(form_model, :refurbished_year) %>
+      </div>
+      <div>
         <%= f.label :parking, t("ui.properties.editor.fields.parking"), **form_label_options(form_model, :parking) %>
         <%= f.text_field :parking, placeholder: t("ui.properties.editor.placeholders.parking"), **form_control_options(form_model, :parking) %>
         <%= field_error_messages(form_model, :parking) %>

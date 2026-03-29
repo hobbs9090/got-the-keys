@@ -1,3 +1,5 @@
+require "zlib"
+
 module DemoData
   class ScenarioValidator
     class ValidationError < StandardError; end
@@ -202,6 +204,7 @@ module DemoData
     def normalize_properties(properties)
       properties.map do |property|
         validate_presence!(property, *REQUIRED_PROPERTY_KEYS)
+        chronology = chronology_for(property)
 
         {
           key: property.fetch(:key),
@@ -233,6 +236,8 @@ module DemoData
           pets_allowed: ActiveModel::Type::Boolean.new.cast(property.fetch(:pets_allowed, false)),
           service_charge_amount: property[:service_charge_amount].present? ? Integer(property[:service_charge_amount]) : nil,
           lease_length_years: property[:lease_length_years].present? ? Integer(property[:lease_length_years]) : nil,
+          year_built: chronology.fetch(:year_built),
+          refurbished_year: chronology[:refurbished_year],
           created_at: property[:created_at].present? ? parse_time!(property[:created_at]) : nil,
           updated_at: property[:updated_at].present? ? parse_time!(property[:updated_at]) : nil,
           published_at: property[:published_at].present? ? parse_time!(property[:published_at]) : nil
@@ -277,6 +282,27 @@ module DemoData
           )
         end
       end
+    end
+
+    def chronology_for(property)
+      generator = PropertyChronologyGenerator.new(random: Random.new(chronology_seed_for(property)))
+      generator.generate(
+        property_type: property.fetch(:property_type, "House"),
+        sale_status: property.fetch(:sale_status),
+        year_built: property[:year_built],
+        refurbished_year: property[:refurbished_year]
+      )
+    end
+
+    def chronology_seed_for(property)
+      seed_source = [
+        property[:key],
+        property[:property_type],
+        property[:town_city],
+        property[:sale_status]
+      ].join(":")
+
+      Zlib.crc32(seed_source)
     end
 
     def expand_availability_window_specs(explicit_specs, batches, properties:)

@@ -249,6 +249,8 @@ zh:
         tenure: 产权类型
         council_tax_band: Council Tax 等级
         furnishing: 家具配置
+        year_built: 建造年份
+        refurbished_year: 最近翻新年份
         available_from: 可入住时间
         parking: 停车
         outdoor_space: 户外空间

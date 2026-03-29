@@ -161,6 +161,13 @@ describe "A property" do
     expect(property.errors[:image_file_name]).to be_empty
   end
 
+  it "rejects refurbishment years earlier than the build year" do
+    property = build_property(year_built: 2005, refurbished_year: 2001)
+
+    expect(property.valid?).to be false
+    expect(property.errors[:refurbished_year]).to include("must be greater than or equal to the year built")
+  end
+
   it "rejects unsupported image filename extensions" do
     property = build_property(image_file_name: "property_placeholder_listing.webp")
 

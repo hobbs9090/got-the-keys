@@ -38,4 +38,14 @@ RSpec.describe PropertiesHelper, type: :helper do
       expect(markup).not_to include("srcset=")
     end
   end
+
+  describe "#property_fact_rows" do
+    it "includes chronology facts when they are present" do
+      property = FactoryBot.build(:property, user:, year_built: 1998, refurbished_year: 2022)
+
+      facts = helper.property_fact_rows(property)
+
+      expect(facts).to include(["Built", 1998], ["Last refurbished", 2022])
+    end
+  end
 end

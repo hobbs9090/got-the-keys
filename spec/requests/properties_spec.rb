@@ -116,6 +116,10 @@ describe "Properties" do
       expect(branch_panel).to be_present
       expect(branch_panel["class"]).to include("empty-state")
       expect(branch_panel["class"]).to include("property-booking-panel__support-card")
+      expect(response.body).to include("Built")
+      expect(response.body).to include(property.year_built.to_s)
+      expect(response.body).to include("Last refurbished")
+      expect(response.body).to include(property.refurbished_year.to_s)
     end
 
     it "keeps the property hero media on a non-stretched 3:2 frame in the stylesheet" do

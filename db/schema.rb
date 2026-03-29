@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_27_100000) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_29_101500) do
   create_table "admins", force: :cascade do |t|
     t.integer "consumed_timestep"
     t.datetime "created_at", precision: nil
@@ -252,18 +252,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_27_100000) do
     t.text "property_description"
     t.string "property_type", default: "House", null: false
     t.datetime "published_at"
+    t.integer "refurbished_year"
     t.string "sale_status"
     t.integer "service_charge_amount"
     t.string "tenure"
     t.string "town_city"
     t.datetime "updated_at", precision: nil
     t.integer "user_id"
+    t.integer "year_built"
     t.index ["available_from"], name: "index_properties_on_available_from"
     t.index ["bedrooms"], name: "index_properties_on_bedrooms"
     t.index ["featured"], name: "index_properties_on_featured"
     t.index ["listing_state"], name: "index_properties_on_listing_state"
+    t.index ["refurbished_year"], name: "index_properties_on_refurbished_year"
     t.index ["sale_status", "asking_price"], name: "index_properties_on_sale_status_and_price"
     t.index ["user_id"], name: "index_properties_on_user_id"
+    t.index ["year_built"], name: "index_properties_on_year_built"
   end
 
   create_table "property_documents", force: :cascade do |t|
