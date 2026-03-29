@@ -181,18 +181,53 @@ property_batches:
     random_seed: 2026032802
 photos:
   - property_key: sevenoaks_family_home
-    image_filename: hero_1.jpg
-    caption: Rear terrace and garden
+    image_filename: sevenoaks_family_home_hero.jpg
+    caption: Front exterior
     position: 1
     primary: true
   - property_key: tunbridge_garden_flat
-    image_filename: hero_2.jpg
-    caption: Living room opening to terrace
+    image_filename: tunbridge_garden_flat_hero.jpg
+    caption: Front exterior
+    position: 1
+    primary: true
+  - property_key: guildford_townhouse
+    image_filename: guildford_townhouse_hero.jpg
+    caption: Front exterior
     position: 1
     primary: true
   - property_key: croydon_rental_loft
-    image_filename: hero_3.jpg
-    caption: Open-plan lounge
+    image_filename: croydon_rental_loft_hero.jpg
+    caption: Front exterior
+    position: 1
+    primary: true
+  - property_key: baseline_rental_001
+    image_filename: baseline_rental_001_hero.jpg
+    caption: Front exterior
+    position: 1
+    primary: true
+  - property_key: baseline_sale_001
+    image_filename: baseline_sale_001_hero.jpg
+    caption: Front exterior
+    position: 1
+    primary: true
+  - property_key: baseline_sale_002
+    image_filename: baseline_sale_002_hero.jpg
+    caption: Front exterior
+    position: 1
+    primary: true
+  - property_key: baseline_sale_003
+    image_filename: baseline_sale_003_hero.jpg
+    caption: Front exterior
+    position: 1
+    primary: true
+  - property_key: baseline_sale_004
+    image_filename: baseline_sale_004_hero.jpg
+    caption: Front exterior
+    position: 1
+    primary: true
+  - property_key: baseline_sale_005
+    image_filename: baseline_sale_005_hero.jpg
+    caption: Front exterior
     position: 1
     primary: true
 floor_plans:

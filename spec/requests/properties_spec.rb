@@ -118,6 +118,17 @@ describe "Properties" do
       expect(branch_panel["class"]).to include("property-booking-panel__support-card")
     end
 
+    it "keeps the property hero media on a non-stretched 3:2 frame in the stylesheet" do
+      stylesheet = Rails.root.join("app/assets/stylesheets/theme.scss").read
+
+      expect(stylesheet).to match(
+        /\.property-hero__media\s*\{[^}]*align-self:\s*start;[^}]*width:\s*100%;/m
+      )
+      expect(stylesheet).to match(
+        /\.property-hero__media--ratio-3-2\s*\{[^}]*aspect-ratio:\s*3 \/ 2;/m
+      )
+    end
+
     it "hides draft listings from public visitors" do
       property.update!(listing_state: "draft")
 
