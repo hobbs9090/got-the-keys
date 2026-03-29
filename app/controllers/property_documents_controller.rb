@@ -81,7 +81,7 @@ class PropertyDocumentsController < ApplicationController
     )
 
     send_data(
-      document_payload(@property_document),
+      PropertyDocumentPayloadBuilder.new(document: @property_document, property: @property).payload,
       filename: @property_document.file_name,
       disposition: "attachment",
       type: mime_type_for(@property_document.file_name)
@@ -100,17 +100,6 @@ class PropertyDocumentsController < ApplicationController
 
   def next_position
     @property.property_documents.maximum(:position).to_i + 1
-  end
-
-  def document_payload(document)
-    <<~TEXT
-      GotTheKeys document download
-
-      Title: #{document.title}
-      Category: #{document.category_label}
-      Property: #{@property.address_line_1}
-      Visibility: #{document.visibility}
-    TEXT
   end
 
   def mime_type_for(file_name)

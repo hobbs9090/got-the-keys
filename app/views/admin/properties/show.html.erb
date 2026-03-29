@@ -123,7 +123,7 @@
             <strong><%= document.title %></strong>
             <p><%= document.category_label %> · <%= document.visibility.humanize %> · <%= document.file_name %></p>
           </div>
-          <%= link_to "Download", download_property_property_document_path(@property, document), class: "button hollow secondary" %>
+          <%= link_to "Download", download_property_property_document_path(@property, document), class: "button hollow secondary", download: document.file_name, data: { turbo: false } %>
         </div>
       <% end %>
     </div>

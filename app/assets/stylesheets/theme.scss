@@ -2025,13 +2025,8 @@ a:focus {
 }
 
 .property-card__header {
-  align-items: start;
-  display: flex;
-  gap: 1rem;
-  justify-content: space-between;
-}
-
-.property-card__header > :first-child {
+  display: grid;
+  gap: 0.35rem;
   min-width: 0;
 }
 
@@ -2047,13 +2042,12 @@ a:focus {
 }
 
 .property-card__price {
-  align-items: flex-end;
+  align-items: flex-start;
   display: grid;
   flex-shrink: 0;
   gap: 0.2rem;
-  margin-left: auto;
-  min-width: fit-content;
-  text-align: right;
+  justify-items: start;
+  text-align: left;
 }
 
 .property-card__price strong {
