@@ -92,6 +92,17 @@ describe "Properties" do
 
       expect(property_links.index("Image Backed Place")).to be < property_links.index("Text Only Place")
     end
+
+    it "renders the card price on its own row beneath the header block" do
+      get properties_path
+
+      document = Nokogiri::HTML(response.body)
+      card = document.at_css(%([data-testid="property-card"]))
+
+      expect(card.at_css(".property-card__header")).to be_present
+      expect(card.at_css(".property-card__header .property-card__price")).not_to be_present
+      expect(card.at_css(".property-card__body > .property-card__price[data-testid='property-card-price']")).to be_present
+    end
   end
 
   describe "GET /properties/1" do

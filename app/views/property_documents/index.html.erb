@@ -22,7 +22,7 @@
               <p><%= document.category_label %> · <%= document.visibility_label %> · <%= document.file_name %></p>
             </div>
             <div class="admin-inline-actions">
-              <%= link_to t("ui.common.download"), download_property_property_document_path(@property, document), class: "button hollow secondary" %>
+              <%= link_to t("ui.common.download"), download_property_property_document_path(@property, document), class: "button hollow secondary", download: document.file_name, data: { turbo: false } %>
               <%= button_to t("ui.common.remove"), property_property_document_path(@property, document), method: :delete, class: "button alert hollow" %>
             </div>
           </div>

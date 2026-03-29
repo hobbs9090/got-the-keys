@@ -14,17 +14,15 @@
 
         <div class="property-card__body">
           <div class="property-card__header">
-            <div>
-              <p class="property-card__eyebrow"><%= property_location_label(property) %></p>
-              <h3><%= link_to property.address_line_1, property_path(property), data: { testid: "property-card-link-#{property.id}" } %></h3>
-            </div>
+            <p class="property-card__eyebrow"><%= property_location_label(property) %></p>
+            <h3><%= link_to property.address_line_1, property_path(property), data: { testid: "property-card-link-#{property.id}" } %></h3>
+          </div>
 
-            <div class="property-card__price">
-              <strong><%= format_price(property) %></strong>
-              <% if chinese_locale? %>
-                <span class="property-price-secondary"><%= format_renminbi(property) %></span>
-              <% end %>
-            </div>
+          <div class="property-card__price" data-testid="property-card-price">
+            <strong><%= format_price(property) %></strong>
+            <% if chinese_locale? %>
+              <span class="property-price-secondary"><%= format_renminbi(property) %></span>
+            <% end %>
           </div>
 
           <p class="property-card__headline"><%= property.headline %></p>

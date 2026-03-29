@@ -109,7 +109,7 @@
             <li>
               <strong><%= document.title %></strong>
               (<%= document.category_label %>)
-              <%= link_to t("ui.common.download"), download_property_property_document_path(@property, document), class: "button hollow secondary tiny", data: { testid: "property-document-download-#{document.id}" } %>
+              <%= link_to t("ui.common.download"), download_property_property_document_path(@property, document), class: "button hollow secondary tiny", download: document.file_name, data: { testid: "property-document-download-#{document.id}", turbo: false } %>
             </li>
           <% end %>
         </ul>
