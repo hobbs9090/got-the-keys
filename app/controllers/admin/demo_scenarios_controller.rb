@@ -1,31 +1,19 @@
 class Admin::DemoScenariosController < Admin::BaseController
   before_action :load_scenario_loader
+  before_action :ensure_baseline_admin_scenario!, only: %i[show apply]
 
   def index
-    @scenarios = @scenario_loader.scenarios
-    @quick_reset_scenarios = @scenarios.select { |scenario| scenario.dig(:qa, :quick_reset) }
-    @scenario_groups = @scenarios.reject { |scenario| scenario.dig(:qa, :quick_reset) }.group_by { |scenario| scenario.dig(:qa, :family) }
+    @baseline_scenario = @scenario_loader.preview("baseline")
     @latest_run = DemoScenarioRun.recent_first.first
     @diagnostics = diagnostics_payload
   end
 
   def show
-    @preview = @scenario_loader.preview(params[:id])
+    @preview = @scenario_loader.preview("baseline")
   end
 
   def apply
-    scenario = @scenario_loader.preview(params[:id])
-    return if reject_unconfirmed_demo_scenario!(scenario)
-
-    actor_email = current_admin.email
-    summary = @scenario_loader.apply_catalog!(key: scenario.fetch(:key), actor_email:)
-    reauthenticate_admin(actor_email)
-
-    notice_key = scenario.fetch(:key) == "baseline" ? "ui.admin.flash.restored_baseline_demo_scenario" : "ui.admin.flash.applied_demo_scenario"
-
-    redirect_to admin_demo_scenarios_path, notice: t(notice_key, name: summary.fetch(:name))
-  rescue StandardError => error
-    redirect_to admin_demo_scenarios_path, alert: error.message
+    restore_baseline
   end
 
   def restore_baseline
@@ -122,5 +110,14 @@ class Admin::DemoScenariosController < Admin::BaseController
   def reauthenticate_admin(email)
     replacement_admin = Admin.find_by(email: email)
     bypass_sign_in(replacement_admin) if replacement_admin.present?
+  end
+
+  def ensure_baseline_admin_scenario!
+    return if params[:id].to_s == "baseline"
+
+    redirect_to(
+      admin_demo_scenarios_path,
+      alert: t("ui.admin.demo_data.baseline_only_alert", default: "Only the baseline demo dataset is available here right now.")
+    )
   end
 end

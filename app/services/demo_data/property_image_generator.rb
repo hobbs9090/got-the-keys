@@ -10,6 +10,7 @@ module DemoData
     DEFAULT_SIZE = "1536x1024".freeze
     DEFAULT_OUTPUT_FORMAT = "jpeg".freeze
     DEFAULT_OUTPUT_COMPRESSION = 90
+    DEFAULT_OUTPUT_DIR = Rails.root.join("app/assets/images").freeze
 
     def self.filtered_scope(property_ids: nil, sale_status: nil, town_city: nil)
       scope = Property.all
@@ -27,7 +28,7 @@ module DemoData
       size: DEFAULT_SIZE,
       output_format: DEFAULT_OUTPUT_FORMAT,
       output_compression: DEFAULT_OUTPUT_COMPRESSION,
-      output_dir: Rails.root.join("app/assets/images"),
+      output_dir: DEFAULT_OUTPUT_DIR,
       logger: Rails.logger,
       prompt_builder: PropertyImagePromptBuilder.new,
       dry_run: false,
@@ -55,6 +56,7 @@ module DemoData
         model: model,
         quality: quality,
         size: size,
+        output_dir: output_dir.to_s,
         dry_run: dry_run?,
         force: force?,
         processed: results.size,
@@ -95,11 +97,12 @@ module DemoData
 
       output_path = output_dir.join(filename)
       File.binwrite(output_path, Base64.decode64(image.b64_json))
-      property.update!(image_file_name: filename)
+      photo = attach_generated_photo(property, filename)
 
       base_result(property, filename, prompt).merge(
         status: :generated,
         path: output_path.to_s,
+        photo_id: photo.id,
         revised_prompt: image.revised_prompt
       )
     rescue StandardError => error
@@ -131,14 +134,37 @@ module DemoData
       "generated_property_#{property.id}.#{filename_extension}"
     end
 
+    def attach_generated_photo(property, filename)
+      existing_photo = property.photos.find_by(image_filename: filename) || property.primary_photo
+      next_position = property.photos.maximum(:position).to_i + 1
+
+      if existing_photo.present?
+        existing_photo.update!(
+          image_filename: filename,
+          caption: generated_caption_for(property),
+          primary: true
+        )
+        existing_photo
+      else
+        property.photos.create!(
+          image_filename: filename,
+          caption: generated_caption_for(property),
+          position: next_position,
+          primary: true
+        )
+      end
+    end
+
+    def generated_caption_for(property)
+      property.headline.presence || "#{property.property_type} in #{property.town_city}"
+    end
+
     def skip_generation?(property, filename)
       return false if force?
-      return false if property.image_file_name.blank?
+      existing_photo = property.photos.find_by(image_filename: filename)
+      return false if existing_photo.blank?
 
-      existing_filename = property.image_file_name.to_s
-      return true if existing_filename != filename
-
-      output_dir.join(existing_filename).exist?
+      output_dir.join(existing_photo.image_filename.to_s).exist?
     end
 
     def base_result(property, filename, prompt)
@@ -148,6 +174,7 @@ module DemoData
         town_city: property.town_city,
         sale_status: property.sale_status,
         filename: filename,
+        asset_pipeline_managed: output_dir == DEFAULT_OUTPUT_DIR,
         output_format: output_format,
         prompt: prompt
       }

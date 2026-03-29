@@ -328,6 +328,7 @@ a:focus {
 }
 
 .site-hero,
+.property-hero,
 .property-card,
 .property-panel,
 .property-booking-panel,
@@ -362,6 +363,7 @@ a:focus {
 .metric-card,
 .insight-card,
 .admin-panel,
+.property-hero,
 .property-panel,
 .property-booking-panel,
 .page-hero,
@@ -372,7 +374,6 @@ a:focus {
 
 .section-heading,
 .page-hero,
-.property-hero__content,
 .property-card__footer,
 .admin-list__item,
 .admin-topbar,
@@ -2123,9 +2124,20 @@ a:focus {
 }
 
 .property-hero {
-  align-items: center;
-  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.9fr);
+  align-items: stretch;
+  background:
+    linear-gradient(135deg, rgba(227, 237, 255, 0.82), rgba(255, 255, 255, 0.96)),
+    rgba(255, 255, 255, 0.92);
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
   margin-top: 2rem;
+  overflow: hidden;
+}
+
+.property-hero__content {
+  align-content: start;
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
 }
 
 .property-hero__labels,
@@ -2144,6 +2156,12 @@ a:focus {
   gap: 0.75rem;
 }
 
+.property-hero__title-block,
+.property-hero__details {
+  display: grid;
+  gap: 1rem;
+}
+
 .property-hero__price strong {
   color: #10213f;
   font-size: clamp(2.2rem, 4vw, 3.2rem);
@@ -2152,8 +2170,37 @@ a:focus {
 .property-hero__meta {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-top: 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 0;
+}
+
+.property-hero__meta > div {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(20, 37, 63, 0.08);
+  border-radius: var(--radius-sm);
+  padding: 0.9rem 1rem;
+}
+
+.property-panel {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.property-panel > h2,
+.property-panel > p {
+  margin: 0;
+}
+
+.property-address {
+  border-top: 1px solid var(--color-line);
+  display: grid;
+  gap: 0.65rem;
+  padding-top: 1.35rem;
+}
+
+.property-address h3,
+.property-address p {
+  margin: 0;
 }
 
 .property-layout {
@@ -2165,6 +2212,8 @@ a:focus {
 .property-booking-panel {
   display: grid;
   gap: 1rem;
+  position: sticky;
+  top: 1.5rem;
 }
 
 .property-booking-panel > h2,
@@ -2185,6 +2234,24 @@ a:focus {
 
 .property-booking-panel__support-card .button {
   margin-bottom: 0;
+}
+
+.property-hero__media {
+  align-self: stretch;
+  border-radius: calc(var(--radius-lg) - 4px);
+  overflow: hidden;
+}
+
+.property-hero__media--ratio-3-2 {
+  aspect-ratio: 3 / 2;
+}
+
+.property-hero__image {
+  height: 100%;
+}
+
+.property-hero__media--ratio-3-2 .property-hero__image {
+  min-height: 0;
 }
 
 .slot-list,
@@ -2522,6 +2589,11 @@ a:focus {
     top: auto;
   }
 
+  .property-booking-panel {
+    position: static;
+    top: auto;
+  }
+
   .admin-calendar-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2606,6 +2678,10 @@ a:focus {
   .admin-filter-form,
   .admin-calendar-grid {
     grid-template-columns: 1fr;
+  }
+
+  .property-hero__media--ratio-3-2 .property-hero__image {
+    min-height: 0;
   }
 
   .property-grid {

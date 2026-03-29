@@ -4,17 +4,39 @@ GotTheKeys is a modern Rails 8 property website, appointment-booking app, and QA
 
 It is designed to feel like a credible small business product while also being predictable enough for acceptance testing, browser automation exercises, and trainer-led demos. The app stays server-rendered, uses Foundation Sites as a CSS layer with bundled Turbo/vanilla JavaScript, and remains practical to deploy on an Apache + Passenger shared host.
 
-## Homepage Snapshot
+## Page Snapshots
 
-![GotTheKeys homepage](docs/readme/homepage.png)
+<table>
+  <tr>
+    <td width="44%" valign="top">
+      <img src="docs/readme/homepage.png" alt="GotTheKeys homepage" width="100%">
+    </td>
+    <td width="56%" valign="top">
+      <p><strong>Homepage</strong></p>
+      <p>The public landing page introduces the platform with a large marketing hero, clear browse action, live metrics, and featured listings pulled from seeded catalogue data.</p>
+      <p>It works as the front door for buyers, renters, and QA demos by showing the overall product tone quickly while still exposing real property cards, booking hooks, and predictable content for browser automation.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="44%" valign="top">
+      <img src="docs/readme/catalogue.png" alt="GotTheKeys property catalogue" width="100%">
+    </td>
+    <td width="56%" valign="top">
+      <p><strong>Property Catalogue</strong></p>
+      <p>The catalogue page is the core browsing surface: scope switching, filter controls, saved-search capture, branch trust cues, pagination, and listing cards all stay visible in one server-rendered flow.</p>
+      <p>That makes it a good snapshot of the app's day-to-day estate-agent workflow, where users narrow stock, compare live availability, and continue into enquiries, offers, rental applications, or viewing requests.</p>
+    </td>
+  </tr>
+</table>
 
-Refresh this screenshot after homepage UI changes with:
+Refresh these screenshots after public-page UI changes with:
 
 ```bash
 bin/update_readme_homepage_screenshot
+README_SCREENSHOT_URL=http://127.0.0.1:3000/properties README_SCREENSHOT_PATH=docs/readme/catalogue.png bin/update_readme_homepage_screenshot
 ```
 
-The script captures `http://127.0.0.1:3000/` and writes `docs/readme/homepage.png`.
+The script now defaults to a narrower portrait viewport so the README images show more of each page. Override `README_SCREENSHOT_URL`, `README_SCREENSHOT_PATH`, `README_SCREENSHOT_WIDTH`, and `README_SCREENSHOT_HEIGHT` when you want to capture a different public route or framing.
 
 ## What The App Does
 

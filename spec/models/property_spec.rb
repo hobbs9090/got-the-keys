@@ -175,4 +175,18 @@ describe "A property" do
 
     expect(property.hero_image_name).to eq("gallery-cover.jpg")
   end
+
+  it "favours listings with imagery in the recommended order" do
+    image_backed = FactoryBot.create(:property, user:, address_line_1: "Image Backed Place", featured: false)
+    text_only = FactoryBot.create(:property, user:, address_line_1: "Text Only Place", featured: false)
+    FactoryBot.create(:photo, property: image_backed, image_filename: "image-backed-place.jpg", primary: true, position: 1)
+
+    image_backed.update_columns(updated_at: 2.days.ago)
+    text_only.update_columns(updated_at: 1.day.ago)
+
+    expect(Property.recommended_order.limit(2).pluck(:address_line_1)).to eq([
+      "Image Backed Place",
+      "Text Only Place"
+    ])
+  end
 end
