@@ -579,7 +579,7 @@
   margin-bottom: 0;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: $layout-tablet-breakpoint) {
   .admin-layout {
     grid-template-columns: 1fr;
   }
@@ -593,7 +593,7 @@
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: $layout-mobile-breakpoint) {
   .admin-topbar-wrap {
     padding: 1rem 1rem 0;
   }

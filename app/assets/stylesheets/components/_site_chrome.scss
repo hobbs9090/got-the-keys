@@ -483,7 +483,7 @@
   white-space: normal;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: $layout-tablet-breakpoint) {
   .site-header {
     position: static;
   }
@@ -505,7 +505,7 @@
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: $layout-mobile-breakpoint) {
   .site-header,
   .flash-stack,
   .site-footer {
