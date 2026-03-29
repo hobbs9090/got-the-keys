@@ -52,9 +52,23 @@ class Property < ApplicationRecord
   scope :for_rent, -> { where(sale_status: SALE_STATUSES[:for_rent]) }
   scope :featured, -> { where(featured: true) }
   scope :publicly_visible, -> { where(listing_state: PUBLIC_LISTING_STATES) }
-  scope :recommended_order, -> { order(featured: :desc, updated_at: :desc) }
+  scope :recommended_order, -> { order(Arel.sql(media_priority_order_sql)).order(featured: :desc, updated_at: :desc) }
 
   class << self
+    def media_priority_order_sql
+      <<~SQL.squish
+        CASE
+          WHEN NULLIF(properties.image_file_name, '') IS NOT NULL THEN 1
+          WHEN EXISTS (
+            SELECT 1
+            FROM photos
+            WHERE photos.property_id = properties.id
+          ) THEN 1
+          ELSE 0
+        END DESC
+      SQL
+    end
+
     def all_properties_total
       publicly_visible.count
     end
@@ -155,7 +169,7 @@ class Property < ApplicationRecord
       when 'newest'
         listings.order(updated_at: :desc)
       else
-        listings.order(featured: :desc, updated_at: :desc)
+        listings.order(Arel.sql(media_priority_order_sql)).order(featured: :desc, updated_at: :desc)
       end
     end
   end

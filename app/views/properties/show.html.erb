@@ -11,39 +11,43 @@
     </div>
 
     <p class="property-hero__eyebrow"><%= property_location_label(@property) %></p>
-    <h1><%= @property.address_line_1 %></h1>
-    <p class="property-hero__headline"><%= @property.headline %></p>
-
-    <div class="property-hero__price">
-      <strong><%= format_price(@property) %></strong>
-      <% if chinese_locale? %>
-        <span><%= format_renminbi(@property) %></span>
-      <% end %>
+    <div class="property-hero__title-block">
+      <h1><%= @property.address_line_1 %></h1>
+      <p class="property-hero__headline"><%= @property.headline %></p>
     </div>
 
-    <dl class="property-hero__meta">
-      <div>
-        <dt><%= t("properties.bedrooms") %></dt>
-        <dd><%= format_bedrooms(@property) %></dd>
+    <div class="property-hero__details">
+      <div class="property-hero__price">
+        <strong><%= format_price(@property) %></strong>
+        <% if chinese_locale? %>
+          <span><%= format_renminbi(@property) %></span>
+        <% end %>
       </div>
-      <div>
-        <dt><%= t("ui.common.bathrooms") %></dt>
-        <dd><%= format_bathrooms(@property.bathrooms) %></dd>
-      </div>
-      <div>
-        <dt><%= t("ui.common.postcode") %></dt>
-        <dd><%= @property.postcode %></dd>
-      </div>
-      <% if @property.available_from.present? %>
+
+      <dl class="property-hero__meta">
         <div>
-          <dt><%= t("ui.properties.show.available_from") %></dt>
-          <dd><%= l(@property.available_from, format: :long) %></dd>
+          <dt><%= t("properties.bedrooms") %></dt>
+          <dd><%= format_bedrooms(@property) %></dd>
         </div>
-      <% end %>
-    </dl>
+        <div>
+          <dt><%= t("ui.common.bathrooms") %></dt>
+          <dd><%= format_bathrooms(@property.bathrooms) %></dd>
+        </div>
+        <div>
+          <dt><%= t("ui.common.postcode") %></dt>
+          <dd><%= @property.postcode %></dd>
+        </div>
+        <% if @property.available_from.present? %>
+          <div>
+            <dt><%= t("ui.properties.show.available_from") %></dt>
+            <dd><%= l(@property.available_from, format: :long) %></dd>
+          </div>
+        <% end %>
+      </dl>
+    </div>
   </div>
 
-  <div class="property-hero__media">
+  <div class="property-hero__media property-hero__media--ratio-3-2">
     <%= medium_image_for(@property) %>
   </div>
 </section>

@@ -76,18 +76,36 @@ describe "Properties" do
       expect(response.body).to include(matching.address_line_1)
       expect(response.body).not_to include("Excluded Rental")
     end
+
+    it "shows image-backed listings first in the default catalogue order" do
+      image_backed = FactoryBot.create(:property, user:, address_line_1: "Image Backed Place", featured: false)
+      text_only = FactoryBot.create(:property, user:, address_line_1: "Text Only Place", featured: false)
+      FactoryBot.create(:photo, property: image_backed, image_filename: "image-backed-place.jpg", primary: true, position: 1)
+
+      image_backed.update_columns(updated_at: 2.days.ago)
+      text_only.update_columns(updated_at: 1.day.ago)
+
+      get properties_path
+
+      document = Nokogiri::HTML(response.body)
+      property_links = document.css('[data-testid^="property-card-link-"]').map { |link| link.text.strip }
+
+      expect(property_links.index("Image Backed Place")).to be < property_links.index("Text Only Place")
+    end
   end
 
   describe "GET /properties/1" do
     it "should retrieve page" do
       get property_path(property)
       document = Nokogiri::HTML(response.body)
+      showcase = document.at_css(%([data-testid="property-showcase"]))
       booking_panel = document.at_css(%([data-testid="booking-panel"]))
       enquiry_panel = document.at_css(%([data-testid="property-enquiry-panel"]))
       offer_panel = document.at_css(%([data-testid="property-offer-panel"]))
       branch_panel = document.at_css(%([data-testid="property-branch-card"]))
 
       expect(response).to have_http_status(:ok)
+      expect(showcase.at_css(".property-hero__media--ratio-3-2")).to be_present
       expect(booking_panel).to be_present
       expect(enquiry_panel).to be_present
       expect(enquiry_panel["class"]).to include("empty-state")

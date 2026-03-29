@@ -46,6 +46,22 @@ RSpec.describe "Welcome", type: :request do
       expect(property_links).not_to include(omitted.address_line_1)
     end
 
+    it "favours image-backed listings when topping up the homepage cards" do
+      user = FactoryBot.create(:user)
+      image_backed = create_property(user:, address_line_1: "1 Photo Lane", featured: false, updated_at: 3.days.ago)
+      newer_text_only = create_property(user:, address_line_1: "2 Text Square", featured: false, updated_at: 1.day.ago)
+      another_text_only = create_property(user:, address_line_1: "3 Plain Court", featured: false, updated_at: 2.days.ago)
+      FactoryBot.create(:photo, property: image_backed, image_filename: "photo-lane.jpg", primary: true, position: 1)
+
+      get root_path
+
+      document = Nokogiri::HTML.parse(response.body)
+      property_links = document.css('[data-testid^="property-card-link-"]').map { |link| link.text.strip }
+
+      expect(property_links.first(3)).to include("1 Photo Lane")
+      expect(property_links.index("1 Photo Lane")).to be < property_links.index("2 Text Square")
+    end
+
     it "tops up the homepage cards when there are fewer than three featured listings" do
       user = FactoryBot.create(:user)
       featured_newest = create_property(user:, address_line_1: "1 Featured Lane", featured: true, updated_at: 1.day.ago)

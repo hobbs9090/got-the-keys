@@ -18,8 +18,9 @@ RSpec.describe "Admin demo scenarios" do
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Demo data management")
     expect(response.body).to include("Seed data resets")
-    expect(response.body).not_to include("Quick reset packs")
-    expect(response.body).not_to include("Typed gate")
+    expect(response.body).not_to include("Import scenario")
+    expect(response.body).not_to include("Export current data")
+    expect(response.body).not_to include("Scenario family")
 
     seed_reset_panel = parsed_html.at_css('[data-testid="scenario-seed-reset-panel"]')
     expect(seed_reset_panel).to be_present
@@ -32,9 +33,8 @@ RSpec.describe "Admin demo scenarios" do
     expect(baseline_input).to be_present
     expect(baseline_input["pattern"]).to eq("baseline")
     expect(baseline_input["placeholder"]).to eq("baseline")
-
-    expect(response.body).to include(%(data-testid="scenario-complexity-high-volume-search"))
-    expect(response.body).to include(%(data-testid="scenario-actions-high-volume-search"))
+    expect(response.body).not_to include(%(data-testid="scenario-card-high-volume-search"))
+    expect(response.body).not_to include(%(data-testid="scenario-actions-high-volume-search"))
   end
 
   it "restores the baseline scenario when the typed gate phrase is correct" do
@@ -47,14 +47,14 @@ RSpec.describe "Admin demo scenarios" do
     expect(Enquiry.count).to eq(40)
   end
 
-  it "rejects quick reset requests without the typed gate phrase" do
-    post apply_admin_demo_scenario_path("deal_progression"), params: { confirm_demo_scenario: "wrong-key", return_to: admin_demo_scenarios_path }
+  it "rejects direct admin access to non-baseline scenarios" do
+    get admin_demo_scenario_path("deal_progression")
 
     expect(response).to redirect_to(admin_demo_scenarios_path)
 
     follow_redirect!
 
-    expect(response.body).to include("Type deal_progression exactly to run this seed reset.")
+    expect(response.body).to include("Only the baseline demo dataset is available here right now.")
     expect(BookingConfiguration.current.active_demo_scenario_key).to eq("baseline")
   end
 
@@ -66,16 +66,16 @@ RSpec.describe "Admin demo scenarios" do
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Demodatenverwaltung")
     expect(response.body).to include("Seed-Daten-Resets")
-    expect(response.body).to include("Vorschau")
+    expect(response.body).not_to include("Vorschau")
   end
 
-  it "renders trainer notes and expected assertions on the preview page" do
-    get admin_demo_scenario_path("documents_and_trust")
+  it "renders trainer notes and expected assertions on the baseline preview page" do
+    get admin_demo_scenario_path("baseline")
 
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Trainer notes")
     expect(response.body).to include("Expected assertions")
-    expect(response.body).to include("public pages should expose brochure files".capitalize)
+    expect(response.body).to include("Known admin and seller credentials should appear in the QA guide.")
   end
 
   it "shows the typed gate on quick reset preview pages" do

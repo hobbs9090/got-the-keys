@@ -13,8 +13,8 @@ module ReadmeHomepageScreenshot
 
     output_path = File.expand_path(ENV.fetch("README_SCREENSHOT_PATH", "docs/readme/homepage.png"), Dir.pwd)
     url = ENV.fetch("README_SCREENSHOT_URL", "http://127.0.0.1:3000/")
-    width = Integer(ENV.fetch("README_SCREENSHOT_WIDTH", "1440"))
-    height = Integer(ENV.fetch("README_SCREENSHOT_HEIGHT", "1600"))
+    width = Integer(ENV.fetch("README_SCREENSHOT_WIDTH", "960"))
+    height = Integer(ENV.fetch("README_SCREENSHOT_HEIGHT", "2200"))
     delay = Float(ENV.fetch("README_SCREENSHOT_DELAY", "0.8"))
 
     FileUtils.mkdir_p(File.dirname(output_path))
@@ -27,7 +27,7 @@ module ReadmeHomepageScreenshot
     sleep(delay)
     driver.save_screenshot(output_path)
 
-    puts "Saved homepage screenshot to #{output_path}"
+    puts "Saved README screenshot to #{output_path}"
   ensure
     driver&.quit
   end

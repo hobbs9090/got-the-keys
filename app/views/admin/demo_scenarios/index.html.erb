@@ -5,11 +5,7 @@
     <div>
       <p class="section-heading__eyebrow"><%= t("ui.admin.demo_data.eyebrow") %></p>
       <h1><%= t("ui.admin.demo_data.title") %></h1>
-    </div>
-
-    <div class="section-heading__actions">
-      <%= link_to t("ui.admin.demo_data.import_scenario"), import_admin_demo_scenarios_path, class: "button hollow secondary" %>
-      <%= link_to t("ui.admin.demo_data.export_current_data"), export_admin_demo_scenarios_path, class: "button hollow primary" %>
+      <p><%= t("ui.admin.demo_data.baseline_only_body", default: "The admin reset flow is currently limited to the baseline demo dataset so QA always has one predictable starting point.") %></p>
     </div>
   </div>
 </section>
@@ -28,7 +24,48 @@
   </article>
 
   <article class="admin-panel">
-    <h2><%= t("ui.admin.demo_data.last_demo_action_title") %></h2>
+    <h2><%= @baseline_scenario.fetch(:name) %></h2>
+    <p><%= @baseline_scenario.fetch(:description) %></p>
+    <ul class="detail-inline-list admin-demo-scenario-card__meta">
+      <li><strong><%= @baseline_scenario.fetch(:property_count) %></strong> <%= t("ui.admin.demo_data.counts.properties", count: @baseline_scenario.fetch(:property_count)) %></li>
+      <li><strong><%= @baseline_scenario.fetch(:appointment_count) %></strong> <%= t("ui.admin.demo_data.counts.bookings", count: @baseline_scenario.fetch(:appointment_count)) %></li>
+      <li><strong><%= @baseline_scenario.fetch(:user_count) %></strong> <%= t("ui.admin.demo_data.counts.sellers", count: @baseline_scenario.fetch(:user_count)) %></li>
+      <li><strong><%= @baseline_scenario.fetch(:enquiry_count, 0) %></strong> leads</li>
+      <li><strong><%= @baseline_scenario.fetch(:offer_count, 0) %></strong> offers</li>
+      <li><strong><%= @baseline_scenario.fetch(:rental_application_count, 0) %></strong> rental applications</li>
+    </ul>
+  </article>
+</section>
+
+<section class="admin-panel admin-demo-danger-zone" data-testid="scenario-seed-reset-panel">
+  <div class="admin-demo-danger-zone__header">
+    <p class="admin-demo-danger-zone__eyebrow"><%= t("ui.admin.demo_data.seed_resets.eyebrow") %></p>
+    <h2><%= t("ui.admin.demo_data.seed_resets.title") %></h2>
+    <p><%= t("ui.admin.demo_data.seed_resets.baseline_only_description", default: "Use this to rebuild the shared baseline training dataset. Other curated resets are hidden for now so the admin flow stays simple.") %></p>
+  </div>
+
+  <div class="admin-demo-danger-zone__list" data-testid="scenario-seed-reset-list">
+    <%= render "seed_reset_gate",
+               scenario: @baseline_scenario,
+               return_to: admin_demo_scenarios_path,
+               show_preview_link: false,
+               compact: true,
+               action_url: restore_baseline_admin_demo_scenarios_path,
+               button_text: t("ui.admin.demo_data.restore_baseline") %>
+  </div>
+</section>
+
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow"><%= t("ui.admin.demo_data.eyebrow") %></p>
+      <h2><%= t("ui.admin.demo_data.last_demo_action_title") %></h2>
+    </div>
+  </div>
+</section>
+
+<section class="admin-grid">
+  <article class="admin-panel">
     <% if @latest_run.present? %>
       <p><strong><%= admin_demo_action_label(@latest_run.action_type) %></strong> <%= t("ui.admin.dashboard.on") %> <%= formatted_date_time(@latest_run.created_at) %></p>
       <pre class="code-block"><%= JSON.pretty_generate(@latest_run.summary_data || {}) %></pre>
@@ -37,65 +74,3 @@
     <% end %>
   </article>
 </section>
-
-<% if @quick_reset_scenarios.any? %>
-  <section class="admin-panel admin-demo-danger-zone" data-testid="scenario-seed-reset-panel">
-    <div class="admin-demo-danger-zone__header">
-      <p class="admin-demo-danger-zone__eyebrow"><%= t("ui.admin.demo_data.seed_resets.eyebrow") %></p>
-      <h2><%= t("ui.admin.demo_data.seed_resets.title") %></h2>
-      <p><%= t("ui.admin.demo_data.seed_resets.description") %></p>
-    </div>
-
-    <div class="admin-demo-danger-zone__list" data-testid="scenario-seed-reset-list">
-      <% @quick_reset_scenarios.each do |scenario| %>
-        <%= render "seed_reset_gate", scenario:, return_to: admin_demo_scenarios_path %>
-      <% end %>
-    </div>
-  </section>
-<% end %>
-
-<% @scenario_groups.each do |family, scenarios| %>
-  <section class="admin-section">
-    <div class="section-heading">
-      <div>
-        <p class="section-heading__eyebrow">Scenario family</p>
-        <h2><%= admin_scenario_family_label(family) %></h2>
-      </div>
-    </div>
-  </section>
-
-  <section class="admin-grid">
-    <% scenarios.each do |scenario| %>
-      <article class="admin-panel admin-demo-scenario-card" data-testid="scenario-card-<%= scenario.fetch(:key).dasherize %>">
-        <div class="admin-demo-scenario-card__header">
-          <div class="admin-demo-scenario-card__intro">
-            <h3><%= scenario.fetch(:name) %></h3>
-            <p><%= scenario.fetch(:description) %></p>
-          </div>
-
-          <span class="badge badge--neutral admin-demo-scenario-card__complexity" data-testid="scenario-complexity-<%= scenario.fetch(:key).dasherize %>"><%= scenario.dig(:qa, :complexity).to_s.humanize %></span>
-        </div>
-
-        <ul class="detail-inline-list admin-demo-scenario-card__meta">
-          <li><strong>Journey</strong>: <%= scenario.dig(:qa, :intended_journey) %></li>
-          <li><strong>Risk</strong>: <%= scenario.dig(:qa, :risk_type).to_s.humanize %></li>
-          <li><strong>Locales</strong>: <%= Array(scenario.dig(:qa, :locale_coverage)).join(", ") %></li>
-          <li><strong><%= scenario.fetch(:property_count) %></strong> <%= t("ui.admin.demo_data.counts.properties", count: scenario.fetch(:property_count)) %></li>
-          <li><strong><%= scenario.fetch(:appointment_count) %></strong> <%= t("ui.admin.demo_data.counts.bookings", count: scenario.fetch(:appointment_count)) %></li>
-          <li><strong><%= scenario.fetch(:user_count) %></strong> <%= t("ui.admin.demo_data.counts.sellers", count: scenario.fetch(:user_count)) %></li>
-          <li><strong><%= scenario.fetch(:enquiry_count, 0) %></strong> leads</li>
-          <li><strong><%= scenario.fetch(:property_document_count, 0) %></strong> documents</li>
-        </ul>
-
-        <% if scenario.dig(:qa, :trainer_notes).any? %>
-          <p><strong>Trainer note:</strong> <%= scenario.dig(:qa, :trainer_notes).first %></p>
-        <% end %>
-
-        <div class="admin-demo-scenario-card__actions" data-testid="scenario-actions-<%= scenario.fetch(:key).dasherize %>">
-          <%= link_to t("ui.admin.demo_data.preview_action"), admin_demo_scenario_path(scenario.fetch(:key)), class: "button hollow secondary" %>
-          <%= button_to t("ui.common.apply"), apply_admin_demo_scenario_path(scenario.fetch(:key)), method: :post, class: "button primary" %>
-        </div>
-      </article>
-    <% end %>
-  </section>
-<% end %>
