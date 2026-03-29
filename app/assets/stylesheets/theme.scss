@@ -2237,9 +2237,10 @@ a:focus {
 }
 
 .property-hero__media {
-  align-self: stretch;
+  align-self: start;
   border-radius: calc(var(--radius-lg) - 4px);
   overflow: hidden;
+  width: 100%;
 }
 
 .property-hero__media--ratio-3-2 {

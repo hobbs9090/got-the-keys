@@ -180,7 +180,13 @@ module PropertiesHelper
   private
 
   def listing_image_tag(image_name, class_name:, alt:)
-    tag.img(src: listing_image_source(image_name), class: class_name, alt: alt)
+    retina_name = listing_retina_image_name(image_name)
+
+    if retina_name.present?
+      pixel_density_image_tag(image_name, retina_source: retina_name, class: class_name, alt: alt)
+    else
+      tag.img(src: listing_image_source(image_name), class: class_name, alt: alt)
+    end
   end
 
   def listing_image_source(image_name)
@@ -190,5 +196,22 @@ module PropertiesHelper
     return source if source.start_with?("/", "http://", "https://", "data:")
 
     "/#{ERB::Util.url_encode(source)}"
+  end
+
+  def listing_retina_image_name(image_name)
+    source = image_name.to_s
+    return if source.blank? || source.start_with?("/", "http://", "https://", "data:")
+
+    extension = File.extname(source)
+    return if extension.blank?
+
+    retina_name = source.sub(/#{Regexp.escape(extension)}\z/i, "@2x#{extension}")
+    retina_name if listing_asset_exists?(retina_name)
+  end
+
+  def listing_asset_exists?(image_name)
+    return true if Rails.root.join("app/assets/images", image_name).exist?
+
+    Rails.application.assets_manifest.assets.key?(image_name)
   end
 end
