@@ -49,6 +49,12 @@
               <dt><%= t("ui.common.bathrooms") %></dt>
               <dd><%= format_bathrooms(property.bathrooms) %></dd>
             </div>
+            <% if property.year_built.present? %>
+              <div>
+                <dt><%= t("ui.properties.facts.year_built") %></dt>
+                <dd><%= property.year_built %></dd>
+              </div>
+            <% end %>
             <div>
               <dt><%= t("ui.common.town") %></dt>
               <dd><%= property.town_city %></dd>

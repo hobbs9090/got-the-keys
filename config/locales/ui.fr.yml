@@ -273,6 +273,8 @@ fr:
         tenure: Statut de propriete
         council_tax_band: Tranche de taxe locale
         furnishing: Mobilier
+        year_built: Annee de construction
+        refurbished_year: Derniere renovation
         available_from: Disponible a partir du
         parking: Stationnement
         outdoor_space: Espace exterieur

@@ -251,6 +251,8 @@ en:
         tenure: "Tenure"
         council_tax_band: "Council tax band"
         furnishing: "Furnishing"
+        year_built: "Built"
+        refurbished_year: "Last refurbished"
         available_from: "Available from"
         parking: "Parking"
         outdoor_space: "Outdoor space"

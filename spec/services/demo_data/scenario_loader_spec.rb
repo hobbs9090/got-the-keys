@@ -51,6 +51,7 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(Property.for_rent.count).to eq(60)
     expect(Property.publicly_visible.for_sale.count).to eq(40)
     expect(Property.publicly_visible.for_rent.count).to eq(60)
+    expect(Property.where.not(year_built: nil).count).to eq(100)
     expect(Photo.count).to eq(10)
     expect(FloorPlan.count).to eq(2)
     expect(PropertyDocument.count).to eq(3)
@@ -82,6 +83,8 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(exported).to include("offers:")
     expect(exported).to include("rental_applications:")
     expect(exported).to include("property_documents:")
+    expect(exported).to include("year_built:")
+    expect(exported).to include("refurbished_year:")
     expect(exported).to include("qa:")
   end
 end

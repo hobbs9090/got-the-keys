@@ -16,6 +16,8 @@ RSpec.describe DemoData::PropertyBlueprintGenerator do
     expect(blueprint[:address_line_1]).to match(/\A(?:(?:Flat|Apartment|Maisonette) \d+, )?\d+ .+\z/)
     expect(blueprint[:town_city]).to be_in(described_class::AREA_CATALOG.map { |area| area.fetch(:town_city) })
     expect(blueprint[:listing_tagline]).to be_present
+    expect(blueprint[:year_built]).to be_between(1700, Date.current.year)
+    expect(blueprint[:refurbished_year]).to be >= blueprint[:year_built] if blueprint[:refurbished_year].present?
     expect(property.property_description.length).to be >= 25
   end
 end

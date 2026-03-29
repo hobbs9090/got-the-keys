@@ -269,6 +269,8 @@ it:
         tenure: Titolo di possesso
         council_tax_band: Fascia council tax
         furnishing: Arredamento
+        year_built: Anno di costruzione
+        refurbished_year: Ultima ristrutturazione
         available_from: Disponibile dal
         parking: Parcheggio
         outdoor_space: Spazio esterno
