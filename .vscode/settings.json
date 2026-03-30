@@ -1,3 +1,41 @@
 {
-  "rubyLsp.bundleGemfile": "${workspaceFolder}/Gemfile"
+  "rubyLsp.bundleGemfile": "${workspaceFolder}/Gemfile",
+  "pgsql.serverGroups": [
+    {
+      "id": "gotthekeys-staging",
+      "name": "GotTheKeys Staging",
+      "color": "#1f8b4c"
+    },
+    {
+      "id": "gotthekeys-production",
+      "name": "GotTheKeys Production",
+      "color": "#b45309"
+    }
+  ],
+  "pgsql.connections": [
+    {
+      "id": "gotthekeys-staging-db",
+      "groupId": "gotthekeys-staging",
+      "profileName": "GotTheKeys Staging DB",
+      "server": "127.0.0.1",
+      "port": 15432,
+      "database": "gotthekeys_staging",
+      "user": "steven",
+      "authenticationType": "SqlLogin",
+      "emptyPasswordInput": true,
+      "password": ""
+    },
+    {
+      "id": "gotthekeys-production-db",
+      "groupId": "gotthekeys-production",
+      "profileName": "GotTheKeys Production DB",
+      "server": "127.0.0.1",
+      "port": 25432,
+      "database": "gotthekeys_production",
+      "user": "steven",
+      "authenticationType": "SqlLogin",
+      "emptyPasswordInput": true,
+      "password": ""
+    }
+  ]
 }

@@ -1,0 +1,83 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Postgres: Start staging tunnel",
+      "type": "shell",
+      "command": "ssh",
+      "args": [
+        "-fN",
+        "-o",
+        "ExitOnForwardFailure=yes",
+        "-M",
+        "-S",
+        "/tmp/gotthekeys-pgsql-staging.sock",
+        "-L",
+        "15432:/var/run/postgresql/.s.PGSQL.5432",
+        "steven@192.168.2.204"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Postgres: Stop staging tunnel",
+      "type": "shell",
+      "command": "ssh",
+      "args": [
+        "-S",
+        "/tmp/gotthekeys-pgsql-staging.sock",
+        "-O",
+        "exit",
+        "steven@192.168.2.204"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Postgres: Start production tunnel",
+      "type": "shell",
+      "command": "ssh",
+      "args": [
+        "-fN",
+        "-o",
+        "ExitOnForwardFailure=yes",
+        "-M",
+        "-S",
+        "/tmp/gotthekeys-pgsql-production.sock",
+        "-L",
+        "25432:/var/run/postgresql/.s.PGSQL.5432",
+        "steven@192.168.2.204"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Postgres: Stop production tunnel",
+      "type": "shell",
+      "command": "ssh",
+      "args": [
+        "-S",
+        "/tmp/gotthekeys-pgsql-production.sock",
+        "-O",
+        "exit",
+        "steven@192.168.2.204"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Postgres: Start staging and production tunnels",
+      "dependsOrder": "parallel",
+      "dependsOn": [
+        "Postgres: Start staging tunnel",
+        "Postgres: Start production tunnel"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Postgres: Stop staging and production tunnels",
+      "dependsOrder": "parallel",
+      "dependsOn": [
+        "Postgres: Stop staging tunnel",
+        "Postgres: Stop production tunnel"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}
