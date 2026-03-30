@@ -278,7 +278,6 @@ fr:
         available_from: Disponible a partir du
         parking: Stationnement
         outdoor_space: Espace exterieur
-        epc_rating: Classe DPE
         floor_area: Surface
         floor_area_value: "%{area} sq ft"
         deposit: Depot

@@ -6,33 +6,33 @@
       <p class="section-heading__eyebrow"><%= t("ui.admin.qa.eyebrow") %></p>
       <h1><%= t("ui.admin.qa.title") %></h1>
     </div>
-
-    <aside class="qa-version-box" data-testid="qa-version-box">
-      <p class="qa-version-box__eyebrow"><%= t("ui.admin.qa.version_box.title", default: "Release build") %></p>
-      <div class="qa-version-box__hero">
-        <p class="qa-version-box__label"><%= t("ui.admin.qa.app_version") %></p>
-        <p class="qa-version-box__version" data-testid="qa-app-version"><%= full_app_version %></p>
-      </div>
-      <dl class="qa-version-box__list">
-        <div>
-          <dt><%= t("ui.admin.qa.version_box.git_sha", default: "Git SHA") %></dt>
-          <dd data-testid="qa-git-sha"><%= app_build_value(app_build_sha) %></dd>
-        </div>
-        <div>
-          <dt><%= t("ui.admin.qa.version_box.build_number", default: "Build number") %></dt>
-          <dd data-testid="qa-build-number"><%= app_build_value(app_build_number) %></dd>
-        </div>
-        <div>
-          <dt><%= t("ui.admin.qa.version_box.deployed_at", default: "Deployed at") %></dt>
-          <dd data-testid="qa-deployed-at"><%= app_build_value(app_deployed_at) %></dd>
-        </div>
-        <div>
-          <dt><%= t("ui.admin.qa.version_box.environment", default: "Environment") %></dt>
-          <dd data-testid="qa-environment"><%= app_runtime_environment %></dd>
-        </div>
-      </dl>
-    </aside>
   </div>
+
+  <aside class="qa-version-box" data-testid="qa-version-box">
+    <p class="qa-version-box__eyebrow"><%= t("ui.admin.qa.version_box.title", default: "Release build") %></p>
+    <div class="qa-version-box__hero">
+      <p class="qa-version-box__label"><%= t("ui.admin.qa.app_version") %></p>
+      <p class="qa-version-box__version" data-testid="qa-app-version"><%= full_app_version %></p>
+    </div>
+    <dl class="qa-version-box__list">
+      <div>
+        <dt><%= t("ui.admin.qa.version_box.git_sha", default: "Git SHA") %></dt>
+        <dd data-testid="qa-git-sha"><%= app_build_value(app_build_sha) %></dd>
+      </div>
+      <div>
+        <dt><%= t("ui.admin.qa.version_box.build_number", default: "Build number") %></dt>
+        <dd data-testid="qa-build-number"><%= app_build_value(app_build_number) %></dd>
+      </div>
+      <div>
+        <dt><%= t("ui.admin.qa.version_box.deployed_at", default: "Deployed at") %></dt>
+        <dd data-testid="qa-deployed-at"><%= app_build_value(app_deployed_at) %></dd>
+      </div>
+      <div>
+        <dt><%= t("ui.admin.qa.version_box.environment", default: "Environment") %></dt>
+        <dd data-testid="qa-environment"><%= app_runtime_environment %></dd>
+      </div>
+    </dl>
+  </aside>
 </section>
 
 <section class="admin-grid">
@@ -46,19 +46,6 @@
         </div>
       <% end %>
     </dl>
-  </article>
-
-  <article class="admin-panel">
-    <h2><%= t("ui.admin.qa.known_credentials_title") %></h2>
-    <div class="code-block">
-      <% Array(@baseline[:admins]).each do |admin| %>
-        <%= t("ui.admin.qa.admin_credential", email: admin[:email], password: admin[:password] || t("ui.admin.qa.default_password")) %>
-      <% end %>
-
-      <% Array(@baseline[:users]).each do |user| %>
-        <%= t("ui.admin.qa.seller_credential", email: user[:email], password: user[:password] || t("ui.admin.qa.default_password")) %>
-      <% end %>
-    </div>
   </article>
 </section>
 

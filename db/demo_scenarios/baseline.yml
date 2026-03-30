@@ -78,7 +78,6 @@ properties:
     available_from: 2026-04-15
     parking: Driveway and garage
     outdoor_space: Landscaped rear garden
-    epc_rating: C
     floor_area_sq_ft: 1890
     pets_allowed: true
   - key: tunbridge_garden_flat
@@ -104,7 +103,6 @@ properties:
     available_from: 2026-05-01
     parking: Residents permit
     outdoor_space: Private terrace
-    epc_rating: B
     floor_area_sq_ft: 920
     service_charge_amount: 2400
     lease_length_years: 112
@@ -129,7 +127,6 @@ properties:
     council_tax_band: E
     parking: Permit parking
     outdoor_space: Courtyard
-    epc_rating: D
     floor_area_sq_ft: 1360
   - key: croydon_rental_loft
     owner_email: lucy.mcclure@example.com
@@ -152,7 +149,6 @@ properties:
     available_from: 2026-04-25
     parking: Secure underground bay
     outdoor_space: Juliet balcony
-    epc_rating: B
     floor_area_sq_ft: 980
     deposit_amount: 2250
     pets_allowed: false
@@ -246,12 +242,6 @@ property_documents:
     category: brochure
     visibility: public
     position: 1
-  - property_key: sevenoaks_family_home
-    title: EPC certificate
-    file_name: cedar-road-epc.pdf
-    category: epc
-    visibility: public
-    position: 2
   - property_key: croydon_rental_loft
     title: Landlord compliance pack
     file_name: park-lane-landlord-pack.pdf

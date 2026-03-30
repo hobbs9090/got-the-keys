@@ -24,7 +24,6 @@ FactoryBot.define do
     refurbished_year { 2022 }
     parking { "Driveway" }
     outdoor_space { "Rear garden" }
-    epc_rating { "C" }
     floor_area_sq_ft { 1_450 }
     pets_allowed { true }
 

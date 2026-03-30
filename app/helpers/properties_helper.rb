@@ -93,7 +93,6 @@ module PropertiesHelper
     cues = []
     cues << t("ui.properties.trust_cues.recently_updated") if property.recently_updated?
     cues << t("ui.properties.trust_cues.available_now") if property.available_now?
-    cues << primary_branch_profile.fetch(:team_label)
     cues << primary_branch_profile.fetch(:response_time)
     cues << t("ui.properties.trust_cues.brochure_ready") if property.public_documents.any?
     cues.uniq
@@ -158,7 +157,6 @@ module PropertiesHelper
       [t("ui.properties.facts.available_from"), property.available_from.present? ? l(property.available_from, format: :long) : nil],
       [t("ui.properties.facts.parking"), property.parking],
       [t("ui.properties.facts.outdoor_space"), property.outdoor_space],
-      [t("ui.properties.facts.epc_rating"), property.epc_rating],
       [t("ui.properties.facts.floor_area"), property.floor_area_sq_ft.present? ? t("ui.properties.facts.floor_area_value", area: property.floor_area_sq_ft) : nil],
       [t("ui.properties.facts.deposit"), property.deposit_amount.present? ? number_to_currency(property.deposit_amount, unit: "£", precision: 0) : nil],
       [t("ui.properties.facts.pets_allowed"), property.pets_allowed? ? t("ui.common.yes") : nil],

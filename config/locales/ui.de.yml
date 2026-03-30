@@ -273,7 +273,6 @@ de:
         available_from: Verfügbar ab
         parking: Parken
         outdoor_space: Außenbereich
-        epc_rating: EPC-Einstufung
         floor_area: Wohnfläche
         floor_area_value: "%{area} sq ft"
         deposit: Kaution

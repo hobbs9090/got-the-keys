@@ -254,7 +254,6 @@ zh:
         available_from: 可入住时间
         parking: 停车
         outdoor_space: 户外空间
-        epc_rating: EPC 等级
         floor_area: 面积
         floor_area_value: "%{area} 平方英尺"
         deposit: 押金
@@ -423,10 +422,6 @@ zh:
           notification_logs: 通知日志
           last_demo_action: 最近一次演示操作
         demo_action_value: "%{action} 于 %{time}"
-        known_credentials_title: 已知凭据
-        admin_credential: 管理员：%{email} / %{password}
-        seller_credential: 卖家：%{email} / %{password}
-        default_password: secret
         training_title: 推荐训练路径
         training_journeys:
         - 从房源页面创建一个新的预约，并验证成功提示和参考编号。

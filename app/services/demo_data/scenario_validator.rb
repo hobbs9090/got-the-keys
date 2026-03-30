@@ -230,7 +230,6 @@ module DemoData
           available_from: property[:available_from],
           parking: property[:parking],
           outdoor_space: property[:outdoor_space],
-          epc_rating: property[:epc_rating],
           floor_area_sq_ft: property[:floor_area_sq_ft].present? ? Integer(property[:floor_area_sq_ft]) : nil,
           deposit_amount: property[:deposit_amount].present? ? Integer(property[:deposit_amount]) : nil,
           pets_allowed: ActiveModel::Type::Boolean.new.cast(property.fetch(:pets_allowed, false)),

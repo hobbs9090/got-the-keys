@@ -36,6 +36,11 @@ RSpec.describe "Property documents", type: :request do
     expect(response.body).to include("PROPERTY PLATFORM")
     expect(response.body).to include("SALES BROCHURE")
     expect(response.body).to include("31 Granville Road")
+    expect(response.body).to include("\\243600,000")
+    expect(response.body).not_to include("GBP ")
+    expect(response.body).not_to include("Built #{property.year_built}")
+    expect(response.body).not_to include(AppSettings.primary_branch_profile.fetch(:response_time))
+    expect(response.body).not_to include(I18n.t("ui.branch_profile.team_label"))
     expect(response.body).to include("/Subtype /Image")
   end
 
@@ -48,7 +53,7 @@ RSpec.describe "Property documents", type: :request do
   end
 
   it "renders public download links as regular browser downloads on the property page" do
-    document = FactoryBot.create(:property_document, property:, title: "EPC certificate", file_name: "granville-road-epc.pdf")
+    document = FactoryBot.create(:property_document, property:, title: "Compliance pack", file_name: "granville-road-compliance.pdf", category: "compliance")
 
     get property_path(property)
 
@@ -57,7 +62,24 @@ RSpec.describe "Property documents", type: :request do
 
     expect(download_link).to be_present
     expect(download_link["data-turbo"]).to eq("false")
-    expect(download_link["download"]).to eq("granville-road-epc.pdf")
+    expect(download_link["download"]).to eq("granville-road-compliance.pdf")
+  end
+
+  it "does not expose raw brochure asset jpg filenames on the public property page" do
+    FactoryBot.create(:photo, property:, image_filename: "granville-road-hero.jpg", primary: true, position: 1)
+    document = FactoryBot.create(:property_document, property:, title: "Sales brochure", file_name: "granville-road-brochure.pdf")
+
+    get property_path(property)
+
+    page = Nokogiri::HTML(response.body)
+    download_link = page.at_css(%([data-testid="property-document-download-#{document.id}"]))
+    rendered_text = page.text
+
+    expect(rendered_text).not_to include("granville-road-hero.jpg")
+    expect(rendered_text).not_to include(I18n.t("ui.properties.show.brochure_assets_title"))
+    expect(download_link).to be_present
+    expect(download_link["href"]).to eq(download_property_property_document_path(property, document))
+    expect(download_link["download"]).to eq("granville-road-brochure.pdf")
   end
 
   it "renders owner document-list download links as regular browser downloads" do
