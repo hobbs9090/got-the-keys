@@ -5,7 +5,7 @@ class EnquiryMailer < ApplicationMailer
 
     mail(
       to: @enquiry.customer_email,
-      subject: "We received your enquiry about #{@property.address_line_1}"
+      subject: I18n.t("ui.enquiries.mailer.acknowledgement_subject", address: @property.address_line_1)
     )
   end
 
@@ -15,7 +15,7 @@ class EnquiryMailer < ApplicationMailer
 
     mail(
       to: internal_recipient,
-      subject: "New #{@enquiry.display_source.downcase} for #{@property.address_line_1}"
+      subject: I18n.t("ui.enquiries.mailer.internal_subject", source: @enquiry.display_source.downcase, address: @property.address_line_1)
     )
   end
 

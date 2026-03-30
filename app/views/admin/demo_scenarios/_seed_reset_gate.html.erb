@@ -4,6 +4,9 @@
 <% field_id = "confirm-demo-scenario-#{scenario_slug}" %>
 <% hint_id = "#{field_id}-hint" %>
 <% show_preview_link = local_assigns.fetch(:show_preview_link, true) %>
+<% compact = local_assigns.fetch(:compact, false) %>
+<% action_url = local_assigns.fetch(:action_url, apply_admin_demo_scenario_path(scenario_key)) %>
+<% button_text = local_assigns.fetch(:button_text, t("ui.admin.demo_data.seed_resets.apply")) %>
 
 <article class="admin-demo-danger-zone__item" data-testid="scenario-seed-reset-<%= scenario_slug %>">
   <div class="admin-demo-danger-zone__content">
@@ -12,15 +15,21 @@
         <h3><%= scenario.fetch(:name) %></h3>
         <p><%= scenario.fetch(:description) %></p>
       </div>
-
-      <span class="badge badge--danger"><%= t("ui.admin.demo_data.seed_resets.badge") %></span>
     </div>
 
-    <ul class="detail-inline-list admin-demo-danger-zone__meta">
-      <li><strong>Journey</strong>: <%= scenario.dig(:qa, :intended_journey) %></li>
-      <li><strong>Risk</strong>: <%= scenario.dig(:qa, :risk_type).to_s.humanize %></li>
-      <li><strong>Locales</strong>: <%= Array(scenario.dig(:qa, :locale_coverage)).join(", ") %></li>
-    </ul>
+    <% if compact %>
+      <ul class="detail-inline-list admin-demo-danger-zone__meta">
+        <li><strong><%= scenario.fetch(:property_count) %></strong> <%= t("ui.admin.demo_data.counts.properties", count: scenario.fetch(:property_count)) %></li>
+        <li><strong><%= scenario.fetch(:appointment_count) %></strong> <%= t("ui.admin.demo_data.counts.bookings", count: scenario.fetch(:appointment_count)) %></li>
+        <li><strong><%= scenario.fetch(:user_count) %></strong> <%= t("ui.admin.demo_data.counts.sellers", count: scenario.fetch(:user_count)) %></li>
+      </ul>
+    <% else %>
+      <ul class="detail-inline-list admin-demo-danger-zone__meta">
+        <li><strong>Journey</strong>: <%= scenario.dig(:qa, :intended_journey) %></li>
+        <li><strong>Risk</strong>: <%= scenario.dig(:qa, :risk_type).to_s.humanize %></li>
+        <li><strong>Locales</strong>: <%= Array(scenario.dig(:qa, :locale_coverage)).join(", ") %></li>
+      </ul>
+    <% end %>
 
     <p class="admin-demo-danger-zone__hint" id="<%= hint_id %>">
       <%= t("ui.admin.demo_data.seed_resets.type_to_continue_html", phrase: content_tag(:span, confirmation_phrase, class: "admin-demo-danger-zone__phrase")) %>
@@ -32,7 +41,7 @@
       <%= link_to t("ui.admin.demo_data.seed_resets.preview"), admin_demo_scenario_path(scenario_key), class: "button hollow secondary" %>
     <% end %>
 
-    <%= form_with url: apply_admin_demo_scenario_path(scenario_key), method: :post, local: true, class: "admin-demo-danger-zone__form", data: { testid: "scenario-seed-reset-form-#{scenario_slug}" } do %>
+    <%= form_with url: action_url, method: :post, local: true, class: "admin-demo-danger-zone__form", data: { testid: "scenario-seed-reset-form-#{scenario_slug}" } do %>
       <%= hidden_field_tag :return_to, return_to %>
 
       <div class="admin-demo-danger-zone__field">
@@ -52,7 +61,7 @@
                            data: { testid: "scenario-seed-reset-input-#{scenario_slug}" } %>
       </div>
 
-      <%= button_tag t("ui.admin.demo_data.seed_resets.apply"), class: "button alert admin-demo-danger-zone__submit", data: { testid: "scenario-seed-reset-apply-#{scenario_slug}" } %>
+      <%= button_tag button_text, class: "button alert admin-demo-danger-zone__submit", data: { testid: "scenario-seed-reset-apply-#{scenario_slug}" } %>
     <% end %>
   </div>
 </article>

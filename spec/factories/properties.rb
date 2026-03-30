@@ -20,9 +20,10 @@ FactoryBot.define do
     council_tax_band { "F" }
     furnishing { "Unfurnished" }
     available_from { Date.current + 14.days }
+    year_built { 1998 }
+    refurbished_year { 2022 }
     parking { "Driveway" }
     outdoor_space { "Rear garden" }
-    epc_rating { "C" }
     floor_area_sq_ft { 1_450 }
     pets_allowed { true }
 
@@ -31,6 +32,8 @@ FactoryBot.define do
       asking_price { 2_200 }
       furnishing { "Part furnished" }
       deposit_amount { 2_500 }
+      year_built { 2012 }
+      refurbished_year { 2024 }
     end
 
     trait :featured do

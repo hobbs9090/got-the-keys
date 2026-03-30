@@ -1,6 +1,7 @@
-<% if flash.any? %>
+<% visible_flashes = flash.to_hash.reject { |key, _value| key.to_s == "admin_security_backup_codes" } %>
+<% if visible_flashes.any? %>
   <div class="flash-stack" data-testid="flash-stack">
-    <% flash.each do |key, value| %>
+    <% visible_flashes.each do |key, value| %>
       <% flash_data = { testid: "flash-#{key}" } %>
       <% flash_data[:auto_dismiss_after] = 5000 if key.to_s == "notice" %>
       <%= content_tag(:div, value, class: "flash flash--#{key}", data: flash_data) %>

@@ -11,10 +11,13 @@ RSpec.describe "Admin properties", type: :request do
   it "shows listing readiness and asset inventory on the admin detail page" do
     FactoryBot.create(:photo, property:, primary: true, image_filename: "admin-shot.jpg")
     FactoryBot.create(:floor_plan, property:, label: "Ground floor")
-    FactoryBot.create(:property_document, property:, title: "Admin brochure", file_name: "admin-brochure.pdf")
+    document = FactoryBot.create(:property_document, property:, title: "Admin brochure", file_name: "admin-brochure.pdf")
     AuditLogger.log!(auditable: property, property:, admin:, action: "listing_state_changed", message: "Listing moved to review pending.")
 
     get admin_property_path(property)
+
+    page = Nokogiri::HTML(response.body)
+    download_link = page.at_css(%(a[href="#{download_property_property_document_path(property, document)}"]))
 
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Listing readiness")
@@ -27,6 +30,9 @@ RSpec.describe "Admin properties", type: :request do
     expect(response.body).to include("admin-property-page__actions")
     expect(response.body).to include("admin-property-readiness__transition-form")
     expect(response.body).to include("admin-property-readiness__transition-button")
+    expect(download_link).to be_present
+    expect(download_link["data-turbo"]).to eq("false")
+    expect(download_link["download"]).to eq("admin-brochure.pdf")
   end
 
   it "lets admins move a listing through moderation states" do

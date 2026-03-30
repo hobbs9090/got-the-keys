@@ -1,9 +1,4 @@
 module PropertiesHelper
-  def cache_key_for_properties_total
-    max_updated_at = Property.maximum(:updated_at)
-    "properties/all-#{max_updated_at}"
-  end
-
   def small_image_for(property)
     image_name = property.hero_image_name
 
@@ -96,19 +91,18 @@ module PropertiesHelper
 
   def property_trust_cues(property)
     cues = []
-    cues << "Recently updated" if property.recently_updated?
-    cues << "Available now" if property.available_now?
-    cues << primary_branch_profile.fetch(:team_label)
+    cues << t("ui.properties.trust_cues.recently_updated") if property.recently_updated?
+    cues << t("ui.properties.trust_cues.available_now") if property.available_now?
     cues << primary_branch_profile.fetch(:response_time)
-    cues << "Brochure ready" if property.public_documents.any?
+    cues << t("ui.properties.trust_cues.brochure_ready") if property.public_documents.any?
     cues.uniq
   end
 
   def property_update_label(property)
-    return "Recently updated" if property.recently_updated?
-    return "Needs a fresh update" if property.stale_listing?
+    return t("ui.properties.update_labels.recently_updated") if property.recently_updated?
+    return t("ui.properties.update_labels.stale") if property.stale_listing?
 
-    "Updated this month"
+    t("ui.properties.update_labels.current")
   end
 
   def property_filter_chip_labels(filters)
@@ -133,16 +127,7 @@ module PropertiesHelper
   end
 
   def translated_listing_state(state)
-    {
-      "draft" => "Draft",
-      "review_pending" => "Review pending",
-      "published" => "Published",
-      "under_offer" => "Under offer",
-      "let_agreed" => "Let agreed",
-      "sold" => "Sold",
-      "let" => "Let",
-      "withdrawn" => "Withdrawn"
-    }.fetch(state.to_s, state.to_s.tr("_", " ").humanize)
+    t("ui.properties.listing_states.#{state}", default: state.to_s.tr("_", " ").humanize)
   end
 
   def property_listing_state_options
@@ -164,33 +149,44 @@ module PropertiesHelper
 
   def property_fact_rows(property)
     [
-      ["Tenure", property.tenure],
-      ["Council tax band", property.council_tax_band],
-      ["Furnishing", property.furnishing],
-      ["Available from", property.available_from.present? ? l(property.available_from, format: :long) : nil],
-      ["Parking", property.parking],
-      ["Outdoor space", property.outdoor_space],
-      ["EPC rating", property.epc_rating],
-      ["Floor area", property.floor_area_sq_ft.present? ? "#{property.floor_area_sq_ft} sq ft" : nil],
-      ["Deposit", property.deposit_amount.present? ? number_to_currency(property.deposit_amount, unit: "£", precision: 0) : nil],
-      ["Pets allowed", property.pets_allowed? ? "Yes" : nil],
-      ["Service charge", property.service_charge_amount.present? ? number_to_currency(property.service_charge_amount, unit: "£", precision: 0) : nil],
-      ["Lease length", property.lease_length_years.present? ? "#{property.lease_length_years} years" : nil]
+      [t("ui.properties.facts.tenure"), property.tenure],
+      [t("ui.properties.facts.council_tax_band"), property.council_tax_band],
+      [t("ui.properties.facts.furnishing"), property.furnishing],
+      [t("ui.properties.facts.year_built"), property.year_built],
+      [t("ui.properties.facts.refurbished_year"), property.refurbished_year],
+      [t("ui.properties.facts.available_from"), property.available_from.present? ? l(property.available_from, format: :long) : nil],
+      [t("ui.properties.facts.parking"), property.parking],
+      [t("ui.properties.facts.outdoor_space"), property.outdoor_space],
+      [t("ui.properties.facts.floor_area"), property.floor_area_sq_ft.present? ? t("ui.properties.facts.floor_area_value", area: property.floor_area_sq_ft) : nil],
+      [t("ui.properties.facts.deposit"), property.deposit_amount.present? ? number_to_currency(property.deposit_amount, unit: "£", precision: 0) : nil],
+      [t("ui.properties.facts.pets_allowed"), property.pets_allowed? ? t("ui.common.yes") : nil],
+      [t("ui.properties.facts.service_charge"), property.service_charge_amount.present? ? number_to_currency(property.service_charge_amount, unit: "£", precision: 0) : nil],
+      [t("ui.properties.facts.lease_length"), property.lease_length_years.present? ? t("ui.properties.facts.lease_length_value", years: property.lease_length_years) : nil]
     ].select { |_label, value| value.present? }
   end
 
   def property_document_category_options
-    PropertyDocument::CATEGORIES.map { |category| [category.to_s.tr("_", " ").humanize, category] }
+    PropertyDocument::CATEGORIES.map { |category| [t("ui.property_documents.categories.#{category}", default: category.to_s.tr("_", " ").humanize), category] }
   end
 
   def property_document_visibility_options
-    PropertyDocument::VISIBILITIES.map { |visibility| [visibility.humanize, visibility] }
+    PropertyDocument::VISIBILITIES.map { |visibility| [t("ui.property_documents.visibilities.#{visibility}", default: visibility.humanize), visibility] }
+  end
+
+  def property_activity_action_label(action)
+    t("ui.properties.activity_actions.#{action}", default: action.to_s.tr("_", " ").humanize)
   end
 
   private
 
   def listing_image_tag(image_name, class_name:, alt:)
-    tag.img(src: listing_image_source(image_name), class: class_name, alt: alt)
+    retina_name = listing_retina_image_name(image_name)
+
+    if retina_name.present?
+      pixel_density_image_tag(image_name, retina_source: retina_name, class: class_name, alt: alt)
+    else
+      tag.img(src: listing_image_source(image_name), class: class_name, alt: alt)
+    end
   end
 
   def listing_image_source(image_name)
@@ -200,5 +196,22 @@ module PropertiesHelper
     return source if source.start_with?("/", "http://", "https://", "data:")
 
     "/#{ERB::Util.url_encode(source)}"
+  end
+
+  def listing_retina_image_name(image_name)
+    source = image_name.to_s
+    return if source.blank? || source.start_with?("/", "http://", "https://", "data:")
+
+    extension = File.extname(source)
+    return if extension.blank?
+
+    retina_name = source.sub(/#{Regexp.escape(extension)}\z/i, "@2x#{extension}")
+    retina_name if listing_asset_exists?(retina_name)
+  end
+
+  def listing_asset_exists?(image_name)
+    return true if Rails.root.join("app/assets/images", image_name).exist?
+
+    Rails.application.assets_manifest.assets.key?(image_name)
   end
 end

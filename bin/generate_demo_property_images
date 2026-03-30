@@ -1,0 +1,97 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "bundler/setup"
+require_relative "../config/environment"
+
+module GenerateDemoPropertyImages
+  module_function
+
+  def run
+    abort_missing_api_key! unless dry_run?
+
+    scope = DemoData::PropertyImageGenerator.filtered_scope(
+      property_ids: property_ids,
+      sale_status: ENV["DEMO_IMAGE_SALE_STATUS"].presence,
+      town_city: ENV["DEMO_IMAGE_TOWN_CITY"].presence
+    )
+
+    abort "No matching properties found." unless scope.exists?
+
+    generator = DemoData::PropertyImageGenerator.new(
+      dry_run: dry_run?,
+      force: force?
+    )
+    results = generator.generate_for_scope(scope, limit: limit)
+
+    puts "Processed #{results.fetch(:processed)} properties"
+    puts "Generated #{results.fetch(:generated)} images"
+    puts "Skipped #{results.fetch(:skipped)} properties"
+    puts "Failed #{results.fetch(:failed)} properties"
+    puts "Output directory: #{results.fetch(:output_dir)}"
+    puts "Asset pipeline managed: yes"
+
+    results.fetch(:results).each do |result|
+      puts format_result(result)
+    end
+
+    exit(results.fetch(:failed).positive? ? 1 : 0)
+  end
+
+  def property_ids
+    raw_ids = ENV["DEMO_IMAGE_PROPERTY_IDS"].to_s.split(",").map(&:strip).reject(&:empty?)
+    return if raw_ids.empty?
+
+    raw_ids.map { |value| Integer(value, 10) }
+  rescue ArgumentError
+    abort "DEMO_IMAGE_PROPERTY_IDS must be a comma-separated list of integers."
+  end
+
+  def limit
+    raw_limit = ENV["DEMO_IMAGE_LIMIT"].to_s.strip
+    return if raw_limit.empty?
+
+    Integer(raw_limit, 10)
+  rescue ArgumentError
+    abort "DEMO_IMAGE_LIMIT must be an integer."
+  end
+
+  def dry_run?
+    truthy_env?("DEMO_IMAGE_DRY_RUN")
+  end
+
+  def force?
+    truthy_env?("DEMO_IMAGE_FORCE")
+  end
+
+  def truthy_env?(name)
+    ENV[name].to_s.match?(/\A(1|true|yes|on)\z/i)
+  end
+
+  def abort_missing_api_key!
+    return if ENV["OPENAI_API_KEY"].present?
+
+    abort "OPENAI_API_KEY must be set unless DEMO_IMAGE_DRY_RUN=1."
+  end
+
+  def format_result(result)
+    status = result.fetch(:status).to_s.upcase
+    property_id = result.fetch(:property_id)
+    filename = result.fetch(:filename)
+
+    case result.fetch(:status)
+    when :generated
+      "#{status} property=#{property_id} file=#{filename}"
+    when :preview
+      "#{status} property=#{property_id} file=#{filename}"
+    when :skipped
+      "#{status} property=#{property_id} file=#{filename} reason=#{result[:reason]}"
+    when :failed
+      "#{status} property=#{property_id} file=#{filename} error=#{result[:error]}"
+    else
+      "#{status} property=#{property_id} file=#{filename}"
+    end
+  end
+end
+
+GenerateDemoPropertyImages.run if $PROGRAM_NAME == __FILE__

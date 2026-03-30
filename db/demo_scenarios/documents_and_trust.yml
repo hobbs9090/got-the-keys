@@ -62,7 +62,6 @@ properties:
     council_tax_band: F
     parking: Driveway
     outdoor_space: Garden studio and lawn
-    epc_rating: C
     floor_area_sq_ft: 1540
     created_at: "today-30d 09:00"
     updated_at: "today-2d 10:00"
@@ -88,7 +87,6 @@ properties:
     available_from: 2026-05-15
     parking: Courtyard space
     outdoor_space: Walled courtyard
-    epc_rating: D
     floor_area_sq_ft: 1040
     created_at: "today-60d 09:00"
     updated_at: "today-35d 09:00"
@@ -111,12 +109,6 @@ property_documents:
     category: brochure
     visibility: public
     position: 1
-  - property_key: sevenoaks_brochure_house
-    title: EPC certificate
-    file_name: granville-road-epc.pdf
-    category: epc
-    visibility: public
-    position: 2
   - property_key: westerham_private_pack
     title: Landlord compliance notes
     file_name: croft-close-compliance.pdf

@@ -35,8 +35,8 @@
       </div>
       <% if @appointment.visit_outcome.present? %>
         <div>
-          <dt>Visit outcome</dt>
-          <dd><%= @appointment.visit_outcome.to_s.tr("_", " ").humanize %></dd>
+          <dt><%= t("ui.appointments.show.visit_outcome") %></dt>
+          <dd><%= t("ui.appointments.visit_outcomes.#{@appointment.visit_outcome}", default: @appointment.visit_outcome.to_s.tr("_", " ").humanize) %></dd>
         </div>
       <% end %>
       <div>
@@ -54,15 +54,15 @@
   </article>
 
   <aside class="property-booking-panel">
-    <h2>Manage your viewing</h2>
+    <h2><%= t("ui.appointments.show.manage_title") %></h2>
     <% if @appointment.manageable_by_customer? %>
-      <p>You can reschedule or cancel this viewing online until <%= formatted_date_time(@appointment.self_service_expires_at) %>.</p>
+      <p><%= t("ui.appointments.show.manage_body", time: formatted_date_time(@appointment.self_service_expires_at)) %></p>
       <div class="form-actions">
-        <%= link_to "Request a new time", edit_self_service_appointment_path(@appointment, token: @appointment.access_token), class: "button primary expanded", data: { testid: "manage-viewing-link" } %>
-        <%= button_to "Cancel viewing", cancel_self_service_appointment_path(@appointment, token: @appointment.access_token), method: :patch, class: "button alert hollow expanded", data: { testid: "cancel-viewing-button" } %>
+        <%= link_to t("ui.appointments.show.request_new_time"), edit_self_service_appointment_path(@appointment, token: @appointment.access_token), class: "button primary expanded", data: { testid: "manage-viewing-link" } %>
+        <%= button_to t("ui.appointments.show.cancel_viewing"), cancel_self_service_appointment_path(@appointment, token: @appointment.access_token), method: :patch, class: "button alert hollow expanded", data: { testid: "cancel-viewing-button" } %>
       </div>
     <% else %>
-      <p class="empty-copy">The self-service window for this viewing has now closed.</p>
+      <p class="empty-copy"><%= t("ui.appointments.show.self_service_closed") %></p>
     <% end %>
 
     <h2><%= t("ui.appointments.show.timeline_title") %></h2>

@@ -18,7 +18,7 @@ class Appointment < ApplicationRecord
   validates :customer_name, :customer_email, :customer_phone, :requested_time, :scheduled_at, :duration_minutes, :status, :public_reference, :access_token, presence: true
   validates :customer_name, length: { maximum: 100 }
   validates :customer_email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
-  validates :customer_phone, format: { with: PHONE_FORMAT, message: "must be a valid phone number" }, allow_blank: true
+  validates :customer_phone, format: { with: PHONE_FORMAT, message: ->(_record, _data) { I18n.t("ui.validation.phone_number") } }, allow_blank: true
   validates :status, inclusion: { in: STATUSES }
   validates :visit_outcome, inclusion: { in: VISIT_OUTCOMES }, allow_blank: true
   validates :duration_minutes, numericality: { only_integer: true, greater_than_or_equal_to: 15, less_than_or_equal_to: 240 }, allow_blank: true
@@ -104,7 +104,7 @@ class Appointment < ApplicationRecord
     availability = AppointmentAvailability.new(property: property)
     return if availability.slot_available?(scheduled_at, duration_minutes:, excluding_appointment: self)
 
-    errors.add(:scheduled_at, "is not available because it conflicts with another appointment or falls outside the booking rules")
+    errors.add(:scheduled_at, I18n.t("ui.appointments.validation.slot_unavailable"))
   end
 
   def noteworthy_change?
@@ -119,7 +119,11 @@ class Appointment < ApplicationRecord
     appointment_events.create!(
       event_type: "created",
       to_status: status,
-      message: "Appointment requested for #{property.address_line_1} at #{I18n.l(scheduled_at, format: :long)}.",
+      message: I18n.t(
+        "ui.appointments.event_messages.created",
+        address: property.address_line_1,
+        time: I18n.l(scheduled_at, format: :long)
+      ),
       occurred_at: created_at
     )
   end
@@ -137,7 +141,11 @@ class Appointment < ApplicationRecord
         event_type: to_status,
         from_status:,
         to_status:,
-        message: "Status changed from #{from_status.humanize.downcase} to #{display_status.downcase}.",
+        message: I18n.t(
+          "ui.appointments.event_messages.status_changed",
+          from_status: I18n.t("ui.appointments.statuses.#{from_status}", default: from_status.humanize.downcase),
+          to_status: display_status.downcase
+        ),
         occurred_at: updated_at
       )
     elsif previous_changes.key?("scheduled_at")
@@ -148,7 +156,11 @@ class Appointment < ApplicationRecord
         event_type: "rescheduled",
         from_status: status,
         to_status: status,
-        message: "Appointment moved from #{I18n.l(from_time, format: :long)} to #{I18n.l(to_time, format: :long)}.",
+        message: I18n.t(
+          "ui.appointments.event_messages.moved",
+          from_time: I18n.l(from_time, format: :long),
+          to_time: I18n.l(to_time, format: :long)
+        ),
         occurred_at: updated_at
       )
     elsif previous_changes.key?("internal_notes")
@@ -157,7 +169,7 @@ class Appointment < ApplicationRecord
         event_type: "internal_note_added",
         from_status: status,
         to_status: status,
-        message: "Internal notes were updated.",
+        message: I18n.t("ui.appointments.event_messages.internal_notes_updated"),
         occurred_at: updated_at
       )
     elsif previous_changes.key?("notes")
@@ -166,7 +178,7 @@ class Appointment < ApplicationRecord
         event_type: "customer_note_updated",
         from_status: status,
         to_status: status,
-        message: "Customer-facing notes were updated.",
+        message: I18n.t("ui.appointments.event_messages.customer_notes_updated"),
         occurred_at: updated_at
       )
     elsif previous_changes.key?("visit_outcome")
@@ -177,7 +189,10 @@ class Appointment < ApplicationRecord
         event_type: to_outcome,
         from_status: status,
         to_status: status,
-        message: "Visit outcome marked as #{to_outcome.to_s.tr('_', ' ').downcase}.",
+        message: I18n.t(
+          "ui.appointments.event_messages.visit_outcome_marked",
+          outcome: I18n.t("ui.appointments.visit_outcomes.#{to_outcome}", default: to_outcome.to_s.tr("_", " ").downcase)
+        ),
         occurred_at: updated_at
       )
     end

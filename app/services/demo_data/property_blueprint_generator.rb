@@ -205,14 +205,15 @@ module DemoData
 
     def initialize(random: Random.new)
       @random = random
+      @chronology_generator = PropertyChronologyGenerator.new(random: random)
     end
 
-    def build_batch(count:)
-      Array.new(count) { |index| build(index: index) }
+    def build_batch(count:, sale_status: nil, starting_index: 0, featured: nil)
+      Array.new(count) { |index| build(index: starting_index + index, sale_status:, featured:) }
     end
 
-    def build(index:)
-      sale_status = weighted_pick([['For Sale', 3], ['For Rent', 2]])
+    def build(index:, sale_status: nil, featured: nil)
+      sale_status ||= weighted_pick([['For Sale', 3], ['For Rent', 2]])
       area = AREA_CATALOG.sample(random: random)
       property_type = property_type_for(sale_status)
       bedrooms = bedrooms_for(property_type, sale_status)
@@ -221,6 +222,7 @@ module DemoData
 
       address_line_1, address_line_2 = address_for(property_type, area:, index:)
       base_price = base_price_for(area: area, sale_status: sale_status, bedrooms: bedrooms, property_type: property_type)
+      chronology = chronology_generator.generate(property_type:, sale_status:)
 
       {
         address_line_1: address_line_1,
@@ -242,7 +244,9 @@ module DemoData
         bathrooms: bathrooms,
         sale_status: sale_status,
         asking_price: base_price,
-        featured: index % 6 == 0,
+        year_built: chronology.fetch(:year_built),
+        refurbished_year: chronology[:refurbished_year],
+        featured: featured.nil? ? index % 6 == 0 : featured,
         prompt_context: {
           property_type: property_type,
           nearby: area.fetch(:nearby),
@@ -254,6 +258,7 @@ module DemoData
     private
 
     attr_reader :random
+    attr_reader :chronology_generator
 
     def weighted_pick(weighted_values)
       total_weight = weighted_values.sum(&:last)

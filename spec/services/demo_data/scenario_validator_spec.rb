@@ -201,6 +201,100 @@ RSpec.describe DemoData::ScenarioValidator do
     )
   end
 
+  it "expands generated property batches into deterministic listings" do
+    payload = base_payload.deep_dup
+    payload[:property_batches] = [
+      {
+        key_prefix: "baseline-rental",
+        count: 2,
+        owner_emails: ["owner@example.com"],
+        sale_status: "For Rent",
+        listing_state: "published",
+        featured: false,
+        random_seed: 20260328
+      }
+    ]
+
+    normalized = validator.validate!(payload)
+
+    expect(normalized[:properties].count).to eq(3)
+    expect(normalized[:properties].last(2).map { |property| property[:key] }).to eq(%w[baseline_rental_001 baseline_rental_002])
+    expect(normalized[:properties].last(2).pluck(:owner_email).uniq).to eq(["owner@example.com"])
+    expect(normalized[:properties].last(2).pluck(:sale_status).uniq).to eq(["For Rent"])
+    expect(normalized[:properties].last(2).pluck(:listing_state).uniq).to eq(["published"])
+    expect(normalized[:properties].last(2).pluck(:featured).uniq).to eq([false])
+  end
+
+  it "expands generated activity batches against matching property groups" do
+    payload = base_payload.deep_dup
+    payload[:property_batches] = [
+      {
+        key_prefix: "baseline-rental",
+        count: 2,
+        owner_emails: ["owner@example.com"],
+        sale_status: "For Rent",
+        listing_state: "published",
+        featured: false,
+        random_seed: 20260328
+      }
+    ]
+    payload[:availability_window_batches] = [
+      {
+        property_key_prefixes: ["baseline_rental"],
+        start_day_offset: 5,
+        start_time: "10:00",
+        duration_minutes: 180,
+        label_prefix: "Generated slot"
+      }
+    ]
+    payload[:appointment_batches] = [
+      {
+        property_key_prefixes: ["baseline_rental"],
+        count: 2,
+        assigned_admin_email: "admin@example.com",
+        status_cycle: ["confirmed", "completed"]
+      }
+    ]
+    payload[:enquiry_batches] = [
+      {
+        property_key_prefixes: ["baseline_rental"],
+        count: 2,
+        assigned_admin_email: "admin@example.com",
+        status_cycle: ["new", "qualified"],
+        source_type_cycle: ["letting_enquiry"]
+      }
+    ]
+    payload[:offer_batches] = [
+      {
+        sale_status: "For Sale",
+        count: 1,
+        assigned_admin_email: "admin@example.com",
+        status_cycle: ["accepted"]
+      }
+    ]
+    payload[:rental_application_batches] = [
+      {
+        property_key_prefixes: ["baseline_rental"],
+        count: 2,
+        assigned_admin_email: "admin@example.com",
+        status_cycle: ["referencing", "approved"]
+      }
+    ]
+
+    normalized = validator.validate!(payload)
+
+    expect(normalized[:availability_windows].count).to eq(3)
+    expect(normalized[:appointments].count).to eq(3)
+    expect(normalized[:enquiries].count).to eq(2)
+    expect(normalized[:offers].count).to eq(1)
+    expect(normalized[:rental_applications].count).to eq(2)
+    expect(normalized[:appointments].last(2).pluck(:status)).to eq(%w[confirmed completed])
+    expect(normalized[:appointments].last[:visit_outcome]).to be_present
+    expect(normalized[:enquiries].pluck(:source_type).uniq).to eq(["letting_enquiry"])
+    expect(normalized[:offers].first[:status]).to eq("accepted")
+    expect(normalized[:rental_applications].pluck(:status)).to eq(%w[referencing approved])
+  end
+
   it "raises for an unsupported scenario family" do
     payload = base_payload.deep_dup
     payload[:qa][:family] = "mystery"

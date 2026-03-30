@@ -1,7 +1,8 @@
 <% properties = local_assigns.fetch(:properties, @properties) %>
+<% grid_class = local_assigns.fetch(:grid_class, "property-grid") %>
 
 <% if properties.any? %>
-  <div class="property-grid" id="properties">
+  <div class="<%= grid_class %>" id="properties">
     <% properties.each do |property| %>
       <article class="<%= property_card_classes(property) %>" data-testid="property-card">
         <div class="property-card__media">
@@ -14,17 +15,15 @@
 
         <div class="property-card__body">
           <div class="property-card__header">
-            <div>
-              <p class="property-card__eyebrow"><%= property_location_label(property) %></p>
-              <h3><%= link_to property.address_line_1, property_path(property), data: { testid: "property-card-link-#{property.id}" } %></h3>
-            </div>
+            <p class="property-card__eyebrow"><%= property_location_label(property) %></p>
+            <h3><%= link_to property.address_line_1, property_path(property), data: { testid: "property-card-link-#{property.id}" } %></h3>
+          </div>
 
-            <div class="property-card__price">
-              <strong><%= format_price(property) %></strong>
-              <% if chinese_locale? %>
-                <span class="property-price-secondary"><%= format_renminbi(property) %></span>
-              <% end %>
-            </div>
+          <div class="property-card__price" data-testid="property-card-price">
+            <strong><%= format_price(property) %></strong>
+            <% if chinese_locale? %>
+              <span class="property-price-secondary"><%= format_renminbi(property) %></span>
+            <% end %>
           </div>
 
           <p class="property-card__headline"><%= property.headline %></p>
@@ -35,9 +34,9 @@
             <% end %>
           </ul>
           <% if property.available_now? %>
-            <p class="property-card__availability"><strong>Available now</strong></p>
+            <p class="property-card__availability"><strong><%= t("ui.properties.card.available_now") %></strong></p>
           <% elsif property.available_from.present? %>
-            <p class="property-card__availability">Available from <%= l(property.available_from, format: :long) %></p>
+            <p class="property-card__availability"><%= t("ui.properties.card.available_from", date: l(property.available_from, format: :long)) %></p>
           <% end %>
 
           <dl class="property-card__meta">
@@ -55,8 +54,8 @@
             </div>
             <% if property.floor_area_sq_ft.present? %>
               <div>
-                <dt>Area</dt>
-                <dd><%= property.floor_area_sq_ft %> sq ft</dd>
+                <dt><%= t("ui.properties.card.area") %></dt>
+                <dd><%= t("ui.properties.card.floor_area", area: property.floor_area_sq_ft) %></dd>
               </div>
             <% end %>
           </dl>

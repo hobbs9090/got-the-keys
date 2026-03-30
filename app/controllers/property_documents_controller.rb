@@ -25,9 +25,9 @@ class PropertyDocumentsController < ApplicationController
         property: @property,
         actor_label: current_user.email,
         action: "property_document_created",
-        message: "#{@new_property_document.category_label} document #{@new_property_document.title.inspect} added."
+        message: t("ui.property_documents.audit.added", category: @new_property_document.category_label, title: @new_property_document.title)
       )
-      redirect_to property_property_documents_path(@property), notice: "Document added."
+      redirect_to property_property_documents_path(@property), notice: t("ui.property_documents.flash.added")
     else
       render :index, status: :unprocessable_entity
     end
@@ -44,9 +44,9 @@ class PropertyDocumentsController < ApplicationController
         property: @property,
         actor_label: current_user.email,
         action: "property_document_updated",
-        message: "Document #{@property_document.title.inspect} was updated."
+        message: t("ui.property_documents.audit.updated", title: @property_document.title)
       )
-      redirect_to property_property_documents_path(@property), notice: "Document updated."
+      redirect_to property_property_documents_path(@property), notice: t("ui.property_documents.flash.updated")
     else
       render :index, status: :unprocessable_entity
     end
@@ -60,14 +60,14 @@ class PropertyDocumentsController < ApplicationController
       property: @property,
       actor_label: current_user.email,
       action: "property_document_removed",
-      message: "Document #{title.inspect} was removed."
+      message: t("ui.property_documents.audit.removed", title:)
     )
-    redirect_to property_property_documents_path(@property), notice: "Document removed."
+    redirect_to property_property_documents_path(@property), notice: t("ui.property_documents.flash.removed")
   end
 
   def download
     unless @property_document.publicly_visible? || current_user == @property.user || current_admin.present?
-      redirect_to property_path(@property), alert: "This document is not available on the public page."
+      redirect_to property_path(@property), alert: t("ui.property_documents.alerts.not_public")
       return
     end
 
@@ -75,13 +75,13 @@ class PropertyDocumentsController < ApplicationController
       auditable: @property_document,
       property: @property,
       admin: current_admin,
-      actor_label: current_user&.email.presence || "Public visitor",
+      actor_label: current_user&.email.presence || t("ui.property_documents.public_visitor"),
       action: "property_document_downloaded",
-      message: "Downloaded #{@property_document.title.inspect}."
+      message: t("ui.property_documents.audit.downloaded", title: @property_document.title)
     )
 
     send_data(
-      document_payload(@property_document),
+      PropertyDocumentPayloadBuilder.new(document: @property_document, property: @property).payload,
       filename: @property_document.file_name,
       disposition: "attachment",
       type: mime_type_for(@property_document.file_name)
@@ -100,17 +100,6 @@ class PropertyDocumentsController < ApplicationController
 
   def next_position
     @property.property_documents.maximum(:position).to_i + 1
-  end
-
-  def document_payload(document)
-    <<~TEXT
-      GotTheKeys document download
-
-      Title: #{document.title}
-      Category: #{document.category_label}
-      Property: #{@property.address_line_1}
-      Visibility: #{document.visibility}
-    TEXT
   end
 
   def mime_type_for(file_name)

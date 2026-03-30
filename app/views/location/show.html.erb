@@ -2,12 +2,15 @@
 
 <div class="row">
 
-  <div class="large-9 columns" role="content">
+  <div class="large-9 columns">
 
     <h4><%= t('location.location_details_for') %> <%= link_to(@property.address_line_1, @property) %></h4>
 
     <div>
-      <%= image_tag ("https://maps.googleapis.com/maps/api/staticmap?center=#{@property.postcode}&zoom=14&size=720x450&markers=#{@property.postcode}&sensor=false") %>
+      <%= image_tag(
+            "https://maps.googleapis.com/maps/api/staticmap?center=#{@property.postcode}&zoom=14&size=720x450&markers=#{@property.postcode}&sensor=false",
+            alt: "Map showing the area around #{@property.address_line_1}"
+          ) %>
     </div>
 
   </div>

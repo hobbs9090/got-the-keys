@@ -9,6 +9,10 @@ RSpec.describe PropertyDocument do
     expect(document.errors[:visibility]).to be_present
   end
 
+  it "does not offer EPC as a supported document category" do
+    expect(described_class::CATEGORIES).not_to include("epc")
+  end
+
   it "knows whether it is public" do
     expect(FactoryBot.build(:property_document, visibility: "public")).to be_publicly_visible
     expect(FactoryBot.build(:property_document, visibility: "private")).not_to be_publicly_visible

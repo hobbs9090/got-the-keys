@@ -76,18 +76,68 @@ describe "Properties" do
       expect(response.body).to include(matching.address_line_1)
       expect(response.body).not_to include("Excluded Rental")
     end
+
+    it "shows image-backed listings first in the default catalogue order" do
+      image_backed = FactoryBot.create(:property, user:, address_line_1: "Image Backed Place", featured: false)
+      text_only = FactoryBot.create(:property, user:, address_line_1: "Text Only Place", featured: false)
+      FactoryBot.create(:photo, property: image_backed, image_filename: "image-backed-place.jpg", primary: true, position: 1)
+
+      image_backed.update_columns(updated_at: 2.days.ago)
+      text_only.update_columns(updated_at: 1.day.ago)
+
+      get properties_path
+
+      document = Nokogiri::HTML(response.body)
+      property_links = document.css('[data-testid^="property-card-link-"]').map { |link| link.text.strip }
+
+      expect(property_links.index("Image Backed Place")).to be < property_links.index("Text Only Place")
+    end
+
+    it "renders the card price on its own row beneath the header block" do
+      get properties_path
+
+      document = Nokogiri::HTML(response.body)
+      card = document.at_css(%([data-testid="property-card"]))
+
+      expect(card.at_css(".property-card__header")).to be_present
+      expect(card.at_css(".property-card__header .property-card__price")).not_to be_present
+      expect(card.at_css(".property-card__body > .property-card__price[data-testid='property-card-price']")).to be_present
+    end
+
+    it "does not show the build year on property cards" do
+      get properties_path
+
+      document = Nokogiri::HTML(response.body)
+      card = document.at_css(%([data-testid="property-card"]))
+
+      expect(card.text).not_to include(property.year_built.to_s)
+      expect(card.text).not_to include(I18n.t("ui.properties.facts.year_built"))
+    end
+
+    it "uses the two-column catalogue grid modifier on the main properties page" do
+      get properties_path
+
+      document = Nokogiri::HTML(response.body)
+      grid = document.at_css("#properties")
+
+      expect(grid).to be_present
+      expect(grid["class"]).to include("property-grid")
+      expect(grid["class"]).to include("property-grid--catalogue")
+    end
   end
 
   describe "GET /properties/1" do
     it "should retrieve page" do
       get property_path(property)
       document = Nokogiri::HTML(response.body)
+      showcase = document.at_css(%([data-testid="property-showcase"]))
       booking_panel = document.at_css(%([data-testid="booking-panel"]))
       enquiry_panel = document.at_css(%([data-testid="property-enquiry-panel"]))
       offer_panel = document.at_css(%([data-testid="property-offer-panel"]))
       branch_panel = document.at_css(%([data-testid="property-branch-card"]))
 
       expect(response).to have_http_status(:ok)
+      expect(showcase.at_css(".property-hero__media--ratio-3-2")).to be_present
       expect(booking_panel).to be_present
       expect(enquiry_panel).to be_present
       expect(enquiry_panel["class"]).to include("empty-state")
@@ -98,6 +148,22 @@ describe "Properties" do
       expect(branch_panel).to be_present
       expect(branch_panel["class"]).to include("empty-state")
       expect(branch_panel["class"]).to include("property-booking-panel__support-card")
+      expect(response.body).to include("Built")
+      expect(response.body).to include(property.year_built.to_s)
+      expect(response.body).to include("Last refurbished")
+      expect(response.body).to include(property.refurbished_year.to_s)
+      expect(response.body).not_to include(I18n.t("ui.branch_profile.team_label"))
+    end
+
+    it "keeps the property hero media on a non-stretched 3:2 frame in the stylesheet" do
+      stylesheet = Rails.root.join("app/assets/stylesheets/theme.scss").read
+
+      expect(stylesheet).to match(
+        /\.property-hero__media\s*\{[^}]*align-self:\s*start;[^}]*width:\s*100%;/m
+      )
+      expect(stylesheet).to match(
+        /\.property-hero__media--ratio-3-2\s*\{[^}]*aspect-ratio:\s*3 \/ 2;/m
+      )
     end
 
     it "hides draft listings from public visitors" do
@@ -143,6 +209,19 @@ describe "Properties" do
       expect(document.at_css(%([data-testid="listing-workflow-panel"]))).to be_present
       expect(document.at_css(%([data-testid="listing-facts-panel"]))).to be_present
     end
+
+    it "renders localized seller listing form copy for the signed-in language" do
+      user.update!(language: "de")
+      sign_in user
+
+      get new_property_path
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(I18n.t("ui.properties.editor.workflow_title", locale: :de))
+      expect(response.body).to include(I18n.t("ui.properties.editor.fields.listing_state", locale: :de))
+      expect(response.body).to include(I18n.t("ui.properties.editor.submit", locale: :de))
+      expect(response.body).to include(I18n.t("ui.properties.editor.placeholders.listing_tagline", locale: :de))
+    end
   end
 
   describe "GET /properties/1/photos" do
@@ -150,6 +229,7 @@ describe "Properties" do
       get property_photos_path(property)
 
       expect(response).to have_http_status(:ok)
+      expect(response.body).not_to include('role="content"')
     end
 
     it "lets the owner create a marketing photo" do
@@ -175,6 +255,7 @@ describe "Properties" do
       get property_floor_plans_path(property)
 
       expect(response).to have_http_status(:ok)
+      expect(response.body).not_to include('role="content"')
     end
 
     it "lets the owner create a floor plan" do
@@ -210,6 +291,28 @@ describe "Properties" do
       get location_path(property)
 
       expect(response).to have_http_status(:ok)
+      expect(response.body).not_to include('role="content"')
+      expect(response.body).to include(%(alt="Map showing the area around #{property.address_line_1}"))
+    end
+  end
+
+  describe "viewing times pages" do
+    before do
+      sign_in user
+    end
+
+    it "renders the viewing times index without invalid ARIA roles" do
+      get property_viewing_times_path(property)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).not_to include('role="content"')
+    end
+
+    it "renders the new viewing time page without invalid ARIA roles" do
+      get new_property_viewing_time_path(property)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).not_to include('role="content"')
     end
   end
 

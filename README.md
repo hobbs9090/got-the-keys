@@ -4,6 +4,40 @@ GotTheKeys is a modern Rails 8 property website, appointment-booking app, and QA
 
 It is designed to feel like a credible small business product while also being predictable enough for acceptance testing, browser automation exercises, and trainer-led demos. The app stays server-rendered, uses Foundation Sites as a CSS layer with bundled Turbo/vanilla JavaScript, and remains practical to deploy on an Apache + Passenger shared host.
 
+## Page Snapshots
+
+<table>
+  <tr>
+    <td width="44%" valign="top">
+      <img src="docs/readme/homepage.png" alt="GotTheKeys homepage" width="100%">
+    </td>
+    <td width="56%" valign="top">
+      <p><strong>Homepage</strong></p>
+      <p>The public landing page introduces the platform with a large marketing hero, clear browse action, live metrics, and featured listings pulled from seeded catalogue data.</p>
+      <p>It works as the front door for buyers, renters, and QA demos by showing the overall product tone quickly while still exposing real property cards, booking hooks, and predictable content for browser automation.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="44%" valign="top">
+      <img src="docs/readme/catalogue.png" alt="GotTheKeys property catalogue" width="100%">
+    </td>
+    <td width="56%" valign="top">
+      <p><strong>Property Catalogue</strong></p>
+      <p>The catalogue page is the core browsing surface: scope switching, filter controls, saved-search capture, branch trust cues, pagination, and listing cards all stay visible in one server-rendered flow.</p>
+      <p>That makes it a good snapshot of the app's day-to-day estate-agent workflow, where users narrow stock, compare live availability, and continue into enquiries, offers, rental applications, or viewing requests.</p>
+    </td>
+  </tr>
+</table>
+
+Refresh these screenshots after public-page UI changes with:
+
+```bash
+bin/update_readme_homepage_screenshot
+README_SCREENSHOT_URL=http://127.0.0.1:3000/properties README_SCREENSHOT_PATH=docs/readme/catalogue.png bin/update_readme_homepage_screenshot
+```
+
+The script now defaults to a narrower portrait viewport so the README images show more of each page. Override `README_SCREENSHOT_URL`, `README_SCREENSHOT_PATH`, `README_SCREENSHOT_WIDTH`, and `README_SCREENSHOT_HEIGHT` when you want to capture a different public route or framing.
+
 ## What The App Does
 
 - Public marketing and property pages with responsive componentized styling.
@@ -112,6 +146,70 @@ It is designed to feel like a credible small business product while also being p
 - `docs/QA_TRAINING.md`
   QA walkthroughs, selectors, scenarios, and known credentials.
 
+## File Structure At A Glance
+
+```text
+.
+|- app/
+|  |- assets/
+|  |  |- images/
+|  |  `- stylesheets/
+|  |- controllers/
+|  |  `- admin/
+|  |- helpers/
+|  |- javascript/
+|  |- jobs/
+|  |- mailers/
+|  |- models/
+|  |- services/
+|  |  |- admin/
+|  |  |- demo_data/
+|  |  `- qa/
+|  `- views/
+|     |- admin/
+|     |- devise/
+|     |- layouts/
+|     |- properties/
+|     `- shared/
+|- config/
+|  |- deploy/
+|  |- environments/
+|  |- initializers/
+|  `- locales/
+|- db/
+|  |- demo_scenarios/
+|  `- migrate/
+|- docs/
+|- lib/
+|  |- capistrano/
+|  |- ci/
+|  `- tasks/
+|- script/
+|- spec/
+|  |- factories/
+|  |- requests/
+|  |- services/
+|  `- system/
+|- .githooks/
+|- Dockerfile
+|- compose.synology.yml
+`- README.md
+```
+
+- `app/controllers/` holds the server-rendered product and admin endpoints; `app/controllers/admin/` is the protected Admin Workspace.
+- `app/models/` is the main domain layer for properties, appointments, offers, rental applications, saved searches, and supporting records.
+- `app/services/` contains orchestration and business-process code that does not fit cleanly in models or controllers. `app/services/demo_data/` drives YAML scenario loading and validation, while `app/services/qa/` supports the training harness.
+- `app/views/` is the primary UI layer. Public pages, Devise entry screens, shared partials, and admin surfaces are grouped by route area.
+- `app/assets/stylesheets/` contains the SCSS source for the server-rendered UI. Component partials live under `components/`, page-level styling under `pages/`, and the bundled entrypoint pulls them together.
+- `app/javascript/` contains the bundled frontend runtime for Turbo and app-authored JavaScript modules.
+- `config/locales/` holds the curated translation files for English plus the supported non-English locales. `config/locales/generated/` holds generated fallback overlays for missing non-English keys.
+- `db/demo_scenarios/` contains the deterministic YAML seed packs used for demos, QA resets, and repeatable local setup.
+- `docs/` is where longer operational and architecture notes live, including deployment, booking architecture, QA training, and modernization guidance.
+- `lib/ci/` contains repo-specific CI guardrails, and `lib/tasks/` contains custom Rake tasks.
+- `script/` is for one-off operational helpers such as curated catalogue refresh scripts.
+- `spec/requests/` covers server-rendered responses and HTML contracts, `spec/system/` covers browser journeys, and the remaining spec folders cover unit-level behavior.
+- `.githooks/pre-push` runs the full RSpec suite before pushes, matching the workflow described in the setup section below.
+
 ## Local Setup
 
 ### Prerequisites
@@ -153,6 +251,25 @@ Preferred spec types for new work:
 - avoid adding new controller specs or legacy `spec/features` coverage
 
 To make that rule block merges, mark the `CI` workflow as a required status check in your GitHub branch protection settings for `main`/`master`.
+
+### Localization Workflow
+
+English is the source of truth for site copy.
+
+When English strings change:
+
+1. Update the English copy first.
+2. Run `bin/i18n_sync_locales` to generate missing non-English fallback keys into `config/locales/generated/`.
+3. Review the generated overlay changes.
+4. Run `bin/i18n_health` to verify locale coverage and interpolation consistency.
+5. Commit the English copy change together with the generated locale overlay updates.
+
+Notes:
+
+- CI runs `bin/i18n_health`, so missing locale coverage or broken interpolation placeholders will fail the build.
+- The generated overlays are intentionally separate from the curated locale files so translators can improve locale-specific copy later without fighting large automatic rewrites.
+- When a human translation is added to a curated locale file under `config/locales/`, rerun `bin/i18n_sync_locales` and the generated overlay will shrink automatically.
+- See `docs/LOCALIZATION_WORKFLOW.md` for the dedicated workflow note.
 
 ### Run The App
 

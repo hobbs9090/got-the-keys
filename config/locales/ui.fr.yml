@@ -1,445 +1,836 @@
 fr:
   ui:
     site_header:
-      eyebrow: "Plateforme immobiliere"
-      admin_bookings: "Reservations"
-      admin_dashboard: "Tableau de bord"
-      sign_out: "Se deconnecter"
-      add_property: "Ajouter un bien"
-      profile: "Profil"
-      register: "S'inscrire"
-      sign_in: "Se connecter"
-
+      eyebrow: Plateforme immobiliere
+      admin_bookings: Reservations
+      admin_dashboard: Tableau de bord
+      sign_out: Se deconnecter
+      add_property: Ajouter un bien
+      profile: Profil
+      register: S'inscrire
+      sign_in: Se connecter
     site_footer:
-      copy: "Decouverte immobiliere moderne, prise de rendez-vous et scenarios QA deterministes dans une seule application Rails rendue cote serveur, concue pour des demos realistes, des tests d'acceptation et la formation a l'automatisation de navigateur pilotee par l'IA."
-
+      copy: Decouverte immobiliere moderne, prise de rendez-vous et scenarios QA deterministes
+        dans une seule application Rails rendue cote serveur, concue pour des demos
+        realistes, des tests d'acceptation et la formation a l'automatisation de navigateur
+        pilotee par l'IA.
     shared:
-      property_placeholder_alt: "Image de remplacement du bien"
-
+      property_placeholder_alt: Image de remplacement du bien
     common:
-      apply: "Appliquer"
-      any: "Tous"
-      cancel: "Annuler"
-      reset: "Reinitialiser"
-      clear_all: "Tout effacer"
-      featured: "A la une"
-      view_property: "Voir le bien"
-      book_a_viewing: "Reserver une visite"
-      town: "Ville"
-      bathrooms: "Salles de bain"
-      postcode: "Code postal"
-      overview: "Vue d'ensemble"
-      address: "Adresse"
-      property: "Bien"
-      requested_slot: "Creneau demande"
-      current_slot: "Creneau actuel"
-      duration: "Duree"
-      customer: "Client"
-      customer_notes: "Notes client"
-      full_name: "Nom complet"
-      email_address: "Adresse e-mail"
-      phone_number: "Numero de telephone"
-      status: "Statut"
-
+      apply: Appliquer
+      any: Tous
+      cancel: Annuler
+      reset: Reinitialiser
+      clear_all: Tout effacer
+      featured: A la une
+      view_property: Voir le bien
+      book_a_viewing: Reserver une visite
+      town: Ville
+      bathrooms: Salles de bain
+      postcode: Code postal
+      overview: Vue d'ensemble
+      address: Adresse
+      property: Bien
+      requested_slot: Creneau demande
+      current_slot: Creneau actuel
+      duration: Duree
+      customer: Client
+      customer_notes: Notes client
+      full_name: Nom complet
+      email_address: Adresse e-mail
+      phone_number: Numero de telephone
+      status: Statut
+      'yes': Oui
+      download: Telecharger
+      remove: Supprimer
+      save: Enregistrer
+      back_to_listing: Retour a l'annonce
     contact:
-      office_name: "GotTheKeys Limited"
-      office_line_1: "123 Awesome Road"
-      office_line_2: "Limpsfield, TN16 4AB"
-
+      office_name: GotTheKeys Limited
+      office_line_1: 123 Awesome Road
+      office_line_2: Limpsfield, TN16 4AB
     legacy:
-      from: "De"
-      to: "A"
-      update: "Mettre a jour"
-      add_viewing_time: "Ajouter un horaire de visite"
-      new_viewing_time_title: "Nouvel horaire de visite pour %{address}"
-      viewing_times_updated_notice: "Les horaires de visite disponibles ont ete mis a jour."
-      new_photos_title: "Nouvelles photos pour %{address}"
-      new_floor_plan_title: "Nouveau plan d'etage pour %{address}"
-      location_details_title: "Details de localisation pour %{address}"
-
+      from: De
+      to: A
+      update: Mettre a jour
+      add_viewing_time: Ajouter un horaire de visite
+      new_viewing_time_title: Nouvel horaire de visite pour %{address}
+      viewing_times_updated_notice: Les horaires de visite disponibles ont ete mis
+        a jour.
+      new_photos_title: Nouvelles photos pour %{address}
+      new_floor_plan_title: Nouveau plan d'etage pour %{address}
+      location_details_title: Details de localisation pour %{address}
     welcome:
       carousel:
-        previous: "Diapositive precedente"
-        next: "Diapositive suivante"
-        first: "Premiere diapositive"
-        second: "Deuxieme diapositive"
-        third: "Troisieme diapositive"
-        fourth: "Quatrieme diapositive"
-        fifth: "Cinquieme diapositive"
-      hero_eyebrow: "Decouverte immobiliere moderne et prise de rendez-vous"
-      hero_title: "Offrez aux acheteurs et aux locataires un site soigne tout en donnant aux equipes QA un environnement d'automatisation deterministe."
-      primary_cta: "Parcourir les biens"
-      admin_cta: "Ouvrir le bureau des reservations"
+        previous: Diapositive precedente
+        next: Diapositive suivante
+        first: Premiere diapositive
+        second: Deuxieme diapositive
+        third: Troisieme diapositive
+        fourth: Quatrieme diapositive
+        fifth: Cinquieme diapositive
+      hero_eyebrow: Decouverte immobiliere moderne et prise de rendez-vous
+      hero_title: Offrez aux acheteurs et aux locataires un site soigne tout en donnant
+        aux equipes QA un environnement d'automatisation deterministe.
+      primary_cta: Parcourir les biens
+      admin_cta: Ouvrir le bureau des reservations
       metric_labels:
-        properties: "Biens"
-        for_sale: "A vendre"
-        for_rent: "A louer"
-        upcoming_viewings: "Visites a venir"
-      featured_eyebrow: "Annonces mises en avant"
-      featured_title: "Des fiches credibles et reactives avec des points d'entree vers la reservation integres"
-      featured_action: "Voir tout le catalogue"
-      insights_label: "Apercus de la plateforme"
-      qa_title: "Concu pour la formation QA"
+        properties: Biens
+        for_sale: A vendre
+        for_rent: A louer
+        upcoming_viewings: Visites a venir
+      featured_eyebrow: Annonces mises en avant
+      featured_title: Des fiches credibles et reactives avec des points d'entree vers
+        la reservation integres
+      featured_action: Voir tout le catalogue
+      insights_label: Apercus de la plateforme
+      qa_title: Concu pour la formation QA
       qa_points:
-        selectors: "Des selecteurs semantiques stables sur les controles essentiels de reservation et d'administration."
-        scenarios: "Des scenarios de demo deterministes pour les parcours heureux, les conflits, les etats vides et les recherches a grand volume."
-        audit: "Des pistes d'audit visibles et des journaux de notification qui facilitent la verification des changements d'etat."
-      shared_host_title: "Adapte a l'hebergement mutualise"
+        selectors: Des selecteurs semantiques stables sur les controles essentiels
+          de reservation et d'administration.
+        scenarios: Des scenarios de demo deterministes pour les parcours heureux,
+          les conflits, les etats vides et les recherches a grand volume.
+        audit: Des pistes d'audit visibles et des journaux de notification qui facilitent
+          la verification des changements d'etat.
+      shared_host_title: Adapte a l'hebergement mutualise
       shared_host_points:
-        stack: "Rails rendu cote serveur sous Apache + Passenger."
-        dependencies: "Aucune hypothese sur Redis, Sidekiq, Docker ou des workers toujours actifs."
-        enhancement: "Amelioration progressive avec Foundation, Turbo et des formulaires classiques."
-
+        stack: Rails rendu cote serveur sous Apache + Passenger.
+        dependencies: Aucune hypothese sur Redis, Sidekiq, Docker ou des workers toujours
+          actifs.
+        enhancement: Amelioration progressive avec Foundation, Turbo et des formulaires
+          classiques.
     properties:
       headline_fallback: "%{property_type} a %{town_city}"
       in_location: "%{property_type} a %{location}"
       bedroom_count:
-        one: "1 chambre"
+        one: 1 chambre
         other: "%{count} chambres"
       bathroom_count:
-        one: "1 salle de bain"
+        one: 1 salle de bain
         other: "%{count} salles de bain"
       sale_statuses:
-        for_sale: "A vendre"
-        for_rent: "A louer"
+        for_sale: A vendre
+        for_rent: A louer
       catalogue:
-        eyebrow: "Catalogue immobilier"
-        hero_title: "Parcourez des annonces modernes avec disponibilites de visite en direct"
-        hero_body: "Recherchez par zone, prix et nombre de chambres, puis reservez une visite depuis chaque fiche."
+        eyebrow: Catalogue immobilier
+        hero_title: Parcourez des annonces modernes avec disponibilites de visite
+          en direct
+        hero_body: Recherchez par zone, prix et nombre de chambres, puis reservez
+          une visite depuis chaque fiche.
         active_filter_count:
-          one: "1 filtre actif"
+          one: 1 filtre actif
           other: "%{count} filtres actifs"
-        overview_badge: "Vue d'ensemble du catalogue"
+        overview_badge: Vue d'ensemble du catalogue
         matching_properties:
-          one: "bien correspondant"
-          other: "biens correspondants"
-        browse_eyebrow: "Parcourir"
-        browse_title: "Passer d'une vue du catalogue a l'autre"
-        browse_body: "Utilisez ici le catalogue complet, ou allez directement vers les biens a vendre ou a louer si vous savez deja ce que vous cherchez."
-        all_listings: "Toutes les annonces"
+          one: bien correspondant
+          other: biens correspondants
+        browse_eyebrow: Parcourir
+        browse_title: Passer d'une vue du catalogue a l'autre
+        browse_body: Utilisez ici le catalogue complet, ou allez directement vers
+          les biens a vendre ou a louer si vous savez deja ce que vous cherchez.
+        all_listings: Toutes les annonces
         totals:
-          all: "Tous"
-        filters_eyebrow: "Affiner la recherche"
-        filters_title: "Filtrer la liste des biens"
-        sidebar_copy: "Affinez la liste par type d'annonce, zone, ville, nombre de chambres et budget, puis reinitialisez tout en un clic si besoin."
-        results_eyebrow: "Resultats en direct"
+          all: Tous
+        filters_eyebrow: Affiner la recherche
+        filters_title: Filtrer la liste des biens
+        sidebar_copy: Affinez la liste par type d'annonce, zone, ville, nombre de
+          chambres et budget, puis reinitialisez tout en un clic si besoin.
+        results_eyebrow: Resultats en direct
         results_title:
-          one: "1 bien pret a explorer"
+          one: 1 bien pret a explorer
           other: "%{count} biens prets a explorer"
-        empty_copy: "Le catalogue complet est affiche. Utilisez le panneau de filtres pour affiner par lieu, prix et nombre de chambres."
+        empty_copy: Le catalogue complet est affiche. Utilisez le panneau de filtres
+          pour affiner par lieu, prix et nombre de chambres.
+        saved_search:
+          eyebrow: Restez informe
+          title: Enregistrer cette recherche
+          body: Conservez les filtres actuels et laissez l equipe vous alerter quand
+            des biens correspondants arrivent.
+          email_placeholder: you@example.com
+          alerts_enabled: M envoyer un e-mail quand de nouveaux biens correspondants
+            arrivent
+          submit: Enregistrer la recherche
+        local_team_eyebrow: Equipe locale
       filters:
-        listing_type: "Type d'annonce"
-        all_listings: "Toutes les annonces"
-        query_label: "Zone, code postal ou mot-cle"
-        query_placeholder: "Essayez Sevenoaks, TN13 ou garden"
-        any_town: "Toutes les villes"
-        min_bedrooms: "Chambres min."
-        min_price: "Prix min."
-        max_price: "Prix max."
-        sort: "Tri"
-        apply: "Appliquer les filtres"
-        search_chip: "Recherche : %{query}"
+        listing_type: Type d'annonce
+        all_listings: Toutes les annonces
+        query_label: Zone, code postal ou mot-cle
+        query_placeholder: Essayez Sevenoaks, TN13 ou garden
+        any_town: Toutes les villes
+        min_bedrooms: Chambres min.
+        min_price: Prix min.
+        max_price: Prix max.
+        sort: Tri
+        apply: Appliquer les filtres
+        search_chip: 'Recherche : %{query}'
         min_bedrooms_chip: "%{count}+ chambres"
-        min_price_chip: "A partir de %{price}"
-        max_price_chip: "Jusqu'a %{price}"
+        min_price_chip: A partir de %{price}
+        max_price_chip: Jusqu'a %{price}
         sort_options:
-          recommended: "Recommande"
-          newest: "Plus recentes d'abord"
-          price_low: "Prix : du plus bas au plus haut"
-          price_high: "Prix : du plus haut au plus bas"
-          bedrooms_high: "Chambres d'abord"
+          recommended: Recommande
+          newest: Plus recentes d'abord
+          price_low: 'Prix : du plus bas au plus haut'
+          price_high: 'Prix : du plus haut au plus bas'
+          bedrooms_high: Chambres d'abord
       card:
-        next_slot: "Prochain creneau : %{time}"
-        no_slots: "Aucun creneau public a venir publie"
+        next_slot: 'Prochain creneau : %{time}'
+        no_slots: Aucun creneau public a venir publie
+        available_now: Disponible maintenant
+        available_from: Disponible a partir du %{date}
+        area: Surface
+        floor_area: "%{area} sq ft"
       empty:
-        eyebrow: "Aucun resultat"
-        title: "Aucun bien ne correspond a cette recherche"
-        body: "Essayez d'elargir la zone, le nombre de chambres ou la fourchette de prix, ou reinitialisez les filtres pour revoir tout le catalogue."
+        eyebrow: Aucun resultat
+        title: Aucun bien ne correspond a cette recherche
+        body: Essayez d'elargir la zone, le nombre de chambres ou la fourchette de
+          prix, ou reinitialisez les filtres pour revoir tout le catalogue.
       show:
-        booking_body: "Choisissez un creneau publie pour creer une demande de reservation. Les administrateurs pourront ensuite confirmer, reprogrammer ou annuler depuis le planning."
-        slot_finish: "fin a %{time}"
-        request_viewing: "Demander une visite"
-        no_slots_title: "Aucun creneau public disponible"
-        no_slots_body: "C'est un cas limite utile pour QA afin de tester les etats vides de reservation et les parcours de contact de secours."
+        booking_body: Choisissez un creneau publie pour creer une demande de reservation.
+          Les administrateurs pourront ensuite confirmer, reprogrammer ou annuler
+          depuis le planning.
+        slot_finish: fin a %{time}
+        request_viewing: Demander une visite
+        no_slots_title: Aucun creneau public disponible
+        no_slots_body: C'est un cas limite utile pour QA afin de tester les etats
+          vides de reservation et les parcours de contact de secours.
+        available_from: Disponible a partir du
+        key_facts_title: Points cles
+        trust_title: Pourquoi cette annonce semble actuelle
+        brochure_assets_title: Elements de brochure
+        primary_image: Image principale
+        photo: Photo
+        floor_plan: Plan
+        documents_title: Documents et telechargements
+        enquiry_title: Besoin de details d'abord ?
+        enquiry_body: Demandez la brochure, un rappel de l equipe ou des precisions
+          avant de choisir un creneau de visite.
+        enquiry_cta: Envoyer une demande
+        offer_title: Pret a faire une offre ?
+        offer_body: Enregistrez directement votre position d achat et votre offre
+          avec l equipe.
+        offer_cta: Envoyer une offre
+        rental_application_title: Vous voulez postuler a la location ?
+        rental_application_body: Partagez votre date d entree souhaitee et vos notes
+          de solvabilite avec l equipe location.
+        rental_application_cta: Demarrer le dossier locatif
+        seller_title: Espace vendeur
+        readiness_summary: complet · %{score}/%{total} controles effectues
+        done: Fait
+        needed: A faire
+        edit_listing: Modifier l'annonce
+        manage_photos: Gerer les photos
+        manage_floor_plans: Gerer les plans
+        manage_documents: Gerer les documents
+        recent_lead_activity_title: Activite recente des leads
+        no_enquiries: Aucune demande n'a encore ete recue pour cette annonce.
+        recent_offers_title: Offres recentes
+        no_offers: Aucune offre n'a encore ete enregistree.
+        recent_rental_applications_title: Dossiers locatifs recents
+        move_in: entree %{date}
+        no_rental_applications: Aucun dossier locatif n'a encore ete enregistre.
+        recent_listing_activity_title: Activite recente de l'annonce
+        no_listing_activity: Aucune activite n'a encore ete enregistree pour cette
+          annonce.
       editor:
-        new_title: "Ajouter un nouveau bien"
-        eyebrow: "Outils vendeur"
-        new_heading: "Ajouter un bien"
-        new_body: "Creez une annonce avec des metadonnees plus riches et une presentation prete pour la reservation."
-        edit_heading: "Modifier %{address}"
-        edit_body: "Mettez a jour les details, le positionnement et les metadonnees affiches dans le catalogue moderne."
-
+        new_title: Ajouter un nouveau bien
+        eyebrow: Outils vendeur
+        new_heading: Ajouter un bien
+        new_body: Creez une annonce avec des metadonnees plus riches et une presentation
+          prete pour la reservation.
+        edit_heading: Modifier %{address}
+        edit_body: Mettez a jour les details, le positionnement et les metadonnees
+          affiches dans le catalogue moderne.
+        workflow_title: Flux de l'annonce
+        core_details_title: Details principaux
+        facts_title: Donnees structurees du bien
+        floor_area_label: Surface (sq ft)
+      trust_cues:
+        recently_updated: Recemment mis a jour
+        available_now: Disponible maintenant
+        brochure_ready: Brochure prete
+      update_labels:
+        recently_updated: Recemment mis a jour
+        stale: A besoin d'une mise a jour
+        current: Mis a jour ce mois-ci
+      listing_states:
+        draft: Brouillon
+        review_pending: En attente de validation
+        published: Publie
+        under_offer: Sous offre
+        let_agreed: Location convenue
+        sold: Vendu
+        let: Loue
+        withdrawn: Retire
+      activity_actions:
+        enquiry_created: Demande creee
+        offer_created: Offre creee
+        rental_application_created: Dossier locatif cree
+        property_document_created: Document ajoute
+        property_document_updated: Document mis a jour
+        property_document_removed: Document supprime
+        property_document_downloaded: Document telecharge
+      facts:
+        tenure: Statut de propriete
+        council_tax_band: Tranche de taxe locale
+        furnishing: Mobilier
+        year_built: Annee de construction
+        refurbished_year: Derniere renovation
+        available_from: Disponible a partir du
+        parking: Stationnement
+        outdoor_space: Espace exterieur
+        floor_area: Surface
+        floor_area_value: "%{area} sq ft"
+        deposit: Depot
+        pets_allowed: Animaux acceptes
+        service_charge: Charges
+        lease_length: Duree du bail
+        lease_length_value: "%{years} ans"
+      seller:
+        checks:
+          headline: Titre et resume
+          media: Photographie
+          floor_plan: Plan
+          facts: Points cles
+          contact: Contact pret
+      flash:
+        not_public: Cette annonce n'est pas actuellement publique.
     for_sale:
-      eyebrow: "A vendre"
-      hero_title: "Biens disponibles a l'achat"
-      hero_body: "Utilisez les filtres pour trouver des biens par zone, chambres et prix, puis passez au parcours de reservation depuis la fiche."
+      eyebrow: A vendre
+      hero_title: Biens disponibles a l'achat
+      hero_body: Utilisez les filtres pour trouver des biens par zone, chambres et
+        prix, puis passez au parcours de reservation depuis la fiche.
       count_label:
-        one: "annonce de vente"
-        other: "annonces de vente"
-
+        one: annonce de vente
+        other: annonces de vente
     for_rent:
-      eyebrow: "A louer"
-      hero_title: "Biens disponibles a la location"
-      hero_body: "Explorez les logements a louer, comparez les disponibilites et testez le parcours de visite locataire sur un catalogue realiste."
+      eyebrow: A louer
+      hero_title: Biens disponibles a la location
+      hero_body: Explorez les logements a louer, comparez les disponibilites et testez
+        le parcours de visite locataire sur un catalogue realiste.
       count_label:
-        one: "annonce locative"
-        other: "annonces locatives"
-
+        one: annonce locative
+        other: annonces locatives
     search:
-      eyebrow: "Recherche immobiliere"
-      hero_title: "Recherchez les annonces et les disponibilites de visite ensemble"
-      hero_body: "Trouvez des parcours heureux realistes, des etats vides et des scenarios de pagination pour l'automatisation QA."
+      eyebrow: Recherche immobiliere
+      hero_title: Recherchez les annonces et les disponibilites de visite ensemble
+      hero_body: Trouvez des parcours heureux realistes, des etats vides et des scenarios
+        de pagination pour l'automatisation QA.
       results_count:
-        one: "resultat"
-        other: "resultats"
-
+        one: resultat
+        other: resultats
     appointments:
       statuses:
-        pending: "En attente"
-        confirmed: "Confirmee"
-        rescheduled: "Replanifiee"
-        cancelled: "Annulee"
-        completed: "Terminee"
-        no_show: "Absent"
+        pending: En attente
+        confirmed: Confirmee
+        rescheduled: Replanifiee
+        cancelled: Annulee
+        completed: Terminee
+        no_show: Absent
       events:
-        created: "Creee"
-        confirmed: "Confirmee"
-        rescheduled: "Replanifiee"
-        cancelled: "Annulee"
-        completed: "Terminee"
-        no_show: "Absent"
-        internal_note_added: "Note interne ajoutee"
-        customer_note_updated: "Note client mise a jour"
+        created: Creee
+        confirmed: Confirmee
+        rescheduled: Replanifiee
+        cancelled: Annulee
+        completed: Terminee
+        no_show: Absent
+        internal_note_added: Note interne ajoutee
+        customer_note_updated: Note client mise a jour
       new:
-        title: "Reserver une visite pour %{address}"
-        eyebrow: "Demande de visite"
-        hero_body: "Choisissez un creneau publie, ajoutez vos coordonnees et creez une demande que l'equipe pourra confirmer, reprogrammer ou annuler."
-        submitted_notice: "La demande de rendez-vous a ete envoyee. Nous vous informerons par e-mail."
-        preferred_slot: "Creneau prefere"
-        choose_slot: "Choisir un creneau"
-        notes_label: "Y a-t-il quelque chose a signaler ?"
-        notes_placeholder: "Besoins d'accessibilite, consignes d'arrivee ou questions pour l'equipe."
-        submit: "Envoyer la demande"
-        back_to_property: "Retour au bien"
-        no_slots_title: "Aucun creneau publie"
-        no_slots_body: "Ce bien n'a actuellement aucune disponibilite publique pour les visites. C'est intentionnel dans certains scenarios QA, donc l'etat vide est affiche clairement."
+        title: Reserver une visite pour %{address}
+        eyebrow: Demande de visite
+        hero_body: Choisissez un creneau publie, ajoutez vos coordonnees et creez
+          une demande que l'equipe pourra confirmer, reprogrammer ou annuler.
+        submitted_notice: La demande de rendez-vous a ete envoyee. Nous vous informerons
+          par e-mail.
+        preferred_slot: Creneau prefere
+        choose_slot: Choisir un creneau
+        notes_label: Y a-t-il quelque chose a signaler ?
+        notes_placeholder: Besoins d'accessibilite, consignes d'arrivee ou questions
+          pour l'equipe.
+        submit: Envoyer la demande
+        back_to_property: Retour au bien
+        no_slots_title: Aucun creneau publie
+        no_slots_body: Ce bien n'a actuellement aucune disponibilite publique pour
+          les visites. C'est intentionnel dans certains scenarios QA, donc l'etat
+          vide est affiche clairement.
       show:
-        title: "Rendez-vous %{reference}"
-        eyebrow: "Details du rendez-vous"
-        hero_body: "L'historique de votre rendez-vous reste visible ici afin de verifier chaque changement de statut et horodatage."
-        invalid_link_alert: "Ce lien de rendez-vous n'est pas valide."
-        summary_title: "Resume de la reservation"
+        title: Rendez-vous %{reference}
+        eyebrow: Details du rendez-vous
+        hero_body: L'historique de votre rendez-vous reste visible ici afin de verifier
+          chaque changement de statut et horodatage.
+        invalid_link_alert: Ce lien de rendez-vous n'est pas valide.
+        summary_title: Resume de la reservation
         duration_minutes:
-          one: "1 minute"
+          one: 1 minute
           other: "%{count} minutes"
-        timeline_title: "Chronologie du statut"
-
+        timeline_title: Chronologie du statut
+        visit_outcome: Resultat de la visite
+        manage_title: Gerer votre visite
+        manage_body: Vous pouvez reprogrammer ou annuler cette visite en ligne jusqu
+          au %{time}.
+        request_new_time: Demander un nouveau creneau
+        cancel_viewing: Annuler la visite
+        self_service_closed: La fenetre de libre-service pour cette visite est maintenant
+          fermee.
+      self_service:
+        title: Gerer la visite %{reference}
+        eyebrow: Gerer votre visite
+        body: Choisissez un nouveau creneau ou gardez l actuel. Le libre-service reste
+          ouvert jusqu a peu apres l heure reservee.
+        current_slot: 'Creneau actuel : <strong>%{time}</strong>'
+        status: Statut
+        choose_slot: Choisir un nouveau creneau
+        select_slot: Selectionner une nouvelle heure
+        submit: Reprogrammer la visite
+        back_to_appointment: Retour au rendez-vous
+        no_slots_title: Aucun creneau disponible
+        no_slots_body: Aucun creneau en libre-service n'est disponible pour le moment.
+          Veuillez contacter l'agence.
+        flash:
+          rescheduled: Votre visite a ete reprogrammee.
+          cancelled: Votre visite a ete annulee.
+          expired: Ce lien de libre-service a expire.
+      visit_outcomes:
+        attended: Effectuee
+        feedback_requested: Avis demande
+        feedback_received: Avis recu
+      event_messages:
+        created: Rendez-vous demande pour %{address} a %{time}.
+        status_changed: Statut passe de %{from_status} a %{to_status}.
+        moved: Rendez-vous deplace de %{from_time} a %{to_time}.
+        internal_notes_updated: Les notes internes ont ete mises a jour.
+        customer_notes_updated: Les notes client ont ete mises a jour.
+        visit_outcome_marked: Resultat de visite marque comme %{outcome}.
+      validation:
+        slot_unavailable: n'est pas disponible car il entre en conflit avec un autre
+          rendez-vous ou sort des regles de reservation
     appointment_mailer:
-      subject: "Visite GotTheKeys %{action} : %{reference}"
+      subject: 'Visite GotTheKeys %{action} : %{reference}'
       actions:
-        request_received: "demande recue"
-        confirmed: "confirmee"
-        cancelled: "annulee"
-        completed: "terminee"
-        marked_as_missed: "marquee comme manquee"
-        updated: "mise a jour"
-      greeting: "Bonjour %{name},"
-      updated_html: "Votre visite pour <strong>%{address}</strong> a ete mise a jour."
-      reference: "Reference : %{reference}"
-      status: "Statut : %{status}"
-      requested_slot: "Creneau demande : %{time}"
-      current_slot: "Creneau actuel : %{time}"
-      notes: "Vos notes : %{notes}"
-      revisit: "Vous pouvez revoir ce rendez-vous a tout moment en utilisant le lien securise envoye apres la reservation."
-      thanks_html: "Merci,<br>GotTheKeys"
-
+        request_received: demande recue
+        confirmed: confirmee
+        cancelled: annulee
+        completed: terminee
+        marked_as_missed: marquee comme manquee
+        updated: mise a jour
+      greeting: Bonjour %{name},
+      updated_html: Votre visite pour <strong>%{address}</strong> a ete mise a jour.
+      reference: 'Reference : %{reference}'
+      status: 'Statut : %{status}'
+      requested_slot: 'Creneau demande : %{time}'
+      current_slot: 'Creneau actuel : %{time}'
+      notes: 'Vos notes : %{notes}'
+      revisit: Vous pouvez revoir ce rendez-vous a tout moment en utilisant le lien
+        securise envoye apres la reservation.
+      thanks_html: Merci,<br>GotTheKeys
     admin:
       dashboard:
-        on: "le"
+        true: le
       appointments:
-        confirm: "Confirmer"
-        cancel: "Annuler"
+        confirm: Confirmer
+        cancel: Annuler
         show:
-          title: "Rendez-vous %{reference}"
-          eyebrow: "Details du rendez-vous"
-          edit: "Modifier"
-          summary_title: "Resume"
-          not_supplied: "Non fourni"
-          notes_title: "Notes"
-          no_customer_notes: "Aucune note client fournie."
-          no_internal_notes: "Aucune note interne pour le moment."
-          audit_trail_title: "Historique d'audit"
-          customer_history_title: "Historique client"
-          no_customer_history: "Aucune autre reservation trouvee pour ce client."
+          title: Rendez-vous %{reference}
+          eyebrow: Details du rendez-vous
+          edit: Modifier
+          summary_title: Resume
+          not_supplied: Non fourni
+          notes_title: Notes
+          no_customer_notes: Aucune note client fournie.
+          no_internal_notes: Aucune note interne pour le moment.
+          audit_trail_title: Historique d'audit
+          customer_history_title: Historique client
+          no_customer_history: Aucune autre reservation trouvee pour ce client.
           actions:
-            complete: "Terminer"
-            no_show: "Absent"
+            complete: Terminer
+            no_show: Absent
         edit:
-          title: "Modifier le rendez-vous %{reference}"
-          eyebrow: "Gestion des reservations"
-          heading: "Modifier le rendez-vous %{reference}"
-          customer_name: "Nom du client"
-          customer_email: "Email du client"
-          customer_phone: "Telephone du client"
-          duration_minutes: "Duree (minutes)"
-          requested_time: "Heure demandee"
-          confirmed_slot: "Creneau confirme"
-          customer_notes: "Notes du client"
-          internal_notes: "Notes internes"
-          save_changes: "Enregistrer les modifications"
-          back: "Retour"
+          title: Modifier le rendez-vous %{reference}
+          eyebrow: Gestion des reservations
+          heading: Modifier le rendez-vous %{reference}
+          customer_name: Nom du client
+          customer_email: Email du client
+          customer_phone: Telephone du client
+          duration_minutes: Duree (minutes)
+          requested_time: Heure demandee
+          confirmed_slot: Creneau confirme
+          customer_notes: Notes du client
+          internal_notes: Notes internes
+          save_changes: Enregistrer les modifications
+          back: Retour
       flash:
-        booking_rules_updated: "Les regles de reservation ont ete mises a jour."
-        property_updated: "Le bien a ete mis a jour."
-        appointment_updated: "Le rendez-vous a ete mis a jour."
-        unsupported_appointment_status: "Statut de rendez-vous non pris en charge."
-        appointment_marked: "Le rendez-vous a ete marque comme %{status}."
-        demo_scenario_confirmation_required: "Saisissez exactement %{phrase} pour lancer cette reinitialisation seed."
-        applied_demo_scenario: "Scenario de demo %{name} applique."
-        restored_baseline_demo_scenario: "Scenario de demo de base (%{name}) restaure."
-        imported_demo_scenario: "Scenario de demo %{name} importe."
+        booking_rules_updated: Les regles de reservation ont ete mises a jour.
+        property_updated: Le bien a ete mis a jour.
+        appointment_updated: Le rendez-vous a ete mis a jour.
+        unsupported_appointment_status: Statut de rendez-vous non pris en charge.
+        appointment_marked: Le rendez-vous a ete marque comme %{status}.
+        demo_scenario_confirmation_required: Saisissez exactement %{phrase} pour lancer
+          cette reinitialisation seed.
+        applied_demo_scenario: Scenario de demo %{name} applique.
+        restored_baseline_demo_scenario: Scenario de demo de base (%{name}) restaure.
+        imported_demo_scenario: Scenario de demo %{name} importe.
       properties:
         index:
-          title: "Biens"
-          eyebrow: "Gestion du catalogue"
+          title: Biens
+          eyebrow: Gestion du catalogue
           appointment_count:
-            one: "1 rendez-vous"
+            one: 1 rendez-vous
             other: "%{count} rendez-vous"
-          open: "Ouvrir"
+          open: Ouvrir
         show:
-          title: "Bien %{address}"
-          eyebrow: "Details du bien"
-          edit_property: "Modifier le bien"
-          view_public_page: "Voir la page publique"
-          summary_title: "Resume de l'annonce"
-          availability_windows_title: "Fenetres de disponibilite"
+          title: Bien %{address}
+          eyebrow: Details du bien
+          edit_property: Modifier le bien
+          view_public_page: Voir la page publique
+          summary_title: Resume de l'annonce
+          availability_windows_title: Fenetres de disponibilite
           window_range: "%{start_time} a %{end_time}"
           window_kinds:
-            open: "Ouvert"
-            blackout: "Bloque"
-          no_windows: "Aucune fenetre propre a ce bien pour le moment. Les regles globales de reservation sont utilisees."
-          booking_history_title: "Historique des reservations du bien"
-          no_bookings: "Aucune reservation pour ce bien pour le moment."
+            open: Ouvert
+            blackout: Bloque
+          no_windows: Aucune fenetre propre a ce bien pour le moment. Les regles globales
+            de reservation sont utilisees.
+          booking_history_title: Historique des reservations du bien
+          no_bookings: Aucune reservation pour ce bien pour le moment.
         edit:
-          title: "Modifier le bien %{address}"
-          eyebrow: "Gestion du catalogue"
-          heading: "Modifier le bien"
+          title: Modifier le bien %{address}
+          eyebrow: Gestion du catalogue
+          heading: Modifier le bien
       users:
         index:
-          title: "Vendeurs"
-          eyebrow: "Gestion des clients et vendeurs"
-          no_results: "Aucun vendeur ne correspond a cette recherche."
+          title: Vendeurs
+          eyebrow: Gestion des clients et vendeurs
+          no_results: Aucun vendeur ne correspond a cette recherche.
           search:
-            label: "Rechercher des vendeurs"
-            placeholder: "Nom, e-mail ou mobile"
-            submit: "Rechercher"
-            clear: "Effacer"
+            label: Rechercher des vendeurs
+            placeholder: Nom, e-mail ou mobile
+            submit: Rechercher
+            clear: Effacer
           property_count:
-            one: "1 bien"
+            one: 1 bien
             other: "%{count} biens"
         show:
-          title: "Vendeur %{name}"
-          eyebrow: "Profil vendeur"
-          account_details_title: "Details du compte"
-          mobile: "Mobile"
-          properties: "Biens"
+          title: Vendeur %{name}
+          eyebrow: Profil vendeur
+          account_details_title: Details du compte
+          mobile: Mobile
+          properties: Biens
           listing_count:
-            one: "1 annonce"
+            one: 1 annonce
             other: "%{count} annonces"
-          recent_booking_activity_title: "Activite recente des reservations"
-          no_activity: "Aucune activite de rendez-vous sur les biens de ce vendeur pour le moment."
+          recent_booking_activity_title: Activite recente des reservations
+          no_activity: Aucune activite de rendez-vous sur les biens de ce vendeur
+            pour le moment.
       notification_logs:
-        title: "Journal des notifications"
-        eyebrow: "Communication client"
-        no_recipient: "Aucun destinataire"
+        title: Journal des notifications
+        eyebrow: Communication client
+        no_recipient: Aucun destinataire
         statuses:
-          sent: "Envoye"
-          skipped: "Ignore"
-          failed: "Echoue"
+          sent: Envoye
+          skipped: Ignore
+          failed: Echoue
       booking_configuration:
-        title: "Regles de reservation"
-        eyebrow: "Configuration des reservations"
-        slot_duration_minutes: "Duree du creneau (minutes)"
-        lead_time_hours: "Delai minimum (heures)"
-        buffer_minutes: "Tampon entre reservations (minutes)"
-        office_opens_at: "Ouverture du bureau a"
-        office_closes_at: "Fermeture du bureau a"
-        open_weekdays: "Jours ouverts"
-        save: "Enregistrer les regles"
+        title: Regles de reservation
+        eyebrow: Configuration des reservations
+        slot_duration_minutes: Duree du creneau (minutes)
+        lead_time_hours: Delai minimum (heures)
+        buffer_minutes: Tampon entre reservations (minutes)
+        office_opens_at: Ouverture du bureau a
+        office_closes_at: Fermeture du bureau a
+        open_weekdays: Jours ouverts
+        save: Enregistrer les regles
       demo_data:
-        title: "Gestion des donnees de demo"
-        eyebrow: "Environnement QA deterministe"
-        restore_baseline: "Restaurer la base"
-        import_scenario: "Importer un scenario"
-        export_current_data: "Exporter les donnees actuelles"
-        diagnostics_title: "Diagnostic"
-        last_demo_action_title: "Derniere action de demo"
-        no_actions: "Aucune reinitialisation, importation ou exportation n'a encore ete enregistree."
-        preview_action: "Apercu"
+        title: Gestion des donnees de demo
+        eyebrow: Environnement QA deterministe
+        restore_baseline: Restaurer la base
+        import_scenario: Importer un scenario
+        export_current_data: Exporter les donnees actuelles
+        diagnostics_title: Diagnostic
+        last_demo_action_title: Derniere action de demo
+        no_actions: Aucune reinitialisation, importation ou exportation n'a encore
+          ete enregistree.
+        preview_action: Apercu
         seed_resets:
-          eyebrow: "Zone sensible"
-          title: "Reinitialisations des donnees seed"
-          description: "Chaque reinitialisation reconstruit l'ensemble des donnees de formation pour une repetition precise. Saisissez exactement la cle du scenario avant de lancer l'action."
-          badge: "Verrou de saisie"
-          preview: "Apercu du reset"
-          field_label: "Saisissez %{phrase} pour continuer"
-          type_to_continue_html: "Saisissez exactement %{phrase} pour deverrouiller cette reinitialisation."
-          apply: "Lancer le reset"
+          eyebrow: Zone sensible
+          title: Reinitialisations des donnees seed
+          description: Chaque reinitialisation reconstruit l'ensemble des donnees
+            de formation pour une repetition precise. Saisissez exactement la cle
+            du scenario avant de lancer l'action.
+          badge: Verrou de saisie
+          preview: Apercu du reset
+          field_label: Saisissez %{phrase} pour continuer
+          type_to_continue_html: Saisissez exactement %{phrase} pour deverrouiller
+            cette reinitialisation.
+          apply: Lancer le reset
         counts:
           properties:
-            one: "bien"
-            other: "biens"
+            one: bien
+            other: biens
           bookings:
-            one: "reservation"
-            other: "reservations"
+            one: reservation
+            other: reservations
           sellers:
-            one: "vendeur"
-            other: "vendeurs"
+            one: vendeur
+            other: vendeurs
         labels:
-          active_scenario: "Scenario actif"
-          property_count: "Biens"
-          user_count: "Utilisateurs"
-          appointment_count: "Rendez-vous"
-          notification_count: "Journaux de notifications"
-          last_demo_action: "Derniere action de demo"
+          active_scenario: Scenario actif
+          property_count: Biens
+          user_count: Utilisateurs
+          appointment_count: Rendez-vous
+          notification_count: Journaux de notifications
+          last_demo_action: Derniere action de demo
         preview_labels:
-          key: "Cle"
-          admin_count: "Administrateurs"
-          user_count: "Utilisateurs"
-          property_count: "Biens"
-          availability_window_count: "Fenetres de disponibilite"
-          appointment_count: "Rendez-vous"
-          appointment_statuses: "Statuts des rendez-vous"
+          key: Cle
+          admin_count: Administrateurs
+          user_count: Utilisateurs
+          property_count: Biens
+          availability_window_count: Fenetres de disponibilite
+          appointment_count: Rendez-vous
+          appointment_statuses: Statuts des rendez-vous
         actions:
-          apply: "Applique"
-          restore: "Restaure"
-          import: "Importe"
-          export: "Exporte"
+          apply: Applique
+          restore: Restaure
+          import: Importe
+          export: Exporte
         scenario_keys:
-          baseline: "Base"
-          custom_sevenoaks_westerham_catalogue: "Catalogue selectionne Sevenoaks et Westerham"
-          fully_booked_day: "Journee complete"
-          high_volume_search: "Recherche a fort volume"
-          qa_edge_cases: "Cas limites QA"
+          baseline: Base
+          custom_sevenoaks_westerham_catalogue: Catalogue selectionne Sevenoaks et
+            Westerham
+          fully_booked_day: Journee complete
+          high_volume_search: Recherche a fort volume
+          qa_edge_cases: Cas limites QA
         preview:
-          title: "Apercu du scenario %{name}"
-          eyebrow: "Apercu du scenario"
-          apply_scenario: "Appliquer le scenario"
-          back_to_demo_data: "Retour aux donnees de demo"
-          quick_reset_title: "Reinitialisation des donnees seed"
-          quick_reset_body: "Cette repetition reconstruit tout le jeu de donnees de formation. Confirmez la cle exacte du scenario avant de la lancer."
+          title: Apercu du scenario %{name}
+          eyebrow: Apercu du scenario
+          apply_scenario: Appliquer le scenario
+          back_to_demo_data: Retour aux donnees de demo
+          quick_reset_title: Reinitialisation des donnees seed
+          quick_reset_body: Cette repetition reconstruit tout le jeu de donnees de
+            formation. Confirmez la cle exacte du scenario avant de la lancer.
         import:
-          title: "Importer un scenario de demo"
-          eyebrow: "Import de donnees de demo"
-          heading: "Apercu d'un scenario importe avant son application"
-          upload_yaml_file: "Televerser un fichier YAML"
-          paste_yaml: "Ou coller du YAML"
-          yaml_placeholder: "key: imported_scenario\nname: Imported Scenario\n..."
-          preview_import: "Apercu de l'import"
-          back: "Retour"
+          title: Importer un scenario de demo
+          eyebrow: Import de donnees de demo
+          heading: Apercu d'un scenario importe avant son application
+          upload_yaml_file: Televerser un fichier YAML
+          paste_yaml: Ou coller du YAML
+          yaml_placeholder: |-
+            key: imported_scenario
+            name: Imported Scenario
+            ...
+          preview_import: Apercu de l'import
+          back: Retour
         import_preview:
-          title: "Apercu de l'import %{name}"
-          eyebrow: "Apercu de l'import"
-          apply_imported_scenario: "Appliquer le scenario importe"
-          back_to_import: "Retour a l'import"
-          raw_yaml: "YAML brut"
+          title: Apercu de l'import %{name}
+          eyebrow: Apercu de l'import
+          apply_imported_scenario: Appliquer le scenario importe
+          back_to_import: Retour a l'import
+          raw_yaml: YAML brut
+    branch_profile:
+      name: Bureau Sevenoaks et Westerham
+      team_label: Gere par l'equipe locale GotTheKeys
+      response_time: Repond en general sous 1 jour ouvre
+      hours: Lun-Sam, 9:00-18:00
+    enquiries:
+      title: Demande sur %{address}
+      eyebrow: Demande sur le bien
+      heading: Poser une question sur %{address}
+      body: Utilisez ce formulaire si vous souhaitez la brochure, un rappel de l equipe
+        ou des reponses avant de reserver une visite.
+      fields:
+        source_type: Type de demande
+        message: Message
+      submit: Envoyer la demande
+      next_steps_title: Que se passe-t-il ensuite ?
+      next_steps:
+        one: Le lead arrive immediatement dans la boite admin.
+        two: L'equipe peut l'assigner, le qualifier et le suivre.
+        three: Vous recevrez un e-mail de confirmation si vous fournissez une adresse
+          e-mail.
+      statuses:
+        new: Nouveau
+        contacted: Contacte
+        qualified: Qualifie
+        unqualified: Non qualifie
+        archived: Archive
+      source_types:
+        general_enquiry: Demande generale
+        brochure_request: Demande de brochure
+        valuation_request: Demande d'estimation
+        letting_enquiry: Demande locative
+      validation:
+        contact_required: Ajoutez une adresse e-mail ou un numero de telephone afin
+          que nous puissions vous repondre.
+      flash:
+        created: Merci. Votre demande a ete envoyee a l equipe.
+      audit:
+        created: Lead cree depuis %{source} par %{name}.
+      mailer:
+        acknowledgement_subject: Nous avons bien recu votre demande au sujet de %{address}
+        internal_subject: Nouvelle %{source} pour %{address}
+        greeting: Bonjour %{name},
+        acknowledgement_body_html: Merci pour votre message au sujet de <strong>%{address}</strong>.
+          L equipe a bien recu votre demande et va la traiter rapidement.
+        lead_reference: 'Reference lead : %{reference}'
+        enquiry_type: 'Type de demande : %{source}'
+        property: 'Bien : %{address}'
+        reply_body: Nous vous repondrons via les coordonnees fournies.
+        internal_intro: Une nouvelle demande sur un bien a ete recue.
+        customer: 'Client : %{name}'
+        email: 'E-mail : %{email}'
+        phone: 'Telephone : %{phone}'
+        source: 'Source : %{source}'
+        not_provided: Non fourni
+    offers:
+      title: Soumettre une offre pour %{address}
+      eyebrow: Offre d achat
+      heading: Soumettre une offre pour %{address}
+      body: Utilisez ce formulaire si vous etes pret a enregistrer une offre et a
+        partager votre position d achat avec l equipe.
+      fields:
+        amount: Montant de l'offre
+        chain_position: Position d'achat
+        chain_position_placeholder: Acheteur comptant, sans chaine en cours
+        notes: Notes
+      submit: Envoyer l'offre
+      statuses:
+        received: recue
+        accepted: acceptee
+        rejected: refusee
+        withdrawn: retiree
+        completed: terminee
+      validation:
+        sale_listing_only: doit etre un bien a vendre
+      alerts:
+        sale_only: Les offres ne sont disponibles que pour les biens a vendre.
+      flash:
+        created: Offre envoyee. L'equipe va l'examiner rapidement.
+      events:
+        received: Offre recue a %{amount}.
+        status_changed: Statut de l offre passe de %{from_status} a %{to_status}.
+      audit:
+        created: Offre recue de %{name} a %{amount}.
+    rental_applications:
+      title: Demarrer un dossier locatif pour %{address}
+      eyebrow: Dossier locatif
+      heading: Demarrer un dossier locatif pour %{address}
+      body: Utilisez ce formulaire si vous souhaitez vous enregistrer comme candidat
+        et partager votre date d entree souhaitee et vos notes de solvabilite.
+      fields:
+        move_in_date: Date d'entree souhaitee
+        guarantor_required: Je pense que je pourrais avoir besoin d'un garant
+        guarantor_available: J'ai deja un garant disponible
+        affordability_notes: Notes de solvabilite
+        notes: Notes
+      submit: Envoyer le dossier locatif
+      statuses:
+        received: recu
+        referencing: en verification
+        approved: approuve
+        rejected: rejete
+        withdrawn: retire
+      validation:
+        rental_listing_only: doit etre un bien en location
+      alerts:
+        rental_only: Les dossiers locatifs sont uniquement disponibles pour les biens
+          a louer.
+      flash:
+        created: Dossier locatif envoye. L'equipe va l'examiner rapidement.
+      events:
+        received: Dossier locatif recu pour %{move_in_date}.
+        status_changed: Statut du dossier passe de %{from_status} a %{to_status}.
+      audit:
+        created: Dossier locatif recu de %{name} pour une entree le %{move_in_date}.
+    saved_searches:
+      notice:
+        one: Recherche enregistree creee pour 1 annonce correspondante.
+        other: Recherche enregistree creee pour %{count} annonces correspondantes.
+      validation:
+        max_price: doit etre superieur ou egal au prix minimum
+    photos:
+      title: Photos de %{address}
+      eyebrow: Elements de l annonce
+      heading: Gerer les photos
+      body: Definissez une image principale, gardez un ordre propre et ajoutez des
+        legendes prêtes pour la brochure.
+      add_title: Ajouter une photo
+      current_title: Photos actuelles
+      empty: Aucune photo n'a encore ete ajoutee.
+      fields:
+        image_filename: Nom du fichier image
+        image_filename_placeholder: hero_family_home.jpg
+        caption: Legende
+        caption_placeholder: Cuisine salle a manger au crepuscule
+        position: Ordre d'affichage
+        primary: Utiliser comme image principale
+        primary_image: Image principale
+      actions:
+        add: Ajouter la photo
+        remove_confirm: Supprimer cette photo ?
+      flash:
+        added: Photo ajoutee.
+        updated: Photo mise a jour.
+        removed: Photo supprimee.
+    floor_plans:
+      title: Plans de %{address}
+      eyebrow: Elements de l annonce
+      heading: Gerer les plans
+      body: Gardez les plans de brochure bien organises pour que les acheteurs et
+        locataires puissent consulter la disposition rapidement.
+      add_title: Ajouter un plan
+      current_title: Plans actuels
+      empty: Aucun plan n'a encore ete ajoute.
+      fields:
+        label: Libelle
+        label_placeholder: Rez-de-chaussee
+        file_name: Nom du fichier
+        file_name_placeholder: plan_rez_de_chaussee.pdf
+        position: Ordre d'affichage
+      actions:
+        add: Ajouter le plan
+        remove_confirm: Supprimer ce plan ?
+      flash:
+        added: Plan ajoute.
+        updated: Plan mis a jour.
+        removed: Plan supprime.
+    property_documents:
+      title: Documents pour %{address}
+      heading: Gerer les documents
+      empty: Aucun document de brochure ou de conformite n'a encore ete ajoute.
+      add_title: Ajouter un document
+      edit_title: Modifier le document
+      public_visitor: Visiteur public
+      fields:
+        title: Titre
+        file_name: Nom du fichier
+        file_name_placeholder: brochure.pdf
+        category: Categorie
+        visibility: Visibilite
+        position: Position
+      actions:
+        add: Ajouter le document
+        save: Enregistrer le document
+      categories:
+        brochure: Brochure
+        compliance: Conformite
+        landlord_attachment: Piece bailleur
+        vendor_attachment: Piece vendeur
+        epc: DPE
+        tenancy_info: Infos location
+      visibilities:
+        public: Public
+        private: Prive
+      validation:
+        supported_file: doit faire reference a un fichier pris en charge
+      alerts:
+        not_public: Ce document n'est pas disponible sur la page publique.
+      flash:
+        added: Document ajoute.
+        updated: Document mis a jour.
+        removed: Document supprime.
+      audit:
+        added: Document %{category} "%{title}" ajoute.
+        updated: Le document "%{title}" a ete mis a jour.
+        removed: Le document "%{title}" a ete supprime.
+        downloaded: '"%{title}" telecharge.'
+    validation:
+      phone_number: doit etre un numero de telephone valide

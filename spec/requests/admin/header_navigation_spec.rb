@@ -12,6 +12,10 @@ RSpec.describe "Admin header navigation" do
     Nokogiri::HTML.parse(response.body)
   end
 
+  def child_testids(node)
+    node.element_children.map { |child| child["data-testid"] || child.name }
+  end
+
   it "defaults the public header button to the admin dashboard" do
     get root_path
 
@@ -41,9 +45,13 @@ RSpec.describe "Admin header navigation" do
 
     topbar_wrap = parsed_html.at_css(".admin-topbar-wrap")
     expect(topbar_wrap).to be_present
+    expect(parsed_html.at_css('a.skip-link')["href"]).to eq("#admin-main-content")
+    expect(parsed_html.at_css("main#admin-main-content[tabindex='-1']")).to be_present
 
     topbar = topbar_wrap.at_css(".admin-topbar")
     expect(topbar).to be_present
+    expect(topbar.at_css(".admin-topbar__main")).to be_present
+    expect(topbar.at_css('[data-testid="active-demo-scenario"]')).not_to be_present
 
     brand_link = parsed_html.at_css(".admin-sidebar__brand-link")
     expect(brand_link).to be_present
@@ -51,12 +59,20 @@ RSpec.describe "Admin header navigation" do
     expect(brand_link.at_css(".admin-sidebar__eyebrow")&.text&.strip).to eq(I18n.t("ui.site_header.eyebrow"))
     expect(brand_link.at_css(".marketing-wordmark--header")).to be_present
 
-    view_site_link = topbar.at_css(".admin-topbar__actions a.button.secondary.hollow.admin-topbar__action")
+    session_panel = topbar.at_css(".admin-topbar__session")
+    expect(session_panel).to be_present
+
+    actions_top = session_panel.at_css(".site-header__actions-top")
+    expect(actions_top).to be_present
+    expect(child_testids(actions_top)).to eq(["admin-account-summary", "language-dropdown"])
+    expect(actions_top.at_css('[data-testid="language-dropdown"]')).to be_present
+
+    view_site_link = session_panel.at_css(".site-header__button-group a.button.primary.admin-topbar__action")
     expect(view_site_link).to be_present
     expect(view_site_link.text.strip).to eq("View site")
     expect(view_site_link["href"]).to eq(root_path)
 
-    admin_user = topbar.at_css(".admin-topbar__user.site-header__account")
+    admin_user = session_panel.at_css('[data-testid="admin-account-summary"].site-header__account')
     expect(admin_user).to be_present
     expect(admin_user.at_css(".site-header__account-heading")).to be_present
     expect(admin_user.text).to include("Signed in")
@@ -64,9 +80,15 @@ RSpec.describe "Admin header navigation" do
     expect(admin_user.text).to include(admin.email)
     expect(admin_user.at_css(".site-header__account-detail")["title"]).to eq(admin.email)
 
+    button_group = session_panel.at_css(".site-header__button-group")
+    expect(button_group).to be_present
+    expect(button_group.css("a.button").map { |link| link.text.strip }).to eq(["View site", "Sign out"])
+    expect(button_group.css("a.button").map { |link| link["href"] }).to eq([root_path, destroy_admin_session_path])
+
     lead_link = parsed_html.at_css('[data-testid="admin-enquiries-link"]')
     expect(lead_link).to be_present
     expect(lead_link["href"]).to eq(admin_enquiries_path)
+    expect(lead_link["aria-current"]).to eq("page")
 
     offers_link = parsed_html.at_css('[data-testid="admin-offers-link"]')
     expect(offers_link).to be_present
@@ -79,8 +101,12 @@ RSpec.describe "Admin header navigation" do
     utility_nav = parsed_html.at_css('[data-testid="admin-nav-utility"]')
     expect(utility_nav).to be_present
 
+    utility_title = parsed_html.at_css('[data-testid="admin-nav-utility-title"]')
+    expect(utility_title).to be_present
+    expect(utility_title.text.strip).to eq("QA Area")
+
     utility_texts = utility_nav.css("a").map { |link| link.text.strip }
-    expect(utility_texts).to eq(["Demo Data", "QA Guide"])
+    expect(utility_texts).to eq(["Demo Data", "Security", "QA Guide"])
 
     divider = parsed_html.at_css('[data-testid="admin-nav-divider"]')
     expect(divider).to be_present
@@ -89,25 +115,29 @@ RSpec.describe "Admin header navigation" do
     expect(demo_data_link).to be_present
     expect(demo_data_link["href"]).to eq(admin_demo_scenarios_path)
 
+    security_link = utility_nav.at_css('[data-testid="admin-security-link"]')
+    expect(security_link).to be_present
+    expect(security_link["href"]).to eq(admin_security_path)
+
+    expect(utility_nav.at_css('[data-testid="admin-nav-utility-divider"]')).not_to be_present
+
     qa_link = utility_nav.at_css('[data-testid="admin-qa-link"]')
     expect(qa_link).to be_present
     expect(qa_link["href"]).to eq(admin_qa_path)
 
-    sign_out_link = topbar.at_css(".admin-topbar__actions a.button.alert.hollow.admin-topbar__action")
+    sign_out_link = session_panel.at_css(".site-header__button-group a.button.alert.hollow.admin-topbar__action")
     expect(sign_out_link).to be_present
     expect(sign_out_link.text.strip).to eq("Sign out")
     expect(sign_out_link["href"]).to eq(destroy_admin_session_path)
   end
 
-  it "shows a friendly name for the curated local catalogue in the admin top bar" do
+  it "keeps the admin top bar free of the active demo scenario label" do
     BookingConfiguration.current.update!(active_demo_scenario_key: "custom_sevenoaks_westerham_catalogue")
 
     get admin_root_path
 
     expect(response).to have_http_status(:ok)
 
-    active_scenario = parsed_html.at_css('[data-testid="active-demo-scenario"]')
-    expect(active_scenario).to be_present
-    expect(active_scenario.text.strip).to eq("Curated Sevenoaks and Westerham catalogue")
+    expect(parsed_html.at_css('[data-testid="active-demo-scenario"]')).not_to be_present
   end
 end
