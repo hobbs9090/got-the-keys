@@ -43,7 +43,7 @@ jobs:
       BUNDLE_WITHOUT: "doc production test"
       DEPLOY_USER: steven
       DEPLOY_HOST: 127.0.0.1
-      DEPLOY_TO: /var/www/stevenhobbs.co.uk
+      DEPLOY_TO: /var/www/gotthekeys-staging
       DEPLOY_REPO_URL: /home/steven/git/rails_got_the_keys.git
       APP_HOST: stevenhobbs.co.uk
 
