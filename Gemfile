@@ -51,7 +51,10 @@ group :test do
   gem 'selenium-webdriver', '~> 4.0'
 end
 
+group :staging, :production do
+  gem 'passenger', '~> 6.1'
+end
+
 group :production do
   gem 'pg', '~> 1.5'
-  gem 'passenger', '~> 6.1'
 end
