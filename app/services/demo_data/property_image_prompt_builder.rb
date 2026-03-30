@@ -36,6 +36,7 @@ module DemoData
         property_summary(property),
         area_note_for(property),
         property_type_note_for(property),
+        chronology_note_for(property),
         sale_context_for(property),
         feature_cues_for(property),
         "Use professional luxury real-estate photography, a front three-quarter exterior angle, wide framing, crisp detail, clean windows, tidy masonry, and bright natural daylight with soft blue-sky weather.",
@@ -65,6 +66,22 @@ module DemoData
       SALE_CONTEXT_NOTES[property.sale_status]
     end
 
+    def chronology_note_for(property)
+      return if property.year_built.blank? && property.refurbished_year.blank?
+
+      notes = []
+
+      if property.year_built.present?
+        notes << "The building dates from #{property.year_built} and should read as a believable #{architectural_era_for(property.year_built)} UK home, with rooflines, windows, and materials that suit that period."
+      end
+
+      if property.refurbished_year.present?
+        notes << "Reflect tasteful updates completed in #{property.refurbished_year} while keeping the original character and scale coherent."
+      end
+
+      notes.join(" ")
+    end
+
     def feature_cues_for(property)
       searchable_text = [property.listing_tagline, property.property_description].compact.join(" ")
       cues = FEATURE_VISUAL_CUES.filter_map { |pattern, cue| cue if searchable_text.match?(pattern) }.first(3)
@@ -76,6 +93,18 @@ module DemoData
     def listing_context_for(property)
       pieces = [property.headline.presence, property.property_description.to_s.squish]
       pieces.compact.join(" ").truncate(420, separator: " ")
+    end
+
+    def architectural_era_for(year_built)
+      case year_built.to_i
+      when ..1836 then "Georgian-era"
+      when 1837..1901 then "Victorian-era"
+      when 1902..1918 then "Edwardian-era"
+      when 1919..1939 then "interwar-era"
+      when 1940..1969 then "mid-century"
+      when 1970..1999 then "late-20th-century"
+      else "early-21st-century"
+      end
     end
   end
 end

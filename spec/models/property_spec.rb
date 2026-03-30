@@ -51,7 +51,6 @@ describe "A property" do
       image_file_name: nil,
       tenure: nil,
       council_tax_band: nil,
-      epc_rating: nil,
       floor_area_sq_ft: nil
     )
 
@@ -161,6 +160,13 @@ describe "A property" do
     expect(property.errors[:image_file_name]).to be_empty
   end
 
+  it "rejects refurbishment years earlier than the build year" do
+    property = build_property(year_built: 2005, refurbished_year: 2001)
+
+    expect(property.valid?).to be false
+    expect(property.errors[:refurbished_year]).to include("must be greater than or equal to the year built")
+  end
+
   it "rejects unsupported image filename extensions" do
     property = build_property(image_file_name: "property_placeholder_listing.webp")
 
@@ -174,5 +180,19 @@ describe "A property" do
     FactoryBot.create(:photo, property:, image_filename: "gallery-cover.jpg", primary: true, position: 1)
 
     expect(property.hero_image_name).to eq("gallery-cover.jpg")
+  end
+
+  it "favours listings with imagery in the recommended order" do
+    image_backed = FactoryBot.create(:property, user:, address_line_1: "Image Backed Place", featured: false)
+    text_only = FactoryBot.create(:property, user:, address_line_1: "Text Only Place", featured: false)
+    FactoryBot.create(:photo, property: image_backed, image_filename: "image-backed-place.jpg", primary: true, position: 1)
+
+    image_backed.update_columns(updated_at: 2.days.ago)
+    text_only.update_columns(updated_at: 1.day.ago)
+
+    expect(Property.recommended_order.limit(2).pluck(:address_line_1)).to eq([
+      "Image Backed Place",
+      "Text Only Place"
+    ])
   end
 end

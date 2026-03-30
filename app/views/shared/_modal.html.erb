@@ -4,10 +4,10 @@
 <div class="site-modal site-modal--<%= modal_size %>" id="<%= id %>" data-modal hidden aria-hidden="true" aria-labelledby="<%= title_id %>" aria-modal="true" role="dialog">
   <div class="site-modal__backdrop" data-modal-close></div>
 
-  <div class="site-modal__dialog">
+  <div class="site-modal__dialog" tabindex="-1">
     <div class="site-modal__header">
       <h4 id="<%= title_id %>"><%= title %></h4>
-      <button class="site-modal__close" data-modal-close aria-label="Close dialog" type="button">
+      <button class="site-modal__close" data-modal-close aria-label="<%= t("ui.common.close_dialog") %>" type="button">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>

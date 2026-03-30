@@ -1,0 +1,136 @@
+<% title t("ui.admin.security.title", default: "Admin security") %>
+<% provisioning_uri = current_admin.otp_provisioning_uri(current_admin.email, otp_secret: @pending_otp_secret, issuer: "GotTheKeys Admin") if @pending_otp_secret.present? %>
+
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow"><%= t("ui.admin.security.eyebrow", default: "Authentication controls") %></p>
+      <h1><%= t("ui.admin.security.title", default: "Admin security") %></h1>
+      <p><%= t("ui.admin.security.intro", default: "Manage your authenticator app enrollment, backup codes, and sign-in recovery options from one place.") %></p>
+    </div>
+  </div>
+</section>
+
+<section class="admin-grid">
+  <article class="admin-panel" data-testid="admin-security-status-panel">
+    <h2><%= t("ui.admin.security.status_title", default: "Two-factor status") %></h2>
+
+    <dl class="detail-list">
+      <div>
+        <dt><%= t("ui.admin.security.global_mode", default: "Global mode") %></dt>
+        <dd data-testid="admin-security-global-mode">
+          <span class="<%= @booking_configuration.admin_two_factor_optional? ? 'badge badge--success' : 'badge badge--warning' %>">
+            <%= admin_two_factor_mode_label(@booking_configuration.admin_two_factor_mode) %>
+          </span>
+        </dd>
+      </div>
+      <div>
+        <dt><%= t("ui.admin.security.account_status", default: "Account status") %></dt>
+        <dd data-testid="admin-security-account-status">
+          <span class="<%= current_admin.two_factor_enrolled? ? 'badge badge--success' : 'badge badge--muted' %>">
+            <%= current_admin.two_factor_enrolled? ? t("ui.admin.security.enabled", default: "Enrolled") : t("ui.admin.security.disabled", default: "Not enrolled") %>
+          </span>
+        </dd>
+      </div>
+      <div>
+        <dt><%= t("ui.admin.security.sign_in_behavior", default: "Sign-in behavior") %></dt>
+        <dd data-testid="admin-security-sign-in-behavior">
+          <% if @booking_configuration.admin_two_factor_disabled? %>
+            <%= t("ui.admin.security.behavior_disabled", default: "OTP checks are currently bypassed for every admin. Existing secrets and backup codes are preserved for later reactivation.") %>
+          <% elsif current_admin.two_factor_enrolled? %>
+            <%= t("ui.admin.security.behavior_enrolled", default: "This admin must enter a valid authenticator code or backup code at sign-in.") %>
+          <% else %>
+            <%= t("ui.admin.security.behavior_unenrolled", default: "This admin can keep signing in with email and password until they choose to enroll.") %>
+          <% end %>
+        </dd>
+      </div>
+      <div>
+        <dt><%= t("ui.admin.security.backup_codes", default: "Backup codes") %></dt>
+        <dd data-testid="admin-security-backup-code-status">
+          <%= current_admin.two_factor_backup_codes_generated? ? t("ui.admin.security.backup_codes_ready", default: "Generated and ready to rotate") : t("ui.admin.security.backup_codes_missing", default: "No backup codes generated yet") %>
+        </dd>
+      </div>
+    </dl>
+
+    <div class="form-actions admin-security-actions">
+      <% if current_admin.two_factor_enrolled? %>
+        <%= button_to t("ui.admin.security.regenerate_backup_codes", default: "Regenerate backup codes"), regenerate_backup_codes_admin_security_path, method: :post, class: "button secondary hollow" %>
+        <%= button_to t("ui.admin.security.disable_action", default: "Disable two-factor"), disable_admin_security_path, method: :delete, class: "button alert hollow" %>
+      <% else %>
+        <%= button_to(@pending_otp_secret.present? ? t("ui.admin.security.restart_setup", default: "Generate a new QR code") : t("ui.admin.security.begin_setup", default: "Begin setup"), enroll_admin_security_path, method: :post, class: "button primary") %>
+      <% end %>
+    </div>
+  </article>
+
+  <% if @pending_otp_secret.present? %>
+    <article class="admin-panel admin-security-enrollment" data-testid="admin-security-enrollment-panel">
+      <h2><%= t("ui.admin.security.enrollment_title", default: "Set up your authenticator app") %></h2>
+      <p><%= t("ui.admin.security.enrollment_body", default: "Scan this QR code with Google Authenticator or any compatible TOTP app, then confirm setup with your first one-time password.") %></p>
+
+      <div class="admin-security-enrollment__grid">
+        <div class="admin-security-enrollment__qr" data-testid="admin-security-qr">
+          <%= admin_two_factor_qr_svg(provisioning_uri) %>
+        </div>
+
+        <div class="admin-security-enrollment__details">
+          <p class="admin-security-enrollment__label"><%= t("ui.admin.security.manual_key", default: "Manual entry key") %></p>
+          <div class="code-block" data-testid="admin-security-manual-key"><%= @pending_otp_secret %></div>
+          <p class="help-text"><%= t("ui.admin.security.manual_key_hint", default: "If scanning is unavailable, enter this secret key manually in your authenticator app.") %></p>
+        </div>
+      </div>
+
+      <%= render "shared/errors", object: current_admin %>
+
+      <%= form_with url: confirm_admin_security_path, method: :patch, class: "stacked-form", local: true do %>
+        <div>
+          <%= label_tag "admin_otp_attempt", t("ui.admin.security.confirm_code", default: "Verification code"), **form_label_options(current_admin, :otp_attempt) %>
+          <%= text_field_tag "admin[otp_attempt]", params.dig(:admin, :otp_attempt), required: true, autocomplete: "one-time-code", data: { testid: "admin-security-otp-attempt" }, **form_control_options(current_admin, :otp_attempt) %>
+          <%= field_error_messages(current_admin, :otp_attempt) %>
+        </div>
+
+        <div class="form-actions">
+          <%= submit_tag t("ui.admin.security.confirm_setup", default: "Confirm and enable 2FA"), class: "button primary" %>
+        </div>
+      <% end %>
+    </article>
+  <% elsif @fresh_backup_codes.any? %>
+    <article class="admin-panel admin-security-backup-codes" data-testid="admin-security-backup-codes-panel">
+      <h2><%= t("ui.admin.security.backup_codes_title", default: "Backup codes") %></h2>
+      <p><%= t("ui.admin.security.backup_codes_body", default: "Save these single-use backup codes somewhere safe now. They will not be shown again after you leave this page.") %></p>
+      <ol class="admin-security-backup-codes__list" data-testid="admin-security-backup-codes">
+        <% @fresh_backup_codes.each do |backup_code| %>
+          <li class="admin-security-backup-codes__item" data-testid="admin-security-backup-code">
+            <code><%= backup_code %></code>
+          </li>
+        <% end %>
+      </ol>
+    </article>
+  <% else %>
+    <article class="admin-panel">
+      <h2><%= t("ui.admin.security.setup_steps_title", default: "How setup works") %></h2>
+      <ol class="timeline">
+        <li><p><%= t("ui.admin.security.setup_steps.scan", default: "Start setup to generate a fresh secret and QR code for your authenticator app.") %></p></li>
+        <li><p><%= t("ui.admin.security.setup_steps.confirm", default: "Confirm setup with your first one-time password so we know the app is paired correctly.") %></p></li>
+        <li><p><%= t("ui.admin.security.setup_steps.save", default: "Save your backup codes immediately. Each code works once and can be regenerated later.") %></p></li>
+      </ol>
+    </article>
+  <% end %>
+</section>
+
+<section class="admin-panel" data-testid="admin-security-activity-panel">
+  <h2><%= t("ui.admin.security.activity_title", default: "Recent security activity") %></h2>
+
+  <% if @security_audit_logs.any? %>
+    <ol class="timeline">
+      <% @security_audit_logs.each do |audit_log| %>
+        <li>
+          <p><strong><%= admin_two_factor_audit_action_label(audit_log.action) %></strong></p>
+          <p><%= audit_log.message %></p>
+          <p><%= t("ui.admin.security.activity_meta", default: "%{actor} at %{time}", actor: audit_log.actor_display, time: formatted_date_time(audit_log.occurred_at)) %></p>
+        </li>
+      <% end %>
+    </ol>
+  <% else %>
+    <p><%= t("ui.admin.security.activity_empty", default: "No two-factor activity has been recorded for this admin yet.") %></p>
+  <% end %>
+</section>

@@ -27,5 +27,7 @@ GotTheKeys::Application.configure do
   config.active_record.migration_error = :page_load
   config.active_record.verbose_query_logs = true
   config.action_view.annotate_rendered_view_with_filenames = true
+  config.assets.resolve_with = [:environment]
+  config.public_file_server.headers = { 'Cache-Control' => 'no-store' }
   config.assets.quiet = true
 end

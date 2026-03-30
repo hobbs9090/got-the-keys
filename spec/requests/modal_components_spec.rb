@@ -15,6 +15,10 @@ RSpec.describe "Modal components" do
     expect(modal).to be_present
     expect(modal.has_attribute?("hidden")).to be(true)
     expect(modal.at_css("[data-modal-close]")).to be_present
+    expect(modal.at_css(".site-modal__close")["aria-label"]).to eq(I18n.t("ui.common.close_dialog"))
+    expect(modal.at_css(".site-modal__dialog")["tabindex"]).to eq("-1")
+    expect(document.css("iframe").map { |frame| frame["title"] }).to all(eq(I18n.t("contact_us.where_we_are")))
+    expect(document.css("iframe").map { |frame| frame["tabindex"] }).to all(eq("-1"))
   end
 
   it "uses the shared modal contract on the registration page" do

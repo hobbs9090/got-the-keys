@@ -18,7 +18,9 @@ RSpec.describe DemoData::PropertyImagePromptBuilder do
       bedrooms: 4,
       bathrooms: 3,
       sale_status: "For Sale",
-      asking_price: 1_050_000
+      asking_price: 1_050_000,
+      year_built: 1934,
+      refurbished_year: 2021
     )
   end
 
@@ -29,6 +31,9 @@ RSpec.describe DemoData::PropertyImagePromptBuilder do
     expect(prompt).to include("leafy Sevenoaks residential lane")
     expect(prompt).to include("bright kitchen diner")
     expect(prompt).to include("off-street parking")
+    expect(prompt).to include("dates from 1934")
+    expect(prompt).to include("interwar-era")
+    expect(prompt).to include("updates completed in 2021")
     expect(prompt).to include("Do not include any readable street signs, house numbers")
     expect(prompt).to include(property.headline)
   end

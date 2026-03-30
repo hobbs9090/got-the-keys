@@ -1,8 +1,10 @@
 class BookingConfiguration < ApplicationRecord
+  ADMIN_TWO_FACTOR_MODES = %w[disabled optional].freeze
   DEFAULT_OPEN_WEEKDAYS = %w[1 2 3 4 5 6].freeze
   CLOCK_FORMAT = /\A\d{2}:\d{2}\z/
 
   validates :slot_duration_minutes, :lead_time_hours, :buffer_minutes, :office_opens_at, :office_closes_at, presence: true
+  validates :admin_two_factor_mode, inclusion: { in: ADMIN_TWO_FACTOR_MODES }
   validates :slot_duration_minutes, numericality: { only_integer: true, greater_than_or_equal_to: 15, less_than_or_equal_to: 240 }, allow_blank: true
   validates :lead_time_hours, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 336 }, allow_blank: true
   validates :buffer_minutes, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 180 }, allow_blank: true
@@ -25,7 +27,8 @@ class BookingConfiguration < ApplicationRecord
         office_opens_at: "09:00",
         office_closes_at: "18:00",
         open_weekdays: DEFAULT_OPEN_WEEKDAYS.join(","),
-        active_demo_scenario_key: "baseline"
+        active_demo_scenario_key: "baseline",
+        admin_two_factor_mode: "disabled"
       }
     end
   end
@@ -53,6 +56,14 @@ class BookingConfiguration < ApplicationRecord
 
   def hours_for(date)
     [parse_clock(date, office_opens_at), parse_clock(date, office_closes_at)]
+  end
+
+  def admin_two_factor_disabled?
+    admin_two_factor_mode == "disabled"
+  end
+
+  def admin_two_factor_optional?
+    admin_two_factor_mode == "optional"
   end
 
   private

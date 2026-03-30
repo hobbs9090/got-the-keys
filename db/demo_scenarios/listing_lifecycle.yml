@@ -73,7 +73,6 @@ properties:
     furnishing: Unfurnished
     parking: Driveway
     outdoor_space: West-facing garden
-    epc_rating: C
     floor_area_sq_ft: 1715
     pets_allowed: true
   - key: bromley_under_offer
@@ -97,7 +96,6 @@ properties:
     council_tax_band: G
     parking: Garage and driveway
     outdoor_space: Landscaped garden
-    epc_rating: D
     floor_area_sq_ft: 2380
   - key: bromley_let_agreed
     owner_email: naomi.blake@example.com
@@ -120,7 +118,6 @@ properties:
     available_from: today+10d
     council_tax_band: C
     parking: Permit parking
-    epc_rating: B
     floor_area_sq_ft: 710
     deposit_amount: 2450
     pets_allowed: false
@@ -144,7 +141,6 @@ properties:
     tenure: Freehold
     council_tax_band: E
     outdoor_space: Courtyard garden
-    epc_rating: E
 photos:
   - property_key: bromley_review
     image_filename: hero_4.jpg

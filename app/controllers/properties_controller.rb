@@ -67,8 +67,8 @@ class PropertiesController < ApplicationController
       :property_description, :bedrooms, :bathrooms, :property_type, :listing_tagline,
       :image_file_name, :sale_status, :asking_price, :featured, :listing_state, :tenure,
       :council_tax_band, :furnishing, :available_from, :parking, :outdoor_space,
-      :epc_rating, :floor_area_sq_ft, :deposit_amount, :pets_allowed, :service_charge_amount,
-      :lease_length_years
+      :floor_area_sq_ft, :deposit_amount, :pets_allowed, :service_charge_amount,
+      :lease_length_years, :year_built, :refurbished_year
     )
   end
 
@@ -81,7 +81,7 @@ class PropertiesController < ApplicationController
     return if current_admin.present?
     return if current_user == @property.user
 
-    redirect_to properties_path, alert: "This listing is not currently public."
+    redirect_to properties_path, alert: t("ui.properties.flash.not_public")
   end
 
   def saved_search_defaults

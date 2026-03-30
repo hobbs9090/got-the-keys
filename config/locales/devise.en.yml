@@ -17,8 +17,9 @@ en:
       unauthenticated: 'You need to sign in or register before continuing.'
       unconfirmed: 'You have to confirm your account before continuing.'
       locked: 'Your account is locked.'
+      admin_otp_attempt_missing: 'Enter your verification code or a backup code to finish signing in.'
       invalid: 'Invalid email or password.'
-      invalid_token: 'Invalid authentication token.'
+      invalid_token: 'Invalid email, password, or verification code.'
       timeout: 'Your session expired, please sign in again to continue.'
       inactive: 'Your account was not activated yet.'
     sessions:
@@ -165,6 +166,8 @@ en:
           title: 'Sign in'
           submit: 'Sign in'
           remember_me: 'Remember me'
+          otp_attempt: "Verification code or backup code"
+          otp_attempt_hint: "Enter an authenticator code or one of your backup codes."
           hero_badge: "Member access"
           hero_title: "Pick up where you left off"
           hero_intro: "Sign in to manage your listings, confirm viewings, and keep booking updates moving."

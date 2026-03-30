@@ -1,0 +1,366 @@
+---
+fr:
+  activerecord:
+    attributes:
+      property:
+        address_line_1: Address line 1
+        asking_price: Asking price
+        bedrooms: Bedrooms
+        country: Country
+        county: County
+        postcode: Postcode
+        property_description: Property description
+        sale_status: Sale status
+        town_city: Town or City
+      user:
+        email: Email
+        first_name: Given Name
+        last_name: Family Name
+        mobile_number: Mobile Number
+        password: Password
+        terms_of_service: Terms of Service
+    models:
+      property: Property
+      user: User
+  bedroom: bedroom
+  bedrooms: Bedrooms
+  blog:
+    blog_date: " on March 18, 2015."
+    john_smith: The GotTheKeys Team
+    written_by: 'Written by '
+  charts:
+    bed: bed
+    china: China
+    chinese: Chinese
+    country: Country
+    english: English
+    english_vs_chinese: English vs Chinese
+    language: Language
+    popularity: Popularity
+    rent: Rent
+    sale: Sale
+    sale_vs_rent: For Sale vs For Rent
+    united_kingdom: United Kingdom
+  coffeescript:
+    blurb: This is a test page used for experiments in CoffeeScript
+    title: CoffeeScript Test Page
+  devise:
+    failure:
+      admin_otp_attempt_missing: Enter your verification code or a backup code to finish signing in.
+    mailer:
+      confirmation_instructions:
+        confirm_my_account: Confirm my account
+        paragraph_1: 'You can confirm your account through the link below:'
+        subject: Confirmation instructions
+        welcome: 'Welcome '
+      reset_password_instructions:
+        change_my_password: Change my password
+        hello: Hello
+        paragraph_1: Someone has requested a link to change your password, and you can do this through the link below.
+        paragraph_2: If you didn't request this, please ignore this email.
+        paragraph_3: Your password won't change until you access the link above and create a new one.
+        subject: Reset password instructions
+      unlock_instructions:
+        hello: 'Hello '
+        paragraph_1: Your account has been locked due to an excessive amount of unsuccessful sign in attempts.
+        paragraph_2: Click the link below to unlock your account
+        subject: Unlock Instructions
+        unlock_my_account: Unlock my account
+    navigation:
+      change_password: Change password
+      change_registration: Change registration
+      sign_in: Sign in
+      sign_out: Sign out
+      sign_up: Sign up
+    omniauth_callbacks:
+      failure: Could not authorize you from %{kind} because "%{reason}".
+      success: Successfully authorized from %{kind} account.
+    views:
+      commons:
+        sidebar:
+          title: Operation panel
+      passwords:
+        edit:
+          cancel_my_account: Cancel my account
+      registrations:
+        binding:
+          submit: Binding
+          title: Binding
+        edit:
+          change_pass_tip: If you do not want to change, leave blank
+          password: Change Password
+          submit: Submit
+      sessions:
+        new:
+          otp_attempt: Verification code or backup code
+          otp_attempt_hint: Enter an authenticator code or one of your backup codes.
+  errors:
+    could_not_be_saved: could not be saved
+    error: error
+    messages:
+      already_confirmed: was already confirmed, please try signing in
+      expired: has expired, please request a new one
+      not_found: not found
+      not_locked: was not locked
+      not_saved:
+        one: '1 error prohibited this %{resource} from being saved:'
+        other: "%{count} errors prohibited this %{resource} from being saved:"
+    oops: Oops
+    please_correct_the_following: Please correct the following
+    the: The
+  estate_future: " is the Estate Agent of the future. Why pay a fee of £10,000 to sell a typical London home! We couldn't understand it. That's why we created GotTheKeys.com so now you can tell Timothy from Foxtons to fuck off!"
+  floor_plans:
+    add_floor_plans_for: Add Floor plans for
+    floor_plans_for: Floor plans for
+    heading: Floor Plans
+    title: Floor Plans
+  gotthekeys:
+    got: got
+    gotthekeys: GotTheKeys
+    keys: keys
+    the: the
+  helpers:
+    label:
+      property:
+        address_line_1: Address line 1
+        address_line_2: Address line 2
+        are_you_sure: Are you sure?
+        asking_price: Asking price
+        bedrooms: Bedrooms
+        cancel: Cancel
+        country: Country
+        county: County
+        delete_property: Delete Property
+        image_file_name: Image file name
+        postcode: Postcode
+        property_description: Property description
+        sale_status: Sale status
+        town_city: Town or City
+        update_property: Update Property
+      user:
+        remember_me: Remember me
+  location:
+    heading: Location
+    location_details_for: Location Details for
+    title: Location
+  members:
+    member_username: Member Username
+    num: Number of Properties
+    properties_for_rent: Properties for Rent
+    properties_for_sale: Properties for Sale
+    sale_or_rental: Members with Properties for Sale or Rental
+    title: Members
+    total: Total
+    total_rental_value: Total Rental Value
+    total_selling_value: Total Selling Value
+  menu:
+    account_details: Account Details
+    add_property: Add Property
+    administration: Administration
+    appointments: Appointments
+    coffeescripts: CoffeeScripts
+    description: Description
+    edit_details: Edit Details
+    floor_plans: Floor Plans
+    language_preference: Language Preference
+    location: Location
+    logged_in_as: Logged in as
+    logged_in_as_admin: Logged in as Administrator
+    logout: Logout
+    manage_account: Manage Account
+    my_property_details: My Property Details
+    photos: Photos
+    register: Register
+    sign_in: Sign in
+    user_profile: User Profile
+    viewing_times: Viewing Times
+    welcome: Welcome
+  need_help: Need help with conveyancing?
+  not_authorised: YOU ARE NOT AUTHORISED TO EDIT THE PAGE
+  photos:
+    add_photos_of: Add Photos of
+    heading: Photos
+    photos_of: Photos of
+    title: Photos
+  preferred_list: Ask us about our preferred list of solicitors, surveyors and mortgage brokers.
+  properties:
+    add_property_details: Add Property Details
+    bedroom: bedroom
+    edit_property_details_for: 'Edit Property Details for '
+  read_more: Read more
+  side:
+    section: Section
+  statistics:
+    active_users_today: Active users today
+    bed: bed
+    new_members_today: New members today
+    num_chinese_users: Chinese users
+    num_english_users: English users
+    num_properties_rent: Number for rent
+    num_properties_sale: Number for sale
+    properties_added_today: Properties added today
+    property_sizes: Property Sizes
+    property_totals: Property Totals
+    site_statistics: Website Statistics
+    tbc: tbc
+    title: Statistics
+    total_num_properties: Number of properties
+    total_number_users: Number of users
+    total_value_properties: Value of properties
+  successfully_created: Property successfully created!
+  successfully_deleted: Property successfully deleted!
+  successfully_updated: Property successfully updated!
+  total: Total
+  ui:
+    admin:
+      appointments:
+        bookings_count:
+          one: 1 booking
+          other: "%{count} bookings"
+        eyebrow: Admin-only booking management
+        filters:
+          all_properties: All properties
+          all_statuses: All statuses
+          anchor_date: Anchor date
+          anyone: Anyone
+          assigned_admin: Assigned admin
+          customer_email: Customer email
+          customer_email_placeholder: customer@example.com
+        hero_body: Review upcoming bookings, filter by property or status, and take action on requests that need an admin decision.
+        title: Bookings desk
+        views:
+          agenda: Agenda
+          day: Day
+          month: Month
+          week: Week
+      dashboard:
+        all_bookings: All bookings
+        bookings_body: The bookings desk is reserved for administrators and gives you the full calendar view, live filters, and status controls for every viewing request on the site.
+        bookings_eyebrow: Admin-only section
+        bookings_requiring_action: Bookings requiring action
+        bookings_title: Booking visibility and control
+        eyebrow: Operations overview
+        last_demo_data_action: Last demo data action
+        metrics:
+          customers: Customers
+          open_leads: Open leads
+          pending_actions: Pending actions
+          properties: Properties
+          upcoming_appointments: Upcoming appointments
+        no_demo_action: No scenario reset or import has been recorded yet.
+        no_notification_records: No notification records yet.
+        no_upcoming_bookings: No upcoming bookings.
+        nothing_needs_attention: Nothing currently needs attention.
+        notification_log_snapshot: Notification log snapshot
+        open_bookings_desk: Open bookings desk
+        pending_action: Pending action
+        recent_activity: Recent activity
+        this_week: This week
+        title: Admin dashboard
+        upcoming_appointments: Upcoming appointments
+      layout:
+        active_demo_scenario: Active demo scenario
+        sidebar_eyebrow: Admin Workspace
+        title: Admin | %{app_name}
+        view_site: View site
+      navigation:
+        aria_label: Admin
+        booking_rules: Booking Rules
+        bookings: Bookings
+        dashboard: Dashboard
+        demo_data: Demo Data
+        notifications: Notifications
+        properties: Properties
+        qa_area: QA Area
+        qa_guide: QA Guide
+        security: Security
+        sellers: Sellers
+      qa:
+        admin_credential: 'admin: %{email} / %{password}'
+        admin_two_factor:
+          confirmation_required: Type DISABLE to confirm switching the global admin 2FA mode to disabled.
+          title: Admin 2FA mode
+          updated_notice: Updated the global admin 2FA mode.
+        app_version: App version
+        available_scenarios_title: Available scenarios
+        default_password: secret
+        demo_action_value: "%{action} at %{time}"
+        diagnostic_labels:
+          active_scenario: Active scenario
+          bookings: Bookings
+          last_demo_action: Last demo action
+          notification_logs: Notification logs
+          properties: Properties
+          users: Users
+        diagnostics_title: Diagnostics
+        eyebrow: Automation training harness
+        known_credentials_title: Known credentials
+        selectors:
+          active_demo_scenario: '`data-testid="active-demo-scenario"` on the admin shell'
+          admin_appointment_row: '`data-testid="admin-appointment-row"` on agenda rows'
+          appointment_form: '`data-testid="appointment-form"` on the public booking form'
+          book_viewing_cta: '`data-testid="book-viewing-cta"` on property booking CTA'
+          property_card: '`data-testid="property-card"` on listing cards'
+        selectors_title: Automation-friendly selectors
+        seller_credential: 'seller: %{email} / %{password}'
+        title: QA guide
+        training_journeys:
+        - Create a new booking from a property page and verify the success message plus reference code.
+        - As an admin, confirm a pending appointment and validate the status badge plus audit timeline.
+        - Reschedule an appointment into an occupied slot and verify the conflict validation message.
+        - Restore the baseline dataset, then switch to the fully booked scenario and verify the empty-slot state.
+        - Export the current dataset, import it back through the preview screen, and confirm the diagnostics panel updates.
+        training_title: Recommended training journeys
+        version_box:
+          build_number: Build number
+          deployed_at: Deployed at
+          environment: Environment
+          git_sha: Git SHA
+          rails_env: Rails env %{env}
+          title: Release build
+          unavailable: Not available
+      security:
+        already_enabled: Two-factor authentication is already enabled for this admin.
+        audit_actions:
+          admin_two_factor_backup_codes_regenerated: Backup codes regenerated
+          admin_two_factor_disabled: 2FA disabled
+          admin_two_factor_enrollment_completed: 2FA enrollment completed
+        backup_codes_regenerated_notice: Generated a new set of backup codes.
+        disabled_notice: Two-factor authentication has been disabled for this admin.
+        enabled_notice: Two-factor authentication is now enabled for this admin.
+        enrollment_expired: Your setup session expired. Start setup again to generate a new secret.
+        enrollment_started_notice: Generated a fresh authenticator setup for this admin.
+        invalid_code: Enter a valid authenticator code.
+        modes:
+          disabled: Disabled
+          optional: Optional
+        not_enabled: Two-factor authentication is not enabled for this admin.
+        title: Admin security
+    common:
+      skip_to_content: Skip to main content
+      'true': 'Yes'
+    site_header:
+      account_eyebrow: Signed in
+      admin_account_name: Administrator
+      member_account_name: Seller account
+  under_construction: Under Construction
+  user:
+    ago: ago
+    appointments: Appointments
+    email: Email
+    member_since: Member since
+    mobile: Mobile
+    name: Name
+    no_appointments: No Appointments
+    property: Property
+    property_details: Property Details
+    user_details_for: User details for
+  viewing_times:
+    add_viewing_times_for: Add Viewing Times for
+    heading: Viewing Times
+    title: Viewing Times
+    viewing_times_for: Viewing times for
+  welcome:
+    tool_tip: Market insight
+    tool_tip_content: See the kind of pricing and presentation insight that helps owners launch a stronger listing.
+    welcome_message: Sell Or Let With More Control

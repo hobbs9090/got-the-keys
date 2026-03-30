@@ -50,6 +50,9 @@ jobs:
           bundle install --jobs 4 --retry 3
           npm ci
 
+      - name: Check locale health
+        run: bin/i18n_health
+
       - name: Build frontend assets
         run: npm run build
 

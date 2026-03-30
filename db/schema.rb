@@ -10,12 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_26_210000) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_30_061000) do
   create_table "admins", force: :cascade do |t|
+    t.integer "consumed_timestep"
     t.datetime "created_at", precision: nil
     t.string "email"
     t.string "encrypted_password"
     t.string "language"
+    t.json "otp_backup_codes"
+    t.boolean "otp_required_for_login", default: false, null: false
+    t.string "otp_secret"
     t.datetime "updated_at", precision: nil
   end
 
@@ -98,6 +102,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_210000) do
 
   create_table "booking_configurations", force: :cascade do |t|
     t.string "active_demo_scenario_key", default: "baseline", null: false
+    t.string "admin_two_factor_mode", default: "disabled", null: false
     t.integer "buffer_minutes", default: 15, null: false
     t.datetime "created_at", null: false
     t.datetime "last_demo_data_action_at"
@@ -232,7 +237,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_210000) do
     t.string "county"
     t.datetime "created_at", precision: nil
     t.integer "deposit_amount"
-    t.string "epc_rating"
     t.boolean "featured", default: false, null: false
     t.integer "floor_area_sq_ft"
     t.string "furnishing"
@@ -247,18 +251,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_210000) do
     t.text "property_description"
     t.string "property_type", default: "House", null: false
     t.datetime "published_at"
+    t.integer "refurbished_year"
     t.string "sale_status"
     t.integer "service_charge_amount"
     t.string "tenure"
     t.string "town_city"
     t.datetime "updated_at", precision: nil
     t.integer "user_id"
+    t.integer "year_built"
     t.index ["available_from"], name: "index_properties_on_available_from"
     t.index ["bedrooms"], name: "index_properties_on_bedrooms"
     t.index ["featured"], name: "index_properties_on_featured"
     t.index ["listing_state"], name: "index_properties_on_listing_state"
+    t.index ["refurbished_year"], name: "index_properties_on_refurbished_year"
     t.index ["sale_status", "asking_price"], name: "index_properties_on_sale_status_and_price"
     t.index ["user_id"], name: "index_properties_on_user_id"
+    t.index ["year_built"], name: "index_properties_on_year_built"
   end
 
   create_table "property_documents", force: :cascade do |t|

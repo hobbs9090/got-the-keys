@@ -1,20 +1,23 @@
 <nav class="admin-nav" aria-label="<%= t('ui.admin.navigation.aria_label') %>">
-  <ul class="vertical menu admin-nav__menu">
-    <li><%= admin_nav_link_to t("ui.admin.navigation.dashboard"), admin_root_path, data: { testid: "admin-dashboard-link" } %></li>
-    <li><%= admin_nav_link_to t("ui.admin.navigation.bookings"), admin_bookings_path, active: controller_path == "admin/appointments", data: { testid: "admin-bookings-link" } %></li>
-    <li><%= admin_nav_link_to "Leads", admin_enquiries_path, active: controller_path == "admin/enquiries", data: { testid: "admin-enquiries-link" } %></li>
-    <li><%= admin_nav_link_to "Offers", admin_offers_path, active: controller_path == "admin/offers", data: { testid: "admin-offers-link" } %></li>
-    <li><%= admin_nav_link_to "Applications", admin_rental_applications_path, active: controller_path == "admin/rental_applications", data: { testid: "admin-rental-applications-link" } %></li>
-    <li><%= admin_nav_link_to t("ui.admin.navigation.properties"), admin_properties_path, data: { testid: "admin-properties-link" } %></li>
-    <li><%= admin_nav_link_to t("ui.admin.navigation.sellers"), admin_users_path, data: { testid: "admin-users-link" } %></li>
-    <li><%= admin_nav_link_to t("ui.admin.navigation.notifications"), admin_notification_logs_path, data: { testid: "admin-notifications-link" } %></li>
-    <li><%= admin_nav_link_to t("ui.admin.navigation.booking_rules"), admin_booking_configuration_path, data: { testid: "admin-booking-rules-link" } %></li>
-  </ul>
+    <ul class="vertical menu admin-nav__menu">
+        <li><%= admin_nav_link_to t("ui.admin.navigation.dashboard"), admin_root_path, data: { testid: "admin-dashboard-link" } %></li>
+        <li><%= admin_nav_link_to t("ui.admin.navigation.bookings"), admin_bookings_path, active: controller_path == "admin/appointments", data: { testid: "admin-bookings-link" } %></li>
+        <li><%= admin_nav_link_to "Leads", admin_enquiries_path, active: controller_path == "admin/enquiries", data: { testid: "admin-enquiries-link" } %></li>
+        <li><%= admin_nav_link_to "Offers", admin_offers_path, active: controller_path == "admin/offers", data: { testid: "admin-offers-link" } %></li>
+        <li><%= admin_nav_link_to "Applications", admin_rental_applications_path, active: controller_path == "admin/rental_applications", data: { testid: "admin-rental-applications-link" } %></li>
+        <li><%= admin_nav_link_to t("ui.admin.navigation.properties"), admin_properties_path, data: { testid: "admin-properties-link" } %></li>
+        <li><%= admin_nav_link_to t("ui.admin.navigation.sellers"), admin_users_path, data: { testid: "admin-users-link" } %></li>
+        <li><%= admin_nav_link_to t("ui.admin.navigation.notifications"), admin_notification_logs_path, data: { testid: "admin-notifications-link" } %></li>
+        <li><%= admin_nav_link_to t("ui.admin.navigation.booking_rules"), admin_booking_configuration_path, data: { testid: "admin-booking-rules-link" } %></li>
+    </ul>
 
-  <div class="admin-nav__divider" data-testid="admin-nav-divider" aria-hidden="true"></div>
+    <div class="admin-nav__divider" data-testid="admin-nav-divider" aria-hidden="true"></div>
+
+  <p class="admin-nav__section-title" data-testid="admin-nav-utility-title"><%= t("ui.admin.navigation.qa_area", default: "QA Area") %></p>
 
   <ul class="vertical menu admin-nav__menu admin-nav__menu--utility" data-testid="admin-nav-utility">
     <li><%= admin_nav_link_to t("ui.admin.navigation.demo_data"), admin_demo_scenarios_path, data: { testid: "admin-demo-data-link" } %></li>
+    <li><%= admin_nav_link_to t("ui.admin.navigation.security", default: "Security"), admin_security_path, data: { testid: "admin-security-link" } %></li>
     <li><%= admin_nav_link_to t("ui.admin.navigation.qa_guide"), admin_qa_path, data: { testid: "admin-qa-link" } %></li>
   </ul>
 </nav>

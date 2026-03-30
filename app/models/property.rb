@@ -42,19 +42,41 @@ class Property < ApplicationRecord
             }
   validates :sale_status, inclusion: { in: SALE_STATUS }, allow_blank: true
   validates :listing_state, inclusion: { in: LISTING_STATES }
-  validates :tenure, :council_tax_band, :furnishing, :parking, :outdoor_space, :epc_rating, length: { maximum: 60 }, allow_blank: true
+  validates :tenure, :council_tax_band, :furnishing, :parking, :outdoor_space, length: { maximum: 60 }, allow_blank: true
   validates :floor_area_sq_ft, :deposit_amount, :service_charge_amount, :lease_length_years,
             numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_blank: true
+  validates :year_built, :refurbished_year,
+            numericality: {
+              only_integer: true,
+              greater_than_or_equal_to: 1700,
+              less_than_or_equal_to: Date.current.year + 1
+            },
+            allow_blank: true
 
   before_validation :apply_listing_defaults
+  validate :refurbished_year_not_before_year_built
 
   scope :for_sale, -> { where(sale_status: SALE_STATUSES[:for_sale]) }
   scope :for_rent, -> { where(sale_status: SALE_STATUSES[:for_rent]) }
   scope :featured, -> { where(featured: true) }
   scope :publicly_visible, -> { where(listing_state: PUBLIC_LISTING_STATES) }
-  scope :recommended_order, -> { order(featured: :desc, updated_at: :desc) }
+  scope :recommended_order, -> { order(Arel.sql(media_priority_order_sql)).order(featured: :desc, updated_at: :desc) }
 
   class << self
+    def media_priority_order_sql
+      <<~SQL.squish
+        CASE
+          WHEN NULLIF(properties.image_file_name, '') IS NOT NULL THEN 1
+          WHEN EXISTS (
+            SELECT 1
+            FROM photos
+            WHERE photos.property_id = properties.id
+          ) THEN 1
+          ELSE 0
+        END DESC
+      SQL
+    end
+
     def all_properties_total
       publicly_visible.count
     end
@@ -155,7 +177,7 @@ class Property < ApplicationRecord
       when 'newest'
         listings.order(updated_at: :desc)
       else
-        listings.order(featured: :desc, updated_at: :desc)
+        listings.order(Arel.sql(media_priority_order_sql)).order(featured: :desc, updated_at: :desc)
       end
     end
   end
@@ -208,27 +230,27 @@ class Property < ApplicationRecord
     [
       {
         key: :headline,
-        label: "Headline and summary",
+        label: I18n.t("ui.properties.seller.checks.headline"),
         complete: listing_tagline.present? && property_description.to_s.length >= 80
       },
       {
         key: :media,
-        label: "Photography",
+        label: I18n.t("ui.properties.seller.checks.media"),
         complete: ordered_photos.any? || image_file_name.present?
       },
       {
         key: :floor_plan,
-        label: "Floor plan",
+        label: I18n.t("ui.properties.seller.checks.floor_plan"),
         complete: ordered_floor_plans.any?
       },
       {
         key: :facts,
-        label: "Key facts",
-        complete: [tenure, council_tax_band, epc_rating, floor_area_sq_ft].all?(&:present?)
+        label: I18n.t("ui.properties.seller.checks.facts"),
+        complete: [tenure, council_tax_band, floor_area_sq_ft].all?(&:present?)
       },
       {
         key: :contact,
-        label: "Contact readiness",
+        label: I18n.t("ui.properties.seller.checks.contact"),
         complete: user.email.present? && user.mobile_number.present?
       }
     ]
@@ -268,5 +290,12 @@ class Property < ApplicationRecord
   def apply_listing_defaults
     self.listing_state ||= "published"
     self.published_at ||= Time.current if listing_state.in?(PUBLIC_LISTING_STATES) && published_at.blank?
+  end
+
+  def refurbished_year_not_before_year_built
+    return if refurbished_year.blank? || year_built.blank?
+    return if refurbished_year >= year_built
+
+    errors.add(:refurbished_year, "must be greater than or equal to the year built")
   end
 end

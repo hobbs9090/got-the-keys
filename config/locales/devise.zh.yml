@@ -17,8 +17,9 @@ zh:
       unauthenticated: '继续操作前请注册或者登录.'
       unconfirmed: '继续操作前请先激活您的帐号.'
       locked: '您的帐号已被锁定.'
+      admin_otp_attempt_missing: '请输入验证码或备用代码以完成登录。'
       invalid: '邮箱或密码错误'
-      invalid_token: '认证码无效.'
+      invalid_token: '电子邮件、密码或验证码无效.'
       timeout: '您已登录超时，请重新登录.'
       inactive: '您还没有激活帐户.'
       not_found_in_database: "电子邮件地址或密码无效"
@@ -162,6 +163,8 @@ zh:
           title: '登录'
           submit: '登录'
           remember_me: '记住我'
+          otp_attempt: "验证码或备用代码"
+          otp_attempt_hint: "请输入验证器代码或您的备用代码之一。"
           hero_badge: "会员入口"
           hero_title: "继续您上次的进度"
           hero_intro: "登录后即可管理房源、确认看房安排，并跟进最新预约动态。"

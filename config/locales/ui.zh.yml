@@ -1,546 +1,874 @@
 zh:
   ui:
     site_header:
-      eyebrow: "房产平台"
-      admin_bookings: "预约"
-      admin_dashboard: "仪表盘"
-      account_eyebrow: "已登录"
-      admin_account_name: "管理员"
-      member_account_name: "业主账户"
-      sign_out: "退出登录"
-      add_property: "添加房源"
-      profile: "个人资料"
-      register: "注册"
-      sign_in: "登录"
-
+      eyebrow: 房产平台
+      admin_bookings: 预约
+      admin_dashboard: 仪表盘
+      account_eyebrow: 已登录
+      admin_account_name: 管理员
+      member_account_name: 业主账户
+      sign_out: 退出登录
+      add_property: 添加房源
+      profile: 个人资料
+      register: 注册
+      sign_in: 登录
     site_footer:
-      copy: "在同一个服务端渲染的 Rails 应用中，整合现代房源浏览、预约看房和可重复的 QA 场景，并为真实演示、验收测试与 AI 驱动的浏览器自动化训练而构建。"
-
+      copy: 在同一个服务端渲染的 Rails 应用中，整合现代房源浏览、预约看房和可重复的 QA 场景，并为真实演示、验收测试与 AI 驱动的浏览器自动化训练而构建。
     shared:
-      property_placeholder_alt: "房源占位图"
-
+      property_placeholder_alt: 房源占位图
     common:
-      apply: "应用"
-      any: "不限"
-      cancel: "取消"
-      reset: "重置"
-      clear_all: "清除全部"
-      featured: "精选"
-      view_property: "查看房源"
-      book_a_viewing: "预约看房"
-      town: "城镇"
-      bathrooms: "浴室"
-      postcode: "邮编"
-      overview: "概览"
-      address: "地址"
-      property: "房源"
-      requested_slot: "申请时段"
-      current_slot: "当前时段"
-      duration: "时长"
-      customer: "客户"
-      customer_notes: "客户备注"
-      full_name: "姓名"
-      email_address: "电子邮箱"
-      phone_number: "电话号码"
-      status: "状态"
-
+      apply: 应用
+      any: 不限
+      skip_to_content: 跳到主要内容
+      cancel: 取消
+      reset: 重置
+      clear_all: 清除全部
+      featured: 精选
+      view_property: 查看房源
+      book_a_viewing: 预约看房
+      town: 城镇
+      bathrooms: 浴室
+      postcode: 邮编
+      overview: 概览
+      address: 地址
+      property: 房源
+      requested_slot: 申请时段
+      current_slot: 当前时段
+      duration: 时长
+      customer: 客户
+      customer_notes: 客户备注
+      full_name: 姓名
+      email_address: 电子邮箱
+      phone_number: 电话号码
+      status: 状态
+      'yes': 是
+      download: 下载
+      remove: 移除
+      save: 保存
+      back_to_listing: 返回房源
     contact:
-      office_name: "GotTheKeys Limited"
-      office_line_1: "123 Awesome Road"
-      office_line_2: "Limpsfield, TN16 4AB"
-
+      office_name: GotTheKeys Limited
+      office_line_1: 123 Awesome Road
+      office_line_2: Limpsfield, TN16 4AB
     legacy:
-      from: "从"
-      to: "到"
-      update: "更新"
-      add_viewing_time: "添加看房时间"
+      from: 从
+      to: 到
+      update: 更新
+      add_viewing_time: 添加看房时间
       new_viewing_time_title: "%{address} 的新看房时间"
-      viewing_times_updated_notice: "可用看房时间已更新。"
+      viewing_times_updated_notice: 可用看房时间已更新。
       new_photos_title: "%{address} 的新照片"
       new_floor_plan_title: "%{address} 的新平面图"
       location_details_title: "%{address} 的位置详情"
-
     welcome:
       carousel:
-        previous: "上一张幻灯片"
-        next: "下一张幻灯片"
-        first: "第一张幻灯片"
-        second: "第二张幻灯片"
-        third: "第三张幻灯片"
-        fourth: "第四张幻灯片"
-        fifth: "第五张幻灯片"
-      hero_eyebrow: "现代房源浏览与看房预约"
-      hero_title: "为买家和租客提供更专业的网站体验，同时为 QA 团队提供可重复的自动化训练环境。"
-      primary_cta: "浏览房源"
-      admin_cta: "打开预约后台"
+        previous: 上一张幻灯片
+        next: 下一张幻灯片
+        first: 第一张幻灯片
+        second: 第二张幻灯片
+        third: 第三张幻灯片
+        fourth: 第四张幻灯片
+        fifth: 第五张幻灯片
+      hero_eyebrow: 现代房源浏览与看房预约
+      hero_title: 为买家和租客提供更专业的网站体验，同时为 QA 团队提供可重复的自动化训练环境。
+      primary_cta: 浏览房源
+      admin_cta: 打开预约后台
       metric_labels:
-        properties: "房源"
-        for_sale: "出售"
-        for_rent: "出租"
-        upcoming_viewings: "即将到来的看房"
-      featured_eyebrow: "精选房源"
-      featured_title: "可信、响应迅速，并内建预约入口的房源卡片"
-      featured_action: "查看完整目录"
-      insights_label: "平台亮点"
-      qa_title: "为 QA 训练而打造"
+        properties: 房源
+        for_sale: 出售
+        for_rent: 出租
+        upcoming_viewings: 即将到来的看房
+      featured_eyebrow: 精选房源
+      featured_title: 可信、响应迅速，并内建预约入口的房源卡片
+      featured_action: 查看完整目录
+      insights_label: 平台亮点
+      qa_title: 为 QA 训练而打造
       qa_points:
-        selectors: "在关键预约与后台控件上使用稳定的语义化选择器。"
-        scenarios: "提供可重复的演示场景，覆盖顺畅流程、冲突、空状态和大批量搜索。"
-        audit: "可见的审计轨迹和通知日志，让状态变化更容易验证。"
-      shared_host_title: "适合共享主机"
+        selectors: 在关键预约与后台控件上使用稳定的语义化选择器。
+        scenarios: 提供可重复的演示场景，覆盖顺畅流程、冲突、空状态和大批量搜索。
+        audit: 可见的审计轨迹和通知日志，让状态变化更容易验证。
+      shared_host_title: 适合共享主机
       shared_host_points:
-        stack: "在 Apache + Passenger 下运行的服务端渲染 Rails。"
-        dependencies: "不依赖 Redis、Sidekiq、Docker 或常驻工作进程。"
-        enhancement: "结合 Foundation、Turbo 和传统表单的渐进增强。"
-
+        stack: 在 Apache + Passenger 下运行的服务端渲染 Rails。
+        dependencies: 不依赖 Redis、Sidekiq、Docker 或常驻工作进程。
+        enhancement: 结合 Foundation、Turbo 和传统表单的渐进增强。
     properties:
       headline_fallback: "%{town_city} 的 %{property_type}"
       in_location: "%{location} 的 %{property_type}"
       bedroom_count:
-        one: "1 间卧室"
+        one: 1 间卧室
         other: "%{count} 间卧室"
       bathroom_count:
-        one: "1 间浴室"
+        one: 1 间浴室
         other: "%{count} 间浴室"
       sale_statuses:
-        for_sale: "出售"
-        for_rent: "出租"
+        for_sale: 出售
+        for_rent: 出租
       catalogue:
-        eyebrow: "房源目录"
-        hero_title: "浏览带有实时预约可用性的现代房源"
-        hero_body: "按区域、价格和卧室数量搜索，然后直接从房源详情页预约看房。"
+        eyebrow: 房源目录
+        hero_title: 浏览带有实时预约可用性的现代房源
+        hero_body: 按区域、价格和卧室数量搜索，然后直接从房源详情页预约看房。
         active_filter_count:
-          one: "1 个筛选条件"
+          one: 1 个筛选条件
           other: "%{count} 个筛选条件"
-        overview_badge: "目录概览"
+        overview_badge: 目录概览
         matching_properties:
-          one: "条匹配房源"
-          other: "条匹配房源"
-        browse_eyebrow: "浏览"
-        browse_title: "在不同目录视图之间切换"
-        browse_body: "你可以在这里查看完整目录，也可以在已经明确方向时直接切换到仅出售或仅出租的房源。"
-        all_listings: "全部房源"
+          one: 条匹配房源
+          other: 条匹配房源
+        browse_eyebrow: 浏览
+        browse_title: 在不同目录视图之间切换
+        browse_body: 你可以在这里查看完整目录，也可以在已经明确方向时直接切换到仅出售或仅出租的房源。
+        all_listings: 全部房源
         totals:
-          all: "全部"
-        filters_eyebrow: "优化搜索"
-        filters_title: "筛选房源列表"
-        sidebar_copy: "按房源类型、区域、城镇、卧室和预算缩小范围；如果想重新开始，也可以一键重置。"
-        results_eyebrow: "实时结果"
+          all: 全部
+        filters_eyebrow: 优化搜索
+        filters_title: 筛选房源列表
+        sidebar_copy: 按房源类型、区域、城镇、卧室和预算缩小范围；如果想重新开始，也可以一键重置。
+        results_eyebrow: 实时结果
         results_title:
-          one: "1 套房源可供查看"
+          one: 1 套房源可供查看
           other: "%{count} 套房源可供查看"
-        empty_copy: "当前显示完整目录。使用筛选面板按位置、价格和卧室数量缩小范围。"
+        empty_copy: 当前显示完整目录。使用筛选面板按位置、价格和卧室数量缩小范围。
+        saved_search:
+          eyebrow: 保持关注
+          title: 保存此次搜索
+          body: 保存当前筛选条件，当有匹配房源上线时让团队提醒你。
+          email_placeholder: you@example.com
+          alerts_enabled: 有新匹配房源时给我发邮件
+          submit: 保存搜索
+        local_team_eyebrow: 本地团队
       filters:
-        listing_type: "房源类型"
-        all_listings: "全部房源"
-        query_label: "区域、邮编或关键词"
-        query_placeholder: "例如 Sevenoaks、TN13 或 garden"
-        any_town: "不限城镇"
-        min_bedrooms: "最少卧室"
-        min_price: "最低价格"
-        max_price: "最高价格"
-        sort: "排序"
-        apply: "应用筛选"
-        search_chip: "搜索：%{query}"
+        listing_type: 房源类型
+        all_listings: 全部房源
+        query_label: 区域、邮编或关键词
+        query_placeholder: 例如 Sevenoaks、TN13 或 garden
+        any_town: 不限城镇
+        min_bedrooms: 最少卧室
+        min_price: 最低价格
+        max_price: 最高价格
+        sort: 排序
+        apply: 应用筛选
+        search_chip: 搜索：%{query}
         min_bedrooms_chip: "%{count}+ 间卧室"
         min_price_chip: "%{price} 起"
-        max_price_chip: "最高 %{price}"
+        max_price_chip: 最高 %{price}
         sort_options:
-          recommended: "推荐"
-          newest: "最新优先"
-          price_low: "价格：从低到高"
-          price_high: "价格：从高到低"
-          bedrooms_high: "卧室优先"
+          recommended: 推荐
+          newest: 最新优先
+          price_low: 价格：从低到高
+          price_high: 价格：从高到低
+          bedrooms_high: 卧室优先
       card:
-        next_slot: "下一时段：%{time}"
-        no_slots: "暂无即将开放的公开看房时段"
+        next_slot: 下一时段：%{time}
+        no_slots: 暂无即将开放的公开看房时段
+        available_now: 现可入住
+        available_from: "%{date} 起可入住"
+        area: 面积
+        floor_area: "%{area} 平方英尺"
       empty:
-        eyebrow: "没有匹配结果"
-        title: "没有房源符合当前搜索"
-        body: "试着放宽区域、卧室或价格范围，或者重置筛选后再次浏览完整目录。"
+        eyebrow: 没有匹配结果
+        title: 没有房源符合当前搜索
+        body: 试着放宽区域、卧室或价格范围，或者重置筛选后再次浏览完整目录。
       show:
-        booking_body: "选择一个已发布的时段来创建预约申请。管理员之后可以在预约后台确认、改期或取消。"
+        booking_body: 选择一个已发布的时段来创建预约申请。管理员之后可以在预约后台确认、改期或取消。
         slot_finish: "%{time} 结束"
-        request_viewing: "提交看房申请"
-        no_slots_title: "暂无公开时段"
-        no_slots_body: "这也是一种很有用的 QA 边界场景，适合测试空预约状态和备用联系流程。"
+        request_viewing: 提交看房申请
+        no_slots_title: 暂无公开时段
+        no_slots_body: 这也是一种很有用的 QA 边界场景，适合测试空预约状态和备用联系流程。
+        available_from: 可入住时间
+        key_facts_title: 关键信息
+        trust_title: 为什么这套房源看起来是最新的
+        brochure_assets_title: 宣传资料
+        primary_image: 主图
+        photo: 照片
+        floor_plan: 户型图
+        documents_title: 文件与下载
+        enquiry_title: 想先了解细节？
+        enquiry_body: 在选择看房时段前，可先索取宣传资料、请求经纪人回电或询问更多信息。
+        enquiry_cta: 发送咨询
+        offer_title: 准备出价了吗？
+        offer_body: 直接向团队提交你的购房情况和核心报价。
+        offer_cta: 提交报价
+        rental_application_title: 想申请租房？
+        rental_application_body: 向租赁团队说明你计划入住的时间和支付能力说明。
+        rental_application_cta: 开始租房申请
+        seller_title: 业主工作区
+        readiness_summary: 已完成 · %{score}/%{total} 项准备检查
+        done: 完成
+        needed: 需要
+        edit_listing: 编辑房源
+        manage_photos: 管理照片
+        manage_floor_plans: 管理户型图
+        manage_documents: 管理文件
+        recent_lead_activity_title: 最近线索活动
+        no_enquiries: 该房源暂时还没有收到咨询。
+        recent_offers_title: 最近报价
+        no_offers: 暂未记录任何报价。
+        recent_rental_applications_title: 最近租房申请
+        move_in: 入住 %{date}
+        no_rental_applications: 暂未记录任何租房申请。
+        recent_listing_activity_title: 最近房源活动
+        no_listing_activity: 该房源暂未记录任何活动。
       editor:
-        new_title: "新增房源"
-        eyebrow: "卖家工具"
-        new_heading: "添加房源"
-        new_body: "创建一个拥有更丰富元数据和预约展示能力的房源。"
-        edit_heading: "编辑 %{address}"
-        edit_body: "更新现代目录中展示的房源详情、定位和元数据。"
-
+        new_title: 新增房源
+        eyebrow: 卖家工具
+        new_heading: 添加房源
+        new_body: 创建一个拥有更丰富元数据和预约展示能力的房源。
+        edit_heading: 编辑 %{address}
+        edit_body: 更新现代目录中展示的房源详情、定位和元数据。
+        workflow_title: 房源发布流程
+        core_details_title: 核心信息
+        facts_title: 结构化房源信息
+        floor_area_label: 面积（平方英尺）
+      trust_cues:
+        recently_updated: 最近已更新
+        available_now: 现可入住
+        brochure_ready: 宣传资料已就绪
+      update_labels:
+        recently_updated: 最近已更新
+        stale: 需要更新
+        current: 本月已更新
+      listing_states:
+        draft: 草稿
+        review_pending: 待审核
+        published: 已发布
+        under_offer: 议价中
+        let_agreed: 已谈妥出租
+        sold: 已售出
+        let: 已出租
+        withdrawn: 已下架
+      activity_actions:
+        enquiry_created: 已创建咨询
+        offer_created: 已创建报价
+        rental_application_created: 已创建租房申请
+        property_document_created: 已添加文件
+        property_document_updated: 已更新文件
+        property_document_removed: 已移除文件
+        property_document_downloaded: 已下载文件
+      facts:
+        tenure: 产权类型
+        council_tax_band: Council Tax 等级
+        furnishing: 家具配置
+        year_built: 建造年份
+        refurbished_year: 最近翻新年份
+        available_from: 可入住时间
+        parking: 停车
+        outdoor_space: 户外空间
+        floor_area: 面积
+        floor_area_value: "%{area} 平方英尺"
+        deposit: 押金
+        pets_allowed: 可带宠物
+        service_charge: 服务费
+        lease_length: 租约年限
+        lease_length_value: "%{years} 年"
+      seller:
+        checks:
+          headline: 标题与摘要
+          media: 照片素材
+          floor_plan: 户型图
+          facts: 关键信息
+          contact: 联系信息就绪
+      flash:
+        not_public: 该房源当前未公开展示。
     for_sale:
-      eyebrow: "出售"
-      hero_title: "可购买房源"
-      hero_body: "使用筛选器按区域、卧室和价格查找房源，然后从详情页进入预约流程。"
+      eyebrow: 出售
+      hero_title: 可购买房源
+      hero_body: 使用筛选器按区域、卧室和价格查找房源，然后从详情页进入预约流程。
       count_label:
-        one: "条出售房源"
-        other: "条出售房源"
-
+        one: 条出售房源
+        other: 条出售房源
     for_rent:
-      eyebrow: "出租"
-      hero_title: "可租赁房源"
-      hero_body: "浏览待租房源，对比可用时段，并在真实目录中测试租客预约流程。"
+      eyebrow: 出租
+      hero_title: 可租赁房源
+      hero_body: 浏览待租房源，对比可用时段，并在真实目录中测试租客预约流程。
       count_label:
-        one: "条出租房源"
-        other: "条出租房源"
-
+        one: 条出租房源
+        other: 条出租房源
     search:
-      eyebrow: "房源搜索"
-      hero_title: "同时搜索房源与预约可用性"
-      hero_body: "为 QA 自动化练习找到真实的顺畅路径、空状态和分页场景。"
+      eyebrow: 房源搜索
+      hero_title: 同时搜索房源与预约可用性
+      hero_body: 为 QA 自动化练习找到真实的顺畅路径、空状态和分页场景。
       results_count:
-        one: "条结果"
-        other: "条结果"
-
+        one: 条结果
+        other: 条结果
     appointments:
       statuses:
-        pending: "待处理"
-        confirmed: "已确认"
-        rescheduled: "已改期"
-        cancelled: "已取消"
-        completed: "已完成"
-        no_show: "未到场"
+        pending: 待处理
+        confirmed: 已确认
+        rescheduled: 已改期
+        cancelled: 已取消
+        completed: 已完成
+        no_show: 未到场
       events:
-        created: "已创建"
-        confirmed: "已确认"
-        rescheduled: "已改期"
-        cancelled: "已取消"
-        completed: "已完成"
-        no_show: "未到场"
-        internal_note_added: "已添加内部备注"
-        customer_note_updated: "已更新客户备注"
+        created: 已创建
+        confirmed: 已确认
+        rescheduled: 已改期
+        cancelled: 已取消
+        completed: 已完成
+        no_show: 未到场
+        internal_note_added: 已添加内部备注
+        customer_note_updated: 已更新客户备注
       new:
-        title: "预约看房：%{address}"
-        eyebrow: "看房申请"
-        hero_body: "选择一个已发布的时段，填写联系信息，然后创建一个可由后台确认、改期或取消的申请。"
-        submitted_notice: "预约申请已提交。我们会通过电子邮件向你发送更新。"
-        preferred_slot: "偏好时段"
-        choose_slot: "选择时段"
-        notes_label: "还有什么需要我们知道的吗？"
-        notes_placeholder: "例如无障碍需求、到达说明，或想提前告诉团队的问题。"
-        submit: "提交申请"
-        back_to_property: "返回房源"
-        no_slots_title: "暂无发布时段"
-        no_slots_body: "当前房源没有公开看房时段。在某些 QA 场景中这是刻意设置的，因此这里会清楚展示空状态。"
+        title: 预约看房：%{address}
+        eyebrow: 看房申请
+        hero_body: 选择一个已发布的时段，填写联系信息，然后创建一个可由后台确认、改期或取消的申请。
+        submitted_notice: 预约申请已提交。我们会通过电子邮件向你发送更新。
+        preferred_slot: 偏好时段
+        choose_slot: 选择时段
+        notes_label: 还有什么需要我们知道的吗？
+        notes_placeholder: 例如无障碍需求、到达说明，或想提前告诉团队的问题。
+        submit: 提交申请
+        back_to_property: 返回房源
+        no_slots_title: 暂无发布时段
+        no_slots_body: 当前房源没有公开看房时段。在某些 QA 场景中这是刻意设置的，因此这里会清楚展示空状态。
       show:
-        title: "预约 %{reference}"
-        eyebrow: "预约详情"
-        hero_body: "这里会持续显示你的预约时间线，方便你核对每次状态变化和时间戳。"
-        invalid_link_alert: "该预约链接无效。"
-        summary_title: "预约摘要"
+        title: 预约 %{reference}
+        eyebrow: 预约详情
+        hero_body: 这里会持续显示你的预约时间线，方便你核对每次状态变化和时间戳。
+        invalid_link_alert: 该预约链接无效。
+        summary_title: 预约摘要
         duration_minutes:
-          one: "1 分钟"
+          one: 1 分钟
           other: "%{count} 分钟"
-        timeline_title: "状态时间线"
-
+        timeline_title: 状态时间线
+        visit_outcome: 看房结果
+        manage_title: 管理你的看房
+        manage_body: 你可以在 %{time} 前在线改期或取消此次看房。
+        request_new_time: 申请新的时间
+        cancel_viewing: 取消看房
+        self_service_closed: 此次看房的自助服务窗口现已关闭。
+      self_service:
+        title: 管理看房 %{reference}
+        eyebrow: 管理你的看房
+        body: 选择一个新时段，或保留当前时段。自助服务会持续开放到预约时间后不久。
+        current_slot: 当前时段：<strong>%{time}</strong>
+        status: 状态
+        choose_slot: 选择新的时段
+        select_slot: 选择新的时间
+        submit: 改期看房
+        back_to_appointment: 返回预约
+        no_slots_title: 暂无可用时段
+        no_slots_body: 目前没有可用的自助时段，请联系门店获取帮助。
+        flash:
+          rescheduled: 你的看房已改期。
+          cancelled: 你的看房已取消。
+          expired: 此自助链接已过期。
+      visit_outcomes:
+        attended: 已到访
+        feedback_requested: 已请求反馈
+        feedback_received: 已收到反馈
+      event_messages:
+        created: 已为 %{address} 在 %{time} 创建预约请求。
+        status_changed: 状态已从 %{from_status} 更改为 %{to_status}。
+        moved: 预约已从 %{from_time} 改到 %{to_time}。
+        internal_notes_updated: 内部备注已更新。
+        customer_notes_updated: 客户备注已更新。
+        visit_outcome_marked: 看房结果已标记为 %{outcome}。
+      validation:
+        slot_unavailable: 不可用，因为它与其他预约冲突或不符合预约规则
     appointment_mailer:
-      subject: "GotTheKeys 看房 %{action}：%{reference}"
+      subject: GotTheKeys 看房 %{action}：%{reference}
       actions:
-        request_received: "申请已收到"
-        confirmed: "已确认"
-        cancelled: "已取消"
-        completed: "已完成"
-        marked_as_missed: "已标记为未到场"
-        updated: "已更新"
+        request_received: 申请已收到
+        confirmed: 已确认
+        cancelled: 已取消
+        completed: 已完成
+        marked_as_missed: 已标记为未到场
+        updated: 已更新
       greeting: "%{name}，你好："
-      updated_html: "你关于 <strong>%{address}</strong> 的看房预约已更新。"
-      reference: "编号：%{reference}"
-      status: "状态：%{status}"
-      requested_slot: "申请时段：%{time}"
-      current_slot: "当前时段：%{time}"
-      notes: "你的备注：%{notes}"
-      revisit: "你可以随时使用预约成功后发送的安全链接再次查看此预约。"
-      thanks_html: "谢谢，<br>GotTheKeys"
-
+      updated_html: 你关于 <strong>%{address}</strong> 的看房预约已更新。
+      reference: 编号：%{reference}
+      status: 状态：%{status}
+      requested_slot: 申请时段：%{time}
+      current_slot: 当前时段：%{time}
+      notes: 你的备注：%{notes}
+      revisit: 你可以随时使用预约成功后发送的安全链接再次查看此预约。
+      thanks_html: 谢谢，<br>GotTheKeys
     admin:
       layout:
-        title: "后台 | %{app_name}"
-        sidebar_eyebrow: "后台工作区"
-        active_demo_scenario: "当前演示场景"
-        view_site: "查看站点"
+        title: 后台 | %{app_name}
+        sidebar_eyebrow: 后台工作区
+        active_demo_scenario: 当前演示场景
+        view_site: 查看站点
       navigation:
-        aria_label: "后台"
-        dashboard: "仪表盘"
-        bookings: "预约"
-        properties: "房源"
-        sellers: "卖家"
-        demo_data: "演示数据"
-        qa_guide: "QA 指南"
-        notifications: "通知"
-        booking_rules: "预约规则"
+        aria_label: 后台
+        dashboard: 仪表盘
+        bookings: 预约
+        properties: 房源
+        sellers: 卖家
+        demo_data: 演示数据
+        qa_area: QA 区域
+        qa_guide: QA 指南
+        notifications: 通知
+        booking_rules: 预约规则
       qa:
-        title: "QA 指南"
-        eyebrow: "自动化训练环境"
-        diagnostics_title: "诊断信息"
-        app_version: "应用版本"
+        title: QA 指南
+        eyebrow: 自动化训练环境
+        diagnostics_title: 诊断信息
+        app_version: 应用版本
         version_box:
-          title: "发布构建"
-          git_sha: "Git SHA"
-          build_number: "构建编号"
-          deployed_at: "部署时间"
-          environment: "环境"
-          rails_env: "Rails 环境 %{env}"
-          unavailable: "不可用"
+          title: 发布构建
+          git_sha: Git SHA
+          build_number: 构建编号
+          deployed_at: 部署时间
+          environment: 环境
+          rails_env: Rails 环境 %{env}
+          unavailable: 不可用
         diagnostic_labels:
-          active_scenario: "当前场景"
-          properties: "房源"
-          users: "用户"
-          bookings: "预约"
-          notification_logs: "通知日志"
-          last_demo_action: "最近一次演示操作"
+          active_scenario: 当前场景
+          properties: 房源
+          users: 用户
+          bookings: 预约
+          notification_logs: 通知日志
+          last_demo_action: 最近一次演示操作
         demo_action_value: "%{action} 于 %{time}"
-        known_credentials_title: "已知凭据"
-        admin_credential: "管理员：%{email} / %{password}"
-        seller_credential: "卖家：%{email} / %{password}"
-        default_password: "secret"
-        training_title: "推荐训练路径"
+        training_title: 推荐训练路径
         training_journeys:
-          - "从房源页面创建一个新的预约，并验证成功提示和参考编号。"
-          - "以管理员身份确认一个待处理预约，并检查状态徽章和审计时间线。"
-          - "将预约改到一个已占用时段，并验证冲突校验提示。"
-          - "恢复基线数据后切换到满额场景，并验证空时段状态。"
-          - "导出当前数据集，再通过预览页面导入，并确认诊断面板更新。"
-        selectors_title: "适合自动化的选择器"
+        - 从房源页面创建一个新的预约，并验证成功提示和参考编号。
+        - 以管理员身份确认一个待处理预约，并检查状态徽章和审计时间线。
+        - 将预约改到一个已占用时段，并验证冲突校验提示。
+        - 恢复基线数据后切换到满额场景，并验证空时段状态。
+        - 导出当前数据集，再通过预览页面导入，并确认诊断面板更新。
+        selectors_title: 适合自动化的选择器
         selectors:
-          property_card: "房源卡片上的 `data-testid=\"property-card\"`"
-          book_viewing_cta: "房源预约按钮上的 `data-testid=\"book-viewing-cta\"`"
-          appointment_form: "公开预约表单上的 `data-testid=\"appointment-form\"`"
-          admin_appointment_row: "议程行上的 `data-testid=\"admin-appointment-row\"`"
-          active_demo_scenario: "后台外壳上的 `data-testid=\"active-demo-scenario\"`"
-        available_scenarios_title: "可用场景"
+          property_card: 房源卡片上的 `data-testid="property-card"`
+          book_viewing_cta: 房源预约按钮上的 `data-testid="book-viewing-cta"`
+          appointment_form: 公开预约表单上的 `data-testid="appointment-form"`
+          admin_appointment_row: 议程行上的 `data-testid="admin-appointment-row"`
+          active_demo_scenario: 后台外壳上的 `data-testid="active-demo-scenario"`
+        available_scenarios_title: 可用场景
       dashboard:
-        title: "后台仪表盘"
-        eyebrow: "运营概览"
-        open_bookings_desk: "打开预约台"
+        title: 后台仪表盘
+        eyebrow: 运营概览
+        open_bookings_desk: 打开预约台
         metrics:
-          properties: "房源"
-          upcoming_appointments: "即将到来的预约"
-          pending_actions: "待处理事项"
-          customers: "客户"
-          open_leads: "开放线索"
-        bookings_eyebrow: "仅限管理员"
-        bookings_title: "预约可见性与控制"
-        all_bookings: "全部预约"
-        pending_action: "待处理"
-        this_week: "本周"
-        bookings_body: "预约台仅供管理员使用，提供完整日历视图、实时筛选和状态控制，用于管理站点上的每一个看房请求。"
-        bookings_requiring_action: "需要处理的预约"
-        nothing_needs_attention: "当前没有需要关注的事项。"
-        upcoming_appointments: "即将到来的预约"
-        no_upcoming_bookings: "暂无即将到来的预约。"
-        recent_activity: "最近活动"
-        notification_log_snapshot: "通知日志快照"
-        no_notification_records: "暂无通知记录。"
-        last_demo_data_action: "最近一次演示数据操作"
-        on: "于"
-        no_demo_action: "尚未记录任何场景重置或导入。"
+          properties: 房源
+          upcoming_appointments: 即将到来的预约
+          pending_actions: 待处理事项
+          customers: 客户
+          open_leads: 开放线索
+        bookings_eyebrow: 仅限管理员
+        bookings_title: 预约可见性与控制
+        all_bookings: 全部预约
+        pending_action: 待处理
+        this_week: 本周
+        bookings_body: 预约台仅供管理员使用，提供完整日历视图、实时筛选和状态控制，用于管理站点上的每一个看房请求。
+        bookings_requiring_action: 需要处理的预约
+        nothing_needs_attention: 当前没有需要关注的事项。
+        upcoming_appointments: 即将到来的预约
+        no_upcoming_bookings: 暂无即将到来的预约。
+        recent_activity: 最近活动
+        notification_log_snapshot: 通知日志快照
+        no_notification_records: 暂无通知记录。
+        last_demo_data_action: 最近一次演示数据操作
+        true: 于
+        no_demo_action: 尚未记录任何场景重置或导入。
       appointments:
-        title: "预约台"
-        eyebrow: "仅限管理员的预约管理"
-        hero_body: "查看即将到来的预约，按房源或状态筛选，并对需要管理员决定的申请采取操作。"
+        title: 预约台
+        eyebrow: 仅限管理员的预约管理
+        hero_body: 查看即将到来的预约，按房源或状态筛选，并对需要管理员决定的申请采取操作。
         views:
-          agenda: "议程"
-          day: "日"
-          week: "周"
-          month: "月"
+          agenda: 议程
+          day: 日
+          week: 周
+          month: 月
         filters:
-          anchor_date: "锚点日期"
-          all_properties: "全部房源"
-          all_statuses: "全部状态"
-          assigned_admin: "分配管理员"
-          anyone: "不限"
-          customer_email: "客户邮箱"
-          customer_email_placeholder: "customer@example.com"
-        confirm: "确认"
-        cancel: "取消"
+          anchor_date: 锚点日期
+          all_properties: 全部房源
+          all_statuses: 全部状态
+          assigned_admin: 分配管理员
+          anyone: 不限
+          customer_email: 客户邮箱
+          customer_email_placeholder: customer@example.com
+        confirm: 确认
+        cancel: 取消
         bookings_count:
-          one: "1 个预约"
+          one: 1 个预约
           other: "%{count} 个预约"
         show:
-          title: "预约 %{reference}"
-          eyebrow: "预约详情"
-          edit: "编辑"
-          summary_title: "摘要"
-          not_supplied: "未提供"
-          notes_title: "备注"
-          no_customer_notes: "客户未提供备注。"
-          no_internal_notes: "暂无内部备注。"
-          audit_trail_title: "审计记录"
-          customer_history_title: "客户历史"
-          no_customer_history: "未找到该客户的其他预约。"
+          title: 预约 %{reference}
+          eyebrow: 预约详情
+          edit: 编辑
+          summary_title: 摘要
+          not_supplied: 未提供
+          notes_title: 备注
+          no_customer_notes: 客户未提供备注。
+          no_internal_notes: 暂无内部备注。
+          audit_trail_title: 审计记录
+          customer_history_title: 客户历史
+          no_customer_history: 未找到该客户的其他预约。
           actions:
-            complete: "完成"
-            no_show: "未到场"
+            complete: 完成
+            no_show: 未到场
         edit:
-          title: "编辑预约 %{reference}"
-          eyebrow: "预约管理"
-          heading: "编辑预约 %{reference}"
-          customer_name: "客户姓名"
-          customer_email: "客户邮箱"
-          customer_phone: "客户电话"
-          duration_minutes: "时长（分钟）"
-          requested_time: "申请时间"
-          confirmed_slot: "确认时段"
-          customer_notes: "客户备注"
-          internal_notes: "内部备注"
-          save_changes: "保存更改"
-          back: "返回"
+          title: 编辑预约 %{reference}
+          eyebrow: 预约管理
+          heading: 编辑预约 %{reference}
+          customer_name: 客户姓名
+          customer_email: 客户邮箱
+          customer_phone: 客户电话
+          duration_minutes: 时长（分钟）
+          requested_time: 申请时间
+          confirmed_slot: 确认时段
+          customer_notes: 客户备注
+          internal_notes: 内部备注
+          save_changes: 保存更改
+          back: 返回
       flash:
-        booking_rules_updated: "预约规则已更新。"
-        property_updated: "房源已更新。"
-        appointment_updated: "预约已更新。"
-        unsupported_appointment_status: "不支持的预约状态。"
-        appointment_marked: "预约已标记为 %{status}。"
-        demo_scenario_confirmation_required: "请准确输入 %{phrase} 后再执行这次 Seed 数据重置。"
-        applied_demo_scenario: "已应用演示场景 %{name}。"
-        restored_baseline_demo_scenario: "已恢复基线演示场景（%{name}）。"
-        imported_demo_scenario: "已导入演示场景 %{name}。"
+        booking_rules_updated: 预约规则已更新。
+        property_updated: 房源已更新。
+        appointment_updated: 预约已更新。
+        unsupported_appointment_status: 不支持的预约状态。
+        appointment_marked: 预约已标记为 %{status}。
+        demo_scenario_confirmation_required: 请准确输入 %{phrase} 后再执行这次 Seed 数据重置。
+        applied_demo_scenario: 已应用演示场景 %{name}。
+        restored_baseline_demo_scenario: 已恢复基线演示场景（%{name}）。
+        imported_demo_scenario: 已导入演示场景 %{name}。
       properties:
         index:
-          title: "房源"
-          eyebrow: "目录管理"
+          title: 房源
+          eyebrow: 目录管理
           appointment_count:
-            one: "1 个预约"
+            one: 1 个预约
             other: "%{count} 个预约"
-          open: "打开"
+          open: 打开
         show:
-          title: "房源 %{address}"
-          eyebrow: "房源详情"
-          edit_property: "编辑房源"
-          view_public_page: "查看公开页面"
-          summary_title: "房源摘要"
-          availability_windows_title: "可用时间窗口"
+          title: 房源 %{address}
+          eyebrow: 房源详情
+          edit_property: 编辑房源
+          view_public_page: 查看公开页面
+          summary_title: 房源摘要
+          availability_windows_title: 可用时间窗口
           window_range: "%{start_time} 至 %{end_time}"
           window_kinds:
-            open: "开放"
-            blackout: "关闭"
-          no_windows: "该房源还没有专属时间窗口，目前使用全局预约规则。"
-          booking_history_title: "房源预约历史"
-          no_bookings: "该房源还没有预约。"
+            open: 开放
+            blackout: 关闭
+          no_windows: 该房源还没有专属时间窗口，目前使用全局预约规则。
+          booking_history_title: 房源预约历史
+          no_bookings: 该房源还没有预约。
         edit:
-          title: "编辑房源 %{address}"
-          eyebrow: "目录管理"
-          heading: "编辑房源"
+          title: 编辑房源 %{address}
+          eyebrow: 目录管理
+          heading: 编辑房源
       users:
         index:
-          title: "卖家"
-          eyebrow: "客户与卖家管理"
-          no_results: "没有卖家符合当前搜索。"
+          title: 卖家
+          eyebrow: 客户与卖家管理
+          no_results: 没有卖家符合当前搜索。
           search:
-            label: "搜索卖家"
-            placeholder: "姓名、邮箱或手机号"
-            submit: "搜索"
-            clear: "清除"
+            label: 搜索卖家
+            placeholder: 姓名、邮箱或手机号
+            submit: 搜索
+            clear: 清除
           property_count:
-            one: "1 套房源"
+            one: 1 套房源
             other: "%{count} 套房源"
         show:
-          title: "卖家 %{name}"
-          eyebrow: "卖家资料"
-          account_details_title: "账户详情"
-          mobile: "手机"
-          properties: "房源"
+          title: 卖家 %{name}
+          eyebrow: 卖家资料
+          account_details_title: 账户详情
+          mobile: 手机
+          properties: 房源
           listing_count:
-            one: "1 个房源"
+            one: 1 个房源
             other: "%{count} 个房源"
-          recent_booking_activity_title: "最近预约活动"
-          no_activity: "该卖家的房源暂时没有预约活动。"
+          recent_booking_activity_title: 最近预约活动
+          no_activity: 该卖家的房源暂时没有预约活动。
       notification_logs:
-        title: "通知日志"
-        eyebrow: "客户沟通"
-        no_recipient: "无收件人"
+        title: 通知日志
+        eyebrow: 客户沟通
+        no_recipient: 无收件人
         statuses:
-          sent: "已发送"
-          skipped: "已跳过"
-          failed: "失败"
+          sent: 已发送
+          skipped: 已跳过
+          failed: 失败
       booking_configuration:
-        title: "预约规则"
-        eyebrow: "预约配置"
-        slot_duration_minutes: "时段时长（分钟）"
-        lead_time_hours: "提前时间（小时）"
-        buffer_minutes: "预约间隔缓冲（分钟）"
-        office_opens_at: "开始办公时间"
-        office_closes_at: "结束办公时间"
-        open_weekdays: "开放工作日"
-        save: "保存预约规则"
+        title: 预约规则
+        eyebrow: 预约配置
+        slot_duration_minutes: 时段时长（分钟）
+        lead_time_hours: 提前时间（小时）
+        buffer_minutes: 预约间隔缓冲（分钟）
+        office_opens_at: 开始办公时间
+        office_closes_at: 结束办公时间
+        open_weekdays: 开放工作日
+        save: 保存预约规则
       demo_data:
-        title: "演示数据管理"
-        eyebrow: "可复现 QA 环境"
-        restore_baseline: "恢复基线"
-        import_scenario: "导入场景"
-        export_current_data: "导出当前数据"
-        diagnostics_title: "诊断信息"
-        last_demo_action_title: "最近一次演示操作"
-        no_actions: "尚未记录任何重置、导入或导出操作。"
-        preview_action: "预览"
+        title: 演示数据管理
+        eyebrow: 可复现 QA 环境
+        restore_baseline: 恢复基线
+        import_scenario: 导入场景
+        export_current_data: 导出当前数据
+        diagnostics_title: 诊断信息
+        last_demo_action_title: 最近一次演示操作
+        no_actions: 尚未记录任何重置、导入或导出操作。
+        preview_action: 预览
         seed_resets:
-          eyebrow: "高风险区"
-          title: "Seed 数据重置"
-          description: "每次重置都会为特定演练重建整套训练数据。执行前必须输入完全一致的场景键。"
-          badge: "输入闸门"
-          preview: "预览重置"
-          field_label: "输入 %{phrase} 以继续"
-          type_to_continue_html: "请准确输入 %{phrase} 以解锁这次重置。"
-          apply: "执行重置"
+          eyebrow: 高风险区
+          title: Seed 数据重置
+          description: 每次重置都会为特定演练重建整套训练数据。执行前必须输入完全一致的场景键。
+          badge: 输入闸门
+          preview: 预览重置
+          field_label: 输入 %{phrase} 以继续
+          type_to_continue_html: 请准确输入 %{phrase} 以解锁这次重置。
+          apply: 执行重置
         counts:
           properties:
-            one: "房源"
-            other: "房源"
+            one: 房源
+            other: 房源
           bookings:
-            one: "预约"
-            other: "预约"
+            one: 预约
+            other: 预约
           sellers:
-            one: "卖家"
-            other: "卖家"
+            one: 卖家
+            other: 卖家
         labels:
-          active_scenario: "当前场景"
-          property_count: "房源"
-          user_count: "用户"
-          appointment_count: "预约"
-          notification_count: "通知日志"
-          last_demo_action: "最近一次演示操作"
+          active_scenario: 当前场景
+          property_count: 房源
+          user_count: 用户
+          appointment_count: 预约
+          notification_count: 通知日志
+          last_demo_action: 最近一次演示操作
         preview_labels:
-          key: "键"
-          admin_count: "管理员"
-          user_count: "用户"
-          property_count: "房源"
-          availability_window_count: "可用时间窗口"
-          appointment_count: "预约"
-          appointment_statuses: "预约状态"
+          key: 键
+          admin_count: 管理员
+          user_count: 用户
+          property_count: 房源
+          availability_window_count: 可用时间窗口
+          appointment_count: 预约
+          appointment_statuses: 预约状态
         actions:
-          apply: "已应用"
-          restore: "已恢复"
-          import: "已导入"
-          export: "已导出"
+          apply: 已应用
+          restore: 已恢复
+          import: 已导入
+          export: 已导出
         scenario_keys:
-          baseline: "基线"
-          custom_sevenoaks_westerham_catalogue: "精选 Sevenoaks 与 Westerham 房源目录"
-          fully_booked_day: "满额日"
-          high_volume_search: "高容量搜索"
-          qa_edge_cases: "QA 边界情况"
+          baseline: 基线
+          custom_sevenoaks_westerham_catalogue: 精选 Sevenoaks 与 Westerham 房源目录
+          fully_booked_day: 满额日
+          high_volume_search: 高容量搜索
+          qa_edge_cases: QA 边界情况
         preview:
-          title: "场景预览 %{name}"
-          eyebrow: "场景预览"
-          apply_scenario: "应用场景"
-          back_to_demo_data: "返回演示数据"
-          quick_reset_title: "Seed 数据重置"
-          quick_reset_body: "这次演练会重建整套训练数据。执行前请确认准确的场景键。"
+          title: 场景预览 %{name}
+          eyebrow: 场景预览
+          apply_scenario: 应用场景
+          back_to_demo_data: 返回演示数据
+          quick_reset_title: Seed 数据重置
+          quick_reset_body: 这次演练会重建整套训练数据。执行前请确认准确的场景键。
         import:
-          title: "导入演示场景"
-          eyebrow: "演示数据导入"
-          heading: "在应用前先预览导入的场景"
-          upload_yaml_file: "上传 YAML 文件"
-          paste_yaml: "或粘贴 YAML"
-          yaml_placeholder: "key: imported_scenario\nname: Imported Scenario\n..."
-          preview_import: "预览导入"
-          back: "返回"
+          title: 导入演示场景
+          eyebrow: 演示数据导入
+          heading: 在应用前先预览导入的场景
+          upload_yaml_file: 上传 YAML 文件
+          paste_yaml: 或粘贴 YAML
+          yaml_placeholder: |-
+            key: imported_scenario
+            name: Imported Scenario
+            ...
+          preview_import: 预览导入
+          back: 返回
         import_preview:
-          title: "导入预览 %{name}"
-          eyebrow: "导入预览"
-          apply_imported_scenario: "应用导入的场景"
-          back_to_import: "返回导入"
-          raw_yaml: "原始 YAML"
+          title: 导入预览 %{name}
+          eyebrow: 导入预览
+          apply_imported_scenario: 应用导入的场景
+          back_to_import: 返回导入
+          raw_yaml: 原始 YAML
+    branch_profile:
+      name: Sevenoaks 与 Westerham 办公室
+      team_label: 由本地 GotTheKeys 团队负责
+      response_time: 通常 1 个工作日内回复
+      hours: 周一至周六 9:00-18:00
+    enquiries:
+      title: 咨询 %{address}
+      eyebrow: 房源咨询
+      heading: 咨询 %{address}
+      body: 如果你想先获取宣传资料、请求经纪人回电，或在预约看房前先问问题，请使用此表单。
+      fields:
+        source_type: 咨询类型
+        message: 留言
+      submit: 发送咨询
+      next_steps_title: 接下来会发生什么？
+      next_steps:
+        one: 线索会立即进入后台收件箱。
+        two: 团队可以对其进行分配、筛选并跟进。
+        three: 如果你提供了邮箱地址，你会收到一封确认邮件。
+      statuses:
+        new: 新建
+        contacted: 已联系
+        qualified: 已确认有效
+        unqualified: 无效
+        archived: 已归档
+      source_types:
+        general_enquiry: 一般咨询
+        brochure_request: 索取宣传册
+        valuation_request: 估值咨询
+        letting_enquiry: 租赁咨询
+      validation:
+        contact_required: 请提供邮箱地址或电话号码，以便我们回复。
+      flash:
+        created: 谢谢，你的咨询已发送给团队。
+      audit:
+        created: 已从 %{source} 创建线索，客户为 %{name}。
+      mailer:
+        acknowledgement_subject: 我们已收到你关于 %{address} 的咨询
+        internal_subject: 关于 %{address} 的新 %{source}
+        greeting: "%{name}，你好："
+        acknowledgement_body_html: 感谢你就 <strong>%{address}</strong> 与我们联系。团队已收到你的咨询，并会尽快查看。
+        lead_reference: 线索编号：%{reference}
+        enquiry_type: 咨询类型：%{source}
+        property: 房源：%{address}
+        reply_body: 我们会通过你提供的联系方式回复你。
+        internal_intro: 收到一条新的房源咨询。
+        customer: 客户：%{name}
+        email: 邮箱：%{email}
+        phone: 电话：%{phone}
+        source: 来源：%{source}
+        not_provided: 未提供
+    offers:
+      title: 为 %{address} 提交报价
+      eyebrow: 购房报价
+      heading: 为 %{address} 提交报价
+      body: 如果你已准备好登记报价并说明购房情况，请使用此表单。
+      fields:
+        amount: 报价金额
+        chain_position: 购房情况
+        chain_position_placeholder: 现金买家，无上游链条
+        notes: 备注
+      submit: 提交报价
+      statuses:
+        received: 已收到
+        accepted: 已接受
+        rejected: 已拒绝
+        withdrawn: 已撤回
+        completed: 已完成
+      validation:
+        sale_listing_only: 必须是出售房源
+      alerts:
+        sale_only: 只有出售房源才可提交报价。
+      flash:
+        created: 报价已提交，团队会尽快审核。
+      events:
+        received: 已收到 %{amount} 的报价。
+        status_changed: 报价状态已从 %{from_status} 变更为 %{to_status}。
+      audit:
+        created: 已收到 %{name} 的 %{amount} 报价。
+    rental_applications:
+      title: 为 %{address} 开始租房申请
+      eyebrow: 租房申请
+      heading: 为 %{address} 开始租房申请
+      body: 如果你想登记为租客并说明预计入住时间和支付能力，请使用此表单。
+      fields:
+        move_in_date: 期望入住日期
+        guarantor_required: 我可能需要担保人
+        guarantor_available: 我已经有担保人
+        affordability_notes: 支付能力说明
+        notes: 备注
+      submit: 提交租房申请
+      statuses:
+        received: 已收到
+        referencing: 审核中
+        approved: 已批准
+        rejected: 已拒绝
+        withdrawn: 已撤回
+      validation:
+        rental_listing_only: 必须是出租房源
+      alerts:
+        rental_only: 只有出租房源才可提交租房申请。
+      flash:
+        created: 租房申请已提交，团队会尽快审核。
+      events:
+        received: 已收到 %{move_in_date} 的租房申请。
+        status_changed: 申请状态已从 %{from_status} 变更为 %{to_status}。
+      audit:
+        created: 已收到 %{name} 的租房申请，计划入住时间为 %{move_in_date}。
+    saved_searches:
+      notice:
+        one: 已创建保存搜索，匹配 1 套房源。
+        other: 已创建保存搜索，匹配 %{count} 套房源。
+      validation:
+        max_price: 必须大于或等于最低价格
+    photos:
+      title: "%{address} 照片"
+      eyebrow: 房源素材
+      heading: 管理照片
+      body: 设置主图、整理显示顺序，并为宣传资料添加合适的图片说明。
+      add_title: 添加照片
+      current_title: 当前照片
+      empty: 尚未添加任何照片。
+      fields:
+        image_filename: 图片文件名
+        image_filename_placeholder: hero_family_home.jpg
+        caption: 图片说明
+        caption_placeholder: 傍晚时分的厨房餐厅
+        position: 显示顺序
+        primary: 设为主图
+        primary_image: 主图
+      actions:
+        add: 添加照片
+        remove_confirm: 要移除此照片吗？
+      flash:
+        added: 照片已添加。
+        updated: 照片已更新。
+        removed: 照片已移除。
+    floor_plans:
+      title: "%{address} 户型图"
+      eyebrow: 房源素材
+      heading: 管理户型图
+      body: 保持宣传资料中的户型图井然有序，方便买家和租客快速查看布局。
+      add_title: 添加户型图
+      current_title: 当前户型图
+      empty: 尚未添加任何户型图。
+      fields:
+        label: 标签
+        label_placeholder: 一层
+        file_name: 文件名
+        file_name_placeholder: ground_floor_plan.pdf
+        position: 显示顺序
+      actions:
+        add: 添加户型图
+        remove_confirm: 要移除此户型图吗？
+      flash:
+        added: 户型图已添加。
+        updated: 户型图已更新。
+        removed: 户型图已移除。
+    property_documents:
+      title: "%{address} 文件"
+      heading: 管理文件
+      empty: 尚未添加宣传册或合规文件。
+      add_title: 添加文件
+      edit_title: 编辑文件
+      public_visitor: 公开访客
+      fields:
+        title: 标题
+        file_name: 文件名
+        file_name_placeholder: brochure.pdf
+        category: 类别
+        visibility: 可见性
+        position: 位置
+      actions:
+        add: 添加文件
+        save: 保存文件
+      categories:
+        brochure: 宣传册
+        compliance: 合规
+        landlord_attachment: 房东附件
+        vendor_attachment: 卖方附件
+        epc: EPC
+        tenancy_info: 租赁信息
+      visibilities:
+        public: 公开
+        private: 私密
+      validation:
+        supported_file: 必须引用受支持的文件
+      alerts:
+        not_public: 该文件无法在公开页面上访问。
+      flash:
+        added: 文件已添加。
+        updated: 文件已更新。
+        removed: 文件已移除。
+      audit:
+        added: 已添加 %{category} 文件“%{title}”。
+        updated: 文件“%{title}”已更新。
+        removed: 文件“%{title}”已移除。
+        downloaded: 已下载“%{title}”。
+    validation:
+      phone_number: 必须是有效的电话号码

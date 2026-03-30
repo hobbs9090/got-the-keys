@@ -34,11 +34,24 @@ RSpec.describe DemoData::PropertyImageGenerator do
     end
   end
 
-  it "writes a generated image file and updates the property image filename" do
+  it "defaults to writing generated files into the Rails asset image directory" do
+    generator = described_class.new(client: fake_client)
+
+    expect(generator.send(:output_dir)).to eq(described_class::DEFAULT_OUTPUT_DIR)
+  end
+
+  it "writes a generated image file and attaches it as the primary property photo" do
     result = described_class.new(client: fake_client, output_dir: @output_dir).generate_for_property(property)
 
     expect(result[:status]).to eq(:generated)
-    expect(property.reload.image_file_name).to eq("generated_property_#{property.id}.jpg")
+    expect(result[:asset_pipeline_managed]).to be(false)
+    expect(property.reload.image_file_name).to be_blank
+    expect(property.photos.count).to eq(1)
+    expect(property.primary_photo).to have_attributes(
+      image_filename: "generated_property_#{property.id}.jpg",
+      primary: true,
+      caption: property.headline
+    )
     expect(@output_dir.join("generated_property_#{property.id}.jpg").binread).to eq("fake-jpeg-binary")
   end
 
@@ -48,5 +61,27 @@ RSpec.describe DemoData::PropertyImageGenerator do
     expect(result[:status]).to eq(:preview)
     expect(result[:prompt]).to include(property.town_city)
     expect(property.reload.image_file_name).to be_blank
+    expect(property.photos).to be_empty
+  end
+
+  it "updates the existing primary photo instead of creating a duplicate" do
+    existing_photo = FactoryBot.create(
+      :photo,
+      property:,
+      image_filename: "old-front.jpg",
+      caption: "Old caption",
+      primary: true,
+      position: 1
+    )
+
+    described_class.new(client: fake_client, output_dir: @output_dir).generate_for_property(property)
+
+    expect(property.reload.photos.count).to eq(1)
+    expect(existing_photo.reload).to have_attributes(
+      image_filename: "generated_property_#{property.id}.jpg",
+      caption: property.headline,
+      primary: true,
+      position: 1
+    )
   end
 end

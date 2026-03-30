@@ -54,7 +54,6 @@ properties:
     council_tax_band: F
     parking: Driveway
     outdoor_space: Garden
-    epc_rating: C
     floor_area_sq_ft: 1760
 photos:
   - property_key: bromley_open_house

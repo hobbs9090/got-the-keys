@@ -4,7 +4,7 @@ class SavedSearchesController < ApplicationController
 
     if @saved_search.save
       matches = @saved_search.matching_properties_count
-      redirect_to properties_path(@saved_search.filter_params), notice: "Saved search created for #{matches} matching #{'listing'.pluralize(matches)}."
+      redirect_to properties_path(@saved_search.filter_params), notice: t("ui.saved_searches.notice", count: matches)
     else
       redirect_to properties_path(@saved_search.filter_params), alert: @saved_search.errors.full_messages.to_sentence
     end

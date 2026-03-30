@@ -7,7 +7,9 @@
       <h1><%= t("ui.admin.dashboard.title") %></h1>
     </div>
 
-    <%= link_to t("ui.admin.dashboard.open_bookings_desk"), admin_bookings_path, class: "button primary" %>
+    <div class="section-heading__actions">
+      <%= link_to t("ui.admin.dashboard.open_bookings_desk"), admin_bookings_path, class: "button primary" %>
+    </div>
   </div>
 
   <div class="admin-dashboard__status-grid" data-testid="admin-dashboard-status-grid">
