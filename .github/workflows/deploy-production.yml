@@ -99,7 +99,7 @@ jobs:
         run: |
           bundle config set path "$BUNDLE_PATH"
           bundle config set without "$BUNDLE_WITHOUT"
-          bundle config set build.pg --with-pg-config "$(command -v pg_config)"
+          bundle config set build.pg "--with-pg-config=$(command -v pg_config)"
           bundle check || bundle install --jobs 4 --retry 3
 
       - name: Verify deploy SSH path
