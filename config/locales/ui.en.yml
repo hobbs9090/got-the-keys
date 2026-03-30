@@ -256,7 +256,6 @@ en:
         available_from: "Available from"
         parking: "Parking"
         outdoor_space: "Outdoor space"
-        epc_rating: "EPC rating"
         floor_area: "Floor area"
         floor_area_value: "%{area} sq ft"
         deposit: "Deposit"
@@ -646,10 +645,6 @@ en:
           notification_logs: "Notification logs"
           last_demo_action: "Last demo action"
         demo_action_value: "%{action} at %{time}"
-        known_credentials_title: "Known credentials"
-        admin_credential: "admin: %{email} / %{password}"
-        seller_credential: "seller: %{email} / %{password}"
-        default_password: "secret"
         training_title: "Recommended training journeys"
         training_journeys:
           - "Create a new booking from a property page and verify the success message plus reference code."

@@ -140,11 +140,6 @@
         <%= field_error_messages(form_model, :outdoor_space) %>
       </div>
       <div>
-        <%= f.label :epc_rating, t("ui.properties.editor.fields.epc_rating"), **form_label_options(form_model, :epc_rating) %>
-        <%= f.text_field :epc_rating, placeholder: t("ui.properties.editor.placeholders.epc_rating"), **form_control_options(form_model, :epc_rating) %>
-        <%= field_error_messages(form_model, :epc_rating) %>
-      </div>
-      <div>
         <%= f.label :floor_area_sq_ft, t("ui.properties.editor.floor_area_label"), **form_label_options(form_model, :floor_area_sq_ft) %>
         <%= f.number_field :floor_area_sq_ft, min: 0, step: 1, **form_control_options(form_model, :floor_area_sq_ft) %>
         <%= field_error_messages(form_model, :floor_area_sq_ft) %>

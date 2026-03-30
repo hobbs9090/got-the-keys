@@ -34,7 +34,6 @@ class Admin::QaController < Admin::BaseController
   def load_page_data
     catalog = DemoData::ScenarioCatalog.new
     @scenarios = catalog.all
-    @baseline = catalog.fetch!("baseline")
     @scenario_previews = DemoData::ScenarioLoader.new.scenarios
     @scenario_family_groups = @scenario_previews.group_by { |scenario| scenario.dig(:qa, :family) }
     @diagnostics = Qa::DiagnosticsSnapshot.new(catalog:).to_h.merge(

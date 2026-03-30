@@ -1,5 +1,5 @@
 class PropertyDocument < ApplicationRecord
-  CATEGORIES = %w[brochure compliance landlord_attachment vendor_attachment epc tenancy_info].freeze
+  CATEGORIES = %w[brochure compliance landlord_attachment vendor_attachment tenancy_info].freeze
   VISIBILITIES = %w[public private].freeze
   FILE_NAME_FORMAT = /\A[\w.\-\/ ]+\.(pdf|doc|docx|jpg|jpeg|png)\z/i.freeze
 

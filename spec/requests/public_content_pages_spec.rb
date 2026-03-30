@@ -47,4 +47,24 @@ RSpec.describe "Public content pages", type: :request do
     expect(response.body).to include('data-testid="about-story-card"')
     expect(response.body).to include(I18n.t("about_us.hero_title"))
   end
+
+  it "wraps the for sale bottom pagination in the shared results footer spacing" do
+    get "/for_sale"
+
+    document = Nokogiri::HTML(response.body)
+    footer = document.at_css(".property-results-panel__footer")
+
+    expect(response).to have_http_status(:ok)
+    expect(footer).to be_present
+  end
+
+  it "wraps the for rent bottom pagination in the shared results footer spacing" do
+    get "/for_rent"
+
+    document = Nokogiri::HTML(response.body)
+    footer = document.at_css(".property-results-panel__footer")
+
+    expect(response).to have_http_status(:ok)
+    expect(footer).to be_present
+  end
 end

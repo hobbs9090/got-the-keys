@@ -51,7 +51,6 @@ describe "A property" do
       image_file_name: nil,
       tenure: nil,
       council_tax_band: nil,
-      epc_rating: nil,
       floor_area_sq_ft: nil
     )
 

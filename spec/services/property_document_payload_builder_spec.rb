@@ -14,7 +14,6 @@ RSpec.describe PropertyDocumentPayloadBuilder do
       bedrooms: 4,
       bathrooms: 3,
       asking_price: 1_050_000,
-      epc_rating: "B",
       floor_area_sq_ft: 2150,
       year_built: 1934,
       refurbished_year: 2021
@@ -49,9 +48,14 @@ RSpec.describe PropertyDocumentPayloadBuilder do
     expect(payload).to include("24 Cedar Road")
     expect(payload).to include("Overview")
     expect(payload).to include("Key facts")
-    expect(payload).to include("GBP 1,050,000")
-    expect(payload).to include("Built 1934  |  Updated 2021  |  2150 sq ft")
+    expect(payload).to include("\\2431,050,000")
+    expect(payload).not_to include("GBP 1,050,000")
+    expect(payload).to include("Guide price")
+    expect(payload).to include("Updated 2021  |  2150 sq ft")
+    expect(payload).not_to include("Built 1934")
     expect(payload).to include("01732 650010  |  hello@gotthekeys.com")
+    expect(payload).not_to include(AppSettings.primary_branch_profile.fetch(:response_time))
+    expect(payload).not_to include(I18n.t("ui.branch_profile.team_label"))
     expect(payload).to include("/Subtype /Image")
   end
 
@@ -64,23 +68,25 @@ RSpec.describe PropertyDocumentPayloadBuilder do
     expect(payload).not_to include("/Subtype /Image")
   end
 
-  it "builds branded EPC sheets with the same property-summary layout" do
-    epc_document = FactoryBot.create(
+  it "builds branded compliance sheets with the same property-summary layout" do
+    compliance_document = FactoryBot.create(
       :property_document,
       property:,
-      title: "EPC certificate",
-      file_name: "cedar-road-epc.pdf",
-      category: "epc",
+      title: "Compliance pack",
+      file_name: "cedar-road-compliance.pdf",
+      category: "compliance",
       visibility: "public"
     )
 
-    payload = described_class.new(document: epc_document, property:).payload
+    payload = described_class.new(document: compliance_document, property:).payload
 
     expect(payload).to start_with("%PDF-1.4")
-    expect(payload).to include("EPC CERTIFICATE")
+    expect(payload).to include("COMPLIANCE PACK")
     expect(payload).to include("PROPERTY PLATFORM")
-    expect(payload).to include("EPC B")
+    expect(payload).to include("24 Cedar Road")
+    expect(payload).to include("\\2431,050,000")
     expect(payload).to include("Prepared #{Date.current.strftime('%d %B %Y')}")
+    expect(payload).not_to include(AppSettings.primary_branch_profile.fetch(:response_time))
   end
 
   it "falls back to a plain text payload for non-pdf documents" do

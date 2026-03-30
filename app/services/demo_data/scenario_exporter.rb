@@ -101,7 +101,6 @@ module DemoData
         available_from: property.available_from,
         parking: property.parking,
         outdoor_space: property.outdoor_space,
-        epc_rating: property.epc_rating,
         floor_area_sq_ft: property.floor_area_sq_ft,
         deposit_amount: property.deposit_amount,
         pets_allowed: property.pets_allowed,

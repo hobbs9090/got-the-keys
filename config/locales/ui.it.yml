@@ -274,7 +274,6 @@ it:
         available_from: Disponibile dal
         parking: Parcheggio
         outdoor_space: Spazio esterno
-        epc_rating: Classe EPC
         floor_area: Superficie
         floor_area_value: "%{area} sq ft"
         deposit: Deposito

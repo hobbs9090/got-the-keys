@@ -86,21 +86,6 @@
       </ul>
     </div>
 
-    <% brochure_assets = @property.ordered_photos.limit(6) %>
-    <% if brochure_assets.any? || @property.ordered_floor_plans.any? %>
-      <div class="property-address">
-        <h3><%= t("ui.properties.show.brochure_assets_title") %></h3>
-        <ul class="detail-inline-list">
-          <% brochure_assets.each do |photo| %>
-            <li><strong><%= photo.primary? ? t("ui.properties.show.primary_image") : t("ui.properties.show.photo") %></strong>: <%= photo.image_filename %></li>
-          <% end %>
-          <% @property.ordered_floor_plans.each do |floor_plan| %>
-            <li><strong><%= t("ui.properties.show.floor_plan") %></strong>: <%= floor_plan.label.presence || floor_plan.floor_plans %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
     <% if @public_documents.any? %>
       <div class="property-address" data-testid="property-documents-panel">
         <h3><%= t("ui.properties.show.documents_title") %></h3>
@@ -162,7 +147,6 @@
 
     <div class="empty-state property-booking-panel__support-card property-branch-card" data-testid="property-branch-card">
       <h3><%= primary_branch_profile[:name] %></h3>
-      <p><strong><%= primary_branch_profile[:team_label] %></strong></p>
       <p><%= primary_branch_profile[:response_time] %></p>
       <p><%= primary_branch_profile[:phone] %> · <%= primary_branch_profile[:email] %></p>
       <p><%= primary_branch_profile[:hours] %></p>

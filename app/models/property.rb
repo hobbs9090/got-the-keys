@@ -42,7 +42,7 @@ class Property < ApplicationRecord
             }
   validates :sale_status, inclusion: { in: SALE_STATUS }, allow_blank: true
   validates :listing_state, inclusion: { in: LISTING_STATES }
-  validates :tenure, :council_tax_band, :furnishing, :parking, :outdoor_space, :epc_rating, length: { maximum: 60 }, allow_blank: true
+  validates :tenure, :council_tax_band, :furnishing, :parking, :outdoor_space, length: { maximum: 60 }, allow_blank: true
   validates :floor_area_sq_ft, :deposit_amount, :service_charge_amount, :lease_length_years,
             numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_blank: true
   validates :year_built, :refurbished_year,
@@ -246,7 +246,7 @@ class Property < ApplicationRecord
       {
         key: :facts,
         label: I18n.t("ui.properties.seller.checks.facts"),
-        complete: [tenure, council_tax_band, epc_rating, floor_area_sq_ft].all?(&:present?)
+        complete: [tenure, council_tax_band, floor_area_sq_ft].all?(&:present?)
       },
       {
         key: :contact,

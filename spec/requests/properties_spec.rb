@@ -103,6 +103,27 @@ describe "Properties" do
       expect(card.at_css(".property-card__header .property-card__price")).not_to be_present
       expect(card.at_css(".property-card__body > .property-card__price[data-testid='property-card-price']")).to be_present
     end
+
+    it "does not show the build year on property cards" do
+      get properties_path
+
+      document = Nokogiri::HTML(response.body)
+      card = document.at_css(%([data-testid="property-card"]))
+
+      expect(card.text).not_to include(property.year_built.to_s)
+      expect(card.text).not_to include(I18n.t("ui.properties.facts.year_built"))
+    end
+
+    it "uses the two-column catalogue grid modifier on the main properties page" do
+      get properties_path
+
+      document = Nokogiri::HTML(response.body)
+      grid = document.at_css("#properties")
+
+      expect(grid).to be_present
+      expect(grid["class"]).to include("property-grid")
+      expect(grid["class"]).to include("property-grid--catalogue")
+    end
   end
 
   describe "GET /properties/1" do
@@ -131,6 +152,7 @@ describe "Properties" do
       expect(response.body).to include(property.year_built.to_s)
       expect(response.body).to include("Last refurbished")
       expect(response.body).to include(property.refurbished_year.to_s)
+      expect(response.body).not_to include(I18n.t("ui.branch_profile.team_label"))
     end
 
     it "keeps the property hero media on a non-stretched 3:2 frame in the stylesheet" do

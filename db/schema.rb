@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_29_101500) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_30_061000) do
   create_table "admins", force: :cascade do |t|
     t.integer "consumed_timestep"
     t.datetime "created_at", precision: nil
@@ -237,7 +237,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_29_101500) do
     t.string "county"
     t.datetime "created_at", precision: nil
     t.integer "deposit_amount"
-    t.string "epc_rating"
     t.boolean "featured", default: false, null: false
     t.integer "floor_area_sq_ft"
     t.string "furnishing"

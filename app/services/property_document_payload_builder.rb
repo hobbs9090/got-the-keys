@@ -8,12 +8,15 @@ class PropertyDocumentPayloadBuilder
   PAGE_HEIGHT = 792.0
   MARGIN = 36.0
   CONTENT_WIDTH = PAGE_WIDTH - (MARGIN * 2)
-  HERO_CARD_Y = 436.0
-  HERO_CARD_HEIGHT = 302.0
-  DETAILS_CARD_Y = 64.0
-  DETAILS_CARD_HEIGHT = 344.0
-  IMAGE_BOX_WIDTH = 232.0
+  HERO_CARD_Y = 430.0
+  HERO_CARD_HEIGHT = 308.0
+  DETAILS_CARD_Y = 58.0
+  DETAILS_CARD_HEIGHT = 348.0
+  IMAGE_BOX_WIDTH = 236.0
   IMAGE_BOX_HEIGHT = (IMAGE_BOX_WIDTH / 1.5).round(2)
+  CONTACT_STRIP_Y = 88.0
+  CONTACT_STRIP_HEIGHT = 64.0
+  POUND_PLACEHOLDER = "__POUND__".freeze
 
   COLORS = {
     page_background: [0.965, 0.976, 0.992],
@@ -90,14 +93,14 @@ class PropertyDocumentPayloadBuilder
     draw_panel(commands, x: MARGIN, y: DETAILS_CARD_Y, width: CONTENT_WIDTH, height: DETAILS_CARD_HEIGHT)
 
     draw_brand(commands, x: 56, y: 693)
-    draw_document_badge(commands, x: 424, y: 697)
+    draw_document_badge(commands, x: 408, y: 697)
     draw_sale_status_badge(commands, x: 56, y: 657)
-    draw_price(commands, x: 56, y: 595)
+    draw_price(commands, x: 56, y: 548)
     draw_header_copy(commands, x: 56, y: 652)
-    draw_hero_image_panel(commands, hero_image:, x: 322, y: 524, width: IMAGE_BOX_WIDTH, height: IMAGE_BOX_HEIGHT)
+    draw_hero_image_panel(commands, hero_image:, x: 318, y: 520, width: IMAGE_BOX_WIDTH, height: IMAGE_BOX_HEIGHT)
     draw_overview(commands, x: 56, y: 382)
     draw_key_facts(commands, x: 382, y: 382)
-    draw_contact_strip(commands, x: 56, y: 96, width: 500, height: 56)
+    draw_contact_strip(commands, x: 56, y: CONTACT_STRIP_Y, width: 500, height: CONTACT_STRIP_HEIGHT)
 
     commands.join
   end
@@ -208,12 +211,13 @@ class PropertyDocumentPayloadBuilder
       line_y -= 16
     end
 
-    draw_text(commands, hero_meta_line, x:, y: 520, size: 11, font: :regular, color: COLORS[:muted_text])
-    draw_text(commands, chronology_line, x:, y: 502, size: 11, font: :regular, color: COLORS[:muted_text]) if chronology_line.present?
+    draw_text(commands, hero_meta_line, x:, y: 484, size: 10.5, font: :regular, color: COLORS[:muted_text])
+    draw_text(commands, chronology_line, x:, y: 467, size: 10.5, font: :regular, color: COLORS[:muted_text]) if chronology_line.present?
   end
 
   def draw_price(commands, x:, y:)
-    draw_text(commands, number_to_currency(property.asking_price, unit: "GBP ", precision: 0), x:, y:, size: 28, font: :bold, color: COLORS[:dark_text])
+    draw_text(commands, "Guide price", x:, y: y + 32, size: 9.5, font: :bold, color: COLORS[:brand_blue])
+    draw_text(commands, formatted_currency(property.asking_price), x:, y:, size: 28, font: :bold, color: COLORS[:dark_text])
   end
 
   def draw_hero_image_panel(commands, hero_image:, x:, y:, width:, height:)
@@ -238,7 +242,7 @@ class PropertyDocumentPayloadBuilder
 
     wrap_text(description, width: 286, font_size: 11.5, max_lines: 10).each do |line|
       draw_text(commands, line, x:, y: current_y, size: 11.5, font: :regular, color: COLORS[:body_text])
-      current_y -= 16
+      current_y -= 17
     end
 
     draw_text(commands, "Prepared #{Date.current.strftime('%d %B %Y')}", x:, y: 172, size: 10, font: :regular, color: COLORS[:muted_text])
@@ -260,23 +264,19 @@ class PropertyDocumentPayloadBuilder
 
     draw_filled_rect(commands, x:, y:, width:, height:, fill: COLORS[:contact_background])
     draw_text(commands, branch.fetch(:name), x: x + 16, y: y + 33, size: 14, font: :bold, color: COLORS[:white])
-    draw_text(commands, branch.fetch(:team_label), x: x + 16, y: y + 16, size: 10.5, font: :regular, color: COLORS[:white])
-    draw_text(commands, branch.fetch(:response_time), x: x + 188, y: y + 16, size: 10.5, font: :regular, color: COLORS[:white])
-    draw_text(commands, "#{branch.fetch(:phone)}  |  #{branch.fetch(:email)}", x: x + 318, y: y + 16, size: 10, font: :regular, color: COLORS[:white])
+    draw_text(commands, "#{branch.fetch(:phone)}  |  #{branch.fetch(:email)}", x: x + 214, y: y + 26, size: 10, font: :regular, color: COLORS[:white])
   end
 
   def hero_meta_line
     [
       bedrooms_label,
       "#{property.bathrooms} bath#{'s' unless property.bathrooms.to_i == 1}",
-      property.town_city,
-      property.epc_rating.present? ? "EPC #{property.epc_rating}" : nil
+      property.town_city
     ].compact.join("  |  ")
   end
 
   def chronology_line
     parts = []
-    parts << "Built #{property.year_built}" if property.year_built.present?
     parts << "Updated #{property.refurbished_year}" if property.refurbished_year.present?
     parts << area_label if area_label.present?
     parts.compact.join("  |  ")
@@ -284,15 +284,13 @@ class PropertyDocumentPayloadBuilder
 
   def facts_for_sheet
     [
-      ["Price", number_to_currency(property.asking_price, unit: "GBP ", precision: 0)],
+      ["Price", formatted_currency(property.asking_price)],
       ["Bedrooms", bedrooms_label],
       ["Bathrooms", property.bathrooms.to_i.to_s],
       ["Town", property.town_city],
       ["Postcode", property.postcode],
       ["Type", property.property_type],
       ["Area", area_label],
-      ["EPC", property.epc_rating],
-      ["Built", property.year_built&.to_s],
       ["Updated", property.refurbished_year&.to_s],
       ["Available", availability_label],
       ["Tenure", property.tenure],
@@ -314,6 +312,10 @@ class PropertyDocumentPayloadBuilder
     else
       "Available now"
     end
+  end
+
+  def formatted_currency(amount)
+    number_to_currency(amount, unit: "£", precision: 0)
   end
 
   def hero_image_asset
@@ -493,7 +495,7 @@ class PropertyDocumentPayloadBuilder
   end
 
   def pdf_text(text)
-    I18n.transliterate(text.to_s)
+    text.to_s.gsub("£", POUND_PLACEHOLDER).then { |value| I18n.transliterate(value) }.gsub(POUND_PLACEHOLDER, "£")
   end
 
   def fmt(number)
@@ -512,6 +514,10 @@ class PropertyDocumentPayloadBuilder
   end
 
   def escape_pdf_text(text)
-    pdf_text(text).gsub("\\", "\\\\\\").gsub("(", "\\(").gsub(")", "\\)")
+    pdf_text(text)
+      .gsub("\\", "\\\\\\")
+      .gsub("(", "\\(")
+      .gsub(")", "\\)")
+      .gsub("£") { "\\243" }
   end
 end

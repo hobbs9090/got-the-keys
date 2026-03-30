@@ -1,7 +1,8 @@
 <% properties = local_assigns.fetch(:properties, @properties) %>
+<% grid_class = local_assigns.fetch(:grid_class, "property-grid") %>
 
 <% if properties.any? %>
-  <div class="property-grid" id="properties">
+  <div class="<%= grid_class %>" id="properties">
     <% properties.each do |property| %>
       <article class="<%= property_card_classes(property) %>" data-testid="property-card">
         <div class="property-card__media">
@@ -47,12 +48,6 @@
               <dt><%= t("ui.common.bathrooms") %></dt>
               <dd><%= format_bathrooms(property.bathrooms) %></dd>
             </div>
-            <% if property.year_built.present? %>
-              <div>
-                <dt><%= t("ui.properties.facts.year_built") %></dt>
-                <dd><%= property.year_built %></dd>
-              </div>
-            <% end %>
             <div>
               <dt><%= t("ui.common.town") %></dt>
               <dd><%= property.town_city %></dd>

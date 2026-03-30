@@ -57,7 +57,7 @@ class Admin::PropertiesController < Admin::BaseController
       :property_description, :bedrooms, :bathrooms, :property_type, :listing_tagline,
       :image_file_name, :sale_status, :asking_price, :featured, :listing_state, :tenure,
       :council_tax_band, :furnishing, :available_from, :parking, :outdoor_space,
-      :epc_rating, :floor_area_sq_ft, :deposit_amount, :pets_allowed, :service_charge_amount,
+      :floor_area_sq_ft, :deposit_amount, :pets_allowed, :service_charge_amount,
       :lease_length_years, :year_built, :refurbished_year
     )
   end

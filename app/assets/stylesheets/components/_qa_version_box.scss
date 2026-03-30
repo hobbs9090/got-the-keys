@@ -11,6 +11,10 @@
   width: min(100%, 24rem);
 }
 
+.admin-section > .qa-version-box {
+  margin-top: -0.25rem;
+}
+
 .qa-version-box__eyebrow {
   color: var(--color-primary-strong);
   font-size: 0.72rem;

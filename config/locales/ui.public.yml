@@ -33,7 +33,6 @@ en:
           refurbished_year: "Last refurbished"
           parking: "Parking"
           outdoor_space: "Outdoor space"
-          epc_rating: "EPC rating"
           deposit_amount: "Deposit"
           service_charge_amount: "Service charge"
           lease_length_years: "Lease length (years)"
@@ -48,7 +47,6 @@ en:
           refurbished_year: "2022"
           parking: "Driveway"
           outdoor_space: "Rear garden"
-          epc_rating: "C"
 
 de:
   ui:
@@ -85,7 +83,6 @@ de:
           refurbished_year: "Letzte Modernisierung"
           parking: "Parken"
           outdoor_space: "Aussenbereich"
-          epc_rating: "EPC-Einstufung"
           deposit_amount: "Kaution"
           service_charge_amount: "Servicegebuehr"
           lease_length_years: "Laufzeit (Jahre)"
@@ -100,7 +97,6 @@ de:
           refurbished_year: "2022"
           parking: "Auffahrt"
           outdoor_space: "Garten hinter dem Haus"
-          epc_rating: "C"
 
 fr:
   ui:
@@ -137,7 +133,6 @@ fr:
           refurbished_year: "Derniere renovation"
           parking: "Stationnement"
           outdoor_space: "Espace exterieur"
-          epc_rating: "Classe DPE"
           deposit_amount: "Depot"
           service_charge_amount: "Charges"
           lease_length_years: "Duree du bail (ans)"
@@ -152,7 +147,6 @@ fr:
           refurbished_year: "2022"
           parking: "Allee"
           outdoor_space: "Jardin arriere"
-          epc_rating: "C"
 
 it:
   ui:
@@ -189,7 +183,6 @@ it:
           refurbished_year: "Ultima ristrutturazione"
           parking: "Parcheggio"
           outdoor_space: "Spazio esterno"
-          epc_rating: "Classe EPC"
           deposit_amount: "Deposito"
           service_charge_amount: "Spese di servizio"
           lease_length_years: "Durata del lease (anni)"
@@ -204,7 +197,6 @@ it:
           refurbished_year: "2022"
           parking: "Vialetto"
           outdoor_space: "Giardino sul retro"
-          epc_rating: "C"
 
 zh:
   ui:
@@ -241,7 +233,6 @@ zh:
           refurbished_year: "最近翻新年份"
           parking: "停车"
           outdoor_space: "户外空间"
-          epc_rating: "EPC 等级"
           deposit_amount: "押金"
           service_charge_amount: "服务费"
           lease_length_years: "租约年限（年）"
@@ -256,4 +247,3 @@ zh:
           refurbished_year: "2022"
           parking: "车道停车"
           outdoor_space: "后花园"
-          epc_rating: "C"
