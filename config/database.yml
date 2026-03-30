@@ -3,6 +3,12 @@ sqlite: &sqlite
   pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
   timeout: 5000
 
+postgresql: &postgresql
+  adapter: postgresql
+  encoding: unicode
+  url: <%= ENV["DATABASE_URL"] %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
+
 development:
   <<: *sqlite
   database: db/development.sqlite3
@@ -15,14 +21,15 @@ test:
   database: db/test.sqlite3
 
 staging:
-  <<: *sqlite
-  database: <%= ENV.fetch("DATABASE_PATH", "storage/staging.sqlite3") %>
+  <<: *postgresql
+  database: <%= ENV.fetch("DATABASE_NAME", "gotthekeys_staging") %>
+  host: <%= ENV["DATABASE_HOST"] %>
+  port: <%= ENV["DATABASE_PORT"] %>
+  username: <%= ENV["DATABASE_USERNAME"] %>
+  password: <%= ENV["DATABASE_PASSWORD"] %>
 
 production:
-  adapter: postgresql
-  encoding: unicode
-  url: <%= ENV["DATABASE_URL"] %>
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
+  <<: *postgresql
   database: <%= ENV.fetch("DATABASE_NAME", "got_the_keys_production") %>
   host: <%= ENV.fetch("DATABASE_HOST", "localhost") %>
   port: <%= ENV.fetch("DATABASE_PORT", 5432) %>

@@ -15,6 +15,7 @@ DEPLOY_USER="${DEPLOY_USER:-steven}"
 DEPLOY_HOST="${DEPLOY_HOST:-127.0.0.1}"
 DEPLOY_TO="${DEPLOY_TO:-/var/www/gotthekeys-staging}"
 APP_HOST="${APP_HOST:-stevenhobbs.co.uk}"
+DATABASE_NAME="${DATABASE_NAME:-gotthekeys_staging}"
 DEPLOY_REPO_URL="${DEPLOY_REPO_URL:-/home/steven/git/rails_got_the_keys.git}"
 DEPLOY_MIRROR_URL="${DEPLOY_MIRROR_URL:-ssh://${DEPLOY_USER}@${DEPLOY_HOST}/home/steven/git/rails_got_the_keys.git}"
 DEPLOY_MIRROR_REMOTE="${DEPLOY_MIRROR_REMOTE:-deploy-mirror}"
@@ -32,6 +33,7 @@ fi
 git push --no-verify --force "$DEPLOY_MIRROR_REMOTE" "${DEPLOY_SHA}:refs/heads/${DEPLOY_REF}"
 
 export DEPLOY_USER DEPLOY_HOST DEPLOY_TO APP_HOST DEPLOY_REPO_URL
+export DATABASE_URL DATABASE_NAME DATABASE_HOST DATABASE_PORT DATABASE_USERNAME DATABASE_PASSWORD
 export DEPLOY_BRANCH="$DEPLOY_REF"
 export APP_VERSION="${APP_VERSION:-}"
 export APP_BUILD_SHA="${APP_BUILD_SHA:-$(git rev-parse --short "${DEPLOY_SHA}")}"
