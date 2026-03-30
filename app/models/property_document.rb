@@ -28,4 +28,8 @@ class PropertyDocument < ApplicationRecord
   def publicly_visible?
     visibility == "public"
   end
+
+  def pdf?
+    File.extname(file_name.to_s).casecmp(".pdf").zero?
+  end
 end

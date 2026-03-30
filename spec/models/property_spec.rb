@@ -160,6 +160,13 @@ describe "A property" do
     expect(property.errors[:image_file_name]).to be_empty
   end
 
+  it "accepts jpeg image filenames" do
+    property = build_property(image_file_name: "/uploads/property_images/example.jpeg")
+
+    expect(property.valid?).to be true
+    expect(property.errors[:image_file_name]).to be_empty
+  end
+
   it "rejects refurbishment years earlier than the build year" do
     property = build_property(year_built: 2005, refurbished_year: 2001)
 
@@ -167,11 +174,19 @@ describe "A property" do
     expect(property.errors[:refurbished_year]).to include("must be greater than or equal to the year built")
   end
 
+  it "clears furnishing details for sale listings" do
+    property = build_property(sale_status: Property::SALE_STATUSES[:for_sale], furnishing: "Part furnished")
+
+    property.valid?
+
+    expect(property.furnishing).to be_nil
+  end
+
   it "rejects unsupported image filename extensions" do
     property = build_property(image_file_name: "property_placeholder_listing.webp")
 
     expect(property.valid?).to be false
-    expect(property.errors[:image_file_name]).to include("must reference a GIF, JPG, PNG, or SVG image")
+    expect(property.errors[:image_file_name]).to include("must reference a GIF, JPG, JPEG, PNG, or SVG image")
   end
 
   it "uses the primary photo as the hero image when present" do

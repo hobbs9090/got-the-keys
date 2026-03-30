@@ -42,3 +42,6 @@
 Icon?
 thumbs.db
 Thumbs.db
+
+# Local deployment environment files
+.env.production

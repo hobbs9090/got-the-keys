@@ -114,6 +114,27 @@ describe "Properties" do
       expect(card.text).not_to include(I18n.t("ui.properties.facts.year_built"))
     end
 
+    it "renders brochure download links on property cards when public PDFs are available" do
+      document = FactoryBot.create(
+        :property_document,
+        property:,
+        title: "Sales brochure",
+        file_name: "request-user-brochure.pdf",
+        category: "brochure",
+        visibility: "public"
+      )
+
+      get properties_path
+
+      page = Nokogiri::HTML(response.body)
+      download_link = page.at_css(%([data-testid="property-card-document-download-#{property.id}-#{document.id}"]))
+
+      expect(download_link).to be_present
+      expect(download_link["href"]).to eq(download_property_property_document_path(property, document))
+      expect(download_link["data-turbo"]).to eq("false")
+      expect(download_link["download"]).to eq("request-user-brochure.pdf")
+    end
+
     it "uses the two-column catalogue grid modifier on the main properties page" do
       get properties_path
 
@@ -188,6 +209,24 @@ describe "Properties" do
       expect(response.body).to include("Manage documents")
       expect(response.body).to include(%(data-testid="property-documents-panel"))
     end
+
+    it "does not show furnishing in the key facts for sale listings" do
+      property.update!(sale_status: Property::SALE_STATUSES[:for_sale], furnishing: "Part furnished")
+
+      get property_path(property)
+
+      expect(response.body).not_to include(I18n.t("ui.properties.facts.furnishing"))
+      expect(response.body).not_to include("Part furnished")
+    end
+
+    it "shows furnishing in the key facts for rental listings" do
+      property.update!(sale_status: Property::SALE_STATUSES[:for_rent], furnishing: "Part furnished")
+
+      get property_path(property)
+
+      expect(response.body).to include(I18n.t("ui.properties.facts.furnishing"))
+      expect(response.body).to include("Part furnished")
+    end
   end
 
   describe "GET /properties/new" do
@@ -210,6 +249,22 @@ describe "Properties" do
       expect(document.at_css(%([data-testid="listing-facts-panel"]))).to be_present
     end
 
+    it "renders a JPEG upload field for the main property image" do
+      sign_in user
+
+      get new_property_path
+
+      document = Nokogiri::HTML(response.body)
+      upload_field = document.at_css('input[type="file"][name="property[image_upload]"]')
+      furnishing_field = document.at_css("[data-property-furnishing-field]")
+
+      expect(response).to have_http_status(:ok)
+      expect(upload_field).to be_present
+      expect(upload_field["accept"]).to eq(".jpg,.jpeg,image/jpeg")
+      expect(furnishing_field).to be_present
+      expect(furnishing_field["hidden"]).to eq("")
+    end
+
     it "renders localized seller listing form copy for the signed-in language" do
       user.update!(language: "de")
       sign_in user
@@ -221,6 +276,27 @@ describe "Properties" do
       expect(response.body).to include(I18n.t("ui.properties.editor.fields.listing_state", locale: :de))
       expect(response.body).to include(I18n.t("ui.properties.editor.submit", locale: :de))
       expect(response.body).to include(I18n.t("ui.properties.editor.placeholders.listing_tagline", locale: :de))
+    end
+  end
+
+  describe "POST /properties" do
+    it "creates a property with an uploaded jpeg hero image" do
+      sign_in user
+
+      post properties_path, params: {
+        property: property_attributes(
+          image_upload: Rack::Test::UploadedFile.new(
+            Rails.root.join("spec/fixtures/files/property-upload.jpeg"),
+            "image/jpeg"
+          )
+        )
+      }
+
+      property = Property.order(:id).last
+
+      expect(response).to redirect_to(property_path(property))
+      expect(property.image_file_name).to match(%r{\A/uploads/property_images/#{property.id}/[0-9a-f]{32}\.jpeg\z})
+      expect(Rails.root.join("tmp", "uploads", property.image_file_name.delete_prefix("/uploads/"))).to exist
     end
   end
 

@@ -13,7 +13,7 @@ class PropertyCatalogueQuery
   def call
     filters = params.slice(*FILTER_KEYS).merge(default_filters.slice(*FILTER_KEYS)).symbolize_keys
     scope = relation.scoping { relation.model.filter(filters) }
-    properties = scope.page(page)
+    properties = scope.preload(:photos, :property_documents).page(page)
 
     Result.new(
       filters:,

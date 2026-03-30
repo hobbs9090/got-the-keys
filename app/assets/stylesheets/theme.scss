@@ -1904,6 +1904,7 @@ a:focus {
 .property-results-panel__footer {
   display: grid;
   gap: 0.75rem;
+  justify-items: center;
 }
 
 .property-filters,
@@ -2005,6 +2006,17 @@ a:focus {
   position: relative;
 }
 
+.property-card__badges {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  left: 1rem;
+  max-width: calc(100% - 2rem);
+  position: absolute;
+  top: 1rem;
+}
+
 .property-card__image,
 .property-hero__image {
   border-radius: calc(var(--radius-md) - 3px);
@@ -2015,10 +2027,36 @@ a:focus {
   width: 100%;
 }
 
-.property-card__media .badge {
-  left: 1rem;
-  position: absolute;
-  top: 1rem;
+.property-card__badges .badge {
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 24px rgba(16, 33, 63, 0.2);
+  color: #fff;
+  letter-spacing: 0.08em;
+  max-width: 100%;
+  padding: 0.45rem 0.9rem;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.18);
+  white-space: normal;
+}
+
+.property-card__badges .badge--accent {
+  background: rgba(186, 83, 18, 0.92);
+}
+
+.property-card__badges .badge--success {
+  background: rgba(17, 125, 87, 0.92);
+}
+
+.property-card__badges .badge--warning {
+  background: rgba(166, 99, 8, 0.92);
+}
+
+.property-card__badges .badge--danger {
+  background: rgba(153, 34, 25, 0.92);
+}
+
+.property-card__badges .badge--muted,
+.property-card__badges .badge--neutral {
+  background: rgba(16, 33, 63, 0.86);
 }
 
 .property-card__body {
@@ -2065,6 +2103,17 @@ a:focus {
   color: #21365d;
   font-size: 1.05rem;
   font-weight: 700;
+}
+
+.property-card__downloads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.property-card__downloads .button {
+  margin-bottom: 0;
+  max-width: 100%;
 }
 
 .property-card__description {

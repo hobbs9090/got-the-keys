@@ -1,6 +1,14 @@
 require "rails_helper"
 
 RSpec.describe "JavaScript runtime", type: :system, js: true do
+  def sign_in_as_user(user, password: "changeme")
+    visit new_user_session_path
+
+    fill_in "user_email", with: user.email
+    fill_in "user_password", with: password
+    click_button "Sign in"
+  end
+
   it "boots the homepage carousel and shared modal end to end" do
     visit root_path
 
@@ -44,5 +52,24 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
 
     expect(page).to have_css("#map-modal[hidden][aria-hidden='true']", visible: false)
     expect(page).to have_no_css("body.site-modal-open", visible: false)
+  end
+
+  it "toggles the furnishing field based on the selected sale status" do
+    user = FactoryBot.create(:user, email: "listing-user@example.com", password: "changeme", password_confirmation: "changeme")
+
+    sign_in_as_user(user)
+    visit new_property_path
+
+    expect(page).to have_css("[data-property-furnishing-field][hidden]", visible: false)
+
+    select "For Rent", from: "property_sale_status"
+
+    expect(page).to have_no_css("[data-property-furnishing-field][hidden]", visible: false)
+    expect(page.evaluate_script("document.getElementById('property_furnishing').disabled")).to be(false)
+
+    select "For Sale", from: "property_sale_status"
+
+    expect(page).to have_css("[data-property-furnishing-field][hidden]", visible: false)
+    expect(page.evaluate_script("document.getElementById('property_furnishing').disabled")).to be(true)
   end
 end

@@ -1,12 +1,36 @@
 class Admin::SecurityController < Admin::BaseController
+  ADMIN_TWO_FACTOR_DISABLE_CONFIRMATION = "DISABLE".freeze
   SECURITY_AUDIT_ACTIONS = %w[
     admin_two_factor_enrollment_completed
     admin_two_factor_disabled
     admin_two_factor_backup_codes_regenerated
   ].freeze
 
+  helper_method :admin_two_factor_disable_confirmation_phrase
+
   def show
     load_page_data
+  end
+
+  def update
+    @booking_configuration = booking_configuration
+    previous_mode = @booking_configuration.admin_two_factor_mode
+    @booking_configuration.assign_attributes(admin_two_factor_mode: admin_two_factor_mode_params[:admin_two_factor_mode])
+
+    if disabling_without_confirmation?(previous_mode)
+      @booking_configuration.errors.add(:admin_two_factor_mode, t("ui.admin.qa.admin_two_factor.confirmation_required"))
+      load_page_data
+      render :show, status: :unprocessable_content
+      return
+    end
+
+    if @booking_configuration.save
+      audit_admin_two_factor_mode_change!(from: previous_mode, to: @booking_configuration.admin_two_factor_mode) if previous_mode != @booking_configuration.admin_two_factor_mode
+      redirect_to admin_security_path, notice: t("ui.admin.qa.admin_two_factor.updated_notice")
+    else
+      load_page_data
+      render :show, status: :unprocessable_content
+    end
   end
 
   def enroll
@@ -112,10 +136,11 @@ class Admin::SecurityController < Admin::BaseController
   private
 
   def load_page_data
-    @booking_configuration = booking_configuration
+    @booking_configuration ||= booking_configuration
     @pending_otp_secret = current_admin.two_factor_enrolled? ? nil : session[:admin_pending_otp_secret].presence
     @fresh_backup_codes = Array(flash[:admin_security_backup_codes])
     @security_audit_logs = current_admin.audit_logs.where(action: SECURITY_AUDIT_ACTIONS).recent_first.limit(8)
+    @last_admin_two_factor_mode_change = AuditLog.recent_first.find_by(action: "admin_two_factor_mode_changed")
   end
 
   def verify_pending_otp(code, secret)
@@ -130,5 +155,33 @@ class Admin::SecurityController < Admin::BaseController
 
   def consumed_timestep_for(timestamp, secret)
     timestamp / current_admin.otp(secret).interval
+  end
+
+  def admin_two_factor_mode_params
+    params.fetch(:booking_configuration, {}).permit(:admin_two_factor_mode)
+  end
+
+  def admin_two_factor_disable_confirmation_phrase
+    ADMIN_TWO_FACTOR_DISABLE_CONFIRMATION
+  end
+
+  def disabling_without_confirmation?(previous_mode)
+    previous_mode != "disabled" &&
+      @booking_configuration.admin_two_factor_disabled? &&
+      disable_confirmation_value != admin_two_factor_disable_confirmation_phrase
+  end
+
+  def disable_confirmation_value
+    params[:confirm_disable_admin_two_factor].to_s.strip.upcase
+  end
+
+  def audit_admin_two_factor_mode_change!(from:, to:)
+    AuditLogger.log!(
+      auditable: booking_configuration,
+      admin: current_admin,
+      action: "admin_two_factor_mode_changed",
+      message: "Admin two-factor mode changed from #{from} to #{to}.",
+      metadata: { from:, to: }
+    )
   end
 end
