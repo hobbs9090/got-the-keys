@@ -251,7 +251,7 @@ Preferred spec types for new work:
 - model, service, job, and helper specs for unit-level behaviour
 - avoid adding new controller specs or legacy `spec/features` coverage
 
-To make that rule block merges, mark the `CI` workflow as a required status check in your GitHub branch protection settings for `main`/`master`.
+To make that rule block merges, mark the `CI` workflow as a required status check in your GitHub branch protection settings for `main`.
 
 ### Localization Workflow
 
@@ -583,7 +583,7 @@ ALLURE_REPORTS=1 ALLURE_CLEAN_RESULTS=1 bundle exec rspec --require allure-rspec
 npx allure generate tmp/allure-results --output tmp/allure-report --report-name "GotTheKeys RSpec"
 ```
 
-Once GitHub Pages is enabled for GitHub Actions on this repository, pushes to `main` or `master` will publish the latest RSpec report to:
+Once GitHub Pages is enabled for GitHub Actions on this repository, pushes to `main` will publish the latest RSpec report to:
 
 ```text
 https://hobbs9090.github.io/rails_got_the_keys/

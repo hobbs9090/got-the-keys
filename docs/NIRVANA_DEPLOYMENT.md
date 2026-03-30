@@ -200,7 +200,7 @@ The `staging` stage defaults to:
 
 - host `192.168.2.204`
 - deploy root `/var/www/gotthekeys-staging`
-- branch `master`
+- branch `main`
 
 The `production` stage uses the same Nirvana host and defaults `APP_HOST` to `gotthekeys.uk`, but still requires:
 
@@ -231,7 +231,7 @@ DEPLOY_USER=your_ssh_user \
 DEPLOY_HOST=192.168.2.204 \
 DEPLOY_TO=/var/www/gotthekeys-staging \
 DEPLOY_REPO_URL=/home/steven/git/rails_got_the_keys.git \
-DEPLOY_BRANCH=master \
+DEPLOY_BRANCH=main \
 bundle exec cap staging deploy
 ```
 
@@ -270,7 +270,7 @@ That wrapper does more than call Capistrano directly:
 5. runs `bundle exec cap staging deploy:check`
 6. runs `bundle exec cap staging deploy`
 
-This matters because the staging deploy is commit-addressed, not branch-tip-addressed. If `master` moves after CI passes, the staging deploy can still install the exact SHA that was tested.
+This matters because the staging deploy is commit-addressed, not branch-tip-addressed. If `main` moves after CI passes, the staging deploy can still install the exact SHA that was tested.
 
 ### What `bin/deploy_production` Does
 
@@ -369,7 +369,7 @@ The deploy task always records the deployed Git SHA. The build number defaults t
 This repo now supports a split CI/CD flow:
 
 - `.github/workflows/ci.yml` runs tests on GitHub-hosted runners
-- `.github/workflows/deploy-staging.yml` deploys to staging only after `CI` succeeds on `master`
+- `.github/workflows/deploy-staging.yml` deploys to staging only after `CI` succeeds on `main`
 - `.github/workflows/deploy-production.yml` supports manual production deploys on the Nirvana runner
 - manual staging deploys are also available through `workflow_dispatch`
 - manual production deploys default `app_host` to `gotthekeys.uk` and `deploy_to` to `/var/www/gotthekeys-production`
