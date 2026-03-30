@@ -112,6 +112,39 @@ jobs:
           echo "short_sha=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
           echo "ref=deploy/$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
+      - name: Validate production runtime configuration
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+          DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+          DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
+          DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+        run: |
+          if [ -n "$DATABASE_URL" ]; then
+            echo "Using DATABASE_URL from GitHub production secrets."
+            exit 0
+          fi
+
+          if [ -n "$DATABASE_HOST$DATABASE_PORT$DATABASE_USERNAME$DATABASE_PASSWORD" ]; then
+            missing=()
+            [ -n "$DATABASE_NAME" ] || missing+=("DATABASE_NAME")
+            [ -n "$DATABASE_HOST" ] || missing+=("DATABASE_HOST")
+            [ -n "$DATABASE_USERNAME" ] || missing+=("DATABASE_USERNAME")
+            [ -n "$DATABASE_PASSWORD" ] || missing+=("DATABASE_PASSWORD")
+
+            if [ "${#missing[@]}" -gt 0 ]; then
+              echo "Incomplete production database configuration. Set DATABASE_URL or all of: DATABASE_NAME, DATABASE_HOST, DATABASE_USERNAME, DATABASE_PASSWORD." >&2
+              echo "Missing: ${missing[*]}" >&2
+              exit 1
+            fi
+
+            echo "Using discrete production database settings from GitHub production secrets."
+            exit 0
+          fi
+
+          echo "No GitHub production database secrets configured; deploy will use the local Postgres socket defaults for gotthekeys_production."
+
       - name: Deploy exact tested commit
         env:
           DEPLOY_SHA: ${{ steps.deploy_meta.outputs.sha }}
