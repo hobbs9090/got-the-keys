@@ -1,0 +1,93 @@
+<% title t("ui.properties.mine.title", default: "My listings") %>
+
+<section class="page-hero property-workspace-hero">
+  <div>
+    <p class="page-hero__eyebrow"><%= t("ui.properties.mine.eyebrow", default: "Seller workspace") %></p>
+    <h1><%= t("ui.properties.mine.title", default: "My listings") %></h1>
+    <p><%= t("ui.properties.mine.body", default: "Open the listings you have saved, jump back into drafts, and review the property details you have already created.") %></p>
+  </div>
+
+  <div class="page-hero__meta">
+    <span class="badge badge--neutral"><%= t("ui.properties.mine.total_label", count: @workspace_counts[:total], default: "%{count} saved listings") %></span>
+    <strong><%= number_with_delimiter(@workspace_counts[:total], delimiter: ",") %></strong>
+    <span><%= t("ui.properties.mine.state_summary", drafts: @workspace_counts[:drafts], live: @workspace_counts[:live], default: "%{drafts} draft or in review · %{live} live") %></span>
+  </div>
+</section>
+
+<section class="property-workspace">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow"><%= t("ui.properties.mine.list_eyebrow", default: "Your records") %></p>
+      <h2><%= t("ui.properties.mine.list_title", default: "Saved and partially completed listings") %></h2>
+    </div>
+
+    <div class="section-heading__actions">
+      <%= link_to t("ui.site_header.add_property"), new_property_path, class: "button primary" %>
+    </div>
+  </div>
+
+  <% if @properties.any? %>
+    <div class="property-workspace__grid">
+      <% @properties.each do |property| %>
+        <article class="site-card property-workspace-card" data-testid="owner-property-card">
+          <div class="property-workspace-card__media">
+            <%= small_image_for(property) %>
+          </div>
+
+          <div class="property-workspace-card__content">
+            <div class="property-workspace-card__badges">
+              <span class="badge <%= property.sale_status == Property::SALE_STATUSES[:for_sale] ? 'badge--accent' : 'badge--success' %>"><%= translated_sale_status(property.sale_status) %></span>
+              <span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span>
+            </div>
+
+            <div>
+              <h2><%= link_to property.address_line_1, property_path(property) %></h2>
+              <p><%= property.headline %></p>
+            </div>
+
+            <dl class="property-workspace-card__meta">
+              <div>
+                <dt><%= t("ui.properties.mine.stats.location", default: "Location") %></dt>
+                <dd><%= property.location_line %></dd>
+              </div>
+              <div>
+                <dt><%= t("ui.properties.mine.stats.price", default: "Guide price") %></dt>
+                <dd><%= format_price(property) %></dd>
+              </div>
+              <div>
+                <dt><%= t("ui.properties.mine.stats.readiness", default: "Readiness") %></dt>
+                <dd><%= property.listing_completeness_percentage %>%</dd>
+              </div>
+              <div>
+                <dt><%= t("ui.properties.mine.stats.last_saved", default: "Last saved") %></dt>
+                <dd><%= formatted_date_time(property.updated_at) %></dd>
+              </div>
+            </dl>
+
+            <p class="property-workspace-card__visibility">
+              <%= property.publicly_visible? ? t("ui.properties.mine.visibility_live", default: "Visible on the public site.") : t("ui.properties.mine.visibility_private", default: "Only visible to you and admins until it is published.") %>
+            </p>
+
+            <div class="property-workspace-card__actions">
+              <%= link_to t("ui.properties.mine.open_details", default: "Open details"), property_path(property), class: "button primary" %>
+              <%= link_to t("ui.properties.show.edit_listing"), edit_property_path(property), class: "button hollow secondary" %>
+            </div>
+          </div>
+        </article>
+      <% end %>
+    </div>
+
+    <div class="property-workspace__footer">
+      <%= paginate @properties %>
+    </div>
+  <% else %>
+    <section class="site-card empty-state">
+      <p class="section-heading__eyebrow"><%= t("ui.properties.mine.list_eyebrow", default: "Your records") %></p>
+      <h2><%= t("ui.properties.mine.empty_title", default: "No saved listings yet") %></h2>
+      <p><%= t("ui.properties.mine.empty_body", default: "Create your first property and come back here whenever you want to continue working on it.") %></p>
+      <div class="form-actions">
+        <%= link_to t("ui.site_header.add_property"), new_property_path, class: "button primary" %>
+      </div>
+    </section>
+  <% end %>
+</section>
