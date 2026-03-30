@@ -30,6 +30,17 @@ class PropertiesController < ApplicationController
     @recent_activity = @property.activity_timeline(limit: 8)
   end
 
+  def mine
+    owner_properties = current_user.properties
+
+    @workspace_counts = {
+      total: owner_properties.count,
+      drafts: owner_properties.where(listing_state: %w[draft review_pending]).count,
+      live: owner_properties.where(listing_state: Property::PUBLIC_LISTING_STATES).count
+    }
+    @properties = owner_properties.preload(:photos).order(updated_at: :desc).page(params[:page])
+  end
+
   def edit
   end
 

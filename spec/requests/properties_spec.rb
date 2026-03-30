@@ -279,6 +279,49 @@ describe "Properties" do
     end
   end
 
+  describe "GET /properties/mine" do
+    it "requires a signed-in seller" do
+      get mine_properties_path
+
+      expect(response).to redirect_to(new_user_session_path)
+    end
+
+    it "shows the signed-in seller their saved and in-progress listings only" do
+      sign_in user
+      draft_property = FactoryBot.create(:property, :draft, user:, address_line_1: "Draft Mews")
+      review_property = FactoryBot.create(:property, :review_pending, user:, address_line_1: "Review Cottage")
+      live_property = FactoryBot.create(:property, user:, address_line_1: "Live House")
+      FactoryBot.create(:property, user: FactoryBot.create(:user), address_line_1: "Someone Else's Home")
+
+      get mine_properties_path
+
+      document = Nokogiri::HTML(response.body)
+      cards = document.css(%([data-testid="owner-property-card"]))
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("Draft Mews")
+      expect(response.body).to include("Review Cottage")
+      expect(response.body).to include("Live House")
+      expect(response.body).not_to include("Someone Else's Home")
+      expect(cards.count).to be >= 3
+      expect(response.body).to include(I18n.t("ui.properties.listing_states.draft"))
+      expect(response.body).to include(I18n.t("ui.properties.listing_states.review_pending"))
+      expect(response.body).to include(I18n.t("ui.properties.listing_states.published"))
+      expect(response.body).to include(property_path(draft_property))
+      expect(response.body).to include(edit_property_path(draft_property))
+    end
+
+    it "shows an empty state when the seller has not created any listings yet" do
+      sign_in FactoryBot.create(:user)
+
+      get mine_properties_path
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("No saved listings yet")
+      expect(response.body).to include(new_property_path)
+    end
+  end
+
   describe "POST /properties" do
     it "creates a property with an uploaded jpeg hero image" do
       sign_in user

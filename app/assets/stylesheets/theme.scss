@@ -2256,6 +2256,95 @@ a:focus {
   margin: 2rem 0 0;
 }
 
+.property-workspace {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.property-workspace__grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.property-workspace-card {
+  align-items: start;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
+}
+
+.property-workspace-card__media {
+  aspect-ratio: 4 / 3;
+  border-radius: calc(var(--radius-md) - 2px);
+  overflow: hidden;
+}
+
+.property-workspace-card__media .property-card__image {
+  height: 100%;
+}
+
+.property-workspace-card__content {
+  display: grid;
+  gap: 0.95rem;
+}
+
+.property-workspace-card__content h2,
+.property-workspace-card__content p {
+  margin: 0;
+}
+
+.property-workspace-card__badges,
+.property-workspace-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.property-workspace-card__meta {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+}
+
+.property-workspace-card__meta > div {
+  background: rgba(20, 87, 214, 0.06);
+  border: 1px solid rgba(20, 37, 63, 0.08);
+  border-radius: var(--radius-sm);
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.9rem 1rem;
+}
+
+.property-workspace-card__meta dt,
+.property-workspace-card__visibility {
+  color: var(--color-muted);
+}
+
+.property-workspace-card__meta dt {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.property-workspace-card__meta dd {
+  color: #10213f;
+  font-weight: 700;
+  margin: 0;
+}
+
+.property-workspace-card__visibility {
+  margin: 0;
+}
+
+.property-workspace__footer {
+  display: flex;
+  justify-content: center;
+}
+
 .property-booking-panel {
   display: grid;
   gap: 1rem;
@@ -2600,6 +2689,7 @@ a:focus {
   .property-catalogue,
   .property-hero,
   .property-layout,
+  .property-workspace-card,
   .admin-grid,
   .how-finish-card {
     grid-template-columns: 1fr;
@@ -2678,9 +2768,14 @@ a:focus {
   }
 
   .property-card__actions,
+  .property-workspace-card__actions,
   .section-heading__actions,
   .admin-inline-actions {
     justify-content: flex-start;
+  }
+
+  .property-workspace-card__meta {
+    grid-template-columns: 1fr;
   }
 
   .contact-jump-nav {

@@ -50,6 +50,10 @@ GotTheKeys::Application.routes.draw do
   resources :coffee, only: [:index]
 
   resources :properties do
+    collection do
+      get :mine
+    end
+
     resources :photos, only: [:index, :new, :create, :update, :destroy]
     resources :floor_plans, only: [:index, :new, :create, :update, :destroy]
     resources :property_documents, path: "documents", only: [:index, :new, :create, :update, :destroy] do

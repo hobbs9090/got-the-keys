@@ -141,7 +141,7 @@ RSpec.describe "Header account details", type: :request do
     expect(account_summary.text).to include("Taylor Stone")
     expect(account_summary.text).to include(user.email)
 
-    expect(link_texts(".site-header__actions-row .site-header__button-group a.button")).to eq(["Add property", "Profile", "Sign out"])
-    expect(link_hrefs(".site-header__actions-row .site-header__button-group a.button")).to eq([new_property_path, edit_user_registration_path, destroy_user_session_path])
+    expect(link_texts(".site-header__actions-row .site-header__button-group a.button")).to eq(["My listings", "Add property", "Profile", "Sign out"])
+    expect(link_hrefs(".site-header__actions-row .site-header__button-group a.button")).to eq([mine_properties_path, new_property_path, edit_user_registration_path, destroy_user_session_path])
   end
 end

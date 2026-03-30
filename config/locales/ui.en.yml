@@ -8,6 +8,7 @@ en:
       admin_account_name: "Administrator"
       member_account_name: "Seller account"
       sign_out: "Sign out"
+      my_listings: "My listings"
       add_property: "Add property"
       profile: "Profile"
       register: "Register"
@@ -274,6 +275,26 @@ en:
         core_details_title: "Core details"
         facts_title: "Structured property facts"
         floor_area_label: "Floor area (sq ft)"
+      mine:
+        title: "My listings"
+        eyebrow: "Seller workspace"
+        body: "Open the listings you have saved, jump back into drafts, and review the property details you have already created."
+        list_eyebrow: "Your records"
+        list_title: "Saved and partially completed listings"
+        total_label:
+          one: "%{count} saved listing"
+          other: "%{count} saved listings"
+        state_summary: "%{drafts} draft or in review · %{live} live"
+        open_details: "Open details"
+        visibility_live: "Visible on the public site."
+        visibility_private: "Only visible to you and admins until it is published."
+        stats:
+          location: "Location"
+          price: "Guide price"
+          readiness: "Readiness"
+          last_saved: "Last saved"
+        empty_title: "No saved listings yet"
+        empty_body: "Create your first property and come back here whenever you want to continue working on it."
       seller:
         checks:
           headline: "Headline and summary"
