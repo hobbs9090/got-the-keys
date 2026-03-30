@@ -44,11 +44,8 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Install dependencies
-        run: |
-          bundle config set --local path 'vendor/bundle'
-          bundle install --jobs 4 --retry 3
-          npm ci
+      - name: Install Node dependencies
+        run: npm ci
 
       - name: Check locale health
         run: bin/i18n_health
