@@ -1,41 +1,30 @@
-# SQLite version 3.x
-#   gem install sqlite3
-#
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem 'sqlite3'
-development:
+sqlite: &sqlite
   adapter: sqlite3
-  database: db/development.sqlite3
-  pool: 5
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
   timeout: 5000
+
+development:
+  <<: *sqlite
+  database: db/development.sqlite3
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
-test: &test
-  adapter: sqlite3
+test:
+  <<: *sqlite
   database: db/test.sqlite3
-  pool: 5
-  timeout: 5000
+
+staging:
+  <<: *sqlite
+  database: <%= ENV.fetch("DATABASE_PATH", "storage/staging.sqlite3") %>
 
 production:
-  <% if ENV["DATABASE_URL"].present? || ENV.fetch("DB_ADAPTER", nil) == "postgresql" %>
   adapter: postgresql
   encoding: unicode
   url: <%= ENV["DATABASE_URL"] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
-  <% else %>
-  adapter: sqlite3
-  database: <%= ENV.fetch("DATABASE_PATH", "storage/production.sqlite3") %>
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
-  timeout: 5000
-  <% end %>
-
-#production:
-#  host: beatles.fritz.box
-#  adapter: postgresql
-#  encoding: unicode
-#  database: got_the_keys
-#  pool: 5
-#  username: postgres
-#  password: orchard72
+  database: <%= ENV.fetch("DATABASE_NAME", "got_the_keys_production") %>
+  host: <%= ENV.fetch("DATABASE_HOST", "localhost") %>
+  port: <%= ENV.fetch("DATABASE_PORT", 5432) %>
+  username: <%= ENV["DATABASE_USERNAME"] %>
+  password: <%= ENV["DATABASE_PASSWORD"] %>
