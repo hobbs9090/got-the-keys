@@ -98,6 +98,10 @@ module PropertiesHelper
     cues.uniq
   end
 
+  def property_card_download_documents(property, limit: 2)
+    property.public_documents.select(&:pdf?).first(limit)
+  end
+
   def property_update_label(property)
     return t("ui.properties.update_labels.recently_updated") if property.recently_updated?
     return t("ui.properties.update_labels.stale") if property.stale_listing?
@@ -151,7 +155,7 @@ module PropertiesHelper
     [
       [t("ui.properties.facts.tenure"), property.tenure],
       [t("ui.properties.facts.council_tax_band"), property.council_tax_band],
-      [t("ui.properties.facts.furnishing"), property.furnishing],
+      [t("ui.properties.facts.furnishing"), property.sale_status == Property::SALE_STATUSES[:for_rent] ? property.furnishing : nil],
       [t("ui.properties.facts.year_built"), property.year_built],
       [t("ui.properties.facts.refurbished_year"), property.refurbished_year],
       [t("ui.properties.facts.available_from"), property.available_from.present? ? l(property.available_from, format: :long) : nil],

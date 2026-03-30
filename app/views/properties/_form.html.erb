@@ -15,7 +15,7 @@
       </div>
       <div>
         <%= f.label :sale_status, t("ui.properties.editor.fields.sale_status"), **form_label_options(form_model, :sale_status) %>
-        <%= f.select :sale_status, Property::SALE_STATUS, { prompt: t('properties.pick_one') }, form_control_options(form_model, :sale_status, classes: nil) %>
+        <%= f.select :sale_status, Property::SALE_STATUS, { prompt: t('properties.pick_one') }, form_control_options(form_model, :sale_status, classes: nil, data: { property_sale_status: true }) %>
         <%= field_error_messages(form_model, :sale_status) %>
       </div>
       <div class="form-grid__checkbox">
@@ -84,10 +84,22 @@
       <%= field_error_messages(form_model, :asking_price) %>
     </div>
     <div>
-      <%= f.label :image_file_name, t("ui.properties.editor.fields.image_file_name"), **form_label_options(form_model, :image_file_name) %>
-      <%= f.text_field :image_file_name, placeholder: t("ui.properties.editor.placeholders.image_file_name"), **form_control_options(form_model, :image_file_name) %>
-      <%= field_error_messages(form_model, :image_file_name) %>
+      <%= f.label :image_upload, t("ui.properties.editor.fields.image_upload", default: "Property image"), **form_label_options(form_model, :image_upload) %>
+      <%= f.file_field :image_upload, accept: ".jpg,.jpeg,image/jpeg", **form_control_options(form_model, :image_upload) %>
+      <%= field_error_messages(form_model, :image_upload) %>
+      <% if form_model.respond_to?(:image_file_name) && form_model.image_file_name.present? %>
+        <p class="help-text"><%= t("ui.properties.editor.current_image", default: "Current image: %{image}", image: form_model.image_file_name) %></p>
+      <% else %>
+        <p class="help-text"><%= t("ui.properties.editor.image_upload_hint", default: "Upload a JPG or JPEG image for the main property photo.") %></p>
+      <% end %>
     </div>
+    <% if current_admin.present? %>
+      <div>
+        <%= f.label :image_file_name, t("ui.properties.editor.fields.image_file_name"), **form_label_options(form_model, :image_file_name) %>
+        <%= f.text_field :image_file_name, placeholder: t("ui.properties.editor.placeholders.image_file_name"), **form_control_options(form_model, :image_file_name) %>
+        <%= field_error_messages(form_model, :image_file_name) %>
+      </div>
+    <% end %>
     <div class="form-grid__full">
       <%= f.label :property_description, t("ui.properties.editor.fields.property_description"), **form_label_options(form_model, :property_description) %>
       <%= f.text_area :property_description, rows: 10, required: true, maxlength: 5000, **form_control_options(form_model, :property_description) %>
@@ -109,10 +121,11 @@
         <%= f.text_field :council_tax_band, placeholder: t("ui.properties.editor.placeholders.council_tax_band"), **form_control_options(form_model, :council_tax_band) %>
         <%= field_error_messages(form_model, :council_tax_band) %>
       </div>
-      <div>
+      <div data-property-furnishing-field <%= "hidden" if form_model.sale_status != Property::SALE_STATUSES[:for_rent] %>>
         <%= f.label :furnishing, t("ui.properties.editor.fields.furnishing"), **form_label_options(form_model, :furnishing) %>
         <%= f.text_field :furnishing, placeholder: t("ui.properties.editor.placeholders.furnishing"), **form_control_options(form_model, :furnishing) %>
         <%= field_error_messages(form_model, :furnishing) %>
+        <p class="help-text"><%= t("ui.properties.editor.furnishing_hint", default: "Only needed for rental listings.") %></p>
       </div>
       <div>
         <%= f.label :available_from, t("ui.properties.facts.available_from"), **form_label_options(form_model, :available_from) %>

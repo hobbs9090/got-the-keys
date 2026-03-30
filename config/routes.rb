@@ -12,8 +12,8 @@ GotTheKeys::Application.routes.draw do
     resource :dashboard, only: :show, controller: :dashboard
     get :bookings, to: 'appointments#index'
     resource :booking_configuration, only: [:show, :update]
-    resource :qa, only: [:show, :update], controller: :qa
-    resource :security, only: :show, controller: :security do
+    resource :qa, only: :show, controller: :qa
+    resource :security, only: [:show, :update], controller: :security do
       post :enroll
       patch :confirm
       post :regenerate_backup_codes

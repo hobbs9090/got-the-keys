@@ -4,13 +4,16 @@
 <% if properties.any? %>
   <div class="<%= grid_class %>" id="properties">
     <% properties.each do |property| %>
+      <% card_documents = property_card_download_documents(property) %>
       <article class="<%= property_card_classes(property) %>" data-testid="property-card">
         <div class="property-card__media">
           <%= small_image_for(property) %>
-          <span class="badge <%= property.sale_status == Property::SALE_STATUSES[:for_sale] ? 'badge--accent' : 'badge--success' %>"><%= translated_sale_status(property.sale_status) %></span>
-          <% unless property.listing_state == "published" %>
-            <span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span>
-          <% end %>
+          <div class="property-card__badges">
+            <span class="badge <%= property.sale_status == Property::SALE_STATUSES[:for_sale] ? 'badge--accent' : 'badge--success' %>"><%= translated_sale_status(property.sale_status) %></span>
+            <% unless property.listing_state == "published" %>
+              <span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span>
+            <% end %>
+          </div>
         </div>
 
         <div class="property-card__body">
@@ -33,6 +36,13 @@
               <li><%= cue %></li>
             <% end %>
           </ul>
+          <% if card_documents.any? %>
+            <div class="property-card__downloads" data-testid="property-card-downloads">
+              <% card_documents.each do |document| %>
+                <%= link_to document.title, download_property_property_document_path(property, document), class: "button hollow secondary tiny", download: document.file_name, data: { turbo: false, testid: "property-card-document-download-#{property.id}-#{document.id}" } %>
+              <% end %>
+            </div>
+          <% end %>
           <% if property.available_now? %>
             <p class="property-card__availability"><strong><%= t("ui.properties.card.available_now") %></strong></p>
           <% elsif property.available_from.present? %>

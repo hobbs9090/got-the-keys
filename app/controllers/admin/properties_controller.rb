@@ -16,6 +16,7 @@ class Admin::PropertiesController < Admin::BaseController
 
   def update
     if @property.update(property_params)
+      @property.persist_image_upload! if @property.image_upload.present?
       redirect_to admin_property_path(@property), notice: t("ui.admin.flash.property_updated")
     else
       render :edit, status: :unprocessable_entity
@@ -55,7 +56,7 @@ class Admin::PropertiesController < Admin::BaseController
     params.require(:property).permit(
       :address_line_1, :address_line_2, :town_city, :county, :postcode, :country,
       :property_description, :bedrooms, :bathrooms, :property_type, :listing_tagline,
-      :image_file_name, :sale_status, :asking_price, :featured, :listing_state, :tenure,
+      :image_file_name, :image_upload, :sale_status, :asking_price, :featured, :listing_state, :tenure,
       :council_tax_band, :furnishing, :available_from, :parking, :outdoor_space,
       :floor_area_sq_ft, :deposit_amount, :pets_allowed, :service_charge_amount,
       :lease_length_years, :year_built, :refurbished_year
