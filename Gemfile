@@ -3,9 +3,7 @@ source 'https://rubygems.org'
 ruby '3.4.7'
 
 gem 'rails', '~> 8.1.3'
-gem 'sqlite3', '~> 2.1'
 gem 'puma', '~> 7.2'
-gem 'pg', '~> 1.5'
 gem 'bootsnap', require: false
 gem 'sprockets-rails'
 gem 'cssbundling-rails'
@@ -31,6 +29,10 @@ group :development, :test do
   gem 'faker', '~> 3.6'
 end
 
+group :development, :test, :staging do
+  gem 'sqlite3', '~> 2.1'
+end
+
 group :development do
   gem 'capistrano', '~> 3.20'
   gem 'capistrano-passenger', '~> 0.2.1'
@@ -49,6 +51,10 @@ group :test do
   gem 'selenium-webdriver', '~> 4.0'
 end
 
-group :production do
+group :staging, :production do
   gem 'passenger', '~> 6.1'
+end
+
+group :production do
+  gem 'pg', '~> 1.5'
 end

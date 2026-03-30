@@ -40,7 +40,7 @@ jobs:
 
     env:
       BUNDLE_PATH: vendor/bundle
-      BUNDLE_WITHOUT: ""
+      BUNDLE_WITHOUT: "doc production test"
       DEPLOY_USER: steven
       DEPLOY_HOST: 127.0.0.1
       DEPLOY_TO: /var/www/stevenhobbs.co.uk
@@ -75,12 +75,13 @@ jobs:
         uses: actions/cache@v5
         with:
           path: vendor/bundle
-          key: deploy-bundle-${{ runner.os }}-${{ hashFiles('Gemfile.lock', '.ruby-version') }}
+          key: deploy-bundle-${{ runner.os }}-without-doc-production-test-${{ hashFiles('Gemfile.lock', '.ruby-version') }}
 
       - name: Install deployment gems
         run: |
           bundle config set path "$BUNDLE_PATH"
-          bundle install --jobs 4 --retry 3
+          bundle config set without "$BUNDLE_WITHOUT"
+          bundle check || bundle install --jobs 4 --retry 3
 
       - name: Verify deploy SSH path
         run: ssh -o BatchMode=yes steven@127.0.0.1 "whoami"
