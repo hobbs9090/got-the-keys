@@ -5,6 +5,7 @@ fr:
       admin_bookings: Reservations
       admin_dashboard: Tableau de bord
       sign_out: Se deconnecter
+      my_listings: Mes annonces
       add_property: Ajouter un bien
       profile: Profil
       register: S'inscrire
@@ -244,6 +245,29 @@ fr:
         core_details_title: Details principaux
         facts_title: Donnees structurees du bien
         floor_area_label: Surface (sq ft)
+      mine:
+        title: Mes annonces
+        eyebrow: Espace vendeur
+        body: Ouvrez vos annonces enregistrees, revenez sur vos brouillons et verifiez
+          les details des biens deja saisis.
+        list_eyebrow: Vos dossiers
+        list_title: Annonces enregistrees et partiellement completees
+        total_label:
+          one: "%{count} annonce enregistree"
+          other: "%{count} annonces enregistrees"
+        state_summary: "%{drafts} brouillon ou en validation - %{live} en ligne"
+        open_details: Ouvrir les details
+        visibility_live: Visible sur le site public.
+        visibility_private: Visible seulement pour vous et les administrateurs jusqu'a
+          publication.
+        stats:
+          location: Localisation
+          price: Prix indicatif
+          readiness: Etat d'avancement
+          last_saved: Derniere sauvegarde
+        empty_title: Aucune annonce enregistree pour le moment
+        empty_body: Creez votre premier bien puis revenez ici quand vous voulez reprendre
+          le travail.
       trust_cues:
         recently_updated: Recemment mis a jour
         available_now: Disponible maintenant
@@ -473,6 +497,12 @@ fr:
         index:
           title: Biens
           eyebrow: Gestion du catalogue
+          no_results: Aucun bien ne correspond a cette recherche.
+          search:
+            label: Rechercher des biens
+            placeholder: Adresse, code postal, vendeur ou statut
+            submit: Rechercher
+            clear: Effacer
           appointment_count:
             one: 1 rendez-vous
             other: "%{count} rendez-vous"
@@ -518,6 +548,8 @@ fr:
           listing_count:
             one: 1 annonce
             other: "%{count} annonces"
+          listings_title: Annonces et statuts
+          no_properties: Ce vendeur n'a pas encore cree d'annonces.
           recent_booking_activity_title: Activite recente des reservations
           no_activity: Aucune activite de rendez-vous sur les biens de ce vendeur
             pour le moment.

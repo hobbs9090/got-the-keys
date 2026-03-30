@@ -7,6 +7,7 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def show
+    @properties = @user.properties.order(updated_at: :desc)
     @appointments = Appointment.joins(:property).where(properties: { user_id: @user.id }).recent_first.limit(20)
   end
 

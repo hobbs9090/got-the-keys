@@ -793,6 +793,12 @@ en:
         index:
           title: "Properties"
           eyebrow: "Catalogue management"
+          no_results: "No properties match this search."
+          search:
+            label: "Search properties"
+            placeholder: "Address, postcode, seller, or status"
+            submit: "Search"
+            clear: "Clear"
           appointment_count:
             one: "1 appointment"
             other: "%{count} appointments"
@@ -837,6 +843,8 @@ en:
           listing_count:
             one: "1 listing"
             other: "%{count} listings"
+          listings_title: "Listings and status"
+          no_properties: "This seller has not created any listings yet."
           recent_booking_activity_title: "Recent booking activity"
           no_activity: "No appointment activity on this seller's properties yet."
       notification_logs:

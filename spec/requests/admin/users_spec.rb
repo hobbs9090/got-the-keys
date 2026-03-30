@@ -65,4 +65,27 @@ RSpec.describe "Admin users", type: :request do
     expect(empty_copy).to be_present
     expect(empty_copy.text.strip).to eq("No sellers match this search.")
   end
+
+  it "lists all of the seller's properties with their current statuses on the profile page" do
+    user = FactoryBot.create(:user, first_name: "Taylor", last_name: "Stone", email: "taylor.stone@example.com")
+    published_property = FactoryBot.create(:property, user:, address_line_1: "Cedar View", listing_state: "published")
+    draft_property = FactoryBot.create(:property, :draft, user:, address_line_1: "Maple House")
+    other_user_property = FactoryBot.create(:property, address_line_1: "Someone Else's Home")
+
+    get admin_user_path(user)
+
+    expect(response).to have_http_status(:ok)
+
+    row_ids = parsed_html.css('[data-testid^="admin-user-property-row-"]').map { |row| row["data-testid"] }
+    expect(row_ids).to include("admin-user-property-row-#{published_property.id}")
+    expect(row_ids).to include("admin-user-property-row-#{draft_property.id}")
+    expect(row_ids).not_to include("admin-user-property-row-#{other_user_property.id}")
+
+    expect(response.body).to include("Listings and status")
+    expect(response.body).to include("Cedar View")
+    expect(response.body).to include("Maple House")
+    expect(response.body).not_to include("Someone Else's Home")
+    expect(response.body).to include(I18n.t("ui.properties.listing_states.published"))
+    expect(response.body).to include(I18n.t("ui.properties.listing_states.draft"))
+  end
 end
