@@ -45,7 +45,7 @@ append :linked_dirs,
 
 set :passenger_in_gemfile, true
 set :passenger_restart_with_touch, true
-set :bundle_without, %w[development test].join(' ')
+set :bundle_without, %w[development test doc].join(' ')
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
