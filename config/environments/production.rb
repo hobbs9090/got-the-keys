@@ -19,7 +19,7 @@ GotTheKeys::Application.configure do
   config.active_job.queue_adapter = (config.x.got_the_keys.active_job_queue_adapter || "async").to_sym
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default_url_options = {
-    host: ENV.fetch('APP_HOST', 'localhost'),
+    host: ENV.fetch('APP_HOST', 'gotthekeys.uk'),
     protocol: 'https'
   }
   if ENV['SMTP_ADDRESS'].present?
@@ -27,7 +27,7 @@ GotTheKeys::Application.configure do
     config.action_mailer.smtp_settings = {
       address: ENV.fetch('SMTP_ADDRESS'),
       port: Integer(ENV.fetch('SMTP_PORT', 587)),
-      domain: ENV.fetch('SMTP_DOMAIN', ENV.fetch('APP_HOST', 'localhost')),
+      domain: ENV.fetch('SMTP_DOMAIN', ENV.fetch('APP_HOST', 'gotthekeys.uk')),
       user_name: ENV['SMTP_USERNAME'],
       password: ENV['SMTP_PASSWORD'],
       authentication: ENV.fetch('SMTP_AUTHENTICATION', 'plain').to_sym,

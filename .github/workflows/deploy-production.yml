@@ -1,0 +1,139 @@
+name: Deploy Production
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Git ref or commit SHA to deploy
+        required: true
+        default: master
+        type: string
+      app_host:
+        description: Public hostname for the production app
+        required: true
+        default: gotthekeys.uk
+        type: string
+      deploy_to:
+        description: Capistrano deploy root on the Nirvana host
+        required: true
+        default: /var/www/gotthekeys-production
+        type: string
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on:
+      - self-hosted
+      - Linux
+      - X64
+      - nirvana
+    timeout-minutes: 30
+    environment:
+      name: production
+      url: ${{ format('https://{0}', inputs.app_host) }}
+
+    env:
+      BUNDLE_PATH: vendor/bundle
+      BUNDLE_WITHOUT: "doc staging test"
+      DEPLOY_USER: steven
+      DEPLOY_HOST: 127.0.0.1
+      DEPLOY_TO: ${{ inputs.deploy_to }}
+      DEPLOY_REPO_URL: /home/steven/git/rails_got_the_keys.git
+
+    steps:
+      - name: Checkout requested ref
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.ref }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Use shared deployment Ruby
+        run: |
+          export PATH="/home/steven/.rbenv/versions/3.4.7/bin:$PATH"
+          echo "/home/steven/.rbenv/versions/3.4.7/bin" >> "$GITHUB_PATH"
+          ruby -v
+          bundle -v
+
+      - name: Cache deployment bundle
+        uses: actions/cache@v5
+        with:
+          path: vendor/bundle
+          key: deploy-production-bundle-${{ runner.os }}-without-doc-staging-test-${{ hashFiles('Gemfile.lock', '.ruby-version') }}
+
+      - name: Ensure PostgreSQL client headers
+        run: |
+          if command -v pg_config >/dev/null 2>&1; then
+            echo "Using pg_config at $(command -v pg_config)"
+            pg_config --version
+            exit 0
+          fi
+
+          if ! command -v apt-get >/dev/null 2>&1; then
+            echo "pg_config is missing and this runner does not expose apt-get for installing libpq-dev." >&2
+            exit 1
+          fi
+
+          if command -v sudo >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y libpq-dev
+          elif [ "$(id -u)" -eq 0 ]; then
+            apt-get update
+            apt-get install -y libpq-dev
+          else
+            echo "pg_config is missing and passwordless sudo is not available to install libpq-dev." >&2
+            exit 1
+          fi
+
+          echo "Installed pg_config at $(command -v pg_config)"
+          pg_config --version
+
+      - name: Install deployment gems
+        run: |
+          bundle config set path "$BUNDLE_PATH"
+          bundle config set without "$BUNDLE_WITHOUT"
+          bundle config set build.pg --with-pg-config "$(command -v pg_config)"
+          bundle check || bundle install --jobs 4 --retry 3
+
+      - name: Verify deploy SSH path
+        run: ssh -o BatchMode=yes steven@127.0.0.1 "whoami"
+
+      - name: Record deploy metadata
+        id: deploy_meta
+        run: |
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "short_sha=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+          echo "ref=deploy/$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy exact tested commit
+        env:
+          DEPLOY_SHA: ${{ steps.deploy_meta.outputs.sha }}
+          DEPLOY_REF: ${{ steps.deploy_meta.outputs.ref }}
+          APP_BUILD_SHA: ${{ steps.deploy_meta.outputs.short_sha }}
+          APP_BUILD_NUMBER: ${{ github.run_number }}
+          APP_HOST: ${{ inputs.app_host }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+          DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+          DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
+          DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          FORCE_SSL: ${{ vars.FORCE_SSL }}
+          ASSUME_SSL: ${{ vars.ASSUME_SSL }}
+          RAILS_LOG_LEVEL: ${{ vars.RAILS_LOG_LEVEL }}
+          ACTIVE_JOB_QUEUE_ADAPTER: ${{ vars.ACTIVE_JOB_QUEUE_ADAPTER }}
+          SMTP_ADDRESS: ${{ secrets.SMTP_ADDRESS }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_DOMAIN: ${{ secrets.SMTP_DOMAIN }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_AUTHENTICATION: ${{ vars.SMTP_AUTHENTICATION }}
+          SMTP_STARTTLS_AUTO: ${{ vars.SMTP_STARTTLS_AUTO }}
+        run: bin/deploy_production

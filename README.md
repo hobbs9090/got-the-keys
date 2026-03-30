@@ -74,7 +74,7 @@ The script now defaults to a narrower portrait viewport so the README images sho
 - Ruby `3.4.7`
 - Rails `8.1.3`
 - SQLite `2.1.x` for local/default shared-host flows
-- PostgreSQL for containerized production deployments
+- PostgreSQL for Nirvana-backed production deployments
 - Puma `7.2.x`
 - Active Job for notification delivery
 - Foundation Sites `6.9.0` as the CSS framework layer
@@ -91,7 +91,8 @@ The script now defaults to a narrower portrait viewport so the README images sho
 - The frontend runtime now flows through the bundled `app/javascript/application.js`; legacy Sprockets-managed JavaScript and app-authored jQuery/Foundation JS usage have been removed.
 - Component and page styles now live under `app/assets/stylesheets/components/` and `app/assets/stylesheets/pages/`, with matching partials in `app/views/`.
 - SQLite plus Apache/Passenger shared hosting remain the default low-complexity posture for the existing shared-host path.
-- DSM-hosted containerized production with PostgreSQL is now scaffolded alongside that path, designed to sit behind an existing Apache + Let's Encrypt edge.
+- Nirvana-hosted Apache + Passenger deploys now cover both SQLite-backed staging and PostgreSQL-backed production.
+- The older Synology container path remains available as an alternative, but it is no longer the primary production recommendation.
 
 ## App Versioning
 
@@ -128,7 +129,7 @@ The script now defaults to a narrower portrait viewport so the README images sho
 - `db/demo_scenarios/`
   Version-controlled scenario definitions used by `db:seed` and the admin demo-data UI.
 - `docs/NIRVANA_DEPLOYMENT.md`
-  Apache + Passenger deployment guide for shared hosting.
+  Apache + Passenger deployment guide for Nirvana-backed staging and production.
 - `docs/SYNOLOGY_CONTAINER_DEPLOYMENT.md`
   Docker deployment guide for running the app behind an existing Apache + Let's Encrypt Linux VM edge with PostgreSQL.
 - `docs/BACKGROUND_JOB_POLICY.md`
@@ -623,8 +624,8 @@ Background-job policy for the next extension phase:
 
 ## Deployment
 
-The app is intended to stay compatible with Apache + Passenger on shared hosting.
-The current deploy target is a staging host, but it intentionally runs in the Rails `production` environment so it behaves like a later live production deployment.
+The app is intended to stay compatible with Apache + Passenger on Nirvana.
+Staging deploys run the Rails `staging` environment with SQLite, and production deploys run the Rails `production` environment with PostgreSQL.
 
 Read the deployment guide:
 
@@ -636,6 +637,7 @@ That guide covers:
 - asset build and precompile steps
 - Apache/Passenger configuration shape
 - how the `staging` Capistrano deploy works end to end
+- how the `production` Capistrano deploy and manual GitHub workflow target `gotthekeys.uk` on Nirvana
 - the `current/`, `releases/`, and `shared/` layout under the deploy root
 - which writable paths Capistrano keeps linked across releases
 - how exact-commit staging deploys, cleanup, and rollback work

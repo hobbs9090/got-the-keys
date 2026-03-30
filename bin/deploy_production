@@ -13,8 +13,8 @@ DEPLOY_SHA="${DEPLOY_SHA:-$(git rev-parse HEAD)}"
 DEPLOY_REF="${DEPLOY_REF:-deploy/${DEPLOY_SHA}}"
 DEPLOY_USER="${DEPLOY_USER:-steven}"
 DEPLOY_HOST="${DEPLOY_HOST:-127.0.0.1}"
-DEPLOY_TO="${DEPLOY_TO:-/var/www/stevenhobbs.co.uk}"
-APP_HOST="${APP_HOST:-stevenhobbs.co.uk}"
+DEPLOY_TO="${DEPLOY_TO:?DEPLOY_TO must be set for production deploys}"
+APP_HOST="${APP_HOST:-gotthekeys.uk}"
 DEPLOY_REPO_URL="${DEPLOY_REPO_URL:-/home/steven/git/rails_got_the_keys.git}"
 DEPLOY_MIRROR_URL="${DEPLOY_MIRROR_URL:-ssh://${DEPLOY_USER}@${DEPLOY_HOST}/home/steven/git/rails_got_the_keys.git}"
 DEPLOY_MIRROR_REMOTE="${DEPLOY_MIRROR_REMOTE:-deploy-mirror}"
@@ -37,5 +37,5 @@ export APP_VERSION="${APP_VERSION:-}"
 export APP_BUILD_SHA="${APP_BUILD_SHA:-$(git rev-parse --short "${DEPLOY_SHA}")}"
 export APP_BUILD_NUMBER="${APP_BUILD_NUMBER:-}"
 
-bundle exec cap staging deploy:check
-bundle exec cap staging deploy
+bundle exec cap production deploy:check
+bundle exec cap production deploy

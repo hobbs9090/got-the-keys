@@ -29,9 +29,9 @@ echo "Saving detailed output to ${log_file}"
 
 set +e
 if [ "${#rspec_args[@]}" -gt 0 ]; then
-  bundle exec rspec "${rspec_args[@]}" 2>&1 | tee "$log_file"
+  env ACTIVE_JOB_QUEUE_ADAPTER=test bundle exec rspec "${rspec_args[@]}" 2>&1 | tee "$log_file"
 else
-  bundle exec rspec 2>&1 | tee "$log_file"
+  env ACTIVE_JOB_QUEUE_ADAPTER=test bundle exec rspec 2>&1 | tee "$log_file"
 fi
 rspec_status=${PIPESTATUS[0]}
 set -e
