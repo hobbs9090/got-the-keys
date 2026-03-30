@@ -8,14 +8,26 @@ The explicit policy for what is and is not safe to run on that adapter lives in 
 
 ## Current Target
 
-This repo is now configured with these deployment defaults:
+This repo is now configured to use the Nirvana host for both deploy stages:
 
 - host: `192.168.2.204`
-- deploy root: `/var/www/stevenhobbs.co.uk`
 - Capistrano stage: `staging`
-- live URL: `https://stevenhobbs.co.uk`
+- Capistrano stage: `production`
 
-This is a staging host, but it intentionally boots the app in the Rails `production` environment with `RAILS_ENV=production` and `PassengerAppEnv production`. That keeps staging behaviour aligned with a later live production deploy.
+Stage defaults:
+
+- `staging`
+  - Rails environment: `staging`
+  - database: SQLite
+  - current default deploy root: `/var/www/stevenhobbs.co.uk`
+  - current default URL: `https://stevenhobbs.co.uk`
+- `production`
+  - Rails environment: `production`
+  - database: PostgreSQL
+  - deploy root: provide `DEPLOY_TO`
+  - public host: defaults to `gotthekeys.uk`
+
+That keeps staging isolated from production while still using the same Nirvana host and Capistrano workflow shape.
 
 That means the Apache virtual host should point at the Capistrano `current/public` path, not the deploy root itself:
 
@@ -46,10 +58,18 @@ The local development bundle includes `ed25519` and `bcrypt_pbkdf` so Capistrano
 
 Set these in the host environment or Passenger app config:
 
-- `RAILS_ENV=production`
 - `SECRET_KEY_BASE`
-- `APP_HOST`
 - `RAILS_SERVE_STATIC_FILES=1`
+
+Production host defaults:
+
+- `APP_HOST=gotthekeys.uk`
+  override this only if production needs to answer on a different hostname
+
+Production-only database settings:
+
+- `DATABASE_URL`
+  or the explicit `DATABASE_NAME`, `DATABASE_HOST`, `DATABASE_PORT`, `DATABASE_USERNAME`, and `DATABASE_PASSWORD` variables
 
 Optional but recommended:
 
@@ -129,33 +149,33 @@ Use the app’s `public/` directory as the document root.
 
 The `Header always set` directive below requires Apache's headers module to be enabled.
 
-Example Apache snippet:
+Example production Apache snippet:
 
 ```apache
 <VirtualHost *:80>
-  ServerName stevenhobbs.co.uk
-  ServerAlias www.stevenhobbs.co.uk
+  ServerName gotthekeys.uk
+  ServerAlias www.gotthekeys.uk
   RewriteEngine On
-  RewriteRule ^ https://stevenhobbs.co.uk%{REQUEST_URI} [END,NE,R=permanent]
+  RewriteRule ^ https://gotthekeys.uk%{REQUEST_URI} [END,NE,R=permanent]
 </VirtualHost>
 
 <VirtualHost *:443>
-  ServerName stevenhobbs.co.uk
-  ServerAlias www.stevenhobbs.co.uk
-  DocumentRoot /var/www/stevenhobbs.co.uk/current/public
+  ServerName gotthekeys.uk
+  ServerAlias www.gotthekeys.uk
+  DocumentRoot /var/www/gotthekeys-production/current/public
 
-  <Directory /var/www/stevenhobbs.co.uk>
+  <Directory /var/www/gotthekeys-production>
     Require all granted
     Options -MultiViews +FollowSymLinks
   </Directory>
 
   PassengerEnabled on
-  PassengerAppRoot /var/www/stevenhobbs.co.uk/current
+  PassengerAppRoot /var/www/gotthekeys-production/current
   PassengerRuby /home/steven/.rbenv/versions/3.4.7/bin/ruby
   PassengerAppEnv production
   PassengerFriendlyErrorPages off
 
-  SetEnv APP_HOST stevenhobbs.co.uk
+  SetEnv APP_HOST gotthekeys.uk
   SetEnv RAILS_ENV production
   SetEnv RAILS_SERVE_STATIC_FILES 1
   SetEnv SECRET_KEY_BASE your_generated_secret_here
@@ -166,8 +186,8 @@ Example Apache snippet:
 
   Header always set Strict-Transport-Security "max-age=31536000"
   SSLEngine on
-  SSLCertificateFile /etc/letsencrypt/live/stevenhobbs.co.uk/fullchain.pem
-  SSLCertificateKeyFile /etc/letsencrypt/live/stevenhobbs.co.uk/privkey.pem
+  SSLCertificateFile /etc/letsencrypt/live/gotthekeys.uk/fullchain.pem
+  SSLCertificateKeyFile /etc/letsencrypt/live/gotthekeys.uk/privkey.pem
   Include /etc/letsencrypt/options-ssl-apache.conf
 </VirtualHost>
 ```
@@ -181,6 +201,11 @@ The `staging` stage defaults to:
 - host `192.168.2.204`
 - deploy root `/var/www/stevenhobbs.co.uk`
 - branch `master`
+
+The `production` stage uses the same Nirvana host and defaults `APP_HOST` to `gotthekeys.uk`, but still requires:
+
+- `DEPLOY_TO`
+- PostgreSQL connection env such as `DATABASE_URL`
 
 Run a deploy with:
 
@@ -210,6 +235,17 @@ DEPLOY_BRANCH=master \
 bundle exec cap staging deploy
 ```
 
+Example production deploy:
+
+```bash
+cd /Users/steven/Source/GitHub/rails_got_the_keys
+APP_HOST=gotthekeys.uk \
+DEPLOY_TO=/var/www/gotthekeys-production \
+DATABASE_URL=postgres://user:password@localhost:5432/got_the_keys_production \
+DEPLOY_USER=your_ssh_user \
+bundle exec cap production deploy
+```
+
 The deploy now:
 
 - reuses shared `storage/`, `log/`, `tmp/`, `vendor/bundle/`, and `node_modules/`
@@ -235,6 +271,16 @@ That wrapper does more than call Capistrano directly:
 6. runs `bundle exec cap staging deploy`
 
 This matters because the staging deploy is commit-addressed, not branch-tip-addressed. If `master` moves after CI passes, the staging deploy can still install the exact SHA that was tested.
+
+### What `bin/deploy_production` Does
+
+The repo-managed production entrypoint is:
+
+```bash
+bin/deploy_production
+```
+
+It uses the same exact-commit mirror flow as staging, but targets the `production` Capistrano stage, defaults `APP_HOST` to `gotthekeys.uk`, and still requires `DEPLOY_TO` so production cannot accidentally deploy into the staging path.
 
 ### How Capistrano Lays Out The Staging App
 
@@ -324,7 +370,9 @@ This repo now supports a split CI/CD flow:
 
 - `.github/workflows/ci.yml` runs tests on GitHub-hosted runners
 - `.github/workflows/deploy-staging.yml` deploys to staging only after `CI` succeeds on `master`
+- `.github/workflows/deploy-production.yml` supports manual production deploys on the Nirvana runner
 - manual staging deploys are also available through `workflow_dispatch`
+- manual production deploys default `app_host` to `gotthekeys.uk` and `deploy_to` to `/var/www/gotthekeys-production`
 
 The staging deploy job is pinned to the self-hosted runner labels:
 
@@ -333,24 +381,45 @@ The staging deploy job is pinned to the self-hosted runner labels:
 - `X64`
 - `nirvana`
 
-The deploy workflow:
+The deploy workflows:
 
 1. checks out the exact tested commit
 2. uses the shared Ruby at `/home/steven/.rbenv/versions/3.4.7/bin`
-3. pushes that exact commit into the server-local bare mirror
+3. pushes that exact commit into the server-local bare mirror with `--no-verify` because CI has already validated the revision
 4. exports `APP_BUILD_SHA` and `APP_BUILD_NUMBER` into the deploy command
-5. deploys the mirrored ref with `bin/deploy_staging`
+5. deploy the mirrored ref with `bin/deploy_staging` or `bin/deploy_production`
 
 The self-hosted runner uses a dedicated localhost-only SSH key to reach `steven@127.0.0.1` for mirror updates and Capistrano SSH sessions. That key should remain restricted to local source addresses only.
 
-## SQLite Notes
+For the GitHub `production` environment, set:
 
-If you are staying on SQLite for the Rails `production` environment:
+- required workflow inputs
+  - `ref`
+  - `app_host` defaulting to `gotthekeys.uk`
+  - `deploy_to` defaulting to `/var/www/gotthekeys-production`
+- required secrets
+  - either `DATABASE_URL` or the explicit `DATABASE_NAME`, `DATABASE_HOST`, `DATABASE_PORT`, `DATABASE_USERNAME`, and `DATABASE_PASSWORD` values
+- optional secrets
+  - `SMTP_ADDRESS`
+  - `SMTP_PORT`
+  - `SMTP_DOMAIN`
+  - `SMTP_USERNAME`
+  - `SMTP_PASSWORD`
+- optional vars
+  - `FORCE_SSL`
+  - `ASSUME_SSL`
+  - `RAILS_LOG_LEVEL`
+  - `ACTIVE_JOB_QUEUE_ADAPTER`
+  - `SMTP_AUTHENTICATION`
+  - `SMTP_STARTTLS_AUTO`
 
-- the production database now lives at `storage/production.sqlite3` by default
-- make sure the `storage/` directory is writable by the app user
-- make sure `tmp/` is writable for caching, restarts, and mail fallback
-- back up the `.sqlite3` file before major changes
+## Database Notes
+
+For the current Nirvana setup:
+
+- `staging` keeps its database under `storage/staging.sqlite3`
+- `production` uses PostgreSQL and should receive its connection settings through deploy-time env plus the Apache/Passenger runtime environment
+- `storage/` and `tmp/` still need to be writable for staging state, caches, restarts, and file mail fallback
 
 Typical restart after a deploy:
 

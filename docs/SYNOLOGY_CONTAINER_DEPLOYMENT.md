@@ -1,13 +1,13 @@
 # Synology Container Deployment
 
-This document describes the recommended production shape for running GotTheKeys directly on a small Synology host when you already have a Linux VM acting as the public web edge:
+This document describes the optional Synology container shape for running GotTheKeys directly on a small Synology host when you already have a Linux VM acting as the public web edge:
 
 - one Rails app container
 - one PostgreSQL container
 - Apache and Let's Encrypt on the Linux VM in front
 - a single app instance
 
-This is the recommended production path for this repo in your environment. The Linux VM keeps ownership of public `80/443`, TLS, reverse proxying, and existing sites, while the Rails app and PostgreSQL run directly on the Synology host in containers.
+This is the alternative production path for this repo. The primary production target now uses the Nirvana Apache + Passenger host; this document covers the containerized Synology option when you still want the Linux VM to keep ownership of public `80/443`, TLS, reverse proxying, and existing sites while the Rails app and PostgreSQL run on the Synology host.
 
 ## Recommended Topology
 
