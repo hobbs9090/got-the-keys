@@ -18,7 +18,7 @@ Stage defaults:
 
 - `staging`
   - Rails environment: `staging`
-  - database: SQLite
+  - database: PostgreSQL
   - current default deploy root: `/var/www/gotthekeys-staging`
   - current default URL: `https://stevenhobbs.co.uk`
 - `production`
@@ -49,7 +49,7 @@ For the current Nirvana host, the working server-side mirror is:
 - Bundler is available.
 - the deploy user can SSH to `192.168.2.204` and write to `/var/www/gotthekeys-staging`
 - the server can fetch `git@github.com:hobbs9090/rails_got_the_keys.git`, or you will deploy from a reachable mirror
-- The host can run SQLite or another relational database supported by Active Record.
+- The host can run PostgreSQL for staging and production.
 - You can either build frontend assets on the server or upload prebuilt assets during deployment.
 
 The local development bundle includes `ed25519` and `bcrypt_pbkdf` so Capistrano can authenticate cleanly with `ssh-ed25519` keys.
@@ -417,9 +417,9 @@ For the GitHub `production` environment, set:
 
 For the current Nirvana setup:
 
-- `staging` keeps its database under `storage/staging.sqlite3`
+- `staging` uses PostgreSQL and defaults to a local database named `gotthekeys_staging`
 - `production` uses PostgreSQL and should receive its connection settings through deploy-time env plus the Apache/Passenger runtime environment
-- `storage/` and `tmp/` still need to be writable for staging state, caches, restarts, and file mail fallback
+- `storage/` and `tmp/` still need to be writable for caches, restarts, uploads, and file mail fallback
 
 Typical restart after a deploy:
 
@@ -443,11 +443,12 @@ touch tmp/restart.txt
 
 ### Database Backup
 
-If you use SQLite:
+If you use PostgreSQL:
 
 ```bash
 mkdir -p backups
-cp storage/production.sqlite3 backups/production-$(date +%F).sqlite3
+pg_dump gotthekeys_staging > backups/staging-$(date +%F).sql
+pg_dump gotthekeys_production > backups/production-$(date +%F).sql
 ```
 
 ### Demo Dataset Export

@@ -77,10 +77,38 @@ jobs:
           path: vendor/bundle
           key: deploy-bundle-${{ runner.os }}-without-doc-production-test-${{ hashFiles('Gemfile.lock', '.ruby-version') }}
 
+      - name: Ensure PostgreSQL client headers
+        run: |
+          if command -v pg_config >/dev/null 2>&1; then
+            echo "Using pg_config at $(command -v pg_config)"
+            pg_config --version
+            exit 0
+          fi
+
+          if ! command -v apt-get >/dev/null 2>&1; then
+            echo "pg_config is missing and this runner does not expose apt-get for installing libpq-dev." >&2
+            exit 1
+          fi
+
+          if command -v sudo >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y libpq-dev
+          elif [ "$(id -u)" -eq 0 ]; then
+            apt-get update
+            apt-get install -y libpq-dev
+          else
+            echo "pg_config is missing and passwordless sudo is not available to install libpq-dev." >&2
+            exit 1
+          fi
+
+          echo "Installed pg_config at $(command -v pg_config)"
+          pg_config --version
+
       - name: Install deployment gems
         run: |
           bundle config set path "$BUNDLE_PATH"
           bundle config set without "$BUNDLE_WITHOUT"
+          bundle config set build.pg --with-pg-config "$(command -v pg_config)"
           bundle check || bundle install --jobs 4 --retry 3
 
       - name: Verify deploy SSH path
@@ -99,4 +127,10 @@ jobs:
           DEPLOY_REF: ${{ steps.deploy_meta.outputs.ref }}
           APP_BUILD_SHA: ${{ steps.deploy_meta.outputs.short_sha }}
           APP_BUILD_NUMBER: ${{ github.run_number }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_NAME: ${{ vars.DATABASE_NAME }}
+          DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+          DATABASE_PORT: ${{ vars.DATABASE_PORT }}
+          DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
         run: bin/deploy_staging
