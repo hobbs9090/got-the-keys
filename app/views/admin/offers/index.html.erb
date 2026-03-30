@@ -9,7 +9,7 @@
   </div>
 </section>
 
-<section class="admin-grid">
+<section class="admin-grid admin-grid--board">
   <% @offers_by_status.each do |status, offers| %>
     <article class="admin-panel" data-testid="offers-column-<%= status %>">
       <h2><%= status.humanize %></h2>

@@ -5,6 +5,7 @@ it:
       admin_bookings: Prenotazioni
       admin_dashboard: Dashboard
       sign_out: Esci
+      my_listings: I miei annunci
       add_property: Aggiungi immobile
       profile: Profilo
       register: Registrati
@@ -240,6 +241,29 @@ it:
         core_details_title: Dettagli principali
         facts_title: Dati strutturati dell immobile
         floor_area_label: Superficie (sq ft)
+      mine:
+        title: I miei annunci
+        eyebrow: Area venditore
+        body: Apri gli annunci salvati, torna alle bozze e rivedi i dettagli degli
+          immobili che hai gia creato.
+        list_eyebrow: I tuoi record
+        list_title: Annunci salvati e completati solo in parte
+        total_label:
+          one: "%{count} annuncio salvato"
+          other: "%{count} annunci salvati"
+        state_summary: "%{drafts} bozza o in revisione - %{live} online"
+        open_details: Apri dettagli
+        visibility_live: Visibile sul sito pubblico.
+        visibility_private: Visibile solo a te e agli amministratori finche non viene
+          pubblicato.
+        stats:
+          location: Localita
+          price: Prezzo indicativo
+          readiness: Preparazione
+          last_saved: Ultimo salvataggio
+        empty_title: Nessun annuncio salvato per ora
+        empty_body: Crea il tuo primo immobile e torna qui ogni volta che vuoi continuare
+          a lavorarci.
       trust_cues:
         recently_updated: Aggiornato di recente
         available_now: Disponibile ora
@@ -467,6 +491,12 @@ it:
         index:
           title: Immobili
           eyebrow: Gestione catalogo
+          no_results: Nessun immobile corrisponde a questa ricerca.
+          search:
+            label: Cerca immobili
+            placeholder: Indirizzo, CAP, venditore o stato
+            submit: Cerca
+            clear: Cancella
           appointment_count:
             one: 1 appuntamento
             other: "%{count} appuntamenti"
@@ -512,6 +542,8 @@ it:
           listing_count:
             one: 1 annuncio
             other: "%{count} annunci"
+          listings_title: Annunci e stato
+          no_properties: Questo venditore non ha ancora creato annunci.
           recent_booking_activity_title: Attivita recenti di prenotazione
           no_activity: Nessuna attivita di appuntamento sugli immobili di questo venditore.
       notification_logs:

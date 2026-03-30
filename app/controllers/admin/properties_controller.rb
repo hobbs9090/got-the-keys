@@ -2,7 +2,11 @@ class Admin::PropertiesController < Admin::BaseController
   before_action :set_property, only: %i[show edit update transition]
 
   def index
-    @properties = Property.recommended_order.includes(:user).page(params[:page])
+    @query = params[:q].to_s.squish
+    @properties = filtered_properties
+      .recommended_order
+      .preload(:user, :appointments, :photos, :floor_plans)
+      .page(params[:page])
   end
 
   def show
@@ -61,5 +65,34 @@ class Admin::PropertiesController < Admin::BaseController
       :floor_area_sq_ft, :deposit_amount, :pets_allowed, :service_charge_amount,
       :lease_length_years, :year_built, :refurbished_year
     )
+  end
+
+  def filtered_properties
+    scope = Property.left_joins(:user).distinct
+    return scope if @query.blank?
+
+    @query.split.each do |term|
+      pattern = "%#{Property.sanitize_sql_like(term.downcase)}%"
+
+      scope = scope.where(<<~SQL.squish, pattern:)
+        LOWER(properties.address_line_1) LIKE :pattern
+        OR LOWER(COALESCE(properties.address_line_2, '')) LIKE :pattern
+        OR LOWER(properties.town_city) LIKE :pattern
+        OR LOWER(properties.county) LIKE :pattern
+        OR LOWER(properties.postcode) LIKE :pattern
+        OR LOWER(properties.country) LIKE :pattern
+        OR LOWER(properties.property_type) LIKE :pattern
+        OR LOWER(COALESCE(properties.listing_tagline, '')) LIKE :pattern
+        OR LOWER(properties.property_description) LIKE :pattern
+        OR LOWER(properties.sale_status) LIKE :pattern
+        OR LOWER(properties.listing_state) LIKE :pattern
+        OR LOWER(COALESCE(users.first_name, '')) LIKE :pattern
+        OR LOWER(COALESCE(users.last_name, '')) LIKE :pattern
+        OR LOWER(COALESCE(users.email, '')) LIKE :pattern
+        OR LOWER(COALESCE(users.first_name, '') || ' ' || COALESCE(users.last_name, '')) LIKE :pattern
+      SQL
+    end
+
+    scope
   end
 end

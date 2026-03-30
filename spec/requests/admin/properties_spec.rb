@@ -1,4 +1,5 @@
 require "rails_helper"
+require "nokogiri"
 
 RSpec.describe "Admin properties", type: :request do
   let(:admin) { FactoryBot.create(:admin, email: "property-admin@gotthekeys.com", password: "secret123", password_confirmation: "secret123") }
@@ -6,6 +7,57 @@ RSpec.describe "Admin properties", type: :request do
 
   before do
     sign_in admin
+  end
+
+  def parsed_html
+    Nokogiri::HTML.parse(response.body)
+  end
+
+  it "shows a property search form on the index" do
+    get admin_properties_path
+
+    expect(response).to have_http_status(:ok)
+
+    search_form = parsed_html.at_css('[data-testid="admin-properties-search"]')
+    expect(search_form).to be_present
+    expect(search_form["action"]).to eq(admin_properties_path)
+
+    search_input = search_form.at_css('[data-testid="admin-properties-search-input"]')
+    expect(search_input).to be_present
+    expect(search_input["placeholder"]).to eq("Address, postcode, seller, or status")
+
+    clear_link = search_form.at_css('[data-testid="admin-properties-search-clear"]')
+    expect(clear_link).to be_present
+    expect(clear_link["href"]).to eq(admin_properties_path)
+  end
+
+  it "filters properties by address and seller details" do
+    matching_user = FactoryBot.create(:user, first_name: "Taylor", last_name: "Stone", email: "taylor.stone@example.com")
+    matching_property = FactoryBot.create(:property, user: matching_user, address_line_1: "Cedar View")
+    non_matching_property = FactoryBot.create(:property, address_line_1: "Maple House")
+
+    get admin_properties_path, params: { q: "Taylor Cedar" }
+
+    expect(response).to have_http_status(:ok)
+
+    card_ids = parsed_html.css('[data-testid^="admin-property-card-"]').map { |row| row["data-testid"] }
+    expect(card_ids).to include("admin-property-card-#{matching_property.id}")
+    expect(card_ids).not_to include("admin-property-card-#{non_matching_property.id}")
+
+    search_input = parsed_html.at_css('[data-testid="admin-properties-search-input"]')
+    expect(search_input["value"]).to eq("Taylor Cedar")
+  end
+
+  it "shows an empty state when no properties match the search" do
+    FactoryBot.create(:property, address_line_1: "Willow Lodge")
+
+    get admin_properties_path, params: { q: "nothing here" }
+
+    expect(response).to have_http_status(:ok)
+
+    empty_copy = parsed_html.at_css(".empty-copy")
+    expect(empty_copy).to be_present
+    expect(empty_copy.text.strip).to eq("No properties match this search.")
   end
 
   it "shows listing readiness and asset inventory on the admin detail page" do

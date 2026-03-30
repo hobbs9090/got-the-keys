@@ -5,6 +5,7 @@ de:
       admin_bookings: Buchungen
       admin_dashboard: Dashboard
       sign_out: Abmelden
+      my_listings: Meine Inserate
       add_property: Objekt hinzufügen
       profile: Profil
       register: Registrieren
@@ -239,6 +240,29 @@ de:
         core_details_title: Kerndetails
         facts_title: Strukturierte Objektdaten
         floor_area_label: Wohnfläche (sq ft)
+      mine:
+        title: Meine Inserate
+        eyebrow: Verkäuferbereich
+        body: Öffnen Sie Ihre gespeicherten Inserate, kehren Sie zu Entwürfen zurück
+          und prüfen Sie die bereits erfassten Objektdetails.
+        list_eyebrow: Ihre Einträge
+        list_title: Gespeicherte und teilweise ausgefüllte Inserate
+        total_label:
+          one: "%{count} gespeichertes Inserat"
+          other: "%{count} gespeicherte Inserate"
+        state_summary: "%{drafts} Entwurf oder in Prüfung · %{live} live"
+        open_details: Details öffnen
+        visibility_live: Auf der öffentlichen Website sichtbar.
+        visibility_private: Nur für Sie und Admins sichtbar, bis es veröffentlicht
+          wird.
+        stats:
+          location: Standort
+          price: Angebotspreis
+          readiness: Bereitschaft
+          last_saved: Zuletzt gespeichert
+        empty_title: Noch keine gespeicherten Inserate
+        empty_body: Erstellen Sie Ihr erstes Objekt und kehren Sie hierher zurück,
+          wenn Sie weiterarbeiten möchten.
       trust_cues:
         recently_updated: Kürzlich aktualisiert
         available_now: Sofort verfügbar
@@ -469,6 +493,12 @@ de:
         index:
           title: Objekte
           eyebrow: Katalogverwaltung
+          no_results: Keine Objekte entsprechen dieser Suche.
+          search:
+            label: Objekte suchen
+            placeholder: Adresse, Postleitzahl, Verkäufer oder Status
+            submit: Suchen
+            clear: Zurücksetzen
           appointment_count:
             one: 1 Termin
             other: "%{count} Termine"
@@ -514,6 +544,8 @@ de:
           listing_count:
             one: 1 Inserat
             other: "%{count} Inserate"
+          listings_title: Inserate und Status
+          no_properties: Dieser Verkäufer hat noch keine Inserate erstellt.
           recent_booking_activity_title: Letzte Buchungsaktivität
           no_activity: Auf den Objekten dieses Verkäufers gibt es noch keine Terminaktivität.
       notification_logs:

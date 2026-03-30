@@ -47,3 +47,22 @@
     <% end %>
   </article>
 </section>
+
+<section class="admin-panel">
+  <h2><%= t("ui.admin.users.show.listings_title") %></h2>
+  <% if @properties.any? %>
+    <div class="admin-list">
+      <% @properties.each do |property| %>
+        <div class="admin-list__item" data-testid="admin-user-property-row-<%= property.id %>">
+          <div>
+            <%= link_to property.address_line_1, admin_property_path(property) %>
+            <p><%= property.location_line %> · <%= translated_sale_status(property.sale_status) %></p>
+          </div>
+          <span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="empty-copy"><%= t("ui.admin.users.show.no_properties") %></p>
+  <% end %>
+</section>

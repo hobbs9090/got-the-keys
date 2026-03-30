@@ -7,24 +7,43 @@
       <h1><%= t("ui.admin.properties.index.title") %></h1>
     </div>
   </div>
+</section>
 
-  <div class="property-grid">
-    <% @properties.each do |property| %>
-      <article class="<%= property_card_classes(property) %>">
-        <div class="property-card__body">
-          <p class="property-card__eyebrow"><%= property.user.full_name.presence || property.user.email %></p>
-          <h3><%= property.address_line_1 %></h3>
-          <p><%= property.headline %></p>
-          <p><%= format_price(property) %> · <%= format_bedrooms(property) %></p>
-          <p><span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span></p>
-        </div>
-        <footer class="property-card__footer">
-          <span><%= property.listing_completeness_percentage %>% complete · <%= t("ui.admin.properties.index.appointment_count", count: property.appointments.count) %></span>
-          <%= link_to t("ui.admin.properties.index.open"), admin_property_path(property), class: "button primary hollow" %>
-        </footer>
-      </article>
-    <% end %>
-  </div>
+<section class="admin-panel">
+  <%= form_with url: admin_properties_path, method: :get, class: "admin-filter-form", local: true, data: { testid: "admin-properties-search" } do |f| %>
+    <div>
+      <%= f.label :q, t("ui.admin.properties.index.search.label") %>
+      <%= f.search_field :q, value: @query, placeholder: t("ui.admin.properties.index.search.placeholder"), data: { testid: "admin-properties-search-input" } %>
+    </div>
+    <div class="admin-filter-form__actions">
+      <%= f.submit t("ui.admin.properties.index.search.submit"), class: "button primary", data: { testid: "admin-properties-search-submit" } %>
+      <%= link_to t("ui.admin.properties.index.search.clear"), admin_properties_path, class: "button hollow secondary", data: { testid: "admin-properties-search-clear" } %>
+    </div>
+  <% end %>
+</section>
 
-  <%= paginate @properties %>
+<section class="admin-panel">
+  <% if @properties.any? %>
+    <div class="property-grid">
+      <% @properties.each do |property| %>
+        <article class="<%= property_card_classes(property) %>" data-testid="admin-property-card-<%= property.id %>">
+          <div class="property-card__body">
+            <p class="property-card__eyebrow"><%= property.user.full_name.presence || property.user.email %></p>
+            <h3><%= property.address_line_1 %></h3>
+            <p><%= property.headline %></p>
+            <p><%= format_price(property) %> · <%= format_bedrooms(property) %></p>
+            <p><span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span></p>
+          </div>
+          <footer class="property-card__footer">
+            <span><%= property.listing_completeness_percentage %>% complete · <%= t("ui.admin.properties.index.appointment_count", count: property.appointments.size) %></span>
+            <%= link_to t("ui.admin.properties.index.open"), admin_property_path(property), class: "button primary hollow" %>
+          </footer>
+        </article>
+      <% end %>
+    </div>
+
+    <%= paginate @properties %>
+  <% else %>
+    <p class="empty-copy"><%= t("ui.admin.properties.index.no_results") %></p>
+  <% end %>
 </section>
