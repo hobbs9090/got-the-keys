@@ -19,7 +19,7 @@ Stage defaults:
 - `staging`
   - Rails environment: `staging`
   - database: SQLite
-  - current default deploy root: `/var/www/stevenhobbs.co.uk`
+  - current default deploy root: `/var/www/gotthekeys-staging`
   - current default URL: `https://stevenhobbs.co.uk`
 - `production`
   - Rails environment: `production`
@@ -31,11 +31,11 @@ That keeps staging isolated from production while still using the same Nirvana h
 
 That means the Apache virtual host should point at the Capistrano `current/public` path, not the deploy root itself:
 
-- `DocumentRoot /var/www/stevenhobbs.co.uk/current/public`
-- `PassengerAppRoot /var/www/stevenhobbs.co.uk/current`
+- `DocumentRoot /var/www/gotthekeys-staging/current/public`
+- `PassengerAppRoot /var/www/gotthekeys-staging/current`
 - `PassengerRuby /home/steven/.rbenv/versions/3.4.7/bin/ruby`
 
-If the existing virtual host currently uses `/var/www/stevenhobbs.co.uk` directly as its document root, update that before the first Rails deploy.
+If the existing virtual host still points at `/var/www/stevenhobbs.co.uk` or uses the deploy root directly as its document root, update that before the first Rails deploy.
 
 For the current Nirvana host, the working server-side mirror is:
 
@@ -47,7 +47,7 @@ For the current Nirvana host, the working server-side mirror is:
 - Passenger is installed and enabled for Apache.
 - Ruby `3.4.x` is available on the server.
 - Bundler is available.
-- the deploy user can SSH to `192.168.2.204` and write to `/var/www/stevenhobbs.co.uk`
+- the deploy user can SSH to `192.168.2.204` and write to `/var/www/gotthekeys-staging`
 - the server can fetch `git@github.com:hobbs9090/rails_got_the_keys.git`, or you will deploy from a reachable mirror
 - The host can run SQLite or another relational database supported by Active Record.
 - You can either build frontend assets on the server or upload prebuilt assets during deployment.
@@ -101,7 +101,7 @@ Changing `ACTIVE_JOB_QUEUE_ADAPTER` alone does not create a durable job system. 
 1. Create the app root and shared writable paths:
 
 ```bash
-mkdir -p /var/www/stevenhobbs.co.uk/shared/{log,tmp/pids,tmp/cache,tmp/sockets,storage}
+mkdir -p /var/www/gotthekeys-staging/shared/{log,tmp/pids,tmp/cache,tmp/sockets,storage}
 ```
 
 2. Make sure the deploy user owns that tree or can write to it.
@@ -199,7 +199,7 @@ Adapt only the Ruby path, hostnames, and certificate paths if needed. The docume
 The `staging` stage defaults to:
 
 - host `192.168.2.204`
-- deploy root `/var/www/stevenhobbs.co.uk`
+- deploy root `/var/www/gotthekeys-staging`
 - branch `master`
 
 The `production` stage uses the same Nirvana host and defaults `APP_HOST` to `gotthekeys.uk`, but still requires:
@@ -229,7 +229,7 @@ Optional overrides:
 ```bash
 DEPLOY_USER=your_ssh_user \
 DEPLOY_HOST=192.168.2.204 \
-DEPLOY_TO=/var/www/stevenhobbs.co.uk \
+DEPLOY_TO=/var/www/gotthekeys-staging \
 DEPLOY_REPO_URL=/home/steven/git/rails_got_the_keys.git \
 DEPLOY_BRANCH=master \
 bundle exec cap staging deploy
@@ -284,7 +284,7 @@ It uses the same exact-commit mirror flow as staging, but targets the `productio
 
 ### How Capistrano Lays Out The Staging App
 
-Under the deploy root `/var/www/stevenhobbs.co.uk`, Capistrano manages the standard release structure:
+Under the deploy root `/var/www/gotthekeys-staging`, Capistrano manages the standard release structure:
 
 - `current/`
   Symlink to the live release Apache and Passenger should serve.

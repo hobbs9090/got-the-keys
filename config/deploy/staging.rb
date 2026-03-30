@@ -8,7 +8,7 @@ server ENV.fetch("DEPLOY_HOST", "192.168.2.204"),
        user: ENV.fetch("DEPLOY_USER", "deploy"),
        roles: %w[app db web]
 
-set :deploy_to, ENV.fetch("DEPLOY_TO", "/var/www/stevenhobbs.co.uk")
+set :deploy_to, ENV.fetch("DEPLOY_TO", "/var/www/gotthekeys-staging")
 set :rails_env, "staging"
 set :bundle_without, %w[development test doc production].join(' ')
 set :default_env, {
