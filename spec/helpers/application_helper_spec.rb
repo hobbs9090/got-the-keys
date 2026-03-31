@@ -157,6 +157,19 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
+  describe "#native_validation_messages" do
+    it "returns translated browser validation copy with interpolation tokens" do
+      I18n.with_locale(:de) do
+        expect(helper.native_validation_messages).to include(
+          invalid: "Bitte geben Sie einen gültigen Wert ein.",
+          required: "Bitte füllen Sie dieses Feld aus.",
+          too_short: "Bitte verwenden Sie mindestens __MIN__ Zeichen.",
+          range_overflow: "Bitte geben Sie einen Wert kleiner oder gleich __MAX__ ein."
+        )
+      end
+    end
+  end
+
   describe "#form_control_options" do
     it "adds invalid classes and aria metadata when the field has errors" do
       property = Property.new

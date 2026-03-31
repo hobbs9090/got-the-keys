@@ -12,7 +12,8 @@
     <%= javascript_include_tag "application", "data-turbo-track" => "reload", defer: true %>
   </head>
 
-  <body class="site-shell <%= controller_path.tr('/', '-') %><%= " welcome--from-admin" if homepage_from_admin_referrer? %>">
+  <body class="site-shell <%= controller_path.tr('/', '-') %><%= " welcome--from-admin" if homepage_from_admin_referrer? %>"
+        data-native-validation-messages="<%= json_escape(native_validation_messages.to_json) %>">
     <a class="skip-link" href="#main-content"><%= t("ui.common.skip_to_content", default: "Skip to main content") %></a>
     <div class="site-background" aria-hidden="true"></div>
     <%= render "layouts/header" %>

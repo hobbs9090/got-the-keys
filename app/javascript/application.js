@@ -2,6 +2,7 @@ import "@hotwired/turbo-rails";
 
 import { bootCarousels, teardownCarousels } from "./carousels";
 import { bootModals, teardownModals } from "./modals";
+import { bootNativeValidations, teardownNativeValidations } from "./native_validations";
 import { bootPaginationScroll, teardownPaginationScroll } from "./pagination_scroll";
 import { bootPropertyListingForms, teardownPropertyListingForms } from "./property_listing_form";
 import { bootPropertySearchFilters, teardownPropertySearchFilters } from "./property_search_filters";
@@ -14,6 +15,7 @@ const bootApplication = () => {
   bootThemePreference();
   bootCarousels();
   bootModals();
+  bootNativeValidations();
   bootPaginationScroll();
   bootPropertyListingForms();
   bootPropertySearchFilters();
@@ -26,6 +28,7 @@ const teardownApplication = () => {
   teardownThemePreference();
   teardownCarousels();
   teardownModals();
+  teardownNativeValidations();
   teardownPaginationScroll();
   teardownPropertyListingForms();
   teardownPropertySearchFilters();

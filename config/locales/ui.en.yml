@@ -617,6 +617,18 @@ en:
         downloaded: "Downloaded \"%{title}\"."
 
     validation:
+      invalid: "Please enter a valid value."
+      required: "Please fill in this field."
+      option_required: "Please select an option."
+      checkbox_required: "Please check this box to continue."
+      email: "Please enter a valid email address."
+      url: "Please enter a valid URL."
+      too_short: "Please use at least %{min} characters."
+      pattern: "Please match the requested format."
+      number: "Please enter a number."
+      range_underflow: "Please enter a value greater than or equal to %{min}."
+      range_overflow: "Please enter a value less than or equal to %{max}."
+      step: "Please enter a valid value."
       phone_number: "must be a valid phone number"
 
     appointment_mailer:

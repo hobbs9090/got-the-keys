@@ -911,4 +911,16 @@ zh:
         removed: 文件“%{title}”已移除。
         downloaded: 已下载“%{title}”。
     validation:
+      invalid: 请输入有效的值。
+      required: 请填写此字段。
+      option_required: 请选择一个选项。
+      checkbox_required: 请勾选此复选框后继续。
+      email: 请输入有效的电子邮件地址。
+      url: 请输入有效的 URL。
+      too_short: 请至少输入 %{min} 个字符。
+      pattern: 请按要求的格式填写。
+      number: 请输入数字。
+      range_underflow: 请输入大于或等于 %{min} 的值。
+      range_overflow: 请输入小于或等于 %{max} 的值。
+      step: 请输入有效的值。
       phone_number: 必须是有效的电话号码
