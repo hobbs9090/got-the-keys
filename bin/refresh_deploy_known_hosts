@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+: "${DEPLOY_HOST:?DEPLOY_HOST must be set}"
+
+DEPLOY_PORT="${DEPLOY_PORT:-22}"
+KNOWN_HOSTS_PATH="${KNOWN_HOSTS_PATH:-$HOME/.ssh/known_hosts}"
+DEPLOY_HOST_KEY="${DEPLOY_HOST_KEY:-}"
+
+mkdir -p "$(dirname "$KNOWN_HOSTS_PATH")"
+touch "$KNOWN_HOSTS_PATH"
+chmod 700 "$(dirname "$KNOWN_HOSTS_PATH")"
+chmod 600 "$KNOWN_HOSTS_PATH"
+
+remove_known_host() {
+  local host="$1"
+
+  ssh-keygen -R "$host" -f "$KNOWN_HOSTS_PATH" >/dev/null 2>&1 || true
+}
+
+remove_known_host "$DEPLOY_HOST"
+remove_known_host "[$DEPLOY_HOST]:$DEPLOY_PORT"
+
+if [ -n "$DEPLOY_HOST_KEY" ]; then
+  echo "Using pinned DEPLOY_HOST_KEY for $DEPLOY_HOST"
+  printf '%s\n' "$DEPLOY_HOST_KEY" >> "$KNOWN_HOSTS_PATH"
+else
+  echo "Refreshing SSH host key for $DEPLOY_HOST:$DEPLOY_PORT via ssh-keyscan"
+  scanned_key="$(ssh-keyscan -H -p "$DEPLOY_PORT" "$DEPLOY_HOST" 2>/dev/null || true)"
+
+  if [ -z "$scanned_key" ]; then
+    echo "ssh-keyscan did not return a host key for $DEPLOY_HOST:$DEPLOY_PORT" >&2
+    exit 1
+  fi
+
+  printf '%s\n' "$scanned_key" >> "$KNOWN_HOSTS_PATH"
+fi
+
+if ssh-keygen -F "$DEPLOY_HOST" -f "$KNOWN_HOSTS_PATH" >/dev/null 2>&1; then
+  echo "Recorded SSH host key for $DEPLOY_HOST in $KNOWN_HOSTS_PATH"
+elif ssh-keygen -F "[$DEPLOY_HOST]:$DEPLOY_PORT" -f "$KNOWN_HOSTS_PATH" >/dev/null 2>&1; then
+  echo "Recorded SSH host key for [$DEPLOY_HOST]:$DEPLOY_PORT in $KNOWN_HOSTS_PATH"
+else
+  echo "Failed to record an SSH host key for $DEPLOY_HOST" >&2
+  exit 1
+fi

@@ -102,8 +102,13 @@ jobs:
           bundle config set build.pg "--with-pg-config=$(command -v pg_config)"
           bundle check || bundle install --jobs 4 --retry 3
 
+      - name: Refresh deploy host key
+        env:
+          DEPLOY_HOST_KEY: ${{ secrets.DEPLOY_HOST_KEY }}
+        run: bin/refresh_deploy_known_hosts
+
       - name: Verify deploy SSH path
-        run: ssh -o BatchMode=yes steven@127.0.0.1 "whoami"
+        run: ssh -o BatchMode=yes "${DEPLOY_USER}@${DEPLOY_HOST}" "whoami"
 
       - name: Record deploy metadata
         id: deploy_meta
