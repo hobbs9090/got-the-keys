@@ -12,7 +12,7 @@ fi
 DEPLOY_SHA="${DEPLOY_SHA:-$(git rev-parse HEAD)}"
 DEPLOY_REF="${DEPLOY_REF:-deploy/${DEPLOY_SHA}}"
 DEPLOY_USER="${DEPLOY_USER:-steven}"
-DEPLOY_HOST="${DEPLOY_HOST:-127.0.0.1}"
+DEPLOY_HOST="${DEPLOY_HOST:-192.168.2.204}"
 DEPLOY_TO="${DEPLOY_TO:-/var/www/gotthekeys-staging}"
 APP_HOST="${APP_HOST:-stevenhobbs.co.uk}"
 DATABASE_NAME="${DATABASE_NAME:-gotthekeys_staging}"
