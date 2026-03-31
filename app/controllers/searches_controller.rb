@@ -1,7 +1,8 @@
 class SearchesController < ApplicationController
   def index
-    @sale_status = params[:sale_status].presence_in(Property::SALE_STATUS) || Property::SALE_STATUSES[:for_sale]
-    catalogue = PropertyCatalogueQuery.new(params:, default_filters: { sale_status: @sale_status }).call
+    @sale_status = params[:sale_status].presence_in(Property::SALE_STATUS)
+    default_filters = @sale_status.present? ? { sale_status: @sale_status } : {}
+    catalogue = PropertyCatalogueQuery.new(params:, default_filters:).call
 
     @filters = catalogue.filters
     @properties = catalogue.properties

@@ -1,6 +1,5 @@
 <% title t('properties.title') %>
 <% active_filter_labels = property_filter_chip_labels(@filters) %>
-<% current_scope = @filters[:sale_status].presence %>
 
 <section class="page-hero property-catalogue-hero">
   <div>
@@ -13,9 +12,6 @@
   </div>
 
   <div class="page-hero__meta property-catalogue-hero__meta">
-    <span class="badge badge--neutral">
-      <%= active_filter_labels.any? ? t("ui.properties.catalogue.active_filter_count", count: active_filter_labels.count) : t("ui.properties.catalogue.overview_badge") %>
-    </span>
     <strong><%= number_with_delimiter(@total_properties, delimiter: ",") %></strong>
     <span><%= t("ui.properties.catalogue.matching_properties", count: @total_properties) %></span>
   </div>
@@ -23,33 +19,6 @@
 
 <section class="property-catalogue">
   <aside class="property-catalogue__sidebar">
-    <section class="site-card property-catalogue__browse">
-      <p class="section-heading__eyebrow"><%= t("ui.properties.catalogue.browse_eyebrow") %></p>
-      <h2><%= t("ui.properties.catalogue.browse_title") %></h2>
-      <p><%= t("ui.properties.catalogue.browse_body") %></p>
-
-      <div class="segmented-links property-catalogue__scope-links">
-        <%= link_to t("ui.properties.catalogue.all_listings"), properties_path, class: ("is-active" if current_scope.blank?) %>
-        <%= link_to t("ui.properties.sale_statuses.for_sale"), for_sale_index_path, class: ("is-active" if current_scope == Property::SALE_STATUSES[:for_sale]) %>
-        <%= link_to t("ui.properties.sale_statuses.for_rent"), for_rent_index_path, class: ("is-active" if current_scope == Property::SALE_STATUSES[:for_rent]) %>
-      </div>
-
-      <dl class="property-catalogue__totals">
-        <div>
-          <dt><%= t("ui.properties.catalogue.totals.all") %></dt>
-          <dd><%= number_with_delimiter(@catalogue_totals[:all], delimiter: ",") %></dd>
-        </div>
-        <div>
-          <dt><%= t("ui.properties.sale_statuses.for_sale") %></dt>
-          <dd><%= number_with_delimiter(@catalogue_totals[:for_sale], delimiter: ",") %></dd>
-        </div>
-        <div>
-          <dt><%= t("ui.properties.sale_statuses.for_rent") %></dt>
-          <dd><%= number_with_delimiter(@catalogue_totals[:for_rent], delimiter: ",") %></dd>
-        </div>
-      </dl>
-    </section>
-
     <section class="site-card property-catalogue__filters">
       <div class="property-results-panel__head">
         <div>
@@ -103,7 +72,6 @@
       <h2><%= primary_branch_profile[:name] %></h2>
       <ul class="detail-inline-list">
         <li><strong><%= primary_branch_profile[:team_label] %></strong></li>
-        <li><%= primary_branch_profile[:response_time] %></li>
         <li><%= primary_branch_profile[:phone] %></li>
         <li><%= primary_branch_profile[:email] %></li>
       </ul>
@@ -118,12 +86,11 @@
           <h2><%= t("ui.properties.catalogue.results_title", count: @total_properties) %></h2>
         </div>
 
-        <div class="property-results-panel__meta">
-          <span class="badge badge--neutral"><%= property_sort_label(@filters[:sort].presence || "recommended") %></span>
-          <% if active_filter_labels.any? %>
+        <% if active_filter_labels.any? %>
+          <div class="property-results-panel__meta">
             <%= link_to t("ui.common.clear_all"), properties_path, class: "button secondary hollow" %>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
       </div>
 
       <% if active_filter_labels.any? %>

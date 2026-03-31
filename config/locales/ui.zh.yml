@@ -140,6 +140,7 @@ zh:
         local_team_eyebrow: 本地团队
       filters:
         listing_type: 房源类型
+        all_properties: 全部房源
         all_listings: 全部房源
         query_label: 区域、邮编或关键词
         query_placeholder: 例如 Sevenoaks、TN13 或 garden

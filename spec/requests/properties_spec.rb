@@ -165,6 +165,29 @@ describe "Properties" do
       expect(results_panel).to be_present
       expect(results_panel.at_css(".pagination")).not_to be_present
     end
+
+    it "keeps the filter card sticky without pinning the whole catalogue sidebar" do
+      stylesheet = Rails.root.join("app/assets/stylesheets/theme.scss").read
+
+      expect(stylesheet).to match(
+        /\.property-catalogue__filters\s*\{[^}]*position:\s*sticky;[^}]*top:\s*6\.5rem;/m
+      )
+    end
+
+    it "omits the browse card, catalogue overview, recommended, and response-time labels from the catalogue page" do
+      get properties_path
+
+      document = Nokogiri::HTML(response.body)
+      hero_meta = document.at_css(".page-hero__meta.property-catalogue-hero__meta")
+      results_meta = document.at_css(".property-results-panel__meta")
+      browse_card = document.at_css(".property-catalogue__browse")
+
+      expect(browse_card).not_to be_present
+      expect(hero_meta.at_css(".badge")).not_to be_present
+      expect(results_meta).not_to be_present
+      expect(response.body).not_to include(I18n.t("ui.properties.catalogue.browse_title"))
+      expect(response.body).not_to include(AppSettings.primary_branch_profile.fetch(:response_time))
+    end
   end
 
   describe "GET /properties/1" do

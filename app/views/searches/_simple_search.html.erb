@@ -1,1 +1,5 @@
-<%= render "properties/filters", url: searches_path, selected_sale_status: @sale_status, show_status_select: true %>
+<%= render "properties/filters",
+  url: searches_path,
+  selected_sale_status: @sale_status,
+  show_status_select: true,
+  listing_type_blank_label: t("ui.properties.filters.all_properties") %>

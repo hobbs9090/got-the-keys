@@ -170,6 +170,7 @@ en:
         empty_copy: "Showing the full catalogue. Use the filter panel to narrow by location, price, and bedroom count."
       filters:
         listing_type: "Listing type"
+        all_properties: "All properties"
         all_listings: "All listings"
         query_label: "Area, postcode or keyword"
         query_placeholder: "Try Sevenoaks, TN13 or garden"

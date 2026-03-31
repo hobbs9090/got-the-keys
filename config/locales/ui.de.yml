@@ -151,6 +151,7 @@ de:
         local_team_eyebrow: Lokales Team
       filters:
         listing_type: Inserattyp
+        all_properties: Alle Objekte
         all_listings: Alle Inserate
         query_label: Gebiet, Postleitzahl oder Stichwort
         query_placeholder: Versuchen Sie Sevenoaks, TN13 oder garden

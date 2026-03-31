@@ -32,7 +32,7 @@
           <p class="property-card__headline"><%= property.headline %></p>
           <p class="property-card__description"><%= truncate(property.property_description, length: 130, separator: " ") %></p>
           <ul class="property-card__trust-list">
-            <% property_trust_cues(property).first(3).each do |cue| %>
+            <% property_trust_cues(property, include_response_time: false).first(3).each do |cue| %>
               <li><%= cue %></li>
             <% end %>
           </ul>
