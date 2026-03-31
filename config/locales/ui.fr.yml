@@ -15,6 +15,12 @@ fr:
         dans une seule application Rails rendue cote serveur, concue pour des demos
         realistes, des tests d'acceptation et la formation a l'automatisation de navigateur
         pilotee par l'IA.
+    theme_toggle:
+      label: Theme
+      options:
+        system: Systeme
+        light: Clair
+        dark: Sombre
     shared:
       property_placeholder_alt: Image de remplacement du bien
     common:

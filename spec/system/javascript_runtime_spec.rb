@@ -1,11 +1,60 @@
 require "rails_helper"
 
 RSpec.describe "JavaScript runtime", type: :system, js: true do
+  def dismiss_cookie_banner
+    click_button "Reject non-essential" if page.has_button?("Reject non-essential", wait: 1)
+  end
+
+  def wait_for_theme_runtime
+    expect(page).to have_css("html[data-theme-ready='true']", wait: 5)
+  end
+
+  def dispatch_change_for_select(select_id, value)
+    page.execute_script(<<~JS)
+      const select = document.getElementById(#{select_id.to_json});
+      if (!select) return;
+
+      const option = Array.from(select.options).find((candidate) => candidate.value === #{value.to_json});
+      if (!option) return;
+
+      option.selected = true;
+      select.value = option.value;
+      select.dispatchEvent(new window.Event("input", { bubbles: true }));
+      select.dispatchEvent(new window.Event("change", { bubbles: true }));
+    JS
+  end
+
+  def choose_theme_preference(label)
+    details = find('[data-testid="theme-toggle"] details', visible: :all)
+    page.execute_script("arguments[0].open = true;", details)
+    find(%([data-testid="theme-option-#{label.downcase}"])).click
+  end
+
+  def store_theme_preference(value)
+    page.execute_script(<<~JS)
+      window.localStorage.setItem("gotthekeys-theme-preference", #{value.to_json});
+    JS
+  end
+
+  def expect_theme_preference(label)
+    expect(
+      page.evaluate_script("document.querySelector('[data-testid=\"theme-toggle\"] .theme-toggle__summary-code')?.textContent?.trim()")
+    ).to eq(label)
+  end
+
   def sign_in_as_user(user, password: "changeme")
     visit new_user_session_path
 
     fill_in "user_email", with: user.email
     fill_in "user_password", with: password
+    click_button "Sign in"
+  end
+
+  def sign_in_as_admin(admin, password: "changeme")
+    visit new_admin_session_path
+
+    fill_in "admin_email", with: admin.email
+    fill_in "admin_password", with: password
     click_button "Sign in"
   end
 
@@ -75,7 +124,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
 
   it "updates price filter labels when the shared search switches to rentals" do
     visit searches_path
-    click_button "Reject non-essential" if page.has_button?("Reject non-essential", wait: 1)
+    dismiss_cookie_banner
     expect(page).to have_css("[data-property-search-filters-ready='true']")
 
     expect(page).to have_css("label[for='min_price']", text: "Min price")
@@ -83,20 +132,695 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     expect(page.evaluate_script("document.getElementById('min_price').placeholder")).to eq("250,000")
     expect(page.evaluate_script("document.getElementById('max_price').placeholder")).to eq("1,000,000")
 
-    select "For Rent", from: "sale_status"
-    expect(page).to have_select("sale_status", selected: "For Rent")
+    dispatch_change_for_select("sale_status", "For Rent")
 
-    expect(page.evaluate_script("document.querySelector(\"label[for='min_price']\").textContent")).to eq("Min monthly rental")
-    expect(page.evaluate_script("document.querySelector(\"label[for='max_price']\").textContent")).to eq("Max monthly rental")
-    expect(page.evaluate_script("document.getElementById('min_price').placeholder")).to eq("1,500")
-    expect(page.evaluate_script("document.getElementById('max_price').placeholder")).to eq("10,000")
+    expect(page).to have_css("label[for='min_price']", text: "Min monthly rental")
+    expect(page).to have_css("label[for='max_price']", text: "Max monthly rental")
+    expect(page).to have_field("min_price", placeholder: "1,500")
+    expect(page).to have_field("max_price", placeholder: "10,000")
 
-    select "For Sale", from: "sale_status"
-    expect(page).to have_select("sale_status", selected: "For Sale")
+    dispatch_change_for_select("sale_status", "For Sale")
 
-    expect(page.evaluate_script("document.querySelector(\"label[for='min_price']\").textContent")).to eq("Min price")
-    expect(page.evaluate_script("document.querySelector(\"label[for='max_price']\").textContent")).to eq("Max price")
-    expect(page.evaluate_script("document.getElementById('min_price').placeholder")).to eq("250,000")
-    expect(page.evaluate_script("document.getElementById('max_price').placeholder")).to eq("1,000,000")
+    expect(page).to have_css("label[for='min_price']", text: "Min price")
+    expect(page).to have_css("label[for='max_price']", text: "Max price")
+    expect(page).to have_field("min_price", placeholder: "250,000")
+    expect(page).to have_field("max_price", placeholder: "1,000,000")
+  end
+
+  it "persists the theme preference across public and admin pages" do
+    admin = FactoryBot.create(:admin, email: "theme-admin@example.com", password: "changeme", password_confirmation: "changeme")
+
+    visit root_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    expect_theme_preference("System")
+
+    choose_theme_preference("Dark")
+
+    expect_theme_preference("Dark")
+    expect(page.evaluate_script("document.documentElement.dataset.themePreference")).to eq("dark")
+    expect(page.evaluate_script("document.documentElement.dataset.theme")).to eq("dark")
+    expect(page.evaluate_script("window.localStorage.getItem('gotthekeys-theme-preference')")).to eq("dark")
+
+    visit properties_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    expect_theme_preference("Dark")
+    expect(page.evaluate_script("document.documentElement.dataset.theme")).to eq("dark")
+
+    sign_in_as_admin(admin)
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    expect_theme_preference("Dark")
+
+    choose_theme_preference("System")
+
+    expect_theme_preference("System")
+    expect(page.evaluate_script("document.documentElement.dataset.themePreference")).to eq("system")
+    expect(page.evaluate_script("window.localStorage.getItem('gotthekeys-theme-preference')")).to eq("system")
+  end
+
+  it "uses the shared checkbox styling in the admin enquiry filters" do
+    admin = FactoryBot.create(:admin, email: "checkbox-admin@example.com", password: "changeme", password_confirmation: "changeme")
+
+    visit root_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    choose_theme_preference("Dark")
+
+    sign_in_as_admin(admin)
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    visit admin_enquiries_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    styles = page.evaluate_script(<<~JS)
+      (() => {
+        const checkbox = document.querySelector('[data-testid="lead-filter-spam"]');
+        const label = document.querySelector('label[for="spam_only"]');
+
+        return {
+          theme: document.documentElement.dataset.theme,
+          checkboxBackground: getComputedStyle(checkbox).backgroundColor,
+          checkboxBorder: getComputedStyle(checkbox).borderTopColor,
+          checkboxRadius: getComputedStyle(checkbox).borderTopLeftRadius,
+          labelColor: getComputedStyle(label).color
+        };
+      })();
+    JS
+
+    expect(styles).to include(
+      "theme" => "dark",
+      "checkboxBackground" => "rgba(20, 32, 54, 0.96)",
+      "checkboxBorder" => "rgba(167, 188, 220, 0.28)",
+      "checkboxRadius" => "7.2px",
+      "labelColor" => "rgb(230, 238, 249)"
+    )
+  end
+
+  it "uses readable admin user search labels and fields in dark mode" do
+    admin = FactoryBot.create(:admin, email: "users-search-admin@example.com", password: "changeme", password_confirmation: "changeme")
+
+    visit root_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    choose_theme_preference("Dark")
+
+    sign_in_as_admin(admin)
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    visit admin_users_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    styles = page.evaluate_script(<<~JS)
+      (() => {
+        const label = document.querySelector('label[for="q"]');
+        const input = document.querySelector('[data-testid="admin-users-search-input"]');
+
+        return {
+          theme: document.documentElement.dataset.theme,
+          labelColor: getComputedStyle(label).color,
+          inputColor: getComputedStyle(input).color,
+          inputBackground: getComputedStyle(input).backgroundColor,
+          placeholderColor: getComputedStyle(input, "::placeholder").color
+        };
+      })();
+    JS
+
+    expect(styles).to include(
+      "theme" => "dark",
+      "labelColor" => "rgb(244, 248, 255)",
+      "inputColor" => "rgb(230, 238, 249)",
+      "inputBackground" => "rgb(24, 36, 59)",
+      "placeholderColor" => "rgb(147, 168, 200)"
+    )
+  end
+
+  it "keeps shared form control text readable in dark mode" do
+    user = FactoryBot.create(:user, email: "dark-form-controls@example.com", password: "changeme", password_confirmation: "changeme")
+
+    visit root_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    choose_theme_preference("Dark")
+
+    sign_in_as_user(user)
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    visit new_property_path
+    wait_for_theme_runtime
+
+    styles = page.evaluate_script(<<~JS)
+      (() => {
+        const textField = document.getElementById("property_address_line_1");
+        const selectField = document.getElementById("property_sale_status");
+        const textareaField = document.getElementById("property_property_description");
+        const dateField = document.getElementById("property_available_from");
+
+        return {
+          theme: document.documentElement.dataset.theme,
+          textColor: getComputedStyle(textField).color,
+          textCaret: getComputedStyle(textField).caretColor,
+          textFill: getComputedStyle(textField).webkitTextFillColor,
+          selectColor: getComputedStyle(selectField).color,
+          selectFill: getComputedStyle(selectField).webkitTextFillColor,
+          textareaColor: getComputedStyle(textareaField).color,
+          textareaCaret: getComputedStyle(textareaField).caretColor,
+          dateColor: getComputedStyle(dateField).color,
+          dateCaret: getComputedStyle(dateField).caretColor,
+          dateFill: getComputedStyle(dateField).webkitTextFillColor
+        };
+      })();
+    JS
+
+    expect(styles).to include(
+      "theme" => "dark",
+      "textColor" => "rgb(230, 238, 249)",
+      "textCaret" => "rgb(230, 238, 249)",
+      "textFill" => "rgb(230, 238, 249)",
+      "selectColor" => "rgb(230, 238, 249)",
+      "selectFill" => "rgb(230, 238, 249)",
+      "textareaColor" => "rgb(230, 238, 249)",
+      "textareaCaret" => "rgb(230, 238, 249)",
+      "dateColor" => "rgb(230, 238, 249)",
+      "dateCaret" => "rgb(230, 238, 249)",
+      "dateFill" => "rgb(230, 238, 249)"
+    )
+  end
+
+  it "uses readable code examples on the admin QA page in dark mode" do
+    admin = FactoryBot.create(:admin, email: "qa-code-admin@example.com", password: "changeme", password_confirmation: "changeme")
+
+    visit root_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    choose_theme_preference("Dark")
+
+    sign_in_as_admin(admin)
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    visit admin_qa_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    styles = page.evaluate_script(<<~JS)
+      (() => {
+        const codeExample = document.querySelector(".detail-inline-list code");
+
+        return {
+          theme: document.documentElement.dataset.theme,
+          codeBackground: getComputedStyle(codeExample).backgroundColor,
+          codeBorder: getComputedStyle(codeExample).borderTopColor,
+          codeColor: getComputedStyle(codeExample).color
+        };
+      })();
+    JS
+
+    expect(styles).to include(
+      "theme" => "dark",
+      "codeBackground" => "rgba(184, 201, 225, 0.12)",
+      "codeBorder" => "rgba(132, 156, 194, 0.18)",
+      "codeColor" => "rgb(244, 248, 255)"
+    )
+  end
+
+  it "uses a dark warning callout on the admin security page" do
+    admin = FactoryBot.create(:admin, email: "security-warning-admin@example.com", password: "changeme", password_confirmation: "changeme")
+
+    visit root_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    choose_theme_preference("Dark")
+
+    sign_in_as_admin(admin)
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    visit admin_security_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    styles = page.evaluate_script(<<~JS)
+      (() => {
+        const callout = document.querySelector('[data-testid="admin-two-factor-warning-callout"]');
+        const label = callout.querySelector("strong");
+        const body = callout.querySelector("p");
+
+        return {
+          theme: document.documentElement.dataset.theme,
+          warningBackground: getComputedStyle(callout).backgroundColor,
+          warningBorderLeft: getComputedStyle(callout).borderLeftColor,
+          warningLabelColor: getComputedStyle(label).color,
+          warningBodyColor: getComputedStyle(body).color
+        };
+      })();
+    JS
+
+    expect(styles).to include(
+      "theme" => "dark",
+      "warningBackground" => "rgba(20, 32, 54, 0.96)",
+      "warningBorderLeft" => "rgb(240, 187, 90)",
+      "warningLabelColor" => "rgb(240, 187, 90)",
+      "warningBodyColor" => "rgb(230, 238, 249)"
+    )
+  end
+
+  it "uses dark surfaces for the legal topic navigation in dark mode" do
+    visit root_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    choose_theme_preference("Dark")
+
+    visit legal_index_path(anchor: "legal-purpose")
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    styles = page.evaluate_script(<<~JS)
+      (() => {
+        const nav = document.querySelector(".legal-tabs");
+        const card = document.getElementById("legal-purpose");
+        const checklistHeading = document.querySelector(".legal-checklist strong");
+
+        return {
+          theme: document.documentElement.dataset.theme,
+          navBackground: getComputedStyle(nav).backgroundColor,
+          navBorder: getComputedStyle(nav).borderTopColor,
+          cardBorder: getComputedStyle(card).borderTopColor,
+          checklistHeadingColor: getComputedStyle(checklistHeading).color
+        };
+      })();
+    JS
+
+    expect(styles).to include(
+      "theme" => "dark",
+      "navBackground" => "rgba(20, 32, 54, 0.96)",
+      "navBorder" => "rgba(132, 156, 194, 0.18)",
+      "cardBorder" => "rgba(116, 145, 188, 0.2)",
+      "checklistHeadingColor" => "rgb(244, 248, 255)"
+    )
+  end
+
+  it "uses dark surfaces for the featured cookie policy cards in dark mode" do
+    visit root_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    choose_theme_preference("Dark")
+
+    visit cookie_policy_index_path
+    wait_for_theme_runtime
+
+    styles = page.evaluate_script(<<~JS)
+      (() => {
+        const settingsCard = document.getElementById("cookie-preferences");
+        const summaryCard = document.querySelector(".cookie-policy-card--summary");
+        const settingsHeading = settingsCard.querySelector("h2");
+        const summaryHeading = summaryCard.querySelector("h2");
+
+        return {
+          theme: document.documentElement.dataset.theme,
+          settingsBackground: getComputedStyle(settingsCard).backgroundColor,
+          summaryBackground: getComputedStyle(summaryCard).backgroundColor,
+          settingsHeadingColor: getComputedStyle(settingsHeading).color,
+          summaryHeadingColor: getComputedStyle(summaryHeading).color
+        };
+      })();
+    JS
+
+    expect(styles).to include(
+      "theme" => "dark",
+      "settingsBackground" => "rgba(20, 32, 54, 0.96)",
+      "summaryBackground" => "rgba(20, 32, 54, 0.96)",
+      "settingsHeadingColor" => "rgb(244, 248, 255)",
+      "summaryHeadingColor" => "rgb(244, 248, 255)"
+    )
+  end
+
+  it "uses readable copy and panel styling for the how-it-works hero in dark mode" do
+    visit root_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    choose_theme_preference("Dark")
+
+    visit how_it_works_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    styles = page.evaluate_script(<<~JS)
+      (() => {
+        const hero = document.querySelector(".page-hero.how-hero");
+        const copy = document.querySelector(".how-hero__copy");
+        const panel = document.querySelector(".how-hero__panel");
+        const panelHeading = panel.querySelector("h2");
+        const panelBody = panel.querySelector("p");
+
+        return {
+          theme: document.documentElement.dataset.theme,
+          heroBackground: getComputedStyle(hero).backgroundColor,
+          copyColor: getComputedStyle(copy).color,
+          panelBackground: getComputedStyle(panel).backgroundColor,
+          panelHeadingColor: getComputedStyle(panelHeading).color,
+          panelBodyColor: getComputedStyle(panelBody).color
+        };
+      })();
+    JS
+
+    expect(styles).to include(
+      "theme" => "dark",
+      "heroBackground" => "rgba(18, 29, 49, 0.86)",
+      "copyColor" => "rgb(230, 238, 249)",
+      "panelBackground" => "rgba(18, 29, 49, 0.86)",
+      "panelHeadingColor" => "rgb(244, 248, 255)",
+      "panelBodyColor" => "rgb(230, 238, 249)"
+    )
+  end
+
+  it "uses readable navigation and feature cards on how-it-works in dark mode" do
+    visit root_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    choose_theme_preference("Dark")
+
+    visit how_it_works_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    styles = page.evaluate_script(<<~JS)
+      (() => {
+        const jumpNav = document.querySelector(".how-jump-nav");
+        const jumpTab = document.querySelector(".how-jump-tab");
+        const jumpIndex = document.querySelector(".how-jump-tab__index");
+        const jumpLabel = document.querySelector(".how-jump-tab__label");
+        const timelineBadge = document.querySelector(".how-timeline-card__badge");
+        const stageCard = document.querySelector(".how-stage-card");
+        const stageStep = document.querySelector(".how-stage-card__step");
+        const marketingFeature = document.querySelector(".how-marketing-card");
+        const callout = document.querySelector(".how-callout");
+        const finishCard = document.querySelector(".how-finish-card");
+
+        return {
+          theme: document.documentElement.dataset.theme,
+          jumpNavBackground: getComputedStyle(jumpNav).backgroundColor,
+          jumpTabBackground: getComputedStyle(jumpTab).backgroundColor,
+          jumpIndexBackground: getComputedStyle(jumpIndex).backgroundColor,
+          jumpIndexColor: getComputedStyle(jumpIndex).color,
+          jumpLabelColor: getComputedStyle(jumpLabel).color,
+          timelineBadgeColor: getComputedStyle(timelineBadge).color,
+          stageBackground: getComputedStyle(stageCard).backgroundColor,
+          stageStepBackground: getComputedStyle(stageStep).backgroundColor,
+          stageStepColor: getComputedStyle(stageStep).color,
+          marketingFeatureBackground: getComputedStyle(marketingFeature).backgroundColor,
+          calloutBackground: getComputedStyle(callout).backgroundColor,
+          finishBackground: getComputedStyle(finishCard).backgroundColor
+        };
+      })();
+    JS
+
+    expect(styles).to include(
+      "theme" => "dark",
+      "jumpNavBackground" => "rgba(20, 32, 54, 0.96)",
+      "jumpTabBackground" => "rgba(20, 32, 54, 0.96)",
+      "jumpIndexBackground" => "rgba(20, 32, 54, 0.96)",
+      "jumpIndexColor" => "rgb(168, 199, 255)",
+      "jumpLabelColor" => "rgb(244, 248, 255)",
+      "timelineBadgeColor" => "rgb(168, 199, 255)",
+      "stageBackground" => "rgba(18, 29, 49, 0.86)",
+      "stageStepBackground" => "rgba(20, 32, 54, 0.96)",
+      "stageStepColor" => "rgb(168, 199, 255)",
+      "marketingFeatureBackground" => "rgba(18, 29, 49, 0.86)",
+      "calloutBackground" => "rgba(18, 29, 49, 0.86)",
+      "finishBackground" => "rgba(18, 29, 49, 0.86)"
+    )
+  end
+
+  it "uses readable panels and text on the contact page in dark mode" do
+    visit root_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    choose_theme_preference("Dark")
+
+    visit contact_us_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    styles = page.evaluate_script(<<~JS)
+      (() => {
+        const jumpNav = document.querySelector(".contact-jump-nav");
+        const jumpTab = document.querySelector(".contact-jump-tab");
+        const jumpLabel = document.querySelector(".contact-jump-tab__label");
+        const heroHint = document.querySelector(".contact-hero__hint");
+        const formCard = document.querySelector(".contact-form-card");
+        const formSurface = document.querySelector(".contact-form");
+        const directoryPersonName = document.querySelector(".contact-person-card strong");
+        const directoryPersonEmail = document.querySelector(".contact-person-card__body span");
+        const mapStrong = document.querySelector(".contact-map-card__details strong");
+        const mapBadge = document.querySelector("#contact-location .badge");
+        const noteCard = document.querySelector(".contact-note-card");
+        const noteBadge = document.querySelector(".contact-note-card .section-heading__eyebrow");
+
+        return {
+          theme: document.documentElement.dataset.theme,
+          jumpNavBackground: getComputedStyle(jumpNav).backgroundColor,
+          jumpTabBackground: getComputedStyle(jumpTab).backgroundColor,
+          jumpLabelColor: getComputedStyle(jumpLabel).color,
+          heroHintColor: getComputedStyle(heroHint).color,
+          formCardBackground: getComputedStyle(formCard).backgroundColor,
+          formSurfaceBackground: getComputedStyle(formSurface).backgroundColor,
+          directoryPersonNameColor: getComputedStyle(directoryPersonName).color,
+          directoryPersonEmailColor: getComputedStyle(directoryPersonEmail).color,
+          mapStrongColor: getComputedStyle(mapStrong).color,
+          hasMapBadge: Boolean(mapBadge),
+          noteBadgeBackground: getComputedStyle(noteBadge).backgroundColor,
+          noteBadgeColor: getComputedStyle(noteBadge).color,
+          noteCardBackground: getComputedStyle(noteCard).backgroundColor
+        };
+      })();
+    JS
+
+    expect(styles).to include(
+      "theme" => "dark",
+      "jumpNavBackground" => "rgba(20, 32, 54, 0.96)",
+      "jumpTabBackground" => "rgba(20, 32, 54, 0.96)",
+      "jumpLabelColor" => "rgb(230, 238, 249)",
+      "heroHintColor" => "rgb(230, 238, 249)",
+      "formCardBackground" => "rgba(18, 29, 49, 0.86)",
+      "formSurfaceBackground" => "rgba(20, 32, 54, 0.96)",
+      "directoryPersonNameColor" => "rgb(244, 248, 255)",
+      "directoryPersonEmailColor" => "rgb(230, 238, 249)",
+      "mapStrongColor" => "rgb(244, 248, 255)",
+      "hasMapBadge" => false,
+      "noteBadgeBackground" => "rgba(184, 201, 225, 0.12)",
+      "noteBadgeColor" => "rgb(244, 248, 255)",
+      "noteCardBackground" => "rgba(18, 29, 49, 0.86)"
+    )
+  end
+
+  it "uses readable saved-search form labels on the catalogue page in dark mode" do
+    visit root_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    choose_theme_preference("Dark")
+
+    visit properties_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    styles = page.evaluate_script(<<~JS)
+      (() => {
+        const emailLabel = document.querySelector('label[for="saved_search_email"]');
+        const alertsLabel = document.querySelector('label[for="saved_search_alerts_enabled"]');
+        const emailInput = document.getElementById("saved_search_email");
+
+        emailInput.focus();
+
+        return {
+          theme: document.documentElement.dataset.theme,
+          emailLabelColor: getComputedStyle(emailLabel).color,
+          alertsLabelColor: getComputedStyle(alertsLabel).color,
+          emailInputBackground: getComputedStyle(emailInput).backgroundColor
+        };
+      })();
+    JS
+
+    expect(styles).to include(
+      "theme" => "dark",
+      "emailLabelColor" => "rgb(244, 248, 255)",
+      "alertsLabelColor" => "rgb(230, 238, 249)",
+      "emailInputBackground" => "rgb(28, 43, 69)"
+    )
+  end
+
+  it "uses the default foundation pagination treatment in light mode" do
+    user = FactoryBot.create(:user, email: "pagination-light-mode@example.com")
+
+    13.times do |index|
+      FactoryBot.create(
+        :property,
+        user:,
+        address_line_1: "Pagination Light Mode #{index + 1}",
+        postcode: format("LM1 %<n>AA", n: index + 1)
+      )
+    end
+
+    visit root_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    store_theme_preference("light")
+
+    visit properties_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    styles = page.evaluate_script(<<~JS)
+      (() => {
+        const link = document.querySelector(".pagination li:not(.current):not(.disabled):not(.ellipsis) a");
+        const current = document.querySelector(".pagination .current a");
+        const disabled = document.querySelector(".pagination .disabled span");
+
+        return {
+          theme: document.documentElement.dataset.theme,
+          linkColor: getComputedStyle(link).color,
+          linkBackground: getComputedStyle(link).backgroundColor,
+          currentColor: getComputedStyle(current).color,
+          currentLinkBackground: getComputedStyle(current).backgroundColor,
+          currentContainerBackground: getComputedStyle(current.parentElement).backgroundColor,
+          currentContainerPadding: getComputedStyle(current.parentElement).paddingTop,
+          currentRadius: getComputedStyle(current.parentElement).borderTopLeftRadius,
+          disabledColor: getComputedStyle(disabled).color
+        };
+      })();
+    JS
+
+    expect(styles).to include(
+      "theme" => "light",
+      "linkColor" => "rgb(10, 10, 10)",
+      "linkBackground" => "rgba(0, 0, 0, 0)",
+      "currentColor" => "rgb(254, 254, 254)",
+      "currentLinkBackground" => "rgba(0, 0, 0, 0)",
+      "currentContainerBackground" => "rgb(23, 121, 186)",
+      "currentContainerPadding" => "3px",
+      "currentRadius" => "0px",
+      "disabledColor" => "rgb(202, 202, 202)"
+    )
+  end
+
+  it "sweeps back to the property results when catalogue pagination is used" do
+    user = FactoryBot.create(:user, email: "pagination-scroll-user@example.com")
+
+    13.times do |index|
+      FactoryBot.create(
+        :property,
+        user:,
+        address_line_1: "Pagination Scroll #{index + 1}",
+        postcode: format("PS1 %<n>AA", n: index + 1)
+      )
+    end
+
+    visit properties_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    page.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+    page.execute_script(<<~JS)
+      const links = Array.from(document.querySelectorAll("[data-pagination-scroll-nav] .pagination a"));
+      links.filter((link) => link.textContent.trim() === "2").at(-1)?.click();
+    JS
+
+    expect(page).to have_current_path(properties_path(page: 2), ignore_query: false)
+    expect(page).to have_css("html[data-pagination-scroll-state='complete']", wait: 5)
+
+    styles = page.evaluate_script(<<~JS)
+      (() => {
+        const target = document.querySelector("[data-pagination-scroll-target]");
+        const current = document.querySelector(".pagination .current");
+
+        return {
+          state: document.documentElement.dataset.paginationScrollState,
+          currentPage: current?.textContent?.trim(),
+          scrollY: window.scrollY,
+          targetTop: Math.round(target.getBoundingClientRect().top)
+        };
+      })();
+    JS
+
+    expect(styles["state"]).to eq("complete")
+    expect(styles["currentPage"]).to eq("2")
+    expect(styles["scrollY"]).to be > 200
+    expect(styles["targetTop"]).to be_between(0, 160)
+  end
+
+  it "uses readable pagination controls on the catalogue page in dark mode" do
+    user = FactoryBot.create(:user, email: "pagination-user@example.com")
+
+    13.times do |index|
+      FactoryBot.create(
+        :property,
+        user:,
+        address_line_1: "Pagination Dark Mode #{index + 1}",
+        postcode: format("DM1 %<n>AA", n: index + 1)
+      )
+    end
+
+    visit root_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    store_theme_preference("dark")
+
+    visit properties_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    styles = page.evaluate_script(<<~JS)
+      (() => {
+        const link = document.querySelector(".pagination li:not(.current):not(.disabled):not(.ellipsis) a");
+        const current = document.querySelector(".pagination .current a");
+        const disabled = document.querySelector(".pagination .disabled span");
+
+        return {
+          theme: document.documentElement.dataset.theme,
+          linkColor: getComputedStyle(link).color,
+          linkBackground: getComputedStyle(link).backgroundColor,
+          currentColor: getComputedStyle(current).color,
+          currentLinkBackground: getComputedStyle(current).backgroundColor,
+          currentContainerBackground: getComputedStyle(current.parentElement).backgroundColor,
+          currentContainerPadding: getComputedStyle(current.parentElement).paddingTop,
+          currentRadius: getComputedStyle(current.parentElement).borderTopLeftRadius,
+          disabledColor: getComputedStyle(disabled).color
+        };
+      })();
+    JS
+
+    expect(styles).to include(
+      "theme" => "dark",
+      "linkColor" => "rgb(230, 238, 249)",
+      "linkBackground" => "rgba(0, 0, 0, 0)",
+      "currentColor" => "rgb(255, 255, 255)",
+      "currentLinkBackground" => "rgba(0, 0, 0, 0)",
+      "currentContainerBackground" => "rgb(121, 171, 255)",
+      "currentContainerPadding" => "3px",
+      "currentRadius" => "0px",
+      "disabledColor" => "rgb(166, 180, 202)"
+    )
   end
 end

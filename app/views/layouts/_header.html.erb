@@ -7,7 +7,7 @@
   <div class="site-header__inner">
     <%= link_to root_path, class: "site-brand", data: { testid: "home-link" } do %>
       <span class="site-brand__eyebrow"><%= t("ui.site_header.eyebrow") %></span>
-      <span class="site-brand__wordmark"><%= render "layouts/gotthekeys", class_name: "marketing-wordmark--header", width: 228 %></span>
+      <span class="site-brand__wordmark"><%= render "layouts/gotthekeys", class_name: "marketing-wordmark--header", variant: :theme_aware, width: 228 %></span>
     <% end %>
 
     <nav class="site-nav" aria-label="<%= t("ui.site_header.primary_navigation") %>" data-testid="site-nav">
@@ -28,6 +28,7 @@
           </div>
         <% end %>
         <%= language_switcher %>
+        <%= render "layouts/theme_toggle", control_id: "site_theme_preference" %>
       </div>
 
       <% if account_summary.present? %>

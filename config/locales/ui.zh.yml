@@ -15,6 +15,12 @@ zh:
       sign_in: 登录
     site_footer:
       copy: 在同一个服务端渲染的 Rails 应用中，整合现代房源浏览、预约看房和可重复的 QA 场景，并为真实演示、验收测试与 AI 驱动的浏览器自动化训练而构建。
+    theme_toggle:
+      label: 主题
+      options:
+        system: 跟随系统
+        light: 浅色
+        dark: 深色
     shared:
       property_placeholder_alt: 房源占位图
     common:

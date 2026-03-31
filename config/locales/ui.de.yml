@@ -14,6 +14,12 @@ de:
       copy: Moderne Immobiliensuche, Besichtigungstermine und deterministische QA-Szenarien
         in einer serverseitig gerenderten Rails-Anwendung, entwickelt für realistische
         Demos, Abnahmetests und Schulungen in KI-gestützter Browser-Automatisierung.
+    theme_toggle:
+      label: Design
+      options:
+        system: System
+        light: Hell
+        dark: Dunkel
     shared:
       property_placeholder_alt: Platzhalterbild für Immobilie
     common:
