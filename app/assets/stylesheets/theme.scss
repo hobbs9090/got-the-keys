@@ -650,14 +650,27 @@ pre code {
   margin-bottom: 0;
 }
 
+.pagination a,
+.pagination button,
+.pagination .disabled span,
+.pagination .current {
+  align-items: center;
+  border-radius: 999px;
+  box-sizing: border-box;
+  display: inline-flex;
+  justify-content: center;
+  min-height: 2.5rem;
+  min-width: 2.5rem;
+  padding: 0;
+  text-align: center;
+}
+
 .pagination .current a,
 .pagination .current a:hover,
 .pagination .current a:focus {
   background: transparent;
   box-shadow: none;
   color: inherit;
-  display: inline;
-  padding: 0;
   pointer-events: none;
 }
 

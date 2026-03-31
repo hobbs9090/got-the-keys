@@ -754,6 +754,8 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
           currentContainerBackground: getComputedStyle(current.parentElement).backgroundColor,
           currentContainerPadding: getComputedStyle(current.parentElement).paddingTop,
           currentRadius: getComputedStyle(current.parentElement).borderTopLeftRadius,
+          currentWidth: Math.round(current.parentElement.getBoundingClientRect().width),
+          currentHeight: Math.round(current.parentElement.getBoundingClientRect().height),
           disabledColor: getComputedStyle(disabled).color
         };
       })();
@@ -766,10 +768,12 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       "currentColor" => "rgb(254, 254, 254)",
       "currentLinkBackground" => "rgba(0, 0, 0, 0)",
       "currentContainerBackground" => "rgb(23, 121, 186)",
-      "currentContainerPadding" => "3px",
-      "currentRadius" => "0px",
+      "currentContainerPadding" => "0px",
+      "currentRadius" => "999px",
       "disabledColor" => "rgb(202, 202, 202)"
     )
+
+    expect(styles["currentWidth"]).to eq(styles["currentHeight"])
   end
 
   it "sweeps back to the property results when catalogue pagination is used" do
@@ -854,6 +858,8 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
           currentContainerBackground: getComputedStyle(current.parentElement).backgroundColor,
           currentContainerPadding: getComputedStyle(current.parentElement).paddingTop,
           currentRadius: getComputedStyle(current.parentElement).borderTopLeftRadius,
+          currentWidth: Math.round(current.parentElement.getBoundingClientRect().width),
+          currentHeight: Math.round(current.parentElement.getBoundingClientRect().height),
           disabledColor: getComputedStyle(disabled).color
         };
       })();
@@ -866,9 +872,11 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       "currentColor" => "rgb(255, 255, 255)",
       "currentLinkBackground" => "rgba(0, 0, 0, 0)",
       "currentContainerBackground" => "rgb(121, 171, 255)",
-      "currentContainerPadding" => "3px",
-      "currentRadius" => "0px",
+      "currentContainerPadding" => "0px",
+      "currentRadius" => "999px",
       "disabledColor" => "rgb(166, 180, 202)"
     )
+
+    expect(styles["currentWidth"]).to eq(styles["currentHeight"])
   end
 end
