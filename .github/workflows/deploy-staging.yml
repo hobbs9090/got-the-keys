@@ -42,7 +42,7 @@ jobs:
       BUNDLE_PATH: vendor/bundle
       BUNDLE_WITHOUT: "doc production test"
       DEPLOY_USER: steven
-      DEPLOY_HOST: 127.0.0.1
+      DEPLOY_HOST: 192.168.2.204
       DEPLOY_TO: /var/www/gotthekeys-staging
       DEPLOY_REPO_URL: /home/steven/git/rails_got_the_keys.git
       APP_HOST: stevenhobbs.co.uk
@@ -112,7 +112,7 @@ jobs:
           bundle check || bundle install --jobs 4 --retry 3
 
       - name: Verify deploy SSH path
-        run: ssh -o BatchMode=yes steven@127.0.0.1 "whoami"
+        run: ssh -o BatchMode=yes "${DEPLOY_USER}@${DEPLOY_HOST}" "whoami"
 
       - name: Record deploy metadata
         id: deploy_meta

@@ -14,7 +14,7 @@ runtime_env = {
 }.reject { |_key, value| value.nil? || value.empty? }
 
 server ENV.fetch("DEPLOY_HOST", "192.168.2.204"),
-       user: ENV.fetch("DEPLOY_USER", "deploy"),
+       user: ENV.fetch("DEPLOY_USER", ENV.fetch("USER", "deploy")),
        roles: %w[app db web]
 
 set :deploy_to, ENV.fetch("DEPLOY_TO", "/var/www/gotthekeys-staging")

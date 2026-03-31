@@ -265,7 +265,7 @@ That wrapper does more than call Capistrano directly:
 
 1. resolves the exact Git commit to deploy with `DEPLOY_SHA` defaulting to local `HEAD`
 2. creates a synthetic ref name like `deploy/<full_sha>`
-3. force-pushes that exact commit into the server-local bare mirror at `/home/steven/git/rails_got_the_keys.git`
+3. connects to the Nirvana staging host at `192.168.2.204` by default and force-pushes that exact commit into the server-local bare mirror at `/home/steven/git/rails_got_the_keys.git`
 4. exports `DEPLOY_BRANCH` to that synthetic ref
 5. runs `bundle exec cap staging deploy:check`
 6. runs `bundle exec cap staging deploy`
