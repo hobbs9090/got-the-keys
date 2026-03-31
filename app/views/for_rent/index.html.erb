@@ -18,11 +18,5 @@
 </section>
 
 <section class="page-section">
-  <div class="property-results-panel__pagination">
-    <%= paginate @properties %>
-  </div>
-  <%= render "properties/property" %>
-  <div class="property-results-panel__footer">
-    <%= paginate @properties %>
-  </div>
+  <%= render "properties/paginated_results", properties: @properties %>
 </section>

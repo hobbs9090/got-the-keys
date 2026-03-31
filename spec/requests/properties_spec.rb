@@ -145,6 +145,26 @@ describe "Properties" do
       expect(grid["class"]).to include("property-grid")
       expect(grid["class"]).to include("property-grid--catalogue")
     end
+
+    it "keeps the shared pagination controls outside the results panel card" do
+      12.times do |index|
+        FactoryBot.create(
+          :property,
+          user:,
+          address_line_1: "Paginated Listing #{index + 2}",
+          postcode: format("BR1 %<n>AA", n: index + 2)
+        )
+      end
+
+      get properties_path
+
+      document = Nokogiri::HTML(response.body)
+      results_panel = document.at_css(".site-card.property-results-panel")
+
+      expect(document.css(".property-results-stack > .property-results-pagination").count).to eq(2)
+      expect(results_panel).to be_present
+      expect(results_panel.at_css(".pagination")).not_to be_present
+    end
   end
 
   describe "GET /properties/1" do
