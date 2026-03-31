@@ -23,14 +23,6 @@ module SharedHelper
     pixel_density_image_tag('placeholder_world.jpg', retina_source: 'placeholder_world@2x.jpg')
   end
 
-  def face_image
-    pixel_density_image_tag('placeholder_face.jpg', retina_source: 'placeholder_face@2x.jpg')
-  end
-
-  def steven_image
-    pixel_density_image_tag('steven_face.jpg', retina_source: 'steven_face@2x.jpg')
-  end
-
   def under_construction_image
     image_tag('under_construction.svg', size: '80x80', class: 'under_construction')
   end
