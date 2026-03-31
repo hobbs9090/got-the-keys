@@ -18,7 +18,5 @@
 </section>
 
 <section class="page-section">
-  <%= paginate @properties %>
-  <%= render "properties/property" %>
-  <%= paginate @properties %>
+  <%= render "properties/paginated_results", properties: @properties %>
 </section>

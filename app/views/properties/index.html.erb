@@ -136,15 +136,8 @@
         <p class="property-results-panel__empty-copy"><%= t("ui.properties.catalogue.empty_copy") %></p>
       <% end %>
 
-      <div class="property-results-panel__pagination">
-        <%= paginate @properties %>
-      </div>
     </section>
 
-    <%= render "properties/property", grid_class: "property-grid property-grid--catalogue" %>
-
-    <div class="property-results-panel__footer">
-      <%= paginate @properties %>
-    </div>
+    <%= render "properties/paginated_results", properties: @properties, grid_class: "property-grid property-grid--catalogue" %>
   </div>
 </section>

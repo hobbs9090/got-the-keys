@@ -48,23 +48,34 @@ RSpec.describe "Public content pages", type: :request do
     expect(response.body).to include(I18n.t("about_us.hero_title"))
   end
 
-  it "wraps the for sale bottom pagination in the shared results footer spacing" do
-    get "/for_sale"
+  it "uses the shared top and bottom pagination layout on the public listing pages" do
+    user = FactoryBot.create(:user)
 
-    document = Nokogiri::HTML(response.body)
-    footer = document.at_css(".property-results-panel__footer")
+    14.times do |index|
+      FactoryBot.create(
+        :property,
+        user:,
+        sale_status: Property::SALE_STATUSES[:for_sale],
+        address_line_1: "Sale Listing #{index + 1}",
+        postcode: format("SE1 %<n>AA", n: index + 1)
+      )
+      FactoryBot.create(
+        :property,
+        :for_rent,
+        user:,
+        address_line_1: "Rent Listing #{index + 1}",
+        postcode: format("SW1 %<n>BB", n: index + 1)
+      )
+    end
 
-    expect(response).to have_http_status(:ok)
-    expect(footer).to be_present
-  end
+    ["/searches", "/for_sale", "/for_rent"].each do |path|
+      get path
 
-  it "wraps the for rent bottom pagination in the shared results footer spacing" do
-    get "/for_rent"
+      document = Nokogiri::HTML(response.body)
 
-    document = Nokogiri::HTML(response.body)
-    footer = document.at_css(".property-results-panel__footer")
-
-    expect(response).to have_http_status(:ok)
-    expect(footer).to be_present
+      expect(response).to have_http_status(:ok)
+      expect(document.css(".property-results-stack > .property-results-pagination").count).to eq(2)
+      expect(document.at_css(".site-card.property-results-panel .pagination")).not_to be_present
+    end
   end
 end
