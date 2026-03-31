@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT_DIR"
+
+export RAILS_ENV="${RAILS_ENV:-production}"
+export SECRET_KEY_BASE_DUMMY="${SECRET_KEY_BASE_DUMMY:-1}"
+
+bundle exec rails runner - <<'RUBY'
+begin
+  connection = ActiveRecord::Base.connection
+  adapter = connection.adapter_name
+  database_name =
+    if connection.respond_to?(:current_database)
+      connection.current_database
+    else
+      connection.pool.db_config.database
+    end
+
+  puts "Checking #{Rails.env} database migration access on #{adapter} (#{database_name})"
+
+  schema_migrations_present = connection.data_source_exists?("schema_migrations")
+  latest_version =
+    if schema_migrations_present
+      connection.select_value("SELECT version FROM schema_migrations ORDER BY version DESC LIMIT 1")
+    end
+
+  if adapter == "PostgreSQL"
+    truthy_values = [true, "t", "true", 1, "1"]
+    role = connection.select_value("SELECT current_user")
+    schema_name = connection.select_value("SELECT current_schema()")
+    privileges = {
+      "schema USAGE" => connection.select_value("SELECT has_schema_privilege(current_user, current_schema(), 'USAGE')"),
+      "schema CREATE" => connection.select_value("SELECT has_schema_privilege(current_user, current_schema(), 'CREATE')")
+    }
+
+    if schema_migrations_present
+      privileges.merge!(
+        "schema_migrations SELECT" => connection.select_value("SELECT has_table_privilege(current_user, 'schema_migrations', 'SELECT')"),
+        "schema_migrations INSERT" => connection.select_value("SELECT has_table_privilege(current_user, 'schema_migrations', 'INSERT')"),
+        "schema_migrations UPDATE" => connection.select_value("SELECT has_table_privilege(current_user, 'schema_migrations', 'UPDATE')"),
+        "schema_migrations DELETE" => connection.select_value("SELECT has_table_privilege(current_user, 'schema_migrations', 'DELETE')")
+      )
+    end
+
+    missing_privileges = privileges.filter_map do |label, value|
+      label unless truthy_values.include?(value)
+    end
+
+    if missing_privileges.any?
+      warn "Database migration access check failed for role #{role} on schema #{schema_name}."
+      warn "Missing privileges: #{missing_privileges.join(', ')}"
+      warn "The deploy database role must be able to manage schema_migrations before deploy:migrate can run."
+      exit 1
+    end
+
+    status = latest_version ? "latest migration #{latest_version}" : "schema_migrations not present yet"
+    puts "Connected as #{role} on schema #{schema_name}; #{status}."
+  else
+    status = latest_version ? "latest migration #{latest_version}" : "schema_migrations not present yet"
+    puts status
+  end
+rescue StandardError => error
+  warn "Database migration access check failed: #{error.class}: #{error.message.lines.first.to_s.strip}"
+  warn "The deploy database role must be able to read and update schema_migrations before deploy:migrate can run." if error.message.include?("schema_migrations")
+  exit 1
+end
+RUBY

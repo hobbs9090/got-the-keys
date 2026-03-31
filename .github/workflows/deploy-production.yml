@@ -150,6 +150,29 @@ jobs:
 
           echo "No GitHub production database secrets configured; deploy will use the local Postgres socket defaults for gotthekeys_production."
 
+      - name: Verify production database migration access
+        env:
+          RAILS_ENV: production
+          APP_HOST: ${{ inputs.app_host }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+          DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+          DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
+          DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          FORCE_SSL: ${{ vars.FORCE_SSL }}
+          ASSUME_SSL: ${{ vars.ASSUME_SSL }}
+          RAILS_LOG_LEVEL: ${{ vars.RAILS_LOG_LEVEL }}
+          ACTIVE_JOB_QUEUE_ADAPTER: ${{ vars.ACTIVE_JOB_QUEUE_ADAPTER }}
+          SMTP_ADDRESS: ${{ secrets.SMTP_ADDRESS }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_DOMAIN: ${{ secrets.SMTP_DOMAIN }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_AUTHENTICATION: ${{ vars.SMTP_AUTHENTICATION }}
+          SMTP_STARTTLS_AUTO: ${{ vars.SMTP_STARTTLS_AUTO }}
+        run: bin/check_database_migration_access
+
       - name: Deploy exact tested commit
         env:
           DEPLOY_SHA: ${{ steps.deploy_meta.outputs.sha }}
