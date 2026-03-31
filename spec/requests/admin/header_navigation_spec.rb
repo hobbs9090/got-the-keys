@@ -64,8 +64,9 @@ RSpec.describe "Admin header navigation" do
 
     actions_top = session_panel.at_css(".site-header__actions-top")
     expect(actions_top).to be_present
-    expect(child_testids(actions_top)).to eq(["admin-account-summary", "language-dropdown"])
+    expect(child_testids(actions_top)).to eq(["admin-account-summary", "language-dropdown", "theme-toggle"])
     expect(actions_top.at_css('[data-testid="language-dropdown"]')).to be_present
+    expect(actions_top.at_css('[data-testid="theme-toggle"]')).to be_present
 
     view_site_link = session_panel.at_css(".site-header__button-group a.button.primary.admin-topbar__action")
     expect(view_site_link).to be_present

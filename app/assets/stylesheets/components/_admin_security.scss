@@ -17,8 +17,8 @@
 }
 
 .admin-security-enrollment__qr {
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(20, 37, 63, 0.08);
+  background: var(--color-surface-strong);
+  border: 1px solid var(--color-panel-border);
   border-radius: var(--radius-md);
   display: grid;
   min-height: 14rem;
@@ -57,25 +57,29 @@
 }
 
 .admin-security-backup-codes__item {
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(20, 37, 63, 0.08);
+  background: var(--color-surface-strong);
+  border: 1px solid var(--color-panel-border);
   border-radius: var(--radius-md);
   padding: 0.85rem 1rem;
 }
 
 .admin-security-backup-codes__item code {
-  color: var(--color-foreground);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  color: var(--color-heading);
   display: block;
   font-size: 0.95rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   overflow-wrap: anywhere;
+  padding: 0;
 }
 
 .admin-two-factor-mode-panel__choice {
   align-items: flex-start;
-  background: rgba(20, 87, 214, 0.06);
-  border: 1px solid rgba(20, 87, 214, 0.12);
+  background: var(--color-primary-soft);
+  border: 1px solid rgba(20, 87, 214, 0.18);
   border-radius: var(--radius-md);
   display: flex;
   gap: 0.75rem;
@@ -85,6 +89,24 @@
 
 .admin-two-factor-mode-panel__choice input {
   margin-top: 0.2rem;
+}
+
+.callout.admin-two-factor-mode-panel__warning {
+  background-color: var(--color-surface-raised);
+  border: 1px solid color-mix(in srgb, var(--color-warning-soft) 44%, var(--color-panel-border-strong));
+  border-left: 0.35rem solid var(--color-warning);
+  border-radius: var(--radius-sm);
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.admin-two-factor-mode-panel__warning p {
+  color: var(--color-ink);
+  margin-bottom: 0;
+}
+
+.admin-two-factor-mode-panel__warning strong {
+  color: var(--color-warning);
 }
 
 @media screen and (max-width: 47.9375em) {
