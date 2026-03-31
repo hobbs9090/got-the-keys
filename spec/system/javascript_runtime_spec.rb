@@ -9,21 +9,6 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     expect(page).to have_css("html[data-theme-ready='true']", wait: 5)
   end
 
-  def dispatch_change_for_select(select_id, value)
-    page.execute_script(<<~JS)
-      const select = document.getElementById(#{select_id.to_json});
-      if (!select) return;
-
-      const option = Array.from(select.options).find((candidate) => candidate.value === #{value.to_json});
-      if (!option) return;
-
-      option.selected = true;
-      select.value = option.value;
-      select.dispatchEvent(new window.Event("input", { bubbles: true }));
-      select.dispatchEvent(new window.Event("change", { bubbles: true }));
-    JS
-  end
-
   def choose_theme_preference(label)
     value = label.downcase
 
@@ -44,6 +29,52 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
   def store_theme_preference(value)
     page.execute_script(<<~JS)
       window.localStorage.setItem("gotthekeys-theme-preference", #{value.to_json});
+    JS
+  end
+
+  def update_shared_search_filter_state(value)
+    page.evaluate_async_script(<<~JS, value)
+      const desiredValue = arguments[0];
+      const done = arguments[arguments.length - 1];
+      const select = document.getElementById("sale_status");
+      const minLabel = document.querySelector("label[for='min_price']");
+      const maxLabel = document.querySelector("label[for='max_price']");
+      const minInput = document.querySelector("[data-property-search-min-price-input]");
+      const maxInput = document.querySelector("[data-property-search-max-price-input]");
+
+      if (!select || !minLabel || !maxLabel || !minInput || !maxInput) {
+        done(null);
+        return;
+      }
+
+      const option = Array.from(select.options).find((candidate) => candidate.value === desiredValue);
+      if (!option) {
+        done({
+          selectedValue: select.value,
+          minLabel: minLabel.textContent.trim(),
+          maxLabel: maxLabel.textContent.trim(),
+          minPlaceholder: minInput.getAttribute("placeholder"),
+          maxPlaceholder: maxInput.getAttribute("placeholder")
+        });
+        return;
+      }
+
+      option.selected = true;
+      select.value = option.value;
+      select.dispatchEvent(new window.Event("input", { bubbles: true }));
+      select.dispatchEvent(new window.Event("change", { bubbles: true }));
+
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          done({
+            selectedValue: select.value,
+            minLabel: minLabel.textContent.trim(),
+            maxLabel: maxLabel.textContent.trim(),
+            minPlaceholder: minInput.getAttribute("placeholder"),
+            maxPlaceholder: maxInput.getAttribute("placeholder")
+          });
+        });
+      });
     JS
   end
 
@@ -143,19 +174,25 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     expect(page).to have_css("input[data-property-search-min-price-input][placeholder='250,000']")
     expect(page).to have_css("input[data-property-search-max-price-input][placeholder='1,000,000']")
 
-    dispatch_change_for_select("sale_status", "For Rent")
+    rental_state = update_shared_search_filter_state("For Rent")
 
-    expect(page).to have_css("label[for='min_price']", text: "Min monthly rental")
-    expect(page).to have_css("label[for='max_price']", text: "Max monthly rental")
-    expect(page).to have_css("input[data-property-search-min-price-input][placeholder='1,500']")
-    expect(page).to have_css("input[data-property-search-max-price-input][placeholder='10,000']")
+    expect(rental_state).to include(
+      "selectedValue" => "For Rent",
+      "minLabel" => "Min monthly rental",
+      "maxLabel" => "Max monthly rental",
+      "minPlaceholder" => "1,500",
+      "maxPlaceholder" => "10,000"
+    )
 
-    dispatch_change_for_select("sale_status", "For Sale")
+    sale_state = update_shared_search_filter_state("For Sale")
 
-    expect(page).to have_css("label[for='min_price']", text: "Min price")
-    expect(page).to have_css("label[for='max_price']", text: "Max price")
-    expect(page).to have_css("input[data-property-search-min-price-input][placeholder='250,000']")
-    expect(page).to have_css("input[data-property-search-max-price-input][placeholder='1,000,000']")
+    expect(sale_state).to include(
+      "selectedValue" => "For Sale",
+      "minLabel" => "Min price",
+      "maxLabel" => "Max price",
+      "minPlaceholder" => "250,000",
+      "maxPlaceholder" => "1,000,000"
+    )
   end
 
   it "persists the theme preference across public and admin pages" do
