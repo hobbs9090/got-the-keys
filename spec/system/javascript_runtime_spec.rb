@@ -140,22 +140,22 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
 
     expect(page).to have_css("label[for='min_price']", text: "Min price")
     expect(page).to have_css("label[for='max_price']", text: "Max price")
-    expect(page.evaluate_script("document.getElementById('min_price').placeholder")).to eq("250,000")
-    expect(page.evaluate_script("document.getElementById('max_price').placeholder")).to eq("1,000,000")
+    expect(page).to have_css("input[data-property-search-min-price-input][placeholder='250,000']")
+    expect(page).to have_css("input[data-property-search-max-price-input][placeholder='1,000,000']")
 
     dispatch_change_for_select("sale_status", "For Rent")
 
     expect(page).to have_css("label[for='min_price']", text: "Min monthly rental")
     expect(page).to have_css("label[for='max_price']", text: "Max monthly rental")
-    expect(page.evaluate_script("document.getElementById('min_price').placeholder")).to eq("1,500")
-    expect(page.evaluate_script("document.getElementById('max_price').placeholder")).to eq("10,000")
+    expect(page).to have_css("input[data-property-search-min-price-input][placeholder='1,500']")
+    expect(page).to have_css("input[data-property-search-max-price-input][placeholder='10,000']")
 
     dispatch_change_for_select("sale_status", "For Sale")
 
     expect(page).to have_css("label[for='min_price']", text: "Min price")
     expect(page).to have_css("label[for='max_price']", text: "Max price")
-    expect(page.evaluate_script("document.getElementById('min_price').placeholder")).to eq("250,000")
-    expect(page.evaluate_script("document.getElementById('max_price').placeholder")).to eq("1,000,000")
+    expect(page).to have_css("input[data-property-search-min-price-input][placeholder='250,000']")
+    expect(page).to have_css("input[data-property-search-max-price-input][placeholder='1,000,000']")
   end
 
   it "persists the theme preference across public and admin pages" do
