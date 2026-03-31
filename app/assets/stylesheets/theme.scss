@@ -1815,6 +1815,14 @@ a:focus {
   gap: 1.25rem;
 }
 
+.property-catalogue__sidebar {
+  align-self: start;
+  position: sticky;
+  top: 6.5rem;
+  max-height: calc(100vh - 7.5rem);
+  overflow-y: auto;
+}
+
 .property-results-stack {
   display: grid;
   gap: 1rem;
@@ -1827,8 +1835,7 @@ a:focus {
 }
 
 .property-catalogue__filters {
-  position: sticky;
-  top: 6.5rem;
+  background-color: rgba(255, 255, 255, 0.98);
 }
 
 .property-catalogue__filters h2,
@@ -2706,7 +2713,9 @@ a:focus {
     top: auto;
   }
 
-  .property-catalogue__filters {
+  .property-catalogue__sidebar {
+    max-height: none;
+    overflow: visible;
     position: static;
     top: auto;
   }

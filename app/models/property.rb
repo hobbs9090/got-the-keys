@@ -66,6 +66,7 @@ class Property < ApplicationRecord
   before_validation :clear_furnishing_for_sale_listings
   validate :refurbished_year_not_before_year_built
   validate :image_upload_is_jpeg
+  validate :prevent_duplicate_exact_address
   after_destroy_commit :remove_uploaded_image_file
 
   scope :for_sale, -> { where(sale_status: SALE_STATUSES[:for_sale]) }
@@ -394,5 +395,35 @@ class Property < ApplicationRecord
     return if refurbished_year >= year_built
 
     errors.add(:refurbished_year, "must be greater than or equal to the year built")
+  end
+
+  def prevent_duplicate_exact_address
+    return if address_line_1.blank? || postcode.blank? || country.blank?
+
+    duplicate_scope = self.class.where(
+      <<~SQL.squish,
+        LOWER(TRIM(address_line_1)) = :address_line_1
+        AND LOWER(TRIM(COALESCE(address_line_2, ''))) = :address_line_2
+        AND REPLACE(LOWER(postcode), ' ', '') = :postcode
+        AND LOWER(TRIM(country)) = :country
+      SQL
+      address_line_1: normalized_address_component(address_line_1),
+      address_line_2: normalized_address_component(address_line_2),
+      postcode: normalized_postcode(postcode),
+      country: normalized_address_component(country)
+    )
+
+    duplicate_scope = duplicate_scope.where.not(id: id) if persisted?
+    return unless duplicate_scope.exists?
+
+    errors.add(:address_line_1, "has already been listed for this address")
+  end
+
+  def normalized_address_component(value)
+    value.to_s.strip.downcase
+  end
+
+  def normalized_postcode(value)
+    value.to_s.gsub(/\s+/, "").downcase
   end
 end

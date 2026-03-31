@@ -159,12 +159,16 @@ it:
         min_bedrooms: Camere minime
         min_price: Prezzo minimo
         max_price: Prezzo massimo
+        min_monthly_rental: Affitto mensile minimo
+        max_monthly_rental: Affitto mensile massimo
         sort: Ordina
         apply: Applica filtri
         search_chip: 'Ricerca: %{query}'
         min_bedrooms_chip: "%{count}+ camere"
         min_price_chip: Da %{price}
         max_price_chip: Fino a %{price}
+        min_monthly_rental_chip: Affitto mensile da %{price}
+        max_monthly_rental_chip: Affitto mensile fino a %{price}
         sort_options:
           recommended: Consigliato
           newest: Piu recenti prima

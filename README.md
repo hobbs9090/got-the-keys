@@ -134,12 +134,12 @@ The script now defaults to a narrower portrait viewport so the README images sho
   Docker deployment guide for running the app behind an existing Apache + Let's Encrypt Linux VM edge with PostgreSQL.
 - `docs/BACKGROUND_JOB_POLICY.md`
   Explicit rules for what background work is safe on the current `:async` setup and when to revisit a durable backend.
-- `docs/MODERNIZATION_AUDIT.md`
-  Recommended modernization sequence for jobs, frontend stack, CSS/view components, and deployment posture.
+- `docs/completed/MODERNIZATION_AUDIT.md`
+  Completed modernization record for jobs, frontend stack, CSS/view components, and deployment posture.
 - `docs/CODEX_EXPANSION_PLAN.md`
   Phased product and QA-harness growth plan for making the app feel more like a credible sales and lettings platform.
-- `docs/PRE_EXTENSION_CHECKLIST.md`
-  Actionable checklist to complete before a major new extension phase.
+- `docs/completed/PRE_EXTENSION_CHECKLIST.md`
+  Completed pre-extension checklist covering the cleanup pass before the next major feature wave.
 - `docs/BOOKING_ARCHITECTURE.md`
   Small architecture map for the booking domain, including core records, flow ownership, and extension seams.
 - `docs/SURFACE_INVENTORY.md`

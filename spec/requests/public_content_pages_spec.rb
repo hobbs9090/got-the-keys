@@ -1,6 +1,18 @@
 require "rails_helper"
 
 RSpec.describe "Public content pages", type: :request do
+  def parsed_html
+    Nokogiri::HTML(response.body)
+  end
+
+  def label_text(for_id)
+    parsed_html.at_css(%(label[for="#{for_id}"]))&.text&.strip
+  end
+
+  def input_placeholder(field_id)
+    parsed_html.at_css(%(input##{field_id}))&.[]("placeholder")
+  end
+
   pages = [
     { description: "search", path: "/searches", text: "Search listings and booking availability together" },
     { description: "legal", path: "/legal", text: "A plain-English summary of the key terms and responsibilities that apply when you use the site." },
@@ -77,5 +89,31 @@ RSpec.describe "Public content pages", type: :request do
       expect(document.css(".property-results-stack > .property-results-pagination").count).to eq(2)
       expect(document.at_css(".site-card.property-results-panel .pagination")).not_to be_present
     end
+  end
+
+  it "uses monthly rental labels on rent-only search forms and generic price labels elsewhere" do
+    get searches_path
+    expect(label_text("min_price")).to eq(I18n.t("ui.properties.filters.min_price"))
+    expect(label_text("max_price")).to eq(I18n.t("ui.properties.filters.max_price"))
+    expect(input_placeholder("min_price")).to eq("250,000")
+    expect(input_placeholder("max_price")).to eq("1,000,000")
+
+    get searches_path, params: { sale_status: Property::SALE_STATUSES[:for_rent] }
+    expect(label_text("min_price")).to eq(I18n.t("ui.properties.filters.min_monthly_rental"))
+    expect(label_text("max_price")).to eq(I18n.t("ui.properties.filters.max_monthly_rental"))
+    expect(input_placeholder("min_price")).to eq("1,500")
+    expect(input_placeholder("max_price")).to eq("10,000")
+
+    get for_sale_index_path
+    expect(label_text("min_price")).to eq(I18n.t("ui.properties.filters.min_price"))
+    expect(label_text("max_price")).to eq(I18n.t("ui.properties.filters.max_price"))
+    expect(input_placeholder("min_price")).to eq("250,000")
+    expect(input_placeholder("max_price")).to eq("1,000,000")
+
+    get for_rent_index_path
+    expect(label_text("min_price")).to eq(I18n.t("ui.properties.filters.min_monthly_rental"))
+    expect(label_text("max_price")).to eq(I18n.t("ui.properties.filters.max_monthly_rental"))
+    expect(input_placeholder("min_price")).to eq("1,500")
+    expect(input_placeholder("max_price")).to eq("10,000")
   end
 end

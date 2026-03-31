@@ -48,8 +48,8 @@ RSpec.describe PropertyCatalogueQuery do
       params: {
         q: "Harbour",
         min_bedrooms: "3",
-        min_price: "500000",
-        max_price: "800000",
+        min_price: "500,000",
+        max_price: "800,000",
         town_city: "Sevenoaks",
         sort: "price_high"
       }

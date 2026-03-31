@@ -66,6 +66,45 @@ describe "A property" do
     expect(property.errors[:address_line_1].first).to eq("can't be blank")
   end
 
+  it "rejects a duplicate property at the same address" do
+    FactoryBot.create(
+      :property,
+      user:,
+      address_line_1: "24 Cedar Road",
+      address_line_2: nil,
+      postcode: "TN13 1AA",
+      country: "United Kingdom"
+    )
+
+    duplicate = build_property(
+      address_line_1: " 24 cedar road ",
+      address_line_2: "",
+      postcode: "TN13   1AA",
+      country: " united kingdom "
+    )
+
+    expect(duplicate.valid?).to be false
+    expect(duplicate.errors[:address_line_1]).to include("has already been listed for this address")
+  end
+
+  it "allows matching first address lines when the second address line is different" do
+    FactoryBot.create(
+      :property,
+      user:,
+      address_line_1: "Orchard House",
+      address_line_2: "Flat 1",
+      postcode: "TN16 1ET"
+    )
+
+    property = build_property(
+      address_line_1: "Orchard House",
+      address_line_2: "Flat 2",
+      postcode: "TN16 1ET"
+    )
+
+    expect(property.valid?).to be true
+  end
+
   it "requires a Town or City" do
     property = build_property(town_city: "")
 

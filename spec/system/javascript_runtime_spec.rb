@@ -72,4 +72,31 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     expect(page).to have_css("[data-property-furnishing-field][hidden]", visible: false)
     expect(page.evaluate_script("document.getElementById('property_furnishing').disabled")).to be(true)
   end
+
+  it "updates price filter labels when the shared search switches to rentals" do
+    visit searches_path
+    click_button "Reject non-essential" if page.has_button?("Reject non-essential", wait: 1)
+    expect(page).to have_css("[data-property-search-filters-ready='true']")
+
+    expect(page).to have_css("label[for='min_price']", text: "Min price")
+    expect(page).to have_css("label[for='max_price']", text: "Max price")
+    expect(page.evaluate_script("document.getElementById('min_price').placeholder")).to eq("250,000")
+    expect(page.evaluate_script("document.getElementById('max_price').placeholder")).to eq("1,000,000")
+
+    select "For Rent", from: "sale_status"
+    expect(page).to have_select("sale_status", selected: "For Rent")
+
+    expect(page.evaluate_script("document.querySelector(\"label[for='min_price']\").textContent")).to eq("Min monthly rental")
+    expect(page.evaluate_script("document.querySelector(\"label[for='max_price']\").textContent")).to eq("Max monthly rental")
+    expect(page.evaluate_script("document.getElementById('min_price').placeholder")).to eq("1,500")
+    expect(page.evaluate_script("document.getElementById('max_price').placeholder")).to eq("10,000")
+
+    select "For Sale", from: "sale_status"
+    expect(page).to have_select("sale_status", selected: "For Sale")
+
+    expect(page.evaluate_script("document.querySelector(\"label[for='min_price']\").textContent")).to eq("Min price")
+    expect(page.evaluate_script("document.querySelector(\"label[for='max_price']\").textContent")).to eq("Max price")
+    expect(page.evaluate_script("document.getElementById('min_price').placeholder")).to eq("250,000")
+    expect(page.evaluate_script("document.getElementById('max_price').placeholder")).to eq("1,000,000")
+  end
 end

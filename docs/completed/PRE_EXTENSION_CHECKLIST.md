@@ -141,7 +141,7 @@ Treat the app as ready for major extension when all of these are true:
 - `config/environments/`
 - `docs/BACKGROUND_JOB_POLICY.md`
 - `docs/NIRVANA_DEPLOYMENT.md`
-- `docs/MODERNIZATION_AUDIT.md`
+- `docs/completed/MODERNIZATION_AUDIT.md`
 
 ### Done When
 

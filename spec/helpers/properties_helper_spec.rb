@@ -48,4 +48,17 @@ RSpec.describe PropertiesHelper, type: :helper do
       expect(facts).to include(["Built", 1998], ["Last refurbished", 2022])
     end
   end
+
+  describe "#property_filter_chip_labels" do
+    it "uses monthly rental copy for rent filters" do
+      chips = helper.property_filter_chip_labels(
+        sale_status: Property::SALE_STATUSES[:for_rent],
+        min_price: 1_500,
+        max_price: 2_500
+      )
+
+      expect(chips).to include("Monthly rent from \u00A3#{1_500.to_fs(:delimited)}")
+      expect(chips).to include("Monthly rent up to \u00A3#{2_500.to_fs(:delimited)}")
+    end
+  end
 end
