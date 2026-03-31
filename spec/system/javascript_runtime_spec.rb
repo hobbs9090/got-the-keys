@@ -14,7 +14,12 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       const select = document.getElementById(#{select_id.to_json});
       if (!select) return;
 
-      select.value = #{value.to_json};
+      const option = Array.from(select.options).find((candidate) => candidate.value === #{value.to_json});
+      if (!option) return;
+
+      option.selected = true;
+      select.value = option.value;
+      select.dispatchEvent(new window.Event("input", { bubbles: true }));
       select.dispatchEvent(new window.Event("change", { bubbles: true }));
     JS
   end
@@ -129,17 +134,17 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
 
     dispatch_change_for_select("sale_status", "For Rent")
 
-    expect(page.evaluate_script("document.querySelector(\"label[for='min_price']\").textContent")).to eq("Min monthly rental")
-    expect(page.evaluate_script("document.querySelector(\"label[for='max_price']\").textContent")).to eq("Max monthly rental")
-    expect(page.evaluate_script("document.getElementById('min_price').placeholder")).to eq("1,500")
-    expect(page.evaluate_script("document.getElementById('max_price').placeholder")).to eq("10,000")
+    expect(page).to have_css("label[for='min_price']", text: "Min monthly rental")
+    expect(page).to have_css("label[for='max_price']", text: "Max monthly rental")
+    expect(page).to have_field("min_price", placeholder: "1,500")
+    expect(page).to have_field("max_price", placeholder: "10,000")
 
     dispatch_change_for_select("sale_status", "For Sale")
 
-    expect(page.evaluate_script("document.querySelector(\"label[for='min_price']\").textContent")).to eq("Min price")
-    expect(page.evaluate_script("document.querySelector(\"label[for='max_price']\").textContent")).to eq("Max price")
-    expect(page.evaluate_script("document.getElementById('min_price').placeholder")).to eq("250,000")
-    expect(page.evaluate_script("document.getElementById('max_price').placeholder")).to eq("1,000,000")
+    expect(page).to have_css("label[for='min_price']", text: "Min price")
+    expect(page).to have_css("label[for='max_price']", text: "Max price")
+    expect(page).to have_field("min_price", placeholder: "250,000")
+    expect(page).to have_field("max_price", placeholder: "1,000,000")
   end
 
   it "persists the theme preference across public and admin pages" do
