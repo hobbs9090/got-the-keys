@@ -89,11 +89,11 @@ module PropertiesHelper
     AppSettings.primary_branch_profile
   end
 
-  def property_trust_cues(property)
+  def property_trust_cues(property, include_response_time: true)
     cues = []
     cues << t("ui.properties.trust_cues.recently_updated") if property.recently_updated?
     cues << t("ui.properties.trust_cues.available_now") if property.available_now?
-    cues << primary_branch_profile.fetch(:response_time)
+    cues << primary_branch_profile.fetch(:response_time) if include_response_time
     cues << t("ui.properties.trust_cues.brochure_ready") if property.public_documents.any?
     cues.uniq
   end

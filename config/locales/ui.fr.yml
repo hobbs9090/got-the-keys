@@ -154,6 +154,7 @@ fr:
         local_team_eyebrow: Equipe locale
       filters:
         listing_type: Type d'annonce
+        all_properties: Tous les biens
         all_listings: Toutes les annonces
         query_label: Zone, code postal ou mot-cle
         query_placeholder: Essayez Sevenoaks, TN13 ou garden

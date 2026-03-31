@@ -151,6 +151,7 @@ it:
         local_team_eyebrow: Team locale
       filters:
         listing_type: Tipo di annuncio
+        all_properties: Tutti gli immobili
         all_listings: Tutti gli annunci
         query_label: Area, CAP o parola chiave
         query_placeholder: Prova Sevenoaks, TN13 o garden

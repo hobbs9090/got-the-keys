@@ -1,8 +1,9 @@
 <%= form_with url: url, method: :get, class: "property-filters", local: true, data: { testid: "property-filter-form" } do %>
   <% if show_status_select %>
+    <% listing_type_blank_label = local_assigns.fetch(:listing_type_blank_label, t("ui.properties.filters.all_listings")) %>
     <div>
       <%= label_tag :sale_status, t("ui.properties.filters.listing_type") %>
-      <%= select_tag :sale_status, options_for_select(property_sale_status_options, selected_sale_status), include_blank: t("ui.properties.filters.all_listings") %>
+      <%= select_tag :sale_status, options_for_select(property_sale_status_options, selected_sale_status), include_blank: listing_type_blank_label %>
     </div>
   <% else %>
     <%= hidden_field_tag :sale_status, selected_sale_status %>

@@ -72,6 +72,20 @@ RSpec.describe "Header account details", type: :request do
     expect(active_link["href"]).to eq(searches_path)
   end
 
+  it "defaults the searches listing type filter to all properties" do
+    get searches_path
+
+    expect(response).to have_http_status(:ok)
+
+    search_filter = parsed_html.at_css('select[name="sale_status"]')
+    first_option = search_filter.at_css("option:first-child")
+
+    expect(search_filter).to be_present
+    expect(first_option["value"]).to eq("")
+    expect(first_option.text.strip).to eq(I18n.t("ui.properties.filters.all_properties"))
+    expect(search_filter.at_css("option[selected]")).not_to be_present
+  end
+
   it "marks the homepage shell when arriving from the admin area" do
     get root_path, headers: { "HTTP_REFERER" => admin_root_url }
 
