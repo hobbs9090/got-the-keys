@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main ]
 
 permissions:
   contents: read
@@ -28,7 +28,7 @@ jobs:
 
       - name: Set up GitHub Pages
         id: pages_config
-        if: ${{ github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'master') }}
+        if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
         continue-on-error: true
         uses: actions/configure-pages@v5
 
@@ -102,13 +102,13 @@ jobs:
           if-no-files-found: warn
 
       - name: Upload GitHub Pages artifact
-        if: ${{ always() && steps.pages_config.outcome == 'success' && steps.allure_report.outputs.present == 'true' && github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'master') }}
+        if: ${{ always() && steps.pages_config.outcome == 'success' && steps.allure_report.outputs.present == 'true' && github.event_name == 'push' && github.ref_name == 'main' }}
         uses: actions/upload-pages-artifact@v4
         with:
           path: tmp/allure-report
 
   deploy-rspec-report:
-    if: ${{ always() && github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'master') && needs.test.outputs.allure_report_present == 'true' && needs.test.outputs.pages_enabled == 'true' && needs.test.result != 'cancelled' }}
+    if: ${{ always() && github.event_name == 'push' && github.ref_name == 'main' && needs.test.outputs.allure_report_present == 'true' && needs.test.outputs.pages_enabled == 'true' && needs.test.result != 'cancelled' }}
     needs: test
     runs-on: ubuntu-latest
     permissions:
