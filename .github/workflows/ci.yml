@@ -13,6 +13,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     outputs:
       allure_report_present: ${{ steps.allure_report.outputs.present }}
       pages_enabled: ${{ steps.pages_config.outcome == 'success' }}

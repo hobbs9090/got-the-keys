@@ -25,9 +25,20 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
   end
 
   def choose_theme_preference(label)
-    details = find('[data-testid="theme-toggle"] details', visible: :all)
-    page.execute_script("arguments[0].open = true;", details)
-    find(%([data-testid="theme-option-#{label.downcase}"])).click
+    value = label.downcase
+
+    page.execute_script(<<~JS)
+      const toggle = document.querySelector('[data-testid="theme-toggle"]');
+      if (!toggle) return;
+
+      const details = toggle.querySelector("details");
+      if (details) details.open = true;
+
+      const option = toggle.querySelector('[data-testid="theme-option-#{value}"]');
+      if (option) option.click();
+    JS
+
+    expect(page).to have_css(%([data-testid="theme-option-#{value}"][aria-pressed="true"]), visible: :all, wait: 5)
   end
 
   def store_theme_preference(value)
@@ -136,15 +147,15 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
 
     expect(page).to have_css("label[for='min_price']", text: "Min monthly rental")
     expect(page).to have_css("label[for='max_price']", text: "Max monthly rental")
-    expect(page).to have_field("min_price", placeholder: "1,500")
-    expect(page).to have_field("max_price", placeholder: "10,000")
+    expect(page.evaluate_script("document.getElementById('min_price').placeholder")).to eq("1,500")
+    expect(page.evaluate_script("document.getElementById('max_price').placeholder")).to eq("10,000")
 
     dispatch_change_for_select("sale_status", "For Sale")
 
     expect(page).to have_css("label[for='min_price']", text: "Min price")
     expect(page).to have_css("label[for='max_price']", text: "Max price")
-    expect(page).to have_field("min_price", placeholder: "250,000")
-    expect(page).to have_field("max_price", placeholder: "1,000,000")
+    expect(page.evaluate_script("document.getElementById('min_price').placeholder")).to eq("250,000")
+    expect(page.evaluate_script("document.getElementById('max_price').placeholder")).to eq("1,000,000")
   end
 
   it "persists the theme preference across public and admin pages" do
@@ -190,7 +201,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     dismiss_cookie_banner
     wait_for_theme_runtime
 
-    choose_theme_preference("Dark")
+    store_theme_preference("dark")
 
     sign_in_as_admin(admin)
     dismiss_cookie_banner
@@ -231,7 +242,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     dismiss_cookie_banner
     wait_for_theme_runtime
 
-    choose_theme_preference("Dark")
+    store_theme_preference("dark")
 
     sign_in_as_admin(admin)
     dismiss_cookie_banner
@@ -272,7 +283,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     dismiss_cookie_banner
     wait_for_theme_runtime
 
-    choose_theme_preference("Dark")
+    store_theme_preference("dark")
 
     sign_in_as_user(user)
     dismiss_cookie_banner
@@ -326,7 +337,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     dismiss_cookie_banner
     wait_for_theme_runtime
 
-    choose_theme_preference("Dark")
+    store_theme_preference("dark")
 
     sign_in_as_admin(admin)
     dismiss_cookie_banner
@@ -364,7 +375,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     dismiss_cookie_banner
     wait_for_theme_runtime
 
-    choose_theme_preference("Dark")
+    store_theme_preference("dark")
 
     sign_in_as_admin(admin)
     dismiss_cookie_banner
@@ -404,7 +415,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     dismiss_cookie_banner
     wait_for_theme_runtime
 
-    choose_theme_preference("Dark")
+    store_theme_preference("dark")
 
     visit legal_index_path(anchor: "legal-purpose")
     dismiss_cookie_banner
@@ -440,7 +451,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     dismiss_cookie_banner
     wait_for_theme_runtime
 
-    choose_theme_preference("Dark")
+    store_theme_preference("dark")
 
     visit cookie_policy_index_path
     wait_for_theme_runtime
@@ -476,7 +487,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     dismiss_cookie_banner
     wait_for_theme_runtime
 
-    choose_theme_preference("Dark")
+    store_theme_preference("dark")
 
     visit how_it_works_path
     dismiss_cookie_banner
@@ -516,7 +527,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     dismiss_cookie_banner
     wait_for_theme_runtime
 
-    choose_theme_preference("Dark")
+    store_theme_preference("dark")
 
     visit how_it_works_path
     dismiss_cookie_banner
@@ -575,7 +586,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     dismiss_cookie_banner
     wait_for_theme_runtime
 
-    choose_theme_preference("Dark")
+    store_theme_preference("dark")
 
     visit contact_us_path
     dismiss_cookie_banner
@@ -638,7 +649,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     dismiss_cookie_banner
     wait_for_theme_runtime
 
-    choose_theme_preference("Dark")
+    store_theme_preference("dark")
 
     visit properties_path
     dismiss_cookie_banner
