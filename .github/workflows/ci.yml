@@ -106,13 +106,13 @@ jobs:
           if-no-files-found: warn
 
       - name: Upload GitHub Pages artifact
-        if: ${{ always() && steps.pages_config.outcome == 'success' && steps.allure_report.outputs.present == 'true' && github.event_name == 'push' && github.ref_name == 'main' }}
+        if: ${{ success() && steps.pages_config.outcome == 'success' && steps.allure_report.outputs.present == 'true' && github.event_name == 'push' && github.ref_name == 'main' }}
         uses: actions/upload-pages-artifact@v4
         with:
           path: tmp/allure-report
 
   deploy-rspec-report:
-    if: ${{ always() && github.event_name == 'push' && github.ref_name == 'main' && needs.test.outputs.allure_report_present == 'true' && needs.test.outputs.pages_enabled == 'true' && needs.test.result != 'cancelled' }}
+    if: ${{ github.event_name == 'push' && github.ref_name == 'main' && needs.test.result == 'success' && needs.test.outputs.allure_report_present == 'true' && needs.test.outputs.pages_enabled == 'true' }}
     needs: test
     runs-on: ubuntu-latest
     permissions:
