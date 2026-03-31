@@ -26,7 +26,10 @@ if [ -n "$DEPLOY_HOST_KEY" ]; then
   printf '%s\n' "$DEPLOY_HOST_KEY" >> "$KNOWN_HOSTS_PATH"
 else
   echo "Refreshing SSH host key for $DEPLOY_HOST:$DEPLOY_PORT via ssh-keyscan"
-  scanned_key="$(ssh-keyscan -H -p "$DEPLOY_PORT" "$DEPLOY_HOST" 2>/dev/null || true)"
+  # Keep plain host entries here. SSHKit's known_hosts parser only returns the
+  # first hashed match for a host, which can make Capistrano reject the server
+  # if sshd presents a different key type first.
+  scanned_key="$(ssh-keyscan -p "$DEPLOY_PORT" "$DEPLOY_HOST" 2>/dev/null || true)"
 
   if [ -z "$scanned_key" ]; then
     echo "ssh-keyscan did not return a host key for $DEPLOY_HOST:$DEPLOY_PORT" >&2

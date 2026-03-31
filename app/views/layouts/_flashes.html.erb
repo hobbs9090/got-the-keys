@@ -1,4 +1,5 @@
-<% visible_flashes = flash.to_hash.reject { |key, _value| key.to_s == "admin_security_backup_codes" } %>
+<% hidden_flash_keys = %w[admin_security_backup_codes timedout] %>
+<% visible_flashes = flash.to_hash.reject { |key, _value| hidden_flash_keys.include?(key.to_s) } %>
 <% if visible_flashes.any? %>
   <div class="flash-stack" data-testid="flash-stack">
     <% visible_flashes.each do |key, value| %>
