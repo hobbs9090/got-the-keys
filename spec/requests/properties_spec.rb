@@ -77,6 +77,35 @@ describe "Properties" do
       expect(response.body).not_to include("Excluded Rental")
     end
 
+    it "parses comma-formatted price filters" do
+      matching = FactoryBot.create(
+        :property,
+        user:,
+        address_line_1: "Comma Filter House",
+        asking_price: 650_000,
+        sale_status: Property::SALE_STATUSES[:for_sale]
+      )
+      FactoryBot.create(
+        :property,
+        user:,
+        address_line_1: "Outside Price Range",
+        asking_price: 825_000,
+        sale_status: Property::SALE_STATUSES[:for_sale]
+      )
+
+      get properties_path, params: {
+        sale_status: Property::SALE_STATUSES[:for_sale],
+        min_price: "600,000",
+        max_price: "700,000"
+      }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(matching.address_line_1)
+      expect(response.body).not_to include("Outside Price Range")
+      expect(response.body).to include(%(value="600,000"))
+      expect(response.body).to include(%(value="700,000"))
+    end
+
     it "shows image-backed listings first in the default catalogue order" do
       image_backed = FactoryBot.create(:property, user:, address_line_1: "Image Backed Place", featured: false)
       text_only = FactoryBot.create(:property, user:, address_line_1: "Text Only Place", featured: false)
@@ -166,11 +195,14 @@ describe "Properties" do
       expect(results_panel.at_css(".pagination")).not_to be_present
     end
 
-    it "keeps the filter card sticky without pinning the whole catalogue sidebar" do
+    it "keeps the catalogue sidebar sticky as one stack on larger screens" do
       stylesheet = Rails.root.join("app/assets/stylesheets/theme.scss").read
 
       expect(stylesheet).to match(
-        /\.property-catalogue__filters\s*\{[^}]*position:\s*sticky;[^}]*top:\s*6\.5rem;/m
+        /\.property-catalogue__sidebar\s*\{[^}]*position:\s*sticky;[^}]*top:\s*6\.5rem;[^}]*max-height:\s*calc\(100vh - 7\.5rem\);[^}]*overflow-y:\s*auto;/m
+      )
+      expect(stylesheet).to match(
+        /\.property-catalogue__filters\s*\{[^}]*background-color:\s*rgba\(255,\s*255,\s*255,\s*0\.98\);/m
       )
     end
 

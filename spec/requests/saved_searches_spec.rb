@@ -21,8 +21,8 @@ RSpec.describe "Saved searches", type: :request do
           search_query: "family home",
           town_city: "Sevenoaks",
           min_bedrooms: 3,
-          min_price: 600_000,
-          max_price: 700_000,
+          min_price: "600,000",
+          max_price: "700,000",
           sort: "recommended",
           alerts_enabled: "1"
         }
@@ -31,6 +31,8 @@ RSpec.describe "Saved searches", type: :request do
 
     expect(response).to redirect_to(properties_path(q: "family home", sale_status: Property::SALE_STATUSES[:for_sale], town_city: "Sevenoaks", min_bedrooms: 3, min_price: 600_000, max_price: 700_000, sort: "recommended"))
     expect(flash[:notice]).to include("1 matching listing")
+    expect(SavedSearch.last.min_price).to eq(600_000)
+    expect(SavedSearch.last.max_price).to eq(700_000)
     expect(matching_property).to be_present
   end
 end

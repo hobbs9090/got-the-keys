@@ -36,6 +36,16 @@ class PropertyCatalogueQuery
         value.to_h
       end
 
-    source.with_indifferent_access
+    source.with_indifferent_access.tap do |normalized|
+      %i[min_price max_price].each do |key|
+        next unless normalized.key?(key)
+
+        normalized[key] = normalize_price_filter(normalized[key])
+      end
+    end
+  end
+
+  def normalize_price_filter(value)
+    value.to_s.gsub(/[,\s]/, "").presence
   end
 end

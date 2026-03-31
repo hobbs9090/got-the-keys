@@ -81,6 +81,10 @@ module PropertiesHelper
     t("ui.properties.filters.sort_options.#{sort.presence || 'recommended'}")
   end
 
+  def property_filter_price_label(bound, sale_status = nil)
+    t(property_filter_price_translation_key(bound, sale_status))
+  end
+
   def property_location_label(property)
     t("ui.properties.in_location", property_type: property.property_type, location: property.location_line)
   end
@@ -117,11 +121,11 @@ module PropertiesHelper
     chips << filters[:town_city] if filters[:town_city].present?
     chips << t("ui.properties.filters.min_bedrooms_chip", count: filters[:min_bedrooms]) if filters[:min_bedrooms].present?
     chips << t(
-      "ui.properties.filters.min_price_chip",
+      property_filter_price_translation_key(:min, filters[:sale_status], suffix: :chip),
       price: number_to_currency(filters[:min_price], unit: '£', precision: 0)
     ) if filters[:min_price].present?
     chips << t(
-      "ui.properties.filters.max_price_chip",
+      property_filter_price_translation_key(:max, filters[:sale_status], suffix: :chip),
       price: number_to_currency(filters[:max_price], unit: '£', precision: 0)
     ) if filters[:max_price].present?
 
@@ -182,6 +186,19 @@ module PropertiesHelper
   end
 
   private
+
+  def property_filter_price_translation_key(bound, sale_status, suffix: nil)
+    normalized_bound = bound.to_s
+    normalized_suffix = suffix.present? ? "_#{suffix}" : ""
+    base_key =
+      if sale_status == Property::SALE_STATUSES[:for_rent]
+        "#{normalized_bound}_monthly_rental"
+      else
+        "#{normalized_bound}_price"
+      end
+
+    "ui.properties.filters.#{base_key}#{normalized_suffix}"
+  end
 
   def listing_image_tag(image_name, class_name:, alt:)
     retina_name = listing_retina_image_name(image_name)

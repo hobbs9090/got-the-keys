@@ -148,12 +148,16 @@ zh:
         min_bedrooms: 最少卧室
         min_price: 最低价格
         max_price: 最高价格
+        min_monthly_rental: 最低月租
+        max_monthly_rental: 最高月租
         sort: 排序
         apply: 应用筛选
         search_chip: 搜索：%{query}
         min_bedrooms_chip: "%{count}+ 间卧室"
         min_price_chip: "%{price} 起"
         max_price_chip: 最高 %{price}
+        min_monthly_rental_chip: 月租 %{price} 起
+        max_monthly_rental_chip: 月租最高 %{price}
         sort_options:
           recommended: 推荐
           newest: 最新优先

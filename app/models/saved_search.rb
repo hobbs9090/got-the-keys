@@ -1,4 +1,12 @@
 class SavedSearch < ApplicationRecord
+  def min_price=(value)
+    super(normalize_price_value(value))
+  end
+
+  def max_price=(value)
+    super(normalize_price_value(value))
+  end
+
   validates :email, :locale, presence: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :sale_status, inclusion: { in: Property::SALE_STATUS }, allow_blank: true
@@ -37,5 +45,9 @@ class SavedSearch < ApplicationRecord
     return if max_price >= min_price
 
     errors.add(:max_price, I18n.t("ui.saved_searches.validation.max_price"))
+  end
+
+  def normalize_price_value(value)
+    value.to_s.gsub(/[,\s]/, "").presence
   end
 end

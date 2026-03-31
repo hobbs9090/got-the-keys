@@ -159,12 +159,16 @@ de:
         min_bedrooms: Min. Schlafzimmer
         min_price: Mindestpreis
         max_price: Höchstpreis
+        min_monthly_rental: Mindestmiete pro Monat
+        max_monthly_rental: Höchstmiete pro Monat
         sort: Sortierung
         apply: Filter anwenden
         search_chip: 'Suche: %{query}'
         min_bedrooms_chip: "%{count}+ Schlafzimmer"
         min_price_chip: Ab %{price}
         max_price_chip: Bis %{price}
+        min_monthly_rental_chip: Monatsmiete ab %{price}
+        max_monthly_rental_chip: Monatsmiete bis %{price}
         sort_options:
           recommended: Empfohlen
           newest: Neueste zuerst

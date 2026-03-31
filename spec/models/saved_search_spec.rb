@@ -11,6 +11,14 @@ RSpec.describe SavedSearch do
     )
   end
 
+  it "strips commas from saved price filters before validation" do
+    search = FactoryBot.build(:saved_search, min_price: "600,000", max_price: "700,000")
+
+    expect(search).to be_valid
+    expect(search.min_price).to eq(600_000)
+    expect(search.max_price).to eq(700_000)
+  end
+
   it "rejects inverted price bounds" do
     search = FactoryBot.build(:saved_search, min_price: 600_000, max_price: 400_000)
 
