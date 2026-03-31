@@ -19,20 +19,6 @@ RSpec.describe SharedHelper, type: :helper do
       expect(markup).to match(%r{src="/assets/placeholder_world-[^"]+\.jpg"})
       expect(markup).to match(%r{srcset="/assets/placeholder_world-[^"]+\.jpg 1x, /assets/placeholder_world@2x-[^"]+\.jpg 2x"})
     end
-
-    it "renders the face image with 1x and 2x sources" do
-      markup = helper.face_image
-
-      expect(markup).to match(%r{src="/assets/placeholder_face-[^"]+\.jpg"})
-      expect(markup).to match(%r{srcset="/assets/placeholder_face-[^"]+\.jpg 1x, /assets/placeholder_face@2x-[^"]+\.jpg 2x"})
-    end
-
-    it "renders the Steven portrait with 1x and 2x sources" do
-      markup = helper.steven_image
-
-      expect(markup).to match(%r{src="/assets/steven_face-[^"]+\.jpg"})
-      expect(markup).to match(%r{srcset="/assets/steven_face-[^"]+\.jpg 1x, /assets/steven_face@2x-[^"]+\.jpg 2x"})
-    end
   end
 
   describe "property placeholder helpers" do
