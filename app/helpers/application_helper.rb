@@ -159,6 +159,23 @@ module ApplicationHelper
     image_tag(source, **image_options)
   end
 
+  def native_validation_messages
+    {
+      invalid: t("ui.validation.invalid"),
+      required: t("ui.validation.required"),
+      option_required: t("ui.validation.option_required"),
+      checkbox_required: t("ui.validation.checkbox_required"),
+      email: t("ui.validation.email"),
+      url: t("ui.validation.url"),
+      too_short: t("ui.validation.too_short", min: "__MIN__"),
+      pattern: t("ui.validation.pattern"),
+      number: t("ui.validation.number"),
+      range_underflow: t("ui.validation.range_underflow", min: "__MIN__"),
+      range_overflow: t("ui.validation.range_overflow", max: "__MAX__"),
+      step: t("ui.validation.step")
+    }
+  end
+
   def form_control_options(object, attribute, classes: nil, **options)
     has_error = object.present? && object.errors[attribute].present?
     merged_classes = [classes, ("is-invalid-input" if has_error)].compact.join(" ").presence

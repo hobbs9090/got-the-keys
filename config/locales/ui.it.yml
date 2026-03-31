@@ -865,4 +865,16 @@ it:
         removed: Il documento "%{title}" e stato rimosso.
         downloaded: '"%{title}" scaricato.'
     validation:
+      invalid: Inserisci un valore valido.
+      required: Compila questo campo.
+      option_required: Seleziona un'opzione.
+      checkbox_required: Seleziona questa casella per continuare.
+      email: Inserisci un indirizzo e-mail valido.
+      url: Inserisci un URL valido.
+      too_short: Inserisci almeno %{min} caratteri.
+      pattern: Rispetta il formato richiesto.
+      number: Inserisci un numero.
+      range_underflow: Inserisci un valore maggiore o uguale a %{min}.
+      range_overflow: Inserisci un valore minore o uguale a %{max}.
+      step: Inserisci un valore valido.
       phone_number: deve essere un numero di telefono valido

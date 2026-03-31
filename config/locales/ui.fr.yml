@@ -876,4 +876,16 @@ fr:
         removed: Le document "%{title}" a ete supprime.
         downloaded: '"%{title}" telecharge.'
     validation:
+      invalid: Veuillez saisir une valeur valide.
+      required: Veuillez renseigner ce champ.
+      option_required: Veuillez selectionner une option.
+      checkbox_required: Veuillez cocher cette case pour continuer.
+      email: Veuillez saisir une adresse e-mail valide.
+      url: Veuillez saisir une URL valide.
+      too_short: Veuillez saisir au moins %{min} caracteres.
+      pattern: Veuillez respecter le format demande.
+      number: Veuillez saisir un nombre.
+      range_underflow: Veuillez saisir une valeur superieure ou egale a %{min}.
+      range_overflow: Veuillez saisir une valeur inferieure ou egale a %{max}.
+      step: Veuillez saisir une valeur valide.
       phone_number: doit etre un numero de telephone valide

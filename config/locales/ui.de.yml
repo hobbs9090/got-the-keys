@@ -867,4 +867,16 @@ de:
         removed: Dokument "%{title}" wurde entfernt.
         downloaded: '"%{title}" heruntergeladen.'
     validation:
+      invalid: Bitte geben Sie einen gültigen Wert ein.
+      required: Bitte füllen Sie dieses Feld aus.
+      option_required: Bitte wählen Sie eine Option aus.
+      checkbox_required: Bitte aktivieren Sie dieses Kontrollkästchen, um fortzufahren.
+      email: Bitte geben Sie eine gültige E-Mail-Adresse ein.
+      url: Bitte geben Sie eine gültige URL ein.
+      too_short: Bitte verwenden Sie mindestens %{min} Zeichen.
+      pattern: Bitte halten Sie das angeforderte Format ein.
+      number: Bitte geben Sie eine Zahl ein.
+      range_underflow: Bitte geben Sie einen Wert größer oder gleich %{min} ein.
+      range_overflow: Bitte geben Sie einen Wert kleiner oder gleich %{max} ein.
+      step: Bitte geben Sie einen gültigen Wert ein.
       phone_number: muss eine gültige Telefonnummer sein
