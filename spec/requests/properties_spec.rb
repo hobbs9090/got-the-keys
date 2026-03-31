@@ -202,7 +202,7 @@ describe "Properties" do
         /\.property-catalogue__sidebar\s*\{[^}]*position:\s*sticky;[^}]*top:\s*6\.5rem;[^}]*max-height:\s*calc\(100vh - 7\.5rem\);[^}]*overflow-y:\s*auto;/m
       )
       expect(stylesheet).to match(
-        /\.property-catalogue__filters\s*\{[^}]*background-color:\s*rgba\(255,\s*255,\s*255,\s*0\.98\);/m
+        /\.property-catalogue__filters\s*\{[^}]*background-color:\s*var\(--color-surface-raised\);/m
       )
     end
 

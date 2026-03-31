@@ -16,6 +16,12 @@ en:
 
     site_footer:
       copy: "Modern property discovery, appointment booking, and deterministic QA scenarios in one server-rendered Rails application. Built for realistic demos, acceptance testing, and AI-driven browser automation training."
+    theme_toggle:
+      label: "Theme"
+      options:
+        system: "System"
+        light: "Light"
+        dark: "Dark"
 
     shared:
       property_placeholder_alt: "Property placeholder image"

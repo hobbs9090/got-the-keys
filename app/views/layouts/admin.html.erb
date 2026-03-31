@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<%= I18n.locale %>">
+<html lang="<%= I18n.locale %>" data-theme-preference="system">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,7 @@
     <%= favicon_link_tag "favicon-house.svg", rel: "icon", type: "image/svg+xml", sizes: "any" %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= javascript_tag theme_preference_bootstrap_script, nonce: true %>
     <%= stylesheet_link_tag "application", media: "all", "data-turbo-track" => "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track" => "reload", defer: true %>
   </head>
@@ -41,6 +42,7 @@
                   </div>
 
                   <%= render "layouts/language_dropdown" %>
+                  <%= render "layouts/theme_toggle", control_id: "admin_theme_preference" %>
                 </div>
 
                 <div class="site-header__actions-row">

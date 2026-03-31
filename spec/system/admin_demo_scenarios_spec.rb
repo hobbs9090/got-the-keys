@@ -30,4 +30,35 @@ RSpec.describe "Admin demo scenarios", type: :system do
 
     expect(BookingConfiguration.current.active_demo_scenario_key).to eq("baseline")
   end
+
+  it "keeps the restore baseline action at the standard button width", js: true do
+    admin = FactoryBot.create(:admin, email: "demo-sizing-admin@example.com", password: "changeme", password_confirmation: "changeme")
+
+    sign_in_as(email: admin.email, password: "changeme")
+
+    metrics = page.evaluate_script(<<~JS)
+      (() => {
+        const form = document.querySelector('[data-testid="scenario-seed-reset-form-baseline"]');
+        const field = document.querySelector('[data-testid="scenario-seed-reset-input-baseline"]');
+        const button = document.querySelector('[data-testid="scenario-seed-reset-apply-baseline"]');
+        if (!form || !field || !button) return null;
+
+        const formRect = form.getBoundingClientRect();
+        const fieldRect = field.getBoundingClientRect();
+        const buttonRect = button.getBoundingClientRect();
+
+        return {
+          formWidth: formRect.width,
+          fieldWidth: fieldRect.width,
+          buttonWidth: buttonRect.width,
+          buttonHeight: buttonRect.height
+        };
+      })()
+    JS
+
+    expect(metrics).to be_present
+    expect(metrics.fetch("buttonWidth")).to be < metrics.fetch("formWidth") - 40
+    expect(metrics.fetch("buttonWidth")).to be < metrics.fetch("fieldWidth") - 40
+    expect(metrics.fetch("buttonHeight")).to be < 48
+  end
 end

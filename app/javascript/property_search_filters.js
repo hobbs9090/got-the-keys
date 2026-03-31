@@ -1,12 +1,10 @@
 const propertySearchFilterState = new WeakMap();
 
-const rentalSaleStatus = "For Rent";
-
 const updatePriceLabels = (form) => {
   const state = propertySearchFilterState.get(form);
   if (!state) return;
 
-  const useRentalLabels = state.saleStatusSelect.value === rentalSaleStatus;
+  const useRentalLabels = state.saleStatusSelect.value === state.rentalSaleStatusValue;
 
   state.minPriceLabel.textContent = useRentalLabels ? state.minPriceLabel.dataset.rentalLabel : state.minPriceLabel.dataset.defaultLabel;
   state.maxPriceLabel.textContent = useRentalLabels ? state.maxPriceLabel.dataset.rentalLabel : state.maxPriceLabel.dataset.defaultLabel;
@@ -25,6 +23,9 @@ const setupPropertySearchFilters = (form) => {
 
   if (!saleStatusSelect || !minPriceLabel || !maxPriceLabel || !minPriceInput || !maxPriceInput) return;
 
+  const rentalSaleStatusValue = saleStatusSelect.dataset.propertySearchRentalValue;
+  if (!rentalSaleStatusValue) return;
+
   const changeHandler = () => updatePriceLabels(form);
   saleStatusSelect.addEventListener("change", changeHandler);
 
@@ -34,6 +35,7 @@ const setupPropertySearchFilters = (form) => {
     maxPriceLabel,
     minPriceInput,
     maxPriceInput,
+    rentalSaleStatusValue,
     changeHandler
   });
 
