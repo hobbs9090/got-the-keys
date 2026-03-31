@@ -28,6 +28,9 @@ RSpec.describe "Header account details", type: :request do
     expect(response).to have_http_status(:ok)
     expect(body_classes).to include("site-shell", "welcome")
     expect(body_classes).not_to include("welcome--from-admin")
+    expect(parsed_html.at_css("html")["data-theme-preference"]).to eq("system")
+    expect(response.body).to include("gotthekeys-theme-preference")
+    expect(response.body).to include("prefers-color-scheme: dark")
     expect(parsed_html.at_css('a.skip-link')["href"]).to eq("#main-content")
     expect(parsed_html.at_css("main#main-content[tabindex='-1']")).to be_present
 
@@ -48,8 +51,12 @@ RSpec.describe "Header account details", type: :request do
 
     actions_top = actions.at_css(".site-header__actions-top")
     expect(actions_top).to be_present
-    expect(child_testids(actions_top)).to eq(["language-dropdown"])
+    expect(child_testids(actions_top)).to eq(["language-dropdown", "theme-toggle"])
     expect(actions_top.at_css('[data-testid="language-dropdown"]')).to be_present
+    theme_toggle = actions_top.at_css('[data-testid="theme-toggle"]')
+    expect(theme_toggle).to be_present
+    expect(theme_toggle.at_css(".theme-toggle__summary-code")&.text&.strip).to eq("System")
+    expect(theme_toggle.css(".theme-toggle__option").map { |option| option.text.strip }).to eq(["System", "Light", "Dark"])
     expect(actions_top.at_css('[data-testid="header-account-summary"]')).not_to be_present
 
     actions_row = actions.at_css(".site-header__actions-row")
@@ -119,8 +126,9 @@ RSpec.describe "Header account details", type: :request do
 
     actions_top = parsed_html.at_css(".site-header__actions-top")
     expect(actions_top).to be_present
-    expect(child_testids(actions_top)).to eq(["header-account-summary", "language-dropdown"])
+    expect(child_testids(actions_top)).to eq(["header-account-summary", "language-dropdown", "theme-toggle"])
     expect(actions_top.at_css('[data-testid="language-dropdown"]')).to be_present
+    expect(actions_top.at_css('[data-testid="theme-toggle"]')).to be_present
 
     account_summary = actions_top.at_css('[data-testid="header-account-summary"]')
     expect(account_summary).to be_present
@@ -145,8 +153,9 @@ RSpec.describe "Header account details", type: :request do
     expect(response).to have_http_status(:ok)
     actions_top = parsed_html.at_css(".site-header__actions-top")
     expect(actions_top).to be_present
-    expect(child_testids(actions_top)).to eq(["header-account-summary", "language-dropdown"])
+    expect(child_testids(actions_top)).to eq(["header-account-summary", "language-dropdown", "theme-toggle"])
     expect(actions_top.at_css('[data-testid="language-dropdown"]')).to be_present
+    expect(actions_top.at_css('[data-testid="theme-toggle"]')).to be_present
 
     account_summary = actions_top.at_css('[data-testid="header-account-summary"]')
     expect(account_summary).to be_present

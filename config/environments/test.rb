@@ -14,4 +14,9 @@ GotTheKeys::Application.configure do
   config.active_support.deprecation = :stderr
   config.active_support.disallowed_deprecation = :raise
   config.active_support.disallowed_deprecation_warnings = []
+
+  if config.respond_to?(:assets)
+    config.assets.resolve_with = [:environment]
+    config.assets.check_precompiled_asset = false
+  end
 end

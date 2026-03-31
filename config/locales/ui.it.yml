@@ -15,6 +15,12 @@ it:
         in un'unica applicazione Rails renderizzata lato server, progettata per demo
         realistiche, test di accettazione e formazione sull'automazione del browser
         guidata dall'IA.
+    theme_toggle:
+      label: Tema
+      options:
+        system: Sistema
+        light: Chiaro
+        dark: Scuro
     shared:
       property_placeholder_alt: Immagine segnaposto dell'immobile
     common:

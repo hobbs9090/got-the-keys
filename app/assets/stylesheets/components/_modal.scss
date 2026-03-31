@@ -13,16 +13,16 @@
 }
 
 .site-modal__backdrop {
-  background: rgba(15, 24, 40, 0.72);
+  background: var(--color-overlay);
   inset: 0;
   position: absolute;
 }
 
 .site-modal__dialog {
-  background: #fff;
-  border: 1px solid rgba(17, 32, 51, 0.12);
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-panel-border-strong);
   border-radius: 1.25rem;
-  box-shadow: 0 24px 60px rgba(17, 32, 51, 0.18);
+  box-shadow: var(--color-shadow-strong);
   max-height: min(90vh, 56rem);
   max-width: min(44rem, calc(100vw - 2rem));
   overflow: auto;
@@ -55,7 +55,7 @@
 .site-modal__close {
   background: transparent;
   border: 0;
-  color: var(--color-ink);
+  color: var(--color-heading);
   cursor: pointer;
   font-size: 2rem;
   line-height: 1;

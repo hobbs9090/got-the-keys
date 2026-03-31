@@ -14,9 +14,9 @@ table th {
   }
 
   .pinned {
-    background: #fff;
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
+    background: var(--color-surface-strong);
+    border-left: 1px solid var(--color-line);
+    border-right: 1px solid var(--color-line);
     left: 0;
     overflow: hidden;
     overflow-x: scroll;
@@ -41,7 +41,7 @@ table th {
   }
 
   .table-wrapper {
-    border-right: 1px solid #ccc;
+    border-right: 1px solid var(--color-line);
     margin-bottom: 20px;
     overflow: hidden;
     position: relative;

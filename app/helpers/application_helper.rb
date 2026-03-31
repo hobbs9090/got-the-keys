@@ -87,6 +87,8 @@ module ApplicationHelper
   end
 
   def marketing_wordmark_tag(class_name: nil, alt: nil, decorative: false, variant: :default, **options)
+    return theme_aware_marketing_wordmark_tag(class_name:, alt:, decorative:, **options) if variant.to_sym == :theme_aware
+
     image_options = {
       alt: decorative ? "" : (alt.presence || t("gotthekeys.gotthekeys", default: "got the keys")),
       class: ["marketing-wordmark", class_name].compact.join(" ")
@@ -98,6 +100,41 @@ module ApplicationHelper
     end
 
     image_tag(marketing_wordmark_asset_name(variant), **image_options.merge(options))
+  end
+
+  def theme_preference_storage_key
+    "gotthekeys-theme-preference"
+  end
+
+  def theme_preference_options
+    [
+      [t("ui.theme_toggle.options.system", default: "System"), "system"],
+      [t("ui.theme_toggle.options.light", default: "Light"), "light"],
+      [t("ui.theme_toggle.options.dark", default: "Dark"), "dark"]
+    ]
+  end
+
+  def theme_preference_bootstrap_script
+    <<~JS
+      (() => {
+        const storageKey = #{theme_preference_storage_key.to_json};
+        const validPreferences = new Set(["light", "dark", "system"]);
+        let preference = "system";
+
+        try {
+          const storedPreference = window.localStorage.getItem(storageKey);
+          if (validPreferences.has(storedPreference)) preference = storedPreference;
+        } catch (_error) {
+        }
+
+        const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const resolvedTheme = preference === "system" ? (prefersDark ? "dark" : "light") : preference;
+
+        document.documentElement.dataset.themePreference = preference;
+        document.documentElement.dataset.theme = resolvedTheme;
+        document.documentElement.style.colorScheme = resolvedTheme;
+      })();
+    JS
   end
 
   def marketing_wordmark_asset_name(variant)
@@ -162,6 +199,41 @@ module ApplicationHelper
   def header_user_display_name(user)
     names = [user.first_name, user.last_name].filter_map { |value| value.to_s.strip.presence }.map(&:capitalize)
     names.join(" ").presence || t("ui.site_header.member_account_name", default: "Seller account")
+  end
+
+  private
+
+  def theme_aware_marketing_wordmark_tag(class_name:, alt:, decorative:, **options)
+    alt_text = alt.presence || t("gotthekeys.gotthekeys", default: "got the keys")
+
+    wrapper_options = {
+      class: "marketing-wordmark-stack marketing-wordmark-stack--theme-aware"
+    }
+
+    if decorative
+      wrapper_options[:aria] = { hidden: true }
+      wrapper_options[:role] = "presentation"
+    else
+      wrapper_options[:"aria-label"] = alt_text
+      wrapper_options[:role] = "img"
+    end
+
+    image_options = options.merge(
+      alt: "",
+      aria: { hidden: true },
+      role: "presentation"
+    )
+
+    light_wordmark = image_tag(
+      marketing_wordmark_asset_name(:default),
+      **image_options.merge(class: ["marketing-wordmark", class_name, "marketing-wordmark__asset", "marketing-wordmark__asset--light"].compact.join(" "))
+    )
+    dark_wordmark = image_tag(
+      marketing_wordmark_asset_name(:dark),
+      **image_options.merge(class: ["marketing-wordmark", class_name, "marketing-wordmark__asset", "marketing-wordmark__asset--dark"].compact.join(" "))
+    )
+
+    tag.span(safe_join([light_wordmark, dark_wordmark]), **wrapper_options)
   end
 
 end

@@ -2,9 +2,9 @@
 <% grid_class = local_assigns.fetch(:grid_class, "property-grid") %>
 <% show_pagination = properties.respond_to?(:total_pages) && properties.total_pages > 1 %>
 
-<section class="property-results-stack">
+<section class="property-results-stack" data-pagination-scroll-target>
   <% if show_pagination %>
-    <div class="property-results-pagination">
+    <div class="property-results-pagination" data-pagination-scroll-nav>
       <%= paginate properties %>
     </div>
   <% end %>
@@ -12,7 +12,7 @@
   <%= render "properties/property", properties:, grid_class: %>
 
   <% if show_pagination %>
-    <div class="property-results-pagination">
+    <div class="property-results-pagination" data-pagination-scroll-nav>
       <%= paginate properties %>
     </div>
   <% end %>
