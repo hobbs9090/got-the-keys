@@ -193,7 +193,7 @@ describe "A property" do
   end
 
   it "accepts svg image filenames for lightweight placeholder artwork" do
-    property = build_property(image_file_name: "property_placeholder_listing.svg")
+    property = build_property(image_file_name: "properties/property_placeholder_listing.svg")
 
     expect(property.valid?).to be true
     expect(property.errors[:image_file_name]).to be_empty
@@ -222,7 +222,7 @@ describe "A property" do
   end
 
   it "rejects unsupported image filename extensions" do
-    property = build_property(image_file_name: "property_placeholder_listing.webp")
+    property = build_property(image_file_name: "properties/property_placeholder_listing.webp")
 
     expect(property.valid?).to be false
     expect(property.errors[:image_file_name]).to include("must reference a GIF, JPG, JPEG, PNG, or SVG image")

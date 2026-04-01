@@ -10,6 +10,7 @@ module DemoData
     DEFAULT_SIZE = "1536x1024".freeze
     DEFAULT_OUTPUT_FORMAT = "jpeg".freeze
     DEFAULT_OUTPUT_COMPRESSION = 90
+    PROPERTY_ASSET_SUBDIR = "properties".freeze
     DEFAULT_OUTPUT_DIR = Rails.root.join("app/assets/images").freeze
 
     def self.filtered_scope(property_ids: nil, sale_status: nil, town_city: nil)
@@ -80,8 +81,6 @@ module DemoData
 
       raise ArgumentError, "OPENAI_API_KEY is required to generate property images" if api_key.blank? && @client.blank?
 
-      FileUtils.mkdir_p(output_dir)
-
       response = client.images.generate(
         prompt: prompt,
         model: model,
@@ -96,6 +95,7 @@ module DemoData
       raise "Image generation returned no base64 payload for property #{property.id}" if image.b64_json.blank?
 
       output_path = output_dir.join(filename)
+      FileUtils.mkdir_p(output_path.dirname)
       File.binwrite(output_path, Base64.decode64(image.b64_json))
       photo = attach_generated_photo(property, filename)
 
@@ -131,7 +131,7 @@ module DemoData
     end
 
     def generated_filename_for(property)
-      "generated_property_#{property.id}.#{filename_extension}"
+      File.join(PROPERTY_ASSET_SUBDIR, "property_#{property.id}_hero.#{filename_extension}")
     end
 
     def attach_generated_photo(property, filename)
@@ -172,6 +172,8 @@ module DemoData
         property_id: property.id,
         address_line_1: property.address_line_1,
         town_city: property.town_city,
+        year_built: property.year_built,
+        refurbished_year: property.refurbished_year,
         sale_status: property.sale_status,
         filename: filename,
         asset_pipeline_managed: output_dir == DEFAULT_OUTPUT_DIR,

@@ -18,7 +18,9 @@ RSpec.describe DemoData::PropertyImageGenerator do
       bedrooms: 3,
       bathrooms: 2,
       sale_status: "For Sale",
-      asking_price: 930_000
+      asking_price: 930_000,
+      year_built: 1936,
+      refurbished_year: 2021
     )
   end
 
@@ -48,11 +50,11 @@ RSpec.describe DemoData::PropertyImageGenerator do
     expect(property.reload.image_file_name).to be_blank
     expect(property.photos.count).to eq(1)
     expect(property.primary_photo).to have_attributes(
-      image_filename: "generated_property_#{property.id}.jpg",
+      image_filename: "properties/property_#{property.id}_hero.jpg",
       primary: true,
       caption: property.headline
     )
-    expect(@output_dir.join("generated_property_#{property.id}.jpg").binread).to eq("fake-jpeg-binary")
+    expect(@output_dir.join("properties/property_#{property.id}_hero.jpg").binread).to eq("fake-jpeg-binary")
   end
 
   it "supports dry-run prompt previews without updating the property" do
@@ -60,6 +62,10 @@ RSpec.describe DemoData::PropertyImageGenerator do
 
     expect(result[:status]).to eq(:preview)
     expect(result[:prompt]).to include(property.town_city)
+    expect(result).to include(
+      year_built: 1936,
+      refurbished_year: 2021
+    )
     expect(property.reload.image_file_name).to be_blank
     expect(property.photos).to be_empty
   end
@@ -78,7 +84,7 @@ RSpec.describe DemoData::PropertyImageGenerator do
 
     expect(property.reload.photos.count).to eq(1)
     expect(existing_photo.reload).to have_attributes(
-      image_filename: "generated_property_#{property.id}.jpg",
+      image_filename: "properties/property_#{property.id}_hero.jpg",
       caption: property.headline,
       primary: true,
       position: 1

@@ -431,7 +431,7 @@ bin/rails db:populate
 
 For now, prefer lightweight local placeholder artwork over batch AI image generation for every listing.
 
-- If `property.image_file_name` is blank, the app now falls back to the built-in SVG placeholder `property_placeholder_listing.svg`.
+- If `property.image_file_name` is blank, the app now falls back to the built-in SVG placeholder `properties/property_placeholder_listing.svg`.
 - SVG placeholders are the recommended default for development and demos because bulk AI-generated listing images are optional and can become expensive quickly.
 - If you do want to generate listing images, preview the prompts first:
 
@@ -445,7 +445,7 @@ LIMIT=5 bin/rails runner script/preview_property_image_prompts.rb
 OPENAI_API_KEY=your_key_here bin/rails runner script/generate_property_images.rb
 ```
 
-The image-generation script writes files into `app/assets/images/` and updates each property record’s `image_file_name`.
+The image-generation script writes files into `app/assets/images/properties/` using names like `property_3344_hero.jpg`, then updates each property record’s `image_file_name`.
 
 ## Bundled Demo Scenarios
 

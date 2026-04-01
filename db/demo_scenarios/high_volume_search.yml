@@ -214,6 +214,12 @@ properties:
     sale_status: For Sale
     asking_price: 525000
     featured: false
+photos:
+  - property_key: guildford_hillside_home
+    image_filename: properties/property_surrey_detached_garden_hero.jpg
+    caption: Front exterior
+    position: 1
+    primary: true
 appointments:
   - property_key: sevenoaks_cedar_road
     assigned_admin_email: steven@gotthekeys.com
