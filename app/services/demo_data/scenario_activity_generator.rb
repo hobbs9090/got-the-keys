@@ -225,7 +225,7 @@ module DemoData
       when "completed"
         [requested_time - 18.days, requested_time - 18.days]
       when "no_show"
-        [requested_time - 10.days, requested_time - 10.days]
+        [requested_time - 14.days, requested_time - 14.days]
       when "cancelled"
         [requested_time - 4.days, requested_time - 4.days]
       else
