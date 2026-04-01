@@ -33,6 +33,9 @@ File.write(report_path, JSON.pretty_generate(report))
 report.fetch(:results).each do |result|
   puts "\n=== Property ##{result.fetch(:property_id)} | #{result.fetch(:address_line_1)}, #{result.fetch(:town_city)} ==="
   puts "Target file: #{result.fetch(:filename)}"
+  build_year = result[:year_built].presence || "Unknown"
+  refurbishment = result[:refurbished_year].presence || "Unknown"
+  puts "Built: #{build_year} | Refurbished: #{refurbishment}"
   puts result.fetch(:prompt)
 end
 

@@ -25,7 +25,7 @@ RSpec.describe "Property documents", type: :request do
 
   it "allows public visitors to download public documents" do
     document = FactoryBot.create(:property_document, property:, title: "Sales brochure", file_name: "granville-road-brochure.pdf")
-    FactoryBot.create(:photo, property:, image_filename: "sevenoaks_family_home_hero.jpg", primary: true, position: 1)
+    FactoryBot.create(:photo, property:, image_filename: "properties/property_sevenoaks_family_home_hero.jpg", primary: true, position: 1)
 
     get download_property_property_document_path(property, document)
 
@@ -66,7 +66,7 @@ RSpec.describe "Property documents", type: :request do
   end
 
   it "does not expose raw brochure asset jpg filenames on the public property page" do
-    FactoryBot.create(:photo, property:, image_filename: "granville-road-hero.jpg", primary: true, position: 1)
+    FactoryBot.create(:photo, property:, image_filename: "properties/granville-road-hero.jpg", primary: true, position: 1)
     document = FactoryBot.create(:property_document, property:, title: "Sales brochure", file_name: "granville-road-brochure.pdf")
 
     get property_path(property)
@@ -75,7 +75,7 @@ RSpec.describe "Property documents", type: :request do
     download_link = page.at_css(%([data-testid="property-document-download-#{document.id}"]))
     rendered_text = page.text
 
-    expect(rendered_text).not_to include("granville-road-hero.jpg")
+    expect(rendered_text).not_to include("properties/granville-road-hero.jpg")
     expect(rendered_text).not_to include(I18n.t("ui.properties.show.brochure_assets_title"))
     expect(download_link).to be_present
     expect(download_link["href"]).to eq(download_property_property_document_path(property, document))

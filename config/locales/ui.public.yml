@@ -39,7 +39,7 @@ en:
           pets_allowed: "Pets allowed"
         placeholders:
           listing_tagline: "A calm family home close to the station"
-          image_file_name: "property_placeholder_listing.svg"
+          image_file_name: "properties/property_placeholder_listing.svg"
           tenure: "Freehold"
           council_tax_band: "F"
           furnishing: "Unfurnished"
@@ -89,7 +89,7 @@ de:
           pets_allowed: "Haustiere erlaubt"
         placeholders:
           listing_tagline: "Ein ruhiges Familienhaus nahe dem Bahnhof"
-          image_file_name: "property_placeholder_listing.svg"
+          image_file_name: "properties/property_placeholder_listing.svg"
           tenure: "Freies Eigentum"
           council_tax_band: "F"
           furnishing: "Unmoebliert"
@@ -139,7 +139,7 @@ fr:
           pets_allowed: "Animaux acceptes"
         placeholders:
           listing_tagline: "Une maison familiale paisible proche de la gare"
-          image_file_name: "property_placeholder_listing.svg"
+          image_file_name: "properties/property_placeholder_listing.svg"
           tenure: "Pleine propriete"
           council_tax_band: "F"
           furnishing: "Non meuble"
@@ -189,7 +189,7 @@ it:
           pets_allowed: "Animali ammessi"
         placeholders:
           listing_tagline: "Una tranquilla casa di famiglia vicino alla stazione"
-          image_file_name: "property_placeholder_listing.svg"
+          image_file_name: "properties/property_placeholder_listing.svg"
           tenure: "Piena proprieta"
           council_tax_band: "F"
           furnishing: "Non arredato"
@@ -239,7 +239,7 @@ zh:
           pets_allowed: "可带宠物"
         placeholders:
           listing_tagline: "安静的家庭住宅，靠近车站"
-          image_file_name: "property_placeholder_listing.svg"
+          image_file_name: "properties/property_placeholder_listing.svg"
           tenure: "永久产权"
           council_tax_band: "F"
           furnishing: "不带家具"

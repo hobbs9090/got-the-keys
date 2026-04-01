@@ -29,7 +29,7 @@ module SharedHelper
 
   def property_image_small(class_name: nil)
     image_tag(
-      'property_placeholder_listing.svg',
+      'properties/property_placeholder_listing.svg',
       size: '160',
       class: class_name,
       alt: t("ui.shared.property_placeholder_alt")
@@ -38,7 +38,7 @@ module SharedHelper
 
   def property_image_medium(class_name: nil)
     image_tag(
-      'property_placeholder_listing.svg',
+      'properties/property_placeholder_listing.svg',
       size: '250',
       class: class_name,
       alt: t("ui.shared.property_placeholder_alt")
