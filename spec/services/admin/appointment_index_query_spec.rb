@@ -90,6 +90,33 @@ RSpec.describe Admin::AppointmentIndexQuery do
     expect(result.appointments.to_a).to eq([in_range])
   end
 
+  it "orders bookings from earliest to latest scheduled time" do
+    later = FactoryBot.create(
+      :appointment,
+      property: primary_property,
+      requested_time: booking_time(2026, 4, 3, 15, 0),
+      scheduled_at: booking_time(2026, 4, 3, 15, 0)
+    )
+    earlier = FactoryBot.create(
+      :appointment,
+      property: primary_property,
+      requested_time: booking_time(2026, 4, 2, 10, 0),
+      scheduled_at: booking_time(2026, 4, 2, 10, 0)
+    )
+    same_time_later_created = FactoryBot.create(
+      :appointment,
+      property: primary_property,
+      requested_time: booking_time(2026, 4, 2, 10, 0),
+      scheduled_at: booking_time(2026, 4, 2, 10, 0)
+    )
+    earlier.update_columns(created_at: Time.zone.local(2026, 4, 1, 9, 5), updated_at: Time.zone.local(2026, 4, 1, 9, 5))
+    same_time_later_created.update_columns(created_at: Time.zone.local(2026, 4, 1, 9, 10), updated_at: Time.zone.local(2026, 4, 1, 9, 10))
+
+    result = described_class.new(params: {}).call
+
+    expect(result.appointments.first(3)).to eq([earlier, same_time_later_created, later])
+  end
+
   it "builds the calendar grid for week view from the requested anchor date" do
     friday_booking = FactoryBot.create(
       :appointment,

@@ -24,6 +24,7 @@ class Appointment < ApplicationRecord
   validates :duration_minutes, numericality: { only_integer: true, greater_than_or_equal_to: 15, less_than_or_equal_to: 240 }, allow_blank: true
   validates :notes, :internal_notes, length: { maximum: 2000 }, allow_blank: true
   validate :slot_available_for_active_bookings, if: :needs_slot_validation?
+  validate :past_only_statuses_require_elapsed_slot
 
   scope :chronological, -> { order(:scheduled_at, :created_at) }
   scope :recent_first, -> { order(scheduled_at: :desc, created_at: :desc) }
@@ -105,6 +106,13 @@ class Appointment < ApplicationRecord
     return if availability.slot_available?(scheduled_at, duration_minutes:, excluding_appointment: self)
 
     errors.add(:scheduled_at, I18n.t("ui.appointments.validation.slot_unavailable"))
+  end
+
+  def past_only_statuses_require_elapsed_slot
+    return unless status.in?(%w[completed no_show])
+    return if scheduled_at.blank? || scheduled_at <= Time.current
+
+    errors.add(:status, "can only be marked once the appointment time has passed")
   end
 
   def noteworthy_change?

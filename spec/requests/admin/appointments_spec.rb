@@ -71,6 +71,26 @@ RSpec.describe "Admin appointments" do
     expect(appointment.admin).to eq(admin)
   end
 
+  it "does not allow an admin to mark a future appointment as no show" do
+    slot = next_booking_slot(hour: 15)
+    appointment = FactoryBot.create(
+      :appointment,
+      :confirmed,
+      property:,
+      customer_name: "Priya Shah",
+      customer_email: "priya.shah@example.com",
+      customer_phone: "07700 930007",
+      requested_time: slot,
+      scheduled_at: slot
+    )
+
+    patch transition_admin_appointment_path(appointment, status: "no_show")
+
+    expect(response).to redirect_to(admin_appointments_path)
+    expect(flash[:alert]).to eq("Status can only be marked once the appointment time has passed")
+    expect(appointment.reload.status).to eq("confirmed")
+  end
+
   it "renders the appointment detail page in the admin's locale" do
     admin.update!(language: "de")
     slot = next_booking_slot(hour: 11)
@@ -128,8 +148,8 @@ RSpec.describe "Admin appointments" do
       :completed,
       property:,
       customer_name: "Feedback Lead",
-      requested_time: booking_time(2026, 4, 2, 11, 0),
-      scheduled_at: booking_time(2026, 4, 2, 11, 0),
+      requested_time: booking_time(2026, 3, 31, 11, 0),
+      scheduled_at: booking_time(2026, 3, 31, 11, 0),
       visit_outcome: "feedback_requested"
     )
     FactoryBot.create(
@@ -137,12 +157,12 @@ RSpec.describe "Admin appointments" do
       :completed,
       property:,
       customer_name: "Outside Range",
-      requested_time: booking_time(2026, 4, 10, 11, 0),
-      scheduled_at: booking_time(2026, 4, 10, 11, 0),
+      requested_time: booking_time(2026, 3, 25, 11, 0),
+      scheduled_at: booking_time(2026, 3, 25, 11, 0),
       visit_outcome: "attended"
     )
 
-    get admin_bookings_path, params: { from: "2026-04-01", to: "2026-04-03", visit_outcome: "feedback_requested" }
+    get admin_bookings_path, params: { from: "2026-03-30", to: "2026-04-01", visit_outcome: "feedback_requested" }
 
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Feedback Lead")

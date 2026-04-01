@@ -11,7 +11,7 @@ class Admin::AppointmentIndexQuery
   def call
     view_mode = params[:view].presence_in(VIEW_MODES) || "agenda"
     anchor_date = parse_date(params[:date]) || today
-    appointments = filtered_scope(view_mode:, anchor_date:).order(:scheduled_at, :created_at)
+    appointments = filtered_scope(view_mode:, anchor_date:).reorder(:scheduled_at, :created_at, :id)
 
     Result.new(
       view_mode:,

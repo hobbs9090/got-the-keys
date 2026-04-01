@@ -142,4 +142,23 @@ RSpec.describe Appointment do
     expect(appointment.timeline.last.event_type).to eq("feedback_requested")
     expect(appointment.timeline.last.message).to include(I18n.t("ui.appointments.visit_outcomes.feedback_requested"))
   end
+
+  it "rejects completed and no-show statuses for future appointments" do
+    future_slot = next_booking_slot(hour: 14)
+    appointment = FactoryBot.build(
+      :appointment,
+      property:,
+      requested_time: future_slot,
+      scheduled_at: future_slot,
+      status: "completed"
+    )
+
+    expect(appointment).not_to be_valid
+    expect(appointment.errors[:status]).to include("can only be marked once the appointment time has passed")
+
+    appointment.status = "no_show"
+
+    expect(appointment).not_to be_valid
+    expect(appointment.errors[:status]).to include("can only be marked once the appointment time has passed")
+  end
 end
