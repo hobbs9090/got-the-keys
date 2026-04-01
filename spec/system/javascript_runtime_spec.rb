@@ -100,6 +100,24 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     click_button "Sign in"
   end
 
+  def admin_user_search_styles
+    page.evaluate_script(<<~JS)
+      (() => {
+        const label = document.querySelector('label[for="q"]');
+        const input = document.querySelector('[data-testid="admin-users-search-input"]');
+        const placeholderStyles = getComputedStyle(input, "::placeholder");
+
+        return {
+          theme: document.documentElement.dataset.theme,
+          labelColor: getComputedStyle(label).color,
+          inputColor: getComputedStyle(input).color,
+          inputBackground: getComputedStyle(input).backgroundColor,
+          placeholderColor: placeholderStyles.color
+        };
+      })();
+    JS
+  end
+
   it "boots the homepage carousel and shared modal end to end" do
     visit root_path
 
@@ -319,20 +337,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     dismiss_cookie_banner
     wait_for_theme_runtime
 
-    styles = page.evaluate_script(<<~JS)
-      (() => {
-        const label = document.querySelector('label[for="q"]');
-        const input = document.querySelector('[data-testid="admin-users-search-input"]');
-
-        return {
-          theme: document.documentElement.dataset.theme,
-          labelColor: getComputedStyle(label).color,
-          inputColor: getComputedStyle(input).color,
-          inputBackground: getComputedStyle(input).backgroundColor,
-          placeholderColor: getComputedStyle(input, "::placeholder").color
-        };
-      })();
-    JS
+    styles = admin_user_search_styles
 
     expect(styles).to include(
       "theme" => "dark",
@@ -340,6 +345,33 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       "inputColor" => "rgb(230, 238, 249)",
       "inputBackground" => "rgb(24, 36, 59)",
       "placeholderColor" => "rgb(147, 168, 200)"
+    )
+  end
+
+  it "keeps admin user search placeholders lighter in light mode" do
+    admin = FactoryBot.create(:admin, email: "users-search-admin-light@example.com", password: "changeme", password_confirmation: "changeme")
+
+    visit root_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    store_theme_preference("light")
+
+    sign_in_as_admin(admin)
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    visit admin_users_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    styles = admin_user_search_styles
+
+    expect(styles).to include(
+      "theme" => "light",
+      "inputColor" => "rgb(29, 36, 51)",
+      "inputBackground" => "rgb(255, 255, 255)",
+      "placeholderColor" => "rgb(106, 116, 135)"
     )
   end
 
