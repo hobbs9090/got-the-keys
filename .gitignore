@@ -47,3 +47,4 @@ Thumbs.db
 .env.production
 .vscode/ltex.disabledRules.en-US.txt
 .vscode/settings.json
+reports/allure-results/
