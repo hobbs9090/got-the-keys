@@ -55,6 +55,9 @@ module DemoData
 
     def apply_payload!(payload, action_type:, actor_email:, source:)
       summary = nil
+      tracked_enquiries = []
+      tracked_offers = []
+      tracked_rental_applications = []
 
       ActiveRecord::Base.transaction do
         reset_demo_data!
@@ -74,9 +77,9 @@ module DemoData
         create_property_documents(payload.fetch(:property_documents), properties:)
         create_availability_windows(payload.fetch(:availability_windows), properties:)
         create_appointments(payload.fetch(:appointments), properties:, admins:)
-        create_enquiries(payload.fetch(:enquiries), properties:, admins:)
-        create_offers(payload.fetch(:offers), properties:, admins:)
-        create_rental_applications(payload.fetch(:rental_applications), properties:, admins:)
+        create_enquiries(payload.fetch(:enquiries), properties:, admins:, tracked_records: tracked_enquiries)
+        create_offers(payload.fetch(:offers), properties:, admins:, tracked_records: tracked_offers)
+        create_rental_applications(payload.fetch(:rental_applications), properties:, admins:, tracked_records: tracked_rental_applications)
 
         summary = {
           name: payload.fetch(:name),
@@ -102,6 +105,12 @@ module DemoData
           summary_data: summary
         )
       end
+
+      align_seeded_activity_history!(
+        enquiry_records: tracked_enquiries,
+        offer_records: tracked_offers,
+        rental_application_records: tracked_rental_applications
+      )
 
       summary
     end
@@ -225,12 +234,12 @@ module DemoData
       end
     end
 
-    def create_enquiries(enquiry_specs, properties:, admins:)
+    def create_enquiries(enquiry_specs, properties:, admins:, tracked_records:)
       enquiry_specs.each do |attributes|
         property = properties.fetch(attributes.fetch(:property_key))
         admin = attributes[:assigned_admin_email].present? ? admins.fetch(attributes.fetch(:assigned_admin_email)) : nil
 
-        Enquiry.create_seeded!(
+        enquiry = Enquiry.create_seeded!(
           property:,
           admin:,
           allow_invalid: attributes.fetch(:allow_invalid, false),
@@ -244,10 +253,13 @@ module DemoData
           spam: attributes.fetch(:spam, false),
           spam_reason: attributes[:spam_reason]
         )
+
+        apply_record_timestamps!(enquiry, attributes)
+        tracked_records << { id: enquiry.id, created_at: enquiry.created_at, updated_at: enquiry.updated_at }
       end
     end
 
-    def create_offers(offer_specs, properties:, admins:)
+    def create_offers(offer_specs, properties:, admins:, tracked_records:)
       offer_specs.each do |attributes|
         property = properties.fetch(attributes.fetch(:property_key))
         admin = attributes[:assigned_admin_email].present? ? admins.fetch(attributes.fetch(:assigned_admin_email)) : nil
@@ -265,18 +277,21 @@ module DemoData
           internal_notes: attributes[:internal_notes]
         )
 
-        next if final_status == "received"
+        unless final_status == "received"
+          offer.update!(
+            admin:,
+            status: final_status,
+            chain_position: attributes[:chain_position],
+            internal_notes: attributes[:internal_notes]
+          )
+        end
 
-        offer.update!(
-          admin:,
-          status: final_status,
-          chain_position: attributes[:chain_position],
-          internal_notes: attributes[:internal_notes]
-        )
+        apply_record_timestamps!(offer, attributes)
+        tracked_records << { id: offer.id, created_at: offer.created_at, updated_at: offer.updated_at }
       end
     end
 
-    def create_rental_applications(application_specs, properties:, admins:)
+    def create_rental_applications(application_specs, properties:, admins:, tracked_records:)
       application_specs.each do |attributes|
         property = properties.fetch(attributes.fetch(:property_key))
         admin = attributes[:assigned_admin_email].present? ? admins.fetch(attributes.fetch(:assigned_admin_email)) : nil
@@ -296,17 +311,116 @@ module DemoData
           internal_notes: attributes[:internal_notes]
         )
 
-        next if final_status == "received"
+        unless final_status == "received"
+          application.update!(
+            admin:,
+            status: final_status,
+            guarantor_required: attributes.fetch(:guarantor_required, false),
+            guarantor_available: attributes.fetch(:guarantor_available, false),
+            affordability_notes: attributes[:affordability_notes],
+            internal_notes: attributes[:internal_notes]
+          )
+        end
 
-        application.update!(
-          admin:,
-          status: final_status,
-          guarantor_required: attributes.fetch(:guarantor_required, false),
-          guarantor_available: attributes.fetch(:guarantor_available, false),
-          affordability_notes: attributes[:affordability_notes],
-          internal_notes: attributes[:internal_notes]
-        )
+        apply_record_timestamps!(application, attributes)
+        tracked_records << { id: application.id, created_at: application.created_at, updated_at: application.updated_at }
       end
+    end
+
+    def apply_record_timestamps!(record, attributes)
+      created_at = attributes[:created_at]
+      updated_at = attributes[:updated_at] || created_at
+      return if created_at.blank? && updated_at.blank?
+
+      record.update_columns({ created_at:, updated_at: }.compact)
+      record.reload
+    end
+
+    def align_audit_logs!(record, occurred_at:)
+      record.audit_logs.update_all(created_at: occurred_at, updated_at: occurred_at, occurred_at: occurred_at) if occurred_at.present?
+    end
+
+    def align_seeded_activity_history!(enquiry_records:, offer_records:, rental_application_records:)
+      enquiry_records.each do |attributes|
+        enquiry = Enquiry.find(attributes.fetch(:id))
+        align_audit_logs!(enquiry, occurred_at: attributes.fetch(:created_at))
+      end
+
+      offer_records.each do |attributes|
+        offer = Offer.find(attributes.fetch(:id))
+        align_offer_history!(offer)
+      end
+
+      rental_application_records.each do |attributes|
+        application = RentalApplication.find(attributes.fetch(:id))
+        align_rental_application_history!(application)
+      end
+    end
+
+    def align_offer_history!(offer)
+      align_audit_logs!(offer, occurred_at: offer.created_at)
+
+      timeline = ensure_offer_timeline!(offer)
+      return if timeline.empty?
+
+      set_event_timestamp!(timeline.first, offer.created_at)
+      set_event_timestamp!(timeline.last, offer.updated_at) if timeline.size > 1
+    end
+
+    def align_rental_application_history!(application)
+      align_audit_logs!(application, occurred_at: application.created_at)
+
+      timeline = ensure_rental_application_timeline!(application)
+      return if timeline.empty?
+
+      set_event_timestamp!(timeline.first, application.created_at)
+      set_event_timestamp!(timeline.last, application.updated_at) if timeline.size > 1
+    end
+
+    def set_event_timestamp!(event, occurred_at)
+      return if occurred_at.blank?
+
+      event.update_columns(created_at: occurred_at, updated_at: occurred_at, occurred_at: occurred_at)
+    end
+
+    def ensure_offer_timeline!(offer)
+      timeline = offer.offer_events.order(:id).to_a
+      return timeline if offer.status == "received" || timeline.size > 1
+
+      offer.offer_events.create!(
+        admin: offer.admin,
+        event_type: offer.status,
+        from_status: "received",
+        to_status: offer.status,
+        message: I18n.t(
+          "ui.offers.events.status_changed",
+          from_status: I18n.t("ui.offers.statuses.received", default: "received"),
+          to_status: I18n.t("ui.offers.statuses.#{offer.status}", default: offer.status.to_s.humanize.downcase)
+        ),
+        occurred_at: offer.updated_at
+      )
+
+      offer.offer_events.order(:id).to_a
+    end
+
+    def ensure_rental_application_timeline!(application)
+      timeline = application.rental_application_events.order(:id).to_a
+      return timeline if application.status == "received" || timeline.size > 1
+
+      application.rental_application_events.create!(
+        admin: application.admin,
+        event_type: application.status,
+        from_status: "received",
+        to_status: application.status,
+        message: I18n.t(
+          "ui.rental_applications.events.status_changed",
+          from_status: I18n.t("ui.rental_applications.statuses.received", default: "received"),
+          to_status: I18n.t("ui.rental_applications.statuses.#{application.status}", default: application.status.to_s.humanize.downcase)
+        ),
+        occurred_at: application.updated_at
+      )
+
+      application.rental_application_events.order(:id).to_a
     end
   end
 end

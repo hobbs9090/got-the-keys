@@ -109,6 +109,7 @@ module DemoData
         status = cycle_value(status_cycle, index)
         source_type = cycle_value(source_type_cycle, index)
         contact = contact_for(index, prefix: "lead")
+        created_at, updated_at = enquiry_timestamps_for(index, status)
 
         {
           property_key: property.fetch(:key),
@@ -119,7 +120,9 @@ module DemoData
           source_type: source_type,
           message: enquiry_message_for(property, source_type),
           status: status,
-          internal_notes: enquiry_internal_note_for(property, status)
+          internal_notes: enquiry_internal_note_for(property, status),
+          created_at:,
+          updated_at:
         }
       end
     end
@@ -128,6 +131,7 @@ module DemoData
       build_records(properties:, count:) do |property, index|
         contact = contact_for(index, prefix: "buyer")
         status = cycle_value(status_cycle, index)
+        created_at, updated_at = offer_timestamps_for(index, status)
 
         {
           property_key: property.fetch(:key),
@@ -139,7 +143,9 @@ module DemoData
           status: status,
           chain_position: cycle_value(CHAIN_POSITIONS, index),
           notes: "Keen on #{property.fetch(:town_city)} and ready to move quickly if the offer is accepted.",
-          internal_notes: "Generated baseline offer seeded for negotiation and progression checks."
+          internal_notes: "Generated baseline offer seeded for negotiation and progression checks.",
+          created_at:,
+          updated_at:
         }
       end
     end
@@ -148,6 +154,7 @@ module DemoData
       build_records(properties:, count:) do |property, index|
         contact = contact_for(index, prefix: "tenant")
         status = cycle_value(status_cycle, index)
+        created_at, updated_at = rental_application_timestamps_for(index, status)
 
         {
           property_key: property.fetch(:key),
@@ -155,13 +162,15 @@ module DemoData
           applicant_name: contact.fetch(:name),
           applicant_email: contact.fetch(:email),
           applicant_phone: contact.fetch(:phone),
-          move_in_date: Date.current + 18 + index,
+          move_in_date: [created_at.to_date + 12.days, Date.current + 14.days + index].max,
           status: status,
           guarantor_required: (index % 3).zero?,
           guarantor_available: (index % 4) != 1,
           affordability_notes: "Stable income and comfortable with the expected monthly commitment for this area.",
           notes: "Generated baseline tenancy application for admin workflow coverage.",
-          internal_notes: "Useful for referencing, approval, and decline states during QA."
+          internal_notes: "Useful for referencing, approval, and decline states during QA.",
+          created_at:,
+          updated_at:
         }
       end
     end
@@ -275,6 +284,70 @@ module DemoData
       amount = (property.fetch(:asking_price) * factor).round
 
       [[amount, 50_000].max, 2_500_000].min.round(-3)
+    end
+
+    def enquiry_timestamps_for(index, status)
+      created_at = Time.zone.now - (index % 5).days - (10 + (index % 3)).hours
+
+      updated_at =
+        case status
+        when "new"
+          created_at
+        when "contacted"
+          created_at + 6.hours
+        when "qualified"
+          created_at + 1.day + 2.hours
+        when "unqualified", "archived"
+          created_at + 2.days + 1.hour
+        else
+          created_at
+        end
+
+      [created_at, [updated_at, Time.zone.now - 30.minutes].min]
+    end
+
+    def offer_timestamps_for(index, status)
+      created_at = Time.zone.now - (6 + index).days - ((index % 4) + 1).hours
+
+      updated_at =
+        case status
+        when "received"
+          created_at
+        when "accepted"
+          created_at + 4.days + 3.hours
+        when "rejected"
+          created_at + 3.days + 5.hours
+        when "withdrawn"
+          created_at + 2.days + 4.hours
+        when "completed"
+          created_at + 12.days + 2.hours
+        else
+          created_at
+        end
+
+      [created_at, [updated_at, Time.zone.now - 45.minutes].min]
+    end
+
+    def rental_application_timestamps_for(index, status)
+      created_at = Time.zone.now - (7 + index).days - ((index % 3) + 2).hours
+
+      updated_at =
+        case status
+        when "received"
+          created_at
+        when "referencing"
+          created_at + 2.days + 6.hours
+        when "approved"
+          created_at + 5.days + 2.hours
+        when "rejected"
+          created_at + 4.days + 1.hour
+        when "withdrawn"
+          created_at + 3.days + 4.hours
+        else
+          created_at
+        end
+
+      [created_at, [updated_at, Time.zone.now - 45.minutes].min]
     end
   end
 end

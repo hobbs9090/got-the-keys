@@ -374,6 +374,8 @@ enquiries:
     source_type: brochure_request
     message: Please send over the brochure and let me know whether the study could work as a downstairs bedroom for an older parent.
     status: new
+    created_at: "today-1d 09:15"
+    updated_at: "today-1d 09:15"
   - property_key: croydon_rental_loft
     assigned_admin_email: steven@gotthekeys.com
     customer_name: Leon Grant
@@ -383,6 +385,8 @@ enquiries:
     message: I am relocating for work in May and want to check the move-in timing, furnished inventory, and whether there is flexibility on the initial tenancy length.
     status: contacted
     internal_notes: Replied with current availability and referencing outline.
+    created_at: "today-4d 11:20"
+    updated_at: "today-3d 15:45"
 enquiry_batches:
   - property_key_prefixes: [baseline_sale]
     count: 15

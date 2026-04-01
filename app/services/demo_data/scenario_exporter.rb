@@ -186,7 +186,9 @@ module DemoData
         internal_notes: enquiry.internal_notes,
         spam: enquiry.spam,
         spam_reason: enquiry.spam_reason,
-        allow_invalid: enquiry.customer_email.present? && !enquiry.customer_email.match?(URI::MailTo::EMAIL_REGEXP)
+        allow_invalid: enquiry.customer_email.present? && !enquiry.customer_email.match?(URI::MailTo::EMAIL_REGEXP),
+        created_at: enquiry.created_at.iso8601,
+        updated_at: enquiry.updated_at.iso8601
       }
     end
 
@@ -201,7 +203,9 @@ module DemoData
         status: offer.status,
         chain_position: offer.chain_position,
         notes: offer.notes,
-        internal_notes: offer.internal_notes
+        internal_notes: offer.internal_notes,
+        created_at: offer.created_at.iso8601,
+        updated_at: offer.updated_at.iso8601
       }
     end
 
@@ -218,7 +222,9 @@ module DemoData
         guarantor_available: application.guarantor_available,
         affordability_notes: application.affordability_notes,
         notes: application.notes,
-        internal_notes: application.internal_notes
+        internal_notes: application.internal_notes,
+        created_at: application.created_at.iso8601,
+        updated_at: application.updated_at.iso8601
       }
     end
   end

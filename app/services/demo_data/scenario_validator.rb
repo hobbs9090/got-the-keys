@@ -571,6 +571,8 @@ module DemoData
           raise ValidationError, "Unsupported enquiry source #{source_type.inspect}"
         end
 
+        created_at, updated_at = parse_activity_timestamps!(enquiry, label: "Enquiry")
+
         {
           property_key:,
           assigned_admin_email:,
@@ -583,7 +585,9 @@ module DemoData
           internal_notes: enquiry[:internal_notes],
           spam: ActiveModel::Type::Boolean.new.cast(enquiry.fetch(:spam, false)),
           spam_reason: enquiry[:spam_reason],
-          allow_invalid: ActiveModel::Type::Boolean.new.cast(enquiry.fetch(:allow_invalid, false))
+          allow_invalid: ActiveModel::Type::Boolean.new.cast(enquiry.fetch(:allow_invalid, false)),
+          created_at:,
+          updated_at:
         }
       end
     end
@@ -601,6 +605,8 @@ module DemoData
         status = offer.fetch(:status, "received")
         raise ValidationError, "Unsupported offer status #{status.inspect}" unless Offer::STATUSES.include?(status)
 
+        created_at, updated_at = parse_activity_timestamps!(offer, label: "Offer")
+
         {
           property_key:,
           assigned_admin_email:,
@@ -611,7 +617,9 @@ module DemoData
           status:,
           chain_position: offer[:chain_position],
           notes: offer[:notes],
-          internal_notes: offer[:internal_notes]
+          internal_notes: offer[:internal_notes],
+          created_at:,
+          updated_at:
         }
       end
     end
@@ -629,6 +637,8 @@ module DemoData
         status = application.fetch(:status, "received")
         raise ValidationError, "Unsupported rental application status #{status.inspect}" unless RentalApplication::STATUSES.include?(status)
 
+        created_at, updated_at = parse_activity_timestamps!(application, label: "Rental application")
+
         {
           property_key:,
           assigned_admin_email:,
@@ -641,7 +651,9 @@ module DemoData
           guarantor_available: ActiveModel::Type::Boolean.new.cast(application.fetch(:guarantor_available, false)),
           affordability_notes: application[:affordability_notes],
           notes: application[:notes],
-          internal_notes: application[:internal_notes]
+          internal_notes: application[:internal_notes],
+          created_at:,
+          updated_at:
         }
       end
     end
@@ -679,6 +691,18 @@ module DemoData
       parsed
     rescue ArgumentError
       raise ValidationError, "Could not parse date #{value.inspect}"
+    end
+
+    def parse_activity_timestamps!(attributes, label:)
+      created_at = attributes[:created_at].present? ? parse_time!(attributes[:created_at]) : nil
+      updated_at = attributes[:updated_at].present? ? parse_time!(attributes[:updated_at]) : nil
+      updated_at ||= created_at if created_at.present?
+
+      if created_at.present? && updated_at.present? && updated_at < created_at
+        raise ValidationError, "#{label} updated_at cannot be earlier than created_at"
+      end
+
+      [created_at, updated_at]
     end
 
     def parse_relative_time(value)
