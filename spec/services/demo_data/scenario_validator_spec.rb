@@ -150,6 +150,40 @@ RSpec.describe DemoData::ScenarioValidator do
     expect(normalized[:appointments].first[:duration_minutes]).to eq(45)
   end
 
+  it "parses relative plain dates for property availability and rental move-ins" do
+    payload = base_payload.deep_dup
+    payload[:properties].first[:available_from] = "today+14d"
+    payload[:properties] << {
+      key: "oak-rental",
+      owner_email: "owner@example.com",
+      address_line_1: "12 Oak Road",
+      town_city: "Croydon",
+      county: "Greater London",
+      postcode: "CR0 2AB",
+      country: "United Kingdom",
+      property_description: "A polished rental apartment with practical storage, a bright layout, and good transport links.",
+      bedrooms: 2,
+      sale_status: "For Rent",
+      asking_price: 1950
+    }
+    payload[:rental_applications] = [
+      {
+        property_key: "oak-rental",
+        assigned_admin_email: "admin@example.com",
+        applicant_name: "Maya Collins",
+        applicant_email: "maya@example.com",
+        applicant_phone: "07700 900555",
+        move_in_date: "today+21d",
+        status: "received"
+      }
+    ]
+
+    normalized = validator.validate!(payload)
+
+    expect(normalized[:properties].find { |property| property[:key] == "cedar-close" }[:available_from]).to eq(Date.new(2026, 4, 15))
+    expect(normalized[:rental_applications].first[:move_in_date]).to eq(Date.new(2026, 4, 22))
+  end
+
   it "raises when a property references a missing owner email" do
     payload = base_payload.deep_dup
     payload[:properties].first[:owner_email] = "missing@example.com"

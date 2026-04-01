@@ -1,7 +1,13 @@
 require "rails_helper"
 
 RSpec.describe DemoData::ScenarioLoader do
+  include ActiveSupport::Testing::TimeHelpers
+
   subject(:loader) { described_class.new }
+
+  around do |example|
+    travel_to(Time.zone.local(2026, 4, 1, 9, 0)) { example.run }
+  end
 
   before do
     ActionMailer::Base.deliveries.clear if defined?(ActionMailer::Base)
@@ -67,6 +73,10 @@ RSpec.describe DemoData::ScenarioLoader do
       "lucy.mcclure@example.com",
       "matthew.wells@example.com"
     ])
+    expect(Property.find_by!(address_line_1: "18 Cedar Road").available_from).to eq(Date.new(2026, 4, 15))
+    expect(Property.find_by!(address_line_1: "Flat 3, 44 Mount Ephraim").available_from).to eq(Date.new(2026, 5, 1))
+    expect(Property.find_by!(address_line_1: "Apartment 11, 9 Park Lane").available_from).to eq(Date.new(2026, 4, 25))
+    expect(RentalApplication.minimum(:move_in_date)).to be >= Date.new(2026, 4, 19)
   end
 
   it "exports the current dataset as YAML" do

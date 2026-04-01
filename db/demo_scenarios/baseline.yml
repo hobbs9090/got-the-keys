@@ -75,7 +75,7 @@ properties:
     tenure: Freehold
     council_tax_band: G
     furnishing: Unfurnished
-    available_from: 2026-04-15
+    available_from: today+14d
     parking: Driveway and garage
     outdoor_space: Landscaped rear garden
     floor_area_sq_ft: 1890
@@ -100,7 +100,7 @@ properties:
     tenure: Leasehold
     council_tax_band: D
     furnishing: Furnished
-    available_from: 2026-05-01
+    available_from: today+30d
     parking: Residents permit
     outdoor_space: Private terrace
     floor_area_sq_ft: 920
@@ -146,7 +146,7 @@ properties:
     asking_price: 1950
     featured: false
     furnishing: Part furnished
-    available_from: 2026-04-25
+    available_from: today+24d
     parking: Secure underground bay
     outdoor_space: Juliet balcony
     floor_area_sq_ft: 980

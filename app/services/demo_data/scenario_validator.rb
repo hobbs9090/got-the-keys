@@ -227,7 +227,7 @@ module DemoData
           tenure: property[:tenure],
           council_tax_band: property[:council_tax_band],
           furnishing: property[:furnishing],
-          available_from: property[:available_from],
+          available_from: property[:available_from].present? ? parse_date!(property[:available_from]) : nil,
           parking: property[:parking],
           outdoor_space: property[:outdoor_space],
           floor_area_sq_ft: property[:floor_area_sq_ft].present? ? Integer(property[:floor_area_sq_ft]) : nil,
@@ -635,7 +635,7 @@ module DemoData
           applicant_name: application.fetch(:applicant_name),
           applicant_email: application.fetch(:applicant_email),
           applicant_phone: application.fetch(:applicant_phone),
-          move_in_date: Date.parse(application.fetch(:move_in_date).to_s),
+          move_in_date: parse_date!(application.fetch(:move_in_date)),
           status:,
           guarantor_required: ActiveModel::Type::Boolean.new.cast(application.fetch(:guarantor_required, false)),
           guarantor_available: ActiveModel::Type::Boolean.new.cast(application.fetch(:guarantor_available, false)),
@@ -666,6 +666,21 @@ module DemoData
       parsed
     end
 
+    def parse_date!(value)
+      relative = parse_relative_date(value)
+      return relative if relative.present?
+
+      return value if value.is_a?(Date) && !value.is_a?(Time)
+      return value.in_time_zone.to_date if value.respond_to?(:in_time_zone)
+
+      parsed = Date.parse(value.to_s)
+      raise ValidationError, "Could not parse date #{value.inspect}" if parsed.blank?
+
+      parsed
+    rescue ArgumentError
+      raise ValidationError, "Could not parse date #{value.inspect}"
+    end
+
     def parse_relative_time(value)
       match = value.to_s.strip.match(/\Atoday(?:(?<sign>[+-])(?<days>\d+)d)?\s+(?<hour>\d{2}):(?<minute>\d{2})\z/i)
       return nil unless match
@@ -675,6 +690,16 @@ module DemoData
       target_date = Date.current + offset_days
 
       Time.zone.local(target_date.year, target_date.month, target_date.day, match[:hour].to_i, match[:minute].to_i)
+    end
+
+    def parse_relative_date(value)
+      match = value.to_s.strip.match(/\Atoday(?:(?<sign>[+-])(?<days>\d+)d)?\z/i)
+      return nil unless match
+
+      offset_days = match[:days].to_i
+      offset_days *= -1 if match[:sign] == "-"
+
+      Date.current + offset_days
     end
 
     def expected_counts(normalized)
