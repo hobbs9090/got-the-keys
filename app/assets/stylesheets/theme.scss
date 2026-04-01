@@ -207,16 +207,15 @@ textarea {
   caret-color: var(--color-ink);
   color: var(--color-ink);
   min-height: 3rem;
-  -webkit-text-fill-color: var(--color-ink);
 }
 
 #{text-inputs()},
 select,
 textarea {
+  // Leave WebKit text fill unset on editable fields so placeholders can stay muted.
   border-radius: calc(var(--radius-sm) + 2px);
   caret-color: var(--color-ink);
   color: var(--color-ink);
-  -webkit-text-fill-color: var(--color-ink);
 }
 
 select {
@@ -246,8 +245,12 @@ textarea {
 }
 
 #{text-inputs()} {
-  &::placeholder {
+  // Chromium and Safari still paint placeholder glyphs via WebKit text fill.
+  &::placeholder,
+  &::-webkit-input-placeholder {
     color: var(--color-field-placeholder);
+    -webkit-text-fill-color: var(--color-field-placeholder);
+    opacity: 1;
   }
 
   &:focus {
@@ -269,8 +272,11 @@ textarea {
   }
 }
 
-textarea::placeholder {
+textarea::placeholder,
+textarea::-webkit-input-placeholder {
   color: var(--color-field-placeholder);
+  -webkit-text-fill-color: var(--color-field-placeholder);
+  opacity: 1;
 }
 
 select:focus,
