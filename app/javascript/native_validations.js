@@ -36,22 +36,25 @@ const missingValueMessage = (element, messages) => {
 const validationMessageFor = (element, messages) => {
   const validity = element.validity;
   if (!validity || validity.valid) return "";
+  const patternMessage = element.dataset.validationPatternMessage || messages.pattern || messages.invalid || "";
+  const invalidMessage = element.dataset.validationInvalidMessage || messages.invalid || "";
 
   if (validity.valueMissing) return missingValueMessage(element, messages);
 
   if (validity.typeMismatch) {
-    if (element.type === "email") return messages.email || messages.invalid || "";
-    if (element.type === "url") return messages.url || messages.invalid || "";
+    if (element.type === "email") return messages.email || invalidMessage;
+    if (element.type === "url") return messages.url || invalidMessage;
   }
 
-  if (validity.tooShort) return interpolate(messages.too_short || messages.invalid || "", { min: element.minLength });
-  if (validity.patternMismatch) return messages.pattern || messages.invalid || "";
-  if (validity.rangeUnderflow) return interpolate(messages.range_underflow || messages.invalid || "", { min: element.getAttribute("min") || element.min });
-  if (validity.rangeOverflow) return interpolate(messages.range_overflow || messages.invalid || "", { max: element.getAttribute("max") || element.max });
-  if (validity.stepMismatch) return messages.step || messages.invalid || "";
-  if (validity.badInput) return messages.number || messages.invalid || "";
+  if (validity.tooShort) return interpolate(messages.too_short || invalidMessage, { min: element.minLength });
+  if (validity.tooLong) return interpolate(messages.too_long || invalidMessage, { max: element.maxLength });
+  if (validity.patternMismatch) return patternMessage;
+  if (validity.rangeUnderflow) return interpolate(messages.range_underflow || invalidMessage, { min: element.getAttribute("min") || element.min });
+  if (validity.rangeOverflow) return interpolate(messages.range_overflow || invalidMessage, { max: element.getAttribute("max") || element.max });
+  if (validity.stepMismatch) return messages.step || invalidMessage;
+  if (validity.badInput) return messages.number || invalidMessage;
 
-  return messages.invalid || "";
+  return invalidMessage;
 };
 
 const applyLocalizedValidationMessage = (event) => {

@@ -112,7 +112,7 @@ class Appointment < ApplicationRecord
     return unless status.in?(%w[completed no_show])
     return if scheduled_at.blank? || scheduled_at <= Time.current
 
-    errors.add(:status, "can only be marked once the appointment time has passed")
+    errors.add(:status, I18n.t("ui.appointments.validation.past_only_status", default: "can only be marked once the appointment time has passed"))
   end
 
   def noteworthy_change?

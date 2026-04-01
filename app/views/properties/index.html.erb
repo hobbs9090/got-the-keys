@@ -53,7 +53,7 @@
 
         <div>
           <%= f.label :email, t("ui.common.email_address") %>
-          <%= f.email_field :email, placeholder: t("ui.properties.catalogue.saved_search.email_placeholder") %>
+          <%= f.email_field :email, required: true, maxlength: 255, placeholder: t("ui.properties.catalogue.saved_search.email_placeholder") %>
         </div>
 
         <div class="form-grid__checkbox">

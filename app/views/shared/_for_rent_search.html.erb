@@ -1,7 +1,7 @@
 <%= form_with url: searches_path, method: :get, class: 'search-form' do %>
   <%= hidden_field_tag :sale_status, Property::SALE_STATUSES[:for_rent] %>
   <div class="input-group">
-    <%= text_field_tag :q, params[:q], class: 'input-group-field', placeholder: t('search.postcode_or_area') %>
+    <%= text_field_tag :q, params[:q], class: 'input-group-field', placeholder: t('search.postcode_or_area'), required: true, maxlength: 100 %>
     <div class="input-group-button">
       <%= button_tag t('search.title'), class: "button secondary" %>
     </div>

@@ -20,7 +20,7 @@
 
   <div>
     <%= label_tag :q, t("ui.properties.filters.query_label") %>
-    <%= text_field_tag :q, params[:q], placeholder: t("ui.properties.filters.query_placeholder"), data: { testid: "property-search-query" } %>
+    <%= text_field_tag :q, params[:q], placeholder: t("ui.properties.filters.query_placeholder"), maxlength: 100, data: { testid: "property-search-query" } %>
   </div>
 
   <div>
@@ -35,12 +35,12 @@
 
   <div>
     <%= label_tag :min_price, property_filter_price_label(:min, current_sale_status), data: { property_search_min_price_label: true, default_label: property_filter_price_label(:min), rental_label: property_filter_price_label(:min, Property::SALE_STATUSES[:for_rent]) } %>
-    <%= text_field_tag :min_price, params[:min_price], inputmode: "numeric", placeholder: current_min_price_placeholder, data: { property_search_min_price_input: true, default_placeholder: "250,000", rental_placeholder: "1,500" } %>
+    <%= text_field_tag :min_price, params[:min_price], inputmode: "numeric", maxlength: 15, pattern: "[0-9,\\s]*", placeholder: current_min_price_placeholder, data: { property_search_min_price_input: true, default_placeholder: "250,000", rental_placeholder: "1,500", validation_pattern_message: t("ui.validation.number") } %>
   </div>
 
   <div>
     <%= label_tag :max_price, property_filter_price_label(:max, current_sale_status), data: { property_search_max_price_label: true, default_label: property_filter_price_label(:max), rental_label: property_filter_price_label(:max, Property::SALE_STATUSES[:for_rent]) } %>
-    <%= text_field_tag :max_price, params[:max_price], inputmode: "numeric", placeholder: current_max_price_placeholder, data: { property_search_max_price_input: true, default_placeholder: "1,000,000", rental_placeholder: "10,000" } %>
+    <%= text_field_tag :max_price, params[:max_price], inputmode: "numeric", maxlength: 15, pattern: "[0-9,\\s]*", placeholder: current_max_price_placeholder, data: { property_search_max_price_input: true, default_placeholder: "1,000,000", rental_placeholder: "10,000", validation_pattern_message: t("ui.validation.number") } %>
   </div>
 
   <div>

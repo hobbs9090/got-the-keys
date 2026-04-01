@@ -30,12 +30,12 @@
         </div>
         <div>
           <%= f.label :office_opens_at, t("ui.admin.booking_configuration.office_opens_at"), **form_label_options(@booking_configuration, :office_opens_at) %>
-          <%= f.text_field :office_opens_at, placeholder: "09:00", pattern: "\\d{2}:\\d{2}", required: true, **form_control_options(@booking_configuration, :office_opens_at) %>
+          <%= f.text_field :office_opens_at, placeholder: "09:00", pattern: "\\d{2}:\\d{2}", required: true, data: { validation_pattern_message: t("ui.admin.booking_configuration.validation.clock_format_hint", default: "Please use 24-hour HH:MM format.") }, **form_control_options(@booking_configuration, :office_opens_at) %>
           <%= field_error_messages(@booking_configuration, :office_opens_at) %>
         </div>
         <div>
           <%= f.label :office_closes_at, t("ui.admin.booking_configuration.office_closes_at"), **form_label_options(@booking_configuration, :office_closes_at) %>
-          <%= f.text_field :office_closes_at, placeholder: "18:00", pattern: "\\d{2}:\\d{2}", required: true, **form_control_options(@booking_configuration, :office_closes_at) %>
+          <%= f.text_field :office_closes_at, placeholder: "18:00", pattern: "\\d{2}:\\d{2}", required: true, data: { validation_pattern_message: t("ui.admin.booking_configuration.validation.clock_format_hint", default: "Please use 24-hour HH:MM format.") }, **form_control_options(@booking_configuration, :office_closes_at) %>
           <%= field_error_messages(@booking_configuration, :office_closes_at) %>
         </div>
         <div class="form-grid__full">

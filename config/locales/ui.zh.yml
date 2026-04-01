@@ -302,6 +302,11 @@ zh:
           contact: 联系信息就绪
       flash:
         not_public: 该房源当前未公开展示。
+      validation:
+        image_file_name: 必须引用 GIF、JPG、JPEG、PNG 或 SVG 图片
+        image_upload: 必须是 JPG 或 JPEG 图片
+        refurbished_year: 必须大于或等于建造年份
+        duplicate_address: 该地址已录入过房源
     for_sale:
       eyebrow: 出售
       hero_title: 可购买房源
@@ -398,6 +403,7 @@ zh:
         visit_outcome_marked: 看房结果已标记为 %{outcome}。
       validation:
         slot_unavailable: 不可用，因为它与其他预约冲突或不符合预约规则
+        past_only_status: 只有在预约时间过去后才能设置该状态
     appointment_mailer:
       subject: GotTheKeys 看房 %{action}：%{reference}
       actions:
@@ -632,6 +638,11 @@ zh:
         office_closes_at: 结束办公时间
         open_weekdays: 开放工作日
         save: 保存预约规则
+        validation:
+          clock_format: 必须使用 24 小时制 HH:MM 格式
+          clock_format_hint: 请使用 24 小时制 HH:MM 格式。
+          closes_after_open: 必须晚于开放时间
+          open_weekdays_present: 至少必须包含一天
       demo_data:
         title: 演示数据管理
         eyebrow: 可复现 QA 环境
@@ -910,6 +921,9 @@ zh:
         updated: 文件“%{title}”已更新。
         removed: 文件“%{title}”已移除。
         downloaded: 已下载“%{title}”。
+    availability_windows:
+      validation:
+        ends_after_start: 必须晚于开始时间
     validation:
       invalid: 请输入有效的值。
       required: 请填写此字段。
@@ -918,6 +932,7 @@ zh:
       email: 请输入有效的电子邮件地址。
       url: 请输入有效的 URL。
       too_short: 请至少输入 %{min} 个字符。
+      too_long: 请不要超过 %{max} 个字符。
       pattern: 请按要求的格式填写。
       number: 请输入数字。
       range_underflow: 请输入大于或等于 %{min} 的值。

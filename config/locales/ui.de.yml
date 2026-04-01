@@ -324,6 +324,11 @@ de:
           contact: Kontaktbereitschaft
       flash:
         not_public: Dieses Inserat ist derzeit nicht öffentlich.
+      validation:
+        image_file_name: muss auf ein GIF-, JPG-, JPEG-, PNG- oder SVG-Bild verweisen
+        image_upload: muss ein JPG- oder JPEG-Bild sein
+        refurbished_year: muss größer oder gleich dem Baujahr sein
+        duplicate_address: wurde für diese Adresse bereits eingetragen
     for_sale:
       eyebrow: Zum Verkauf
       hero_title: Häuser zum Kauf
@@ -435,6 +440,7 @@ de:
       validation:
         slot_unavailable: ist nicht verfügbar, weil es mit einem anderen Termin kollidiert
           oder außerhalb der Buchungsregeln liegt
+        past_only_status: kann erst gesetzt werden, wenn der Terminzeitpunkt vorbei ist
     appointment_mailer:
       subject: 'GotTheKeys Besichtigung %{action}: %{reference}'
       actions:
@@ -577,6 +583,11 @@ de:
         office_closes_at: Büro schließt um
         open_weekdays: Geöffnete Wochentage
         save: Buchungsregeln speichern
+        validation:
+          clock_format: muss das 24-Stunden-Format HH:MM verwenden
+          clock_format_hint: Bitte verwenden Sie das 24-Stunden-Format HH:MM.
+          closes_after_open: muss später als die Öffnungszeit sein
+          open_weekdays_present: muss mindestens einen Tag enthalten
       demo_data:
         title: Demodatenverwaltung
         eyebrow: Deterministische QA-Umgebung
@@ -866,6 +877,9 @@ de:
         updated: Dokument "%{title}" wurde aktualisiert.
         removed: Dokument "%{title}" wurde entfernt.
         downloaded: '"%{title}" heruntergeladen.'
+    availability_windows:
+      validation:
+        ends_after_start: muss nach der Startzeit liegen
     validation:
       invalid: Bitte geben Sie einen gültigen Wert ein.
       required: Bitte füllen Sie dieses Feld aus.
@@ -874,6 +888,7 @@ de:
       email: Bitte geben Sie eine gültige E-Mail-Adresse ein.
       url: Bitte geben Sie eine gültige URL ein.
       too_short: Bitte verwenden Sie mindestens %{min} Zeichen.
+      too_long: Bitte verwenden Sie höchstens %{max} Zeichen.
       pattern: Bitte halten Sie das angeforderte Format ein.
       number: Bitte geben Sie eine Zahl ein.
       range_underflow: Bitte geben Sie einen Wert größer oder gleich %{min} ein.

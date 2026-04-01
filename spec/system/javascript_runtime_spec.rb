@@ -213,6 +213,34 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     )
   end
 
+  it "requires an email address in the saved-search form" do
+    visit properties_path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+
+    state = page.evaluate_script(<<~JS)
+      (() => {
+        const input = document.getElementById("saved_search_email");
+        if (!input) return null;
+
+        input.value = "";
+        input.checkValidity();
+        const invalid = input.validationMessage;
+
+        input.value = "buyer@example.com";
+        input.dispatchEvent(new window.Event("input", { bubbles: true }));
+        const cleared = input.validationMessage;
+
+        return { invalid, cleared };
+      })()
+    JS
+
+    expect(state).to include(
+      "invalid" => I18n.t("ui.validation.required"),
+      "cleared" => ""
+    )
+  end
+
   it "localizes native browser validation messages on the registration form" do
     visit new_language_path(language: "de", return_to: new_user_registration_path)
 

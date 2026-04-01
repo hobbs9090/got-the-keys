@@ -315,6 +315,11 @@ en:
           contact: "Contact readiness"
       flash:
         not_public: "This listing is not currently public."
+      validation:
+        image_file_name: "must reference a GIF, JPG, JPEG, PNG, or SVG image"
+        image_upload: "must be a JPG or JPEG image"
+        refurbished_year: "must be greater than or equal to the year built"
+        duplicate_address: "has already been listed for this address"
 
     for_sale:
       eyebrow: "For sale"
@@ -415,6 +420,7 @@ en:
         visit_outcome_marked: "Visit outcome marked as %{outcome}."
       validation:
         slot_unavailable: "is not available because it conflicts with another appointment or falls outside the booking rules"
+        past_only_status: "can only be marked once the appointment time has passed"
 
     enquiries:
       title: "Enquire about %{address}"
@@ -616,6 +622,10 @@ en:
         removed: "Document \"%{title}\" was removed."
         downloaded: "Downloaded \"%{title}\"."
 
+    availability_windows:
+      validation:
+        ends_after_start: "must be after the start time"
+
     validation:
       invalid: "Please enter a valid value."
       required: "Please fill in this field."
@@ -624,6 +634,7 @@ en:
       email: "Please enter a valid email address."
       url: "Please enter a valid URL."
       too_short: "Please use at least %{min} characters."
+      too_long: "Please use no more than %{max} characters."
       pattern: "Please match the requested format."
       number: "Please enter a number."
       range_underflow: "Please enter a value greater than or equal to %{min}."
@@ -888,6 +899,11 @@ en:
         office_closes_at: "Office closes at"
         open_weekdays: "Open weekdays"
         save: "Save booking rules"
+        validation:
+          clock_format: "must use 24-hour HH:MM format"
+          clock_format_hint: "Please use 24-hour HH:MM format."
+          closes_after_open: "must be later than the opening time"
+          open_weekdays_present: "must include at least one day"
       demo_data:
         title: "Demo data management"
         eyebrow: "Deterministic QA harness"

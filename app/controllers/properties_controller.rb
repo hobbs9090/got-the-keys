@@ -54,11 +54,11 @@ class PropertiesController < ApplicationController
   end
 
   def new
-    @property = current_user.properties.new(listing_state: "draft")
+    @property = current_user.properties.new(default_property_attributes)
   end
 
   def create
-    @property = current_user.properties.new(property_params.reverse_merge(listing_state: "draft"))
+    @property = current_user.properties.new(property_params.reverse_merge(default_property_attributes))
     if @property.save
       @property.persist_image_upload! if @property.image_upload.present?
       redirect_to @property, notice: t(:successfully_created)
@@ -109,6 +109,13 @@ class PropertiesController < ApplicationController
       max_price: @filters[:max_price],
       sort: @filters[:sort],
       alerts_enabled: true
+    }
+  end
+
+  def default_property_attributes
+    {
+      listing_state: "draft",
+      country: "United Kingdom"
     }
   end
 

@@ -41,24 +41,29 @@
 
       <div class="form-grid">
         <div class="form-grid__full">
-          <%= f.label :title, t("ui.property_documents.fields.title") %>
-          <%= f.text_field :title %>
+          <%= f.label :title, t("ui.property_documents.fields.title"), **form_label_options(@new_property_document, :title) %>
+          <%= f.text_field :title, required: true, maxlength: 120, **form_control_options(@new_property_document, :title) %>
+          <%= field_error_messages(@new_property_document, :title) %>
         </div>
         <div class="form-grid__full">
-          <%= f.label :file_name, t("ui.property_documents.fields.file_name") %>
-          <%= f.text_field :file_name, placeholder: t("ui.property_documents.fields.file_name_placeholder") %>
+          <%= f.label :file_name, t("ui.property_documents.fields.file_name"), **form_label_options(@new_property_document, :file_name) %>
+          <%= f.text_field :file_name, required: true, maxlength: 200, placeholder: t("ui.property_documents.fields.file_name_placeholder"), **form_control_options(@new_property_document, :file_name) %>
+          <%= field_error_messages(@new_property_document, :file_name) %>
         </div>
         <div>
-          <%= f.label :category, t("ui.property_documents.fields.category") %>
-          <%= f.select :category, property_document_category_options %>
+          <%= f.label :category, t("ui.property_documents.fields.category"), **form_label_options(@new_property_document, :category) %>
+          <%= f.select :category, property_document_category_options, {}, form_control_options(@new_property_document, :category) %>
+          <%= field_error_messages(@new_property_document, :category) %>
         </div>
         <div>
-          <%= f.label :visibility, t("ui.property_documents.fields.visibility") %>
-          <%= f.select :visibility, property_document_visibility_options %>
+          <%= f.label :visibility, t("ui.property_documents.fields.visibility"), **form_label_options(@new_property_document, :visibility) %>
+          <%= f.select :visibility, property_document_visibility_options, {}, form_control_options(@new_property_document, :visibility) %>
+          <%= field_error_messages(@new_property_document, :visibility) %>
         </div>
         <div>
-          <%= f.label :position, t("ui.property_documents.fields.position") %>
-          <%= f.number_field :position, min: 0 %>
+          <%= f.label :position, t("ui.property_documents.fields.position"), **form_label_options(@new_property_document, :position) %>
+          <%= f.number_field :position, min: 0, **form_control_options(@new_property_document, :position) %>
+          <%= field_error_messages(@new_property_document, :position) %>
         </div>
       </div>
 
@@ -73,24 +78,29 @@
       <%= form_with model: [@property, @edited_property_document] do |f| %>
         <div class="form-grid">
           <div class="form-grid__full">
-            <%= f.label :title, t("ui.property_documents.fields.title") %>
-            <%= f.text_field :title %>
+            <%= f.label :title, t("ui.property_documents.fields.title"), **form_label_options(@edited_property_document, :title) %>
+            <%= f.text_field :title, required: true, maxlength: 120, **form_control_options(@edited_property_document, :title) %>
+            <%= field_error_messages(@edited_property_document, :title) %>
           </div>
           <div class="form-grid__full">
-            <%= f.label :file_name, t("ui.property_documents.fields.file_name") %>
-            <%= f.text_field :file_name %>
+            <%= f.label :file_name, t("ui.property_documents.fields.file_name"), **form_label_options(@edited_property_document, :file_name) %>
+            <%= f.text_field :file_name, required: true, maxlength: 200, **form_control_options(@edited_property_document, :file_name) %>
+            <%= field_error_messages(@edited_property_document, :file_name) %>
           </div>
           <div>
-            <%= f.label :category, t("ui.property_documents.fields.category") %>
-            <%= f.select :category, property_document_category_options %>
+            <%= f.label :category, t("ui.property_documents.fields.category"), **form_label_options(@edited_property_document, :category) %>
+            <%= f.select :category, property_document_category_options, {}, form_control_options(@edited_property_document, :category) %>
+            <%= field_error_messages(@edited_property_document, :category) %>
           </div>
           <div>
-            <%= f.label :visibility, t("ui.property_documents.fields.visibility") %>
-            <%= f.select :visibility, property_document_visibility_options %>
+            <%= f.label :visibility, t("ui.property_documents.fields.visibility"), **form_label_options(@edited_property_document, :visibility) %>
+            <%= f.select :visibility, property_document_visibility_options, {}, form_control_options(@edited_property_document, :visibility) %>
+            <%= field_error_messages(@edited_property_document, :visibility) %>
           </div>
           <div>
-            <%= f.label :position, t("ui.property_documents.fields.position") %>
-            <%= f.number_field :position, min: 0 %>
+            <%= f.label :position, t("ui.property_documents.fields.position"), **form_label_options(@edited_property_document, :position) %>
+            <%= f.number_field :position, min: 0, **form_control_options(@edited_property_document, :position) %>
+            <%= field_error_messages(@edited_property_document, :position) %>
           </div>
         </div>
 

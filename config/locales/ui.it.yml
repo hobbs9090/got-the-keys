@@ -325,6 +325,11 @@ it:
           contact: Contatti pronti
       flash:
         not_public: Questo annuncio non e attualmente pubblico.
+      validation:
+        image_file_name: deve fare riferimento a un immagine GIF, JPG, JPEG, PNG o SVG
+        image_upload: deve essere un immagine JPG o JPEG
+        refurbished_year: deve essere maggiore o uguale all anno di costruzione
+        duplicate_address: e gia stato inserito per questo indirizzo
     for_sale:
       eyebrow: In vendita
       hero_title: Case disponibili all'acquisto
@@ -433,6 +438,7 @@ it:
       validation:
         slot_unavailable: non e disponibile perche entra in conflitto con un altro
           appuntamento o non rientra nelle regole di prenotazione
+        past_only_status: puo essere impostato solo dopo che l orario dell appuntamento e trascorso
     appointment_mailer:
       subject: 'Visita GotTheKeys %{action}: %{reference}'
       actions:
@@ -575,6 +581,11 @@ it:
         office_closes_at: L'ufficio chiude alle
         open_weekdays: Giorni di apertura
         save: Salva regole di prenotazione
+        validation:
+          clock_format: deve usare il formato a 24 ore HH:MM
+          clock_format_hint: Usa il formato a 24 ore HH:MM.
+          closes_after_open: deve essere successiva all ora di apertura
+          open_weekdays_present: deve includere almeno un giorno
       demo_data:
         title: Gestione dati demo
         eyebrow: Ambiente QA deterministico
@@ -864,6 +875,9 @@ it:
         updated: Il documento "%{title}" e stato aggiornato.
         removed: Il documento "%{title}" e stato rimosso.
         downloaded: '"%{title}" scaricato.'
+    availability_windows:
+      validation:
+        ends_after_start: deve essere successivo all ora di inizio
     validation:
       invalid: Inserisci un valore valido.
       required: Compila questo campo.
@@ -872,6 +886,7 @@ it:
       email: Inserisci un indirizzo e-mail valido.
       url: Inserisci un URL valido.
       too_short: Inserisci almeno %{min} caratteri.
+      too_long: Inserisci non piu di %{max} caratteri.
       pattern: Rispetta il formato richiesto.
       number: Inserisci un numero.
       range_underflow: Inserisci un valore maggiore o uguale a %{min}.

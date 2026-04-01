@@ -31,6 +31,6 @@ class AvailabilityWindow < ApplicationRecord
     return if starts_at.blank? || ends_at.blank?
     return if starts_at < ends_at
 
-    errors.add(:ends_at, "must be after the start time")
+    errors.add(:ends_at, I18n.t("ui.availability_windows.validation.ends_after_start", default: "must be after the start time"))
   end
 end

@@ -222,6 +222,22 @@ describe "Properties" do
     end
   end
 
+  describe "GET /properties/new" do
+    it "prefills the seller-facing defaults for a new listing" do
+      sign_in user
+
+      get new_property_path
+
+      document = Nokogiri::HTML(response.body)
+      country_field = document.at_css('input[name="property[country]"]')
+      listing_state_select = document.at_css('select[name="property[listing_state]"]')
+
+      expect(response).to have_http_status(:ok)
+      expect(country_field["value"]).to eq("United Kingdom")
+      expect(listing_state_select.at_css('option[selected][value="draft"]')).to be_present
+    end
+  end
+
   describe "GET /properties/1" do
     it "should retrieve page" do
       get property_path(property)

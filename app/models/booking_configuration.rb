@@ -8,7 +8,10 @@ class BookingConfiguration < ApplicationRecord
   validates :slot_duration_minutes, numericality: { only_integer: true, greater_than_or_equal_to: 15, less_than_or_equal_to: 240 }, allow_blank: true
   validates :lead_time_hours, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 336 }, allow_blank: true
   validates :buffer_minutes, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 180 }, allow_blank: true
-  validates :office_opens_at, :office_closes_at, format: { with: CLOCK_FORMAT, message: "must use 24-hour HH:MM format" }, allow_blank: true
+  validates :office_opens_at, :office_closes_at, format: {
+    with: CLOCK_FORMAT,
+    message: ->(_record, _data) { I18n.t("ui.admin.booking_configuration.validation.clock_format", default: "must use 24-hour HH:MM format") }
+  }, allow_blank: true
   validate :office_hours_in_order
   validate :open_weekdays_present
 
@@ -72,13 +75,13 @@ class BookingConfiguration < ApplicationRecord
     return if office_opens_at.blank? || office_closes_at.blank?
     return if parse_clock(Date.current, office_opens_at) < parse_clock(Date.current, office_closes_at)
 
-    errors.add(:office_closes_at, "must be later than the opening time")
+    errors.add(:office_closes_at, I18n.t("ui.admin.booking_configuration.validation.closes_after_open", default: "must be later than the opening time"))
   end
 
   def open_weekdays_present
     return if open_weekday_numbers.any?
 
-    errors.add(:open_weekdays, "must include at least one day")
+    errors.add(:open_weekdays, I18n.t("ui.admin.booking_configuration.validation.open_weekdays_present", default: "must include at least one day"))
   end
 
   def parse_clock(date, value)

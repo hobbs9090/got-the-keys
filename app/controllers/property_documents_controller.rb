@@ -8,7 +8,7 @@ class PropertyDocumentsController < ApplicationController
 
   def index
     @property_documents = @property.ordered_documents
-    @new_property_document = @property.property_documents.new(position: next_position)
+    @new_property_document = @property.property_documents.new(default_property_document_attributes)
   end
 
   def new
@@ -35,7 +35,7 @@ class PropertyDocumentsController < ApplicationController
 
   def update
     @property_documents = @property.ordered_documents
-    @new_property_document = @property.property_documents.new(position: next_position)
+    @new_property_document = @property.property_documents.new(default_property_document_attributes)
     @edited_property_document = @property_document
 
     if @property_document.update(property_document_params)
@@ -100,6 +100,14 @@ class PropertyDocumentsController < ApplicationController
 
   def next_position
     @property.property_documents.maximum(:position).to_i + 1
+  end
+
+  def default_property_document_attributes
+    {
+      category: "brochure",
+      visibility: "private",
+      position: next_position
+    }
   end
 
   def mime_type_for(file_name)
