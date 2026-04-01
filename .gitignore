@@ -46,3 +46,4 @@ Thumbs.db
 # Local deployment environment files
 .env.production
 .vscode/ltex.disabledRules.en-US.txt
+.vscode/settings.json
