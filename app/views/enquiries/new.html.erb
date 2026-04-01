@@ -12,7 +12,7 @@
       <div class="form-grid">
         <div>
           <%= f.label :customer_name, t("ui.common.full_name"), **form_label_options(@enquiry, :customer_name) %>
-          <%= f.text_field :customer_name, required: true, autofocus: true, data: { testid: "enquiry-customer-name" }, **form_control_options(@enquiry, :customer_name) %>
+          <%= f.text_field :customer_name, required: true, autofocus: true, maxlength: 100, data: { testid: "enquiry-customer-name" }, **form_control_options(@enquiry, :customer_name) %>
           <%= field_error_messages(@enquiry, :customer_name) %>
         </div>
         <div>
@@ -32,7 +32,7 @@
         </div>
         <div class="form-grid__full">
           <%= f.label :message, t("ui.enquiries.fields.message"), **form_label_options(@enquiry, :message) %>
-          <%= f.text_area :message, rows: 8, required: true, maxlength: 3000, data: { testid: "enquiry-message" }, **form_control_options(@enquiry, :message) %>
+          <%= f.text_area :message, rows: 8, required: true, minlength: 20, maxlength: 3000, data: { testid: "enquiry-message" }, **form_control_options(@enquiry, :message) %>
           <%= field_error_messages(@enquiry, :message) %>
         </div>
       </div>

@@ -47,7 +47,7 @@ class Property < ApplicationRecord
             allow_blank: true,
             format: {
               with: IMAGE_FILE_NAME_FORMAT,
-              message: 'must reference a GIF, JPG, JPEG, PNG, or SVG image'
+              message: ->(_record, _data) { I18n.t("ui.properties.validation.image_file_name", default: "must reference a GIF, JPG, JPEG, PNG, or SVG image") }
             }
   validates :sale_status, inclusion: { in: SALE_STATUS }, allow_blank: true
   validates :listing_state, inclusion: { in: LISTING_STATES }
@@ -337,7 +337,7 @@ class Property < ApplicationRecord
 
     return if extension.in?(IMAGE_UPLOAD_EXTENSIONS) && (content_type.blank? || content_type.in?(IMAGE_UPLOAD_CONTENT_TYPES))
 
-    errors.add(:image_upload, "must be a JPG or JPEG image")
+    errors.add(:image_upload, I18n.t("ui.properties.validation.image_upload", default: "must be a JPG or JPEG image"))
   end
 
   def image_upload_root
@@ -394,7 +394,7 @@ class Property < ApplicationRecord
     return if refurbished_year.blank? || year_built.blank?
     return if refurbished_year >= year_built
 
-    errors.add(:refurbished_year, "must be greater than or equal to the year built")
+    errors.add(:refurbished_year, I18n.t("ui.properties.validation.refurbished_year", default: "must be greater than or equal to the year built"))
   end
 
   def prevent_duplicate_exact_address
@@ -416,7 +416,7 @@ class Property < ApplicationRecord
     duplicate_scope = duplicate_scope.where.not(id: id) if persisted?
     return unless duplicate_scope.exists?
 
-    errors.add(:address_line_1, "has already been listed for this address")
+    errors.add(:address_line_1, I18n.t("ui.properties.validation.duplicate_address", default: "has already been listed for this address"))
   end
 
   def normalized_address_component(value)

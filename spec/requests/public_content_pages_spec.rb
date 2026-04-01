@@ -13,6 +13,10 @@ RSpec.describe "Public content pages", type: :request do
     parsed_html.at_css(%(input##{field_id}))&.[]("placeholder")
   end
 
+  def input_attribute(field_id, attribute)
+    parsed_html.at_css(%(input##{field_id}))&.[](attribute)
+  end
+
   pages = [
     { description: "search", path: "/searches", text: "Search listings and booking availability together" },
     { description: "legal", path: "/legal", text: "A plain-English summary of the key terms and responsibilities that apply when you use the site." },
@@ -115,5 +119,21 @@ RSpec.describe "Public content pages", type: :request do
     expect(label_text("max_price")).to eq(I18n.t("ui.properties.filters.max_monthly_rental"))
     expect(input_placeholder("min_price")).to eq("1,500")
     expect(input_placeholder("max_price")).to eq("10,000")
+  end
+
+  it "adds search form validation attributes for query and price inputs" do
+    get searches_path
+
+    expect(input_attribute("q", "maxlength")).to eq("100")
+    expect(input_attribute("min_price", "pattern")).to eq("[0-9,\\s]*")
+    expect(input_attribute("max_price", "pattern")).to eq("[0-9,\\s]*")
+    expect(input_attribute("min_price", "maxlength")).to eq("15")
+    expect(input_attribute("max_price", "maxlength")).to eq("15")
+
+    get properties_path
+
+    saved_search_email = parsed_html.at_css("input#saved_search_email")
+    expect(saved_search_email["required"]).to eq("required")
+    expect(saved_search_email["maxlength"]).to eq("255")
   end
 end

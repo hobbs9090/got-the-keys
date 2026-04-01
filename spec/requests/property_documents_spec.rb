@@ -23,6 +23,20 @@ RSpec.describe "Property documents", type: :request do
     expect(response).to redirect_to(property_property_documents_path(property))
   end
 
+  it "prefills sensible document defaults for the owner form" do
+    sign_in owner
+
+    get property_property_documents_path(property)
+
+    page = Nokogiri::HTML(response.body)
+    category_select = page.at_css('select[name="property_document[category]"]')
+    visibility_select = page.at_css('select[name="property_document[visibility]"]')
+
+    expect(response).to have_http_status(:ok)
+    expect(category_select.at_css('option[selected][value="brochure"]')).to be_present
+    expect(visibility_select.at_css('option[selected][value="private"]')).to be_present
+  end
+
   it "allows public visitors to download public documents" do
     document = FactoryBot.create(:property_document, property:, title: "Sales brochure", file_name: "granville-road-brochure.pdf")
     FactoryBot.create(:photo, property:, image_filename: "properties/property_sevenoaks_family_home_hero.jpg", primary: true, position: 1)

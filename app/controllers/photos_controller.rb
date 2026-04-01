@@ -8,7 +8,7 @@ class PhotosController < ApplicationController
 
   def index
     @photos = @property.photos.ordered
-    @new_photo = @property.photos.new(position: next_position)
+    @new_photo = @property.photos.new(default_photo_attributes)
   end
 
   def new
@@ -29,7 +29,7 @@ class PhotosController < ApplicationController
 
   def update
     @photos = @property.photos.ordered
-    @new_photo = @property.photos.new(position: next_position)
+    @new_photo = @property.photos.new(default_photo_attributes)
     @edited_photo = @photo
 
     if @photo.update(photo_params)
@@ -56,5 +56,12 @@ class PhotosController < ApplicationController
 
   def next_position
     @property.photos.maximum(:position).to_i + 1
+  end
+
+  def default_photo_attributes
+    {
+      position: next_position,
+      primary: @property.photos.none?
+    }
   end
 end

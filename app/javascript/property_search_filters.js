@@ -29,7 +29,7 @@ const setupPropertySearchFilters = (form) => {
   const changeHandler = () => updatePriceLabels(form);
   saleStatusSelect.addEventListener("change", changeHandler);
 
-  propertySearchFilterState.set(form, {
+  const state = {
     saleStatusSelect,
     minPriceLabel,
     maxPriceLabel,
@@ -37,7 +37,9 @@ const setupPropertySearchFilters = (form) => {
     maxPriceInput,
     rentalSaleStatusValue,
     changeHandler
-  });
+  };
+
+  propertySearchFilterState.set(form, state);
 
   form.dataset.propertySearchFiltersReady = "true";
   updatePriceLabels(form);

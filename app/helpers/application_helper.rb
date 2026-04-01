@@ -168,6 +168,7 @@ module ApplicationHelper
       email: t("ui.validation.email"),
       url: t("ui.validation.url"),
       too_short: t("ui.validation.too_short", min: "__MIN__"),
+      too_long: t("ui.validation.too_long", max: "__MAX__"),
       pattern: t("ui.validation.pattern"),
       number: t("ui.validation.number"),
       range_underflow: t("ui.validation.range_underflow", min: "__MIN__"),

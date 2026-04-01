@@ -329,6 +329,11 @@ fr:
           contact: Contact pret
       flash:
         not_public: Cette annonce n'est pas actuellement publique.
+      validation:
+        image_file_name: doit faire reference a une image GIF, JPG, JPEG, PNG ou SVG
+        image_upload: doit etre une image JPG ou JPEG
+        refurbished_year: doit etre superieure ou egale a l annee de construction
+        duplicate_address: a deja ete enregistree pour cette adresse
     for_sale:
       eyebrow: A vendre
       hero_title: Biens disponibles a l'achat
@@ -439,6 +444,7 @@ fr:
       validation:
         slot_unavailable: n'est pas disponible car il entre en conflit avec un autre
           rendez-vous ou sort des regles de reservation
+        past_only_status: ne peut etre defini qu une fois l heure du rendez-vous passee
     appointment_mailer:
       subject: 'Visite GotTheKeys %{action} : %{reference}'
       actions:
@@ -582,6 +588,11 @@ fr:
         office_closes_at: Fermeture du bureau a
         open_weekdays: Jours ouverts
         save: Enregistrer les regles
+        validation:
+          clock_format: doit utiliser le format 24 h HH:MM
+          clock_format_hint: Veuillez utiliser le format 24 h HH:MM.
+          closes_after_open: doit etre posterieure a l heure d ouverture
+          open_weekdays_present: doit inclure au moins un jour
       demo_data:
         title: Gestion des donnees de demo
         eyebrow: Environnement QA deterministe
@@ -875,6 +886,9 @@ fr:
         updated: Le document "%{title}" a ete mis a jour.
         removed: Le document "%{title}" a ete supprime.
         downloaded: '"%{title}" telecharge.'
+    availability_windows:
+      validation:
+        ends_after_start: doit etre apres l heure de debut
     validation:
       invalid: Veuillez saisir une valeur valide.
       required: Veuillez renseigner ce champ.
@@ -883,6 +897,7 @@ fr:
       email: Veuillez saisir une adresse e-mail valide.
       url: Veuillez saisir une URL valide.
       too_short: Veuillez saisir au moins %{min} caracteres.
+      too_long: Veuillez ne pas depasser %{max} caracteres.
       pattern: Veuillez respecter le format demande.
       number: Veuillez saisir un nombre.
       range_underflow: Veuillez saisir une valeur superieure ou egale a %{min}.

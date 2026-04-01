@@ -12,7 +12,7 @@
       <div class="form-grid">
         <div>
           <%= f.label :buyer_name, t("ui.common.full_name"), **form_label_options(@offer, :buyer_name) %>
-          <%= f.text_field :buyer_name, required: true, data: { testid: "offer-buyer-name" }, **form_control_options(@offer, :buyer_name) %>
+          <%= f.text_field :buyer_name, required: true, maxlength: 100, data: { testid: "offer-buyer-name" }, **form_control_options(@offer, :buyer_name) %>
           <%= field_error_messages(@offer, :buyer_name) %>
         </div>
         <div>
@@ -32,12 +32,12 @@
         </div>
         <div class="form-grid__full">
           <%= f.label :chain_position, t("ui.offers.fields.chain_position"), **form_label_options(@offer, :chain_position) %>
-          <%= f.text_field :chain_position, placeholder: t("ui.offers.fields.chain_position_placeholder"), data: { testid: "offer-chain-position" }, **form_control_options(@offer, :chain_position) %>
+          <%= f.text_field :chain_position, placeholder: t("ui.offers.fields.chain_position_placeholder"), maxlength: 120, data: { testid: "offer-chain-position" }, **form_control_options(@offer, :chain_position) %>
           <%= field_error_messages(@offer, :chain_position) %>
         </div>
         <div class="form-grid__full">
           <%= f.label :notes, t("ui.offers.fields.notes"), **form_label_options(@offer, :notes) %>
-          <%= f.text_area :notes, rows: 6, data: { testid: "offer-notes" }, **form_control_options(@offer, :notes) %>
+          <%= f.text_area :notes, rows: 6, maxlength: 3000, data: { testid: "offer-notes" }, **form_control_options(@offer, :notes) %>
           <%= field_error_messages(@offer, :notes) %>
         </div>
       </div>
