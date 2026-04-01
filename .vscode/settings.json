@@ -21,9 +21,11 @@
       "port": 15432,
       "database": "gotthekeys_staging",
       "user": "steven",
-      "authenticationType": "SqlLogin",
+      "authenticationType": "None",
       "emptyPasswordInput": true,
-      "password": ""
+      "password": "",
+      "expiresOn": 0,
+      "sshPassword": ""
     },
     {
       "id": "gotthekeys-production-db",
@@ -33,9 +35,11 @@
       "port": 25432,
       "database": "gotthekeys_production",
       "user": "steven",
-      "authenticationType": "SqlLogin",
+      "authenticationType": "None",
       "emptyPasswordInput": true,
-      "password": ""
+      "password": "",
+      "expiresOn": 0,
+      "sshPassword": ""
     }
   ]
 }
