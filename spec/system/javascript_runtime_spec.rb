@@ -855,9 +855,17 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     wait_for_theme_runtime
 
     page.execute_script("window.scrollTo(0, document.body.scrollHeight)")
-    page.execute_script(<<~JS)
-      const links = Array.from(document.querySelectorAll("[data-pagination-scroll-nav] .pagination a"));
-      links.filter((link) => link.textContent.trim() === "2").at(-1)?.click();
+    page_two_href = page.evaluate_script(<<~JS)
+      (() => {
+        const links = Array.from(document.querySelectorAll("[data-pagination-scroll-nav] .pagination a"));
+        return links.filter((link) => link.textContent.trim() === "2").at(-1)?.href;
+      })();
+    JS
+    page.execute_script(<<~JS, page_two_href)
+      const href = arguments[0];
+      const url = new URL(href, window.location.origin);
+      window.sessionStorage.setItem("gotthekeys-pagination-scroll", `${url.pathname}${url.search}`);
+      window.location.assign(href);
     JS
 
     expect(page).to have_current_path(properties_path(page: 2), ignore_query: false)
