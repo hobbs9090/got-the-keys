@@ -184,6 +184,77 @@ RSpec.describe DemoData::ScenarioValidator do
     expect(normalized[:rental_applications].first[:move_in_date]).to eq(Date.new(2026, 4, 22))
   end
 
+  it "parses activity timestamps and rejects inverted activity timelines" do
+    payload = base_payload.deep_dup
+    payload[:enquiries] = [
+      {
+        property_key: "cedar-close",
+        assigned_admin_email: "admin@example.com",
+        customer_name: "Emily Hart",
+        customer_email: "emily@example.com",
+        customer_phone: "07700 900777",
+        source_type: "general_enquiry",
+        message: "I would love a little more information about the layout, storage, and next viewing availability for this listing.",
+        status: "contacted",
+        created_at: "today-4d 09:00",
+        updated_at: "today-3d 11:30"
+      }
+    ]
+    payload[:offers] = [
+      {
+        property_key: "cedar-close",
+        assigned_admin_email: "admin@example.com",
+        buyer_name: "Sam Turner",
+        buyer_email: "sam@example.com",
+        buyer_phone: "07700 900888",
+        amount: 640000,
+        status: "accepted",
+        created_at: "today-8d 10:15",
+        updated_at: "today-5d 14:45"
+      }
+    ]
+    payload[:properties] << {
+      key: "oak-rental",
+      owner_email: "owner@example.com",
+      address_line_1: "12 Oak Road",
+      town_city: "Croydon",
+      county: "Greater London",
+      postcode: "CR0 2AB",
+      country: "United Kingdom",
+      property_description: "A polished rental apartment with practical storage, a bright layout, and good transport links.",
+      bedrooms: 2,
+      sale_status: "For Rent",
+      asking_price: 1950
+    }
+    payload[:rental_applications] = [
+      {
+        property_key: "oak-rental",
+        assigned_admin_email: "admin@example.com",
+        applicant_name: "Maya Collins",
+        applicant_email: "maya@example.com",
+        applicant_phone: "07700 900555",
+        move_in_date: "today+21d",
+        status: "approved",
+        created_at: "today-6d 08:45",
+        updated_at: "today-2d 16:10"
+      }
+    ]
+
+    normalized = validator.validate!(payload)
+
+    expect(normalized[:enquiries].first[:created_at]).to eq(Time.zone.local(2026, 3, 28, 9, 0))
+    expect(normalized[:enquiries].first[:updated_at]).to eq(Time.zone.local(2026, 3, 29, 11, 30))
+    expect(normalized[:offers].first[:updated_at]).to eq(Time.zone.local(2026, 3, 27, 14, 45))
+    expect(normalized[:rental_applications].first[:created_at]).to eq(Time.zone.local(2026, 3, 26, 8, 45))
+
+    payload[:offers].first[:updated_at] = "today-10d 09:00"
+
+    expect { validator.validate!(payload) }.to raise_error(
+      described_class::ValidationError,
+      "Offer updated_at cannot be earlier than created_at"
+    )
+  end
+
   it "raises when a property references a missing owner email" do
     payload = base_payload.deep_dup
     payload[:properties].first[:owner_email] = "missing@example.com"

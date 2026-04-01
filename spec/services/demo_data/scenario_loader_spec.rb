@@ -76,7 +76,25 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(Property.find_by!(address_line_1: "18 Cedar Road").available_from).to eq(Date.new(2026, 4, 15))
     expect(Property.find_by!(address_line_1: "Flat 3, 44 Mount Ephraim").available_from).to eq(Date.new(2026, 5, 1))
     expect(Property.find_by!(address_line_1: "Apartment 11, 9 Park Lane").available_from).to eq(Date.new(2026, 4, 25))
-    expect(RentalApplication.minimum(:move_in_date)).to be >= Date.new(2026, 4, 19)
+    expect(RentalApplication.minimum(:move_in_date)).to be >= Date.new(2026, 4, 15)
+
+    baseline_enquiry = Enquiry.find_by!(customer_email: "emily.carter@example.com")
+    expect(baseline_enquiry.created_at).to eq(Time.zone.local(2026, 3, 31, 9, 15))
+    expect(baseline_enquiry.updated_at).to eq(Time.zone.local(2026, 3, 31, 9, 15))
+    expect(baseline_enquiry.audit_logs.order(:id).pluck(:occurred_at)).to eq([Time.zone.local(2026, 3, 31, 9, 15)])
+
+    contacted_enquiry = Enquiry.find_by!(customer_email: "leon.grant@example.com")
+    expect(contacted_enquiry.created_at).to eq(Time.zone.local(2026, 3, 28, 11, 20))
+    expect(contacted_enquiry.updated_at).to eq(Time.zone.local(2026, 3, 29, 15, 45))
+
+    accepted_offer = Offer.find_by!(status: "accepted")
+    expect(accepted_offer.created_at).to be < accepted_offer.updated_at
+    expect(accepted_offer.timeline.order(:occurred_at).pluck(:occurred_at)).to eq([accepted_offer.created_at, accepted_offer.updated_at])
+
+    approved_application = RentalApplication.find_by!(status: "approved")
+    expect(approved_application.created_at).to be < approved_application.updated_at
+    expect(approved_application.timeline.order(:occurred_at).pluck(:occurred_at)).to eq([approved_application.created_at, approved_application.updated_at])
+    expect(approved_application.move_in_date).to be >= approved_application.created_at.to_date + 12.days
   end
 
   it "exports the current dataset as YAML" do
@@ -95,6 +113,8 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(exported).to include("property_documents:")
     expect(exported).to include("year_built:")
     expect(exported).to include("refurbished_year:")
+    expect(exported).to include("created_at:")
+    expect(exported).to include("updated_at:")
     expect(exported).to include("qa:")
   end
 end
