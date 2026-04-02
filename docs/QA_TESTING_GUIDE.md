@@ -64,27 +64,18 @@ Key selectors include:
 
 The in-app QA guide at `/admin/qa` is the best runtime confirmation of the selector registry and scenario state.
 
-## Deterministic Demo Scenarios
+## Deterministic Demo Data
 
-Scenario packs are YAML-backed datasets used for:
+The baseline dataset is a YAML-backed seed used for:
 
 - baseline happy-path practice
-- edge cases
-- fully booked availability
-- high-volume catalogue browsing
-- lead-management and progression workflows
+- repeatable public-flow assertions
+- repeatable admin-flow assertions
+- reset-friendly training runs
 
-Examples bundled in the repo:
+Bundled in the repo:
 
 - `baseline`
-- `fully_booked_day`
-- `qa_edge_cases`
-- `high_volume_search`
-- `lead_management`
-- `deal_progression`
-- `listing_lifecycle`
-- `documents_and_trust`
-- `viewing_operations`
 
 Read [Demo data operations](DEMO_DATA_OPERATIONS.md) for seeding, preview, reset, and export workflows.
 
@@ -114,7 +105,7 @@ Why this app is useful for Playwright:
 - public flows have stable entry points and predictable data
 - admin flows exercise authentication, state transitions, and filters
 - selectors are curated rather than accidental
-- scenario packs reduce flakiness from drifting test data
+- baseline reseeding reduces flakiness from drifting test data
 
 Suggested Playwright exercises:
 

@@ -37,7 +37,6 @@ bundle install
 npm install
 bin/rails db:prepare
 bin/rails db:seed
-bin/install_git_hooks
 npm run build
 bin/rails server
 ```
@@ -67,8 +66,6 @@ After `bin/rails db:seed`:
 - Seller examples:
   - `charlotte.hughes@example.com` / `********`
   - `daniel.mercer@example.com` / `********`
-  - `matthew.wells@example.com` / `********`
-  - `lucy.mcclure@example.com` / `********`
 
 ## Common Local Commands
 
@@ -84,10 +81,10 @@ Reseed the default deterministic dataset:
 bin/rails db:seed
 ```
 
-Load a specific scenario:
+Seed the bundled dataset explicitly:
 
 ```bash
-SEED_SCENARIO=fully_booked_day bin/rails db:seed
+SEED_SCENARIO=baseline bin/rails db:seed
 ```
 
 Run the full test suite:

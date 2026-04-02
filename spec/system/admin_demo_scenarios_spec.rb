@@ -10,7 +10,7 @@ RSpec.describe "Admin demo scenarios", type: :system do
   end
 
   it "restores the baseline scenario from the admin area with the typed gate" do
-    BookingConfiguration.current.update!(active_demo_scenario_key: "fully_booked_day")
+    BookingConfiguration.current.update!(active_demo_scenario_key: "baseline")
     admin = FactoryBot.create(:admin, email: "steven@gotthekeys.uk", password: "changeme", password_confirmation: "changeme")
 
     sign_in_as(email: admin.email, password: "changeme")
@@ -18,7 +18,7 @@ RSpec.describe "Admin demo scenarios", type: :system do
     expect(page).to have_text("Demo data management")
     expect(page).to have_css('[data-testid="scenario-seed-reset-panel"]')
     expect(page).to have_text("Seed data resets")
-    expect(BookingConfiguration.current.active_demo_scenario_key).to eq("fully_booked_day")
+    expect(BookingConfiguration.current.active_demo_scenario_key).to eq("baseline")
 
     within('[data-testid="scenario-seed-reset-baseline"]') do
       fill_in "Type baseline to continue", with: "baseline"

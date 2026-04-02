@@ -650,9 +650,6 @@ fr:
           baseline: Base
           custom_sevenoaks_westerham_catalogue: Catalogue selectionne Sevenoaks et
             Westerham
-          fully_booked_day: Journee complete
-          high_volume_search: Recherche a fort volume
-          qa_edge_cases: Cas limites QA
         preview:
           title: Apercu du scenario %{name}
           eyebrow: Apercu du scenario

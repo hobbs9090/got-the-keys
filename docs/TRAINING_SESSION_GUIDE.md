@@ -20,7 +20,7 @@ Common workshop goals include:
 - teaching admin-flow automation and state checks
 - practicing accessibility and Lighthouse audits
 - demonstrating deterministic resets and seeded data discipline
-- comparing happy paths against edge cases
+- comparing happy paths across repeated baseline resets
 
 ## Before The Session
 
@@ -58,11 +58,11 @@ bundle exec rspec spec/requests spec/system
 - show selectors and the admin QA panel
 - run a known happy path
 
-### Phase 3: Failure And Edge States
+### Phase 3: Assertion Discipline
 
-- switch to `fully_booked_day` or `qa_edge_cases`
-- explore conflict or empty-slot behavior
-- compare assertions against the baseline run
+- keep the baseline active
+- explore both read and write journeys from the same known seed
+- compare assertions against a freshly reset baseline run
 
 ### Phase 4: Reset Discipline
 
@@ -77,7 +77,6 @@ Use the admin demo-data console or the CLI workflow described in [Demo data oper
 Best practice:
 
 - restore `baseline` between attendee groups
-- switch to a non-baseline pack only for a deliberate exercise
 - announce the active scenario before asking learners to run assertions
 
 ## Common Trainer Checks During A Session
@@ -91,10 +90,9 @@ Best practice:
 ## Good Exercise Pairings
 
 - `baseline` + public booking happy path
-- `fully_booked_day` + slot-conflict handling
-- `qa_edge_cases` + empty state and validation checks
-- `high_volume_search` + list scanning, pagination, and read-only load exercises
-- `lead_management` + enquiry triage and admin history views
+- `baseline` + public booking happy path
+- `baseline` + enquiry triage and admin history views
+- `baseline` + repeatability checks after reseed
 
 ## Workshop Risks To Avoid
 

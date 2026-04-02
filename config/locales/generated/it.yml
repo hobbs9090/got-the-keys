@@ -308,7 +308,7 @@ it:
         - Create a new booking from a property page and verify the success message plus reference code.
         - As an admin, confirm a pending appointment and validate the status badge plus audit timeline.
         - Reschedule an appointment into an occupied slot and verify the conflict validation message.
-        - Restore the baseline dataset, then switch to the fully booked scenario and verify the empty-slot state.
+        - Restore the baseline dataset and verify the same booking and admin assertions still hold.
         - Export the current dataset, import it back through the preview screen, and confirm the diagnostics panel updates.
         training_title: Recommended training journeys
         version_box:

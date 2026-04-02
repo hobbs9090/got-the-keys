@@ -3,36 +3,28 @@
 ## Contents
 
 - [Documentation index](INDEX.md)
-- [What scenario packs are](#what-scenario-packs-are)
-- [Bundled scenarios](#bundled-scenarios)
+- [What the baseline dataset is](#what-the-baseline-dataset-is)
+- [Bundled demo dataset](#bundled-demo-dataset)
 - [Seed the default baseline](#seed-the-default-baseline)
-- [Seed a specific scenario](#seed-a-specific-scenario)
+- [Seed the baseline explicitly](#seed-the-baseline-explicitly)
 - [Verify the active scenario](#verify-the-active-scenario)
 - [Reset and cleanup notes](#reset-and-cleanup-notes)
 
-This guide explains how seeded scenarios are managed before, during, and after training sessions.
+This guide explains how the baseline demo dataset is managed before, during, and after training sessions.
 
-## What Scenario Packs Are
+## What The Baseline Dataset Is
 
-Scenario packs are deterministic YAML datasets stored under:
+The baseline dataset is a deterministic YAML seed stored under:
 
 - `db/demo_scenarios/`
 
-They exist so the app can be reset into known states repeatedly.
+It exists so the app can be reset into a known state repeatedly.
 
-## Bundled Scenarios
+## Bundled Demo Dataset
 
-The repo currently includes packs such as:
+The repo currently ships with:
 
 - `baseline`
-- `fully_booked_day`
-- `qa_edge_cases`
-- `high_volume_search`
-- `lead_management`
-- `deal_progression`
-- `listing_lifecycle`
-- `documents_and_trust`
-- `viewing_operations`
 
 ## Seed The Default Baseline
 
@@ -40,10 +32,10 @@ The repo currently includes packs such as:
 bin/rails db:seed
 ```
 
-## Seed A Specific Scenario
+## Seed The Baseline Explicitly
 
 ```bash
-SEED_SCENARIO=fully_booked_day bin/rails db:seed
+SEED_SCENARIO=baseline bin/rails db:seed
 ```
 
 ## Verify The Active Scenario
@@ -61,7 +53,7 @@ The active scenario indicator is also part of the selector contract:
 
 The admin demo-data area is the main trainer surface for:
 
-- previewing a scenario
+- previewing the baseline dataset
 - restoring the baseline dataset
 - checking trainer notes
 - reviewing expected assertions
@@ -93,7 +85,7 @@ bin/rails runner 'puts DemoData::ScenarioLoader.new.export' > db/demo_scenarios/
 
 Use this when you have shaped a useful workshop state and want to turn it into a reusable pack.
 
-## Validate A Scenario Pack
+## Validate A Demo Dataset
 
 Preview a YAML payload from the command line:
 
@@ -103,13 +95,13 @@ bin/rails runner 'payload = YAML.safe_load(File.read("db/demo_scenarios/my_train
 
 Use the admin preview flow when you want a trainer-friendly UI check before applying the dataset.
 
-## Editing Guidance For New Packs
+## Editing Guidance For The Baseline Dataset
 
 Recommended conventions:
 
-- keep the dataset tightly focused on one teaching goal
+- keep the dataset stable and broadly useful for training
 - use stable, descriptive keys
-- prefer relative times where supported so packs do not go stale
+- prefer relative times where supported so the baseline does not go stale
 - keep credentials simple unless the exercise needs variation
 
 Helpful top-level fields to review after export:

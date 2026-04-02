@@ -695,9 +695,6 @@ zh:
         scenario_keys:
           baseline: 基线
           custom_sevenoaks_westerham_catalogue: 精选 Sevenoaks 与 Westerham 房源目录
-          fully_booked_day: 满额日
-          high_volume_search: 高容量搜索
-          qa_edge_cases: QA 边界情况
         preview:
           title: 场景预览 %{name}
           eyebrow: 场景预览

@@ -16,13 +16,8 @@ RSpec.describe DemoData::ScenarioLoader do
   it "previews the bundled scenarios" do
     previews = loader.scenarios
     baseline = previews.find { |scenario| scenario[:key] == "baseline" }
-    lifecycle = previews.find { |scenario| scenario[:key] == "listing_lifecycle" }
-    leads = previews.find { |scenario| scenario[:key] == "lead_management" }
-    viewing = previews.find { |scenario| scenario[:key] == "viewing_operations" }
-    deals = previews.find { |scenario| scenario[:key] == "deal_progression" }
-    documents = previews.find { |scenario| scenario[:key] == "documents_and_trust" }
 
-    expect(previews.map { |scenario| scenario[:key] }).to include("baseline", "fully_booked_day", "qa_edge_cases", "high_volume_search", "listing_lifecycle", "lead_management", "viewing_operations", "deal_progression", "documents_and_trust")
+    expect(previews.map { |scenario| scenario[:key] }).to eq(["baseline"])
     expect(baseline[:property_count]).to eq(100)
     expect(baseline[:availability_window_count]).to eq(100)
     expect(baseline[:appointment_count]).to eq(40)
@@ -31,17 +26,6 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(baseline[:rental_application_count]).to eq(14)
     expect(baseline[:photo_count]).to eq(11)
     expect(baseline[:property_document_count]).to eq(2)
-    expect(lifecycle[:property_count]).to eq(5)
-    expect(lifecycle[:photo_count]).to eq(3)
-    expect(lifecycle[:floor_plan_count]).to eq(2)
-    expect(leads[:enquiry_count]).to eq(5)
-    expect(leads[:enquiry_statuses]).to include("new" => 2, "contacted" => 1, "qualified" => 1, "unqualified" => 1)
-    expect(viewing[:appointment_statuses]).to include("confirmed" => 1, "rescheduled" => 1, "completed" => 1, "no_show" => 1)
-    expect(deals[:offer_statuses]).to include("rejected" => 1, "withdrawn" => 1, "accepted" => 1)
-    expect(deals[:rental_application_statuses]).to include("rejected" => 1, "withdrawn" => 1, "approved" => 1)
-    expect(documents[:property_document_count]).to eq(2)
-    expect(documents.dig(:qa, :family)).to eq("accessibility")
-    expect(viewing.dig(:qa, :quick_reset)).to eq(true)
   end
 
   it "applies a scenario and records the active key" do

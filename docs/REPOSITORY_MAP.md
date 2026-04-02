@@ -58,7 +58,7 @@ Rails configuration plus project-specific runtime metadata.
 - `db/migrate/`
   Schema evolution.
 - `db/demo_scenarios/`
-  Deterministic seeded scenario packs.
+  Deterministic seeded baseline demo data.
 - `db/seeds.rb`
   Seed entry point.
 

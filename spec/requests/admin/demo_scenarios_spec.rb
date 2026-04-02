@@ -48,7 +48,7 @@ RSpec.describe "Admin demo scenarios" do
   end
 
   it "rejects direct admin access to non-baseline scenarios" do
-    get admin_demo_scenario_path("deal_progression")
+    get admin_demo_scenario_path("removed_scenario")
 
     expect(response).to redirect_to(admin_demo_scenarios_path)
 

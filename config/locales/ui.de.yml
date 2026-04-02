@@ -641,9 +641,6 @@ de:
         scenario_keys:
           baseline: Basis
           custom_sevenoaks_westerham_catalogue: Kuratiertes Sevenoaks- und Westerham-Katalog
-          fully_booked_day: Voll ausgebuchter Tag
-          high_volume_search: Suche mit hohem Volumen
-          qa_edge_cases: QA-Grenzfälle
         preview:
           title: Szenariovorschau %{name}
           eyebrow: Szenariovorschau
