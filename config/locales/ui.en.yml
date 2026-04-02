@@ -109,7 +109,7 @@ en:
       shared_host_title: "Shared-host friendly"
       shared_host_points:
         stack: "Server-rendered Rails under Apache + Passenger."
-        dependencies: "No Redis, Sidekiq, Docker, or always-on worker assumptions."
+        dependencies: "No Redis, Sidekiq, or always-on worker assumptions."
         enhancement: "Progressive enhancement with Foundation, Turbo, and conventional forms."
 
     properties:

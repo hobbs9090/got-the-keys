@@ -97,7 +97,7 @@ zh:
       shared_host_title: 适合共享主机
       shared_host_points:
         stack: 在 Apache + Passenger 下运行的服务端渲染 Rails。
-        dependencies: 不依赖 Redis、Sidekiq、Docker 或常驻工作进程。
+        dependencies: 不依赖 Redis、Sidekiq 或常驻工作进程。
         enhancement: 结合 Foundation、Turbo 和传统表单的渐进增强。
     properties:
       headline_fallback: "%{town_city} 的 %{property_type}"

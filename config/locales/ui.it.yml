@@ -101,7 +101,7 @@ it:
       shared_host_title: Adatto all'hosting condiviso
       shared_host_points:
         stack: Rails renderizzato lato server su Apache + Passenger.
-        dependencies: Nessuna dipendenza da Redis, Sidekiq, Docker o worker sempre
+        dependencies: Nessuna dipendenza da Redis, Sidekiq o worker sempre
           attivi.
         enhancement: Miglioramento progressivo con Foundation, Turbo e moduli tradizionali.
     properties:

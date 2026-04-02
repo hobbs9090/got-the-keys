@@ -100,7 +100,7 @@ de:
       shared_host_title: Für Shared Hosting geeignet
       shared_host_points:
         stack: Serverseitig gerendertes Rails unter Apache + Passenger.
-        dependencies: Keine Annahmen zu Redis, Sidekiq, Docker oder dauerhaft laufenden
+        dependencies: Keine Annahmen zu Redis, Sidekiq oder dauerhaft laufenden
           Workern.
         enhancement: Progressive Enhancement mit Foundation, Turbo und klassischen
           Formularen.

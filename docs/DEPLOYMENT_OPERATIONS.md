@@ -4,9 +4,8 @@
 
 - [Documentation index](INDEX.md)
 - [Primary deployment story](#primary-deployment-story)
-- [Nirvana posture](#nirvana-posture)
+- [Linux posture](#linux-posture)
 - [Capistrano release flow](#capistrano-release-flow)
-- [Container and Synology notes](#container-and-synology-notes)
 - [Release checks](#release-checks)
 
 This guide explains how the app is deployed and operated in hosted environments.
@@ -17,13 +16,13 @@ The primary hosted path is:
 
 - Apache + Passenger
 - Capistrano-managed releases
-- Nirvana as the current main host shape
+- Linux as the current main host shape
 
 This keeps the app aligned with its shared-host-friendly design.
 
-## Nirvana Posture
+## Linux Posture
 
-Current deploy stages target the Nirvana host shape described by:
+Current deploy stages target the Linux host shape described by:
 
 - `config/deploy/staging.rb`
 - `config/deploy/production.rb`
@@ -102,22 +101,6 @@ Capistrano links and reuses paths such as:
 - `storage`
 - `vendor/bundle`
 - `node_modules`
-
-## Alternative Container Path
-
-An alternative deployment path exists via:
-
-- `Dockerfile`
-- `compose.synology.yml`
-- `bin/container_start`
-
-This path is useful when you want:
-
-- a containerized app service
-- a bundled Postgres service
-- a Synology or Docker-oriented deployment style
-
-It is still secondary to the Apache + Passenger posture in the current documentation set.
 
 ## Release Checks
 

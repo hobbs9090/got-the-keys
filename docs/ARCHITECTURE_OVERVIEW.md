@@ -23,7 +23,7 @@ GotTheKeys is a server-rendered Rails application with a deliberately simple ope
 - Devise for `User` and `Admin`
 - Active Job for background boundaries
 - SQLite for local/default simple flows
-- PostgreSQL for Nirvana-backed hosted deployments
+- PostgreSQL for Linux-backed hosted deployments
 - Apache + Passenger as the primary hosted posture
 
 ## Architectural Priorities
@@ -107,11 +107,6 @@ The main deployment story is:
 - Apache + Passenger
 - Capistrano-managed releases
 - shared-host-friendly assumptions
-
-An alternative containerized path also exists through:
-
-- `Dockerfile`
-- `compose.synology.yml`
 
 ## Read Next
 

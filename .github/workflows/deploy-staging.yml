@@ -32,7 +32,6 @@ jobs:
       - self-hosted
       - Linux
       - X64
-      - nirvana
     timeout-minutes: 30
     environment:
       name: staging

@@ -14,7 +14,7 @@ on:
         default: gotthekeys.uk
         type: string
       deploy_to:
-        description: Capistrano deploy root on the Nirvana host
+        description: Capistrano deploy root on the Linux host
         required: true
         default: /var/www/gotthekeys-production
         type: string

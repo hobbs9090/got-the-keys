@@ -112,10 +112,6 @@ Test coverage by layer.
 
 ## Deployment Files
 
-- `Dockerfile`
-  Container build path.
-- `compose.synology.yml`
-  Synology/container deployment option.
 - `config/deploy.rb`
   Shared Capistrano deploy behavior.
 - `config/deploy/staging.rb`
