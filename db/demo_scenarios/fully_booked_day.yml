@@ -20,7 +20,7 @@ booking_configuration:
   office_closes_at: "17:00"
   open_weekdays: [1, 2, 3, 4, 5]
 admins:
-  - email: steven@gotthekeys.com
+  - email: steven@gotthekeys.uk
     password: secret
     password_confirmation: secret
     language: en
@@ -80,7 +80,7 @@ availability_windows:
     label: Fully booked open day
 appointments:
   - property_key: bromley_show_home
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Alice Morgan
     customer_email: alice.morgan@example.com
     customer_phone: "07700 910001"
@@ -89,7 +89,7 @@ appointments:
     duration_minutes: 60
     status: confirmed
   - property_key: bromley_show_home
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Ben Storey
     customer_email: ben.storey@example.com
     customer_phone: "07700 910002"
@@ -98,7 +98,7 @@ appointments:
     duration_minutes: 60
     status: confirmed
   - property_key: bromley_show_home
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Chloe White
     customer_email: chloe.white@example.com
     customer_phone: "07700 910003"
@@ -107,7 +107,7 @@ appointments:
     duration_minutes: 60
     status: confirmed
   - property_key: bromley_show_home
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: David Thomas
     customer_email: david.thomas@example.com
     customer_phone: "07700 910004"
@@ -116,7 +116,7 @@ appointments:
     duration_minutes: 60
     status: confirmed
   - property_key: bromley_show_home
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Ella James
     customer_email: ella.james@example.com
     customer_phone: "07700 910005"
@@ -125,7 +125,7 @@ appointments:
     duration_minutes: 60
     status: confirmed
   - property_key: bromley_show_home
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Farah Green
     customer_email: farah.green@example.com
     customer_phone: "07700 910006"
@@ -134,7 +134,7 @@ appointments:
     duration_minutes: 60
     status: confirmed
   - property_key: bromley_show_home
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: George Shaw
     customer_email: george.shaw@example.com
     customer_phone: "07700 910007"
@@ -143,7 +143,7 @@ appointments:
     duration_minutes: 60
     status: confirmed
   - property_key: canterbury_empty_backup
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Hannah Wells
     customer_email: hannah.wells@example.com
     customer_phone: "07700 910008"

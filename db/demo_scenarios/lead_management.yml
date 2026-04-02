@@ -20,7 +20,7 @@ booking_configuration:
   office_closes_at: "18:00"
   open_weekdays: [1, 2, 3, 4, 5, 6]
 admins:
-  - email: steven@gotthekeys.com
+  - email: steven@gotthekeys.uk
     password: secret
     password_confirmation: secret
     language: en
@@ -70,7 +70,7 @@ availability_windows: []
 appointments: []
 enquiries:
   - property_key: sevenoaks_lead_home
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Anna Webb
     customer_email: anna.webb@example.com
     customer_phone: "07700 902111"
@@ -78,7 +78,7 @@ enquiries:
     message: Please send the brochure and confirm whether the garden studio has independent heating and broadband coverage.
     status: new
   - property_key: sevenoaks_lead_home
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Anna Webb
     customer_email: anna.webb@example.com
     customer_phone: "07700 902111"
@@ -87,7 +87,7 @@ enquiries:
     status: contacted
     internal_notes: Duplicate lead from same customer. Merge conversation notes before follow-up.
   - property_key: sevenoaks_lead_home
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Marcus Flynn
     customer_email: "marcus at invalid"
     customer_phone: "07700 902222"

@@ -20,7 +20,7 @@ booking_configuration:
   office_closes_at: "18:00"
   open_weekdays: [1, 2, 3, 4, 5, 6]
 admins:
-  - email: steven@gotthekeys.com
+  - email: steven@gotthekeys.uk
     password: secret
     password_confirmation: secret
     language: en
@@ -81,7 +81,7 @@ availability_windows:
     label: Vendor break
 appointments:
   - property_key: bromley_open_house
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Olivia Hart
     customer_email: olivia.hart@example.com
     customer_phone: "07700 903111"
@@ -91,7 +91,7 @@ appointments:
     status: confirmed
     notes: Wants to understand onward chain position.
   - property_key: bromley_open_house
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Noah Quinn
     customer_email: noah.quinn@example.com
     customer_phone: "07700 903222"
@@ -102,7 +102,7 @@ appointments:
     notes: Needed to move after a train delay.
     internal_notes: Reminder still to be sent.
   - property_key: bromley_open_house
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Zara Miles
     customer_email: zara.miles@example.com
     customer_phone: "07700 903333"
@@ -113,7 +113,7 @@ appointments:
     visit_outcome: feedback_requested
     notes: Asked about extension potential.
   - property_key: bromley_open_house
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Ethan Cole
     customer_email: ethan.cole@example.com
     customer_phone: "07700 903444"

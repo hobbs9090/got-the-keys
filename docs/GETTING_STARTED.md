@@ -1,5 +1,14 @@
 # Getting Started
 
+## Contents
+
+- [Documentation index](INDEX.md)
+- [Prerequisites](#prerequisites)
+- [First boot](#first-boot)
+- [Useful local commands](#useful-local-commands)
+- [Baseline credentials](#baseline-credentials)
+- [Next steps](#next-steps)
+
 This guide is for someone running the app locally for the first time.
 
 ## Prerequisites
@@ -54,7 +63,7 @@ npm run watch:js
 
 After `bin/rails db:seed`:
 
-- Admin: `steven@gotthekeys.com` / `********`
+- Admin: `steven@gotthekeys.uk` / `********`
 - Seller examples:
   - `charlotte.hughes@example.com` / `********`
   - `daniel.mercer@example.com` / `********`

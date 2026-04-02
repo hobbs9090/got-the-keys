@@ -1,5 +1,17 @@
 # QA And Testing Guide
 
+## Contents
+
+- [Documentation index](INDEX.md)
+- [Why the app works well for QA](#why-the-app-works-well-for-qa)
+- [Core testing surfaces](#core-testing-surfaces)
+- [Stable selectors](#stable-selectors)
+- [Deterministic scenarios](#deterministic-scenarios)
+- [Recommended journeys](#recommended-journeys)
+- [Playwright guidance](#playwright-guidance)
+- [Lighthouse guidance](#lighthouse-guidance)
+- [k6 guidance](#k6-guidance)
+
 GotTheKeys is intentionally built as a good target for QA practice.
 
 ## Why The App Works Well For QA

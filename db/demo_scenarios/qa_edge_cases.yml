@@ -20,7 +20,7 @@ booking_configuration:
   office_closes_at: "17:30"
   open_weekdays: [1, 2, 3, 4, 5]
 admins:
-  - email: steven@gotthekeys.com
+  - email: steven@gotthekeys.uk
     password: secret
     password_confirmation: secret
     language: en
@@ -83,7 +83,7 @@ availability_windows:
     label: Friday rental appointments
 appointments:
   - property_key: reigate_modern_flat
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Priya Shah
     customer_email: priya.shah@example.com
     requested_time: "today+16d 09:30"
@@ -92,7 +92,7 @@ appointments:
     status: pending
     notes: Customer deliberately has no phone number to exercise validation messaging and admin handling.
   - property_key: reigate_modern_flat
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Owen Clark
     customer_email: owen.clark@example.com
     customer_phone: "07700 920002"
@@ -103,7 +103,7 @@ appointments:
     notes: Customer asked for a later visit because of a delayed train.
     internal_notes: This internal note is intentionally verbose so QA teams can confirm that long content wraps cleanly, preserves whitespace sensibly, and does not break card layouts in either the agenda view or the detail screen.
   - property_key: reigate_modern_flat
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Nina Hughes
     customer_email: nina.hughes@example.com
     customer_phone: "07700 920003"

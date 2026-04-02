@@ -1,5 +1,16 @@
 # Repository Map
 
+## Contents
+
+- [Documentation index](INDEX.md)
+- [Top-level layout](#top-level-layout)
+- [`app/`](#app)
+- [`config/`](#config)
+- [`db/`](#db)
+- [`spec/`](#spec)
+- [`bin/`](#bin)
+- [Other useful directories](#other-useful-directories)
+
 This guide explains where the important parts of the codebase live and why they exist.
 
 ## Top-Level Layout

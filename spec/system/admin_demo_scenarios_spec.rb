@@ -11,7 +11,7 @@ RSpec.describe "Admin demo scenarios", type: :system do
 
   it "restores the baseline scenario from the admin area with the typed gate" do
     BookingConfiguration.current.update!(active_demo_scenario_key: "fully_booked_day")
-    admin = FactoryBot.create(:admin, email: "steven@gotthekeys.com", password: "changeme", password_confirmation: "changeme")
+    admin = FactoryBot.create(:admin, email: "steven@gotthekeys.uk", password: "changeme", password_confirmation: "changeme")
 
     sign_in_as(email: admin.email, password: "changeme")
 

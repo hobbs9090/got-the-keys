@@ -21,7 +21,7 @@ booking_configuration:
   office_closes_at: "18:00"
   open_weekdays: [1, 2, 3, 4, 5, 6]
 admins:
-  - email: steven@gotthekeys.com
+  - email: steven@gotthekeys.uk
     password: secret
     password_confirmation: secret
     language: en
@@ -285,7 +285,7 @@ availability_window_batches:
     label_prefix: Guided viewing availability
 appointments:
   - property_key: sevenoaks_family_home
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Holly Mercer
     customer_email: holly.mercer@example.com
     customer_phone: "07700 900111"
@@ -295,7 +295,7 @@ appointments:
     status: pending
     notes: We are relocating for work and would like to ask about parking.
   - property_key: sevenoaks_family_home
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Daniel Porter
     customer_email: daniel.porter@example.com
     customer_phone: "07700 900222"
@@ -306,7 +306,7 @@ appointments:
     notes: Coming with my partner and a mortgage adviser.
     internal_notes: Confirmed by phone and keen on school catchment details.
   - property_key: tunbridge_garden_flat
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Jasmine Boyd
     customer_email: jasmine.boyd@example.com
     customer_phone: "07700 900333"
@@ -317,7 +317,7 @@ appointments:
     notes: Afternoon is easier if possible.
     internal_notes: Requested move after train cancellation.
   - property_key: guildford_townhouse
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Marcus Lee
     customer_email: marcus.lee@example.com
     customer_phone: "07700 900444"
@@ -328,7 +328,7 @@ appointments:
     notes: Please cancel if the property is no longer available.
     internal_notes: Cancelled by customer after receiving another offer acceptance.
   - property_key: croydon_rental_loft
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Aisha Rahman
     customer_email: aisha.rahman@example.com
     customer_phone: "07700 900555"
@@ -340,7 +340,7 @@ appointments:
     notes: Interested in moving before the end of April.
     internal_notes: Strong fit for the property and requested application paperwork.
   - property_key: croydon_rental_loft
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Samir Patel
     customer_email: samir.patel@example.com
     customer_phone: "07700 900666"
@@ -353,21 +353,21 @@ appointments:
 appointment_batches:
   - property_key_prefixes: [baseline_sale]
     count: 14
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     status_cycle: [pending, confirmed, rescheduled, completed, cancelled]
     start_day_offset: 8
     start_time: "09:00"
     cadence_hours: 2
   - property_key_prefixes: [baseline_rental]
     count: 20
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     status_cycle: [pending, confirmed, completed, no_show]
     start_day_offset: 9
     start_time: "09:30"
     cadence_hours: 2
 enquiries:
   - property_key: sevenoaks_family_home
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Emily Carter
     customer_email: emily.carter@example.com
     customer_phone: "07700 901111"
@@ -377,7 +377,7 @@ enquiries:
     created_at: "today-1d 09:15"
     updated_at: "today-1d 09:15"
   - property_key: croydon_rental_loft
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Leon Grant
     customer_email: leon.grant@example.com
     customer_phone: ""
@@ -390,21 +390,21 @@ enquiries:
 enquiry_batches:
   - property_key_prefixes: [baseline_sale]
     count: 15
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     status_cycle: [new, contacted, qualified]
     source_type_cycle: [brochure_request, general_enquiry, valuation_request]
   - property_key_prefixes: [baseline_rental]
     count: 23
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     status_cycle: [new, contacted, qualified, archived]
     source_type_cycle: [letting_enquiry, general_enquiry]
 offer_batches:
   - property_key_prefixes: [baseline_sale]
     count: 10
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     status_cycle: [received, accepted, rejected, withdrawn]
 rental_application_batches:
   - property_key_prefixes: [baseline_rental]
     count: 14
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     status_cycle: [received, referencing, approved, rejected, withdrawn]

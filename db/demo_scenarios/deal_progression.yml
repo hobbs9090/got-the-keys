@@ -21,7 +21,7 @@ booking_configuration:
   office_closes_at: "18:00"
   open_weekdays: [1, 2, 3, 4, 5, 6]
 admins:
-  - email: steven@gotthekeys.com
+  - email: steven@gotthekeys.uk
     password: secret
     password_confirmation: secret
     language: en
@@ -82,7 +82,7 @@ appointments: []
 enquiries: []
 offers:
   - property_key: sale_pipeline_home
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     buyer_name: Daniel Webb
     buyer_email: daniel.webb@example.com
     buyer_phone: "07700 904111"
@@ -92,7 +92,7 @@ offers:
     notes: Initial opening offer below guide.
     internal_notes: Rejected after seller review.
   - property_key: sale_pipeline_home
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     buyer_name: Chloe Morgan
     buyer_email: chloe.morgan@example.com
     buyer_phone: "07700 904222"
@@ -101,7 +101,7 @@ offers:
     chain_position: First-time buyer with mortgage agreement in principle
     notes: Withdrew after survey issues elsewhere.
   - property_key: sale_pipeline_home
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     buyer_name: Alex Turner
     buyer_email: alex.turner@example.com
     buyer_phone: "07700 904333"
@@ -111,7 +111,7 @@ offers:
     notes: Strong headline offer and flexible completion.
 rental_applications:
   - property_key: rent_pipeline_flat
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     applicant_name: Priya Shah
     applicant_email: priya.shah@example.com
     applicant_phone: "07700 904444"
@@ -122,7 +122,7 @@ rental_applications:
     affordability_notes: Income below target and no guarantor yet.
     internal_notes: Missing guarantor case for training.
   - property_key: rent_pipeline_flat
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     applicant_name: Priya Shah
     applicant_email: priya.shah@example.com
     applicant_phone: "07700 904444"
@@ -133,7 +133,7 @@ rental_applications:
     affordability_notes: Duplicate applicant follow-up.
     internal_notes: Duplicate applicant example.
   - property_key: rent_pipeline_flat
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     applicant_name: Marcus Hall
     applicant_email: marcus.hall@example.com
     applicant_phone: "07700 904555"

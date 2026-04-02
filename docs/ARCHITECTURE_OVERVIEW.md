@@ -1,5 +1,15 @@
 # Architecture Overview
 
+## Contents
+
+- [Documentation index](INDEX.md)
+- [Core stack](#core-stack)
+- [Architectural priorities](#architectural-priorities)
+- [Main product domains](#main-product-domains)
+- [Booking domain](#booking-domain)
+- [Background jobs and async posture](#background-jobs-and-async-posture)
+- [Hosting posture](#hosting-posture)
+
 GotTheKeys is a server-rendered Rails application with a deliberately simple operational posture.
 
 ## Core Stack
