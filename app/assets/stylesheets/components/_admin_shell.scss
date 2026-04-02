@@ -489,10 +489,12 @@
 }
 
 .admin-demo-danger-zone__actions {
-  align-self: stretch;
-  display: grid;
+  align-self: end;
+  display: flex;
+  flex-direction: column;
   gap: 0.8rem;
   justify-self: stretch;
+  justify-content: flex-end;
 }
 
 .admin-demo-danger-zone__actions .button,
@@ -501,7 +503,6 @@
 }
 
 .admin-demo-danger-zone__form {
-  align-content: start;
   display: grid;
   gap: 0.7rem;
   margin: 0;
