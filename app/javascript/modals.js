@@ -111,6 +111,13 @@ const bindEscapeHandler = () => {
 };
 
 export const bootModals = () => {
+  document.body.classList.remove("site-modal-open");
+
+  document.querySelectorAll("[data-modal]").forEach((modal) => {
+    modal.hidden = true;
+    modal.setAttribute("aria-hidden", "true");
+  });
+
   bindEscapeHandler();
   document.querySelectorAll("[data-modal]").forEach(setupModal);
 
@@ -133,11 +140,16 @@ export const bootModals = () => {
 };
 
 export const teardownModals = () => {
+  document.body.classList.remove("site-modal-open");
+
   document.querySelectorAll("[data-modal]").forEach((modal) => {
-    closeModal(modal, false);
+    modal.hidden = true;
+    modal.setAttribute("aria-hidden", "true");
 
     const state = modalState.get(modal);
     if (!state) return;
+
+    state.lastTrigger?.setAttribute("aria-expanded", "false");
 
     state.cleanup.forEach(([element, eventName, handler]) => {
       element.removeEventListener(eventName, handler);
