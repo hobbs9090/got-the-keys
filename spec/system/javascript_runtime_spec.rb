@@ -163,6 +163,21 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     expect(page).to have_no_css("body.site-modal-open", visible: false)
   end
 
+  it "clears modal overlay state when navigating away from an open modal", js: true do
+    visit contact_us_path
+
+    click_button "View Map"
+
+    expect(page).to have_css("#map-modal[aria-hidden='false']", visible: true)
+    expect(page).to have_css("body.site-modal-open", visible: false)
+
+    visit root_path
+
+    expect(page).to have_current_path(root_path, wait: 5)
+    expect(page).to have_no_css("body.site-modal-open", visible: false)
+    expect(page).to have_no_css('[data-modal][aria-hidden="false"]', visible: false)
+  end
+
   it "toggles the furnishing field based on the selected sale status" do
     user = FactoryBot.create(:user, email: "listing-user@example.com", password: "changeme", password_confirmation: "changeme")
 
