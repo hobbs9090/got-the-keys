@@ -7,14 +7,21 @@
   gap: 0.45rem;
 
   li {
-    padding: 0.28rem 0.6rem;
-    border-radius: 999px;
-    background: var(--color-success-soft);
-    color: var(--color-success);
-    font-size: 0.76rem;
-    font-weight: 600;
-    line-height: 1.2;
+    margin: 0;
   }
+}
+
+.property-card__trust-badge {
+  align-items: center;
+  display: inline-flex;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: normal;
+  line-height: 1.2;
+  min-height: 2rem;
+  padding: 0.34rem 0.82rem;
+  text-transform: none;
+  white-space: nowrap;
 }
 
 .property-catalogue__saved-search,

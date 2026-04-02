@@ -61,4 +61,32 @@ RSpec.describe PropertiesHelper, type: :helper do
       expect(chips).to include("Monthly rent up to \u00A3#{2_500.to_fs(:delimited)}")
     end
   end
+
+  describe "#listing_state_badge_class" do
+    it "keeps sale-status and listing-state badges visually distinct for active deal states" do
+      expect(helper.listing_state_badge_class("under_offer")).to eq("badge badge--warning")
+      expect(helper.listing_state_badge_class("let_agreed")).to eq("badge badge--warning")
+    end
+  end
+
+  describe "#property_sale_status_badge_class" do
+    it "maps sale statuses to the shared property badge styles" do
+      expect(helper.property_sale_status_badge_class(Property::SALE_STATUSES[:for_sale])).to eq("badge badge--accent")
+      expect(helper.property_sale_status_badge_class(Property::SALE_STATUSES[:for_rent])).to eq("badge badge--success")
+    end
+  end
+
+  describe "#property_featured_badge_class" do
+    it "uses the shared neutral property badge styling" do
+      expect(helper.property_featured_badge_class).to eq("badge badge--neutral")
+    end
+  end
+
+  describe "#property_card_document_label" do
+    it "uses a short brochure label for brochure documents" do
+      document = FactoryBot.build(:property_document, category: "brochure", title: "Sales brochure")
+
+      expect(helper.property_card_document_label(document)).to eq("Brochure")
+    end
+  end
 end
