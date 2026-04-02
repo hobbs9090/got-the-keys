@@ -1,5 +1,15 @@
 # Training Session Guide
 
+## Contents
+
+- [Documentation index](INDEX.md)
+- [Session goals](#session-goals)
+- [Before the session](#before-the-session)
+- [Recommended session shape](#recommended-session-shape)
+- [Reset guidance during training](#reset-guidance-during-training)
+- [Trainer checks between exercises](#trainer-checks-between-exercises)
+- [Common failure modes](#common-failure-modes)
+
 This guide is for someone running GotTheKeys as a workshop or internal training environment.
 
 ## Session Goals

@@ -1,5 +1,14 @@
 # Deployment Operations
 
+## Contents
+
+- [Documentation index](INDEX.md)
+- [Primary deployment story](#primary-deployment-story)
+- [Nirvana posture](#nirvana-posture)
+- [Capistrano release flow](#capistrano-release-flow)
+- [Container and Synology notes](#container-and-synology-notes)
+- [Release checks](#release-checks)
+
 This guide explains how the app is deployed and operated in hosted environments.
 
 ## Primary Deployment Story

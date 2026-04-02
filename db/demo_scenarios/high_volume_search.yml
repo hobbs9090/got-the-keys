@@ -20,7 +20,7 @@ booking_configuration:
   office_closes_at: "18:00"
   open_weekdays: [1, 2, 3, 4, 5, 6]
 admins:
-  - email: steven@gotthekeys.com
+  - email: steven@gotthekeys.uk
     password: secret
     password_confirmation: secret
     language: en
@@ -222,7 +222,7 @@ photos:
     primary: true
 appointments:
   - property_key: sevenoaks_cedar_road
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Ruby Owen
     customer_email: ruby.owen@example.com
     customer_phone: "07700 930001"
@@ -231,7 +231,7 @@ appointments:
     duration_minutes: 45
     status: confirmed
   - property_key: tunbridge_rental_flat
-    assigned_admin_email: steven@gotthekeys.com
+    assigned_admin_email: steven@gotthekeys.uk
     customer_name: Jack Flynn
     customer_email: jack.flynn@example.com
     customer_phone: "07700 930002"

@@ -12,19 +12,31 @@
 }
 
 .landing-hero__content {
+  display: grid;
+  gap: 1rem;
   max-width: 72rem;
+}
+
+.landing-hero__body {
+  align-items: start;
+  display: grid;
+  gap: 1rem 1.5rem;
+  grid-template-columns: minmax(0, 1.3fr) auto;
 }
 
 .landing-hero__copy {
   font-size: 1.08rem;
+  margin-bottom: 0;
   max-width: 60ch;
 }
 
 .landing-hero__actions {
+  align-items: flex-start;
   display: flex;
   flex-wrap: wrap;
   gap: 0.9rem;
-  margin-top: 1.6rem;
+  justify-content: flex-end;
+  margin-top: 0;
 }
 
 .landing-hero__visual {
@@ -38,5 +50,14 @@
 @media (max-width: 760px) {
   .landing-showcase {
     margin-bottom: 1rem;
+  }
+
+  .landing-hero__body {
+    grid-template-columns: 1fr;
+  }
+
+  .landing-hero__actions {
+    justify-content: flex-start;
+    margin-top: 0.6rem;
   }
 }

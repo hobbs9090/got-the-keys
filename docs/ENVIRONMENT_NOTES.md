@@ -1,5 +1,14 @@
 # Environment Notes
 
+## Contents
+
+- [Documentation index](INDEX.md)
+- [Databases](#databases)
+- [Key environment variables](#key-environment-variables)
+- [Asset and build notes](#asset-and-build-notes)
+- [Local mail and diagnostics](#local-mail-and-diagnostics)
+- [Hosted environment notes](#hosted-environment-notes)
+
 This page collects the environment-specific details that do not belong in the README.
 
 ## Databases

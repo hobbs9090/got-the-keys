@@ -1,8 +1,8 @@
 # GotTheKeys
 
-GotTheKeys is a Rails 8 property website that doubles as a deterministic QA training harness.
+GotTheKeys is a Rails 8 property platform that also serves as a deterministic QA training harness.
 
-It is designed to feel like a credible boutique estate-and-lettings product while remaining predictable enough for browser automation, seeded demos, trainer-led workshops, and repeatable test runs.
+That dual purpose is intentional. The public site, seller tools, and admin workspace are written to feel coherent as a real property business product, but the data model, seeded scenarios, selectors, and admin diagnostics are shaped so trainers and test writers can reuse the app repeatedly. It is specifically designed to support training in Playwright for automated acceptance testing, as well as CI pipelines, performance testing, and accessibility auditing using tools such as Google Lighthouse and similar platforms.
 
 ![GotTheKeys homepage](docs/readme/homepage.png)
 
@@ -32,42 +32,26 @@ bundle install
 npm install
 bin/rails db:prepare
 bin/rails db:seed
-bin/install_git_hooks
 npm run build
 bin/rails server
 ```
 
 Open:
 
-- Public site: `http://127.0.0.1:3000`
-- Admin sign-in: `http://127.0.0.1:3000/admins/sign_in`
-- QA guide in-app: `http://127.0.0.1:3000/admin/qa`
+- Public site: `https://gotthekeys.uk:3000`
+- Admin sign-in: `http://gotthekeys.uk/admins/sign_in`
+- QA guide in-app: `http://gotthekeys.uk/admin/qa`
 
 Baseline credentials after seeding:
 
-- Admin: `steven@gotthekeys.com` / `secret`
+- Admin: `steven@gotthekeys.uk` / `secret`
 - Seller examples:
   - `charlotte.hughes@example.com` / `secret`
   - `daniel.mercer@example.com` / `secret`
 
-## Screenshot Refresh
-
-Refresh the default homepage screenshot:
-
-```bash
-bin/update_readme_homepage_screenshot
-```
-
-Capture the catalogue screenshot:
-
-```bash
-README_SCREENSHOT_URL=http://127.0.0.1:3000/properties \
-README_SCREENSHOT_PATH=docs/readme/catalogue.png \
-bin/update_readme_homepage_screenshot
-```
-
 ## Documentation Map
 
+- [Documentation index](docs/INDEX.md)
 - [Product overview](docs/PRODUCT_OVERVIEW.md)
 - [Getting started](docs/GETTING_STARTED.md)
 - [User manual](docs/USER_MANUAL.md)
@@ -78,16 +62,3 @@ bin/update_readme_homepage_screenshot
 - [Repository map](docs/REPOSITORY_MAP.md)
 - [Deployment operations](docs/DEPLOYMENT_OPERATIONS.md)
 - [Environment notes](docs/ENVIRONMENT_NOTES.md)
-
-## Operational Notes
-
-- The tracked pre-push hook runs `bundle exec rspec` before push.
-- The app is intentionally server-rendered and shared-host friendly: Apache + Passenger is the primary deployment posture.
-- Staging and production deploys flow through Capistrano plus the `bin/deploy_staging` and `bin/deploy_production` helpers.
-- Demo scenarios live under `db/demo_scenarios/` and are meant to be swapped repeatedly during QA practice and workshops.
-
-## Related Deep Dives
-
-- [Background job policy](docs/BACKGROUND_JOB_POLICY.md)
-- [Booking domain architecture](docs/BOOKING_ARCHITECTURE.md)
-- [Surface inventory](docs/SURFACE_INVENTORY.md)

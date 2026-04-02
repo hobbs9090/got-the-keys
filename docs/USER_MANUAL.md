@@ -1,5 +1,19 @@
 # User Manual
 
+## Contents
+
+- [Documentation index](INDEX.md)
+- [Browse the public site](#1-browse-the-public-site)
+- [Browse and filter listings](#2-browse-and-filter-listings)
+- [Open a property detail page](#3-open-a-property-detail-page)
+- [Book a viewing](#4-book-a-viewing)
+- [Send an enquiry](#5-send-an-enquiry)
+- [Make an offer](#6-make-an-offer)
+- [Submit a rental application](#7-submit-a-rental-application)
+- [Use appointment self-service links](#8-use-appointment-self-service-links)
+- [Use seller tools](#9-use-seller-tools)
+- [Use the admin workspace](#10-use-the-admin-workspace)
+
 This guide explains how to use GotTheKeys as if it were a real boutique sales and lettings website.
 
 That framing matters. The app is intentionally believable enough for real product walkthroughs, even though it is also used for QA training and seeded demos.

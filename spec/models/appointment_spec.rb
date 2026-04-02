@@ -4,7 +4,7 @@ RSpec.describe Appointment do
   include ActiveJob::TestHelper
 
   let(:user) { FactoryBot.create(:user) }
-  let(:admin) { FactoryBot.create(:admin, email: "steven@gotthekeys.com") }
+  let(:admin) { FactoryBot.create(:admin, email: "steven@gotthekeys.uk") }
   let(:property) { FactoryBot.create(:property, user:, address_line_1: "18 Cedar Road") }
 
   before do

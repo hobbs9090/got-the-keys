@@ -7,11 +7,13 @@
   <div class="landing-hero__content">
     <p class="landing-hero__eyebrow"><%= t("ui.welcome.hero_eyebrow") %></p>
     <h1><%= t("ui.welcome.hero_title") %></h1>
-    <p class="landing-hero__copy"><%= t('welcome.paragraph_1') %> <%= t('welcome.paragraph_2') %></p>
+    <div class="landing-hero__body">
+      <p class="landing-hero__copy"><%= t('welcome.paragraph_1') %> <%= t('welcome.paragraph_2') %></p>
 
-    <div class="landing-hero__actions">
-      <%= link_to t("ui.welcome.primary_cta"), properties_path, class: "button primary large", data: { testid: "browse-properties-link" } %>
-      <%= link_to t("ui.welcome.admin_cta"), admin_bookings_path, class: "button secondary hollow large" if admin_signed_in? %>
+      <div class="landing-hero__actions">
+        <%= link_to t("ui.welcome.primary_cta"), properties_path, class: "button primary large", data: { testid: "browse-properties-link" } %>
+        <%= link_to t("ui.welcome.admin_cta"), admin_bookings_path, class: "button secondary hollow large" if admin_signed_in? %>
+      </div>
     </div>
   </div>
 </section>

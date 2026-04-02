@@ -1,5 +1,15 @@
 # Demo Data Operations
 
+## Contents
+
+- [Documentation index](INDEX.md)
+- [What scenario packs are](#what-scenario-packs-are)
+- [Bundled scenarios](#bundled-scenarios)
+- [Seed the default baseline](#seed-the-default-baseline)
+- [Seed a specific scenario](#seed-a-specific-scenario)
+- [Verify the active scenario](#verify-the-active-scenario)
+- [Reset and cleanup notes](#reset-and-cleanup-notes)
+
 This guide explains how seeded scenarios are managed before, during, and after training sessions.
 
 ## What Scenario Packs Are

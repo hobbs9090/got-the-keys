@@ -1,5 +1,13 @@
 # Product Overview
 
+## Contents
+
+- [Documentation index](INDEX.md)
+- [Main audiences](#main-audiences)
+- [What users can do](#what-users-can-do)
+- [Main entry points](#main-entry-points)
+- [Why this works as a training product](#why-this-works-as-a-training-product)
+
 GotTheKeys should be understood in two ways at the same time:
 
 - a believable small estate-and-lettings website
@@ -11,9 +19,6 @@ That dual purpose is intentional. The public site, seller tools, and admin works
 
 ## Main Audiences
 
-- Buyers and renters browsing listings, booking viewings, sending enquiries, making offers, and submitting rental applications.
-- Sellers signing in to manage their listings, photos, documents, and listing quality.
-- Admins managing appointments, leads, applications, demo data, and QA diagnostics.
 - Trainers and contributors using the app to teach or practice browser automation, accessibility review, and performance testing.
 
 ## What Users Can Do
@@ -64,7 +69,7 @@ Admins can:
 - `/searches` - shared search/filter surface
 - `/admins/sign_in` - admin sign-in
 - `/admin` - admin workspace
-- `/admin/demo-data` - demo-data operations
+- `/admin/demo-data` - demo-data operations and resets
 - `/admin/qa` - QA diagnostics and selector guidance
 
 ## Read Next
