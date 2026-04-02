@@ -523,11 +523,11 @@ pre code {
 }
 
 .site-main {
-  padding: 0 var(--space-site-shell) var(--space-2xl);
+  padding: 0 var(--space-site-shell) 1.5rem;
 }
 
 .admin-main {
-  padding: 0 var(--space-site-shell) var(--space-2xl);
+  padding: 0 var(--space-site-shell) 1.5rem;
 }
 
 .site-header,
@@ -1321,6 +1321,11 @@ html[data-theme="dark"] .pagination .ellipsis::after {
   color: var(--color-muted);
   margin-bottom: 0;
   max-width: 56ch;
+}
+
+.how-section[id],
+.how-finish-card[id] {
+  scroll-margin-top: 1.25rem;
 }
 
 .how-process-grid,
@@ -3267,7 +3272,7 @@ table th {
   .property-layout,
   .property-workspace-card,
   .admin-grid,
-  .how-finish-card {
+  .site-card.how-finish-card {
     grid-template-columns: 1fr;
   }
 
@@ -3318,6 +3323,7 @@ table th {
 @media (max-width: $layout-mobile-breakpoint) {
   .site-main,
   .admin-main {
+    padding-bottom: 1.5rem;
     padding-left: 1rem;
     padding-right: 1rem;
   }

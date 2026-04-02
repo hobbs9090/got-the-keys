@@ -538,7 +538,7 @@ html[data-theme="dark"] .marketing-wordmark-stack--theme-aware .marketing-wordma
 }
 
 .site-footer {
-  margin-top: 2.25rem;
+  margin-top: 1rem;
   padding: 0 var(--space-site-shell) 1.4rem;
 }
 
@@ -681,30 +681,31 @@ html[data-theme="dark"] .marketing-wordmark-stack--theme-aware .marketing-wordma
     padding-right: 1rem;
   }
 
+  .site-footer {
+    margin-top: 1.25rem;
+    padding-bottom: 1rem;
+  }
+
   .site-header__inner {
     align-items: stretch;
     flex-direction: column;
   }
 
-  .site-nav,
-  .site-header__actions-row {
-    justify-content: flex-start;
-  }
-
   .site-header__actions {
     align-self: stretch;
-    align-items: flex-start;
+    align-items: flex-end;
   }
 
   .site-header__actions-top {
-    justify-content: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    width: 100%;
   }
 
   .site-header__actions-row {
+    justify-content: flex-end;
     flex-wrap: wrap;
-  }
-
-  .theme-toggle {
     width: 100%;
   }
 
@@ -712,23 +713,23 @@ html[data-theme="dark"] .marketing-wordmark-stack--theme-aware .marketing-wordma
   .site-header__button-group,
   .site-header__guest-actions {
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: flex-end;
   }
 
   .site-header__session {
-    align-items: flex-start;
+    align-items: flex-end;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: flex-end;
     width: 100%;
   }
 
   .site-header__account {
-    justify-items: start;
-    text-align: left;
+    justify-items: end;
+    text-align: right;
   }
 
   .site-header__account-heading {
-    justify-content: flex-start;
+    justify-content: flex-end;
   }
 
   .marketing-wordmark--header {
@@ -737,15 +738,6 @@ html[data-theme="dark"] .marketing-wordmark-stack--theme-aware .marketing-wordma
 
   .marketing-wordmark--hero {
     width: min(100%, 13rem);
-  }
-
-  .theme-toggle__details,
-  .theme-toggle__summary {
-    width: 100%;
-  }
-
-  .theme-toggle__summary {
-    justify-content: space-between;
   }
 
   .site-footer__inner {

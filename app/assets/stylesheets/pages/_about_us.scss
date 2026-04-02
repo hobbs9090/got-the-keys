@@ -201,6 +201,19 @@
 }
 
 @media (max-width: $layout-mobile-breakpoint) {
+  .about-story__media {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .about-story__image {
+    height: clamp(12.5rem, 58vw, 16rem);
+    max-width: none;
+    min-height: 0;
+    object-position: center 32%;
+    width: 100%;
+  }
+
   .about-hero__actions .button {
     width: 100%;
   }

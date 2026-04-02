@@ -638,7 +638,7 @@
   }
 
   .admin-dashboard__status-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .admin-bookings-view-switch {
@@ -673,5 +673,11 @@
 
   .admin-demo-danger-zone__title-row {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 420px) {
+  .admin-dashboard__status-grid {
+    grid-template-columns: 1fr;
   }
 }
