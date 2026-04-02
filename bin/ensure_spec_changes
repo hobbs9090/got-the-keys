@@ -103,12 +103,36 @@ def file_contents_at(sha, path)
   abort "Unable to read #{path} from #{sha} for spec coverage guard."
 end
 
+def git_stdout(*args)
+  stdout, stderr, status = Open3.capture3('git', *args)
+  return stdout if status.success?
+
+  warn stderr unless stderr.to_s.strip.empty?
+  nil
+end
+
+def local_range_from_git
+  head_sha = git_stdout('rev-parse', 'HEAD')&.strip
+  return Ci::ChangeRange.new(base_sha: nil, head_sha: nil, diff_mode: :single_commit) if head_sha.to_s.empty?
+
+  upstream = git_stdout('rev-parse', '--abbrev-ref', '--symbolic-full-name', '@{upstream}')&.strip
+  if upstream && !upstream.empty?
+    merge_base = git_stdout('merge-base', 'HEAD', upstream)&.strip
+    return Ci::ChangeRange.new(base_sha: merge_base, head_sha: head_sha, diff_mode: :two_dot) if merge_base && !merge_base.empty?
+  end
+
+  previous = git_stdout('rev-parse', 'HEAD^')&.strip
+  return Ci::ChangeRange.new(base_sha: previous, head_sha: head_sha, diff_mode: :two_dot) if previous && !previous.empty?
+
+  Ci::ChangeRange.new(base_sha: nil, head_sha: head_sha, diff_mode: :single_commit)
+end
+
 payload = read_event_payload(ENV['GITHUB_EVENT_PATH'])
 range = Ci::ChangeRange.from_github(env: ENV, payload: payload)
 
 unless range.complete?
-  puts 'Skipping spec coverage guard because GitHub did not provide a complete change range.'
-  exit 0
+  range = local_range_from_git
+  puts 'Using local git history for spec coverage guard.'
 end
 
 changed_files = git_changed_files(range)
