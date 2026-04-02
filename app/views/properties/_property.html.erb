@@ -9,7 +9,7 @@
         <div class="property-card__media">
           <%= small_image_for(property) %>
           <div class="property-card__badges">
-            <span class="badge <%= property.sale_status == Property::SALE_STATUSES[:for_sale] ? 'badge--accent' : 'badge--success' %>"><%= translated_sale_status(property.sale_status) %></span>
+            <span class="<%= property_sale_status_badge_class(property.sale_status) %>"><%= translated_sale_status(property.sale_status) %></span>
             <% unless property.listing_state == "published" %>
               <span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span>
             <% end %>
@@ -33,13 +33,13 @@
           <p class="property-card__description"><%= truncate(property.property_description, length: 130, separator: " ") %></p>
           <ul class="property-card__trust-list">
             <% property_trust_cues(property, include_response_time: false).first(3).each do |cue| %>
-              <li><%= cue %></li>
+              <li><span class="badge badge--success property-card__trust-badge"><%= cue %></span></li>
             <% end %>
           </ul>
           <% if card_documents.any? %>
             <div class="property-card__downloads" data-testid="property-card-downloads">
               <% card_documents.each do |document| %>
-                <%= link_to document.title, download_property_property_document_path(property, document), class: "button hollow secondary tiny", download: document.file_name, data: { turbo: false, testid: "property-card-document-download-#{property.id}-#{document.id}" } %>
+                <%= link_to property_card_document_label(document), download_property_property_document_path(property, document), class: "button hollow secondary tiny", download: document.file_name, data: { turbo: false, testid: "property-card-document-download-#{property.id}-#{document.id}" } %>
               <% end %>
             </div>
           <% end %>

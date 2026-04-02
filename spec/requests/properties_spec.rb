@@ -159,9 +159,24 @@ describe "Properties" do
       download_link = page.at_css(%([data-testid="property-card-document-download-#{property.id}-#{document.id}"]))
 
       expect(download_link).to be_present
+      expect(download_link.text).to eq("Brochure")
       expect(download_link["href"]).to eq(download_property_property_document_path(property, document))
       expect(download_link["data-turbo"]).to eq("false")
       expect(download_link["download"]).to eq("request-user-brochure.pdf")
+    end
+
+    it "renders trust cues using the shared badge styling on property cards" do
+      get properties_path
+
+      document = Nokogiri::HTML(response.body)
+      trust_badges = document.css(".property-card__trust-list .property-card__trust-badge")
+      trust_text = trust_badges.map { |badge| badge.text.squish }
+      trust_badge = trust_badges.first
+
+      expect(trust_badge).to be_present
+      expect(trust_badge["class"]).to include("badge")
+      expect(trust_badge["class"]).to include("badge--success")
+      expect(trust_text).not_to include("Brochure ready")
     end
 
     it "uses the two-column catalogue grid modifier on the main properties page" do

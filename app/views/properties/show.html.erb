@@ -3,10 +3,10 @@
 <section class="property-hero" data-testid="property-showcase">
   <div class="property-hero__content">
     <div class="property-hero__labels">
-      <span class="badge <%= @property.sale_status == Property::SALE_STATUSES[:for_sale] ? 'badge--accent' : 'badge--success' %>"><%= translated_sale_status(@property.sale_status) %></span>
+      <span class="<%= property_sale_status_badge_class(@property.sale_status) %>"><%= translated_sale_status(@property.sale_status) %></span>
       <span class="<%= listing_state_badge_class(@property.listing_state) %>"><%= translated_listing_state(@property.listing_state) %></span>
       <% if @property.featured? %>
-        <span class="badge badge--warning"><%= t("ui.common.featured") %></span>
+        <span class="<%= property_featured_badge_class %>"><%= t("ui.common.featured") %></span>
       <% end %>
     </div>
 
@@ -74,16 +74,6 @@
     <div class="property-address">
       <h3><%= t("ui.common.address") %></h3>
       <p><%= [@property.address_line_1, @property.address_line_2, @property.town_city, @property.county, @property.postcode, @property.country].reject(&:blank?).join(", ") %></p>
-    </div>
-
-    <div class="property-address" data-testid="property-trust-panel">
-      <h3><%= t("ui.properties.show.trust_title") %></h3>
-      <ul class="detail-inline-list">
-        <% property_trust_cues(@property).each do |cue| %>
-          <li><%= cue %></li>
-        <% end %>
-        <li><%= property_update_label(@property) %></li>
-      </ul>
     </div>
 
     <% if @public_documents.any? %>

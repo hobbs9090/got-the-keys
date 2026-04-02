@@ -61,6 +61,17 @@ module PropertiesHelper
     end
   end
 
+  def property_sale_status_badge_class(status)
+    case status
+    when Property::SALE_STATUSES[:for_sale]
+      "badge badge--accent"
+    when Property::SALE_STATUSES[:for_rent]
+      "badge badge--success"
+    else
+      "badge"
+    end
+  end
+
   def property_sale_status_options(include_all: false)
     options = []
     options << [t("ui.properties.filters.all_listings"), nil] if include_all
@@ -98,12 +109,17 @@ module PropertiesHelper
     cues << t("ui.properties.trust_cues.recently_updated") if property.recently_updated?
     cues << t("ui.properties.trust_cues.available_now") if property.available_now?
     cues << primary_branch_profile.fetch(:response_time) if include_response_time
-    cues << t("ui.properties.trust_cues.brochure_ready") if property.public_documents.any?
     cues.uniq
   end
 
   def property_card_download_documents(property, limit: 2)
     property.public_documents.select(&:pdf?).first(limit)
+  end
+
+  def property_card_document_label(document)
+    return t("ui.property_documents.categories.brochure", default: "Brochure") if document.category.to_s == "brochure"
+
+    document.title
   end
 
   def property_update_label(property)
@@ -147,12 +163,16 @@ module PropertiesHelper
       "draft" => "badge badge--muted",
       "review_pending" => "badge badge--warning",
       "published" => "badge badge--success",
-      "under_offer" => "badge badge--accent",
-      "let_agreed" => "badge badge--accent",
+      "under_offer" => "badge badge--warning",
+      "let_agreed" => "badge badge--warning",
       "sold" => "badge badge--neutral",
       "let" => "badge badge--neutral",
       "withdrawn" => "badge badge--danger"
     }.fetch(state.to_s, "badge")
+  end
+
+  def property_featured_badge_class
+    "badge badge--neutral"
   end
 
   def property_fact_rows(property)
