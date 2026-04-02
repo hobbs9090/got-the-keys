@@ -221,8 +221,7 @@ Add clear documentation for how the app is deployed and operated in hosted envir
 This should include the current real deployment posture and related tooling, including:
 
 - Apache + Passenger deployment notes
-- Nirvana deployment guidance if that is still the primary hosted path
-- the alternative Synology/container deployment path if it is still supported
+- Linux deployment guidance if that is still the primary hosted path
 - Capistrano-related files and how they fit into releases
 - environment variables and build metadata expectations where relevant
 - asset build/precompile expectations
@@ -481,7 +480,6 @@ Include:
 - what to do about asset builds and precompilation
 - which environments use SQLite and which use PostgreSQL if that distinction still applies
 - where Apache + Passenger specifics are documented
-- whether the Synology/container route is current, fallback, or legacy
 
 If the current deployment docs are split across multiple files, the new docs should make the entry points clearer.
 
@@ -609,7 +607,7 @@ Requirements:
 7. Add file structure and deployment documentation
    - Explain where major responsibilities live in the repo
    - Make the repo map useful to new contributors
-   - Document the supported deployment story, including Apache + Passenger, Nirvana, any supported Synology/container route, and Capistrano-based release flow
+   - Document the supported deployment story, including Apache + Passenger, Linux, and Capistrano-based release flow
    - Explain where deployment config lives:
      - /Users/steven/Source/GitHub/rails_got_the_keys/config/deploy.rb
      - /Users/steven/Source/GitHub/rails_got_the_keys/config/deploy/

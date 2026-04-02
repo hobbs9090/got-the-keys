@@ -102,7 +102,7 @@ fr:
       shared_host_title: Adapte a l'hebergement mutualise
       shared_host_points:
         stack: Rails rendu cote serveur sous Apache + Passenger.
-        dependencies: Aucune hypothese sur Redis, Sidekiq, Docker ou des workers toujours
+        dependencies: Aucune hypothese sur Redis, Sidekiq ou des workers toujours
           actifs.
         enhancement: Amelioration progressive avec Foundation, Turbo et des formulaires
           classiques.

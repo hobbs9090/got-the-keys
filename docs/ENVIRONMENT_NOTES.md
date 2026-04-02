@@ -19,7 +19,7 @@ Local and simple-host posture:
 
 Hosted production posture:
 
-- PostgreSQL is the intended hosted database on Nirvana-backed deployments
+- PostgreSQL is the intended hosted database on Linux-backed deployments
 
 The app documentation should not treat SQLite and PostgreSQL as interchangeable in operations. SQLite is the simple local/shared-host posture; PostgreSQL is the stronger hosted production posture.
 
@@ -104,22 +104,6 @@ Useful overrides:
 - `README_SCREENSHOT_WIDTH`
 - `README_SCREENSHOT_HEIGHT`
 - `README_SCREENSHOT_BROWSER`
-
-## Container Notes
-
-The container path expects:
-
-- a production Rails environment
-- a Postgres service in `compose.synology.yml`
-- storage and mail directories mounted from the host
-
-The default container entrypoint is:
-
-```bash
-bin/container_start
-```
-
-That runs `db:prepare` and then boots Puma with `config/puma.rb`.
 
 ## Read Next
 
