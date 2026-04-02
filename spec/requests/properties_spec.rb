@@ -356,6 +356,52 @@ describe "Properties" do
       expect(furnishing_field["hidden"]).to eq("")
     end
 
+    it "hides rent-only fields for sale listings by default" do
+      sign_in user
+
+      get new_property_path
+
+      document = Nokogiri::HTML(response.body)
+      deposit_field = document.at_css("[data-property-rental-only-field] input[name='property[deposit_amount]']")
+      pets_field = document.at_css("[data-property-rental-only-field] input[name='property[pets_allowed]']")
+      lease_length_field = document.at_css("[data-property-lease-length-field]")
+
+      expect(response).to have_http_status(:ok)
+      expect(deposit_field.ancestors("[data-property-rental-only-field]").first["hidden"]).to eq("")
+      expect(pets_field.ancestors("[data-property-rental-only-field]").first["hidden"]).to eq("")
+      expect(lease_length_field["hidden"]).to be_nil
+    end
+
+    it "shows lease length for non-freehold sale listings" do
+      sign_in user
+
+      property.update!(sale_status: Property::SALE_STATUSES[:for_sale], tenure: "Leasehold")
+
+      get edit_property_path(property)
+
+      document = Nokogiri::HTML(response.body)
+      lease_length_field = document.at_css("[data-property-lease-length-field]")
+
+      expect(response).to have_http_status(:ok)
+      expect(lease_length_field["hidden"]).to be_nil
+    end
+
+    it "renders the asking price field as comma-friendly numeric text input" do
+      sign_in user
+
+      get new_property_path
+
+      document = Nokogiri::HTML(response.body)
+      price_field = document.at_css('input[name="property[asking_price]"]')
+
+      expect(response).to have_http_status(:ok)
+      expect(price_field).to be_present
+      expect(price_field["type"]).to eq("text")
+      expect(price_field["inputmode"]).to eq("numeric")
+      expect(price_field["pattern"]).to eq("[0-9,\\s]*")
+      expect(price_field["maxlength"]).to eq("15")
+    end
+
     it "renders localized seller listing form copy for the signed-in language" do
       user.update!(language: "de")
       sign_in user
@@ -431,6 +477,40 @@ describe "Properties" do
       expect(response).to redirect_to(property_path(property))
       expect(property.image_file_name).to match(%r{\A/uploads/property_images/#{property.id}/[0-9a-f]{32}\.jpeg\z})
       expect(Rails.root.join("tmp", "uploads", property.image_file_name.delete_prefix("/uploads/"))).to exist
+    end
+
+    it "accepts a comma-formatted asking price and stores it as an integer" do
+      sign_in user
+
+      post properties_path, params: {
+        property: property_attributes(asking_price: "650,000")
+      }
+
+      property = Property.order(:id).last
+
+      expect(response).to redirect_to(property_path(property))
+      expect(property.asking_price).to eq(650_000)
+    end
+
+    it "clears rent-only fields for sale listings" do
+      sign_in user
+
+      post properties_path, params: {
+        property: property_attributes(
+          sale_status: Property::SALE_STATUSES[:for_sale],
+          deposit_amount: 2_500,
+          lease_length_years: 999,
+          pets_allowed: true,
+          tenure: "Freehold"
+        )
+      }
+
+      property = Property.order(:id).last
+
+      expect(response).to redirect_to(property_path(property))
+      expect(property.deposit_amount).to be_nil
+      expect(property.lease_length_years).to be_nil
+      expect(property.pets_allowed).to be(false)
     end
   end
 
