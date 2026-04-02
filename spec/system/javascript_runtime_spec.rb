@@ -201,16 +201,35 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     visit new_property_path
 
     expect(page).to have_css("[data-property-furnishing-field][hidden]", visible: false)
+    expect(page).to have_css("[data-property-rental-only-field][hidden]", visible: false, count: 2)
+    expect(page).to have_no_css("[data-property-lease-length-field][hidden]", visible: false)
 
     select "For Rent", from: "property_sale_status"
 
     expect(page).to have_no_css("[data-property-furnishing-field][hidden]", visible: false)
     expect(page.evaluate_script("document.getElementById('property_furnishing').disabled")).to be(false)
+    expect(page).to have_no_css("[data-property-rental-only-field][hidden]", visible: false)
+    expect(page.evaluate_script("document.getElementById('property_deposit_amount').disabled")).to be(false)
+    expect(page.evaluate_script("document.getElementById('property_pets_allowed').disabled")).to be(false)
+    expect(page).to have_no_css("[data-property-lease-length-field][hidden]", visible: false)
 
     select "For Sale", from: "property_sale_status"
 
     expect(page).to have_css("[data-property-furnishing-field][hidden]", visible: false)
     expect(page.evaluate_script("document.getElementById('property_furnishing').disabled")).to be(true)
+    expect(page).to have_css("[data-property-rental-only-field][hidden]", visible: false, count: 2)
+    expect(page.evaluate_script("document.getElementById('property_deposit_amount').disabled")).to be(true)
+    expect(page.evaluate_script("document.getElementById('property_pets_allowed').disabled")).to be(true)
+
+    fill_in "property_tenure", with: "Freehold"
+
+    expect(page).to have_css("[data-property-lease-length-field][hidden]", visible: false)
+    expect(page.evaluate_script("document.getElementById('property_lease_length_years').disabled")).to be(true)
+
+    fill_in "property_tenure", with: "Leasehold"
+
+    expect(page).to have_no_css("[data-property-lease-length-field][hidden]", visible: false)
+    expect(page.evaluate_script("document.getElementById('property_lease_length_years').disabled")).to be(false)
   end
 
   it "updates price filter labels when the shared search switches to rentals" do

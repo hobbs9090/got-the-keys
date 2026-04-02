@@ -80,7 +80,7 @@
     </div>
     <div>
       <%= f.label :asking_price, t("ui.properties.editor.fields.asking_price"), **form_label_options(form_model, :asking_price) %>
-      <%= f.number_field :asking_price, min: 0, step: 1000, required: true, **form_control_options(form_model, :asking_price) %>
+      <%= f.text_field :asking_price, inputmode: "numeric", maxlength: 15, pattern: "[0-9,\\s]*", required: true, data: { validation_pattern_message: t("ui.validation.number") }, **form_control_options(form_model, :asking_price) %>
       <%= field_error_messages(form_model, :asking_price) %>
     </div>
     <div>
@@ -113,7 +113,7 @@
     <div class="form-grid">
       <div>
         <%= f.label :tenure, t("ui.properties.editor.fields.tenure"), **form_label_options(form_model, :tenure) %>
-        <%= f.text_field :tenure, placeholder: t("ui.properties.editor.placeholders.tenure"), **form_control_options(form_model, :tenure) %>
+        <%= f.text_field :tenure, placeholder: t("ui.properties.editor.placeholders.tenure"), data: { property_tenure: true }, **form_control_options(form_model, :tenure) %>
         <%= field_error_messages(form_model, :tenure) %>
       </div>
       <div>
@@ -157,7 +157,7 @@
         <%= f.number_field :floor_area_sq_ft, min: 0, step: 1, **form_control_options(form_model, :floor_area_sq_ft) %>
         <%= field_error_messages(form_model, :floor_area_sq_ft) %>
       </div>
-      <div>
+      <div data-property-rental-only-field <%= "hidden" if form_model.sale_status != Property::SALE_STATUSES[:for_rent] %>>
         <%= f.label :deposit_amount, t("ui.properties.editor.fields.deposit_amount"), **form_label_options(form_model, :deposit_amount) %>
         <%= f.number_field :deposit_amount, min: 0, step: 50, **form_control_options(form_model, :deposit_amount) %>
         <%= field_error_messages(form_model, :deposit_amount) %>
@@ -167,12 +167,12 @@
         <%= f.number_field :service_charge_amount, min: 0, step: 50, **form_control_options(form_model, :service_charge_amount) %>
         <%= field_error_messages(form_model, :service_charge_amount) %>
       </div>
-      <div>
+      <div data-property-lease-length-field <%= "hidden" if form_model.sale_status == Property::SALE_STATUSES[:for_sale] && form_model.tenure.to_s.strip.casecmp("Freehold").zero? %>>
         <%= f.label :lease_length_years, t("ui.properties.editor.fields.lease_length_years"), **form_label_options(form_model, :lease_length_years) %>
         <%= f.number_field :lease_length_years, min: 0, step: 1, **form_control_options(form_model, :lease_length_years) %>
         <%= field_error_messages(form_model, :lease_length_years) %>
       </div>
-      <div class="form-grid__checkbox">
+      <div class="form-grid__checkbox" data-property-rental-only-field <%= "hidden" if form_model.sale_status != Property::SALE_STATUSES[:for_rent] %>>
         <%= f.check_box :pets_allowed %>
         <%= f.label :pets_allowed, t("ui.properties.editor.fields.pets_allowed"), class: "checkbox-label" %>
       </div>

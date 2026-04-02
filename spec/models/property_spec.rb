@@ -199,6 +199,13 @@ describe "A property" do
     expect(property.errors[:image_file_name]).to be_empty
   end
 
+  it "strips commas from asking price before validation" do
+    property = build_property(asking_price: "650,000")
+
+    expect(property.valid?).to be true
+    expect(property.asking_price).to eq(650_000)
+  end
+
   it "accepts jpeg image filenames" do
     property = build_property(image_file_name: "/uploads/property_images/example.jpeg")
 
@@ -219,6 +226,34 @@ describe "A property" do
     property.valid?
 
     expect(property.furnishing).to be_nil
+  end
+
+  it "clears rent-only fields for freehold sale listings" do
+    property = build_property(
+      sale_status: Property::SALE_STATUSES[:for_sale],
+      tenure: "Freehold",
+      deposit_amount: 2_500,
+      lease_length_years: 999,
+      pets_allowed: true
+    )
+
+    property.valid?
+
+    expect(property.deposit_amount).to be_nil
+    expect(property.lease_length_years).to be_nil
+    expect(property.pets_allowed).to be(false)
+  end
+
+  it "keeps lease length for non-freehold sale listings" do
+    property = build_property(
+      sale_status: Property::SALE_STATUSES[:for_sale],
+      tenure: "Leasehold",
+      lease_length_years: 125
+    )
+
+    property.valid?
+
+    expect(property.lease_length_years).to eq(125)
   end
 
   it "rejects unsupported image filename extensions" do

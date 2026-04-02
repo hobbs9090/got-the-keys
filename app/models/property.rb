@@ -32,6 +32,10 @@ class Property < ApplicationRecord
 
   attr_accessor :image_upload
 
+  def asking_price=(value)
+    super(normalize_integer_input(value))
+  end
+
   validates :address_line_1, :town_city, :county, :postcode, :country,
             :property_description, :bedrooms, :sale_status, :asking_price,
             :user_id, presence: true
@@ -64,6 +68,8 @@ class Property < ApplicationRecord
 
   before_validation :apply_listing_defaults
   before_validation :clear_furnishing_for_sale_listings
+  before_validation :clear_rental_only_fields_for_sale_listings
+  before_validation :clear_lease_length_for_freehold_sale_listings
   validate :refurbished_year_not_before_year_built
   validate :image_upload_is_jpeg
   validate :prevent_duplicate_exact_address
@@ -329,6 +335,10 @@ class Property < ApplicationRecord
 
   private
 
+  def normalize_integer_input(value)
+    value.to_s.gsub(/[,\s]/, "").presence
+  end
+
   def image_upload_is_jpeg
     return if image_upload.blank?
 
@@ -388,6 +398,20 @@ class Property < ApplicationRecord
 
   def clear_furnishing_for_sale_listings
     self.furnishing = nil if sale_status == SALE_STATUSES[:for_sale]
+  end
+
+  def clear_rental_only_fields_for_sale_listings
+    return unless sale_status == SALE_STATUSES[:for_sale]
+
+    self.deposit_amount = nil
+    self.pets_allowed = false
+  end
+
+  def clear_lease_length_for_freehold_sale_listings
+    return unless sale_status == SALE_STATUSES[:for_sale]
+    return unless tenure.to_s.strip.casecmp("Freehold").zero?
+
+    self.lease_length_years = nil
   end
 
   def refurbished_year_not_before_year_built
