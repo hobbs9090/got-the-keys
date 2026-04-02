@@ -1,6 +1,7 @@
 const modalState = new WeakMap();
 const triggerState = new WeakMap();
 let escapeHandlerBound = false;
+let lifecycleHandlersBound = false;
 const focusableSelector = [
   "a[href]:not([tabindex='-1'])",
   "button:not([disabled]):not([tabindex='-1'])",
@@ -18,6 +19,18 @@ const focusableElementsFor = (modal) =>
 const focusFirstElement = (modal) => {
   const focusTarget = focusableElementsFor(modal)[0] || modal.querySelector(".site-modal__dialog");
   focusTarget?.focus();
+};
+
+const resetModalDomState = () => {
+  document.body.classList.remove("site-modal-open");
+
+  document.querySelectorAll("[data-modal]").forEach((modal) => {
+    modal.hidden = true;
+    modal.setAttribute("aria-hidden", "true");
+
+    const state = modalState.get(modal);
+    state?.lastTrigger?.setAttribute("aria-expanded", "false");
+  });
 };
 
 const closeModal = (modal, restoreFocus = true) => {
@@ -110,15 +123,25 @@ const bindEscapeHandler = () => {
   escapeHandlerBound = true;
 };
 
+const bindLifecycleHandlers = () => {
+  if (lifecycleHandlersBound) return;
+
+  const resetHandler = () => resetModalDomState();
+
+  window.addEventListener("beforeunload", resetHandler);
+  window.addEventListener("pagehide", resetHandler);
+  window.addEventListener("pageshow", resetHandler);
+  document.addEventListener("turbo:visit", resetHandler);
+  document.addEventListener("turbo:before-cache", resetHandler);
+  document.addEventListener("turbo:before-render", resetHandler);
+
+  lifecycleHandlersBound = true;
+};
+
 export const bootModals = () => {
-  document.body.classList.remove("site-modal-open");
-
-  document.querySelectorAll("[data-modal]").forEach((modal) => {
-    modal.hidden = true;
-    modal.setAttribute("aria-hidden", "true");
-  });
-
+  resetModalDomState();
   bindEscapeHandler();
+  bindLifecycleHandlers();
   document.querySelectorAll("[data-modal]").forEach(setupModal);
 
   document.querySelectorAll("[data-modal-trigger]").forEach((trigger) => {
@@ -140,16 +163,11 @@ export const bootModals = () => {
 };
 
 export const teardownModals = () => {
-  document.body.classList.remove("site-modal-open");
+  resetModalDomState();
 
   document.querySelectorAll("[data-modal]").forEach((modal) => {
-    modal.hidden = true;
-    modal.setAttribute("aria-hidden", "true");
-
     const state = modalState.get(modal);
     if (!state) return;
-
-    state.lastTrigger?.setAttribute("aria-expanded", "false");
 
     state.cleanup.forEach(([element, eventName, handler]) => {
       element.removeEventListener(eventName, handler);
