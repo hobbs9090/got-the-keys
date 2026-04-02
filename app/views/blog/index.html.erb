@@ -124,7 +124,9 @@ editorial_points = [
       <div class="blog-story-grid__cards">
         <% story_cards.each do |story| %>
           <article class="site-card blog-story-card" data-testid="blog-story-card">
-            <%= pixel_density_image_tag(story[:image][0], retina_source: story[:image][1], class: 'blog-story-card__image', alt: story[:title]) %>
+            <div class="blog-story-card__media">
+              <%= pixel_density_image_tag(story[:image][0], retina_source: story[:image][1], class: 'blog-story-card__image', alt: story[:title]) %>
+            </div>
 
             <div class="blog-story-card__body">
               <div class="blog-story-card__meta">
