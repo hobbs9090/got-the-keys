@@ -705,7 +705,7 @@ en:
           - "Create a new booking from a property page and verify the success message plus reference code."
           - "As an admin, confirm a pending appointment and validate the status badge plus audit timeline."
           - "Reschedule an appointment into an occupied slot and verify the conflict validation message."
-          - "Restore the baseline dataset, then switch to the fully booked scenario and verify the empty-slot state."
+          - "Restore the baseline dataset and verify the same booking and admin assertions still hold."
           - "Export the current dataset, import it back through the preview screen, and confirm the diagnostics panel updates."
         admin_two_factor:
           title: "Admin 2FA mode"
@@ -956,9 +956,6 @@ en:
         scenario_keys:
           baseline: "Baseline"
           custom_sevenoaks_westerham_catalogue: "Curated Sevenoaks and Westerham catalogue"
-          fully_booked_day: "Fully booked day"
-          high_volume_search: "High volume search"
-          qa_edge_cases: "QA edge cases"
         preview:
           title: "Scenario preview %{name}"
           eyebrow: "Scenario preview"

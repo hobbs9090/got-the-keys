@@ -4,7 +4,7 @@ RSpec.describe AdminHelper, type: :helper do
   describe "#translated_demo_scenario_key" do
     it "uses the locale-specific scenario name when available" do
       I18n.with_locale(:de) do
-        expect(helper.translated_demo_scenario_key("fully_booked_day")).to eq("Voll ausgebuchter Tag")
+        expect(helper.translated_demo_scenario_key("baseline")).to eq("Basis")
       end
     end
 
@@ -15,13 +15,13 @@ RSpec.describe AdminHelper, type: :helper do
 
   describe "#admin_demo_confirmation_phrase" do
     it "uses the scenario key as the typed confirmation phrase" do
-      expect(helper.admin_demo_confirmation_phrase(key: "qa_edge_cases")).to eq("qa_edge_cases")
+      expect(helper.admin_demo_confirmation_phrase(key: "baseline")).to eq("baseline")
     end
   end
 
   describe "#admin_demo_confirmation_pattern" do
     it "returns a safe exact-match pattern for the phrase" do
-      expect(helper.admin_demo_confirmation_pattern("deal_progression")).to eq("deal_progression")
+      expect(helper.admin_demo_confirmation_pattern("baseline")).to eq("baseline")
     end
   end
 

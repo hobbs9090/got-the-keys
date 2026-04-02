@@ -38,9 +38,9 @@ bin/rails server
 
 Open:
 
-- Public site: `https://gotthekeys.uk:3000`
-- Admin sign-in: `http://gotthekeys.uk/admins/sign_in`
-- QA guide in-app: `http://gotthekeys.uk/admin/qa`
+- Public site: [https://gotthekeys.uk](https://gotthekeys.uk)
+- Admin sign-in: [http://gotthekeys.uk/admins/sign_in](http://gotthekeys.uk/admins/sign_in)
+- QA guide in-app: [http://gotthekeys.uk/admin/qa](http://gotthekeys.uk/admin/qa)
 
 Baseline credentials after seeding:
 
