@@ -63,13 +63,11 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Use shared deployment Ruby
-        run: |
-          source bin/activate_shared_ruby
-          echo "${RBENV_ROOT:-$HOME/.rbenv}/bin" >> "$GITHUB_PATH"
-          echo "${RBENV_ROOT:-$HOME/.rbenv}/shims" >> "$GITHUB_PATH"
-          ruby -v
-          bundle -v
+      - name: Set up deployment Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: false
 
       - name: Cache deployment bundle
         uses: actions/cache@v5
