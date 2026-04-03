@@ -26,6 +26,7 @@ fr:
     common:
       apply: Appliquer
       any: Tous
+      false: Faux
       cancel: Annuler
       reset: Reinitialiser
       clear_all: Tout effacer

@@ -26,6 +26,7 @@ zh:
     common:
       apply: 应用
       any: 不限
+      false: 否
       skip_to_content: 跳到主要内容
       cancel: 取消
       reset: 重置

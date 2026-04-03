@@ -25,6 +25,7 @@ de:
     common:
       apply: Anwenden
       any: Beliebig
+      false: Falsch
       cancel: Abbrechen
       reset: Zurücksetzen
       clear_all: Alles löschen

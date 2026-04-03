@@ -26,6 +26,7 @@ it:
     common:
       apply: Applica
       any: Qualsiasi
+      false: Falso
       cancel: Annulla
       reset: Reimposta
       clear_all: Cancella tutto
