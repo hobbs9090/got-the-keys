@@ -950,8 +950,17 @@ zh:
         scenario_keys:
           baseline: 基线
           custom_sevenoaks_westerham_catalogue: 精选 Sevenoaks 与 Westerham 房源目录
+        scenario_descriptions:
+          baseline: 一个均衡的日常演示数据集，包含出售与出租房源、多种预约状态，以及培训用的已知账号凭据。
         scenario_journeys:
           baseline: 覆盖目录浏览、预约、后台确认以及业主可见性的基线端到端流程。
+        scenario_trainer_notes:
+          baseline:
+            - 将此场景用作新测试人员和浏览器代理的默认上手数据包。
+        scenario_expected_assertions:
+          baseline:
+            - 当前场景徽章应显示“基线”。
+            - QA 指南中应出现已知的管理员和卖家凭据。
         preview:
           title: 场景预览 %{name}
           eyebrow: 场景预览

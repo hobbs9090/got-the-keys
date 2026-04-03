@@ -27,7 +27,7 @@ RSpec.describe "Admin demo scenarios" do
 
     baseline_reset = parsed_html.at_css('[data-testid="scenario-seed-reset-baseline"]')
     expect(baseline_reset).to be_present
-    expect(baseline_reset.text).to include("Baseline Demo Estate")
+    expect(baseline_reset.text).to include(I18n.t("ui.admin.demo_data.scenario_keys.baseline"))
 
     baseline_input = baseline_reset.at_css('[data-testid="scenario-seed-reset-input-baseline"]')
     expect(baseline_input).to be_present
@@ -75,7 +75,9 @@ RSpec.describe "Admin demo scenarios" do
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Trainer notes")
     expect(response.body).to include("Expected assertions")
-    expect(response.body).to include("Known admin and seller credentials should appear in the QA guide.")
+    expect(response.body).to include(I18n.t("ui.admin.demo_data.preview.trainer_notes_title"))
+    expect(response.body).to include(I18n.t("ui.admin.demo_data.preview.expected_assertions_title"))
+    expect(response.body).to include(I18n.t("ui.admin.demo_data.scenario_expected_assertions.baseline").last)
   end
 
   it "shows the typed gate on quick reset preview pages" do

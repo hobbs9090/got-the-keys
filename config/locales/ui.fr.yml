@@ -971,8 +971,17 @@ fr:
           baseline: Base
           custom_sevenoaks_westerham_catalogue: Catalogue selectionne Sevenoaks et
             Westerham
+        scenario_descriptions:
+          baseline: Un jeu de donnees quotidien equilibre avec des biens a vendre et a louer, plusieurs statuts de rendez-vous et des identifiants connus pour la formation.
         scenario_journeys:
           baseline: Parcours complet de base couvrant la navigation catalogue, la reservation, la confirmation admin et la visibilite vendeur.
+        scenario_trainer_notes:
+          baseline:
+            - Utilisez ce pack comme parcours d'onboarding par defaut pour les nouveaux testeurs et agents navigateur.
+        scenario_expected_assertions:
+          baseline:
+            - Le badge du scenario actif doit afficher Base.
+            - Les identifiants connus des admins et vendeurs doivent apparaitre dans le guide QA.
         preview:
           title: Apercu du scenario %{name}
           eyebrow: Apercu du scenario

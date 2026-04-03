@@ -25,6 +25,18 @@ module AdminHelper
     t("ui.admin.demo_data.scenario_keys.#{key}", default: key.to_s.humanize)
   end
 
+  def admin_scenario_name_label(scenario)
+    key = scenario[:key] || scenario["key"]
+    translated_demo_scenario_key(key)
+  end
+
+  def admin_scenario_description_label(scenario)
+    key = scenario[:key] || scenario["key"]
+    fallback = scenario[:description] || scenario["description"]
+
+    t("ui.admin.demo_data.scenario_descriptions.#{key}", default: fallback)
+  end
+
   def admin_demo_confirmation_phrase(key_or_scenario)
     key = key_or_scenario.is_a?(Hash) ? key_or_scenario.fetch(:key) : key_or_scenario
 
@@ -99,6 +111,22 @@ module AdminHelper
     fallback = scenario.dig(:qa, :intended_journey) || scenario.dig("qa", "intended_journey")
 
     t("ui.admin.demo_data.scenario_journeys.#{key}", default: fallback)
+  end
+
+  def admin_scenario_trainer_notes(scenario)
+    key = scenario[:key] || scenario["key"]
+    fallback = Array(scenario.dig(:qa, :trainer_notes) || scenario.dig("qa", "trainer_notes"))
+
+    notes = t("ui.admin.demo_data.scenario_trainer_notes.#{key}", default: fallback)
+    notes.is_a?(Array) ? notes : Array(fallback)
+  end
+
+  def admin_scenario_expected_assertions(scenario)
+    key = scenario[:key] || scenario["key"]
+    fallback = Array(scenario.dig(:qa, :expected_assertions) || scenario.dig("qa", "expected_assertions"))
+
+    assertions = t("ui.admin.demo_data.scenario_expected_assertions.#{key}", default: fallback)
+    assertions.is_a?(Array) ? assertions : Array(fallback)
   end
 
   def admin_selector_surface_label(entry)

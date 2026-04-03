@@ -24,8 +24,8 @@
   </article>
 
   <article class="admin-panel">
-    <h2><%= @baseline_scenario.fetch(:name) %></h2>
-    <p><%= @baseline_scenario.fetch(:description) %></p>
+    <h2><%= admin_scenario_name_label(@baseline_scenario) %></h2>
+    <p><%= admin_scenario_description_label(@baseline_scenario) %></p>
     <ul class="detail-inline-list admin-demo-scenario-card__meta">
       <li><strong><%= @baseline_scenario.fetch(:property_count) %></strong> <%= t("ui.admin.demo_data.counts.properties", count: @baseline_scenario.fetch(:property_count)) %></li>
       <li><strong><%= @baseline_scenario.fetch(:appointment_count) %></strong> <%= t("ui.admin.demo_data.counts.bookings", count: @baseline_scenario.fetch(:appointment_count)) %></li>

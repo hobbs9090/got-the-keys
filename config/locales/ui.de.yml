@@ -962,8 +962,17 @@ de:
         scenario_keys:
           baseline: Basis
           custom_sevenoaks_westerham_catalogue: Kuratiertes Sevenoaks- und Westerham-Katalog
+        scenario_descriptions:
+          baseline: Ein ausgewogener Tagesdatensatz mit gemischten Verkaufs- und Mietobjekten, mehreren Terminstatus und bekannten Zugangsdaten für Schulungen.
         scenario_journeys:
           baseline: Durchgehender Basis-Ablauf mit Katalogsuche, Buchung, Admin-Bestätigung und Sichtbarkeit für Verkäufer.
+        scenario_trainer_notes:
+          baseline:
+            - Verwenden Sie dies als Standard-Onboarding-Paket für neue Tester und Browser-Agenten.
+        scenario_expected_assertions:
+          baseline:
+            - Das Badge für das aktive Szenario sollte Basis anzeigen.
+            - Bekannte Admin- und Verkäufer-Zugangsdaten sollten im QA-Leitfaden erscheinen.
         preview:
           title: Szenariovorschau %{name}
           eyebrow: Szenariovorschau
