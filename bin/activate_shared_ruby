@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="${ROOT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+SHARED_RUBY_VERSION="${SHARED_RUBY_VERSION:-$(tr -d '[:space:]' < "$ROOT_DIR/.ruby-version")}"
+RBENV_ROOT="${RBENV_ROOT:-$HOME/.rbenv}"
+DEFAULT_SHARED_RUBY_BIN="$RBENV_ROOT/versions/$SHARED_RUBY_VERSION/bin"
+SHARED_RUBY_BIN="${SHARED_RUBY_BIN:-$DEFAULT_SHARED_RUBY_BIN}"
+
+if [ -x "$RBENV_ROOT/bin/rbenv" ]; then
+  export RBENV_ROOT
+  export PATH="$RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH"
+  eval "$("$RBENV_ROOT/bin/rbenv" init - bash)"
+  rbenv shell "$SHARED_RUBY_VERSION"
+elif [ -x "$SHARED_RUBY_BIN/ruby" ]; then
+  export PATH="$SHARED_RUBY_BIN:$PATH"
+fi
+
+hash -r
