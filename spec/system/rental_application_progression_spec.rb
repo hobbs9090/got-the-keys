@@ -31,7 +31,7 @@ RSpec.describe "Rental application progression", type: :system do
 
     sign_in_as(admin)
     click_link "Ravi Patel"
-    select "Approved", from: "rental_application_status"
+    select I18n.t("ui.rental_applications.statuses.approved"), from: "rental_application_status"
     click_button "Save application"
 
     expect(page).to have_text("Rental application updated.")
