@@ -38,4 +38,22 @@ RSpec.describe "Admin dashboard", type: :request do
       expect(link["class"]).to include("hollow")
     end
   end
+
+  it "uses compact status pills in the recent activity table" do
+    property = FactoryBot.create(:property)
+    appointment = FactoryBot.create(:appointment, property:, status: "pending")
+
+    get admin_root_path
+
+    expect(response).to have_http_status(:ok)
+
+    document = Nokogiri::HTML.parse(response.body)
+    row = document.css(".admin-list__item").find { |candidate| candidate.text.include?(appointment.public_reference) }
+    status_badge = row.css("span").last
+
+    expect(row).to be_present
+    expect(row.at_css("p")&.text.to_s).to include(appointment.customer_name, appointment.property.address_line_1)
+    expect(status_badge["class"]).to include("badge")
+    expect(status_badge["class"]).to include("admin-bookings-row__pill")
+  end
 end

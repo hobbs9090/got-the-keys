@@ -338,7 +338,9 @@
 }
 
 .admin-bookings-row__pill {
+  justify-self: start;
   text-transform: none;
+  width: fit-content;
 }
 
 .admin-bookings-row__action.button {

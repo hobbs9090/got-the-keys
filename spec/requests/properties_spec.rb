@@ -280,6 +280,7 @@ describe "Properties" do
       expect(response.body).to include("Last refurbished")
       expect(response.body).to include(property.refurbished_year.to_s)
       expect(response.body).not_to include(I18n.t("ui.branch_profile.team_label"))
+      expect(showcase.text).not_to include(I18n.t("ui.properties.listing_states.published"))
     end
 
     it "keeps the property hero media on a non-stretched 3:2 frame in the stylesheet" do

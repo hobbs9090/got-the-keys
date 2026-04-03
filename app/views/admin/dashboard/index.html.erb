@@ -102,13 +102,14 @@
   </article>
   <article class="admin-panel">
     <h2><%= t("ui.admin.dashboard.recent_activity") %></h2>
-    <div class="admin-table">
+    <div class="admin-list">
       <% @recent_appointments.each do |appointment| %>
-        <div class="admin-table__row">
-          <span><%= link_to appointment.public_reference, admin_appointment_path(appointment) %></span>
-          <span><%= appointment.customer_name %></span>
-          <span><%= appointment.property.address_line_1 %></span>
-          <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+        <div class="admin-list__item">
+          <div>
+            <%= link_to appointment.public_reference, admin_appointment_path(appointment) %>
+            <p><%= appointment.customer_name %> · <%= appointment.property.address_line_1 %></p>
+          </div>
+          <span class="<%= [appointment_status_badge_class(appointment.status), "admin-bookings-row__pill"].join(" ") %>"><%= appointment.display_status %></span>
         </div>
       <% end %>
     </div>
