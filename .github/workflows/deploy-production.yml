@@ -57,8 +57,9 @@ jobs:
 
       - name: Use shared deployment Ruby
         run: |
-          export PATH="/home/steven/.rbenv/versions/3.4.7/bin:$PATH"
-          echo "/home/steven/.rbenv/versions/3.4.7/bin" >> "$GITHUB_PATH"
+          source bin/activate_shared_ruby
+          echo "${RBENV_ROOT:-$HOME/.rbenv}/bin" >> "$GITHUB_PATH"
+          echo "${RBENV_ROOT:-$HOME/.rbenv}/shims" >> "$GITHUB_PATH"
           ruby -v
           bundle -v
 
