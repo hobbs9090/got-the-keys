@@ -40,6 +40,7 @@ jobs:
     env:
       BUNDLE_PATH: vendor/bundle
       BUNDLE_WITHOUT: "doc production test"
+      RUNNER_TOOL_CACHE: ${{ runner.temp }}/toolcache
       DEPLOY_USER: steven
       DEPLOY_HOST: 192.168.2.204
       DEPLOY_TO: /var/www/gotthekeys-staging

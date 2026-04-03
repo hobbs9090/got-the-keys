@@ -42,6 +42,7 @@ jobs:
     env:
       BUNDLE_PATH: vendor/bundle
       BUNDLE_WITHOUT: "doc staging test"
+      RUNNER_TOOL_CACHE: ${{ runner.temp }}/toolcache
       DEPLOY_USER: steven
       DEPLOY_HOST: 127.0.0.1
       DEPLOY_TO: ${{ inputs.deploy_to }}
