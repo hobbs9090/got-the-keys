@@ -48,6 +48,7 @@ fr:
       phone_number: Numero de telephone
       status: Statut
       'yes': Oui
+      'no': Non
       download: Telecharger
       remove: Supprimer
       save: Enregistrer
@@ -465,8 +466,51 @@ fr:
         securise envoye apres la reservation.
       thanks_html: Merci,<br>GotTheKeys
     admin:
+      navigation:
+        aria_label: Admin
+        dashboard: Tableau de bord
+        bookings: Reservations
+        leads: Prospects
+        sales: Ventes
+        rentals: Locations
+        properties: Biens
+        sellers: Vendeurs
+        demo_data: Donnees de demo
+        security: Securite
+        qa_area: Zone QA
+        qa_guide: Guide QA
+        notifications: Notifications
+        booking_rules: Regles de reservation
       dashboard:
-        true: le
+        title: Tableau de bord admin
+        eyebrow: Vue d'ensemble des operations
+        open_bookings_desk: Ouvrir le desk des reservations
+        metrics:
+          properties: Biens
+          upcoming_appointments: Rendez-vous a venir
+          pending_actions: Actions en attente
+          customers: Clients
+          open_leads: Prospects ouverts
+        bookings_eyebrow: Reserve aux admins
+        bookings_title: Visibilite et controle des reservations
+        all_bookings: Toutes les reservations
+        pending_action: Action en attente
+        this_week: Cette semaine
+        bookings_body: Le desk des reservations est reserve aux administrateurs et
+          donne acces a la vue calendrier complete, aux filtres en direct et aux
+          commandes d'etat pour chaque demande de visite du site.
+        bookings_requiring_action: Reservations necessitant une action
+        nothing_needs_attention: Rien ne requiert votre attention pour le moment.
+        upcoming_appointments: Rendez-vous a venir
+        no_upcoming_bookings: Aucune reservation a venir.
+        recent_leads: Prospects recents
+        no_leads: Aucun prospect n'a encore ete capture.
+        recent_activity: Activite recente
+        notification_log_snapshot: Apercu du journal des notifications
+        no_notification_records: Aucun enregistrement de notification pour le moment.
+        last_demo_data_action: Derniere action sur les donnees de demo
+        on: le
+        no_demo_action: Aucune reinitialisation ou import de scenario n'a encore ete enregistre.
       appointments:
         confirm: Confirmer
         cancel: Annuler
@@ -474,8 +518,15 @@ fr:
           title: Rendez-vous %{reference}
           eyebrow: Details du rendez-vous
           edit: Modifier
+          send_reminder: Envoyer un rappel
           summary_title: Resume
           not_supplied: Non fourni
+          visit_outcome: Resultat de la visite
+          not_recorded: Non enregistre
+          self_service: Libre-service
+          self_service_open_until: Ouvert jusqu a %{time}
+          self_service_closed: Ferme
+          reminder_sent: Rappel envoye
           notes_title: Notes
           no_customer_notes: Aucune note client fournie.
           no_internal_notes: Aucune note interne pour le moment.
@@ -510,6 +561,248 @@ fr:
         applied_demo_scenario: Scenario de demo %{name} applique.
         restored_baseline_demo_scenario: Scenario de demo de base (%{name}) restaure.
         imported_demo_scenario: Scenario de demo %{name} importe.
+      qa:
+        title: Guide QA
+        eyebrow: Environnement de formation a l'automatisation
+        diagnostics_title: Diagnostic
+        app_version: Version de l'application
+        version_box:
+          title: Build de publication
+          git_sha: Git SHA
+          build_number: Numero de build
+          deployed_at: Deploie le
+          environment: Environnement
+          rails_env: Environnement Rails %{env}
+          unavailable: Indisponible
+        diagnostic_labels:
+          active_scenario: Scenario actif
+          build_version: Version du build
+          git_sha: Git SHA
+          build_number: Numero de build
+          environment: Environnement
+          mail_delivery_mode: Mode d'envoi des e-mails
+          job_adapter: Adaptateur de jobs
+          seeded_personas: Personas seedees
+          properties: Biens
+          users: Utilisateurs
+          bookings: Reservations
+          notification_logs: Journaux de notifications
+          last_demo_action: Derniere action de demo
+        demo_action_value: "%{action} a %{time}"
+        training_title: Parcours de formation recommandes
+        training_journeys:
+          - Creez une nouvelle reservation depuis une page bien et verifiez le message de succes ainsi que le code de reference.
+          - En tant qu'admin, confirmez un rendez-vous en attente et verifiez le badge d'etat ainsi que la timeline d'audit.
+          - Replanifiez un rendez-vous sur un creneau deja occupe et verifiez le message de validation du conflit.
+          - Restaurez le jeu de donnees de base et verifiez que les memes assertions de reservation et d'administration tiennent toujours.
+          - Exportez le jeu de donnees courant, importez-le a nouveau depuis l'ecran d'aperçu et verifiez que le panneau de diagnostic se met a jour.
+        admin_two_factor:
+          title: Mode 2FA admin
+          body: Le mode optionnel n'impose l'OTP qu'aux admins deja inscrits. Le mode desactive contourne l'OTP pour tous les admins sans supprimer les secrets ni les codes de secours.
+          confirmation_required: Saisissez DISABLE pour confirmer le passage du mode 2FA admin global a desactive.
+          optional_help: Les admins inscrits doivent utiliser un OTP ou un code de secours. Les admins non inscrits peuvent encore se connecter avec e-mail et mot de passe.
+          disabled_help: "Contournement d'urgence : les controles OTP sont ignores pour tous les admins jusqu'au retour du mode optionnel."
+          warning_title: Avertissement
+          warning_body: Le passage en mode desactive supprime immediatement les invites OTP pour tous les admins. Les secrets et codes de secours existants restent conserves.
+          confirmation_label: Saisissez %{phrase} avant de passer en mode desactive
+          confirmation_help: Cette confirmation n'est requise que lors du passage d'optionnel a desactive.
+          save: Enregistrer le mode 2FA admin
+          current_mode: Mode actuel
+          last_changed_by: Derniere modification par
+          last_changed_at: Derniere modification le
+          updated_notice: Le mode 2FA admin global a ete mis a jour.
+        selector_contract_registry: Registre des selecteurs
+        selectors_catalog:
+          property_card:
+            surface: Catalogue public
+            purpose: Racine de carte annonce pour les assertions catalogue et la navigation detail.
+          book_viewing_cta:
+            surface: Detail bien public
+            purpose: Principal bouton d'appel a l'action pour demander une visite.
+          appointment_form:
+            surface: Parcours public de reservation
+            purpose: Conteneur du formulaire de demande de rendez-vous pour l'automatisation.
+          saved_search_panel:
+            surface: Catalogue public
+            purpose: Carte d'enregistrement de recherche pour les alertes acheteurs et locataires.
+          property_documents_panel:
+            surface: Detail bien public
+            purpose: Panneau public de brochure et de telechargement de documents.
+          admin_appointment_row:
+            surface: Desk admin des reservations
+            purpose: Contrat de ligne d'agenda pour les parcours du desk de reservation.
+          admin_property_activity_timeline:
+            surface: Detail bien admin
+            purpose: Historique d'activite du bien avec documents, prospects et actions de moderation.
+          lead_activity_timeline:
+            surface: Detail prospect admin
+            purpose: Timeline d'activite du prospect pour le suivi et les verifications d'audit.
+          active_demo_scenario:
+            surface: Interface admin
+            purpose: Indicateur global du scenario actif utilise apres les resets et imports.
+        scenario_families: Familles de scenarios
+        scenario_families_labels:
+          happy_path: Parcours nominal
+        scenario_complexities:
+          foundational: Fondamental
+        scenario_risk_types:
+          workflow: Flux de travail
+        seeded_personas:
+          admins: "Admins : %{list}"
+          sellers: "Vendeurs : %{list}"
+      security:
+        title: Securite admin
+        eyebrow: Controles d'authentification
+        intro: Gere l'inscription a l'application d'authentification, les codes de secours et les options de recuperation de connexion depuis un seul ecran.
+        status_title: Etat de la double authentification
+        global_mode: Mode global
+        account_status: Etat du compte
+        enabled: Inscrit
+        disabled: Non inscrit
+        sign_in_behavior: Comportement a la connexion
+        behavior_disabled: Les controles OTP sont actuellement contournes pour tous les admins. Les secrets et codes de secours existants sont conserves pour une reactivation ulterieure.
+        behavior_enrolled: Cet admin doit saisir un code d'authentification valide ou un code de secours a la connexion.
+        behavior_unenrolled: Cet admin peut continuer a se connecter avec e-mail et mot de passe jusqu'a son inscription.
+        backup_codes: Codes de secours
+        backup_codes_ready: Generes et prets a etre renouveles
+        backup_codes_missing: Aucun code de secours n'a encore ete genere
+        regenerate_backup_codes: Regenerer les codes de secours
+        disable_action: Desactiver la double authentification
+        restart_setup: Generer un nouveau code QR
+        begin_setup: Demarrer la configuration
+        enrollment_title: Configurer votre application d'authentification
+        enrollment_body: Scannez ce code QR avec Google Authenticator ou toute application TOTP compatible, puis confirmez la configuration avec votre premier code a usage unique.
+        manual_key: Cle de saisie manuelle
+        manual_key_hint: Si le scan n'est pas possible, saisissez manuellement cette cle secrete dans votre application d'authentification.
+        confirm_code: Code de verification
+        confirm_setup: Confirmer et activer la 2FA
+        backup_codes_title: Codes de secours
+        backup_codes_body: Enregistrez ces codes de secours a usage unique dans un endroit sur des maintenant. Ils ne seront plus affiches une fois la page quittee.
+        setup_steps_title: Comment fonctionne la configuration
+        setup_steps:
+          scan: Demarrez la configuration pour generer un nouveau secret et un code QR pour votre application d'authentification.
+          confirm: Confirmez la configuration avec votre premier code a usage unique pour verifier que l'application est correctement associee.
+          save: Enregistrez immediatement vos codes de secours. Chaque code ne fonctionne qu'une fois et peut etre regenere plus tard.
+        activity_title: Activite de securite recente
+        activity_meta: "%{actor} a %{time}"
+        activity_empty: Aucune activite de double authentification n'a encore ete enregistree pour cet admin.
+        activity_messages:
+          admin_two_factor_enrollment_completed: L'inscription a la double authentification admin a ete finalisee alors que le mode global etait %{mode}.
+          admin_two_factor_disabled: La double authentification admin a ete desactivee.
+          admin_two_factor_backup_codes_regenerated: Les codes de secours admin ont ete regeneres.
+          admin_two_factor_mode_changed: Le mode 2FA admin est passe de %{from} a %{to}.
+        enrollment_started_notice: Une nouvelle configuration d'authentification a ete generee pour cet admin.
+        enabled_notice: La double authentification est maintenant activee pour cet admin.
+        disabled_notice: La double authentification a ete desactivee pour cet admin.
+        backup_codes_regenerated_notice: Un nouvel ensemble de codes de secours a ete genere.
+        already_enabled: La double authentification est deja activee pour cet admin.
+        not_enabled: La double authentification n'est pas activee pour cet admin.
+        enrollment_expired: Votre session de configuration a expire. Recommencez pour generer un nouveau secret.
+        invalid_code: Saisissez un code d'authentification valide.
+        modes:
+          disabled: Desactive
+          optional: Optionnel
+        audit_actions:
+          admin_two_factor_enrollment_completed: Inscription 2FA terminee
+          admin_two_factor_disabled: 2FA desactivee
+          admin_two_factor_backup_codes_regenerated: Codes de secours regeneres
+      enquiries:
+        index:
+          title: Boite des prospects
+          eyebrow: Prospects
+          no_results: Aucun prospect ne correspond aux filtres actuels.
+          potential_spam: Spam potentiel
+          flagged: "Marque : %{reason}"
+          filters:
+            status: Statut
+            source: Source
+            assigned_admin: Admin assigne
+            search: Rechercher
+            search_placeholder: Nom, e-mail, message ou reference
+            spam_only: Spam signale uniquement
+            apply: Appliquer les filtres
+            clear: Effacer
+            all: Tous
+            anyone: N'importe lequel
+        show:
+          title: Prospect %{reference}
+          eyebrow: Detail du prospect
+          back: Retour a la boite
+          view_property: Voir le bien
+          summary_title: Resume du prospect
+          reference: Reference
+          property: Bien
+          status: Statut
+          source: Source
+          email: E-mail
+          phone: Telephone
+          created: Cree le
+          contacted: Contacte le
+          spam_flag: Marquage spam
+          not_provided: Non fourni
+          message_title: Message du prospect
+          manage_title: Gerer le prospect
+          assigned_admin: Admin assigne
+          unassigned: Non assigne
+          flag_as_spam: Marquer comme spam
+          spam_reason: Raison du spam
+          internal_notes: Notes internes
+          save: Enregistrer le prospect
+          activity_title: Historique d'activite
+          no_activity: Aucune activite n'a encore ete enregistree pour ce prospect.
+      offers:
+        index:
+          title: Tableau des offres
+          eyebrow: Progression des ventes
+          empty_column: Aucune offre dans cette colonne.
+        show:
+          title: Offre %{reference}
+          eyebrow: Detail de l'offre
+          back: Retour au tableau
+          summary_title: Resume de l'offre
+          property: Bien
+          buyer: Acheteur
+          email: E-mail
+          phone: Telephone
+          amount: Montant
+          chain: Chaine
+          notes: Notes
+          not_supplied: Non fourni
+          none: Aucune
+          manage_title: Gerer l'offre
+          status: Statut
+          chain_position: Position dans la chaine
+          internal_notes: Notes internes
+          save: Enregistrer l'offre
+          history_title: Historique des decisions
+      rental_applications:
+        index:
+          title: Tableau des dossiers locatifs
+          eyebrow: Progression des locations
+          move_in: Entree %{date}
+          empty_column: Aucun dossier dans cette colonne.
+        show:
+          title: Dossier locatif %{reference}
+          eyebrow: Detail du dossier locatif
+          back: Retour au tableau
+          summary_title: Resume du dossier
+          property: Bien
+          applicant: Candidat
+          email: E-mail
+          phone: Telephone
+          move_in_date: Date d'entree
+          guarantor_needed: Garant necessaire
+          guarantor_available: Garant disponible
+          affordability_notes: Notes de solvabilite
+          notes: Notes
+          none: Aucune
+          manage_title: Gerer le dossier
+          status: Statut
+          guarantor_required: Garant requis
+          guarantor_available_label: Garant disponible
+          internal_notes: Notes internes
+          save: Enregistrer le dossier
+          history_title: Historique des decisions
       properties:
         index:
           title: Biens
@@ -530,6 +823,8 @@ fr:
           edit_property: Modifier le bien
           view_public_page: Voir la page publique
           summary_title: Resume de l'annonce
+          readiness_title: Niveau de preparation de l'annonce
+          readiness_score: "%{percentage}% complete"
           availability_windows_title: Fenetres de disponibilite
           window_range: "%{start_time} a %{end_time}"
           window_kinds:
@@ -537,8 +832,19 @@ fr:
             blackout: Bloque
           no_windows: Aucune fenetre propre a ce bien pour le moment. Les regles globales
             de reservation sont utilisees.
+          marketing_assets_title: Ressources marketing
+          photos_title: Photos
+          photo_position: Photo %{position}
+          no_photos: Aucune photo marketing n'a encore ete ajoutee.
+          floor_plans_title: Plans
+          floor_plan_position: Plan %{position}
+          no_floor_plans: Aucun plan n'a encore ete ajoute.
+          documents_title: Documents
+          no_documents: Aucun document n'a encore ete associe a cette annonce.
           booking_history_title: Historique des reservations du bien
           no_bookings: Aucune reservation pour ce bien pour le moment.
+          activity_title: Historique d'activite
+          no_activity: Aucune activite n'a encore ete enregistree pour ce bien.
         edit:
           title: Modifier le bien %{address}
           eyebrow: Gestion du catalogue
@@ -616,6 +922,12 @@ fr:
           type_to_continue_html: Saisissez exactement %{phrase} pour deverrouiller
             cette reinitialisation.
           apply: Lancer le reset
+          journey: Parcours
+          risk: Risque
+          locales: Langues
+          baseline_only_description: Utilisez cette action pour reconstruire le jeu
+            de donnees de base partage. Les autres resets organises sont masques
+            pour le moment afin de garder le flux admin simple.
         counts:
           properties:
             one: bien
@@ -626,6 +938,15 @@ fr:
           sellers:
             one: vendeur
             other: vendeurs
+          leads:
+            one: prospect
+            other: prospects
+          offers:
+            one: offre
+            other: offres
+          rental_applications:
+            one: dossier locatif
+            other: dossiers locatifs
         labels:
           active_scenario: Scenario actif
           property_count: Biens
@@ -650,6 +971,8 @@ fr:
           baseline: Base
           custom_sevenoaks_westerham_catalogue: Catalogue selectionne Sevenoaks et
             Westerham
+        scenario_journeys:
+          baseline: Parcours complet de base couvrant la navigation catalogue, la reservation, la confirmation admin et la visibilite vendeur.
         preview:
           title: Apercu du scenario %{name}
           eyebrow: Apercu du scenario
@@ -658,6 +981,17 @@ fr:
           quick_reset_title: Reinitialisation des donnees seed
           quick_reset_body: Cette repetition reconstruit tout le jeu de donnees de
             formation. Confirmez la cle exacte du scenario avant de la lancer.
+          briefing_title: Brief du scenario
+          family: Famille
+          journey: Parcours
+          complexity: Complexite
+          risk_type: Type de risque
+          locale_coverage: Couverture des langues
+          expected_counts_title: Volumes attendus
+          trainer_notes_title: Notes de formation
+          no_trainer_notes: Aucune note de formateur n'a ete fournie pour ce scenario.
+          expected_assertions_title: Assertions attendues
+          no_expected_assertions: Aucune assertion attendue n'a ete fournie pour ce scenario.
         import:
           title: Importer un scenario de demo
           eyebrow: Import de donnees de demo
@@ -676,6 +1010,9 @@ fr:
           apply_imported_scenario: Appliquer le scenario importe
           back_to_import: Retour a l'import
           raw_yaml: YAML brut
+        baseline_only_body: Le flux de reinitialisation admin est actuellement limite
+          au jeu de donnees de demo de base afin que l equipe QA dispose toujours
+          d'un point de depart previsible.
     branch_profile:
       name: Bureau Sevenoaks et Westerham
       team_label: Gere par l'equipe locale GotTheKeys

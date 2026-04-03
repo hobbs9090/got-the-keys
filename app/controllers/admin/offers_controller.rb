@@ -18,7 +18,7 @@ class Admin::OffersController < Admin::BaseController
         action: "offer_updated",
         message: offer_audit_message
       )
-      redirect_to admin_offer_path(@offer), notice: "Offer updated."
+      redirect_to admin_sale_path(@offer), notice: "Offer updated."
     else
       render :show, status: :unprocessable_entity
     end

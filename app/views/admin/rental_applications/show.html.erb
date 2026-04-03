@@ -1,69 +1,69 @@
-<% title "Rental application #{@rental_application.public_reference}" %>
+<% title t("ui.admin.rental_applications.show.title", reference: @rental_application.public_reference) %>
 
 <section class="admin-section">
   <div class="section-heading">
     <div>
-      <p class="section-heading__eyebrow">Rental application detail</p>
+      <p class="section-heading__eyebrow"><%= t("ui.admin.rental_applications.show.eyebrow") %></p>
       <h1><%= @rental_application.public_reference %></h1>
     </div>
 
     <div class="section-heading__actions">
-      <%= link_to "Back to board", admin_rental_applications_path, class: "button hollow secondary" %>
-      <span class="<%= rental_application_status_badge_class(@rental_application.status) %>"><%= @rental_application.status.humanize %></span>
+      <%= link_to t("ui.admin.rental_applications.show.back"), admin_rentals_path, class: "button hollow secondary" %>
+      <span class="<%= rental_application_status_badge_class(@rental_application.status) %>"><%= t("ui.rental_applications.statuses.#{@rental_application.status}", default: @rental_application.status.humanize) %></span>
     </div>
   </div>
 </section>
 
 <section class="admin-grid admin-grid--split">
   <article class="admin-panel">
-    <h2>Application summary</h2>
+    <h2><%= t("ui.admin.rental_applications.show.summary_title") %></h2>
     <dl class="detail-list">
-      <div><dt>Property</dt><dd><%= @rental_application.property.address_line_1 %></dd></div>
-      <div><dt>Applicant</dt><dd><%= @rental_application.applicant_name %></dd></div>
-      <div><dt>Email</dt><dd><%= @rental_application.applicant_email %></dd></div>
-      <div><dt>Phone</dt><dd><%= @rental_application.applicant_phone %></dd></div>
-      <div><dt>Move-in date</dt><dd><%= @rental_application.move_in_date %></dd></div>
-      <div><dt>Guarantor needed</dt><dd><%= @rental_application.guarantor_required? ? "Yes" : "No" %></dd></div>
-      <div><dt>Guarantor available</dt><dd><%= @rental_application.guarantor_available? ? "Yes" : "No" %></dd></div>
-      <div><dt>Affordability notes</dt><dd><%= @rental_application.affordability_notes.presence || "None" %></dd></div>
-      <div><dt>Notes</dt><dd><%= @rental_application.notes.presence || "None" %></dd></div>
+      <div><dt><%= t("ui.admin.rental_applications.show.property") %></dt><dd><%= @rental_application.property.address_line_1 %></dd></div>
+      <div><dt><%= t("ui.admin.rental_applications.show.applicant") %></dt><dd><%= @rental_application.applicant_name %></dd></div>
+      <div><dt><%= t("ui.admin.rental_applications.show.email") %></dt><dd><%= @rental_application.applicant_email %></dd></div>
+      <div><dt><%= t("ui.admin.rental_applications.show.phone") %></dt><dd><%= @rental_application.applicant_phone %></dd></div>
+      <div><dt><%= t("ui.admin.rental_applications.show.move_in_date") %></dt><dd><%= @rental_application.move_in_date %></dd></div>
+      <div><dt><%= t("ui.admin.rental_applications.show.guarantor_needed") %></dt><dd><%= @rental_application.guarantor_required? ? t("ui.common.yes") : t("ui.common.no", default: "No") %></dd></div>
+      <div><dt><%= t("ui.admin.rental_applications.show.guarantor_available") %></dt><dd><%= @rental_application.guarantor_available? ? t("ui.common.yes") : t("ui.common.no", default: "No") %></dd></div>
+      <div><dt><%= t("ui.admin.rental_applications.show.affordability_notes") %></dt><dd><%= @rental_application.affordability_notes.presence || t("ui.admin.rental_applications.show.none") %></dd></div>
+      <div><dt><%= t("ui.admin.rental_applications.show.notes") %></dt><dd><%= @rental_application.notes.presence || t("ui.admin.rental_applications.show.none") %></dd></div>
     </dl>
   </article>
 
   <article class="admin-panel">
-    <h2>Manage application</h2>
-    <%= form_with model: [:admin, @rental_application], data: { testid: "rental-application-management-form" } do |f| %>
+    <h2><%= t("ui.admin.rental_applications.show.manage_title") %></h2>
+    <%= form_with model: @rental_application, url: admin_rental_path(@rental_application), data: { testid: "rental-application-management-form" } do |f| %>
       <div class="form-grid">
         <div>
-          <%= f.label :status, "Status" %>
-          <%= f.select :status, RentalApplication::STATUSES.map { |status| [status.humanize, status] }, {}, data: { testid: "rental-application-status-select" } %>
+          <%= f.label :status, t("ui.admin.rental_applications.show.status") %>
+          <%= f.select :status, RentalApplication::STATUSES.map { |status| [t("ui.rental_applications.statuses.#{status}", default: status.humanize), status] }, {}, data: { testid: "rental-application-status-select" } %>
         </div>
         <div class="form-grid__checkbox">
           <%= f.check_box :guarantor_required, data: { testid: "rental-application-guarantor-required" } %>
-          <%= f.label :guarantor_required, "Guarantor required", class: "checkbox-label" %>
+          <%= f.label :guarantor_required, t("ui.admin.rental_applications.show.guarantor_required"), class: "checkbox-label" %>
         </div>
         <div class="form-grid__checkbox">
           <%= f.check_box :guarantor_available, data: { testid: "rental-application-guarantor-available" } %>
-          <%= f.label :guarantor_available, "Guarantor available", class: "checkbox-label" %>
+          <%= f.label :guarantor_available, t("ui.admin.rental_applications.show.guarantor_available_label"), class: "checkbox-label" %>
         </div>
         <div class="form-grid__full">
-          <%= f.label :affordability_notes, "Affordability notes" %>
+          <%= f.label :affordability_notes, t("ui.admin.rental_applications.show.affordability_notes") %>
           <%= f.text_area :affordability_notes, rows: 4, data: { testid: "rental-application-affordability-notes" } %>
         </div>
         <div class="form-grid__full">
-          <%= f.label :internal_notes, "Internal notes" %>
+          <%= f.label :internal_notes, t("ui.admin.rental_applications.show.internal_notes") %>
           <%= f.text_area :internal_notes, rows: 4, data: { testid: "rental-application-internal-notes" } %>
         </div>
       </div>
       <div class="form-actions">
-        <%= f.submit "Save application", class: "button primary", data: { testid: "save-rental-application-button" } %>
+        <%= f.submit t("ui.admin.rental_applications.show.save"), class: "button primary", data: { testid: "save-rental-application-button" } %>
       </div>
     <% end %>
   </article>
 </section>
 
 <section class="admin-panel">
-  <h2>Decision history</h2>
+  <h2><%= t("ui.admin.rental_applications.show.history_title") %></h2>
   <ol class="timeline" data-testid="rental-application-decision-history">
     <% @rental_application.timeline.each do |event| %>
       <li>

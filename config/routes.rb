@@ -23,8 +23,8 @@ GotTheKeys::Application.routes.draw do
       patch :transition, on: :member
       post :send_reminder, on: :member
     end
-    resources :offers, only: [:index, :show, :update]
-    resources :rental_applications, only: [:index, :show, :update]
+    resources :sales, only: [:index, :show, :update], controller: :offers
+    resources :rentals, only: [:index, :show, :update], controller: :rental_applications
     resources :enquiries, only: [:index, :show, :update]
     resources :properties, only: [:index, :show, :edit, :update] do
       patch :transition, on: :member
@@ -41,6 +41,16 @@ GotTheKeys::Application.routes.draw do
         get :export
       end
     end
+
+    get "offers", to: redirect("/admin/sales")
+    get "offers/:id", to: redirect { |params, _req| "/admin/sales/#{params[:id]}" }
+    patch "offers/:id", to: redirect("/admin/sales/%{id}")
+    put "offers/:id", to: redirect("/admin/sales/%{id}")
+
+    get "rental_applications", to: redirect("/admin/rentals")
+    get "rental_applications/:id", to: redirect { |params, _req| "/admin/rentals/#{params[:id]}" }
+    patch "rental_applications/:id", to: redirect("/admin/rentals/%{id}")
+    put "rental_applications/:id", to: redirect("/admin/rentals/%{id}")
   end
 
   resources :members, only: [:index]

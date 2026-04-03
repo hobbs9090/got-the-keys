@@ -28,7 +28,7 @@ module Qa
     end
 
     def active_scenario_name
-      active_scenario_payload[:name].presence || translated_scenario_key(BookingConfiguration.current.active_demo_scenario_key)
+      translated_scenario_key(BookingConfiguration.current.active_demo_scenario_key)
     end
 
     def translated_scenario_key(key)
@@ -40,8 +40,8 @@ module Qa
       users = Array(active_scenario_payload[:users]).map { |entry| entry[:email] }
 
       [
-        ("Admins: #{admins.join(', ')}" if admins.any?),
-        ("Sellers: #{users.join(', ')}" if users.any?)
+        (I18n.t("ui.admin.qa.seeded_personas.admins", list: admins.join(", ")) if admins.any?),
+        (I18n.t("ui.admin.qa.seeded_personas.sellers", list: users.join(", ")) if users.any?)
       ].compact.join(" | ")
     end
   end

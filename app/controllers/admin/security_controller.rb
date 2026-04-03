@@ -76,7 +76,7 @@ class Admin::SecurityController < Admin::BaseController
       auditable: current_admin,
       admin: current_admin,
       action: "admin_two_factor_enrollment_completed",
-      message: "Completed admin two-factor enrollment.",
+      message: t("ui.admin.security.activity_messages.admin_two_factor_enrollment_completed", mode: admin_two_factor_mode_text(booking_configuration.admin_two_factor_mode)),
       metadata: { global_mode: booking_configuration.admin_two_factor_mode }
     )
 
@@ -102,7 +102,7 @@ class Admin::SecurityController < Admin::BaseController
       auditable: current_admin,
       admin: current_admin,
       action: "admin_two_factor_backup_codes_regenerated",
-      message: "Regenerated admin two-factor backup codes."
+      message: t("ui.admin.security.activity_messages.admin_two_factor_backup_codes_regenerated")
     )
 
     flash[:admin_security_backup_codes] = backup_codes
@@ -127,7 +127,7 @@ class Admin::SecurityController < Admin::BaseController
       auditable: current_admin,
       admin: current_admin,
       action: "admin_two_factor_disabled",
-      message: "Disabled admin two-factor authentication."
+      message: t("ui.admin.security.activity_messages.admin_two_factor_disabled")
     )
 
     redirect_to admin_security_path, notice: t("ui.admin.security.disabled_notice")
@@ -180,8 +180,12 @@ class Admin::SecurityController < Admin::BaseController
       auditable: booking_configuration,
       admin: current_admin,
       action: "admin_two_factor_mode_changed",
-      message: "Admin two-factor mode changed from #{from} to #{to}.",
+      message: t("ui.admin.security.activity_messages.admin_two_factor_mode_changed", from: admin_two_factor_mode_text(from), to: admin_two_factor_mode_text(to)),
       metadata: { from:, to: }
     )
+  end
+
+  def admin_two_factor_mode_text(value)
+    I18n.t("ui.admin.security.modes.#{value}", default: value.to_s.humanize)
   end
 end

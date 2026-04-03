@@ -10,7 +10,7 @@
     <div class="section-heading__actions">
       <span class="<%= appointment_status_badge_class(@appointment.status) %>"><%= @appointment.display_status %></span>
       <%= link_to t("ui.admin.appointments.show.edit"), edit_admin_appointment_path(@appointment), class: "button primary hollow" %>
-      <%= button_to "Send reminder", send_reminder_admin_appointment_path(@appointment), method: :post, class: "button hollow secondary" if @appointment.status.in?(%w[pending confirmed rescheduled]) %>
+      <%= button_to t("ui.admin.appointments.show.send_reminder"), send_reminder_admin_appointment_path(@appointment), method: :post, class: "button hollow secondary" if @appointment.status.in?(%w[pending confirmed rescheduled]) %>
     </div>
   </div>
 </section>
@@ -44,16 +44,16 @@
         <dd><%= formatted_date_time(@appointment.scheduled_at) %></dd>
       </div>
       <div>
-        <dt>Visit outcome</dt>
-        <dd><%= @appointment.visit_outcome.present? ? @appointment.visit_outcome.to_s.humanize : "Not recorded" %></dd>
+        <dt><%= t("ui.admin.appointments.show.visit_outcome") %></dt>
+        <dd><%= @appointment.visit_outcome.present? ? @appointment.visit_outcome.to_s.humanize : t("ui.admin.appointments.show.not_recorded") %></dd>
       </div>
       <div>
-        <dt>Self-service</dt>
-        <dd><%= @appointment.manageable_by_customer? ? "Open until #{formatted_date_time(@appointment.self_service_expires_at)}" : "Closed" %></dd>
+        <dt><%= t("ui.admin.appointments.show.self_service") %></dt>
+        <dd><%= @appointment.manageable_by_customer? ? t("ui.admin.appointments.show.self_service_open_until", time: formatted_date_time(@appointment.self_service_expires_at)) : t("ui.admin.appointments.show.self_service_closed") %></dd>
       </div>
       <% if @appointment.reminder_sent_at.present? %>
         <div>
-          <dt>Reminder sent</dt>
+          <dt><%= t("ui.admin.appointments.show.reminder_sent") %></dt>
           <dd><%= formatted_date_time(@appointment.reminder_sent_at) %></dd>
         </div>
       <% end %>

@@ -1,10 +1,10 @@
-<% title "Rental applications board" %>
+<% title t("ui.admin.rental_applications.index.title") %>
 
 <section class="admin-section">
   <div class="section-heading">
     <div>
-      <p class="section-heading__eyebrow">Lettings progression</p>
-      <h1>Rental applications board</h1>
+      <p class="section-heading__eyebrow"><%= t("ui.admin.rental_applications.index.eyebrow") %></p>
+      <h1><%= t("ui.admin.rental_applications.index.title") %></h1>
     </div>
   </div>
 </section>
@@ -12,21 +12,21 @@
 <section class="admin-grid admin-grid--board">
   <% @applications_by_status.each do |status, applications| %>
     <article class="admin-panel" data-testid="rental-applications-column-<%= status %>">
-      <h2><%= status.humanize %></h2>
+      <h2><%= t("ui.rental_applications.statuses.#{status}", default: status.humanize) %></h2>
       <% if applications.any? %>
         <div class="admin-list">
           <% applications.each do |application| %>
             <div class="admin-list__item">
               <div>
-                <%= link_to application.applicant_name, admin_rental_application_path(application) %>
-                <p><%= application.property.address_line_1 %> · move-in <%= application.move_in_date %></p>
+                <%= link_to application.applicant_name, admin_rental_path(application) %>
+                <p><%= application.property.address_line_1 %> · <%= t("ui.admin.rental_applications.index.move_in", date: application.move_in_date) %></p>
               </div>
-              <span class="<%= rental_application_status_badge_class(application.status) %>"><%= application.status.humanize %></span>
+              <span class="<%= rental_application_status_badge_class(application.status) %>"><%= t("ui.rental_applications.statuses.#{application.status}", default: application.status.humanize) %></span>
             </div>
           <% end %>
         </div>
       <% else %>
-        <p class="empty-copy">No applications in this column.</p>
+        <p class="empty-copy"><%= t("ui.admin.rental_applications.index.empty_column") %></p>
       <% end %>
     </article>
   <% end %>

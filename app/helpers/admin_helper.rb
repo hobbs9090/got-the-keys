@@ -83,6 +83,46 @@ module AdminHelper
   end
 
   def admin_scenario_family_label(value)
-    value.to_s.tr("_", " ").humanize
+    t("ui.admin.qa.scenario_families_labels.#{value}", default: value.to_s.tr("_", " ").humanize)
+  end
+
+  def admin_scenario_complexity_label(value)
+    t("ui.admin.qa.scenario_complexities.#{value}", default: value.to_s.humanize)
+  end
+
+  def admin_scenario_risk_type_label(value)
+    t("ui.admin.qa.scenario_risk_types.#{value}", default: value.to_s.humanize)
+  end
+
+  def admin_scenario_journey_label(scenario)
+    key = scenario[:key] || scenario["key"]
+    fallback = scenario.dig(:qa, :intended_journey) || scenario.dig("qa", "intended_journey")
+
+    t("ui.admin.demo_data.scenario_journeys.#{key}", default: fallback)
+  end
+
+  def admin_selector_surface_label(entry)
+    key = entry[:key] || entry["key"]
+    fallback = entry[:surface] || entry["surface"]
+
+    t("ui.admin.qa.selectors_catalog.#{key}.surface", default: fallback)
+  end
+
+  def admin_selector_purpose_label(entry)
+    key = entry[:key] || entry["key"]
+    fallback = entry[:purpose] || entry["purpose"]
+
+    t("ui.admin.qa.selectors_catalog.#{key}.purpose", default: fallback)
+  end
+
+  def admin_security_activity_message(audit_log)
+    t(
+      "ui.admin.security.activity_messages.#{audit_log.action}",
+      default: audit_log.message,
+      actor: audit_log.actor_display,
+      from: admin_two_factor_mode_label(audit_log.metadata&.fetch("from", nil)),
+      to: admin_two_factor_mode_label(audit_log.metadata&.fetch("to", nil)),
+      mode: admin_two_factor_mode_label(audit_log.metadata&.fetch("global_mode", nil))
+    )
   end
 end
