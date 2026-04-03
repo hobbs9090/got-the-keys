@@ -1,11 +1,11 @@
-<% title t("ui.admin.demo_data.preview.title", name: @preview.fetch(:name)) %>
+<% title t("ui.admin.demo_data.preview.title", name: admin_scenario_name_label(@preview)) %>
 <% quick_reset = @preview.dig(:qa, :quick_reset) %>
 
 <section class="admin-section">
   <div class="section-heading">
     <div>
       <p class="section-heading__eyebrow"><%= t("ui.admin.demo_data.preview.eyebrow") %></p>
-      <h1><%= @preview.fetch(:name) %></h1>
+      <h1><%= admin_scenario_name_label(@preview) %></h1>
     </div>
 
     <div class="section-heading__actions">
@@ -34,7 +34,7 @@
 <section class="admin-grid">
   <article class="admin-panel">
     <h2><%= t("ui.admin.demo_data.preview.briefing_title") %></h2>
-    <p><%= @preview.fetch(:description) %></p>
+    <p><%= admin_scenario_description_label(@preview) %></p>
     <dl class="detail-list">
       <div>
         <dt><%= t("ui.admin.demo_data.preview.family") %></dt>
@@ -42,7 +42,7 @@
       </div>
       <div>
         <dt><%= t("ui.admin.demo_data.preview.journey") %></dt>
-        <dd><%= @preview.dig(:qa, :intended_journey) %></dd>
+        <dd><%= admin_scenario_journey_label(@preview) %></dd>
       </div>
       <div>
         <dt><%= t("ui.admin.demo_data.preview.complexity") %></dt>
@@ -75,9 +75,10 @@
 <section class="admin-grid">
   <article class="admin-panel">
     <h2><%= t("ui.admin.demo_data.preview.trainer_notes_title") %></h2>
-    <% if @preview.dig(:qa, :trainer_notes).any? %>
+    <% trainer_notes = admin_scenario_trainer_notes(@preview) %>
+    <% if trainer_notes.any? %>
       <ol class="timeline">
-        <% @preview.dig(:qa, :trainer_notes).each do |note| %>
+        <% trainer_notes.each do |note| %>
           <li><p><%= note %></p></li>
         <% end %>
       </ol>
@@ -88,9 +89,10 @@
 
   <article class="admin-panel">
     <h2><%= t("ui.admin.demo_data.preview.expected_assertions_title") %></h2>
-    <% if @preview.dig(:qa, :expected_assertions).any? %>
+    <% expected_assertions = admin_scenario_expected_assertions(@preview) %>
+    <% if expected_assertions.any? %>
       <ul class="detail-inline-list">
-        <% @preview.dig(:qa, :expected_assertions).each do |assertion| %>
+        <% expected_assertions.each do |assertion| %>
           <li><%= assertion %></li>
         <% end %>
       </ul>

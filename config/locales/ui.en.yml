@@ -1188,8 +1188,17 @@ en:
         scenario_keys:
           baseline: "Baseline"
           custom_sevenoaks_westerham_catalogue: "Curated Sevenoaks and Westerham catalogue"
+        scenario_descriptions:
+          baseline: "A balanced day-to-day dataset with mixed sale and rental listings, multiple appointment statuses, and known credentials for training."
         scenario_journeys:
           baseline: "Baseline end-to-end walkthrough covering catalogue browse, booking, admin confirmation, and seller visibility."
+        scenario_trainer_notes:
+          baseline:
+            - "Use this as the default onboarding pack for new testers and browser agents."
+        scenario_expected_assertions:
+          baseline:
+            - "The active scenario badge should read Baseline."
+            - "Known admin and seller credentials should appear in the QA guide."
         preview:
           title: "Scenario preview %{name}"
           eyebrow: "Scenario preview"
