@@ -1,113 +1,113 @@
-<% title "Lead #{ @enquiry.lead_reference }" %>
+<% title t("ui.admin.enquiries.show.title", reference: @enquiry.lead_reference) %>
 
 <section class="admin-section">
   <div class="section-heading">
     <div>
-      <p class="section-heading__eyebrow">Lead detail</p>
+      <p class="section-heading__eyebrow"><%= t("ui.admin.enquiries.show.eyebrow") %></p>
       <h1><%= @enquiry.customer_name %></h1>
     </div>
 
     <div class="section-heading__actions">
-      <%= link_to "Back to inbox", admin_enquiries_path, class: "button hollow secondary" %>
-      <%= link_to "View property", admin_property_path(@enquiry.property), class: "button hollow primary" %>
+      <%= link_to t("ui.admin.enquiries.show.back"), admin_enquiries_path, class: "button hollow secondary" %>
+      <%= link_to t("ui.admin.enquiries.show.view_property"), admin_property_path(@enquiry.property), class: "button hollow primary" %>
     </div>
   </div>
 </section>
 
 <section class="admin-grid admin-grid--split">
   <article class="admin-panel">
-    <h2>Lead summary</h2>
+    <h2><%= t("ui.admin.enquiries.show.summary_title") %></h2>
     <dl class="detail-list">
       <div>
-        <dt>Reference</dt>
+        <dt><%= t("ui.admin.enquiries.show.reference") %></dt>
         <dd><%= @enquiry.lead_reference %></dd>
       </div>
       <div>
-        <dt>Property</dt>
+        <dt><%= t("ui.admin.enquiries.show.property") %></dt>
         <dd><%= @enquiry.property.address_line_1 %></dd>
       </div>
       <div>
-        <dt>Status</dt>
+        <dt><%= t("ui.admin.enquiries.show.status") %></dt>
         <dd><span class="<%= enquiry_status_badge_class(@enquiry.status) %>"><%= @enquiry.display_status %></span></dd>
       </div>
       <div>
-        <dt>Source</dt>
+        <dt><%= t("ui.admin.enquiries.show.source") %></dt>
         <dd><%= enquiry_source_label(@enquiry.source_type) %></dd>
       </div>
       <div>
-        <dt>Email</dt>
-        <dd><%= @enquiry.customer_email.presence || "Not provided" %></dd>
+        <dt><%= t("ui.admin.enquiries.show.email") %></dt>
+        <dd><%= @enquiry.customer_email.presence || t("ui.admin.enquiries.show.not_provided") %></dd>
       </div>
       <div>
-        <dt>Phone</dt>
-        <dd><%= @enquiry.customer_phone.presence || "Not provided" %></dd>
+        <dt><%= t("ui.admin.enquiries.show.phone") %></dt>
+        <dd><%= @enquiry.customer_phone.presence || t("ui.admin.enquiries.show.not_provided") %></dd>
       </div>
       <div>
-        <dt>Created</dt>
+        <dt><%= t("ui.admin.enquiries.show.created") %></dt>
         <dd><%= formatted_date_time(@enquiry.created_at) %></dd>
       </div>
       <% if @enquiry.contacted_at.present? %>
         <div>
-          <dt>Contacted</dt>
+          <dt><%= t("ui.admin.enquiries.show.contacted") %></dt>
           <dd><%= formatted_date_time(@enquiry.contacted_at) %></dd>
         </div>
       <% end %>
       <% if @enquiry.spam? %>
         <div>
-          <dt>Spam flag</dt>
-          <dd><%= @enquiry.spam_reason.presence || "Potential spam" %></dd>
+          <dt><%= t("ui.admin.enquiries.show.spam_flag") %></dt>
+          <dd><%= @enquiry.spam_reason.presence || t("ui.admin.enquiries.index.potential_spam") %></dd>
         </div>
       <% end %>
     </dl>
   </article>
 
   <article class="admin-panel">
-    <h2>Lead message</h2>
+    <h2><%= t("ui.admin.enquiries.show.message_title") %></h2>
     <%= simple_format(@enquiry.message) %>
   </article>
 </section>
 
 <section class="admin-panel">
-  <h2>Manage lead</h2>
+  <h2><%= t("ui.admin.enquiries.show.manage_title") %></h2>
 
   <%= form_with model: [:admin, @enquiry], data: { testid: "lead-management-form" } do |f| %>
     <%= render "shared/errors", object: @enquiry %>
 
     <div class="form-grid">
       <div>
-        <%= f.label :status, "Status" %>
-        <%= f.select :status, Enquiry::STATUSES.map { |status| [status.humanize, status] }, {}, data: { testid: "lead-status-select" } %>
+        <%= f.label :status, t("ui.admin.enquiries.show.status") %>
+        <%= f.select :status, Enquiry::STATUSES.map { |status| [t("ui.enquiries.statuses.#{status}", default: status.humanize), status] }, {}, data: { testid: "lead-status-select" } %>
       </div>
       <div>
-        <%= f.label :source_type, "Source" %>
+        <%= f.label :source_type, t("ui.admin.enquiries.show.source") %>
         <%= f.select :source_type, Enquiry::SOURCE_TYPES.map { |source| [enquiry_source_label(source), source] }, {}, data: { testid: "lead-source-select" } %>
       </div>
       <div>
-        <%= f.label :admin_id, "Assigned admin" %>
-        <%= f.select :admin_id, [["Unassigned", nil]] + @admins.map { |admin| [admin.email, admin.id] }, {}, data: { testid: "lead-admin-select" } %>
+        <%= f.label :admin_id, t("ui.admin.enquiries.show.assigned_admin") %>
+        <%= f.select :admin_id, [[t("ui.admin.enquiries.show.unassigned"), nil]] + @admins.map { |admin| [admin.email, admin.id] }, {}, data: { testid: "lead-admin-select" } %>
       </div>
       <div class="form-grid__checkbox">
         <%= f.check_box :spam, data: { testid: "lead-spam-toggle" } %>
-        <%= f.label :spam, "Flag as spam", class: "checkbox-label" %>
+        <%= f.label :spam, t("ui.admin.enquiries.show.flag_as_spam"), class: "checkbox-label" %>
       </div>
       <div class="form-grid__full">
-        <%= f.label :spam_reason, "Spam reason" %>
+        <%= f.label :spam_reason, t("ui.admin.enquiries.show.spam_reason") %>
         <%= f.text_field :spam_reason, data: { testid: "lead-spam-reason" } %>
       </div>
       <div class="form-grid__full">
-        <%= f.label :internal_notes, "Internal notes" %>
+        <%= f.label :internal_notes, t("ui.admin.enquiries.show.internal_notes") %>
         <%= f.text_area :internal_notes, rows: 8, data: { testid: "lead-internal-notes" } %>
       </div>
     </div>
 
     <div class="form-actions">
-      <%= f.submit "Save lead", class: "button primary", data: { testid: "save-lead-button" } %>
+      <%= f.submit t("ui.admin.enquiries.show.save"), class: "button primary", data: { testid: "save-lead-button" } %>
     </div>
   <% end %>
 </section>
 
 <section class="admin-panel">
-  <h2>Activity timeline</h2>
+  <h2><%= t("ui.admin.enquiries.show.activity_title") %></h2>
   <% if @activity_logs.any? %>
     <ol class="timeline" data-testid="lead-activity-timeline">
       <% @activity_logs.each do |entry| %>
@@ -119,6 +119,6 @@
       <% end %>
     </ol>
   <% else %>
-    <p class="empty-copy">No activity has been recorded for this lead yet.</p>
+    <p class="empty-copy"><%= t("ui.admin.enquiries.show.no_activity") %></p>
   <% end %>
 </section>

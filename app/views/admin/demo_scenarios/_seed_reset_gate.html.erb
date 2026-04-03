@@ -25,9 +25,9 @@
       </ul>
     <% else %>
       <ul class="detail-inline-list admin-demo-danger-zone__meta">
-        <li><strong>Journey</strong>: <%= scenario.dig(:qa, :intended_journey) %></li>
-        <li><strong>Risk</strong>: <%= scenario.dig(:qa, :risk_type).to_s.humanize %></li>
-        <li><strong>Locales</strong>: <%= Array(scenario.dig(:qa, :locale_coverage)).join(", ") %></li>
+        <li><strong><%= t("ui.admin.demo_data.seed_resets.journey") %></strong>: <%= scenario.dig(:qa, :intended_journey) %></li>
+        <li><strong><%= t("ui.admin.demo_data.seed_resets.risk") %></strong>: <%= admin_scenario_risk_type_label(scenario.dig(:qa, :risk_type)) %></li>
+        <li><strong><%= t("ui.admin.demo_data.seed_resets.locales") %></strong>: <%= Array(scenario.dig(:qa, :locale_coverage)).join(", ") %></li>
       </ul>
     <% end %>
 

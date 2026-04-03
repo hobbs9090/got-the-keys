@@ -20,7 +20,7 @@ class Admin::RentalApplicationsController < Admin::BaseController
         action: "rental_application_updated",
         message: rental_application_audit_message
       )
-      redirect_to admin_rental_application_path(@rental_application), notice: "Rental application updated."
+      redirect_to admin_rental_path(@rental_application), notice: "Rental application updated."
     else
       render :show, status: :unprocessable_entity
     end

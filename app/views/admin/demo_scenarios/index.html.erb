@@ -30,9 +30,9 @@
       <li><strong><%= @baseline_scenario.fetch(:property_count) %></strong> <%= t("ui.admin.demo_data.counts.properties", count: @baseline_scenario.fetch(:property_count)) %></li>
       <li><strong><%= @baseline_scenario.fetch(:appointment_count) %></strong> <%= t("ui.admin.demo_data.counts.bookings", count: @baseline_scenario.fetch(:appointment_count)) %></li>
       <li><strong><%= @baseline_scenario.fetch(:user_count) %></strong> <%= t("ui.admin.demo_data.counts.sellers", count: @baseline_scenario.fetch(:user_count)) %></li>
-      <li><strong><%= @baseline_scenario.fetch(:enquiry_count, 0) %></strong> leads</li>
-      <li><strong><%= @baseline_scenario.fetch(:offer_count, 0) %></strong> offers</li>
-      <li><strong><%= @baseline_scenario.fetch(:rental_application_count, 0) %></strong> rental applications</li>
+      <li><strong><%= @baseline_scenario.fetch(:enquiry_count, 0) %></strong> <%= t("ui.admin.demo_data.counts.leads", count: @baseline_scenario.fetch(:enquiry_count, 0)) %></li>
+      <li><strong><%= @baseline_scenario.fetch(:offer_count, 0) %></strong> <%= t("ui.admin.demo_data.counts.offers", count: @baseline_scenario.fetch(:offer_count, 0)) %></li>
+      <li><strong><%= @baseline_scenario.fetch(:rental_application_count, 0) %></strong> <%= t("ui.admin.demo_data.counts.rental_applications", count: @baseline_scenario.fetch(:rental_application_count, 0)) %></li>
     </ul>
   </article>
 </section>

@@ -48,6 +48,7 @@ it:
       phone_number: Numero di telefono
       status: Stato
       'yes': Si
+      'no': No
       download: Scarica
       remove: Rimuovi
       save: Salva
@@ -459,8 +460,51 @@ it:
         inviato dopo la prenotazione.
       thanks_html: Grazie,<br>GotTheKeys
     admin:
+      navigation:
+        aria_label: Admin
+        dashboard: Dashboard
+        bookings: Prenotazioni
+        leads: Lead
+        sales: Vendite
+        rentals: Affitti
+        properties: Immobili
+        sellers: Venditori
+        demo_data: Dati demo
+        security: Sicurezza
+        qa_area: Area QA
+        qa_guide: Guida QA
+        notifications: Notifiche
+        booking_rules: Regole di prenotazione
       dashboard:
-        true: il
+        title: Dashboard admin
+        eyebrow: Panoramica operativa
+        open_bookings_desk: Apri desk prenotazioni
+        metrics:
+          properties: Immobili
+          upcoming_appointments: Appuntamenti imminenti
+          pending_actions: Azioni in sospeso
+          customers: Clienti
+          open_leads: Lead aperti
+        bookings_eyebrow: Solo per admin
+        bookings_title: Visibilita e controllo delle prenotazioni
+        all_bookings: Tutte le prenotazioni
+        pending_action: Azione in sospeso
+        this_week: Questa settimana
+        bookings_body: Il desk prenotazioni e riservato agli amministratori e offre
+          la vista completa del calendario, filtri live e controlli di stato per
+          ogni richiesta di visita del sito.
+        bookings_requiring_action: Prenotazioni che richiedono azione
+        nothing_needs_attention: Al momento non c e nulla da gestire.
+        upcoming_appointments: Appuntamenti imminenti
+        no_upcoming_bookings: Nessuna prenotazione imminente.
+        recent_leads: Lead recenti
+        no_leads: Non sono ancora stati acquisiti lead.
+        recent_activity: Attivita recenti
+        notification_log_snapshot: Snapshot del registro notifiche
+        no_notification_records: Nessun record di notifica al momento.
+        last_demo_data_action: Ultima azione sui dati demo
+        on: il
+        no_demo_action: Non e ancora stato registrato alcun reset o import di scenario.
       appointments:
         confirm: Conferma
         cancel: Annulla
@@ -468,8 +512,15 @@ it:
           title: Appuntamento %{reference}
           eyebrow: Dettagli appuntamento
           edit: Modifica
+          send_reminder: Invia promemoria
           summary_title: Riepilogo
           not_supplied: Non fornito
+          visit_outcome: Esito visita
+          not_recorded: Non registrato
+          self_service: Self-service
+          self_service_open_until: Aperto fino a %{time}
+          self_service_closed: Chiuso
+          reminder_sent: Promemoria inviato
           notes_title: Note
           no_customer_notes: Nessuna nota cliente fornita.
           no_internal_notes: Nessuna nota interna al momento.
@@ -504,6 +555,248 @@ it:
         applied_demo_scenario: Scenario demo %{name} applicato.
         restored_baseline_demo_scenario: Scenario demo di base (%{name}) ripristinato.
         imported_demo_scenario: Scenario demo %{name} importato.
+      qa:
+        title: Guida QA
+        eyebrow: Ambiente di formazione per l'automazione
+        diagnostics_title: Diagnostica
+        app_version: Versione dell'app
+        version_box:
+          title: Build di rilascio
+          git_sha: Git SHA
+          build_number: Numero build
+          deployed_at: Distribuito il
+          environment: Ambiente
+          rails_env: Ambiente Rails %{env}
+          unavailable: Non disponibile
+        diagnostic_labels:
+          active_scenario: Scenario attivo
+          build_version: Versione build
+          git_sha: Git SHA
+          build_number: Numero build
+          environment: Ambiente
+          mail_delivery_mode: Modalita invio e-mail
+          job_adapter: Adapter job
+          seeded_personas: Personas seed
+          properties: Immobili
+          users: Utenti
+          bookings: Prenotazioni
+          notification_logs: Registri notifiche
+          last_demo_action: Ultima azione demo
+        demo_action_value: "%{action} alle %{time}"
+        training_title: Percorsi di formazione consigliati
+        training_journeys:
+          - Crea una nuova prenotazione da una pagina immobile e verifica il messaggio di successo insieme al codice di riferimento.
+          - Come admin, conferma un appuntamento in sospeso e verifica badge di stato e cronologia audit.
+          - Riprogramma un appuntamento in una fascia gia occupata e verifica il messaggio di conflitto.
+          - Ripristina il dataset base e verifica che le stesse asserzioni su prenotazioni e admin continuino a valere.
+          - Esporta il dataset corrente, importalo di nuovo dalla schermata di anteprima e verifica che il pannello diagnostico si aggiorni.
+        admin_two_factor:
+          title: Modalita 2FA admin
+          body: La modalita opzionale impone OTP solo agli admin gia registrati. La modalita disabilitata bypassa OTP per tutti gli admin senza eliminare segreti o codici di backup.
+          confirmation_required: Digita DISABLE per confermare il passaggio della 2FA admin globale a disabilitata.
+          optional_help: Gli admin registrati devono usare OTP o un codice di backup. Gli admin non registrati possono ancora accedere con email e password.
+          disabled_help: "Bypass di emergenza: i controlli OTP vengono saltati per tutti gli admin finche non viene ripristinata la modalita opzionale."
+          warning_title: Avviso
+          warning_body: Passando a disabilitata si rimuovono subito le richieste OTP per tutti gli admin. I segreti e i codici di backup esistenti restano memorizzati.
+          confirmation_label: Digita %{phrase} prima di passare a disabilitata
+          confirmation_help: Questa conferma e richiesta solo quando si passa da opzionale a disabilitata.
+          save: Salva modalita 2FA admin
+          current_mode: Modalita corrente
+          last_changed_by: Ultima modifica di
+          last_changed_at: Ultima modifica il
+          updated_notice: La modalita 2FA admin globale e stata aggiornata.
+        selector_contract_registry: Registro dei selettori
+        selectors_catalog:
+          property_card:
+            surface: Catalogo pubblico
+            purpose: Radice della card annuncio per asserzioni di catalogo e navigazione di dettaglio.
+          book_viewing_cta:
+            surface: Dettaglio immobile pubblico
+            purpose: Principale call to action per richiedere una visita su una pagina immobile.
+          appointment_form:
+            surface: Flusso pubblico di prenotazione
+            purpose: Guscio del modulo richiesta appuntamento per l'automazione.
+          saved_search_panel:
+            surface: Catalogo pubblico
+            purpose: Scheda salvataggio ricerca per percorsi di avviso di acquirenti e inquilini.
+          property_documents_panel:
+            surface: Dettaglio immobile pubblico
+            purpose: Pannello pubblico per brochure e download documenti.
+          admin_appointment_row:
+            surface: Desk prenotazioni admin
+            purpose: Riga agenda per i flussi del desk prenotazioni.
+          admin_property_activity_timeline:
+            surface: Dettaglio immobile admin
+            purpose: Storico attivita immobile con documenti, lead e azioni di moderazione.
+          lead_activity_timeline:
+            surface: Dettaglio lead admin
+            purpose: Timeline attivita lead per controlli di follow-up e audit.
+          active_demo_scenario:
+            surface: Interfaccia admin
+            purpose: Indicatore globale dello scenario attivo usato dopo reset e importazioni.
+        scenario_families: Famiglie di scenari
+        scenario_families_labels:
+          happy_path: Percorso felice
+        scenario_complexities:
+          foundational: Fondamentale
+        scenario_risk_types:
+          workflow: Flusso di lavoro
+        seeded_personas:
+          admins: "Admin: %{list}"
+          sellers: "Venditori: %{list}"
+      security:
+        title: Sicurezza admin
+        eyebrow: Controlli di autenticazione
+        intro: Gestisci configurazione dell'app di autenticazione, codici di backup e opzioni di recupero accesso da un unico posto.
+        status_title: Stato della doppia autenticazione
+        global_mode: Modalita globale
+        account_status: Stato account
+        enabled: Registrato
+        disabled: Non registrato
+        sign_in_behavior: Comportamento di accesso
+        behavior_disabled: I controlli OTP sono attualmente bypassati per tutti gli admin. I segreti e i codici di backup esistenti vengono mantenuti per una futura riattivazione.
+        behavior_enrolled: Questo admin deve inserire un codice di autenticazione valido o un codice di backup all'accesso.
+        behavior_unenrolled: Questo admin puo continuare ad accedere con email e password finche non sceglie di registrarsi.
+        backup_codes: Codici di backup
+        backup_codes_ready: Generati e pronti da ruotare
+        backup_codes_missing: Nessun codice di backup ancora generato
+        regenerate_backup_codes: Rigenera codici di backup
+        disable_action: Disabilita doppio fattore
+        restart_setup: Genera un nuovo codice QR
+        begin_setup: Avvia configurazione
+        enrollment_title: Configura la tua app di autenticazione
+        enrollment_body: Scansiona questo codice QR con Google Authenticator o qualsiasi app TOTP compatibile, poi conferma la configurazione con il primo codice usa e getta.
+        manual_key: Chiave di inserimento manuale
+        manual_key_hint: Se la scansione non e disponibile, inserisci manualmente questa chiave segreta nella tua app di autenticazione.
+        confirm_code: Codice di verifica
+        confirm_setup: Conferma e abilita 2FA
+        backup_codes_title: Codici di backup
+        backup_codes_body: Salva ora questi codici di backup monouso in un luogo sicuro. Non verranno mostrati di nuovo dopo aver lasciato questa pagina.
+        setup_steps_title: Come funziona la configurazione
+        setup_steps:
+          scan: Avvia la configurazione per generare un nuovo segreto e un codice QR per la tua app di autenticazione.
+          confirm: Conferma la configurazione con il primo codice usa e getta cosi sappiamo che l'app e associata correttamente.
+          save: Salva subito i codici di backup. Ogni codice funziona una sola volta e puo essere rigenerato in seguito.
+        activity_title: Attivita di sicurezza recenti
+        activity_meta: "%{actor} alle %{time}"
+        activity_empty: Nessuna attivita di doppia autenticazione e ancora stata registrata per questo admin.
+        activity_messages:
+          admin_two_factor_enrollment_completed: La registrazione alla doppia autenticazione admin e stata completata mentre la modalita globale era %{mode}.
+          admin_two_factor_disabled: La doppia autenticazione admin e stata disabilitata.
+          admin_two_factor_backup_codes_regenerated: I codici di backup admin sono stati rigenerati.
+          admin_two_factor_mode_changed: La modalita 2FA admin e passata da %{from} a %{to}.
+        enrollment_started_notice: E stata generata una nuova configurazione di autenticazione per questo admin.
+        enabled_notice: La doppia autenticazione e ora abilitata per questo admin.
+        disabled_notice: La doppia autenticazione e stata disabilitata per questo admin.
+        backup_codes_regenerated_notice: E stato generato un nuovo set di codici di backup.
+        already_enabled: La doppia autenticazione e gia abilitata per questo admin.
+        not_enabled: La doppia autenticazione non e abilitata per questo admin.
+        enrollment_expired: La sessione di configurazione e scaduta. Avvia di nuovo la configurazione per generare un nuovo segreto.
+        invalid_code: Inserisci un codice di autenticazione valido.
+        modes:
+          disabled: Disabilitata
+          optional: Opzionale
+        audit_actions:
+          admin_two_factor_enrollment_completed: Registrazione 2FA completata
+          admin_two_factor_disabled: 2FA disabilitata
+          admin_two_factor_backup_codes_regenerated: Codici di backup rigenerati
+      enquiries:
+        index:
+          title: Casella lead
+          eyebrow: Lead
+          no_results: Nessun lead corrisponde ai filtri correnti.
+          potential_spam: Possibile spam
+          flagged: "Segnalato: %{reason}"
+          filters:
+            status: Stato
+            source: Fonte
+            assigned_admin: Admin assegnato
+            search: Cerca
+            search_placeholder: Nome, email, messaggio o riferimento
+            spam_only: Solo spam segnalato
+            apply: Applica filtri
+            clear: Cancella
+            all: Tutti
+            anyone: Chiunque
+        show:
+          title: Lead %{reference}
+          eyebrow: Dettaglio lead
+          back: Torna alla casella
+          view_property: Vedi immobile
+          summary_title: Riepilogo lead
+          reference: Riferimento
+          property: Immobile
+          status: Stato
+          source: Fonte
+          email: Email
+          phone: Telefono
+          created: Creato
+          contacted: Contattato
+          spam_flag: Segnalazione spam
+          not_provided: Non fornito
+          message_title: Messaggio lead
+          manage_title: Gestisci lead
+          assigned_admin: Admin assegnato
+          unassigned: Non assegnato
+          flag_as_spam: Segna come spam
+          spam_reason: Motivo spam
+          internal_notes: Note interne
+          save: Salva lead
+          activity_title: Cronologia attivita
+          no_activity: Nessuna attivita registrata per questo lead.
+      offers:
+        index:
+          title: Bacheca offerte
+          eyebrow: Avanzamento vendite
+          empty_column: Nessuna offerta in questa colonna.
+        show:
+          title: Offerta %{reference}
+          eyebrow: Dettaglio offerta
+          back: Torna alla bacheca
+          summary_title: Riepilogo offerta
+          property: Immobile
+          buyer: Acquirente
+          email: Email
+          phone: Telefono
+          amount: Importo
+          chain: Catena
+          notes: Note
+          not_supplied: Non fornito
+          none: Nessuna
+          manage_title: Gestisci offerta
+          status: Stato
+          chain_position: Posizione nella catena
+          internal_notes: Note interne
+          save: Salva offerta
+          history_title: Cronologia decisioni
+      rental_applications:
+        index:
+          title: Bacheca domande di affitto
+          eyebrow: Avanzamento affitti
+          move_in: ingresso %{date}
+          empty_column: Nessuna domanda in questa colonna.
+        show:
+          title: Domanda di affitto %{reference}
+          eyebrow: Dettaglio domanda di affitto
+          back: Torna alla bacheca
+          summary_title: Riepilogo domanda
+          property: Immobile
+          applicant: Candidato
+          email: Email
+          phone: Telefono
+          move_in_date: Data di ingresso
+          guarantor_needed: Garante necessario
+          guarantor_available: Garante disponibile
+          affordability_notes: Note sulla sostenibilita
+          notes: Note
+          none: Nessuna
+          manage_title: Gestisci domanda
+          status: Stato
+          guarantor_required: Garante richiesto
+          guarantor_available_label: Garante disponibile
+          internal_notes: Note interne
+          save: Salva domanda
+          history_title: Cronologia decisioni
       properties:
         index:
           title: Immobili
@@ -524,6 +817,8 @@ it:
           edit_property: Modifica immobile
           view_public_page: Vedi pagina pubblica
           summary_title: Riepilogo annuncio
+          readiness_title: Prontezza annuncio
+          readiness_score: "%{percentage}% completo"
           availability_windows_title: Finestre di disponibilita
           window_range: "%{start_time} - %{end_time}"
           window_kinds:
@@ -531,8 +826,19 @@ it:
             blackout: Bloccata
           no_windows: Nessuna finestra specifica per questo immobile. Sono in uso
             le regole globali di prenotazione.
+          marketing_assets_title: Materiali marketing
+          photos_title: Foto
+          photo_position: Foto %{position}
+          no_photos: Non sono ancora state aggiunte foto marketing.
+          floor_plans_title: Planimetrie
+          floor_plan_position: Planimetria %{position}
+          no_floor_plans: Non sono ancora state aggiunte planimetrie.
+          documents_title: Documenti
+          no_documents: Nessun documento e ancora stato allegato a questo annuncio.
           booking_history_title: Storico prenotazioni immobile
           no_bookings: Nessuna prenotazione per questo immobile al momento.
+          activity_title: Cronologia attivita
+          no_activity: Nessuna attivita registrata per questo immobile.
         edit:
           title: Modifica immobile %{address}
           eyebrow: Gestione catalogo
@@ -607,6 +913,12 @@ it:
           type_to_continue_html: Digita esattamente %{phrase} per sbloccare questo
             reset.
           apply: Esegui reset
+          journey: Percorso
+          risk: Rischio
+          locales: Lingue
+          baseline_only_description: Usa questa azione per ricostruire il dataset
+            condiviso di base. Gli altri reset curati sono nascosti per ora cosi
+            il flusso admin resta semplice.
         counts:
           properties:
             one: immobile
@@ -617,6 +929,15 @@ it:
           sellers:
             one: venditore
             other: venditori
+          leads:
+            one: lead
+            other: lead
+          offers:
+            one: offerta
+            other: offerte
+          rental_applications:
+            one: domanda di affitto
+            other: domande di affitto
         labels:
           active_scenario: Scenario attivo
           property_count: Immobili
@@ -640,6 +961,8 @@ it:
         scenario_keys:
           baseline: Base
           custom_sevenoaks_westerham_catalogue: Catalogo curato Sevenoaks e Westerham
+        scenario_journeys:
+          baseline: Percorso base end-to-end che copre navigazione catalogo, prenotazione, conferma admin e visibilita venditore.
         preview:
           title: Anteprima scenario %{name}
           eyebrow: Anteprima scenario
@@ -648,6 +971,17 @@ it:
           quick_reset_title: Reset dei dati seed
           quick_reset_body: Questa prova ricostruisce l'intero set di dati di training.
             Conferma la chiave esatta dello scenario prima di eseguirla.
+          briefing_title: Brief dello scenario
+          family: Famiglia
+          journey: Percorso
+          complexity: Complessita
+          risk_type: Tipo di rischio
+          locale_coverage: Copertura lingue
+          expected_counts_title: Conteggi attesi
+          trainer_notes_title: Note del trainer
+          no_trainer_notes: Nessuna nota del trainer disponibile per questo scenario.
+          expected_assertions_title: Assert attese
+          no_expected_assertions: Nessuna assert attesa disponibile per questo scenario.
         import:
           title: Importa scenario demo
           eyebrow: Importazione dati demo
@@ -666,6 +1000,8 @@ it:
           apply_imported_scenario: Applica scenario importato
           back_to_import: Torna all'importazione
           raw_yaml: YAML grezzo
+        baseline_only_body: Il flusso di reset admin e attualmente limitato al dataset
+          demo di base in modo che QA abbia sempre un punto di partenza prevedibile.
     branch_profile:
       name: Ufficio Sevenoaks e Westerham
       team_label: Gestito dal team locale GotTheKeys

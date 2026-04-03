@@ -1,59 +1,59 @@
-<% title "Offer #{@offer.public_reference}" %>
+<% title t("ui.admin.offers.show.title", reference: @offer.public_reference) %>
 
 <section class="admin-section">
   <div class="section-heading">
     <div>
-      <p class="section-heading__eyebrow">Offer detail</p>
+      <p class="section-heading__eyebrow"><%= t("ui.admin.offers.show.eyebrow") %></p>
       <h1><%= @offer.public_reference %></h1>
     </div>
 
     <div class="section-heading__actions">
-      <%= link_to "Back to board", admin_offers_path, class: "button hollow secondary" %>
-      <span class="<%= offer_status_badge_class(@offer.status) %>"><%= @offer.status.humanize %></span>
+      <%= link_to t("ui.admin.offers.show.back"), admin_sales_path, class: "button hollow secondary" %>
+      <span class="<%= offer_status_badge_class(@offer.status) %>"><%= t("ui.offers.statuses.#{@offer.status}", default: @offer.status.humanize) %></span>
     </div>
   </div>
 </section>
 
 <section class="admin-grid admin-grid--split">
   <article class="admin-panel">
-    <h2>Offer summary</h2>
+    <h2><%= t("ui.admin.offers.show.summary_title") %></h2>
     <dl class="detail-list">
-      <div><dt>Property</dt><dd><%= @offer.property.address_line_1 %></dd></div>
-      <div><dt>Buyer</dt><dd><%= @offer.buyer_name %></dd></div>
-      <div><dt>Email</dt><dd><%= @offer.buyer_email %></dd></div>
-      <div><dt>Phone</dt><dd><%= @offer.buyer_phone %></dd></div>
-      <div><dt>Amount</dt><dd><%= number_to_currency(@offer.amount, unit: "£", precision: 0) %></dd></div>
-      <div><dt>Chain</dt><dd><%= @offer.chain_position.presence || "Not supplied" %></dd></div>
-      <div><dt>Notes</dt><dd><%= @offer.notes.presence || "None" %></dd></div>
+      <div><dt><%= t("ui.admin.offers.show.property") %></dt><dd><%= @offer.property.address_line_1 %></dd></div>
+      <div><dt><%= t("ui.admin.offers.show.buyer") %></dt><dd><%= @offer.buyer_name %></dd></div>
+      <div><dt><%= t("ui.admin.offers.show.email") %></dt><dd><%= @offer.buyer_email %></dd></div>
+      <div><dt><%= t("ui.admin.offers.show.phone") %></dt><dd><%= @offer.buyer_phone %></dd></div>
+      <div><dt><%= t("ui.admin.offers.show.amount") %></dt><dd><%= number_to_currency(@offer.amount, unit: "£", precision: 0) %></dd></div>
+      <div><dt><%= t("ui.admin.offers.show.chain") %></dt><dd><%= @offer.chain_position.presence || t("ui.admin.offers.show.not_supplied") %></dd></div>
+      <div><dt><%= t("ui.admin.offers.show.notes") %></dt><dd><%= @offer.notes.presence || t("ui.admin.offers.show.none") %></dd></div>
     </dl>
   </article>
 
   <article class="admin-panel">
-    <h2>Manage offer</h2>
-    <%= form_with model: [:admin, @offer], data: { testid: "offer-management-form" } do |f| %>
+    <h2><%= t("ui.admin.offers.show.manage_title") %></h2>
+    <%= form_with model: @offer, url: admin_sale_path(@offer), data: { testid: "offer-management-form" } do |f| %>
       <div class="form-grid">
         <div>
-          <%= f.label :status, "Status" %>
-          <%= f.select :status, Offer::STATUSES.map { |status| [status.humanize, status] }, {}, data: { testid: "offer-status-select" } %>
+          <%= f.label :status, t("ui.admin.offers.show.status") %>
+          <%= f.select :status, Offer::STATUSES.map { |status| [t("ui.offers.statuses.#{status}", default: status.humanize), status] }, {}, data: { testid: "offer-status-select" } %>
         </div>
         <div class="form-grid__full">
-          <%= f.label :chain_position, "Chain position" %>
+          <%= f.label :chain_position, t("ui.admin.offers.show.chain_position") %>
           <%= f.text_field :chain_position, data: { testid: "offer-chain-position-admin" } %>
         </div>
         <div class="form-grid__full">
-          <%= f.label :internal_notes, "Internal notes" %>
+          <%= f.label :internal_notes, t("ui.admin.offers.show.internal_notes") %>
           <%= f.text_area :internal_notes, rows: 6, data: { testid: "offer-internal-notes" } %>
         </div>
       </div>
       <div class="form-actions">
-        <%= f.submit "Save offer", class: "button primary", data: { testid: "save-offer-button" } %>
+        <%= f.submit t("ui.admin.offers.show.save"), class: "button primary", data: { testid: "save-offer-button" } %>
       </div>
     <% end %>
   </article>
 </section>
 
 <section class="admin-panel">
-  <h2>Decision history</h2>
+  <h2><%= t("ui.admin.offers.show.history_title") %></h2>
   <ol class="timeline" data-testid="offer-decision-history">
     <% @offer.timeline.each do |event| %>
       <li>

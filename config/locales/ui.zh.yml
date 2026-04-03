@@ -49,6 +49,7 @@ zh:
       phone_number: 电话号码
       status: 状态
       'yes': 是
+      'no': 否
       download: 下载
       remove: 移除
       save: 保存
@@ -432,9 +433,13 @@ zh:
         aria_label: 后台
         dashboard: 仪表盘
         bookings: 预约
+        leads: 线索
+        sales: 销售
+        rentals: 租赁
         properties: 房源
         sellers: 卖家
         demo_data: 演示数据
+        security: 安全
         qa_area: QA 区域
         qa_guide: QA 指南
         notifications: 通知
@@ -454,6 +459,13 @@ zh:
           unavailable: 不可用
         diagnostic_labels:
           active_scenario: 当前场景
+          build_version: 构建版本
+          git_sha: Git SHA
+          build_number: 构建编号
+          environment: 环境
+          mail_delivery_mode: 邮件投递模式
+          job_adapter: 任务适配器
+          seeded_personas: 预置角色
           properties: 房源
           users: 用户
           bookings: 预约
@@ -467,7 +479,51 @@ zh:
         - 将预约改到一个已占用时段，并验证冲突校验提示。
         - 恢复基线数据后切换到满额场景，并验证空时段状态。
         - 导出当前数据集，再通过预览页面导入，并确认诊断面板更新。
+        admin_two_factor:
+          title: 管理员 2FA 模式
+          body: 可选模式只对已经启用的管理员强制要求 OTP。禁用模式会对所有管理员绕过 OTP，但不会删除已有密钥或备用码。
+          confirmation_required: 如要把全局管理员 2FA 模式切换为禁用，请输入 DISABLE。
+          optional_help: 已启用的管理员必须使用 OTP 或备用码。未启用的管理员仍可通过邮箱和密码登录。
+          disabled_help: 紧急绕过：在恢复为可选模式前，所有管理员都会跳过 OTP 检查。
+          warning_title: 警告
+          warning_body: 切换为禁用后，所有管理员的 OTP 提示都会立即移除。现有密钥和备用码仍会保留，之后可以重新启用可选模式。
+          confirmation_label: 切换为禁用前请输入 %{phrase}
+          confirmation_help: 只有从可选模式切换到禁用模式时才需要此确认。
+          save: 保存管理员 2FA 模式
+          current_mode: 当前模式
+          last_changed_by: 最后修改人
+          last_changed_at: 最后修改时间
+          updated_notice: 已更新全局管理员 2FA 模式。
         selectors_title: 适合自动化的选择器
+        selector_contract_registry: 选择器契约清单
+        selectors_catalog:
+          property_card:
+            surface: 公开目录
+            purpose: 目录断言与下钻导航使用的房源卡片根节点。
+          book_viewing_cta:
+            surface: 公开房源详情
+            purpose: 房源页面上的主要预约看房按钮。
+          appointment_form:
+            surface: 公开预约流程
+            purpose: 预约自动化使用的预约申请表单外壳。
+          saved_search_panel:
+            surface: 公开目录
+            purpose: 买家和租客提醒流程使用的保存搜索卡片。
+          property_documents_panel:
+            surface: 公开房源详情
+            purpose: 公开的宣传册和文件下载面板。
+          admin_appointment_row:
+            surface: 后台预约台
+            purpose: 预约台工作流使用的议程行契约。
+          admin_property_activity_timeline:
+            surface: 后台房源详情
+            purpose: 包含文件、线索和审核操作的房源活动历史。
+          lead_activity_timeline:
+            surface: 后台线索详情
+            purpose: 用于跟进和审计检查的线索活动时间线。
+          active_demo_scenario:
+            surface: 后台外壳
+            purpose: 重置和导入后使用的全局当前场景指示器。
         selectors:
           property_card: 房源卡片上的 `data-testid="property-card"`
           book_viewing_cta: 房源预约按钮上的 `data-testid="book-viewing-cta"`
@@ -475,6 +531,72 @@ zh:
           admin_appointment_row: 议程行上的 `data-testid="admin-appointment-row"`
           active_demo_scenario: 后台外壳上的 `data-testid="active-demo-scenario"`
         available_scenarios_title: 可用场景
+        scenario_families: 场景家族
+        scenario_families_labels:
+          happy_path: 顺畅路径
+        scenario_complexities:
+          foundational: 基础
+        scenario_risk_types:
+          workflow: 工作流
+        seeded_personas:
+          admins: "管理员：%{list}"
+          sellers: "卖家：%{list}"
+      security:
+        title: 后台安全
+        eyebrow: 认证控制
+        intro: 在一个页面中管理身份验证器应用配置、备用码和登录恢复选项。
+        status_title: 双重验证状态
+        global_mode: 全局模式
+        account_status: 账户状态
+        enabled: 已启用
+        disabled: 未启用
+        sign_in_behavior: 登录行为
+        behavior_disabled: 当前所有管理员都会绕过 OTP 检查。现有密钥和备用码会被保留，以便日后重新启用。
+        behavior_enrolled: 该管理员登录时必须输入有效的身份验证器代码或备用码。
+        behavior_unenrolled: 该管理员在选择启用前仍可继续使用邮箱和密码登录。
+        backup_codes: 备用码
+        backup_codes_ready: 已生成，可随时轮换
+        backup_codes_missing: 还没有生成任何备用码
+        regenerate_backup_codes: 重新生成备用码
+        disable_action: 禁用双重验证
+        restart_setup: 生成新的二维码
+        begin_setup: 开始设置
+        enrollment_title: 设置你的身份验证器应用
+        enrollment_body: 请使用 Google Authenticator 或任何兼容的 TOTP 应用扫描此二维码，然后用你的第一个一次性验证码完成确认。
+        manual_key: 手动输入密钥
+        manual_key_hint: 如果无法扫码，请在身份验证器应用中手动输入此密钥。
+        confirm_code: 验证码
+        confirm_setup: 确认并启用 2FA
+        backup_codes_title: 备用码
+        backup_codes_body: 请立即将这些一次性备用码保存在安全位置。离开此页面后将不会再次显示。
+        setup_steps_title: 设置流程说明
+        setup_steps:
+          scan: 开始设置以生成新的密钥和二维码，供你的身份验证器应用使用。
+          confirm: 使用你的第一个一次性验证码完成确认，以确保应用已正确绑定。
+          save: 立即保存你的备用码。每个备用码只能使用一次，之后还可以重新生成。
+        activity_title: 最近安全活动
+        activity_meta: "%{actor} 于 %{time}"
+        activity_empty: 该管理员尚未记录任何双重验证活动。
+        activity_messages:
+          admin_two_factor_enrollment_completed: 已完成管理员双重验证设置，当时的全局模式为 %{mode}。
+          admin_two_factor_disabled: 已禁用管理员双重验证。
+          admin_two_factor_backup_codes_regenerated: 已重新生成管理员备用码。
+          admin_two_factor_mode_changed: 管理员 2FA 模式已从 %{from} 更改为 %{to}。
+        enrollment_started_notice: 已为该管理员生成新的身份验证器设置。
+        enabled_notice: 该管理员的双重验证现已启用。
+        disabled_notice: 该管理员的双重验证已禁用。
+        backup_codes_regenerated_notice: 已生成一组新的备用码。
+        already_enabled: 该管理员已启用双重验证。
+        not_enabled: 该管理员尚未启用双重验证。
+        enrollment_expired: 你的设置会话已过期。请重新开始设置以生成新的密钥。
+        invalid_code: 请输入有效的身份验证器代码。
+        modes:
+          disabled: 已禁用
+          optional: 可选
+        audit_actions:
+          admin_two_factor_enrollment_completed: 已完成 2FA 设置
+          admin_two_factor_disabled: 已禁用 2FA
+          admin_two_factor_backup_codes_regenerated: 已重新生成备用码
       dashboard:
         title: 后台仪表盘
         eyebrow: 运营概览
@@ -495,11 +617,13 @@ zh:
         nothing_needs_attention: 当前没有需要关注的事项。
         upcoming_appointments: 即将到来的预约
         no_upcoming_bookings: 暂无即将到来的预约。
+        recent_leads: 最近线索
+        no_leads: 还没有收集到任何线索。
         recent_activity: 最近活动
         notification_log_snapshot: 通知日志快照
         no_notification_records: 暂无通知记录。
         last_demo_data_action: 最近一次演示数据操作
-        true: 于
+        on: 于
         no_demo_action: 尚未记录任何场景重置或导入。
       appointments:
         title: 预约台
@@ -527,8 +651,15 @@ zh:
           title: 预约 %{reference}
           eyebrow: 预约详情
           edit: 编辑
+          send_reminder: 发送提醒
           summary_title: 摘要
           not_supplied: 未提供
+          visit_outcome: 看房结果
+          not_recorded: 未记录
+          self_service: 自助管理
+          self_service_open_until: 开放至 %{time}
+          self_service_closed: 已关闭
+          reminder_sent: 提醒已发送
           notes_title: 备注
           no_customer_notes: 客户未提供备注。
           no_internal_notes: 暂无内部备注。
@@ -562,6 +693,103 @@ zh:
         applied_demo_scenario: 已应用演示场景 %{name}。
         restored_baseline_demo_scenario: 已恢复基线演示场景（%{name}）。
         imported_demo_scenario: 已导入演示场景 %{name}。
+      enquiries:
+        index:
+          title: 线索收件箱
+          eyebrow: 线索
+          no_results: 当前筛选条件下没有匹配的线索。
+          potential_spam: 可能是垃圾信息
+          flagged: 已标记：%{reason}
+          filters:
+            status: 状态
+            source: 来源
+            assigned_admin: 指派管理员
+            search: 搜索
+            search_placeholder: 姓名、邮箱、留言或编号
+            spam_only: 仅显示垃圾线索
+            apply: 应用筛选
+            clear: 清除
+            all: 全部
+            anyone: 不限
+        show:
+          title: 线索 %{reference}
+          eyebrow: 线索详情
+          back: 返回收件箱
+          view_property: 查看房源
+          summary_title: 线索摘要
+          reference: 编号
+          property: 房源
+          status: 状态
+          source: 来源
+          email: 邮箱
+          phone: 电话
+          created: 创建时间
+          contacted: 联系时间
+          spam_flag: 垃圾标记
+          not_provided: 未提供
+          message_title: 线索留言
+          manage_title: 管理线索
+          assigned_admin: 指派管理员
+          unassigned: 未分配
+          flag_as_spam: 标记为垃圾信息
+          spam_reason: 垃圾原因
+          internal_notes: 内部备注
+          save: 保存线索
+          activity_title: 活动时间线
+          no_activity: 该线索尚未记录任何活动。
+      offers:
+        index:
+          title: 报价看板
+          eyebrow: 销售进度
+          empty_column: 此列中暂无报价。
+        show:
+          title: 报价 %{reference}
+          eyebrow: 报价详情
+          back: 返回看板
+          summary_title: 报价摘要
+          property: 房源
+          buyer: 买家
+          email: 邮箱
+          phone: 电话
+          amount: 金额
+          chain: 链条情况
+          notes: 备注
+          not_supplied: 未提供
+          none: 无
+          manage_title: 管理报价
+          status: 状态
+          chain_position: 链条位置
+          internal_notes: 内部备注
+          save: 保存报价
+          history_title: 决策历史
+      rental_applications:
+        index:
+          title: 租房申请看板
+          eyebrow: 租赁进度
+          move_in: 入住 %{date}
+          empty_column: 此列中暂无申请。
+        show:
+          title: 租房申请 %{reference}
+          eyebrow: 租房申请详情
+          back: 返回看板
+          summary_title: 申请摘要
+          property: 房源
+          applicant: 申请人
+          email: 邮箱
+          phone: 电话
+          move_in_date: 入住日期
+          guarantor_needed: 需要担保人
+          guarantor_available: 已有担保人
+          affordability_notes: 支付能力说明
+          notes: 备注
+          none: 无
+          manage_title: 管理申请
+          status: 状态
+          guarantor_required: 需要担保人
+          guarantor_available_label: 已有担保人
+          internal_notes: 内部备注
+          save: 保存申请
+          history_title: 决策历史
       properties:
         index:
           title: 房源
@@ -582,14 +810,27 @@ zh:
           edit_property: 编辑房源
           view_public_page: 查看公开页面
           summary_title: 房源摘要
+          readiness_title: 上线准备度
+          readiness_score: 已完成 %{percentage}%
           availability_windows_title: 可用时间窗口
           window_range: "%{start_time} 至 %{end_time}"
           window_kinds:
             open: 开放
             blackout: 关闭
           no_windows: 该房源还没有专属时间窗口，目前使用全局预约规则。
+          marketing_assets_title: 营销素材
+          photos_title: 照片
+          photo_position: 照片 %{position}
+          no_photos: 还没有添加营销照片。
+          floor_plans_title: 户型图
+          floor_plan_position: 户型图 %{position}
+          no_floor_plans: 还没有添加户型图。
+          documents_title: 文件
+          no_documents: 该房源尚未附加任何文件。
           booking_history_title: 房源预约历史
           no_bookings: 该房源还没有预约。
+          activity_title: 活动时间线
+          no_activity: 该房源尚未记录任何活动。
         edit:
           title: 编辑房源 %{address}
           eyebrow: 目录管理
@@ -662,6 +903,11 @@ zh:
           field_label: 输入 %{phrase} 以继续
           type_to_continue_html: 请准确输入 %{phrase} 以解锁这次重置。
           apply: 执行重置
+          journey: 路径
+          risk: 风险
+          locales: 语言
+          baseline_only_description: 使用此操作可以重建共享的基线训练数据集。
+            其他策划好的重置目前先隐藏，以保持后台流程简单清晰。
         counts:
           properties:
             one: 房源
@@ -672,6 +918,15 @@ zh:
           sellers:
             one: 卖家
             other: 卖家
+          leads:
+            one: 线索
+            other: 线索
+          offers:
+            one: 报价
+            other: 报价
+          rental_applications:
+            one: 租房申请
+            other: 租房申请
         labels:
           active_scenario: 当前场景
           property_count: 房源
@@ -695,6 +950,8 @@ zh:
         scenario_keys:
           baseline: 基线
           custom_sevenoaks_westerham_catalogue: 精选 Sevenoaks 与 Westerham 房源目录
+        scenario_journeys:
+          baseline: 覆盖目录浏览、预约、后台确认以及业主可见性的基线端到端流程。
         preview:
           title: 场景预览 %{name}
           eyebrow: 场景预览
@@ -702,6 +959,17 @@ zh:
           back_to_demo_data: 返回演示数据
           quick_reset_title: Seed 数据重置
           quick_reset_body: 这次演练会重建整套训练数据。执行前请确认准确的场景键。
+          briefing_title: 场景简介
+          family: 家族
+          journey: 路径
+          complexity: 复杂度
+          risk_type: 风险类型
+          locale_coverage: 语言覆盖
+          expected_counts_title: 预期数量
+          trainer_notes_title: 培训备注
+          no_trainer_notes: 该场景未提供培训备注。
+          expected_assertions_title: 预期断言
+          no_expected_assertions: 该场景未提供预期断言。
         import:
           title: 导入演示场景
           eyebrow: 演示数据导入
@@ -720,6 +988,7 @@ zh:
           apply_imported_scenario: 应用导入的场景
           back_to_import: 返回导入
           raw_yaml: 原始 YAML
+        baseline_only_body: 当前后台重置流程仅提供基线演示数据集，这样 QA 团队始终有一个稳定可预测的起点。
     branch_profile:
       name: Sevenoaks 与 Westerham 办公室
       team_label: 由本地 GotTheKeys 团队负责

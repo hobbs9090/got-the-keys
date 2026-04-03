@@ -1,10 +1,10 @@
-<% title "Offers board" %>
+<% title t("ui.admin.offers.index.title") %>
 
 <section class="admin-section">
   <div class="section-heading">
     <div>
-      <p class="section-heading__eyebrow">Sales progression</p>
-      <h1>Offers board</h1>
+      <p class="section-heading__eyebrow"><%= t("ui.admin.offers.index.eyebrow") %></p>
+      <h1><%= t("ui.admin.offers.index.title") %></h1>
     </div>
   </div>
 </section>
@@ -12,13 +12,13 @@
 <section class="admin-grid admin-grid--board">
   <% @offers_by_status.each do |status, offers| %>
     <article class="admin-panel" data-testid="offers-column-<%= status %>">
-      <h2><%= status.humanize %></h2>
+      <h2><%= t("ui.offers.statuses.#{status}", default: status.humanize) %></h2>
       <% if offers.any? %>
         <div class="admin-list">
           <% offers.each do |offer| %>
             <div class="admin-list__item">
               <div>
-                <%= link_to offer.buyer_name, admin_offer_path(offer) %>
+                <%= link_to offer.buyer_name, admin_sale_path(offer) %>
                 <p><%= offer.property.address_line_1 %> · <%= number_to_currency(offer.amount, unit: "£", precision: 0) %></p>
               </div>
               <span class="<%= offer_status_badge_class(offer.status) %>"><%= offer.status.humanize %></span>
@@ -26,7 +26,7 @@
           <% end %>
         </div>
       <% else %>
-        <p class="empty-copy">No offers in this column.</p>
+        <p class="empty-copy"><%= t("ui.admin.offers.index.empty_column") %></p>
       <% end %>
     </article>
   <% end %>

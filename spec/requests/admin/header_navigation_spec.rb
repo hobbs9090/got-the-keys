@@ -88,16 +88,19 @@ RSpec.describe "Admin header navigation" do
 
     lead_link = parsed_html.at_css('[data-testid="admin-enquiries-link"]')
     expect(lead_link).to be_present
+    expect(lead_link.text.strip).to eq(I18n.t("ui.admin.navigation.leads"))
     expect(lead_link["href"]).to eq(admin_enquiries_path)
     expect(lead_link["aria-current"]).to eq("page")
 
     offers_link = parsed_html.at_css('[data-testid="admin-offers-link"]')
     expect(offers_link).to be_present
-    expect(offers_link["href"]).to eq(admin_offers_path)
+    expect(offers_link.text.strip).to eq(I18n.t("ui.admin.navigation.sales"))
+    expect(offers_link["href"]).to eq(admin_sales_path)
 
     applications_link = parsed_html.at_css('[data-testid="admin-rental-applications-link"]')
     expect(applications_link).to be_present
-    expect(applications_link["href"]).to eq(admin_rental_applications_path)
+    expect(applications_link.text.strip).to eq(I18n.t("ui.admin.navigation.rentals"))
+    expect(applications_link["href"]).to eq(admin_rentals_path)
 
     utility_nav = parsed_html.at_css('[data-testid="admin-nav-utility"]')
     expect(utility_nav).to be_present

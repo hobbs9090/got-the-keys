@@ -9,26 +9,26 @@
   </div>
 
   <aside class="qa-version-box" data-testid="qa-version-box">
-    <p class="qa-version-box__eyebrow"><%= t("ui.admin.qa.version_box.title", default: "Release build") %></p>
+    <p class="qa-version-box__eyebrow"><%= t("ui.admin.qa.version_box.title") %></p>
     <div class="qa-version-box__hero">
       <p class="qa-version-box__label"><%= t("ui.admin.qa.app_version") %></p>
       <p class="qa-version-box__version" data-testid="qa-app-version"><%= full_app_version %></p>
     </div>
     <dl class="qa-version-box__list">
       <div>
-        <dt><%= t("ui.admin.qa.version_box.git_sha", default: "Git SHA") %></dt>
+        <dt><%= t("ui.admin.qa.version_box.git_sha") %></dt>
         <dd data-testid="qa-git-sha"><%= app_build_value(app_build_sha) %></dd>
       </div>
       <div>
-        <dt><%= t("ui.admin.qa.version_box.build_number", default: "Build number") %></dt>
+        <dt><%= t("ui.admin.qa.version_box.build_number") %></dt>
         <dd data-testid="qa-build-number"><%= app_build_value(app_build_number) %></dd>
       </div>
       <div>
-        <dt><%= t("ui.admin.qa.version_box.deployed_at", default: "Deployed at") %></dt>
+        <dt><%= t("ui.admin.qa.version_box.deployed_at") %></dt>
         <dd data-testid="qa-deployed-at"><%= app_build_value(app_deployed_at) %></dd>
       </div>
       <div>
-        <dt><%= t("ui.admin.qa.version_box.environment", default: "Environment") %></dt>
+        <dt><%= t("ui.admin.qa.version_box.environment") %></dt>
         <dd data-testid="qa-environment"><%= app_runtime_environment %></dd>
       </div>
     </dl>
@@ -41,7 +41,7 @@
     <dl class="detail-list">
       <% @diagnostics.each do |label, value| %>
         <div>
-          <dt><%= t("ui.admin.qa.diagnostic_labels.#{label}", default: label.to_s.humanize) %></dt>
+          <dt><%= t("ui.admin.qa.diagnostic_labels.#{label}") %></dt>
           <dd><%= value.is_a?(DemoScenarioRun) ? t("ui.admin.qa.demo_action_value", action: admin_demo_action_label(value.action_type), time: formatted_date_time(value.created_at)) : value %></dd>
         </div>
       <% end %>
@@ -62,12 +62,12 @@
 
 <section class="admin-grid">
   <article class="admin-panel">
-    <h2>Selector contract registry</h2>
+    <h2><%= t("ui.admin.qa.selector_contract_registry") %></h2>
     <% @selector_groups.each do |surface, selectors| %>
-      <p><strong><%= surface %></strong></p>
+      <p><strong><%= admin_selector_surface_label(selectors.first) %></strong></p>
       <ul class="detail-inline-list">
         <% selectors.each do |entry| %>
-          <li><code><%= entry[:selector] %></code>: <%= entry[:purpose] %></li>
+          <li><code><%= entry[:selector] %></code>: <%= admin_selector_purpose_label(entry) %></li>
         <% end %>
       </ul>
     <% end %>
@@ -75,15 +75,15 @@
 </section>
 
 <section class="admin-panel">
-  <h2>Scenario families</h2>
+  <h2><%= t("ui.admin.qa.scenario_families") %></h2>
   <% @scenario_family_groups.each do |family, scenarios| %>
     <p><strong><%= admin_scenario_family_label(family) %></strong></p>
     <ul class="detail-inline-list">
       <% scenarios.each do |scenario| %>
         <li>
-          <strong><%= scenario[:name] %></strong>:
-          <%= scenario.dig(:qa, :intended_journey) %>
-          (<%= scenario.dig(:qa, :complexity).to_s.humanize %>)
+          <strong><%= translated_demo_scenario_key(scenario[:key]) %></strong>:
+          <%= admin_scenario_journey_label(scenario) %>
+          (<%= admin_scenario_complexity_label(scenario.dig(:qa, :complexity)) %>)
         </li>
       <% end %>
     </ul>

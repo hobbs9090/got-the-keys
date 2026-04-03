@@ -465,6 +465,7 @@ html[data-theme="dark"] .marketing-wordmark-stack--theme-aware .marketing-wordma
   padding: 0.3rem;
   position: relative;
   right: 0;
+  z-index: 40;
 }
 
 .language-dropdown__details:not([open]) .language-dropdown__menu {

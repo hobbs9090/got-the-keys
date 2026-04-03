@@ -11,7 +11,7 @@ RSpec.describe "Admin rental applications", type: :request do
   it "renders the rental applications board" do
     application
 
-    get admin_rental_applications_path
+    get admin_rentals_path
 
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Rental applications board")
@@ -19,7 +19,7 @@ RSpec.describe "Admin rental applications", type: :request do
   end
 
   it "updates a rental application and syncs progression" do
-    patch admin_rental_application_path(application), params: {
+    patch admin_rental_path(application), params: {
       rental_application: {
         status: "approved",
         guarantor_required: "0",
@@ -29,7 +29,7 @@ RSpec.describe "Admin rental applications", type: :request do
       }
     }
 
-    expect(response).to redirect_to(admin_rental_application_path(application))
+    expect(response).to redirect_to(admin_rental_path(application))
     expect(application.reload.status).to eq("approved")
     expect(application.property.reload.listing_state).to eq("let_agreed")
   end

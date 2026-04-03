@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Rental application progression", type: :system do
   def sign_in_as(admin)
-    visit admin_rental_applications_path
+    visit admin_rentals_path
 
     fill_in "admin_email", with: admin.email
     fill_in "admin_password", with: "changeme"

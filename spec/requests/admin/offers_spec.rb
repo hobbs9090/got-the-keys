@@ -11,7 +11,7 @@ RSpec.describe "Admin offers", type: :request do
   it "renders the offers board" do
     offer
 
-    get admin_offers_path
+    get admin_sales_path
 
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Offers board")
@@ -19,7 +19,7 @@ RSpec.describe "Admin offers", type: :request do
   end
 
   it "updates an offer and syncs progression" do
-    patch admin_offer_path(offer), params: {
+    patch admin_sale_path(offer), params: {
       offer: {
         status: "accepted",
         chain_position: "Cash buyer, no chain",
@@ -27,7 +27,7 @@ RSpec.describe "Admin offers", type: :request do
       }
     }
 
-    expect(response).to redirect_to(admin_offer_path(offer))
+    expect(response).to redirect_to(admin_sale_path(offer))
     expect(offer.reload.status).to eq("accepted")
     expect(offer.property.reload.listing_state).to eq("under_offer")
   end

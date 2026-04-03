@@ -33,34 +33,34 @@
 
 <section class="admin-grid">
   <article class="admin-panel">
-    <h2>Scenario briefing</h2>
+    <h2><%= t("ui.admin.demo_data.preview.briefing_title") %></h2>
     <p><%= @preview.fetch(:description) %></p>
     <dl class="detail-list">
       <div>
-        <dt>Family</dt>
+        <dt><%= t("ui.admin.demo_data.preview.family") %></dt>
         <dd><%= admin_scenario_family_label(@preview.dig(:qa, :family)) %></dd>
       </div>
       <div>
-        <dt>Journey</dt>
+        <dt><%= t("ui.admin.demo_data.preview.journey") %></dt>
         <dd><%= @preview.dig(:qa, :intended_journey) %></dd>
       </div>
       <div>
-        <dt>Complexity</dt>
-        <dd><%= @preview.dig(:qa, :complexity).to_s.humanize %></dd>
+        <dt><%= t("ui.admin.demo_data.preview.complexity") %></dt>
+        <dd><%= admin_scenario_complexity_label(@preview.dig(:qa, :complexity)) %></dd>
       </div>
       <div>
-        <dt>Risk type</dt>
-        <dd><%= @preview.dig(:qa, :risk_type).to_s.humanize %></dd>
+        <dt><%= t("ui.admin.demo_data.preview.risk_type") %></dt>
+        <dd><%= admin_scenario_risk_type_label(@preview.dig(:qa, :risk_type)) %></dd>
       </div>
       <div>
-        <dt>Locale coverage</dt>
+        <dt><%= t("ui.admin.demo_data.preview.locale_coverage") %></dt>
         <dd><%= Array(@preview.dig(:qa, :locale_coverage)).join(", ") %></dd>
       </div>
     </dl>
   </article>
 
   <article class="admin-panel">
-    <h2>Expected counts</h2>
+    <h2><%= t("ui.admin.demo_data.preview.expected_counts_title") %></h2>
     <dl class="detail-list">
       <% @preview.dig(:qa, :expected_counts).each do |label, value| %>
         <div>
@@ -74,7 +74,7 @@
 
 <section class="admin-grid">
   <article class="admin-panel">
-    <h2>Trainer notes</h2>
+    <h2><%= t("ui.admin.demo_data.preview.trainer_notes_title") %></h2>
     <% if @preview.dig(:qa, :trainer_notes).any? %>
       <ol class="timeline">
         <% @preview.dig(:qa, :trainer_notes).each do |note| %>
@@ -82,12 +82,12 @@
         <% end %>
       </ol>
     <% else %>
-      <p class="empty-copy">No trainer notes were provided for this scenario.</p>
+      <p class="empty-copy"><%= t("ui.admin.demo_data.preview.no_trainer_notes") %></p>
     <% end %>
   </article>
 
   <article class="admin-panel">
-    <h2>Expected assertions</h2>
+    <h2><%= t("ui.admin.demo_data.preview.expected_assertions_title") %></h2>
     <% if @preview.dig(:qa, :expected_assertions).any? %>
       <ul class="detail-inline-list">
         <% @preview.dig(:qa, :expected_assertions).each do |assertion| %>
@@ -95,7 +95,7 @@
         <% end %>
       </ul>
     <% else %>
-      <p class="empty-copy">No expected assertions were provided for this scenario.</p>
+      <p class="empty-copy"><%= t("ui.admin.demo_data.preview.no_expected_assertions") %></p>
     <% end %>
   </article>
 </section>
