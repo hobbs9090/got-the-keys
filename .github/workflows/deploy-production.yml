@@ -55,10 +55,29 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      - name: Prepare hosted tool cache
+        run: |
+          if [ -w /opt/hostedtoolcache ]; then
+            echo "/opt/hostedtoolcache is already writable"
+            exit 0
+          fi
+
+          if command -v sudo >/dev/null 2>&1; then
+            sudo mkdir -p /opt/hostedtoolcache
+            sudo chown -R "$(id -un):$(id -gn)" /opt/hostedtoolcache
+          elif [ "$(id -u)" -eq 0 ]; then
+            mkdir -p /opt/hostedtoolcache
+            chown -R "$(id -un):$(id -gn)" /opt/hostedtoolcache
+          else
+            echo "/opt/hostedtoolcache must be writable for ruby/setup-ruby on this self-hosted runner." >&2
+            ls -ld /opt /opt/hostedtoolcache 2>/dev/null || true
+            exit 1
+          fi
+
+          ls -ld /opt/hostedtoolcache
+
       - name: Use shared deployment Ruby
         uses: ruby/setup-ruby@v1
-        env:
-          RUNNER_TOOL_CACHE: ${{ github.workspace }}/tmp/toolcache
         with:
           ruby-version: .ruby-version
           bundler-cache: false
