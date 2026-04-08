@@ -681,6 +681,10 @@ pre code {
   text-align: center;
 }
 
+.pagination .current {
+  padding: 0;
+}
+
 .pagination .ellipsis {
   align-items: center;
   display: inline-flex;
@@ -3381,6 +3385,10 @@ table th {
     font-size: 0.95rem;
     min-width: 2.25rem;
     padding: 0 0.65rem;
+  }
+
+  .pagination .current {
+    padding: 0;
   }
 
   .site-main,
