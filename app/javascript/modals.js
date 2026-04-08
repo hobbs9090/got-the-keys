@@ -134,6 +134,7 @@ const bindLifecycleHandlers = () => {
   document.addEventListener("turbo:visit", resetHandler);
   document.addEventListener("turbo:before-cache", resetHandler);
   document.addEventListener("turbo:before-render", resetHandler);
+  document.addEventListener("submit", resetHandler, true);
 
   lifecycleHandlersBound = true;
 };
