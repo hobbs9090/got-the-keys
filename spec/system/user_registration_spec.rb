@@ -36,11 +36,6 @@ RSpec.describe "User registration", type: :system, js: true do
 
     dismiss_cookie_banner
 
-    click_button "Read more"
-
-    expect(page).to have_css("#registration-explainer[aria-hidden='false']", visible: true)
-    expect(page).to have_css("body.site-modal-open", visible: false)
-
     unique_email = "signup-submit-#{SecureRandom.hex(4)}@example.com"
 
     fill_in "user_first_name", with: "Test"
@@ -56,6 +51,11 @@ RSpec.describe "User registration", type: :system, js: true do
       checkbox.dispatchEvent(new Event("input", { bubbles: true }));
       checkbox.dispatchEvent(new Event("change", { bubbles: true }));
     JS
+
+    click_button "Read more"
+
+    expect(page).to have_css("#registration-explainer[aria-hidden='false']", visible: true)
+    expect(page).to have_css("body.site-modal-open", visible: false)
 
     page.execute_script("document.querySelector('form.auth-form').requestSubmit()")
 
