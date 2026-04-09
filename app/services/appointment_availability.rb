@@ -1,4 +1,6 @@
 class AppointmentAvailability
+  SLOT_INTERVAL_MINUTES = 15
+
   Slot = Struct.new(:starts_at, :ends_at, :group_viewing, keyword_init: true) do
     def label
       base = "#{I18n.l(starts_at, format: :long)} to #{I18n.l(ends_at, format: :time_only)}"
@@ -12,12 +14,13 @@ class AppointmentAvailability
     @from = from
   end
 
-  def next_slots(limit: 8, days_ahead: 21, excluding_appointment: nil)
+  def next_slots(limit: 8, days_ahead: nil, excluding_appointment: nil)
     slots = []
+    booking_window_days = days_ahead.nil? ? configuration.booking_window_days : days_ahead
 
-    date_range(days_ahead).each do |date|
+    date_range(booking_window_days).each do |date|
       windows_for(date).each do |window_start, window_end|
-        cursor = [window_start, from].max
+        cursor = aligned_slot_start([window_start, from].max)
 
         while (cursor + slot_duration) <= window_end
           slot_end = cursor + slot_duration
@@ -27,7 +30,7 @@ class AppointmentAvailability
             return slots if slots.length >= limit
           end
 
-          cursor += configuration.slot_duration_minutes.minutes
+          cursor += slot_interval
         end
       end
     end
@@ -53,6 +56,19 @@ class AppointmentAvailability
 
   def slot_duration
     configuration.slot_duration_minutes.minutes
+  end
+
+  def slot_interval
+    SLOT_INTERVAL_MINUTES.minutes
+  end
+
+  def aligned_slot_start(value)
+    interval_seconds = slot_interval.to_i
+    timestamp = value.to_i
+    remainder = timestamp % interval_seconds
+    aligned_timestamp = remainder.zero? ? timestamp : timestamp + (interval_seconds - remainder)
+
+    Time.zone.at(aligned_timestamp)
   end
 
   def minimum_bookable_time

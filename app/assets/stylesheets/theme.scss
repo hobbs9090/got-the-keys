@@ -2822,6 +2822,11 @@ html[data-theme="dark"] {
   gap: 1.5rem;
 }
 
+.property-workspace-panel {
+  display: grid;
+  gap: 1.25rem;
+}
+
 .property-workspace-card {
   align-items: start;
   display: grid;
@@ -2905,6 +2910,32 @@ html[data-theme="dark"] {
   margin: 0;
 }
 
+.property-workspace-bookings {
+  display: grid;
+  gap: 1rem;
+}
+
+.property-workspace-bookings__section {
+  background: var(--color-surface-soft);
+  border: 1px solid var(--color-panel-border);
+  border-radius: var(--radius-sm);
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem 1.1rem;
+}
+
+.property-workspace-bookings__header {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.property-workspace-bookings__details {
+  display: grid;
+  gap: 0.2rem;
+}
+
 .property-workspace-card__appointment-groups {
   display: grid;
   gap: 1rem;
@@ -2950,6 +2981,35 @@ html[data-theme="dark"] {
 .property-workspace-card__appointment p {
   color: var(--color-muted);
   font-size: 0.92rem;
+  margin: 0;
+}
+
+.property-workspace-card__appointment--customer {
+  align-items: center;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.property-workspace-card__appointment-actions {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  min-width: 15.5rem;
+}
+
+.property-workspace-card__appointment-actions .badge {
+  justify-content: center;
+  min-width: 6.75rem;
+  text-align: center;
+}
+
+.property-workspace-card__appointment-actions .button {
+  margin: 0;
+  min-width: 8.5rem;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .property-workspace__footer {
@@ -3031,6 +3091,176 @@ html[data-theme="dark"] {
 .calendar-entry:hover {
   background: rgba(20, 87, 214, 0.12);
   transform: translateY(-1px);
+}
+
+.appointment-slot-picker {
+  background: linear-gradient(180deg, rgba(20, 87, 214, 0.04), rgba(20, 87, 214, 0.01));
+  border: 1px solid rgba(20, 87, 214, 0.1);
+  border-radius: var(--radius-md);
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.appointment-slot-picker__header {
+  align-items: start;
+  display: flex;
+  justify-content: space-between;
+}
+
+.appointment-slot-picker__eyebrow {
+  color: var(--color-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+}
+
+.appointment-slot-picker__summary {
+  margin: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.appointment-slot-picker__summary strong {
+  font-size: 0.96rem;
+  font-weight: 600;
+}
+
+.appointment-slot-picker__date-button,
+.appointment-slot-picker__time-button {
+  appearance: none;
+  background: var(--color-surface);
+  border: 1px solid rgba(20, 87, 214, 0.14);
+  border-radius: var(--radius-sm);
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+}
+
+.appointment-slot-picker__date-button:hover,
+.appointment-slot-picker__time-button:hover {
+  border-color: rgba(20, 87, 214, 0.32);
+  transform: translateY(-1px);
+}
+
+.appointment-slot-picker__date-button.is-selected,
+.appointment-slot-picker__time-button.is-selected {
+  background: rgba(20, 87, 214, 0.12);
+  border-color: rgba(20, 87, 214, 0.48);
+  box-shadow: 0 12px 24px rgba(20, 87, 214, 0.12);
+}
+
+.appointment-slot-picker__calendar {
+  display: grid;
+  gap: 1rem;
+}
+
+.appointment-slot-picker__month {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.appointment-slot-picker__month-header h3 {
+  font-size: 0.95rem;
+  margin-bottom: 0;
+}
+
+.appointment-slot-picker__weekday-row,
+.appointment-slot-picker__month-grid {
+  display: grid;
+  gap: 0.35rem;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.appointment-slot-picker__weekday-label {
+  color: var(--color-muted);
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 0.15rem 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.appointment-slot-picker__date-button,
+.appointment-slot-picker__date-placeholder {
+  align-items: center;
+  aspect-ratio: 1;
+  display: grid;
+  justify-items: center;
+  min-height: 0;
+  padding: 0.35rem;
+}
+
+.appointment-slot-picker__date-button {
+  position: relative;
+}
+
+.appointment-slot-picker__date-placeholder {
+  border: 1px solid rgba(20, 87, 214, 0.06);
+  border-radius: var(--radius-sm);
+  color: rgba(40, 53, 84, 0.4);
+}
+
+.appointment-slot-picker__date-placeholder.is-outside {
+  border-color: transparent;
+  color: rgba(40, 53, 84, 0.18);
+}
+
+.appointment-slot-picker__date-day {
+  color: var(--color-heading);
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.appointment-slot-picker__date-placeholder .appointment-slot-picker__date-day {
+  color: inherit;
+}
+
+.appointment-slot-picker__date-indicator {
+  background: var(--color-primary);
+  border-radius: 999px;
+  height: 0.28rem;
+  width: 0.28rem;
+}
+
+.appointment-slot-picker__time-group {
+  display: none;
+  gap: 0.85rem;
+}
+
+.appointment-slot-picker__time-group.is-active {
+  display: grid;
+}
+
+.appointment-slot-picker__time-group h3 {
+  margin-bottom: 0;
+}
+
+.appointment-slot-picker__time-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.appointment-slot-picker__time-button {
+  align-items: start;
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.9rem 1rem;
+  text-align: left;
+}
+
+.appointment-slot-picker__time-button strong {
+  font-size: 1rem;
+}
+
+.appointment-slot-picker__time-button span,
+.appointment-slot-picker__time-button em {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  font-style: normal;
 }
 
 .timeline {
@@ -3438,9 +3668,7 @@ table th {
     width: 100%;
   }
 
-  .pagination li.first,
-  .pagination li.last,
-  .pagination li.ellipsis {
+  .pagination li:not(.prev):not(.next):not(.current) {
     display: none !important;
   }
 
@@ -3456,8 +3684,8 @@ table th {
   .pagination button,
   .pagination .disabled span,
   .pagination .current {
-    font-size: 0.95rem;
-    min-width: 2.25rem;
+    font-size: 0.9rem;
+    min-width: 2.5rem;
     padding: 0 0.65rem;
   }
 
@@ -3467,33 +3695,16 @@ table th {
     width: 2.25rem;
   }
 
+  .pagination li.prev,
+  .pagination li.next {
+    flex: 0 1 auto;
+  }
+
   .pagination li.prev a,
   .pagination li.prev span,
   .pagination li.next a,
   .pagination li.next span {
-    font-size: 0;
-    min-width: 2.25rem;
-    padding: 0 0.75rem;
-    position: relative;
-  }
-
-  .pagination li.prev a::before,
-  .pagination li.prev span::before,
-  .pagination li.next a::before,
-  .pagination li.next span::before {
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 1;
-  }
-
-  .pagination li.prev a::before,
-  .pagination li.prev span::before {
-    content: "\2039";
-  }
-
-  .pagination li.next a::before,
-  .pagination li.next span::before {
-    content: "\203A";
+    min-width: 4.75rem;
   }
 
   .site-main,
@@ -3539,6 +3750,31 @@ table th {
 
   .property-workspace-card__appointment-groups {
     grid-template-columns: 1fr;
+  }
+
+  .property-workspace-card__appointment {
+    flex-direction: column;
+  }
+
+  .property-workspace-card__appointment--customer {
+    align-items: start;
+    grid-template-columns: 1fr;
+  }
+
+  .property-workspace-card__appointment-actions {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: start;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .property-workspace-card__appointment-actions .badge {
+    min-width: 0;
+  }
+
+  .property-workspace-card__appointment-actions .button {
+    width: 100%;
   }
 
   .contact-jump-nav {

@@ -1,5 +1,6 @@
 import "@hotwired/turbo-rails";
 
+import { bootAppointmentSlotPickers, teardownAppointmentSlotPickers } from "./appointment_slot_picker";
 import { bootCarousels, teardownCarousels } from "./carousels";
 import { bootModals, teardownModals } from "./modals";
 import { bootNativeValidations, teardownNativeValidations } from "./native_validations";
@@ -13,6 +14,7 @@ import { bootThemePreference, teardownThemePreference } from "./theme_preference
 
 const bootApplication = () => {
   bootThemePreference();
+  bootAppointmentSlotPickers();
   bootCarousels();
   bootModals();
   bootNativeValidations();
@@ -26,6 +28,7 @@ const bootApplication = () => {
 
 const teardownApplication = () => {
   teardownThemePreference();
+  teardownAppointmentSlotPickers();
   teardownCarousels();
   teardownModals();
   teardownNativeValidations();

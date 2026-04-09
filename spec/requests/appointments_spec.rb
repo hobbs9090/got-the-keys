@@ -7,6 +7,14 @@ RSpec.describe "Appointments" do
   let(:property) { FactoryBot.create(:property, user:, address_line_1: "44 Mount Ephraim") }
 
   describe "GET /properties/:property_id/appointments/new" do
+    around do |example|
+      travel_to(Time.zone.local(2026, 4, 9, 8, 0)) { example.run }
+    end
+
+    before do
+      configure_booking_rules!(open_weekdays: %w[1 2 3 4 5], office_opens_at: "09:00", office_closes_at: "17:00")
+    end
+
     it "renders the booking form" do
       get new_property_appointment_path(property)
 
@@ -23,6 +31,22 @@ RSpec.describe "Appointments" do
       expect(response.body).to include(%(value="#{ERB::Util.html_escape(user.full_name)}"))
       expect(response.body).to include(%(value="#{ERB::Util.html_escape(user.email)}"))
       expect(response.body).to include(%(value="#{ERB::Util.html_escape(user.mobile_number)}"))
+    end
+
+    it "includes later slots that are still within the 21-day booking window" do
+      late_slot = booking_time(2026, 4, 20, 9, 0)
+      FactoryBot.create(
+        :availability_window,
+        property:,
+        kind: "open",
+        starts_at: late_slot,
+        ends_at: booking_time(2026, 4, 20, 15, 0)
+      )
+
+      get new_property_appointment_path(property)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(%(value="#{late_slot.iso8601}"))
     end
   end
 

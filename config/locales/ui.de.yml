@@ -415,7 +415,7 @@ de:
         eyebrow: Ihre Besichtigung verwalten
         body: Wählen Sie einen neuen Termin oder behalten Sie den aktuellen. Self-Service
           bleibt bis kurz nach dem gebuchten Termin offen.
-        current_slot: 'Aktueller Termin: <strong>%{time}</strong>'
+        current_slot_html: 'Aktueller Termin: <strong>%{time}</strong>'
         status: Status
         choose_slot: Neuen Termin wählen
         select_slot: Neue Zeit auswählen

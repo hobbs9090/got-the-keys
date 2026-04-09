@@ -18,4 +18,18 @@ RSpec.describe BookingConfiguration do
     expect(configuration).not_to be_valid
     expect(configuration.errors[:open_weekdays]).to include("must include at least one day")
   end
+
+  it "only allows supported slot durations" do
+    configuration = build_configuration(slot_duration_minutes: 50)
+
+    expect(configuration).not_to be_valid
+    expect(configuration.errors[:slot_duration_minutes]).to include("is not included in the list")
+  end
+
+  it "requires the booking window to stay within a sensible range" do
+    configuration = build_configuration(booking_window_days: 0)
+
+    expect(configuration).not_to be_valid
+    expect(configuration.errors[:booking_window_days]).to include("must be greater than or equal to 1")
+  end
 end

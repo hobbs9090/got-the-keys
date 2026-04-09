@@ -1,4 +1,6 @@
 class AppointmentsController < ApplicationController
+  BOOKING_FORM_SLOT_LIMIT = 1000
+
   before_action :set_property, only: %i[new create]
   before_action :set_appointment, only: %i[show edit_self_service reschedule_self_service cancel_self_service]
   before_action :authorize_public_access!, only: %i[show edit_self_service reschedule_self_service cancel_self_service]
@@ -12,7 +14,7 @@ class AppointmentsController < ApplicationController
         duration_minutes: booking_configuration.slot_duration_minutes
       )
     )
-    @available_slots = @property.next_available_slots(limit: 10)
+    @available_slots = @property.next_available_slots(limit: BOOKING_FORM_SLOT_LIMIT)
   end
 
   def create
@@ -23,7 +25,7 @@ class AppointmentsController < ApplicationController
     if @appointment.save
       redirect_to appointment_path(@appointment, token: @appointment.access_token), notice: t("ui.appointments.new.submitted_notice")
     else
-      @available_slots = @property.next_available_slots(limit: 10)
+      @available_slots = @property.next_available_slots(limit: BOOKING_FORM_SLOT_LIMIT)
       render :new, status: :unprocessable_entity
     end
   end
@@ -32,14 +34,14 @@ class AppointmentsController < ApplicationController
   end
 
   def edit_self_service
-    @available_slots = @appointment.property.next_available_slots(limit: 10, excluding_appointment: @appointment)
+    @available_slots = @appointment.property.next_available_slots(limit: BOOKING_FORM_SLOT_LIMIT, excluding_appointment: @appointment)
   end
 
   def reschedule_self_service
     requested_time = parse_requested_time
 
     if requested_time.blank?
-      @available_slots = @appointment.property.next_available_slots(limit: 10, excluding_appointment: @appointment)
+      @available_slots = @appointment.property.next_available_slots(limit: BOOKING_FORM_SLOT_LIMIT, excluding_appointment: @appointment)
       @appointment.errors.add(:requested_time, t("ui.appointments.self_service.choose_slot"))
       render :edit_self_service, status: :unprocessable_entity
       return
@@ -48,7 +50,7 @@ class AppointmentsController < ApplicationController
     if @appointment.update(requested_time:, scheduled_at: requested_time, status: "rescheduled")
       redirect_to appointment_path(@appointment, token: @appointment.access_token), notice: t("ui.appointments.self_service.flash.rescheduled")
     else
-      @available_slots = @appointment.property.next_available_slots(limit: 10, excluding_appointment: @appointment)
+      @available_slots = @appointment.property.next_available_slots(limit: BOOKING_FORM_SLOT_LIMIT, excluding_appointment: @appointment)
       render :edit_self_service, status: :unprocessable_entity
     end
   end

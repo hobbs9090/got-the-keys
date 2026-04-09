@@ -396,7 +396,7 @@ en:
         title: "Manage viewing %{reference}"
         eyebrow: "Manage your viewing"
         body: "Choose a new slot or keep the current one. Self-service stays open until shortly after the booked time."
-        current_slot: "Current slot: <strong>%{time}</strong>"
+        current_slot_html: "Current slot: <strong>%{time}</strong>"
         status: "Status"
         choose_slot: "Choose a new slot"
         select_slot: "Select a new time"
@@ -1111,7 +1111,8 @@ en:
       booking_configuration:
         title: "Booking rules"
         eyebrow: "Booking configuration"
-        slot_duration_minutes: "Slot duration (minutes)"
+        slot_duration_minutes: "Booking duration (minutes)"
+        booking_window_days: "Booking window length (days)"
         lead_time_hours: "Lead time (hours)"
         buffer_minutes: "Buffer between bookings (minutes)"
         office_opens_at: "Office opens at"

@@ -56,6 +56,83 @@ module ApplicationHelper
     l(value, format: :long)
   end
 
+  def formatted_calendar_date(value)
+    return if value.blank?
+
+    l(value.to_date, format: :calendar_heading)
+  end
+
+  def formatted_calendar_slot_summary(value)
+    return if value.blank?
+
+    "#{formatted_calendar_date(value)} \u00b7 #{l(value, format: :time_only)}"
+  end
+
+  def appointment_slot_picker_payload(slots)
+    slots
+      .group_by { |slot| slot.starts_at.to_date }
+      .map do |date, day_slots|
+        {
+          key: date.iso8601,
+          label: formatted_calendar_date(date),
+          weekday: l(date, format: :calendar_day),
+          day_number: l(date, format: "%d"),
+          month_label: l(date, format: "%b"),
+          times: day_slots.map do |slot|
+            {
+              value: slot.starts_at.iso8601,
+              label: l(slot.starts_at, format: :time_only),
+              finish_label: l(slot.ends_at, format: :time_only),
+              group_viewing: slot.group_viewing
+            }
+          end
+        }
+      end
+  end
+
+  def appointment_slot_picker_calendar_months(picker_slots)
+    return [] if picker_slots.blank?
+
+    available_days = picker_slots.index_by { |day| Date.iso8601(day.fetch(:key)) }
+    first_date = available_days.keys.min
+    last_date = available_days.keys.max
+    month_cursor = first_date.beginning_of_month
+    months = []
+
+    while month_cursor <= last_date.beginning_of_month
+      month_start = month_cursor.beginning_of_month
+      month_end = month_cursor.end_of_month
+      leading_padding = (month_start.wday + 6) % 7
+      trailing_padding = 6 - ((month_end.wday + 6) % 7)
+      grid_start = month_start - leading_padding
+      grid_end = month_end + trailing_padding
+
+      months << {
+        key: month_cursor.strftime("%Y-%m"),
+        label: l(month_cursor, format: "%B %Y"),
+        cells: (grid_start..grid_end).map do |date|
+          day = available_days[date]
+
+          {
+            key: date.iso8601,
+            label: l(date, format: :long),
+            day_number: date.day,
+            outside_month: date.month != month_cursor.month,
+            available: day.present?
+          }.merge(day || {})
+        end
+      }
+
+      month_cursor = month_cursor.next_month.beginning_of_month
+    end
+
+    months
+  end
+
+  def monday_first_abbr_day_names
+    I18n.t("date.abbr_day_names", default: Date::ABBR_DAYNAMES).rotate(1)
+  end
+
   def admin_nav_link_to(name, path, active: nil, **options)
     is_active = active.nil? ? current_page?(path) : active
     classes = [options.delete(:class), ("is-active" if is_active)].compact.join(" ")

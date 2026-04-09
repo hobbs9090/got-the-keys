@@ -1,7 +1,11 @@
 require "rails_helper"
 
-RSpec.describe "Public appointment booking", type: :system do
+RSpec.describe "Public appointment booking", type: :system, js: true do
   include ActiveSupport::Testing::TimeHelpers
+
+  def dismiss_cookie_banner
+    click_button "Reject non-essential" if page.has_button?("Reject non-essential", wait: 1)
+  end
 
   around do |example|
     travel_to(Time.zone.local(2026, 4, 6, 8, 0)) { example.run }
@@ -22,6 +26,7 @@ RSpec.describe "Public appointment booking", type: :system do
     click_link "88 Harbour View"
 
     expect(page).to have_current_path(property_path(property))
+    dismiss_cookie_banner
     expect(page).to have_text("Book a viewing")
 
     click_link "Request a viewing"
@@ -32,7 +37,8 @@ RSpec.describe "Public appointment booking", type: :system do
       fill_in "appointment_customer_name", with: "Nina Hughes"
       fill_in "appointment_customer_email", with: "nina.hughes@example.com"
       fill_in "appointment_customer_phone", with: "07700 930005"
-      find("[data-testid='requested-time-select'] option[value='#{requested_slot.starts_at.iso8601}']").select_option
+      find("[data-testid='requested-time-picker-date-#{requested_slot.starts_at.to_date.iso8601}']").click
+      find("[data-testid='requested-time-picker'] [data-slot-picker-time='#{requested_slot.starts_at.iso8601}']").click
       fill_in "appointment_notes", with: "Please confirm whether parking is allocated."
 
       expect do
@@ -44,7 +50,7 @@ RSpec.describe "Public appointment booking", type: :system do
 
     expect(page).to have_text("Appointment request submitted. We will email you with updates.")
     expect(page).to have_text(appointment.public_reference)
-    expect(page).to have_text("Pending")
+    expect(page).to have_text("PENDING")
     expect(page).to have_text("88 Harbour View")
     expect(page).to have_text("Nina Hughes")
     expect(page).to have_text("Please confirm whether parking is allocated.")

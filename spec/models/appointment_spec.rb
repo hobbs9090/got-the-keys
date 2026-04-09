@@ -115,6 +115,22 @@ RSpec.describe Appointment do
     expect(appointment.errors[:customer_phone]).to include("must be a valid phone number")
   end
 
+  it "only allows supported appointment durations" do
+    appointment = FactoryBot.build(
+      :appointment,
+      property:,
+      customer_name: "Mia Hart",
+      customer_email: "mia.hart@example.com",
+      customer_phone: "07700 930009",
+      requested_time: next_booking_slot(hour: 13),
+      scheduled_at: next_booking_slot(hour: 13),
+      duration_minutes: 50
+    )
+
+    expect(appointment).not_to be_valid
+    expect(appointment.errors[:duration_minutes]).to include("is not included in the list")
+  end
+
   it "supports customer self-service before the appointment expires" do
     appointment = FactoryBot.create(
       :appointment,

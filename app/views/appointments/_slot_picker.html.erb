@@ -1,0 +1,107 @@
+<% picker_slots = appointment_slot_picker_payload(slots) %>
+<% calendar_months = appointment_slot_picker_calendar_months(picker_slots) %>
+<% current_value = selected_value.presence %>
+<% current_day = picker_slots.find { |day| day.fetch(:times).any? { |time| time.fetch(:value) == current_value } } || picker_slots.first %>
+<% selected_day_key = current_day&.fetch(:key) %>
+
+<div class="appointment-slot-picker"
+     data-slot-picker
+     data-slot-picker-selected-prefix="<%= summary_prefix %>"
+     data-testid="<%= testid %>">
+  <%= hidden_field_tag field_name, current_value, id: field_id, data: { slot_picker_input: true } %>
+  <script type="application/json" data-slot-picker-source><%= raw(json_escape(picker_slots.to_json)) %></script>
+
+  <div class="appointment-slot-picker__header">
+    <div>
+      <p class="appointment-slot-picker__eyebrow"><%= eyebrow %></p>
+      <p class="appointment-slot-picker__summary" data-slot-picker-summary>
+        <% if current_value.present? %>
+          <strong><%= formatted_calendar_slot_summary(Time.zone.parse(current_value)) %></strong>
+        <% else %>
+          <%= empty_summary %>
+        <% end %>
+      </p>
+    </div>
+  </div>
+
+  <div class="appointment-slot-picker__calendar" aria-label="<%= date_label %>" data-slot-picker-dates>
+    <% calendar_months.each do |month| %>
+      <section class="appointment-slot-picker__month" data-testid="<%= "#{testid}-month-#{month.fetch(:key)}" %>">
+        <header class="appointment-slot-picker__month-header">
+          <h3><%= month.fetch(:label) %></h3>
+        </header>
+
+        <div class="appointment-slot-picker__weekday-row" aria-hidden="true">
+          <% monday_first_abbr_day_names.each do |weekday_name| %>
+            <span class="appointment-slot-picker__weekday-label"><%= weekday_name %></span>
+          <% end %>
+        </div>
+
+        <div class="appointment-slot-picker__month-grid">
+          <% month.fetch(:cells).each do |day| %>
+            <% if day.fetch(:available) %>
+              <% is_selected = day.fetch(:key) == selected_day_key %>
+              <button
+                type="button"
+                class="appointment-slot-picker__date-button<%= " is-selected" if is_selected %>"
+                aria-label="<%= day.fetch(:label) %>"
+                aria-pressed="<%= is_selected %>"
+                data-slot-picker-date="<%= day.fetch(:key) %>"
+                data-testid="<%= "#{testid}-date-#{day.fetch(:key)}" %>">
+                <strong class="appointment-slot-picker__date-day"><%= day.fetch(:day_number) %></strong>
+                <span class="appointment-slot-picker__date-indicator"></span>
+              </button>
+            <% else %>
+              <span
+                class="appointment-slot-picker__date-placeholder<%= " is-outside" if day.fetch(:outside_month) %>"
+                aria-hidden="true">
+                <span class="appointment-slot-picker__date-day"><%= day.fetch(:outside_month) ? "" : day.fetch(:day_number) %></span>
+              </span>
+            <% end %>
+          <% end %>
+        </div>
+      </section>
+    <% end %>
+  </div>
+
+  <div class="appointment-slot-picker__times" data-slot-picker-times>
+    <% picker_slots.each do |day| %>
+      <% visible = day.fetch(:key) == selected_day_key %>
+      <section
+        class="appointment-slot-picker__time-group<%= " is-active" if visible %>"
+        data-slot-picker-time-group="<%= day.fetch(:key) %>"
+        <% unless visible %>hidden<% end %>>
+        <h3><%= day.fetch(:label) %></h3>
+        <div class="appointment-slot-picker__time-grid">
+          <% day.fetch(:times).each do |time| %>
+            <% is_selected = time.fetch(:value) == current_value %>
+            <button
+              type="button"
+              class="appointment-slot-picker__time-button<%= " is-selected" if is_selected %>"
+              data-slot-picker-time="<%= time.fetch(:value) %>"
+              data-slot-picker-date-key="<%= day.fetch(:key) %>"
+              data-testid="<%= "#{testid}-time-#{time.fetch(:value).parameterize}" %>">
+              <strong><%= time.fetch(:label) %></strong>
+              <span><%= t("ui.properties.show.slot_finish", time: time.fetch(:finish_label)) %></span>
+              <% if time.fetch(:group_viewing) %>
+                <em><%= t("ui.admin.appointments.index.group_viewing_badge", default: "Group viewing") %></em>
+              <% end %>
+            </button>
+          <% end %>
+        </div>
+      </section>
+    <% end %>
+  </div>
+
+  <noscript>
+    <div>
+      <label for="<%= "#{field_id}_fallback" %>"><%= fallback_label %></label>
+      <select name="<%= field_name %>" id="<%= "#{field_id}_fallback" %>">
+        <option value=""><%= fallback_prompt %></option>
+        <% slots.each do |slot| %>
+          <option value="<%= slot.starts_at.iso8601 %>" <%= "selected" if slot.starts_at.iso8601 == current_value %>><%= slot.label %></option>
+        <% end %>
+      </select>
+    </div>
+  </noscript>
+</div>

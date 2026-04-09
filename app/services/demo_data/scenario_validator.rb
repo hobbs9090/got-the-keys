@@ -19,6 +19,7 @@ module DemoData
 
       validate_presence!(scenario, :key, :name)
 
+      booking_configuration = normalize_booking_configuration(scenario[:booking_configuration] || {})
       admins = normalize_admins(Array(scenario[:admins]))
       users = normalize_users(Array(scenario[:users]))
       properties = normalize_properties(expand_property_specs(scenario))
@@ -52,11 +53,11 @@ module DemoData
           Array(scenario[:appointments]),
           Array(scenario[:appointment_batches]),
           properties: properties,
-          default_duration_minutes: scenario.dig(:booking_configuration, :slot_duration_minutes) || BookingConfiguration.current.slot_duration_minutes
+          default_duration_minutes: booking_configuration.fetch(:slot_duration_minutes)
         ),
         property_index:,
         admin_emails:,
-        default_duration_minutes: scenario.dig(:booking_configuration, :slot_duration_minutes) || BookingConfiguration.current.slot_duration_minutes
+        default_duration_minutes: booking_configuration.fetch(:slot_duration_minutes)
       )
       enquiries = normalize_enquiries(
         expand_enquiry_specs(
@@ -91,7 +92,7 @@ module DemoData
         name: scenario.fetch(:name),
         description: scenario[:description].to_s,
         qa: normalize_qa_metadata(scenario[:qa] || {}),
-        booking_configuration: normalize_booking_configuration(scenario[:booking_configuration] || {}),
+        booking_configuration:,
         admins:,
         users:,
         properties:,
@@ -165,8 +166,12 @@ module DemoData
     end
 
     def normalize_booking_configuration(configuration)
+      slot_duration_minutes = Integer(configuration.fetch(:slot_duration_minutes, 45))
+      validate_supported_duration!(slot_duration_minutes, label: "Booking configuration slot duration")
+
       {
-        slot_duration_minutes: Integer(configuration.fetch(:slot_duration_minutes, 45)),
+        slot_duration_minutes:,
+        booking_window_days: Integer(configuration.fetch(:booking_window_days, 21)),
         lead_time_hours: Integer(configuration.fetch(:lead_time_hours, 4)),
         buffer_minutes: Integer(configuration.fetch(:buffer_minutes, 15)),
         office_opens_at: configuration.fetch(:office_opens_at, "09:00"),
@@ -533,6 +538,8 @@ module DemoData
         end
 
         requested_time = parse_time!(appointment.fetch(:requested_time))
+        duration_minutes = Integer(appointment.fetch(:duration_minutes, default_duration_minutes))
+        validate_supported_duration!(duration_minutes, label: "Appointment duration")
 
         {
           property_key:,
@@ -542,7 +549,7 @@ module DemoData
           customer_phone: appointment[:customer_phone],
           requested_time:,
           scheduled_at: parse_time!(appointment.fetch(:scheduled_at, requested_time)),
-          duration_minutes: Integer(appointment.fetch(:duration_minutes, default_duration_minutes)),
+          duration_minutes:,
           status:,
           visit_outcome: appointment[:visit_outcome],
           notes: appointment[:notes],
@@ -664,6 +671,12 @@ module DemoData
       return if duplicates.empty?
 
       raise ValidationError, "Duplicate #{label.pluralize}: #{duplicates.join(', ')}"
+    end
+
+    def validate_supported_duration!(value, label:)
+      return if BookingConfiguration::SUPPORTED_SLOT_DURATIONS.include?(value)
+
+      raise ValidationError, "#{label} must be one of #{BookingConfiguration::SUPPORTED_SLOT_DURATIONS.join(', ')} minutes"
     end
 
     def parse_time!(value)

@@ -20,6 +20,7 @@ RSpec.describe DemoData::ScenarioValidator do
       },
       booking_configuration: {
         slot_duration_minutes: 30,
+        booking_window_days: 21,
         lead_time_hours: 2,
         buffer_minutes: 10,
         office_opens_at: "08:30",
@@ -97,6 +98,7 @@ RSpec.describe DemoData::ScenarioValidator do
 
     expect(normalized[:booking_configuration]).to include(
       slot_duration_minutes: 30,
+      booking_window_days: 21,
       lead_time_hours: 2,
       buffer_minutes: 10,
       office_opens_at: "08:30",
@@ -148,6 +150,30 @@ RSpec.describe DemoData::ScenarioValidator do
     normalized = validator.validate!(payload)
 
     expect(normalized[:appointments].first[:duration_minutes]).to eq(45)
+  end
+
+  it "rejects unsupported booking configuration slot durations" do
+    payload = base_payload.deep_dup
+    payload[:booking_configuration][:slot_duration_minutes] = 50
+
+    expect do
+      validator.validate!(payload)
+    end.to raise_error(
+      described_class::ValidationError,
+      "Booking configuration slot duration must be one of 30, 45, 60 minutes"
+    )
+  end
+
+  it "rejects unsupported appointment durations" do
+    payload = base_payload.deep_dup
+    payload[:appointments].first[:duration_minutes] = 50
+
+    expect do
+      validator.validate!(payload)
+    end.to raise_error(
+      described_class::ValidationError,
+      "Appointment duration must be one of 30, 45, 60 minutes"
+    )
   end
 
   it "parses relative plain dates for property availability and rental move-ins" do

@@ -523,6 +523,79 @@ describe "Properties" do
       expect(owner_cards.count).to be >= 1
     end
 
+    it "shows upcoming, previous, and cancelled bookings for the signed-in customer" do
+      sign_in user
+
+      upcoming_property = FactoryBot.create(:property, address_line_1: "Upcoming Booking House")
+      previous_property = FactoryBot.create(:property, address_line_1: "Previous Booking House")
+      cancelled_property = FactoryBot.create(:property, address_line_1: "Cancelled Booking House")
+      other_users_property = FactoryBot.create(:property, address_line_1: "Someone Else's Booking House")
+
+      upcoming_time = Time.zone.local(2026, 4, 10, 14, 0)
+      previous_time = Time.zone.local(2026, 4, 7, 14, 0)
+      cancelled_time = Time.zone.local(2026, 4, 11, 10, 0)
+
+      upcoming_appointment = FactoryBot.create(
+        :appointment,
+        property: upcoming_property,
+        customer_name: user.full_name,
+        customer_email: user.email.upcase,
+        customer_phone: user.mobile_number,
+        requested_time: upcoming_time,
+        scheduled_at: upcoming_time,
+        status: "confirmed",
+        skip_slot_validation: true
+      )
+      previous_appointment = FactoryBot.create(
+        :appointment,
+        property: previous_property,
+        customer_name: user.full_name,
+        customer_email: user.email,
+        customer_phone: user.mobile_number,
+        requested_time: previous_time,
+        scheduled_at: previous_time,
+        status: "completed",
+        skip_slot_validation: true
+      )
+      cancelled_appointment = FactoryBot.create(
+        :appointment,
+        property: cancelled_property,
+        customer_name: user.full_name,
+        customer_email: user.email,
+        customer_phone: user.mobile_number,
+        requested_time: cancelled_time,
+        scheduled_at: cancelled_time,
+        status: "cancelled",
+        skip_slot_validation: true
+      )
+      FactoryBot.create(
+        :appointment,
+        property: other_users_property,
+        customer_name: "Someone Else",
+        customer_email: "someone@example.com",
+        customer_phone: "+44 20 7946 0999",
+        requested_time: upcoming_time,
+        scheduled_at: upcoming_time,
+        status: "confirmed",
+        skip_slot_validation: true
+      )
+
+      travel_to(Time.zone.local(2026, 4, 8, 12, 0)) do
+        get mine_properties_path
+      end
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("Your bookings")
+      expect(response.body).to include("Upcoming Booking House")
+      expect(response.body).to include("Previous Booking House")
+      expect(response.body).to include("Cancelled Booking House")
+      expect(response.body).not_to include("Someone Else's Booking House")
+      expect(response.body).to include(appointment_path(upcoming_appointment, token: upcoming_appointment.access_token))
+      expect(response.body).to include(appointment_path(previous_appointment, token: previous_appointment.access_token))
+      expect(response.body).to include(appointment_path(cancelled_appointment, token: cancelled_appointment.access_token))
+      expect(response.body).to include("View booking")
+    end
+
     it "shows an empty state when the seller has not created any listings yet" do
       sign_in FactoryBot.create(:user)
 

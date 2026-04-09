@@ -11,7 +11,7 @@
 <section class="property-layout">
   <article class="property-panel">
     <h2><%= @appointment.property.address_line_1 %></h2>
-    <p><%= t("ui.appointments.self_service.current_slot", time: formatted_date_time(@appointment.scheduled_at)) %></p>
+    <p><%= t("ui.appointments.self_service.current_slot_html", time: formatted_date_time(@appointment.scheduled_at)) %></p>
     <p><%= t("ui.appointments.self_service.status") %>: <span class="<%= appointment_status_badge_class(@appointment.status) %>"><%= @appointment.display_status %></span></p>
   </article>
 
@@ -22,10 +22,18 @@
       <%= form_with model: @appointment, url: reschedule_self_service_appointment_path(@appointment, token: @appointment.access_token), method: :patch, data: { testid: "self-service-reschedule-form" } do |f| %>
         <div>
           <%= f.label :requested_time, t("ui.appointments.self_service.choose_slot"), **form_label_options(@appointment, :requested_time) %>
-          <%= f.select :requested_time,
-                       options_for_select(@available_slots.map { |slot| [slot.label, slot.starts_at.iso8601] }),
-                       { prompt: t("ui.appointments.self_service.select_slot") },
-                       form_control_options(@appointment, :requested_time, data: { testid: "self-service-slot-select" }) %>
+          <%= render "slot_picker",
+                     slots: @available_slots,
+                     field_name: "appointment[requested_time]",
+                     field_id: "appointment_requested_time",
+                     selected_value: @appointment.requested_time&.iso8601,
+                     eyebrow: t("ui.appointments.self_service.choose_slot"),
+                     summary_prefix: t("ui.appointments.self_service.choose_slot"),
+                     empty_summary: t("ui.appointments.self_service.select_slot"),
+                     date_label: t("ui.appointments.self_service.choose_slot"),
+                     fallback_label: t("ui.appointments.self_service.choose_slot"),
+                     fallback_prompt: t("ui.appointments.self_service.select_slot"),
+                     testid: "self-service-slot-picker" %>
           <%= field_error_messages(@appointment, :requested_time) %>
         </div>
 

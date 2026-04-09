@@ -77,6 +77,29 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
+  describe "#formatted_calendar_date" do
+    it "includes the weekday for selected calendar headings" do
+      value = Date.new(2026, 4, 28)
+
+      expect(helper.formatted_calendar_date(value)).to eq(I18n.l(value, format: :calendar_heading))
+    end
+  end
+
+  describe "#appointment_slot_picker_calendar_months" do
+    it "builds consecutive month grids across month boundaries" do
+      picker_slots = [
+        { key: "2026-04-28", label: "Tuesday, 28 April 2026", times: [{ value: "2026-04-28T09:00:00Z" }] },
+        { key: "2026-05-02", label: "Saturday, 02 May 2026", times: [{ value: "2026-05-02T09:00:00Z" }] }
+      ]
+
+      months = helper.appointment_slot_picker_calendar_months(picker_slots)
+
+      expect(months.map { |month| month.fetch(:key) }).to eq(%w[2026-04 2026-05])
+      expect(months.first.fetch(:cells).any? { |cell| cell[:key] == "2026-04-28" && cell[:available] }).to be(true)
+      expect(months.last.fetch(:cells).any? { |cell| cell[:key] == "2026-05-02" && cell[:available] }).to be(true)
+    end
+  end
+
   describe "#admin_nav_link_to" do
     it "adds the active class when the current page matches" do
       allow(helper).to receive(:current_page?).with("/admin/dashboard").and_return(true)
