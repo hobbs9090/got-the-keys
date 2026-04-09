@@ -166,7 +166,7 @@ module DemoData
     end
 
     def normalize_booking_configuration(configuration)
-      slot_duration_minutes = Integer(configuration.fetch(:slot_duration_minutes, 45))
+      slot_duration_minutes = Integer(configuration.fetch(:slot_duration_minutes, BookingConfiguration.current.slot_duration_minutes))
       validate_supported_duration!(slot_duration_minutes, label: "Booking configuration slot duration")
 
       {

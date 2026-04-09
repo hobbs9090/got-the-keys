@@ -90,7 +90,7 @@ RSpec.describe DemoData::ScenarioValidator do
   end
 
   before do
-    BookingConfiguration.current.update!(slot_duration_minutes: 45)
+    BookingConfiguration.current.update!(slot_duration_minutes: 60)
   end
 
   it "normalizes a valid scenario payload" do
@@ -149,7 +149,7 @@ RSpec.describe DemoData::ScenarioValidator do
 
     normalized = validator.validate!(payload)
 
-    expect(normalized[:appointments].first[:duration_minutes]).to eq(45)
+    expect(normalized[:appointments].first[:duration_minutes]).to eq(60)
   end
 
   it "rejects unsupported booking configuration slot durations" do

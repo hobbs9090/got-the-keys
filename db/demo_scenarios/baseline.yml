@@ -14,7 +14,7 @@ qa:
     - Known admin and seller credentials should appear in the QA guide.
   quick_reset: true
 booking_configuration:
-  slot_duration_minutes: 45
+  slot_duration_minutes: 60
   lead_time_hours: 4
   buffer_minutes: 15
   office_opens_at: "09:00"
@@ -236,8 +236,38 @@ photos:
     caption: Front exterior
     position: 1
     primary: true
+  - property_key: baseline_sale_008
+    image_filename: properties/property_20_marlborough_close_hero.jpg
+    caption: Front exterior
+    position: 1
+    primary: true
+  - property_key: baseline_sale_009
+    image_filename: properties/property_22_priory_place_hero.jpg
+    caption: Front exterior
+    position: 1
+    primary: true
+  - property_key: baseline_sale_010
+    image_filename: properties/property_24_calverley_drive_hero.jpg
+    caption: Front exterior
+    position: 1
+    primary: true
+  - property_key: baseline_sale_020
+    image_filename: properties/property_44_grosvenor_crescent_hero.jpg
+    caption: Front exterior
+    position: 1
+    primary: true
   - property_key: baseline_sale_024
     image_filename: properties/property_52_mount_lane_hero.jpg
+    caption: Front exterior
+    position: 1
+    primary: true
+  - property_key: baseline_sale_031
+    image_filename: properties/property_66_rectory_lane_hero.jpg
+    caption: Front exterior
+    position: 1
+    primary: true
+  - property_key: baseline_sale_036
+    image_filename: properties/property_76_beech_gardens_hero.jpg
     caption: Front exterior
     position: 1
     primary: true
@@ -301,7 +331,7 @@ appointments:
     customer_phone: "07700 900111"
     requested_time: "today+7d 09:00"
     scheduled_at: "today+7d 09:00"
-    duration_minutes: 45
+    duration_minutes: 60
     status: pending
     notes: We are relocating for work and would like to ask about parking.
   - property_key: sevenoaks_family_home
@@ -311,7 +341,7 @@ appointments:
     customer_phone: "07700 900222"
     requested_time: "today+7d 10:00"
     scheduled_at: "today+7d 10:00"
-    duration_minutes: 45
+    duration_minutes: 60
     status: confirmed
     notes: Coming with my partner and a mortgage adviser.
     internal_notes: Confirmed by phone and keen on school catchment details.
@@ -322,7 +352,7 @@ appointments:
     customer_phone: "07700 900333"
     requested_time: "today+8d 11:00"
     scheduled_at: "today+9d 14:00"
-    duration_minutes: 45
+    duration_minutes: 60
     status: rescheduled
     notes: Afternoon is easier if possible.
     internal_notes: Requested move after train cancellation.
@@ -333,7 +363,7 @@ appointments:
     customer_phone: "07700 900444"
     requested_time: "today+10d 15:00"
     scheduled_at: "today+10d 15:00"
-    duration_minutes: 45
+    duration_minutes: 60
     status: cancelled
     notes: Please cancel if the property is no longer available.
     internal_notes: Cancelled by customer after receiving another offer acceptance.
@@ -344,7 +374,7 @@ appointments:
     customer_phone: "07700 900555"
     requested_time: "today-5d 10:00"
     scheduled_at: "today-5d 10:00"
-    duration_minutes: 45
+    duration_minutes: 60
     status: completed
     visit_outcome: feedback_requested
     notes: Interested in moving before the end of April.
@@ -356,7 +386,7 @@ appointments:
     customer_phone: "07700 900666"
     requested_time: "today-1d 13:00"
     scheduled_at: "today-1d 13:00"
-    duration_minutes: 45
+    duration_minutes: 60
     status: no_show
     notes: Please call if I am delayed.
     internal_notes: Did not arrive and could not be reached after two calls.

@@ -1,6 +1,6 @@
 module BookingTimeHelpers
   DEFAULT_BOOKING_RULES = {
-    slot_duration_minutes: 45,
+    slot_duration_minutes: 60,
     booking_window_days: 21,
     lead_time_hours: 4,
     buffer_minutes: 15,
