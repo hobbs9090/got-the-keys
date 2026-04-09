@@ -101,4 +101,16 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(exported).to include("updated_at:")
     expect(exported).to include("qa:")
   end
+
+  it "clears saved properties before removing users and properties during a reset" do
+    owner = FactoryBot.create(:user, email: "owner@example.com")
+    saver = FactoryBot.create(:user, email: "saver@example.com")
+    property = FactoryBot.create(:property, user: owner)
+    FactoryBot.create(:saved_property, user: saver, property:)
+
+    expect { loader.apply_catalog!(key: "baseline", actor_email: "spec@example.com") }
+      .to change(SavedProperty, :count)
+      .from(1)
+      .to(0)
+  end
 end
