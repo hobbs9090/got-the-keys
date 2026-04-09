@@ -3433,12 +3433,15 @@ table th {
 
 @media (max-width: $layout-mobile-breakpoint) {
   .pagination {
+    align-items: center;
     gap: 0.35rem;
+    width: 100%;
   }
 
-  .pagination .first,
-  .pagination .last {
-    display: none;
+  .pagination li.first,
+  .pagination li.last,
+  .pagination li.ellipsis {
+    display: none !important;
   }
 
   .pagination a,
@@ -3462,6 +3465,35 @@ table th {
     height: 2.25rem;
     padding: 0;
     width: 2.25rem;
+  }
+
+  .pagination li.prev a,
+  .pagination li.prev span,
+  .pagination li.next a,
+  .pagination li.next span {
+    font-size: 0;
+    min-width: 2.25rem;
+    padding: 0 0.75rem;
+    position: relative;
+  }
+
+  .pagination li.prev a::before,
+  .pagination li.prev span::before,
+  .pagination li.next a::before,
+  .pagination li.next span::before {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .pagination li.prev a::before,
+  .pagination li.prev span::before {
+    content: "\2039";
+  }
+
+  .pagination li.next a::before,
+  .pagination li.next span::before {
+    content: "\203A";
   }
 
   .site-main,
