@@ -5,6 +5,7 @@ require "fileutils"
 
 module DemoData
   class PropertyImageGenerator
+    DEFAULT_BATCH_SIZE = 5
     DEFAULT_MODEL = "gpt-image-1.5".freeze
     DEFAULT_QUALITY = "high".freeze
     DEFAULT_SIZE = "1536x1024".freeze
@@ -33,7 +34,8 @@ module DemoData
       logger: Rails.logger,
       prompt_builder: PropertyImagePromptBuilder.new,
       dry_run: false,
-      force: false
+      force: false,
+      batch_size: DEFAULT_BATCH_SIZE
     )
       @client = client
       @api_key = api_key
@@ -47,16 +49,22 @@ module DemoData
       @prompt_builder = prompt_builder
       @dry_run = dry_run
       @force = force
+      @batch_size = batch_size
     end
 
     def generate_for_scope(scope, limit: nil)
-      selected_scope = limit.present? ? scope.limit(limit) : scope
-      results = selected_scope.map { |property| generate_for_property(property) }
+      selected_properties = limit.present? ? scope.limit(limit).to_a : scope.to_a
+      batches = selected_properties.each_slice(batch_size).to_a
+      results = batches.flat_map.with_index(1) do |properties, batch_number|
+        properties.map { |property| generate_for_property(property).merge(batch_number:) }
+      end
 
       {
         model: model,
         quality: quality,
         size: size,
+        batch_size: batch_size,
+        batches: batches.size,
         output_dir: output_dir.to_s,
         dry_run: dry_run?,
         force: force?,
@@ -116,7 +124,7 @@ module DemoData
 
     private
 
-    attr_reader :api_key, :model, :quality, :size, :output_format, :output_compression, :output_dir, :logger, :prompt_builder
+    attr_reader :api_key, :model, :quality, :size, :output_format, :output_compression, :output_dir, :logger, :prompt_builder, :batch_size
 
     def client
       @client ||= OpenAI::Client.new(api_key: api_key, max_retries: 2)
@@ -161,10 +169,10 @@ module DemoData
 
     def skip_generation?(property, filename)
       return false if force?
-      existing_photo = property.photos.find_by(image_filename: filename)
-      return false if existing_photo.blank?
+      return true if property.hero_image_name.present?
 
-      output_dir.join(existing_photo.image_filename.to_s).exist?
+      existing_photo = property.photos.find_by(image_filename: filename)
+      existing_photo.present? && output_dir.join(existing_photo.image_filename.to_s).exist?
     end
 
     def base_result(property, filename, prompt)

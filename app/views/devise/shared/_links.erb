@@ -2,19 +2,19 @@
 
   <%- if controller_name != 'sessions' %>
       <li>
-        <%= link_to t('devise.views.links.sign_in'), new_session_path(resource_name) %>
+        <%= link_to t('devise.views.links.sign_in'), new_session_path(resource_name, pending_saved_property_params) %>
       </li>
   <% end -%>
 
   <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
       <li>
-        <%= link_to t('devise.views.links.register'), new_registration_path(resource_name) %>
+        <%= link_to t('devise.views.links.register'), new_registration_path(resource_name, pending_saved_property_params) %>
       </li>
   <% end -%>
 
   <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
       <li>
-        <%= link_to t('devise.views.links.forget_pass'), new_password_path(resource_name) %>
+        <%= link_to t('devise.views.links.forget_pass'), new_password_path(resource_name, pending_saved_property_params) %>
       </li>
   <% end -%>
 

@@ -2,7 +2,7 @@ GotTheKeys::Application.routes.draw do
 
   root 'welcome#index'
 
-  devise_for :users, path_names: {sign_up: "register"}
+  devise_for :users, path_names: {sign_up: "register"}, controllers: { passwords: "users/passwords" }
 
   devise_for :admins, except: [:update, :destroy, :new, :create, :show, :edit], controllers: { sessions: "admin/sessions" }
 

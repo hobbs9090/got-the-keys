@@ -18,13 +18,14 @@ selected_property_ids = property_ids.presence
 sale_status = ENV["SALE_STATUS"].presence
 town_city = ENV["TOWN_CITY"].presence
 limit = integer_env("LIMIT", default: 5)
+batch_size = integer_env("BATCH_SIZE", default: DemoData::PropertyImageGenerator::DEFAULT_BATCH_SIZE)
 
 scope = DemoData::PropertyImageGenerator.filtered_scope(
   property_ids: selected_property_ids,
   sale_status: sale_status,
   town_city: town_city
 )
-generator = DemoData::PropertyImageGenerator.new(dry_run: true)
+generator = DemoData::PropertyImageGenerator.new(dry_run: true, batch_size: batch_size)
 report = generator.generate_for_scope(scope, limit: limit)
 
 report_path = Rails.root.join("tmp/property_image_prompt_preview.json")
@@ -40,4 +41,5 @@ report.fetch(:results).each do |result|
 end
 
 puts "\nPreviewed #{report[:previewed]} prompts."
+puts "Processed #{report[:batches]} batch(es) of up to #{report[:batch_size]} properties."
 puts "Report written to #{report_path}."

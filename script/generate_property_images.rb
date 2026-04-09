@@ -26,6 +26,7 @@ selected_property_ids = property_ids.presence
 sale_status = string_env("SALE_STATUS")
 town_city = string_env("TOWN_CITY")
 limit = integer_env("LIMIT")
+batch_size = integer_env("BATCH_SIZE")
 force = truthy_env?(ENV["FORCE"])
 model = string_env("MODEL")
 quality = string_env("QUALITY")
@@ -46,7 +47,8 @@ generator = DemoData::PropertyImageGenerator.new(
   quality: quality || DemoData::PropertyImageGenerator::DEFAULT_QUALITY,
   size: size || DemoData::PropertyImageGenerator::DEFAULT_SIZE,
   output_format: output_format || DemoData::PropertyImageGenerator::DEFAULT_OUTPUT_FORMAT,
-  output_compression: output_compression || DemoData::PropertyImageGenerator::DEFAULT_OUTPUT_COMPRESSION
+  output_compression: output_compression || DemoData::PropertyImageGenerator::DEFAULT_OUTPUT_COMPRESSION,
+  batch_size: batch_size || DemoData::PropertyImageGenerator::DEFAULT_BATCH_SIZE
 )
 report = generator.generate_for_scope(scope, limit: limit)
 
@@ -54,4 +56,5 @@ report_path = Rails.root.join("tmp/property_image_generation_report.json")
 File.write(report_path, JSON.pretty_generate(report))
 
 puts "Generated #{report[:generated]} property images, skipped #{report[:skipped]}, failed #{report[:failed]}."
+puts "Processed #{report[:batches]} batch(es) of up to #{report[:batch_size]} properties."
 puts "Report written to #{report_path}."

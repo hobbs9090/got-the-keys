@@ -70,7 +70,29 @@ RSpec.describe DemoData::PropertyImageGenerator do
     expect(property.photos).to be_empty
   end
 
-  it "updates the existing primary photo instead of creating a duplicate" do
+  it "processes scopes in configurable batches" do
+    other_properties = FactoryBot.create_list(:property, 2)
+
+    report = described_class.new(client: fake_client, output_dir: @output_dir, batch_size: 2).generate_for_scope(Property.where(id: [property.id, *other_properties.map(&:id)]))
+
+    expect(report).to include(
+      batch_size: 2,
+      batches: 2,
+      processed: 3
+    )
+    expect(report.fetch(:results).map { |result| result[:batch_number] }).to eq([1, 1, 2])
+  end
+
+  it "skips properties that already have any hero image unless forced" do
+    FactoryBot.create(:photo, property:, image_filename: "already-present.jpg", primary: true, position: 1)
+
+    result = described_class.new(client: fake_client, output_dir: @output_dir).generate_for_property(property)
+
+    expect(result[:status]).to eq(:skipped)
+    expect(result[:reason]).to eq("existing_image_preserved")
+  end
+
+  it "preserves an existing primary photo by default" do
     existing_photo = FactoryBot.create(
       :photo,
       property:,
@@ -80,14 +102,31 @@ RSpec.describe DemoData::PropertyImageGenerator do
       position: 1
     )
 
-    described_class.new(client: fake_client, output_dir: @output_dir).generate_for_property(property)
+    result = described_class.new(client: fake_client, output_dir: @output_dir).generate_for_property(property)
 
+    expect(result[:status]).to eq(:skipped)
     expect(property.reload.photos.count).to eq(1)
     expect(existing_photo.reload).to have_attributes(
-      image_filename: "properties/property_#{property.id}_hero.jpg",
-      caption: property.headline,
+      image_filename: "old-front.jpg",
+      caption: "Old caption",
       primary: true,
       position: 1
     )
+  end
+
+  it "can replace existing imagery when force is enabled" do
+    existing_photo = FactoryBot.create(
+      :photo,
+      property:,
+      image_filename: "already-present.jpg",
+      caption: "Old caption",
+      primary: true,
+      position: 1
+    )
+
+    result = described_class.new(client: fake_client, output_dir: @output_dir, force: true).generate_for_property(property)
+
+    expect(result[:status]).to eq(:generated)
+    expect(existing_photo.reload.image_filename).to eq("properties/property_#{property.id}_hero.jpg")
   end
 end
