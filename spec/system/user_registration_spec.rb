@@ -45,19 +45,14 @@ RSpec.describe "User registration", type: :system, js: true do
     select "English", from: "user_language"
     fill_in "user_password", with: "changeme"
     fill_in "user_password_confirmation", with: "changeme"
-    page.execute_script(<<~JS)
-      const checkbox = document.getElementById("user_terms_of_service");
-      checkbox.checked = true;
-      checkbox.dispatchEvent(new Event("input", { bubbles: true }));
-      checkbox.dispatchEvent(new Event("change", { bubbles: true }));
-    JS
+    check "user_terms_of_service", allow_label_click: true
 
     click_button "Read more"
 
     expect(page).to have_css("#registration-explainer[aria-hidden='false']", visible: true)
     expect(page).to have_css("body.site-modal-open", visible: false)
+    expect(page).to have_checked_field("user_terms_of_service", visible: :all)
 
-    expect(page.evaluate_script("document.querySelector('form.auth-form').checkValidity()")).to eq(true)
     page.execute_script("document.querySelector('form.auth-form').submit()")
 
     expect(page).to have_current_path(root_path, wait: 10)
