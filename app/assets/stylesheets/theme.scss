@@ -647,6 +647,11 @@ pre code {
   margin: 2rem 0;
 }
 
+.page-section--stacked-panels {
+  display: grid;
+  gap: 1rem;
+}
+
 .pagination-centered {
   text-align: center;
 }

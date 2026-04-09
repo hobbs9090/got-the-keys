@@ -15,6 +15,61 @@
 </section>
 
 <section class="property-workspace">
+  <% if @saved_properties.any? %>
+    <div class="section-heading">
+      <div>
+        <p class="section-heading__eyebrow"><%= t("ui.properties.mine.saved_homes_eyebrow", default: "Your shortlist") %></p>
+        <h2><%= t("ui.properties.mine.saved_homes_title", default: "Saved homes") %></h2>
+      </div>
+    </div>
+
+    <div class="property-workspace__grid">
+      <% @saved_properties.each do |property| %>
+        <article class="site-card property-workspace-card" data-testid="saved-property-card">
+          <div class="property-workspace-card__media">
+            <%= small_image_for(property) %>
+          </div>
+
+          <div class="property-workspace-card__content">
+            <div class="property-workspace-card__badges">
+              <span class="<%= property_sale_status_badge_class(property.sale_status) %>"><%= translated_sale_status(property.sale_status) %></span>
+              <span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span>
+            </div>
+
+            <div>
+              <h2><%= link_to property.address_line_1, property_path(property) %></h2>
+              <p><%= property.headline %></p>
+            </div>
+
+            <dl class="property-workspace-card__meta">
+              <div>
+                <dt><%= t("ui.properties.mine.stats.location", default: "Location") %></dt>
+                <dd><%= property.location_line %></dd>
+              </div>
+              <div>
+                <dt><%= t("ui.properties.mine.stats.price", default: "Guide price") %></dt>
+                <dd><%= format_price(property) %></dd>
+              </div>
+              <div>
+                <dt><%= t("ui.properties.mine.stats.last_saved", default: "Last saved") %></dt>
+                <dd><%= formatted_date_time(property.updated_at) %></dd>
+              </div>
+              <div>
+                <dt><%= t("ui.properties.mine.stats.status", default: "Status") %></dt>
+                <dd><%= translated_listing_state(property.listing_state) %></dd>
+              </div>
+            </dl>
+
+            <div class="property-workspace-card__actions">
+              <%= link_to t("ui.properties.mine.open_details", default: "Open details"), property_path(property), class: "button primary" %>
+              <%= button_to t("ui.saved_properties.saved_button", default: "Remove from saved list"), property_saved_property_path(property), method: :delete, class: "button primary hollow" %>
+            </div>
+          </div>
+        </article>
+      <% end %>
+    </div>
+  <% end %>
+
   <div class="section-heading">
     <div>
       <p class="section-heading__eyebrow"><%= t("ui.properties.mine.list_eyebrow", default: "Your records") %></p>

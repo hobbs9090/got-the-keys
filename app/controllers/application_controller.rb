@@ -23,6 +23,36 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def after_sign_in_path_for(resource)
+    if resource.is_a?(User)
+      save_requested_property_for(resource)
+
+      return requested_return_path if requested_return_path.present?
+    end
+
+    super
+  end
+
+  def after_sign_up_path_for(resource)
+    if resource.is_a?(User)
+      save_requested_property_for(resource)
+
+      return requested_return_path if requested_return_path.present?
+    end
+
+    super
+  end
+
+  def after_inactive_sign_up_path_for(resource)
+    if resource.is_a?(User)
+      save_requested_property_for(resource)
+
+      return requested_return_path if requested_return_path.present?
+    end
+
+    super
+  end
+
   def cookie_consent_choice
     value = cookies[:gotthekeys_cookie_consent].presence
     %w[all essential].include?(value) ? value : nil
@@ -64,5 +94,23 @@ class ApplicationController < ActionController::Base
     URI.parse(request.referer).path.match?(%r{\A/admin(?:/|$)})
   rescue URI::InvalidURIError
     false
+  end
+
+  def save_requested_property_for(resource)
+    property_id = params[:save_property_id].presence
+    return if property_id.blank?
+
+    property = Property.find_by(id: property_id)
+    return if property.blank? || property.user == resource
+
+    resource.saved_properties.find_or_create_by!(property:)
+  end
+
+  def requested_return_path
+    path = params[:return_to].to_s
+    return if path.blank?
+    return path if path.start_with?("/")
+
+    nil
   end
 end

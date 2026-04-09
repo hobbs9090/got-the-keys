@@ -39,6 +39,7 @@ class PropertiesController < ApplicationController
       drafts: owner_properties.where(listing_state: %w[draft review_pending]).count,
       live: owner_properties.where(listing_state: Property::PUBLIC_LISTING_STATES).count
     }
+    @saved_properties = current_user.saved_listings.preload(:photos).order(updated_at: :desc)
     @properties = owner_properties.preload(:photos).order(updated_at: :desc).page(params[:page])
     @appointments_by_property = appointments_by_property_for(@properties)
   end
