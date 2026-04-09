@@ -4,11 +4,21 @@
 require_relative "../lib/ci/locale_health"
 
 health = Ci::LocaleHealth.new(root: File.expand_path("..", __dir__))
+synced = health.sync_generated!
 missing = health.missing_keys
 interpolations = health.inconsistent_interpolations
 
 has_missing = missing.values.any?(&:any?)
 has_interpolation_errors = interpolations.values.any?(&:any?)
+
+if synced.values.any?(&:any?)
+  puts "Updated generated locale fallbacks:"
+  synced.each do |locale, keys|
+    next if keys.empty?
+
+    puts "#{locale}: #{keys.length} fallback keys"
+  end
+end
 
 if has_missing
   warn "Missing translated keys compared with English:"

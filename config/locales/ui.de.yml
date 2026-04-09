@@ -884,6 +884,7 @@ de:
         title: Buchungsregeln
         eyebrow: Buchungskonfiguration
         slot_duration_minutes: Dauer des Zeitfensters (Minuten)
+        booking_window_days: Buchungsfenster (Tage)
         lead_time_hours: Vorlaufzeit (Stunden)
         buffer_minutes: Puffer zwischen Buchungen (Minuten)
         office_opens_at: Büro öffnet um

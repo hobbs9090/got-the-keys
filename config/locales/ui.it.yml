@@ -882,6 +882,7 @@ it:
         title: Regole di prenotazione
         eyebrow: Configurazione prenotazioni
         slot_duration_minutes: Durata fascia (minuti)
+        booking_window_days: Finestra di prenotazione (giorni)
         lead_time_hours: Preavviso (ore)
         buffer_minutes: Buffer tra prenotazioni (minuti)
         office_opens_at: L'ufficio apre alle

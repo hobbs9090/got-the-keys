@@ -889,6 +889,7 @@ fr:
         title: Regles de reservation
         eyebrow: Configuration des reservations
         slot_duration_minutes: Duree du creneau (minutes)
+        booking_window_days: Fenetre de reservation (jours)
         lead_time_hours: Delai minimum (heures)
         buffer_minutes: Tampon entre reservations (minutes)
         office_opens_at: Ouverture du bureau a
