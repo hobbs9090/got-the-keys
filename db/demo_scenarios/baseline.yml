@@ -177,57 +177,67 @@ property_batches:
     random_seed: 2026032802
 photos:
   - property_key: sevenoaks_family_home
-    image_filename: properties/property_sevenoaks_family_home_hero.jpg
+    image_filename: properties/property_18_cedar_road_hero.jpg
     caption: Front exterior
     position: 1
     primary: true
   - property_key: tunbridge_garden_flat
-    image_filename: properties/property_tunbridge_garden_flat_hero.jpg
+    image_filename: properties/property_flat_3_44_mount_ephraim_hero.jpg
     caption: Front exterior
     position: 1
     primary: true
   - property_key: guildford_townhouse
-    image_filename: properties/property_guildford_townhouse_hero.jpg
+    image_filename: properties/property_72_quarry_street_hero.jpg
     caption: Front exterior
     position: 1
     primary: true
   - property_key: croydon_rental_loft
-    image_filename: properties/property_croydon_rental_loft_hero.jpg
+    image_filename: properties/property_apartment_11_9_park_lane_hero.jpg
     caption: Front exterior
     position: 1
     primary: true
   - property_key: baseline_rental_001
-    image_filename: properties/property_baseline_rental_001_hero.jpg
+    image_filename: properties/property_maisonette_7_6_queens_terrace_hero.jpg
     caption: Front exterior
     position: 1
     primary: true
   - property_key: baseline_sale_001
-    image_filename: properties/property_baseline_sale_001_hero.jpg
+    image_filename: properties/property_6_south_mews_hero.jpg
     caption: Front exterior
     position: 1
     primary: true
   - property_key: baseline_sale_002
-    image_filename: properties/property_baseline_sale_002_hero.jpg
+    image_filename: properties/property_8_richmond_grove_hero.jpg
     caption: Front exterior
     position: 1
     primary: true
   - property_key: baseline_sale_003
-    image_filename: properties/property_baseline_sale_003_hero.jpg
+    image_filename: properties/property_10_meadow_court_hero.jpg
     caption: Front exterior
     position: 1
     primary: true
   - property_key: baseline_sale_004
-    image_filename: properties/property_baseline_sale_004_hero.jpg
+    image_filename: properties/property_flat_17_12_rectory_place_hero.jpg
     caption: Front exterior
     position: 1
     primary: true
   - property_key: baseline_sale_005
-    image_filename: properties/property_baseline_sale_005_hero.jpg
+    image_filename: properties/property_flat_1_14_grosvenor_lane_hero.jpg
+    caption: Front exterior
+    position: 1
+    primary: true
+  - property_key: baseline_sale_006
+    image_filename: properties/property_16_kings_crescent_hero.jpg
+    caption: Front exterior
+    position: 1
+    primary: true
+  - property_key: baseline_sale_007
+    image_filename: properties/property_18_mount_road_hero.jpg
     caption: Front exterior
     position: 1
     primary: true
   - property_key: baseline_sale_024
-    image_filename: properties/property_surrey_detached_garden_hero.jpg
+    image_filename: properties/property_52_mount_lane_hero.jpg
     caption: Front exterior
     position: 1
     primary: true

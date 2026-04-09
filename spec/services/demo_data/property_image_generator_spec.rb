@@ -28,6 +28,7 @@ RSpec.describe DemoData::PropertyImageGenerator do
   let(:fake_response) { Struct.new(:data).new([fake_image]) }
   let(:images_resource) { instance_double("ImagesResource", generate: fake_response) }
   let(:fake_client) { instance_double(OpenAI::Client, images: images_resource) }
+  let(:generated_filename) { "properties/property_6_parkside_mews_hero.jpg" }
 
   around do |example|
     Dir.mktmpdir do |dir|
@@ -50,11 +51,11 @@ RSpec.describe DemoData::PropertyImageGenerator do
     expect(property.reload.image_file_name).to be_blank
     expect(property.photos.count).to eq(1)
     expect(property.primary_photo).to have_attributes(
-      image_filename: "properties/property_#{property.id}_hero.jpg",
+      image_filename: generated_filename,
       primary: true,
       caption: property.headline
     )
-    expect(@output_dir.join("properties/property_#{property.id}_hero.jpg").binread).to eq("fake-jpeg-binary")
+    expect(@output_dir.join(generated_filename).binread).to eq("fake-jpeg-binary")
   end
 
   it "supports dry-run prompt previews without updating the property" do
@@ -127,6 +128,6 @@ RSpec.describe DemoData::PropertyImageGenerator do
     result = described_class.new(client: fake_client, output_dir: @output_dir, force: true).generate_for_property(property)
 
     expect(result[:status]).to eq(:generated)
-    expect(existing_photo.reload.image_filename).to eq("properties/property_#{property.id}_hero.jpg")
+    expect(existing_photo.reload.image_filename).to eq(generated_filename)
   end
 end

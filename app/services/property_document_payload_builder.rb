@@ -92,11 +92,14 @@ class PropertyDocumentPayloadBuilder
     draw_panel(commands, x: MARGIN, y: HERO_CARD_Y, width: CONTENT_WIDTH, height: HERO_CARD_HEIGHT)
     draw_panel(commands, x: MARGIN, y: DETAILS_CARD_Y, width: CONTENT_WIDTH, height: DETAILS_CARD_HEIGHT)
 
+    layout = header_layout
+
     draw_brand(commands, x: 56, y: 693)
     draw_document_badge(commands, x: 408, y: 697)
     draw_sale_status_badge(commands, x: 56, y: 657)
-    draw_price(commands, x: 56, y: 548)
-    draw_header_copy(commands, x: 56, y: 652)
+    draw_header_copy(commands, x: 56, y: 652, layout:)
+    draw_price(commands, x: 56, y: layout.fetch(:price_y))
+    draw_header_meta(commands, x: 56, layout:)
     draw_hero_image_panel(commands, hero_image:, x: 318, y: 520, width: IMAGE_BOX_WIDTH, height: IMAGE_BOX_HEIGHT)
     draw_overview(commands, x: 56, y: 382)
     draw_key_facts(commands, x: 382, y: 382)
@@ -194,7 +197,7 @@ class PropertyDocumentPayloadBuilder
     draw_text(commands, sale_status, x: x + 10, y: y + 5, size: 10, font: :bold, color:)
   end
 
-  def draw_header_copy(commands, x:, y:)
+  def draw_header_copy(commands, x:, y:, layout:)
     eyebrow = pdf_text("#{property.property_type} in #{property.location_line}")
     draw_text(commands, eyebrow, x:, y:, size: 10, font: :bold, color: COLORS[:brand_blue])
 
@@ -205,14 +208,18 @@ class PropertyDocumentPayloadBuilder
       line_y -= 24
     end
 
-    headline_lines = wrap_text(property.headline, width: 238, font_size: 13, max_lines: 3)
+    headline_lines = layout.fetch(:headline_lines)
     headline_lines.each do |line|
       draw_text(commands, line, x:, y: line_y - 6, size: 13, font: :regular, color: COLORS[:body_text])
       line_y -= 16
     end
+  end
 
-    draw_text(commands, hero_meta_line, x:, y: 484, size: 10.5, font: :regular, color: COLORS[:muted_text])
-    draw_text(commands, chronology_line, x:, y: 467, size: 10.5, font: :regular, color: COLORS[:muted_text]) if chronology_line.present?
+  def draw_header_meta(commands, x:, layout:)
+    draw_text(commands, hero_meta_line, x:, y: layout.fetch(:hero_meta_y), size: 10.5, font: :regular, color: COLORS[:muted_text])
+    return if chronology_line.blank?
+
+    draw_text(commands, chronology_line, x:, y: layout.fetch(:chronology_y), size: 10.5, font: :regular, color: COLORS[:muted_text])
   end
 
   def draw_price(commands, x:, y:)
@@ -273,6 +280,23 @@ class PropertyDocumentPayloadBuilder
       "#{property.bathrooms} bath#{'s' unless property.bathrooms.to_i == 1}",
       property.town_city
     ].compact.join("  |  ")
+  end
+
+  def header_layout
+    headline_lines = wrap_text(property.headline, width: 238, font_size: 13, max_lines: 3)
+    address_lines = wrap_text(property.address_line_1, width: 238, font_size: 22, font: :bold, max_lines: 2)
+    address_bottom_y = 652 - 34 - (24 * address_lines.length)
+    headline_bottom_y = address_bottom_y - (16 * headline_lines.length)
+    price_y = [headline_bottom_y - 42, 522].min
+    hero_meta_y = price_y - 58
+    chronology_y = hero_meta_y - 17
+
+    {
+      headline_lines:,
+      price_y:,
+      hero_meta_y:,
+      chronology_y:
+    }
   end
 
   def chronology_line
