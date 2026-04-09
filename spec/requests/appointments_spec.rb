@@ -13,6 +13,17 @@ RSpec.describe "Appointments" do
       expect(response).to have_http_status(:ok)
       expect(response.body).to include("Book a viewing")
     end
+
+    it "prefills the booking form for signed-in users" do
+      sign_in(user)
+
+      get new_property_appointment_path(property)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(%(value="#{ERB::Util.html_escape(user.full_name)}"))
+      expect(response.body).to include(%(value="#{ERB::Util.html_escape(user.email)}"))
+      expect(response.body).to include(%(value="#{ERB::Util.html_escape(user.mobile_number)}"))
+    end
   end
 
   describe "POST /properties/:property_id/appointments" do
