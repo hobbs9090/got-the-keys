@@ -502,6 +502,27 @@ describe "Properties" do
       expect(response.body).to include(I18n.t("ui.appointments.statuses.cancelled"))
     end
 
+    it "shows saved properties separately from owned listings" do
+      sign_in user
+      saved_property = FactoryBot.create(:property, address_line_1: "Saved Lane")
+      owned_property = FactoryBot.create(:property, user:, address_line_1: "Owned Lane")
+      FactoryBot.create(:saved_property, user:, property: saved_property)
+
+      get mine_properties_path
+
+      document = Nokogiri::HTML(response.body)
+      saved_cards = document.css(%([data-testid="saved-property-card"]))
+      owner_cards = document.css(%([data-testid="owner-property-card"]))
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("Saved homes")
+      expect(response.body).to include("Saved Lane")
+      expect(response.body).to include("Owned Lane")
+      expect(response.body).to include("Remove from saved list")
+      expect(saved_cards.count).to eq(1)
+      expect(owner_cards.count).to be >= 1
+    end
+
     it "shows an empty state when the seller has not created any listings yet" do
       sign_in FactoryBot.create(:user)
 
@@ -657,6 +678,16 @@ describe "Properties" do
 
       expect(response).to have_http_status(:ok)
       expect(response.body).not_to include('role="content"')
+    end
+
+    it "uses the stacked panel layout on photo and floor-plan management pages" do
+      sign_in user
+
+      get property_photos_path(property)
+      expect(response.body).to include(%(page-section page-section--stacked-panels))
+
+      get property_floor_plans_path(property)
+      expect(response.body).to include(%(page-section page-section--stacked-panels))
     end
   end
 
