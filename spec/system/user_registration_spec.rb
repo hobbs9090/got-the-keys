@@ -57,7 +57,8 @@ RSpec.describe "User registration", type: :system, js: true do
     expect(page).to have_css("#registration-explainer[aria-hidden='false']", visible: true)
     expect(page).to have_css("body.site-modal-open", visible: false)
 
-    page.execute_script("document.querySelector('form.auth-form').requestSubmit()")
+    expect(page.evaluate_script("document.querySelector('form.auth-form').checkValidity()")).to eq(true)
+    page.execute_script("document.querySelector('form.auth-form').submit()")
 
     expect(page).to have_current_path(root_path, wait: 10)
     expect(page).to have_no_css("body.site-modal-open", visible: false)
