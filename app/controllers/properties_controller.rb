@@ -28,6 +28,7 @@ class PropertiesController < ApplicationController
     @recent_rental_applications = @property.rental_applications.recent_first.limit(3)
     @public_documents = @property.public_documents
     @recent_activity = @property.activity_timeline(limit: 8)
+    @saved_property = current_user&.saved_properties&.find_by(property: @property)
   end
 
   def mine
@@ -39,6 +40,7 @@ class PropertiesController < ApplicationController
       live: owner_properties.where(listing_state: Property::PUBLIC_LISTING_STATES).count
     }
     @properties = owner_properties.preload(:photos).order(updated_at: :desc).page(params[:page])
+    @appointments_by_property = appointments_by_property_for(@properties)
   end
 
   def edit
@@ -117,6 +119,29 @@ class PropertiesController < ApplicationController
       listing_state: "draft",
       country: "United Kingdom"
     }
+  end
+
+  def appointments_by_property_for(properties)
+    property_ids = properties.map(&:id)
+    return {} if property_ids.empty?
+
+    appointments = Appointment.where(property_id: property_ids).recent_first.to_a
+
+    appointments.each_with_object({}) do |appointment, grouped|
+      buckets = grouped[appointment.property_id] ||= {
+        upcoming: [],
+        previous: [],
+        cancelled: []
+      }
+
+      if appointment.status == "cancelled"
+        buckets[:cancelled] << appointment
+      elsif appointment.scheduled_at >= Time.current
+        buckets[:upcoming] << appointment
+      else
+        buckets[:previous] << appointment
+      end
+    end
   end
 
 end

@@ -75,6 +75,8 @@ RSpec.describe "Property documents", type: :request do
     download_link = page.at_css(%([data-testid="property-document-download-#{document.id}"]))
 
     expect(download_link).to be_present
+    expect(download_link["class"]).to include("button hollow secondary")
+    expect(download_link["class"]).not_to include("tiny")
     expect(download_link["data-turbo"]).to eq("false")
     expect(download_link["download"]).to eq("granville-road-compliance.pdf")
   end
@@ -92,6 +94,8 @@ RSpec.describe "Property documents", type: :request do
     expect(rendered_text).not_to include("properties/granville-road-hero.jpg")
     expect(rendered_text).not_to include(I18n.t("ui.properties.show.brochure_assets_title"))
     expect(download_link).to be_present
+    expect(download_link["class"]).to include("button hollow secondary")
+    expect(download_link["class"]).not_to include("tiny")
     expect(download_link["href"]).to eq(download_property_property_document_path(property, document))
     expect(download_link["download"]).to eq("granville-road-brochure.pdf")
   end

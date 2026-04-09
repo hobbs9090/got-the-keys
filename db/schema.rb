@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_01_101500) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_09_060000) do
   create_table "admins", force: :cascade do |t|
     t.integer "consumed_timestep"
     t.datetime "created_at", precision: nil
@@ -321,6 +321,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_101500) do
     t.index ["status"], name: "index_rental_applications_on_status"
   end
 
+  create_table "saved_properties", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "property_id", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["property_id"], name: "index_saved_properties_on_property_id"
+    t.index ["user_id", "property_id"], name: "index_saved_properties_on_user_id_and_property_id", unique: true
+    t.index ["user_id"], name: "index_saved_properties_on_user_id"
+  end
+
   create_table "saved_searches", force: :cascade do |t|
     t.boolean "alerts_enabled", default: true, null: false
     t.datetime "created_at", null: false
@@ -399,4 +409,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_101500) do
   add_foreign_key "rental_application_events", "rental_applications"
   add_foreign_key "rental_applications", "admins"
   add_foreign_key "rental_applications", "properties"
+  add_foreign_key "saved_properties", "properties"
+  add_foreign_key "saved_properties", "users"
 end

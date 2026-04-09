@@ -86,7 +86,7 @@
             <li>
               <strong><%= document.title %></strong>
               (<%= document.category_label %>)
-              <%= link_to t("ui.common.download"), download_property_property_document_path(@property, document), class: "button hollow secondary tiny", download: document.file_name, data: { testid: "property-document-download-#{document.id}", turbo: false } %>
+              <%= link_to t("ui.common.download"), download_property_property_document_path(@property, document), class: "button hollow secondary", download: document.file_name, data: { testid: "property-document-download-#{document.id}", turbo: false } %>
             </li>
           <% end %>
         </ul>
@@ -97,6 +97,18 @@
   <aside class="property-booking-panel" data-testid="booking-panel">
     <h2><%= t("ui.common.book_a_viewing") %></h2>
     <p><%= t("ui.properties.show.booking_body") %></p>
+
+    <% if current_user != @property.user %>
+      <% if user_signed_in? %>
+        <% if @saved_property.present? %>
+          <%= button_to t("ui.saved_properties.saved_button", default: "Saved"), property_saved_property_path(@property), method: :delete, class: "button hollow secondary expanded", data: { testid: "unsave-property-button" } %>
+        <% else %>
+          <%= button_to t("ui.saved_properties.save_button", default: "Save property"), property_saved_property_path(@property), method: :post, class: "button hollow secondary expanded", data: { testid: "save-property-button" } %>
+        <% end %>
+      <% else %>
+        <%= link_to t("ui.saved_properties.sign_in_to_save", default: "Sign in to save"), new_user_session_path, class: "button hollow secondary expanded", data: { testid: "save-property-sign-in-link" } %>
+      <% end %>
+    <% end %>
 
     <% if @available_slots.any? %>
       <ul class="slot-list">
@@ -147,7 +159,7 @@
 </section>
 
 <% if current_user == @property.user %>
-  <section class="property-layout">
+  <section class="property-workspace property-workspace--seller">
     <article class="property-panel" data-testid="seller-listing-workspace">
       <h2><%= t("ui.properties.show.seller_title") %></h2>
       <p><strong><%= @property.listing_completeness_percentage %>%</strong> <%= t("ui.properties.show.readiness_summary", score: @property.listing_completeness_score, total: @property.listing_completeness_checks.size) %></p>

@@ -18,6 +18,8 @@ class Property < ApplicationRecord
   SORT_OPTIONS = %w[recommended newest price_low price_high bedrooms_high].freeze
 
   belongs_to :user, counter_cache: true
+  has_many :saved_properties, dependent: :destroy
+  has_many :saved_by_users, through: :saved_properties, source: :user
 
   has_many :photos, dependent: :destroy
   has_many :floor_plans, dependent: :destroy

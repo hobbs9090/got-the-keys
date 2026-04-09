@@ -2,6 +2,8 @@ class User < ApplicationRecord
   PHONE_FORMAT = /\A\+?[0-9().\-\s]{7,20}\z/.freeze
 
   has_many :properties, dependent: :destroy
+  has_many :saved_properties, dependent: :destroy
+  has_many :saved_listings, through: :saved_properties, source: :property
 
   after_initialize :set_defaults, if: :new_record?
 

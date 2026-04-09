@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe "Properties" do
+  include ActiveSupport::Testing::TimeHelpers
+
   let!(:user) { FactoryBot.create(:user, email: "request-user@example.com") }
   let!(:property) { FactoryBot.create(:property, user:) }
 
@@ -310,11 +312,16 @@ describe "Properties" do
 
       get property_path(property)
 
+      document = Nokogiri::HTML(response.body)
+      seller_workspace = document.at_css(%([data-testid="seller-listing-workspace"]))
+
       expect(response).to have_http_status(:ok)
       expect(response.body).to include(%(data-testid="seller-listing-workspace"))
       expect(response.body).to include("Manage photos")
       expect(response.body).to include("Manage documents")
       expect(response.body).to include(%(data-testid="property-documents-panel"))
+      expect(seller_workspace.parent["class"]).to include("property-workspace--seller")
+      expect(seller_workspace.parent["class"]).not_to include("property-layout")
     end
 
     it "does not show furnishing in the key facts for sale listings" do
@@ -462,6 +469,37 @@ describe "Properties" do
       expect(response.body).to include(I18n.t("ui.properties.listing_states.published"))
       expect(response.body).to include(property_path(draft_property))
       expect(response.body).to include(edit_property_path(draft_property))
+    end
+
+    it "shows upcoming, previous, and cancelled appointments for the seller's properties" do
+      sign_in user
+      property = FactoryBot.create(:property, user:, address_line_1: "Appointment House")
+      other_property = FactoryBot.create(:property, user: FactoryBot.create(:user), address_line_1: "Someone Else's Appointment House")
+
+      upcoming_time = Time.zone.local(2026, 4, 10, 14, 0)
+      previous_time = Time.zone.local(2026, 4, 7, 14, 0)
+      cancelled_time = Time.zone.local(2026, 4, 11, 10, 0)
+
+      FactoryBot.create(:appointment, property:, customer_name: "Upcoming Customer", customer_email: "upcoming@example.com", requested_time: upcoming_time, scheduled_at: upcoming_time, status: "confirmed", skip_slot_validation: true)
+      FactoryBot.create(:appointment, property:, customer_name: "Previous Customer", customer_email: "previous@example.com", requested_time: previous_time, scheduled_at: previous_time, status: "completed", skip_slot_validation: true)
+      FactoryBot.create(:appointment, property:, customer_name: "Cancelled Customer", customer_email: "cancelled@example.com", requested_time: cancelled_time, scheduled_at: cancelled_time, status: "cancelled", skip_slot_validation: true)
+      FactoryBot.create(:appointment, property: other_property, customer_name: "Other Customer", customer_email: "other@example.com", requested_time: upcoming_time, scheduled_at: upcoming_time, status: "confirmed", skip_slot_validation: true)
+
+      travel_to(Time.zone.local(2026, 4, 8, 12, 0)) do
+        get mine_properties_path
+      end
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("Upcoming")
+      expect(response.body).to include("Previous")
+      expect(response.body).to include("Cancelled")
+      expect(response.body).to include("Upcoming Customer")
+      expect(response.body).to include("Previous Customer")
+      expect(response.body).to include("Cancelled Customer")
+      expect(response.body).not_to include("Other Customer")
+      expect(response.body).to include(I18n.t("ui.appointments.statuses.confirmed"))
+      expect(response.body).to include(I18n.t("ui.appointments.statuses.completed"))
+      expect(response.body).to include(I18n.t("ui.appointments.statuses.cancelled"))
     end
 
     it "shows an empty state when the seller has not created any listings yet" do
