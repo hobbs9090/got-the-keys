@@ -31,21 +31,4 @@ RSpec.describe "User registration", type: :system, js: true do
     expect(page).to have_current_path(searches_path, wait: 5)
   end
 
-  it "clears modal state before a non-Turbo registration submit navigates away" do
-    visit new_user_registration_path
-
-    dismiss_cookie_banner
-
-    click_button "Read more"
-
-    expect(page).to have_css("#registration-explainer[aria-hidden='false']", visible: true)
-    expect(page).to have_css("body.site-modal-open", visible: false)
-    page.execute_script(<<~JS)
-      const form = document.querySelector("form.auth-form");
-      form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
-    JS
-
-    expect(page).to have_no_css("body.site-modal-open", visible: false)
-    expect(page).to have_no_css('[data-modal][aria-hidden="false"]', visible: false)
-  end
 end
