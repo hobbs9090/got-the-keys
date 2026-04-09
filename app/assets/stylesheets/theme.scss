@@ -2890,6 +2890,63 @@ html[data-theme="dark"] {
   margin: 0;
 }
 
+.property-workspace-card__appointments {
+  display: grid;
+  gap: 1rem;
+}
+
+.property-workspace-card__appointments h3,
+.property-workspace-card__appointment-heading {
+  margin: 0;
+}
+
+.property-workspace-card__appointment-groups {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.property-workspace-card__appointment-groups > div {
+  background: var(--color-surface-soft);
+  border: 1px solid var(--color-panel-border);
+  border-radius: var(--radius-sm);
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem;
+}
+
+.property-workspace-card__appointment-heading {
+  color: var(--color-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.property-workspace-card__appointment-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.property-workspace-card__appointment {
+  align-items: start;
+  border-top: 1px solid var(--color-line);
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+  padding-top: 0.75rem;
+}
+
+.property-workspace-card__appointment:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.property-workspace-card__appointment p {
+  color: var(--color-muted);
+  font-size: 0.92rem;
+}
+
 .property-workspace__footer {
   display: flex;
   justify-content: center;
@@ -3440,6 +3497,10 @@ table th {
   }
 
   .property-workspace-card__meta {
+    grid-template-columns: 1fr;
+  }
+
+  .property-workspace-card__appointment-groups {
     grid-template-columns: 1fr;
   }
 

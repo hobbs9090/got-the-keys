@@ -68,6 +68,71 @@
               <%= property.publicly_visible? ? t("ui.properties.mine.visibility_live", default: "Visible on the public site.") : t("ui.properties.mine.visibility_private", default: "Only visible to you and admins until it is published.") %>
             </p>
 
+            <% appointment_buckets = @appointments_by_property.fetch(property.id, { upcoming: [], previous: [], cancelled: [] }) %>
+
+            <section class="property-workspace-card__appointments">
+              <h3><%= t("ui.properties.mine.appointments_title", default: "Appointments") %></h3>
+
+              <div class="property-workspace-card__appointment-groups">
+                <div>
+                  <p class="property-workspace-card__appointment-heading"><%= t("ui.properties.mine.upcoming_appointments", default: "Upcoming") %></p>
+                  <% if appointment_buckets[:upcoming].any? %>
+                    <div class="property-workspace-card__appointment-list">
+                      <% appointment_buckets[:upcoming].each do |appointment| %>
+                        <div class="property-workspace-card__appointment">
+                          <div>
+                            <strong><%= appointment.customer_name %></strong>
+                            <p><%= appointment.customer_email %> · <%= formatted_date_time(appointment.scheduled_at) %></p>
+                          </div>
+                          <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+                        </div>
+                      <% end %>
+                    </div>
+                  <% else %>
+                    <p class="empty-copy"><%= t("ui.properties.mine.no_upcoming_appointments", default: "No upcoming appointments.") %></p>
+                  <% end %>
+                </div>
+
+                <div>
+                  <p class="property-workspace-card__appointment-heading"><%= t("ui.properties.mine.previous_appointments", default: "Previous") %></p>
+                  <% if appointment_buckets[:previous].any? %>
+                    <div class="property-workspace-card__appointment-list">
+                      <% appointment_buckets[:previous].each do |appointment| %>
+                        <div class="property-workspace-card__appointment">
+                          <div>
+                            <strong><%= appointment.customer_name %></strong>
+                            <p><%= appointment.customer_email %> · <%= formatted_date_time(appointment.scheduled_at) %></p>
+                          </div>
+                          <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+                        </div>
+                      <% end %>
+                    </div>
+                  <% else %>
+                    <p class="empty-copy"><%= t("ui.properties.mine.no_previous_appointments", default: "No previous appointments.") %></p>
+                  <% end %>
+                </div>
+
+                <div>
+                  <p class="property-workspace-card__appointment-heading"><%= t("ui.properties.mine.cancelled_appointments", default: "Cancelled") %></p>
+                  <% if appointment_buckets[:cancelled].any? %>
+                    <div class="property-workspace-card__appointment-list">
+                      <% appointment_buckets[:cancelled].each do |appointment| %>
+                        <div class="property-workspace-card__appointment">
+                          <div>
+                            <strong><%= appointment.customer_name %></strong>
+                            <p><%= appointment.customer_email %> · <%= formatted_date_time(appointment.scheduled_at) %></p>
+                          </div>
+                          <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+                        </div>
+                      <% end %>
+                    </div>
+                  <% else %>
+                    <p class="empty-copy"><%= t("ui.properties.mine.no_cancelled_appointments", default: "No cancelled appointments.") %></p>
+                  <% end %>
+                </div>
+              </div>
+            </section>
+
             <div class="property-workspace-card__actions">
               <%= link_to t("ui.properties.mine.open_details", default: "Open details"), property_path(property), class: "button primary" %>
               <%= link_to t("ui.properties.show.edit_listing"), edit_property_path(property), class: "button hollow secondary" %>
