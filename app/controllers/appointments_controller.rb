@@ -6,9 +6,11 @@ class AppointmentsController < ApplicationController
 
   def new
     @appointment = @property.appointments.new(
-      requested_time: preselected_slot,
-      scheduled_at: preselected_slot,
-      duration_minutes: booking_configuration.slot_duration_minutes
+      default_appointment_attributes.merge(
+        requested_time: preselected_slot,
+        scheduled_at: preselected_slot,
+        duration_minutes: booking_configuration.slot_duration_minutes
+      )
     )
     @available_slots = @property.next_available_slots(limit: 10)
   end
@@ -99,5 +101,15 @@ class AppointmentsController < ApplicationController
     Time.zone.parse(params.require(:appointment).fetch(:requested_time))
   rescue ActionController::ParameterMissing, ArgumentError, TypeError
     nil
+  end
+
+  def default_appointment_attributes
+    return {} unless current_user.present?
+
+    {
+      customer_name: current_user.full_name,
+      customer_email: current_user.email,
+      customer_phone: current_user.mobile_number
+    }
   end
 end
