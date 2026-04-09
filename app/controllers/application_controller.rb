@@ -1,11 +1,13 @@
 class ApplicationController < ActionController::Base
   before_action :set_user_language
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :persist_pending_saved_property_request
 
   helper AppVersionHelper
   helper_method :available_languages, :booking_configuration, :chinese_locale?,
                 :cookie_consent_choice, :cookie_consent_pending?, :cookie_consent_all?,
-                :cookie_consent_essential_only?, :homepage_from_admin_referrer?
+                :cookie_consent_essential_only?, :homepage_from_admin_referrer?,
+                :pending_return_to_path, :pending_save_property_id
 
   protected
 
@@ -97,20 +99,39 @@ class ApplicationController < ActionController::Base
   end
 
   def save_requested_property_for(resource)
-    property_id = params[:save_property_id].presence
+    property_id = pending_save_property_id
     return if property_id.blank?
 
     property = Property.find_by(id: property_id)
+    clear_pending_saved_property_request
     return if property.blank? || property.user == resource
 
     resource.saved_properties.find_or_create_by!(property:)
   end
 
   def requested_return_path
-    path = params[:return_to].to_s
+    path = pending_return_to_path.to_s
     return if path.blank?
     return path if path.start_with?("/")
 
     nil
+  end
+
+  def persist_pending_saved_property_request
+    session[:pending_save_property_id] = params[:save_property_id] if params[:save_property_id].present?
+    session[:pending_return_to] = params[:return_to] if params[:return_to].present?
+  end
+
+  def pending_save_property_id
+    params[:save_property_id].presence || session[:pending_save_property_id].presence
+  end
+
+  def pending_return_to_path
+    params[:return_to].presence || session[:pending_return_to].presence
+  end
+
+  def clear_pending_saved_property_request
+    session.delete(:pending_save_property_id)
+    session.delete(:pending_return_to)
   end
 end

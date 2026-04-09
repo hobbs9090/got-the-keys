@@ -20,7 +20,7 @@
     <div class="auth-panel__callout">
       <p><%= t('devise.views.sessions.new.paragraph_2') %></p>
       <% if devise_mapping.registerable? %>
-        <%= link_to t('devise.views.sessions.new.create_account'), new_registration_path(resource_name, return_to: params[:return_to], save_property_id: params[:save_property_id]), class: "button secondary hollow" %>
+        <%= link_to t('devise.views.sessions.new.create_account'), new_registration_path(resource_name, return_to: pending_return_to_path, save_property_id: pending_save_property_id), class: "button secondary hollow" %>
       <% else %>
         <%= link_to t('devise.views.links.sign_in_as_member'), new_user_session_path, class: "button secondary hollow" %>
       <% end %>
@@ -37,8 +37,8 @@
     </div>
 
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "stacked-form auth-form", data: { turbo: false } }) do |f| %>
-      <%= hidden_field_tag :return_to, params[:return_to] if params[:return_to].present? %>
-      <%= hidden_field_tag :save_property_id, params[:save_property_id] if params[:save_property_id].present? %>
+      <%= hidden_field_tag :return_to, pending_return_to_path if pending_return_to_path.present? %>
+      <%= hidden_field_tag :save_property_id, pending_save_property_id if pending_save_property_id.present? %>
 
       <% if resource.errors[:base].any? %>
         <div class="auth-form__hint" role="alert" aria-live="polite">
