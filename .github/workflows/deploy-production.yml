@@ -18,6 +18,9 @@ on:
         required: true
         default: /var/www/gotthekeys-production
         type: string
+  workflow_run:
+    workflows: ["Deploy Staging"]
+    types: [completed]
 
 permissions:
   actions: read
@@ -29,6 +32,11 @@ concurrency:
 
 jobs:
   deploy:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'workflow_run' &&
+       github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_branch == 'main')
     runs-on:
       - self-hosted
       - Linux
@@ -37,21 +45,31 @@ jobs:
     timeout-minutes: 30
     environment:
       name: production
-      url: ${{ format('https://{0}', inputs.app_host) }}
+      url: ${{ format('https://{0}', github.event_name == 'workflow_dispatch' && inputs.app_host || 'gotthekeys.uk') }}
 
     env:
       BUNDLE_PATH: vendor/bundle
       BUNDLE_WITHOUT: "doc staging test"
       DEPLOY_USER: steven
       DEPLOY_HOST: 127.0.0.1
-      DEPLOY_TO: ${{ inputs.deploy_to }}
+      DEPLOY_TO: ${{ github.event_name == 'workflow_dispatch' && inputs.deploy_to || '/var/www/gotthekeys-production' }}
       DEPLOY_REPO_URL: /home/steven/git/rails_got_the_keys.git
+      APP_HOST: ${{ github.event_name == 'workflow_dispatch' && inputs.app_host || 'gotthekeys.uk' }}
 
     steps:
       - name: Checkout requested ref
+        if: github.event_name == 'workflow_dispatch'
         uses: actions/checkout@v5
         with:
           ref: ${{ inputs.ref }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Checkout staging-tested commit
+        if: github.event_name == 'workflow_run'
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
           fetch-depth: 0
           persist-credentials: false
 
@@ -152,7 +170,7 @@ jobs:
       - name: Verify production database migration access
         env:
           RAILS_ENV: production
-          APP_HOST: ${{ inputs.app_host }}
+          APP_HOST: ${{ env.APP_HOST }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
           DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
@@ -178,7 +196,7 @@ jobs:
           DEPLOY_REF: ${{ steps.deploy_meta.outputs.ref }}
           APP_BUILD_SHA: ${{ steps.deploy_meta.outputs.short_sha }}
           APP_BUILD_NUMBER: ${{ github.run_number }}
-          APP_HOST: ${{ inputs.app_host }}
+          APP_HOST: ${{ env.APP_HOST }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
           DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
