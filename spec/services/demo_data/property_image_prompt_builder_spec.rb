@@ -36,5 +36,20 @@ RSpec.describe DemoData::PropertyImagePromptBuilder do
     expect(prompt).to include("updates completed in 2021")
     expect(prompt).to include("Do not include any readable street signs, house numbers")
     expect(prompt).to include(property.headline)
+    expect(prompt).to match(/front three-quarter exterior angle from the (left-hand|right-hand) side/)
+    expect(prompt).to match(/calm clear day|soft overcast conditions|shortly after a light shower/)
+  end
+
+  it "prefers interior compositions for flat-like homes" do
+    property.update!(
+      property_type: "Garden Flat",
+      listing_tagline: "Garden flat with bright reception room",
+      property_description: "A polished flat with a bright reception room, calm bedroom, and refined interior finishes."
+    )
+
+    prompt = described_class.new.prompt_for(property)
+
+    expect(prompt).to include("Prefer an interior hero image")
+    expect(prompt).to match(/window light suggest a calm clear day|light read as softly overcast|feel just after light rain/)
   end
 end

@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   helper_method :available_languages, :booking_configuration, :chinese_locale?,
                 :cookie_consent_choice, :cookie_consent_pending?, :cookie_consent_all?,
                 :cookie_consent_essential_only?, :homepage_from_admin_referrer?,
-                :pending_return_to_path, :pending_save_property_id
+                :pending_return_to_path, :pending_save_property_id, :pending_saved_property_params
 
   protected
 
@@ -53,6 +53,20 @@ class ApplicationController < ActionController::Base
     end
 
     super
+  end
+
+  def after_sending_reset_password_instructions_path_for(resource_name)
+    return super unless resource_name.to_sym == :user
+    return super unless pending_saved_property_request?
+
+    new_user_session_path(pending_saved_property_params)
+  end
+
+  def after_resetting_password_path_for(resource)
+    return super unless resource.is_a?(User)
+    return super unless pending_saved_property_request?
+
+    new_user_session_path(pending_saved_property_params)
   end
 
   def cookie_consent_choice
@@ -128,6 +142,17 @@ class ApplicationController < ActionController::Base
 
   def pending_return_to_path
     params[:return_to].presence || session[:pending_return_to].presence
+  end
+
+  def pending_saved_property_request?
+    pending_return_to_path.present? || pending_save_property_id.present?
+  end
+
+  def pending_saved_property_params
+    {}.tap do |params|
+      params[:return_to] = requested_return_path if requested_return_path.present?
+      params[:save_property_id] = pending_save_property_id if pending_save_property_id.present?
+    end
   end
 
   def clear_pending_saved_property_request

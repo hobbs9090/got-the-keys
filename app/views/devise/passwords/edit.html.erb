@@ -10,7 +10,7 @@
 
     <div class="auth-panel__callout">
       <p><%= t('devise.views.passwords.edit.paragraph_2') %></p>
-      <%= link_to t('devise.views.passwords.edit.request_new_link'), new_password_path(resource_name), class: "button secondary hollow" %>
+      <%= link_to t('devise.views.passwords.edit.request_new_link'), new_password_path(resource_name, pending_saved_property_params), class: "button secondary hollow" %>
     </div>
   </aside>
 
@@ -26,6 +26,8 @@
     <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "stacked-form auth-form", data: { turbo: false } }) do |f| %>
       <%= devise_error_messages! %>
       <%= f.hidden_field :reset_password_token %>
+      <%= hidden_field_tag :return_to, pending_return_to_path if pending_return_to_path.present? %>
+      <%= hidden_field_tag :save_property_id, pending_save_property_id if pending_save_property_id.present? %>
 
       <div class="auth-form__stack">
         <div>

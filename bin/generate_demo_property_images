@@ -20,11 +20,13 @@ module GenerateDemoPropertyImages
 
     generator = DemoData::PropertyImageGenerator.new(
       dry_run: dry_run?,
-      force: force?
+      force: force?,
+      batch_size: batch_size
     )
     results = generator.generate_for_scope(scope, limit: limit)
 
     puts "Processed #{results.fetch(:processed)} properties"
+    puts "Batch size #{results.fetch(:batch_size)} across #{results.fetch(:batches)} batch(es)"
     puts "Generated #{results.fetch(:generated)} images"
     puts "Skipped #{results.fetch(:skipped)} properties"
     puts "Failed #{results.fetch(:failed)} properties"
@@ -62,6 +64,15 @@ module GenerateDemoPropertyImages
 
   def force?
     truthy_env?("DEMO_IMAGE_FORCE")
+  end
+
+  def batch_size
+    raw_batch_size = ENV["DEMO_IMAGE_BATCH_SIZE"].to_s.strip
+    return DemoData::PropertyImageGenerator::DEFAULT_BATCH_SIZE if raw_batch_size.empty?
+
+    Integer(raw_batch_size, 10)
+  rescue ArgumentError
+    abort "DEMO_IMAGE_BATCH_SIZE must be an integer."
   end
 
   def truthy_env?(name)

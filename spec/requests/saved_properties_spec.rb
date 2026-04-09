@@ -161,4 +161,53 @@ RSpec.describe "Saved properties", type: :request do
     expect(response).to redirect_to(property_path(property))
     expect(created_user.saved_listings).to include(property)
   end
+
+  it "returns to the property page and saves the listing after a password reset flow" do
+    get new_user_session_path(return_to: property_path(property), save_property_id: property.id)
+    get new_user_password_path
+
+    page = Nokogiri::HTML(response.body)
+    return_to_value = page.at_css('input[name="return_to"]')&.[]("value")
+    save_property_id_value = page.at_css('input[name="save_property_id"]')&.[]("value")
+
+    expect(return_to_value).to eq(property_path(property))
+    expect(save_property_id_value).to eq(property.id.to_s)
+
+    raw_token = user.send_reset_password_instructions
+
+    put user_password_path, params: {
+      user: {
+        reset_password_token: raw_token,
+        password: "newpassword",
+        password_confirmation: "newpassword"
+      },
+      return_to: return_to_value,
+      save_property_id: save_property_id_value
+    }
+
+    expect(response).to redirect_to(new_user_session_path(return_to: property_path(property), save_property_id: property.id))
+
+    follow_redirect!
+
+    sign_in_page = Nokogiri::HTML(response.body)
+    sign_in_return_to = sign_in_page.at_css('input[name="return_to"]')&.[]("value")
+    sign_in_save_property_id = sign_in_page.at_css('input[name="save_property_id"]')&.[]("value")
+
+    expect(sign_in_return_to).to eq(property_path(property))
+    expect(sign_in_save_property_id).to eq(property.id.to_s)
+
+    expect do
+      post user_session_path, params: {
+        user: {
+          email: user.email,
+          password: "newpassword"
+        },
+        return_to: sign_in_return_to,
+        save_property_id: sign_in_save_property_id
+      }
+    end.to change(SavedProperty, :count).by(1)
+
+    expect(response).to redirect_to(property_path(property))
+    expect(user.reload.saved_listings).to include(property)
+  end
 end
