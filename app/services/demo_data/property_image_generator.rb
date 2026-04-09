@@ -139,7 +139,7 @@ module DemoData
     end
 
     def generated_filename_for(property)
-      File.join(PROPERTY_ASSET_SUBDIR, "property_#{property.id}_hero.#{filename_extension}")
+      File.join(PROPERTY_ASSET_SUBDIR, "property_#{address_slug_for(property)}_hero.#{filename_extension}")
     end
 
     def attach_generated_photo(property, filename)
@@ -194,6 +194,10 @@ module DemoData
       return "jpg" if output_format == "jpeg"
 
       output_format
+    end
+
+    def address_slug_for(property)
+      property.address_line_1.to_s.parameterize(separator: "_").presence || property.id.to_s
     end
   end
 end
