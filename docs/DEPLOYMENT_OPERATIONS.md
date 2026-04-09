@@ -61,6 +61,9 @@ That supports admin and QA runtime version reporting.
 bin/deploy_staging
 ```
 
+GitHub Actions also deploys staging automatically after the `CI` workflow succeeds for a push to `main`.
+If that staging deploy completes successfully, the production deploy workflow now promotes the same commit automatically.
+
 Common overrides:
 
 ```bash
@@ -78,6 +81,8 @@ DEPLOY_TO=/var/www/gotthekeys-production \
 APP_HOST=gotthekeys.uk \
 bin/deploy_production
 ```
+
+Manual production deploys are still available through the `Deploy Production` workflow dispatch when you need to promote a specific ref or override the default host or deploy path.
 
 ## Apache + Passenger Notes
 
