@@ -233,68 +233,13 @@ it:
           day: Day
           month: Month
           week: Week
-      dashboard:
-        all_bookings: All bookings
-        bookings_body: The bookings desk is reserved for administrators and gives you the full calendar view, live filters, and status controls for every viewing request on the site.
-        bookings_eyebrow: Admin-only section
-        bookings_requiring_action: Bookings requiring action
-        bookings_title: Booking visibility and control
-        eyebrow: Operations overview
-        last_demo_data_action: Last demo data action
-        metrics:
-          customers: Customers
-          open_leads: Open leads
-          pending_actions: Pending actions
-          properties: Properties
-          upcoming_appointments: Upcoming appointments
-        no_demo_action: No scenario reset or import has been recorded yet.
-        no_notification_records: No notification records yet.
-        no_upcoming_bookings: No upcoming bookings.
-        nothing_needs_attention: Nothing currently needs attention.
-        notification_log_snapshot: Notification log snapshot
-        open_bookings_desk: Open bookings desk
-        pending_action: Pending action
-        recent_activity: Recent activity
-        this_week: This week
-        title: Admin dashboard
-        upcoming_appointments: Upcoming appointments
       layout:
         active_demo_scenario: Active demo scenario
         sidebar_eyebrow: Admin Workspace
         title: Admin | %{app_name}
         view_site: View site
-      navigation:
-        aria_label: Admin
-        booking_rules: Booking Rules
-        bookings: Bookings
-        dashboard: Dashboard
-        demo_data: Demo Data
-        notifications: Notifications
-        properties: Properties
-        qa_area: QA Area
-        qa_guide: QA Guide
-        security: Security
-        sellers: Sellers
       qa:
-        admin_credential: 'admin: %{email} / %{password}'
-        admin_two_factor:
-          confirmation_required: Type DISABLE to confirm switching the global admin 2FA mode to disabled.
-          title: Admin 2FA mode
-          updated_notice: Updated the global admin 2FA mode.
-        app_version: App version
         available_scenarios_title: Available scenarios
-        default_password: secret
-        demo_action_value: "%{action} at %{time}"
-        diagnostic_labels:
-          active_scenario: Active scenario
-          bookings: Bookings
-          last_demo_action: Last demo action
-          notification_logs: Notification logs
-          properties: Properties
-          users: Users
-        diagnostics_title: Diagnostics
-        eyebrow: Automation training harness
-        known_credentials_title: Known credentials
         selectors:
           active_demo_scenario: '`data-testid="active-demo-scenario"` on the admin shell'
           admin_appointment_row: '`data-testid="admin-appointment-row"` on agenda rows'
@@ -302,40 +247,6 @@ it:
           book_viewing_cta: '`data-testid="book-viewing-cta"` on property booking CTA'
           property_card: '`data-testid="property-card"` on listing cards'
         selectors_title: Automation-friendly selectors
-        seller_credential: 'seller: %{email} / %{password}'
-        title: QA guide
-        training_journeys:
-        - Create a new booking from a property page and verify the success message plus reference code.
-        - As an admin, confirm a pending appointment and validate the status badge plus audit timeline.
-        - Reschedule an appointment into an occupied slot and verify the conflict validation message.
-        - Restore the baseline dataset and verify the same booking and admin assertions still hold.
-        - Export the current dataset, import it back through the preview screen, and confirm the diagnostics panel updates.
-        training_title: Recommended training journeys
-        version_box:
-          build_number: Build number
-          deployed_at: Deployed at
-          environment: Environment
-          git_sha: Git SHA
-          rails_env: Rails env %{env}
-          title: Release build
-          unavailable: Not available
-      security:
-        already_enabled: Two-factor authentication is already enabled for this admin.
-        audit_actions:
-          admin_two_factor_backup_codes_regenerated: Backup codes regenerated
-          admin_two_factor_disabled: 2FA disabled
-          admin_two_factor_enrollment_completed: 2FA enrollment completed
-        backup_codes_regenerated_notice: Generated a new set of backup codes.
-        disabled_notice: Two-factor authentication has been disabled for this admin.
-        enabled_notice: Two-factor authentication is now enabled for this admin.
-        enrollment_expired: Your setup session expired. Start setup again to generate a new secret.
-        enrollment_started_notice: Generated a fresh authenticator setup for this admin.
-        invalid_code: Enter a valid authenticator code.
-        modes:
-          disabled: Disabled
-          optional: Optional
-        not_enabled: Two-factor authentication is not enabled for this admin.
-        title: Admin security
     common:
       skip_to_content: Skip to main content
       'true': 'Yes'
