@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_09_113000) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_09_143000) do
   create_table "admins", force: :cascade do |t|
     t.integer "consumed_timestep"
     t.datetime "created_at", precision: nil
@@ -46,7 +46,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_09_113000) do
     t.string "customer_email", null: false
     t.string "customer_name", null: false
     t.string "customer_phone"
-    t.integer "duration_minutes", default: 45, null: false
+    t.integer "duration_minutes", default: 60, null: false
     t.text "internal_notes"
     t.text "notes"
     t.integer "property_id", null: false
@@ -111,7 +111,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_09_113000) do
     t.string "office_closes_at", default: "18:00", null: false
     t.string "office_opens_at", default: "09:00", null: false
     t.string "open_weekdays", default: "1,2,3,4,5,6", null: false
-    t.integer "slot_duration_minutes", default: 45, null: false
+    t.integer "slot_duration_minutes", default: 60, null: false
     t.datetime "updated_at", null: false
   end
 

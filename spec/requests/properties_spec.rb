@@ -466,7 +466,7 @@ describe "Properties" do
       expect(cards.count).to be >= 3
       expect(response.body).to include(I18n.t("ui.properties.listing_states.draft"))
       expect(response.body).to include(I18n.t("ui.properties.listing_states.review_pending"))
-      expect(response.body).to include(I18n.t("ui.properties.listing_states.published"))
+      expect(response.body).not_to include(I18n.t("ui.properties.listing_states.published"))
       expect(response.body).to include(property_path(draft_property))
       expect(response.body).to include(edit_property_path(draft_property))
     end

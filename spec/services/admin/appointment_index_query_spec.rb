@@ -24,8 +24,8 @@ RSpec.describe Admin::AppointmentIndexQuery do
       admin: primary_admin,
       customer_name: "Matching Viewer",
       customer_email: "matching.viewer@example.com",
-      requested_time: booking_time(2026, 4, 3, 10, 0),
-      scheduled_at: booking_time(2026, 4, 3, 10, 0)
+      requested_time: booking_time(2026, 4, 3, 9, 0),
+      scheduled_at: booking_time(2026, 4, 3, 9, 0)
     )
     FactoryBot.create(
       :appointment,
@@ -33,8 +33,8 @@ RSpec.describe Admin::AppointmentIndexQuery do
       property: primary_property,
       admin: primary_admin,
       customer_email: "matching.viewer@example.com",
-      requested_time: booking_time(2026, 4, 3, 11, 15),
-      scheduled_at: booking_time(2026, 4, 3, 11, 15)
+      requested_time: booking_time(2026, 4, 3, 11, 0),
+      scheduled_at: booking_time(2026, 4, 3, 11, 0)
     )
     FactoryBot.create(
       :appointment,
@@ -42,8 +42,8 @@ RSpec.describe Admin::AppointmentIndexQuery do
       property: secondary_property,
       admin: primary_admin,
       customer_email: "matching.viewer@example.com",
-      requested_time: booking_time(2026, 4, 3, 12, 30),
-      scheduled_at: booking_time(2026, 4, 3, 12, 30)
+      requested_time: booking_time(2026, 4, 3, 13, 0),
+      scheduled_at: booking_time(2026, 4, 3, 13, 0)
     )
     FactoryBot.create(
       :appointment,

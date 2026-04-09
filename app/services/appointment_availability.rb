@@ -1,5 +1,5 @@
 class AppointmentAvailability
-  SLOT_INTERVAL_MINUTES = 15
+  SLOT_INTERVAL_MINUTES = 60
 
   Slot = Struct.new(:starts_at, :ends_at, :group_viewing, keyword_init: true) do
     def label

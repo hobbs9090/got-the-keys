@@ -81,7 +81,9 @@
           <div class="property-workspace-card__content">
             <div class="property-workspace-card__badges">
               <span class="<%= property_sale_status_badge_class(property.sale_status) %>"><%= translated_sale_status(property.sale_status) %></span>
-              <span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span>
+              <% unless property.listing_state == "published" %>
+                <span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span>
+              <% end %>
             </div>
 
             <div>
@@ -140,7 +142,9 @@
           <div class="property-workspace-card__content">
             <div class="property-workspace-card__badges">
               <span class="<%= property_sale_status_badge_class(property.sale_status) %>"><%= translated_sale_status(property.sale_status) %></span>
-              <span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span>
+              <% unless property.listing_state == "published" %>
+                <span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span>
+              <% end %>
             </div>
 
             <div>
