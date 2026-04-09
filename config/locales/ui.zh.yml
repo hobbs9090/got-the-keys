@@ -874,6 +874,7 @@ zh:
         title: 预约规则
         eyebrow: 预约配置
         slot_duration_minutes: 时段时长（分钟）
+        booking_window_days: 可预约窗口（天）
         lead_time_hours: 提前时间（小时）
         buffer_minutes: 预约间隔缓冲（分钟）
         office_opens_at: 开始办公时间
