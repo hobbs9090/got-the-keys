@@ -31,9 +31,48 @@ RSpec.describe AppointmentAvailability do
     expect(slots.map(&:starts_at)).to eq(
       [
         booking_time(2026, 4, 5, 10, 0),
-        booking_time(2026, 4, 5, 10, 45)
+        booking_time(2026, 4, 5, 10, 15)
       ]
     )
+  end
+
+  it "offers quarter-hour start times within each available window" do
+    FactoryBot.create(
+      :availability_window,
+      property:,
+      kind: "open",
+      starts_at: booking_time(2026, 4, 1, 10, 0),
+      ends_at: booking_time(2026, 4, 1, 12, 0)
+    )
+
+    slots = described_class.new(property: property, configuration: configuration, from: booking_time(2026, 4, 1, 9, 0)).next_slots(limit: 4, days_ahead: 0)
+
+    expect(slots.map(&:starts_at)).to eq(
+      [
+        booking_time(2026, 4, 1, 10, 0),
+        booking_time(2026, 4, 1, 10, 15),
+        booking_time(2026, 4, 1, 10, 30),
+        booking_time(2026, 4, 1, 10, 45)
+      ]
+    )
+  end
+
+  it "rounds the first available slot up to the next quarter hour" do
+    slots = described_class.new(
+      property: property,
+      configuration: configuration,
+      from: booking_time(2026, 4, 1, 9, 7) + 23.seconds
+    ).next_slots(limit: 1, days_ahead: 0)
+
+    expect(slots.first.starts_at).to eq(booking_time(2026, 4, 1, 9, 15))
+  end
+
+  it "uses the configured booking window by default" do
+    configuration.update!(booking_window_days: 14)
+
+    slots = described_class.new(property: property, configuration: configuration, from: booking_time(2026, 4, 1, 8, 0)).next_slots(limit: 500)
+
+    expect(slots.map { |slot| slot.starts_at.to_date }.uniq.last).to eq(Date.new(2026, 4, 15))
   end
 
   it "rejects future slots that fall inside the lead time" do
@@ -124,4 +163,5 @@ RSpec.describe AppointmentAvailability do
 
     expect(availability.slot_available?(slot, duration_minutes: 45)).to be(false)
   end
+
 end

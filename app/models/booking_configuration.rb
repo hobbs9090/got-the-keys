@@ -1,11 +1,14 @@
 class BookingConfiguration < ApplicationRecord
   ADMIN_TWO_FACTOR_MODES = %w[disabled optional].freeze
   DEFAULT_OPEN_WEEKDAYS = %w[1 2 3 4 5 6].freeze
+  SUPPORTED_SLOT_DURATIONS = [30, 45, 60].freeze
   CLOCK_FORMAT = /\A\d{2}:\d{2}\z/
 
-  validates :slot_duration_minutes, :lead_time_hours, :buffer_minutes, :office_opens_at, :office_closes_at, presence: true
+  validates :slot_duration_minutes, :booking_window_days, :lead_time_hours, :buffer_minutes, :office_opens_at, :office_closes_at, presence: true
   validates :admin_two_factor_mode, inclusion: { in: ADMIN_TWO_FACTOR_MODES }
-  validates :slot_duration_minutes, numericality: { only_integer: true, greater_than_or_equal_to: 15, less_than_or_equal_to: 240 }, allow_blank: true
+  validates :slot_duration_minutes, numericality: { only_integer: true }, allow_blank: true
+  validates :slot_duration_minutes, inclusion: { in: SUPPORTED_SLOT_DURATIONS }, allow_blank: true
+  validates :booking_window_days, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 60 }, allow_blank: true
   validates :lead_time_hours, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 336 }, allow_blank: true
   validates :buffer_minutes, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 180 }, allow_blank: true
   validates :office_opens_at, :office_closes_at, format: {
@@ -25,6 +28,7 @@ class BookingConfiguration < ApplicationRecord
     def default_attributes
       {
         slot_duration_minutes: 45,
+        booking_window_days: 21,
         lead_time_hours: 4,
         buffer_minutes: 15,
         office_opens_at: "09:00",

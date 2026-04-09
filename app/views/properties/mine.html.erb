@@ -15,6 +15,54 @@
 </section>
 
 <section class="property-workspace">
+  <% if @customer_appointment_buckets.values.any?(&:any?) %>
+    <div class="section-heading">
+      <div>
+        <p class="section-heading__eyebrow"><%= t("ui.properties.mine.customer_bookings_eyebrow", default: "Your viewings") %></p>
+        <h2><%= t("ui.properties.mine.customer_bookings_title", default: "Your bookings") %></h2>
+      </div>
+    </div>
+
+    <section class="site-card property-workspace-panel property-workspace-panel--appointments" data-testid="customer-bookings-panel">
+      <div class="property-workspace-bookings">
+        <% [
+          [:upcoming, t("ui.properties.mine.upcoming_appointments", default: "Upcoming"), t("ui.properties.mine.no_upcoming_appointments", default: "No upcoming appointments.")],
+          [:previous, t("ui.properties.mine.previous_appointments", default: "Previous"), t("ui.properties.mine.no_previous_appointments", default: "No previous appointments.")],
+          [:cancelled, t("ui.properties.mine.cancelled_appointments", default: "Cancelled"), t("ui.properties.mine.no_cancelled_appointments", default: "No cancelled appointments.")]
+        ].each do |bucket_key, heading, empty_copy| %>
+          <% appointments = @customer_appointment_buckets.fetch(bucket_key) %>
+
+          <section class="property-workspace-bookings__section">
+            <div class="property-workspace-bookings__header">
+              <p class="property-workspace-card__appointment-heading"><%= heading %></p>
+              <span class="badge badge--neutral"><%= appointments.count %></span>
+            </div>
+
+            <% if appointments.any? %>
+              <div class="property-workspace-card__appointment-list">
+                <% appointments.each do |appointment| %>
+                  <div class="property-workspace-card__appointment property-workspace-card__appointment--customer" data-testid="customer-booking-row">
+                    <div class="property-workspace-bookings__details">
+                      <strong><%= appointment.property.address_line_1 %></strong>
+                      <p><%= formatted_date_time(appointment.scheduled_at) %></p>
+                      <p><%= appointment.property.location_line %></p>
+                    </div>
+                    <div class="property-workspace-card__appointment-actions">
+                      <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+                      <%= link_to t("ui.properties.mine.view_booking", default: "View booking"), appointment_path(appointment, token: appointment.access_token), class: "button hollow secondary" %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            <% else %>
+              <p class="empty-copy"><%= empty_copy %></p>
+            <% end %>
+          </section>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+
   <% if @saved_properties.any? %>
     <div class="section-heading">
       <div>

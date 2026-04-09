@@ -30,7 +30,10 @@
         </div>
         <div>
           <%= f.label :duration_minutes, t("ui.admin.appointments.edit.duration_minutes"), **form_label_options(@appointment, :duration_minutes) %>
-          <%= f.number_field :duration_minutes, min: 15, max: 240, step: 15, required: true, **form_control_options(@appointment, :duration_minutes) %>
+          <%= f.select :duration_minutes,
+                       BookingConfiguration::SUPPORTED_SLOT_DURATIONS.map { |duration| ["#{duration} minutes", duration] },
+                       {},
+                       form_control_options(@appointment, :duration_minutes) %>
           <%= field_error_messages(@appointment, :duration_minutes) %>
         </div>
         <div>

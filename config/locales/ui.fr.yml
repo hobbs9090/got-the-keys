@@ -419,7 +419,7 @@ fr:
         eyebrow: Gerer votre visite
         body: Choisissez un nouveau creneau ou gardez l actuel. Le libre-service reste
           ouvert jusqu a peu apres l heure reservee.
-        current_slot: 'Creneau actuel : <strong>%{time}</strong>'
+        current_slot_html: 'Creneau actuel : <strong>%{time}</strong>'
         status: Statut
         choose_slot: Choisir un nouveau creneau
         select_slot: Selectionner une nouvelle heure

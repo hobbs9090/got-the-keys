@@ -1,7 +1,11 @@
 require "rails_helper"
 
-RSpec.describe "Appointment self service", type: :system do
+RSpec.describe "Appointment self service", type: :system, js: true do
   include ActiveSupport::Testing::TimeHelpers
+
+  def dismiss_cookie_banner
+    click_button "Reject non-essential" if page.has_button?("Reject non-essential", wait: 1)
+  end
 
   around do |example|
     travel_to(Time.zone.local(2026, 4, 6, 8, 0)) { example.run }
@@ -26,9 +30,10 @@ RSpec.describe "Appointment self service", type: :system do
     )
 
     visit appointment_path(appointment, token: appointment.access_token)
+    dismiss_cookie_banner
 
     click_link "Request a new time"
-    find("[data-testid='self-service-slot-select'] option", match: :first).select_option
+    find("[data-testid='self-service-slot-picker'] .appointment-slot-picker__time-group.is-active [data-slot-picker-time]", match: :first).click
     click_button "Reschedule viewing"
 
     expect(page).to have_text("Your viewing has been rescheduled.")

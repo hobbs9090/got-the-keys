@@ -62,3 +62,13 @@ Baseline credentials after seeding:
 - [Repository map](docs/REPOSITORY_MAP.md)
 - [Deployment operations](docs/DEPLOYMENT_OPERATIONS.md)
 - [Environment notes](docs/ENVIRONMENT_NOTES.md)
+
+## Booking Settings
+
+Booking rules are managed in the admin workspace under `Admin -> Booking rules`.
+
+- `Booking duration` supports `30`, `45`, or `60` minutes.
+- `Booking window length (days)` controls how many days ahead customers can book.
+- Lead time, buffer time, office hours, and open weekdays are also configurable from the same screen.
+
+These settings drive the public property booking flow, the self-service reschedule flow, and the availability service that generates bookable appointment slots.

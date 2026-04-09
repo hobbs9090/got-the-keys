@@ -2,6 +2,7 @@ en:
   date:
     formats:
       calendar_day: "%a %d %b"
+      calendar_heading: "%A, %d %B %Y"
       shared_date: "%d %B, %Y"
   time:
     formats:
@@ -13,6 +14,7 @@ zh:
   date:
     formats:
       calendar_day: "%m月%d日"
+      calendar_heading: "%Y年%m月%d日 %A"
       shared_date: "%Y年%m月%d日"
   time:
     formats:
@@ -24,6 +26,7 @@ de:
   date:
     formats:
       calendar_day: "%d.%m."
+      calendar_heading: "%A, %d.%m.%Y"
       shared_date: "%d.%m.%Y"
   time:
     formats:
@@ -35,6 +38,7 @@ fr:
   date:
     formats:
       calendar_day: "%d/%m"
+      calendar_heading: "%A %d/%m/%Y"
       shared_date: "%d/%m/%Y"
   time:
     formats:
@@ -46,6 +50,7 @@ it:
   date:
     formats:
       calendar_day: "%d/%m"
+      calendar_heading: "%A %d/%m/%Y"
       shared_date: "%d/%m/%Y"
   time:
     formats:

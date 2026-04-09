@@ -32,6 +32,7 @@ module DemoData
 
       {
         slot_duration_minutes: configuration.slot_duration_minutes,
+        booking_window_days: configuration.booking_window_days,
         lead_time_hours: configuration.lead_time_hours,
         buffer_minutes: configuration.buffer_minutes,
         office_opens_at: configuration.office_opens_at,

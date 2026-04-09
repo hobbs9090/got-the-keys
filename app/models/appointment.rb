@@ -21,7 +21,8 @@ class Appointment < ApplicationRecord
   validates :customer_phone, format: { with: PHONE_FORMAT, message: ->(_record, _data) { I18n.t("ui.validation.phone_number") } }, allow_blank: true
   validates :status, inclusion: { in: STATUSES }
   validates :visit_outcome, inclusion: { in: VISIT_OUTCOMES }, allow_blank: true
-  validates :duration_minutes, numericality: { only_integer: true, greater_than_or_equal_to: 15, less_than_or_equal_to: 240 }, allow_blank: true
+  validates :duration_minutes, numericality: { only_integer: true }, allow_blank: true
+  validates :duration_minutes, inclusion: { in: BookingConfiguration::SUPPORTED_SLOT_DURATIONS }, allow_blank: true
   validates :notes, :internal_notes, length: { maximum: 2000 }, allow_blank: true
   validate :slot_available_for_active_bookings, if: :needs_slot_validation?
   validate :past_only_statuses_require_elapsed_slot

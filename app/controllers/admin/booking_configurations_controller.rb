@@ -15,6 +15,6 @@ class Admin::BookingConfigurationsController < Admin::BaseController
   private
 
   def booking_configuration_params
-    params.require(:booking_configuration).permit(:slot_duration_minutes, :lead_time_hours, :buffer_minutes, :office_opens_at, :office_closes_at, open_weekdays: [])
+    params.require(:booking_configuration).permit(:slot_duration_minutes, :booking_window_days, :lead_time_hours, :buffer_minutes, :office_opens_at, :office_closes_at, open_weekdays: [])
   end
 end

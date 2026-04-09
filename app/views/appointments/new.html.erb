@@ -40,10 +40,18 @@
 
         <div>
           <%= f.label :requested_time, t("ui.appointments.new.preferred_slot"), **form_label_options(@appointment, :requested_time) %>
-          <%= f.select :requested_time,
-                       options_for_select(@available_slots.map { |slot| [slot.label, slot.starts_at.iso8601] }, @appointment.requested_time&.iso8601),
-                       { prompt: t("ui.appointments.new.choose_slot") },
-                       form_control_options(@appointment, :requested_time, data: { testid: "requested-time-select" }) %>
+          <%= render "slot_picker",
+                     slots: @available_slots,
+                     field_name: "appointment[requested_time]",
+                     field_id: "appointment_requested_time",
+                     selected_value: @appointment.requested_time&.iso8601,
+                     eyebrow: t("ui.appointments.new.preferred_slot"),
+                     summary_prefix: t("ui.appointments.new.preferred_slot"),
+                     empty_summary: t("ui.appointments.new.choose_slot"),
+                     date_label: t("ui.appointments.new.preferred_slot"),
+                     fallback_label: t("ui.appointments.new.preferred_slot"),
+                     fallback_prompt: t("ui.appointments.new.choose_slot"),
+                     testid: "requested-time-picker" %>
           <%= field_error_messages(@appointment, :requested_time) %>
         </div>
 

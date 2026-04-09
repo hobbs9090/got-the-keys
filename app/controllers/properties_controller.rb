@@ -42,6 +42,7 @@ class PropertiesController < ApplicationController
     @saved_properties = current_user.saved_listings.preload(:photos).order(updated_at: :desc)
     @properties = owner_properties.preload(:photos).order(updated_at: :desc).page(params[:page])
     @appointments_by_property = appointments_by_property_for(@properties)
+    @customer_appointment_buckets = customer_appointment_buckets_for(current_user)
   end
 
   def edit
@@ -129,19 +130,41 @@ class PropertiesController < ApplicationController
     appointments = Appointment.where(property_id: property_ids).recent_first.to_a
 
     appointments.each_with_object({}) do |appointment, grouped|
-      buckets = grouped[appointment.property_id] ||= {
-        upcoming: [],
-        previous: [],
-        cancelled: []
-      }
+      buckets = grouped[appointment.property_id] ||= empty_appointment_buckets
+      bucket_appointment!(buckets, appointment)
+    end
+  end
 
-      if appointment.status == "cancelled"
-        buckets[:cancelled] << appointment
-      elsif appointment.scheduled_at >= Time.current
-        buckets[:upcoming] << appointment
-      else
-        buckets[:previous] << appointment
-      end
+  def customer_appointment_buckets_for(user)
+    return { upcoming: [], previous: [], cancelled: [] } if user.email.blank?
+
+    appointments = Appointment.includes(:property)
+      .where("lower(customer_email) = ?", user.email.downcase)
+      .recent_first
+      .to_a
+
+    appointments.each_with_object(empty_appointment_buckets) do |appointment, grouped|
+      next if appointment.property.blank?
+
+      bucket_appointment!(grouped, appointment)
+    end
+  end
+
+  def empty_appointment_buckets
+    {
+      upcoming: [],
+      previous: [],
+      cancelled: []
+    }
+  end
+
+  def bucket_appointment!(grouped, appointment)
+    if appointment.status == "cancelled"
+      grouped[:cancelled] << appointment
+    elsif appointment.scheduled_at >= Time.current
+      grouped[:upcoming] << appointment
+    else
+      grouped[:previous] << appointment
     end
   end
 
