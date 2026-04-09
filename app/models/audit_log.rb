@@ -8,6 +8,6 @@ class AuditLog < ApplicationRecord
   scope :recent_first, -> { order(occurred_at: :desc, created_at: :desc) }
 
   def actor_display
-    admin&.email.presence || actor_label.presence || "System"
+    admin&.email.presence || actor_label.presence || I18n.t("ui.common.system_actor", default: "System")
   end
 end

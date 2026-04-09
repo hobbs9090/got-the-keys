@@ -27,6 +27,7 @@ en:
       property_placeholder_alt: "Property placeholder image"
 
     common:
+      system_actor: "System"
       apply: "Apply"
       any: "Any"
       skip_to_content: "Skip to main content"

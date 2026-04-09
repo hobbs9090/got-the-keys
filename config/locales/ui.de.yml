@@ -2,8 +2,11 @@ de:
   ui:
     site_header:
       eyebrow: Immobilienplattform
+      account_eyebrow: Angemeldet
       admin_bookings: Buchungen
-      admin_dashboard: Dashboard
+      admin_dashboard: Admin-Dashboard
+      admin_account_name: Administrator
+      member_account_name: Verkäuferkonto
       sign_out: Abmelden
       my_listings: Meine Inserate
       add_property: Objekt hinzufügen
@@ -17,15 +20,17 @@ de:
     theme_toggle:
       label: Design
       options:
-        system: System
+        system: Automatisch
         light: Hell
         dark: Dunkel
     shared:
       property_placeholder_alt: Platzhalterbild für Immobilie
     common:
+      system_actor: System
       apply: Anwenden
       any: Beliebig
       false: Falsch
+      skip_to_content: Zum Inhalt springen
       cancel: Abbrechen
       reset: Zurücksetzen
       clear_all: Alles löschen
@@ -47,6 +52,7 @@ de:
       email_address: E-Mail-Adresse
       phone_number: Telefonnummer
       status: Status
+      'true': Ja
       'yes': Ja
       'no': Nein
       download: Herunterladen

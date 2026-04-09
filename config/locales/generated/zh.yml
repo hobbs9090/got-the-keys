@@ -16,4 +16,5 @@ zh:
           update: Update
   ui:
     common:
-      'true': 'Yes'
+      system_actor: 系统
+      'true': 是

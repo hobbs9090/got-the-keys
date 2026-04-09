@@ -24,9 +24,11 @@ zh:
     shared:
       property_placeholder_alt: 房源占位图
     common:
+      system_actor: 系统
       apply: 应用
       any: 不限
       false: 否
+      'true': 是
       skip_to_content: 跳到主要内容
       cancel: 取消
       reset: 重置
