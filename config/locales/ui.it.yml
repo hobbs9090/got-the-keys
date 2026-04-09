@@ -2,8 +2,11 @@ it:
   ui:
     site_header:
       eyebrow: Piattaforma immobiliare
+      account_eyebrow: Accesso effettuato
       admin_bookings: Prenotazioni
-      admin_dashboard: Dashboard
+      admin_dashboard: Cruscotto
+      admin_account_name: Amministratore
+      member_account_name: Account venditore
       sign_out: Esci
       my_listings: I miei annunci
       add_property: Aggiungi immobile
@@ -24,9 +27,11 @@ it:
     shared:
       property_placeholder_alt: Immagine segnaposto dell'immobile
     common:
+      system_actor: Sistema
       apply: Applica
       any: Qualsiasi
       false: Falso
+      skip_to_content: Vai al contenuto principale
       cancel: Annulla
       reset: Reimposta
       clear_all: Cancella tutto
@@ -48,6 +53,7 @@ it:
       email_address: Indirizzo e-mail
       phone_number: Numero di telefono
       status: Stato
+      'true': Si
       'yes': Si
       'no': No
       download: Scarica
@@ -463,7 +469,7 @@ it:
     admin:
       navigation:
         aria_label: Admin
-        dashboard: Dashboard
+        dashboard: Cruscotto
         bookings: Prenotazioni
         leads: Lead
         sales: Vendite

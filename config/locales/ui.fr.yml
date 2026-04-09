@@ -2,8 +2,11 @@ fr:
   ui:
     site_header:
       eyebrow: Plateforme immobiliere
+      account_eyebrow: Connecte
       admin_bookings: Reservations
       admin_dashboard: Tableau de bord
+      admin_account_name: Administrateur
+      member_account_name: Compte vendeur
       sign_out: Se deconnecter
       my_listings: Mes annonces
       add_property: Ajouter un bien
@@ -24,9 +27,11 @@ fr:
     shared:
       property_placeholder_alt: Image de remplacement du bien
     common:
+      system_actor: Systeme
       apply: Appliquer
       any: Tous
       false: Faux
+      skip_to_content: Aller au contenu principal
       cancel: Annuler
       reset: Reinitialiser
       clear_all: Tout effacer
@@ -48,6 +53,7 @@ fr:
       email_address: Adresse e-mail
       phone_number: Numero de telephone
       status: Statut
+      'true': Oui
       'yes': Oui
       'no': Non
       download: Telecharger
