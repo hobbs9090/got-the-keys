@@ -15,30 +15,5 @@ zh:
           are_you_sure: Are you sure?
           update: Update
   ui:
-    admin:
-      navigation:
-        security: Security
-      qa:
-        admin_two_factor:
-          confirmation_required: Type DISABLE to confirm switching the global admin 2FA mode to disabled.
-          title: Admin 2FA mode
-          updated_notice: Updated the global admin 2FA mode.
-      security:
-        already_enabled: Two-factor authentication is already enabled for this admin.
-        audit_actions:
-          admin_two_factor_backup_codes_regenerated: Backup codes regenerated
-          admin_two_factor_disabled: 2FA disabled
-          admin_two_factor_enrollment_completed: 2FA enrollment completed
-        backup_codes_regenerated_notice: Generated a new set of backup codes.
-        disabled_notice: Two-factor authentication has been disabled for this admin.
-        enabled_notice: Two-factor authentication is now enabled for this admin.
-        enrollment_expired: Your setup session expired. Start setup again to generate a new secret.
-        enrollment_started_notice: Generated a fresh authenticator setup for this admin.
-        invalid_code: Enter a valid authenticator code.
-        modes:
-          disabled: Disabled
-          optional: Optional
-        not_enabled: Two-factor authentication is not enabled for this admin.
-        title: Admin security
     common:
       'true': 'Yes'
