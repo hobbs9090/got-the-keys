@@ -127,4 +127,38 @@ RSpec.describe "Saved properties", type: :request do
     expect(response).to redirect_to(property_path(property))
     expect(User.order(:id).last.saved_listings).to include(property)
   end
+
+  it "keeps the pending save through the sign-in to registration hop via session" do
+    get new_user_session_path(return_to: property_path(property), save_property_id: property.id)
+    get new_user_registration_path
+
+    page = Nokogiri::HTML(response.body)
+    return_to_value = page.at_css('input[name="return_to"]')&.[]("value")
+    save_property_id_value = page.at_css('input[name="save_property_id"]')&.[]("value")
+
+    expect(return_to_value).to eq(property_path(property))
+    expect(save_property_id_value).to eq(property.id.to_s)
+
+    expect do
+      post user_registration_path, params: {
+        user: {
+          first_name: "Session",
+          last_name: "Flow",
+          mobile_number: "07595 123456",
+          language: "en",
+          terms_of_service: "1",
+          email: "session-saved-property-user@example.com",
+          password: "changeme",
+          password_confirmation: "changeme"
+        },
+        return_to: return_to_value,
+        save_property_id: save_property_id_value
+      }
+    end.to change(SavedProperty, :count).by(1)
+
+    created_user = User.find_by(email: "session-saved-property-user@example.com")
+
+    expect(response).to redirect_to(property_path(property))
+    expect(created_user.saved_listings).to include(property)
+  end
 end
