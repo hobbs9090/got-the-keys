@@ -1,29 +1,48 @@
 <% control_id = local_assigns.fetch(:control_id, "theme_preference") %>
 <% toggle_label = t("ui.theme_toggle.label", default: "Theme") %>
-<% default_label = theme_preference_options.find { |_label, value| value == "system" }&.first || theme_preference_options.first&.first || "System" %>
 
-<div class="theme-toggle" data-theme-toggle data-theme-toggle-label="<%= toggle_label %>" data-testid="theme-toggle">
+<div class="theme-toggle" data-theme-toggle data-theme-toggle-label="<%= toggle_label %>" data-testid="theme-toggle" role="group" aria-label="<%= toggle_label %>">
   <label class="show-for-sr" for="<%= control_id %>"><%= toggle_label %></label>
 
-  <details class="theme-toggle__details">
-    <summary class="theme-toggle__summary" data-theme-preference-summary aria-label="<%= "#{toggle_label}: #{default_label}" %>">
-      <span class="theme-toggle__summary-value">
-        <span class="theme-toggle__summary-code" data-theme-preference-label><%= default_label %></span>
-      </span>
-    </summary>
-
-    <div class="theme-toggle__menu" aria-label="<%= toggle_label %>">
-      <% theme_preference_options.each do |label, value| %>
-        <button type="button"
-                class="theme-toggle__option<%= " is-active" if value == "system" %>"
-                data-testid="theme-option-<%= value %>"
-                data-theme-preference-option="<%= value %>"
-                aria-pressed="<%= value == "system" %>">
-          <span><%= label %></span>
-        </button>
-      <% end %>
-    </div>
-  </details>
+  <div class="theme-toggle__segments" data-theme-preference-summary aria-label="<%= "#{toggle_label}: System" %>">
+    <% theme_preference_options.each do |label, value| %>
+      <button type="button"
+              class="theme-toggle__option<%= " is-active" if value == "system" %>"
+              data-testid="theme-option-<%= value %>"
+              data-theme-preference-option="<%= value %>"
+              aria-pressed="<%= value == "system" %>"
+              aria-label="<%= label %>">
+        <span class="theme-toggle__option-icon" aria-hidden="true">
+          <% case value %>
+          <% when "system" %>
+            <svg viewBox="0 0 20 20" focusable="false">
+              <rect x="3.25" y="4.25" width="13.5" height="9.5" rx="2"></rect>
+              <path d="M7 16h6"></path>
+              <path d="M9 13.75v2.25"></path>
+              <path d="M11 13.75v2.25"></path>
+            </svg>
+          <% when "light" %>
+            <svg viewBox="0 0 20 20" focusable="false">
+              <circle cx="10" cy="10" r="3.25"></circle>
+              <path d="M10 2.5v2"></path>
+              <path d="M10 15.5v2"></path>
+              <path d="M2.5 10h2"></path>
+              <path d="M15.5 10h2"></path>
+              <path d="M4.7 4.7l1.4 1.4"></path>
+              <path d="M13.9 13.9l1.4 1.4"></path>
+              <path d="M15.3 4.7l-1.4 1.4"></path>
+              <path d="M6.1 13.9l-1.4 1.4"></path>
+            </svg>
+          <% when "dark" %>
+            <svg viewBox="0 0 20 20" focusable="false">
+              <path d="M13.95 3.45a6.85 6.85 0 1 0 2.6 13.18A7.55 7.55 0 0 1 13.95 3.45z"></path>
+            </svg>
+          <% end %>
+        </span>
+        <span class="show-for-sr theme-toggle__option-label"><%= label %></span>
+      </button>
+    <% end %>
+  </div>
 
   <%= select_tag control_id,
                  options_for_select(theme_preference_options, "system"),

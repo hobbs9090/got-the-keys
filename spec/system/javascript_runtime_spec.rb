@@ -16,9 +16,6 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       const toggle = document.querySelector('[data-testid="theme-toggle"]');
       if (!toggle) return;
 
-      const details = toggle.querySelector("details");
-      if (details) details.open = true;
-
       const option = toggle.querySelector('[data-testid="theme-option-#{value}"]');
       if (option) option.click();
     JS
@@ -79,9 +76,9 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
   end
 
   def expect_theme_preference(label)
-    expect(
-      page.evaluate_script("document.querySelector('[data-testid=\"theme-toggle\"] .theme-toggle__summary-code')?.textContent?.trim()")
-    ).to eq(label)
+    value = label.downcase
+
+    expect(page).to have_css(%([data-testid="theme-option-#{value}"].is-active[aria-pressed="true"]), visible: :all, wait: 5)
   end
 
   def sign_in_as_user(user, password: "changeme")
