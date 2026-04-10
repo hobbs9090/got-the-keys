@@ -270,7 +270,7 @@ fr:
         body: Ouvrez vos annonces enregistrees, revenez sur vos brouillons et verifiez
           les details des biens deja saisis.
         list_eyebrow: Vos dossiers
-        list_title: Annonces enregistrees et partiellement completees
+        list_title: Vos annonces
         total_label:
           one: "%{count} annonce enregistree"
           other: "%{count} annonces enregistrees"
@@ -284,7 +284,7 @@ fr:
           price: Prix indicatif
           readiness: Etat d'avancement
           last_saved: Derniere sauvegarde
-        empty_title: Aucune annonce enregistree pour le moment
+        empty_title: Aucune annonce pour le moment
         empty_body: Creez votre premier bien puis revenez ici quand vous voulez reprendre
           le travail.
       trust_cues:
@@ -1105,8 +1105,10 @@ fr:
         completed: terminee
       validation:
         sale_listing_only: doit etre un bien a vendre
+        owner_cannot_offer: ne peut pas appartenir au proprietaire de ce bien
       alerts:
         sale_only: Les offres ne sont disponibles que pour les biens a vendre.
+        owner_cannot_offer: Vous ne pouvez pas soumettre une offre sur votre propre bien.
       flash:
         created: Offre envoyee. L'equipe va l'examiner rapidement.
       events:

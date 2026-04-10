@@ -3,6 +3,7 @@ class OffersController < ApplicationController
 
   before_action :set_property
   before_action :ensure_sale_listing!
+  before_action :ensure_current_user_is_not_owner!
 
   def new
     @offer = @property.offers.new
@@ -28,5 +29,11 @@ class OffersController < ApplicationController
     return if @property.sale_status == Property::SALE_STATUSES[:for_sale]
 
     redirect_to property_path(@property), alert: t("ui.offers.alerts.sale_only")
+  end
+
+  def ensure_current_user_is_not_owner!
+    return unless current_user == @property.user
+
+    redirect_to property_path(@property), alert: t("ui.offers.alerts.owner_cannot_offer")
   end
 end

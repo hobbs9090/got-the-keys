@@ -19,6 +19,7 @@ class Offer < ApplicationRecord
   validates :chain_position, length: { maximum: 120 }, allow_blank: true
   validates :notes, :internal_notes, length: { maximum: 3000 }, allow_blank: true
   validate :sale_listing_only
+  validate :buyer_cannot_be_property_owner
 
   scope :recent_first, -> { order(created_at: :desc, id: :desc) }
 
@@ -49,6 +50,13 @@ class Offer < ApplicationRecord
     return if property.blank? || property.sale_status == Property::SALE_STATUSES[:for_sale]
 
     errors.add(:property, I18n.t("ui.offers.validation.sale_listing_only"))
+  end
+
+  def buyer_cannot_be_property_owner
+    return if property.blank? || buyer_email.blank? || property.user&.email.blank?
+    return unless buyer_email.strip.casecmp?(property.user.email.strip)
+
+    errors.add(:buyer_email, I18n.t("ui.offers.validation.owner_cannot_offer"))
   end
 
   def record_creation_event

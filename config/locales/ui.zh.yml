@@ -241,7 +241,7 @@ zh:
         eyebrow: 业主工作区
         body: 打开你已保存的房源，返回草稿，并查看你已经填写过的房源详情。
         list_eyebrow: 你的记录
-        list_title: 已保存和部分完成的房源
+        list_title: 你的房源
         total_label:
           one: "%{count} 套已保存房源"
           other: "%{count} 套已保存房源"
@@ -254,7 +254,7 @@ zh:
           price: 参考价格
           readiness: 完成度
           last_saved: 最近保存
-        empty_title: 还没有已保存的房源
+        empty_title: 还没有房源
         empty_body: 创建你的第一套房源，并在想继续处理时随时回到这里。
       trust_cues:
         recently_updated: 最近已更新
@@ -1072,8 +1072,10 @@ zh:
         completed: 已完成
       validation:
         sale_listing_only: 必须是出售房源
+        owner_cannot_offer: 不能属于该房源的业主
       alerts:
         sale_only: 只有出售房源才可提交报价。
+        owner_cannot_offer: 你不能为自己的房源提交报价。
       flash:
         created: 报价已提交，团队会尽快审核。
       events:

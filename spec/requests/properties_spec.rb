@@ -602,7 +602,7 @@ describe "Properties" do
       get mine_properties_path
 
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include("No saved listings yet")
+      expect(response.body).to include("No listings yet")
       expect(response.body).to include(new_property_path)
     end
   end

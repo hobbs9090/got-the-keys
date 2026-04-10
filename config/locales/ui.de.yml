@@ -265,7 +265,7 @@ de:
         body: Öffnen Sie Ihre gespeicherten Inserate, kehren Sie zu Entwürfen zurück
           und prüfen Sie die bereits erfassten Objektdetails.
         list_eyebrow: Ihre Einträge
-        list_title: Gespeicherte und teilweise ausgefüllte Inserate
+        list_title: Ihre Inserate
         total_label:
           one: "%{count} gespeichertes Inserat"
           other: "%{count} gespeicherte Inserate"
@@ -279,7 +279,7 @@ de:
           price: Angebotspreis
           readiness: Bereitschaft
           last_saved: Zuletzt gespeichert
-        empty_title: Noch keine gespeicherten Inserate
+        empty_title: Noch keine Inserate
         empty_body: Erstellen Sie Ihr erstes Objekt und kehren Sie hierher zurück,
           wenn Sie weiterarbeiten möchten.
       trust_cues:
@@ -1095,8 +1095,10 @@ de:
         completed: abgeschlossen
       validation:
         sale_listing_only: muss ein Verkaufsobjekt sein
+        owner_cannot_offer: darf nicht dem Eigentümer dieses Objekts gehören
       alerts:
         sale_only: Angebote sind nur bei Verkaufsobjekten verfügbar.
+        owner_cannot_offer: Sie können kein Angebot für Ihr eigenes Objekt abgeben.
       flash:
         created: Angebot eingereicht. Das Team prüft es in Kürze.
       events:
