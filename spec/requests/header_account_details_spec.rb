@@ -55,8 +55,9 @@ RSpec.describe "Header account details", type: :request do
     expect(actions_top.at_css('[data-testid="language-dropdown"]')).to be_present
     theme_toggle = actions_top.at_css('[data-testid="theme-toggle"]')
     expect(theme_toggle).to be_present
-    expect(theme_toggle.at_css(".theme-toggle__summary-code")&.text&.strip).to eq("System")
+    expect(theme_toggle["role"]).to eq("group")
     expect(theme_toggle.css(".theme-toggle__option").map { |option| option.text.strip }).to eq(["System", "Light", "Dark"])
+    expect(theme_toggle.at_css('[data-testid="theme-option-system"]')["aria-pressed"]).to eq("true")
     expect(actions_top.at_css('[data-testid="header-account-summary"]')).not_to be_present
 
     actions_row = actions.at_css(".site-header__actions-row")

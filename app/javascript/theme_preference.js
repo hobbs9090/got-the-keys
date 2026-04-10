@@ -27,13 +27,11 @@ const syncThemeControls = (preference) => {
   });
 
   document.querySelectorAll("[data-theme-toggle]").forEach((toggle) => {
-    const select = toggle.querySelector("[data-theme-preference-select]");
-    const selectedLabel = select?.selectedOptions?.[0]?.textContent?.trim() || preference;
     const summary = toggle.querySelector("[data-theme-preference-summary]");
-    const summaryLabel = toggle.querySelector("[data-theme-preference-label]");
     const toggleLabel = toggle.dataset.themeToggleLabel || "Theme";
+    const activeOption = toggle.querySelector(`[data-theme-preference-option="${preference}"]`);
+    const selectedLabel = activeOption?.textContent?.trim() || preference;
 
-    if (summaryLabel) summaryLabel.textContent = selectedLabel;
     if (summary) summary.setAttribute("aria-label", `${toggleLabel}: ${selectedLabel}`);
 
     toggle.querySelectorAll("[data-theme-preference-option]").forEach((option) => {
@@ -114,7 +112,6 @@ const bindThemePreferenceListener = () => {
     if (option) {
       event.preventDefault();
       applyThemePreference(option.dataset.themePreferenceOption, { persist: true });
-      option.closest("details")?.removeAttribute("open");
       return;
     }
 
