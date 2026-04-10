@@ -266,7 +266,7 @@ it:
         body: Apri gli annunci salvati, torna alle bozze e rivedi i dettagli degli
           immobili che hai gia creato.
         list_eyebrow: I tuoi record
-        list_title: Annunci salvati e completati solo in parte
+        list_title: I tuoi annunci
         total_label:
           one: "%{count} annuncio salvato"
           other: "%{count} annunci salvati"
@@ -280,7 +280,7 @@ it:
           price: Prezzo indicativo
           readiness: Preparazione
           last_saved: Ultimo salvataggio
-        empty_title: Nessun annuncio salvato per ora
+        empty_title: Nessun annuncio per ora
         empty_body: Crea il tuo primo immobile e torna qui ogni volta che vuoi continuare
           a lavorarci.
       trust_cues:
@@ -1093,8 +1093,10 @@ it:
         completed: completata
       validation:
         sale_listing_only: deve essere un immobile in vendita
+        owner_cannot_offer: non puo appartenere al proprietario di questo immobile
       alerts:
         sale_only: Le offerte sono disponibili solo per gli immobili in vendita.
+        owner_cannot_offer: Non puoi inviare un'offerta per il tuo stesso immobile.
       flash:
         created: Offerta inviata. Il team la esaminera a breve.
       events:

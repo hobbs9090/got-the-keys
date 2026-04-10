@@ -293,7 +293,7 @@ en:
         eyebrow: "Seller workspace"
         body: "Open the listings you have saved, jump back into drafts, and review the property details you have already created."
         list_eyebrow: "Your records"
-        list_title: "Saved and partially completed listings"
+        list_title: "Your listings"
         total_label:
           one: "%{count} saved listing"
           other: "%{count} saved listings"
@@ -306,7 +306,7 @@ en:
           price: "Guide price"
           readiness: "Readiness"
           last_saved: "Last saved"
-        empty_title: "No saved listings yet"
+        empty_title: "No listings yet"
         empty_body: "Create your first property and come back here whenever you want to continue working on it."
       seller:
         checks:
@@ -490,8 +490,10 @@ en:
         completed: "completed"
       validation:
         sale_listing_only: "must be a sale listing"
+        owner_cannot_offer: "cannot belong to the owner of this property"
       alerts:
         sale_only: "Offers are only available on sale listings."
+        owner_cannot_offer: "You cannot submit an offer on your own property."
       flash:
         created: "Offer submitted. The team will review it shortly."
       events:
