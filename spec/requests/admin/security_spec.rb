@@ -12,12 +12,11 @@ RSpec.describe "Admin security" do
     Nokogiri::HTML.parse(response.body)
   end
 
-  it "shows the admin 2FA mode card on the security page" do
+  it "does not show the admin 2FA mode controls card on the security page" do
     get admin_security_path
 
     expect(response).to have_http_status(:ok)
-    expect(response.body).to include("Admin 2FA mode")
-    expect(response.body).to include(%(data-testid="admin-two-factor-mode-controls"))
+    expect(response.body).not_to include(%(data-testid="admin-two-factor-mode-controls"))
     expect(response.body).to include(%(id="disable-admin-two-factor-mode-modal"))
   end
 
@@ -39,17 +38,8 @@ RSpec.describe "Admin security" do
     patch admin_security_path, params: { booking_configuration: { admin_two_factor_mode: "disabled" } }
 
     expect(response).to have_http_status(:unprocessable_content)
-    expect(response.body).to include("Type DISABLE to confirm switching the global admin 2FA mode to disabled.")
+    expect(response.body).to include("Type DISABLE before switching to disabled")
     expect(BookingConfiguration.current.admin_two_factor_mode).to eq("optional")
-  end
-
-  it "renders the disable confirmation modal trigger when the mode is optional" do
-    BookingConfiguration.current.update!(admin_two_factor_mode: "optional")
-
-    get admin_security_path
-
-    trigger = parsed_html.at_css('[data-modal-trigger="disable-admin-two-factor-mode-modal"]')
-    expect(trigger).to be_present
   end
 
   it "switches admin 2FA back to disabled when the confirmation phrase is supplied" do

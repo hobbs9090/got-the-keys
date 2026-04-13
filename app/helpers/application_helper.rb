@@ -53,7 +53,7 @@ module ApplicationHelper
   def formatted_date_time(value)
     return if value.blank?
 
-    l(value, format: :long)
+    "#{l(value, format: :long)} UTC"
   end
 
   def formatted_calendar_date(value)

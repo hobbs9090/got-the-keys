@@ -2524,6 +2524,14 @@ html[data-theme="dark"] {
   padding: 1.25rem;
 }
 
+.admin-filter-form[data-testid="admin-properties-search"] {
+  grid-template-columns: minmax(22rem, 2fr) auto;
+}
+
+.admin-filter-form[data-testid="admin-properties-search"] .admin-filter-form__actions {
+  grid-column: auto;
+}
+
 .property-filters label,
 .admin-filter-form label,
 .stacked-form label {
@@ -3691,6 +3699,12 @@ table th {
     align-items: center;
     gap: 0.35rem;
     width: 100%;
+  }
+
+  .pagination li.prev,
+  .pagination li.next,
+  .pagination li.current {
+    display: list-item !important;
   }
 
   .pagination li:not(.prev):not(.next):not(.current) {
