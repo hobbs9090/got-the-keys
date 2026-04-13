@@ -24,7 +24,7 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(baseline[:enquiry_count]).to eq(40)
     expect(baseline[:offer_count]).to eq(10)
     expect(baseline[:rental_application_count]).to eq(14)
-    expect(baseline[:photo_count]).to eq(19)
+    expect(baseline[:photo_count]).to eq(29)
     expect(baseline[:property_document_count]).to eq(2)
   end
 
@@ -35,14 +35,14 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(BookingConfiguration.current.active_demo_scenario_key).to eq("baseline")
     expect(Admin.count).to eq(1)
     expect(Admin.pluck(:email)).to eq(["steven@gotthekeys.uk"])
-    expect(User.count).to eq(4)
+    expect(User.count).to eq(7)
     expect(Property.count).to eq(100)
     expect(Property.for_sale.count).to eq(40)
     expect(Property.for_rent.count).to eq(60)
     expect(Property.publicly_visible.for_sale.count).to eq(40)
     expect(Property.publicly_visible.for_rent.count).to eq(60)
     expect(Property.where.not(year_built: nil).count).to eq(100)
-    expect(Photo.count).to eq(19)
+    expect(Photo.count).to eq(29)
     expect(FloorPlan.count).to eq(2)
     expect(PropertyDocument.count).to eq(2)
     expect(AvailabilityWindow.count).to eq(100)
@@ -52,10 +52,13 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(RentalApplication.count).to eq(14)
     expect(User.pluck(:language).uniq).to eq(["en"])
     expect(User.order(:email).pluck(:email)).to match_array([
+      "alex.cole@example.com",
       "charlotte.hughes@example.com",
       "daniel.mercer@example.com",
       "lucy.mcclure@example.com",
-      "matthew.wells@example.com"
+      "matthew.wells@example.com",
+      "nina.hughes@example.com",
+      "sam.turner@example.com"
     ])
     expect(Property.find_by!(address_line_1: "18 Cedar Road").available_from).to eq(Date.new(2026, 4, 15))
     expect(Property.find_by!(address_line_1: "Flat 3, 44 Mount Ephraim").available_from).to eq(Date.new(2026, 5, 1))
