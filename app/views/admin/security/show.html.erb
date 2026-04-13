@@ -60,24 +60,6 @@
         <%= button_to(@pending_otp_secret.present? ? t("ui.admin.security.restart_setup") : t("ui.admin.security.begin_setup"), enroll_admin_security_path, method: :post, class: "button primary") %>
       <% end %>
     </div>
-    <section class="admin-security-global-mode-controls" data-testid="admin-two-factor-mode-controls">
-      <h3><%= t("ui.admin.qa.admin_two_factor.title") %></h3>
-      <p><%= t("ui.admin.qa.admin_two_factor.body") %></p>
-      <%= render "shared/errors", object: @booking_configuration %>
-
-      <div class="form-actions">
-        <% if @booking_configuration.admin_two_factor_disabled? %>
-          <%= button_to t("ui.admin.security.modes.optional", default: "Optional"),
-                        admin_security_path(booking_configuration: { admin_two_factor_mode: "optional" }),
-                        method: :patch,
-                        class: "button secondary" %>
-        <% else %>
-          <button type="button" class="button alert" data-modal-trigger="disable-admin-two-factor-mode-modal">
-            <%= t("ui.admin.security.modes.disabled", default: "Disabled") %>
-          </button>
-        <% end %>
-      </div>
-    </section>
   </article>
 
   <% if @pending_otp_secret.present? %>

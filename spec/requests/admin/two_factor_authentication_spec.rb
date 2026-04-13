@@ -60,6 +60,7 @@ RSpec.describe "Admin two-factor authentication", type: :request do
 
     expect(response).to have_http_status(:unprocessable_content)
     expect(response.body).to include("Enter your verification code or a backup code to finish signing in.")
+    expect(response.body).to include("Password verified. Enter your code to continue.")
     expect(response.body).to include("Verification code or backup code")
     expect(response.body).to include("Enter an authenticator code or one of your backup codes.")
     expect(response.body).not_to include('name="admin[password]"')

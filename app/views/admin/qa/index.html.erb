@@ -74,18 +74,3 @@
   </article>
 </section>
 
-<section class="admin-panel">
-  <h2><%= t("ui.admin.qa.scenario_families") %></h2>
-  <% @scenario_family_groups.each do |family, scenarios| %>
-    <p><strong><%= admin_scenario_family_label(family) %></strong></p>
-    <ul class="detail-inline-list">
-      <% scenarios.each do |scenario| %>
-        <li>
-          <strong><%= translated_demo_scenario_key(scenario[:key]) %></strong>:
-          <%= admin_scenario_journey_label(scenario) %>
-          (<%= admin_scenario_complexity_label(scenario.dig(:qa, :complexity)) %>)
-        </li>
-      <% end %>
-    </ul>
-  <% end %>
-</section>

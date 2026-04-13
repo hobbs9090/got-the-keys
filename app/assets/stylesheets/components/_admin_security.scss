@@ -47,18 +47,6 @@
   text-transform: uppercase;
 }
 
-.admin-security-global-mode-controls {
-  border-top: 1px solid var(--color-panel-border);
-  display: grid;
-  gap: 0.75rem;
-  padding-top: 1rem;
-}
-
-.admin-security-global-mode-controls h3,
-.admin-security-global-mode-controls p {
-  margin-bottom: 0;
-}
-
 .admin-security-backup-codes__list {
   display: grid;
   gap: 0.75rem;
