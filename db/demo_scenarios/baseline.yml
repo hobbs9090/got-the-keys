@@ -336,6 +336,21 @@ photos:
     caption: Front exterior
     position: 1
     primary: true
+  - property_key: baseline_sale_025
+    image_filename: properties/property_54_highfield_close_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_sale_026
+    image_filename: properties/property_flat_10_56_mount_crescent_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_sale_027
+    image_filename: properties/property_58_albion_close_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
   - property_key: baseline_sale_031
     image_filename: properties/property_66_rectory_lane_hero.jpg
     caption: Front exterior
