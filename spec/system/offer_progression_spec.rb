@@ -1,6 +1,13 @@
 require "rails_helper"
 
 RSpec.describe "Offer progression", type: :system do
+  def sign_in_as_user(user)
+    visit new_user_session_path
+    fill_in "user_email", with: user.email
+    fill_in "user_password", with: "changeme"
+    click_button "Sign in"
+  end
+
   def sign_in_as(admin)
     visit admin_sales_path
 
@@ -12,6 +19,9 @@ RSpec.describe "Offer progression", type: :system do
   it "lets a buyer submit an offer and an admin accept it" do
     property = FactoryBot.create(:property, address_line_1: "19 Willow Road")
     admin = FactoryBot.create(:admin, email: "offers-board@gotthekeys.com", password: "changeme", password_confirmation: "changeme")
+    buyer = FactoryBot.create(:user, email: "offer-buyer@example.com", password: "changeme", password_confirmation: "changeme")
+
+    sign_in_as_user(buyer)
 
     visit property_path(property)
     click_link "Submit an offer"

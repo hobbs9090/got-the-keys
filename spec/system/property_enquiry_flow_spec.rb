@@ -1,8 +1,18 @@
 require "rails_helper"
 
 RSpec.describe "Property enquiry flow", type: :system do
-  it "lets a visitor send a property enquiry without booking a viewing" do
+  def sign_in_as(user)
+    visit new_user_session_path
+    fill_in "user_email", with: user.email
+    fill_in "user_password", with: "changeme"
+    click_button "Sign in"
+  end
+
+  it "lets a signed-in visitor send a property enquiry without booking a viewing" do
     property = FactoryBot.create(:property, address_line_1: "26 Hillside Walk")
+    user = FactoryBot.create(:user, email: "enquiry-user@example.com", password: "changeme", password_confirmation: "changeme")
+
+    sign_in_as(user)
 
     visit property_path(property)
 
