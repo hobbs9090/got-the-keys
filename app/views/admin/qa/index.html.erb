@@ -48,28 +48,34 @@
             <% elsif label.to_sym == :seeded_personas && value.is_a?(Hash) %>
               <div class="qa-seeded-personas">
                 <% if value[:admins].present? %>
-                  <p><strong><%= t("ui.admin.qa.seeded_personas.admins_label", default: "Admins") %>:</strong></p>
-                  <ul class="detail-inline-list">
-                    <% value[:admins].each do |credential| %>
-                      <li><code><%= credential %></code></li>
-                    <% end %>
-                  </ul>
+                  <section class="qa-seeded-personas__group">
+                    <p><strong><%= t("ui.admin.qa.seeded_personas.admins_label", default: "Admins") %>:</strong></p>
+                    <ul class="qa-seeded-personas__list">
+                      <% value[:admins].each do |credential| %>
+                        <li><code><%= credential %></code></li>
+                      <% end %>
+                    </ul>
+                  </section>
                 <% end %>
                 <% if value[:sellers].present? %>
-                  <p><strong><%= t("ui.admin.qa.seeded_personas.sellers_label", default: "Sellers") %>:</strong></p>
-                  <ul class="detail-inline-list">
-                    <% value[:sellers].each do |credential| %>
-                      <li><code><%= credential %></code></li>
-                    <% end %>
-                  </ul>
+                  <section class="qa-seeded-personas__group">
+                    <p><strong><%= t("ui.admin.qa.seeded_personas.sellers_label", default: "Sellers") %>:</strong></p>
+                    <ul class="qa-seeded-personas__list">
+                      <% value[:sellers].each do |credential| %>
+                        <li><code><%= credential %></code></li>
+                      <% end %>
+                    </ul>
+                  </section>
                 <% end %>
                 <% if value[:buyers].present? %>
-                  <p><strong><%= t("ui.admin.qa.seeded_personas.buyers_label", default: "Buyers") %>:</strong></p>
-                  <ul class="detail-inline-list">
-                    <% value[:buyers].each do |credential| %>
-                      <li><code><%= credential %></code></li>
-                    <% end %>
-                  </ul>
+                  <section class="qa-seeded-personas__group">
+                    <p><strong><%= t("ui.admin.qa.seeded_personas.buyers_label", default: "Buyers") %>:</strong></p>
+                    <ul class="qa-seeded-personas__list">
+                      <% value[:buyers].each do |credential| %>
+                        <li><code><%= credential %></code></li>
+                      <% end %>
+                    </ul>
+                  </section>
                 <% end %>
               </div>
             <% else %>
