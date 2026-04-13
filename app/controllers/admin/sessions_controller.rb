@@ -1,11 +1,18 @@
 class Admin::SessionsController < Devise::SessionsController
   def create
+    Rails.logger.info(
+      "[admin-signin-debug] create request_id=#{request.request_id} email=#{sign_in_params[:email].to_s.inspect} " \
+      "otp_present=#{sign_in_params[:otp_attempt].to_s.strip.present?} challenge_token_present=#{two_factor_challenge_token_param.present?}"
+    )
+
     if two_factor_challenge_token_param.present?
+      Rails.logger.info("[admin-signin-debug] entering challenge flow request_id=#{request.request_id}")
       complete_two_factor_challenge
       return
     end
 
     if missing_two_factor_attempt?
+      Rails.logger.info("[admin-signin-debug] missing otp for 2fa-enabled admin request_id=#{request.request_id}")
       @admin_two_factor_challenge_token = issue_two_factor_challenge_token(pending_two_factor_candidate)
       self.resource = resource_class.new(email: sign_in_params[:email].to_s, otp_attempt: sign_in_params[:otp_attempt].to_s)
       resource.errors.add(:otp_attempt, t("devise.failure.admin_otp_attempt_missing"))
@@ -27,6 +34,7 @@ class Admin::SessionsController < Devise::SessionsController
     self.resource = resource_class.new(email: admin&.email.to_s, otp_attempt: sign_in_params[:otp_attempt].to_s)
 
     if admin.blank?
+      Rails.logger.info("[admin-signin-debug] invalid or expired challenge token request_id=#{request.request_id}")
       resource.errors.add(:base, t("devise.failure.invalid", authentication_keys: "email"))
       clean_up_passwords(resource)
       render "devise/sessions/new", status: :unprocessable_content
@@ -34,6 +42,7 @@ class Admin::SessionsController < Devise::SessionsController
     end
 
     if otp_attempt.blank?
+      Rails.logger.info("[admin-signin-debug] missing otp in challenge step request_id=#{request.request_id}")
       resource.errors.add(:otp_attempt, t("devise.failure.admin_otp_attempt_missing"))
       clean_up_passwords(resource)
       render "devise/sessions/new", status: :unprocessable_content
@@ -41,6 +50,7 @@ class Admin::SessionsController < Devise::SessionsController
     end
 
     unless admin.validate_and_consume_otp!(otp_attempt)
+      Rails.logger.info("[admin-signin-debug] invalid otp in challenge step request_id=#{request.request_id}")
       resource.errors.add(:otp_attempt, t("ui.admin.security.invalid_code"))
       clean_up_passwords(resource)
       render "devise/sessions/new", status: :unprocessable_content
