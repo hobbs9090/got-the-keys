@@ -92,7 +92,7 @@ GotTheKeys::Application.routes.draw do
   resources :language, only: [:new]
 
   resources :searches, only: [:index]
-  resources :saved_searches, only: [:create]
+  resources :saved_searches, only: %i[create destroy]
 
   resources :location, only: [:show]
 

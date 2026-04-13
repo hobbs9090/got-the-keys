@@ -559,6 +559,27 @@ describe "Properties" do
       expect(owner_cards.count).to be >= 1
     end
 
+    it "includes a saved searches workspace panel" do
+      sign_in user
+
+      get mine_properties_path
+
+      expect(response).to have_http_status(:ok)
+      document = Nokogiri::HTML(response.body)
+      expect(document.at_css(%([data-testid="workspace-saved-searches"]))).to be_present
+      expect(response.body).to include(I18n.t("ui.properties.mine.saved_searches_title"))
+    end
+
+    it "lists saved searches in the workspace" do
+      sign_in user
+      FactoryBot.create(:saved_search, user:, town_city: "Tunbridge Wells")
+
+      get mine_properties_path
+
+      document = Nokogiri::HTML(response.body)
+      expect(document.css(%([data-testid="saved-search-card"])).count).to eq(1)
+    end
+
     it "shows upcoming, previous, and cancelled bookings for the signed-in customer" do
       sign_in user
 

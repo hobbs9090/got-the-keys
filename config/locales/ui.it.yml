@@ -9,6 +9,7 @@ it:
       member_account_name: Account venditore
       sign_out: Esci
       my_listings: I miei annunci
+      saved_searches: Ricerche salvate
       add_property: Aggiungi immobile
       profile: Profilo
       register: Registrati
@@ -159,9 +160,22 @@ it:
           title: Salva questa ricerca
           body: Salva i filtri attuali e lascia che il team ti avvisi quando arrivano
             immobili corrispondenti.
+          body_signed_in: Salva i filtri applicati sul tuo account. Potrai riaprirli in qualsiasi momento da questo catalogo.
+          body_guest: Accedi o crea un account per salvare i filtri e vedere le ricerche salvate qui accanto agli annunci.
+          sign_in_cta: Accedi per salvare
+          register_cta: Crea un account
           email_placeholder: you@example.com
           alerts_enabled: Inviami un e-mail quando arrivano nuovi annunci corrispondenti
           submit: Salva ricerca
+          saved_list_eyebrow: Il tuo account
+          saved_list_title: Ricerche salvate
+          view_matches: Vedi annunci corrispondenti
+          remove: Rimuovi
+          saved_at: "Salvato %{time}"
+          alerts_on: Avvisi attivi
+          alerts_off: Avvisi disattivati
+          list_empty: Non hai ancora salvato ricerche. Usa Salva questa ricerca nella barra laterale per memorizzare i filtri attuali.
+          manage_in_workspace: Gestisci in I miei annunci
         local_team_eyebrow: Team locale
       filters:
         listing_type: Tipo di annuncio
@@ -283,6 +297,10 @@ it:
         empty_title: Nessun annuncio per ora
         empty_body: Crea il tuo primo immobile e torna qui ogni volta che vuoi continuare
           a lavorarci.
+        saved_searches_eyebrow: Ricerca immobiliare
+        saved_searches_title: Ricerche salvate
+        saved_searches_browse_catalogue: Sfoglia il catalogo
+        saved_searches_empty: Non hai ancora salvato filtri del catalogo. Apri il catalogo immobili e usa Salva questa ricerca nella barra laterale mentre sei connesso.
       trust_cues:
         recently_updated: Aggiornato di recente
         available_now: Disponibile ora
@@ -1138,6 +1156,7 @@ it:
       notice:
         one: Ricerca salvata creata per 1 annuncio corrispondente.
         other: Ricerca salvata creata per %{count} annunci corrispondenti.
+      destroyed: Ricerca salvata rimossa.
       validation:
         max_price: deve essere maggiore o uguale al prezzo minimo
     photos:

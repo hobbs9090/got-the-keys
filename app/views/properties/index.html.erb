@@ -12,8 +12,10 @@
   </div>
 
   <div class="page-hero__meta property-catalogue-hero__meta">
-    <strong><%= number_with_delimiter(@total_properties, delimiter: ",") %></strong>
-    <span><%= t("ui.properties.catalogue.matching_properties", count: @total_properties) %></span>
+    <div class="property-catalogue-hero__stat" role="status">
+      <strong class="property-catalogue-hero__stat-number"><%= number_with_delimiter(@total_properties, delimiter: ",") %></strong>
+      <span class="property-catalogue-hero__stat-caption"><%= t("ui.properties.catalogue.matching_properties", count: @total_properties) %></span>
+    </div>
   </div>
 </section>
 
@@ -39,30 +41,35 @@
     <section class="site-card property-catalogue__saved-search" data-testid="saved-search-panel">
       <p class="section-heading__eyebrow"><%= t("ui.properties.catalogue.saved_search.eyebrow") %></p>
       <h2><%= t("ui.properties.catalogue.saved_search.title") %></h2>
-      <p class="property-catalogue__sidebar-copy"><%= t("ui.properties.catalogue.saved_search.body") %></p>
 
-      <%= form_with model: @saved_search, url: saved_searches_path, class: "saved-search-form" do |f| %>
-        <%= f.hidden_field :locale %>
-        <%= f.hidden_field :sale_status %>
-        <%= f.hidden_field :search_query %>
-        <%= f.hidden_field :town_city %>
-        <%= f.hidden_field :min_bedrooms %>
-        <%= f.hidden_field :min_price %>
-        <%= f.hidden_field :max_price %>
-        <%= f.hidden_field :sort %>
+      <% if user_signed_in? %>
+        <p class="property-catalogue__sidebar-copy"><%= t("ui.properties.catalogue.saved_search.body_signed_in") %></p>
 
-        <div>
-          <%= f.label :email, t("ui.common.email_address") %>
-          <%= f.email_field :email, required: true, maxlength: 255, placeholder: t("ui.properties.catalogue.saved_search.email_placeholder") %>
-        </div>
+        <%= form_with model: @saved_search, url: saved_searches_path, class: "saved-search-form" do |f| %>
+          <%= f.hidden_field :locale %>
+          <%= f.hidden_field :sale_status %>
+          <%= f.hidden_field :search_query %>
+          <%= f.hidden_field :town_city %>
+          <%= f.hidden_field :min_bedrooms %>
+          <%= f.hidden_field :min_price %>
+          <%= f.hidden_field :max_price %>
+          <%= f.hidden_field :sort %>
 
-        <div class="form-grid__checkbox">
-          <%= f.check_box :alerts_enabled %>
-          <%= f.label :alerts_enabled, t("ui.properties.catalogue.saved_search.alerts_enabled"), class: "checkbox-label" %>
-        </div>
+          <div class="form-grid__checkbox">
+            <%= f.check_box :alerts_enabled %>
+            <%= f.label :alerts_enabled, t("ui.properties.catalogue.saved_search.alerts_enabled"), class: "checkbox-label" %>
+          </div>
 
-        <div class="form-actions">
-          <%= f.submit t("ui.properties.catalogue.saved_search.submit"), class: "button primary expanded", data: { testid: "save-search-button" } %>
+          <div class="form-actions">
+            <%= f.submit t("ui.properties.catalogue.saved_search.submit"), class: "button primary expanded", data: { testid: "save-search-button" } %>
+          </div>
+        <% end %>
+      <% else %>
+        <p class="property-catalogue__sidebar-copy"><%= t("ui.properties.catalogue.saved_search.body_guest") %></p>
+
+        <div class="saved-search-guest-actions">
+          <%= link_to t("ui.properties.catalogue.saved_search.sign_in_cta"), new_user_session_path, class: "button primary expanded" %>
+          <%= link_to t("ui.properties.catalogue.saved_search.register_cta"), new_user_registration_path, class: "button secondary hollow expanded" %>
         </div>
       <% end %>
     </section>
@@ -104,6 +111,8 @@
       <% end %>
 
     </section>
+
+    <%= render "properties/catalogue_saved_searches" %>
 
     <%= render "properties/paginated_results", properties: @properties, grid_class: "property-grid property-grid--catalogue" %>
   </div>

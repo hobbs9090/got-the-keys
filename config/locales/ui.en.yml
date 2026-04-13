@@ -9,6 +9,7 @@ en:
       member_account_name: "Seller account"
       sign_out: "Sign out"
       my_listings: "My listings"
+      saved_searches: "Saved searches"
       add_property: "Add property"
       profile: "Profile"
       register: "Register"
@@ -167,9 +168,22 @@ en:
           eyebrow: "Stay in the loop"
           title: "Save this search"
           body: "Capture the current filters and let the team alert you when matching homes come in."
+          body_signed_in: "Save the filters you have applied to your account. You can reopen them any time from this catalogue."
+          body_guest: "Sign in or create an account to save your filters and see your saved searches here next to the listings."
+          sign_in_cta: "Sign in to save"
+          register_cta: "Create an account"
           email_placeholder: "you@example.com"
           alerts_enabled: "Email me when new matching listings arrive"
           submit: "Save search"
+          saved_list_eyebrow: "Your account"
+          saved_list_title: "Saved searches"
+          view_matches: "View matching listings"
+          remove: "Remove"
+          saved_at: "Saved %{time}"
+          alerts_on: "Alerts on"
+          alerts_off: "Alerts off"
+          list_empty: "You have not saved any searches yet. Use Save this search in the sidebar to store the filters you are viewing."
+          manage_in_workspace: "Manage in My listings"
         local_team_eyebrow: "Local team"
         results_eyebrow: "Live results"
         results_title:
@@ -313,6 +327,10 @@ en:
           last_saved: "Last saved"
         empty_title: "No listings yet"
         empty_body: "Create your first property and come back here whenever you want to continue working on it."
+        saved_searches_eyebrow: "Property search"
+        saved_searches_title: "Saved searches"
+        saved_searches_browse_catalogue: "Browse the catalogue"
+        saved_searches_empty: "You have not saved any catalogue filters yet. Open the property catalogue and use Save this search in the sidebar while you are signed in."
       seller:
         checks:
           headline: "Headline and summary"
@@ -541,6 +559,7 @@ en:
       notice:
         one: "Saved search created for 1 matching listing."
         other: "Saved search created for %{count} matching listings."
+      destroyed: "Saved search removed."
       validation:
         max_price: "must be greater than or equal to the minimum price"
 

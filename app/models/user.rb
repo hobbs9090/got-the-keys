@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :properties, dependent: :destroy
   has_many :saved_properties, dependent: :destroy
   has_many :saved_listings, through: :saved_properties, source: :property
+  has_many :saved_searches, dependent: :destroy
 
   after_initialize :set_defaults, if: :new_record?
   before_validation :strip_form_fields

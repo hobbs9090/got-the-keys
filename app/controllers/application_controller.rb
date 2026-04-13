@@ -27,33 +27,8 @@ class ApplicationController < ActionController::Base
   private
 
   def after_sign_in_path_for(resource)
-    if resource.is_a?(User)
-      save_requested_property_for(resource)
-
-      return requested_return_path if requested_return_path.present?
-    end
-
-    super
-  end
-
-  def after_sign_up_path_for(resource)
-    if resource.is_a?(User)
-      save_requested_property_for(resource)
-
-      return requested_return_path if requested_return_path.present?
-    end
-
-    super
-  end
-
-  def after_inactive_sign_up_path_for(resource)
-    if resource.is_a?(User)
-      save_requested_property_for(resource)
-
-      return requested_return_path if requested_return_path.present?
-    end
-
-    super
+    path = return_path_after_user_authentication(resource)
+    path.presence || super
   end
 
   def after_sending_reset_password_instructions_path_for(resource_name)
@@ -122,6 +97,19 @@ class ApplicationController < ActionController::Base
     return if property.blank? || property.user == resource
 
     resource.saved_properties.find_or_create_by!(property:)
+  end
+
+  def return_path_after_user_authentication(resource)
+    return unless resource.is_a?(User)
+
+    save_requested_property_for(resource)
+
+    if (explicit = requested_return_path).present?
+      session.delete(:pending_return_to)
+      return explicit
+    end
+
+    stored_location_for(resource)
   end
 
   def requested_return_path

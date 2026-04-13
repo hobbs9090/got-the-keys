@@ -21,6 +21,8 @@ class PropertiesController < ApplicationController
       for_rent: Property.cached_for_rent_total
     }
     @saved_search = SavedSearch.new(saved_search_defaults)
+    @saved_searches = current_user.saved_searches.order(created_at: :desc) if user_signed_in?
+    store_location_for(:user, request.fullpath) unless user_signed_in?
   end
 
   def show
@@ -44,6 +46,7 @@ class PropertiesController < ApplicationController
       live: owner_properties.where(listing_state: Property::PUBLIC_LISTING_STATES).count
     }
     @saved_properties = current_user.saved_listings.preload(:photos).order(updated_at: :desc)
+    @saved_searches = current_user.saved_searches.order(created_at: :desc)
     @properties = owner_properties.preload(:photos).order(updated_at: :desc).page(params[:page])
     @appointments_by_property = appointments_by_property_for(@properties)
     @customer_appointment_buckets = customer_appointment_buckets_for(current_user)
@@ -108,7 +111,6 @@ class PropertiesController < ApplicationController
   def saved_search_defaults
     {
       locale: I18n.locale.to_s,
-      email: current_user&.email,
       sale_status: @filters[:sale_status],
       search_query: @filters[:q],
       town_city: @filters[:town_city],

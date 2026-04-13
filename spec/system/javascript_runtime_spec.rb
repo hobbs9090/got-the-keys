@@ -263,32 +263,17 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     )
   end
 
-  it "requires an email address in the saved-search form" do
+  it "shows sign-in options for guests on the saved-search panel instead of an email field" do
     visit properties_path
     dismiss_cookie_banner
     wait_for_theme_runtime
 
-    state = page.evaluate_script(<<~JS)
-      (() => {
-        const input = document.getElementById("saved_search_email");
-        if (!input) return null;
+    within('[data-testid="saved-search-panel"]') do
+      expect(page).to have_link(I18n.t("ui.properties.catalogue.saved_search.sign_in_cta"))
+      expect(page).to have_link(I18n.t("ui.properties.catalogue.saved_search.register_cta"))
+    end
 
-        input.value = "";
-        input.checkValidity();
-        const invalid = input.validationMessage;
-
-        input.value = "buyer@example.com";
-        input.dispatchEvent(new window.Event("input", { bubbles: true }));
-        const cleared = input.validationMessage;
-
-        return { invalid, cleared };
-      })()
-    JS
-
-    expect(state).to include(
-      "invalid" => I18n.t("ui.validation.required"),
-      "cleared" => ""
-    )
+    expect(page).to have_no_css("#saved_search_email")
   end
 
   it "localizes native browser validation messages on the registration form" do
@@ -821,12 +806,16 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     )
   end
 
-  it "uses readable saved-search form labels on the catalogue page in dark mode" do
+  it "uses readable saved-search form labels on the catalogue page in dark mode when signed in" do
+    user = FactoryBot.create(:user)
+
     visit root_path
     dismiss_cookie_banner
     wait_for_theme_runtime
 
     store_theme_preference("dark")
+
+    sign_in_as_user(user)
 
     visit properties_path
     dismiss_cookie_banner
@@ -834,26 +823,21 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
 
     styles = page.evaluate_script(<<~JS)
       (() => {
-        const emailLabel = document.querySelector('label[for="saved_search_email"]');
         const alertsLabel = document.querySelector('label[for="saved_search_alerts_enabled"]');
-        const emailInput = document.getElementById("saved_search_email");
+        const alertsInput = document.getElementById("saved_search_alerts_enabled");
 
-        emailInput.focus();
+        alertsInput.focus();
 
         return {
           theme: document.documentElement.dataset.theme,
-          emailLabelColor: getComputedStyle(emailLabel).color,
-          alertsLabelColor: getComputedStyle(alertsLabel).color,
-          emailInputBackground: getComputedStyle(emailInput).backgroundColor
+          alertsLabelColor: getComputedStyle(alertsLabel).color
         };
       })();
     JS
 
     expect(styles).to include(
       "theme" => "dark",
-      "emailLabelColor" => "rgb(244, 248, 255)",
-      "alertsLabelColor" => "rgb(230, 238, 249)",
-      "emailInputBackground" => "rgb(28, 43, 69)"
+      "alertsLabelColor" => "rgb(230, 238, 249)"
     )
   end
 

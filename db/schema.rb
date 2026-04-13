@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_09_143000) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_13_120000) do
   create_table "admins", force: :cascade do |t|
     t.integer "consumed_timestep"
     t.datetime "created_at", precision: nil
@@ -345,10 +345,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_09_143000) do
     t.string "sort"
     t.string "town_city"
     t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
     t.index ["alerts_enabled"], name: "index_saved_searches_on_alerts_enabled"
     t.index ["email"], name: "index_saved_searches_on_email"
     t.index ["sale_status"], name: "index_saved_searches_on_sale_status"
     t.index ["town_city"], name: "index_saved_searches_on_town_city"
+    t.index ["user_id"], name: "index_saved_searches_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -412,4 +414,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_09_143000) do
   add_foreign_key "rental_applications", "properties"
   add_foreign_key "saved_properties", "properties"
   add_foreign_key "saved_properties", "users"
+  add_foreign_key "saved_searches", "users"
 end

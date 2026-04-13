@@ -9,6 +9,7 @@ de:
       member_account_name: Verkäuferkonto
       sign_out: Abmelden
       my_listings: Meine Inserate
+      saved_searches: Gespeicherte Suchen
       add_property: Objekt hinzufügen
       profile: Profil
       register: Registrieren
@@ -158,10 +159,23 @@ de:
           title: Diese Suche speichern
           body: Speichern Sie die aktuellen Filter und lassen Sie sich informieren,
             wenn passende Immobilien verfügbar sind.
+          body_signed_in: Speichern Sie die angewendeten Filter in Ihrem Konto. Sie können sie jederzeit wieder hier im Katalog öffnen.
+          body_guest: Melden Sie sich an oder legen Sie ein Konto an, um Filter zu speichern und Ihre gespeicherten Suchen hier neben den Inseraten zu sehen.
+          sign_in_cta: Anmelden zum Speichern
+          register_cta: Konto erstellen
           email_placeholder: you@example.com
           alerts_enabled: Per E-Mail benachrichtigen, wenn neue passende Inserate
             eintreffen
           submit: Suche speichern
+          saved_list_eyebrow: Ihr Konto
+          saved_list_title: Gespeicherte Suchen
+          view_matches: Passende Inserate anzeigen
+          remove: Entfernen
+          saved_at: "Gespeichert %{time}"
+          alerts_on: Benachrichtigungen an
+          alerts_off: Benachrichtigungen aus
+          list_empty: Sie haben noch keine Suchen gespeichert. Nutzen Sie „Suche speichern“ in der Seitenleiste, um Ihre aktuellen Filter zu sichern.
+          manage_in_workspace: In „Meine Inserate“ verwalten
         local_team_eyebrow: Lokales Team
       filters:
         listing_type: Inserattyp
@@ -282,6 +296,10 @@ de:
         empty_title: Noch keine Inserate
         empty_body: Erstellen Sie Ihr erstes Objekt und kehren Sie hierher zurück,
           wenn Sie weiterarbeiten möchten.
+        saved_searches_eyebrow: Immobiliensuche
+        saved_searches_title: Gespeicherte Suchen
+        saved_searches_browse_catalogue: Zum Katalog
+        saved_searches_empty: Sie haben noch keine Katalogfilter gespeichert. Öffnen Sie den Immobilienkatalog und nutzen Sie „Suche speichern“ in der Seitenleiste, während Sie angemeldet sind.
       trust_cues:
         recently_updated: Kürzlich aktualisiert
         available_now: Sofort verfügbar
@@ -1140,6 +1158,7 @@ de:
       notice:
         one: Gespeicherte Suche für 1 passendes Inserat erstellt.
         other: Gespeicherte Suche für %{count} passende Inserate erstellt.
+      destroyed: Gespeicherte Suche entfernt.
       validation:
         max_price: muss größer oder gleich dem Mindestpreis sein
     photos:

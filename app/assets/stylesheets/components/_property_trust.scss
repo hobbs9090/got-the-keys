@@ -101,3 +101,84 @@
     outline: none;
   }
 }
+
+.saved-search-guest-actions {
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 0.35rem;
+}
+
+.property-catalogue__saved-searches-band {
+  margin-bottom: 1.25rem;
+
+  .property-results-panel__head {
+    align-items: center;
+  }
+}
+
+.property-saved-searches-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr);
+  margin-top: 1rem;
+}
+
+.property-saved-search-card {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem 1.75rem;
+  justify-content: space-between;
+  padding: 1.1rem 1.35rem;
+}
+
+.property-saved-search-card__main {
+  display: flex;
+  flex: 1 1 16rem;
+  flex-direction: column;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.property-saved-search-card__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.property-saved-search-card__meta {
+  align-items: center;
+  color: var(--color-muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.property-saved-search-card__actions {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  justify-content: flex-end;
+
+  form {
+    display: inline-flex;
+    margin: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .property-saved-search-card {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .property-saved-search-card__actions {
+    justify-content: flex-start;
+  }
+}

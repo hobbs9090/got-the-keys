@@ -1,4 +1,6 @@
 class SavedSearch < ApplicationRecord
+  belongs_to :user
+
   def min_price=(value)
     super(normalize_price_value(value))
   end
@@ -7,8 +9,9 @@ class SavedSearch < ApplicationRecord
     super(normalize_price_value(value))
   end
 
-  validates :email, :locale, presence: true
-  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :user, presence: true
+  validates :locale, presence: true
+  validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :sale_status, inclusion: { in: Property::SALE_STATUS }, allow_blank: true
   validates :sort, inclusion: { in: Property::SORT_OPTIONS }, allow_blank: true
   validates :min_bedrooms, :min_price, :max_price,
@@ -17,6 +20,7 @@ class SavedSearch < ApplicationRecord
   validate :price_bounds_make_sense
 
   before_validation :apply_defaults
+  before_validation :sync_email_from_user
 
   def filter_params
     {
@@ -38,6 +42,10 @@ class SavedSearch < ApplicationRecord
 
   def apply_defaults
     self.locale ||= I18n.default_locale.to_s
+  end
+
+  def sync_email_from_user
+    self.email = user.email if user.present?
   end
 
   def price_bounds_make_sense

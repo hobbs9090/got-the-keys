@@ -121,18 +121,37 @@
     </div>
   <% end %>
 
-  <div class="section-heading">
+  <div class="section-heading" id="saved-searches">
     <div>
-      <p class="section-heading__eyebrow"><%= t("ui.properties.mine.list_eyebrow", default: "Your records") %></p>
-      <h2><%= t("ui.properties.mine.list_title", default: "Saved and partially completed listings") %></h2>
+      <p class="section-heading__eyebrow"><%= t("ui.properties.mine.saved_searches_eyebrow") %></p>
+      <h2><%= t("ui.properties.mine.saved_searches_title") %></h2>
     </div>
 
     <div class="section-heading__actions">
-      <%= link_to t("ui.site_header.add_property"), new_property_path, class: "button primary" %>
+      <%= link_to t("ui.properties.mine.saved_searches_browse_catalogue"), properties_path, class: "button secondary hollow" %>
     </div>
   </div>
 
+  <section class="site-card property-workspace-panel property-workspace-panel--saved-searches" data-testid="workspace-saved-searches">
+    <% if @saved_searches.blank? %>
+      <p class="empty-copy"><%= t("ui.properties.mine.saved_searches_empty") %></p>
+    <% else %>
+      <%= render "properties/saved_searches_cards", saved_searches: @saved_searches %>
+    <% end %>
+  </section>
+
   <% if @properties.any? %>
+    <div class="section-heading">
+      <div>
+        <p class="section-heading__eyebrow"><%= t("ui.properties.mine.list_eyebrow", default: "Your records") %></p>
+        <h2><%= t("ui.properties.mine.list_title", default: "Saved and partially completed listings") %></h2>
+      </div>
+
+      <div class="section-heading__actions">
+        <%= link_to t("ui.site_header.add_property"), new_property_path, class: "button primary" %>
+      </div>
+    </div>
+
     <div class="property-workspace__grid">
       <% @properties.each do |property| %>
         <article class="site-card property-workspace-card" data-testid="owner-property-card">

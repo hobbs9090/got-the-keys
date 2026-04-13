@@ -132,8 +132,7 @@ RSpec.describe "Public content pages", type: :request do
 
     get properties_path
 
-    saved_search_email = parsed_html.at_css("input#saved_search_email")
-    expect(saved_search_email["required"]).to eq("required")
-    expect(saved_search_email["maxlength"]).to eq("255")
+    expect(parsed_html.at_css("input#saved_search_email")).to be_nil
+    expect(parsed_html.at_css('[data-testid="saved-search-panel"] a[href*="sign_in"]')).to be_present
   end
 end

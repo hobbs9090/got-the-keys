@@ -9,6 +9,7 @@ zh:
       member_account_name: 业主账户
       sign_out: 退出登录
       my_listings: 我的房源
+      saved_searches: 已保存的搜索
       add_property: 添加房源
       profile: 个人资料
       register: 注册
@@ -144,9 +145,22 @@ zh:
           eyebrow: 保持关注
           title: 保存此次搜索
           body: 保存当前筛选条件，当有匹配房源上线时让团队提醒你。
+          body_signed_in: 将当前筛选保存到账户，之后可随时在本目录再次打开。
+          body_guest: 登录或注册账户后即可保存筛选，并在列表旁查看已保存的搜索。
+          sign_in_cta: 登录后保存
+          register_cta: 注册账户
           email_placeholder: you@example.com
           alerts_enabled: 有新匹配房源时给我发邮件
           submit: 保存搜索
+          saved_list_eyebrow: 我的账户
+          saved_list_title: 已保存的搜索
+          view_matches: 查看匹配房源
+          remove: 删除
+          saved_at: "保存于 %{time}"
+          alerts_on: 提醒已开启
+          alerts_off: 提醒已关闭
+          list_empty: 你还没有保存过搜索。在侧边栏使用「保存此次搜索」即可保存当前筛选条件。
+          manage_in_workspace: 在「我的房源」中管理
         local_team_eyebrow: 本地团队
       filters:
         listing_type: 房源类型
@@ -256,6 +270,10 @@ zh:
           last_saved: 最近保存
         empty_title: 还没有房源
         empty_body: 创建你的第一套房源，并在想继续处理时随时回到这里。
+        saved_searches_eyebrow: 找房搜索
+        saved_searches_title: 已保存的搜索
+        saved_searches_browse_catalogue: 浏览房源目录
+        saved_searches_empty: 你尚未保存过目录筛选。请打开房源目录，并在登录状态下使用侧边栏的「保存此次搜索」。
       trust_cues:
         recently_updated: 最近已更新
         available_now: 现可入住
@@ -1115,6 +1133,7 @@ zh:
       notice:
         one: 已创建保存搜索，匹配 1 套房源。
         other: 已创建保存搜索，匹配 %{count} 套房源。
+      destroyed: 已删除保存的搜索。
       validation:
         max_price: 必须大于或等于最低价格
     photos:

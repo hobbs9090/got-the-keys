@@ -9,6 +9,7 @@ fr:
       member_account_name: Compte vendeur
       sign_out: Se deconnecter
       my_listings: Mes annonces
+      saved_searches: Recherches enregistrees
       add_property: Ajouter un bien
       profile: Profil
       register: S'inscrire
@@ -161,10 +162,23 @@ fr:
           title: Enregistrer cette recherche
           body: Conservez les filtres actuels et laissez l equipe vous alerter quand
             des biens correspondants arrivent.
+          body_signed_in: Enregistrez les filtres appliqués sur votre compte. Vous pourrez les rouvrir depuis ce catalogue.
+          body_guest: Connectez-vous ou créez un compte pour enregistrer vos filtres et voir vos recherches enregistrées ici à côté des annonces.
+          sign_in_cta: Se connecter pour enregistrer
+          register_cta: Créer un compte
           email_placeholder: you@example.com
           alerts_enabled: M envoyer un e-mail quand de nouveaux biens correspondants
             arrivent
           submit: Enregistrer la recherche
+          saved_list_eyebrow: Votre compte
+          saved_list_title: Recherches enregistrées
+          view_matches: Voir les annonces correspondantes
+          remove: Supprimer
+          saved_at: "Enregistré %{time}"
+          alerts_on: Alertes activées
+          alerts_off: Alertes désactivées
+          list_empty: Vous n avez pas encore enregistre de recherche. Utilisez Enregistrer cette recherche dans le panneau lateral pour conserver vos filtres.
+          manage_in_workspace: Gerer dans Mes annonces
         local_team_eyebrow: Equipe locale
       filters:
         listing_type: Type d'annonce
@@ -287,6 +301,10 @@ fr:
         empty_title: Aucune annonce pour le moment
         empty_body: Creez votre premier bien puis revenez ici quand vous voulez reprendre
           le travail.
+        saved_searches_eyebrow: Recherche immobiliere
+        saved_searches_title: Recherches enregistrees
+        saved_searches_browse_catalogue: Parcourir le catalogue
+        saved_searches_empty: Vous n avez pas encore enregistre de filtres du catalogue. Ouvrez le catalogue des biens et utilisez Enregistrer cette recherche dans le panneau lateral pendant que vous etes connecte.
       trust_cues:
         recently_updated: Recemment mis a jour
         available_now: Disponible maintenant
@@ -1150,6 +1168,7 @@ fr:
       notice:
         one: Recherche enregistree creee pour 1 annonce correspondante.
         other: Recherche enregistree creee pour %{count} annonces correspondantes.
+      destroyed: Recherche enregistree supprimee.
       validation:
         max_price: doit etre superieur ou egal au prix minimum
     photos:

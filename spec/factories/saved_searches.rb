@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :saved_search do
-    sequence(:email) { |n| "searcher#{n}@example.com" }
+    user
     locale { "en" }
     sale_status { Property::SALE_STATUSES[:for_sale] }
     search_query { "Sevenoaks" }

@@ -25,4 +25,12 @@ RSpec.describe SavedSearch do
     expect(search).not_to be_valid
     expect(search.errors[:max_price]).to include("must be greater than or equal to the minimum price")
   end
+
+  it "requires an associated user" do
+    search = FactoryBot.build(:saved_search, user: nil)
+    search.email = "orphan@example.com"
+
+    expect(search).not_to be_valid
+    expect(search.errors[:user]).to include("must exist")
+  end
 end

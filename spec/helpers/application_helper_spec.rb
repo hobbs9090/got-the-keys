@@ -77,6 +77,18 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
+  describe "#formatted_public_date_time" do
+    it "returns a localized long timestamp without a UTC suffix" do
+      value = Time.zone.local(2026, 3, 30, 15, 45)
+
+      expect(helper.formatted_public_date_time(value)).to eq(I18n.l(value, format: :long))
+    end
+
+    it "returns nil for blank values" do
+      expect(helper.formatted_public_date_time(nil)).to be_nil
+    end
+  end
+
   describe "#formatted_calendar_date" do
     it "includes the weekday for selected calendar headings" do
       value = Date.new(2026, 4, 28)

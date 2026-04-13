@@ -1,0 +1,17 @@
+<% return unless user_signed_in? %>
+
+<section class="site-card property-catalogue__saved-searches-band" data-testid="catalogue-saved-searches">
+  <div class="property-results-panel__head">
+    <div>
+      <p class="section-heading__eyebrow"><%= t("ui.properties.catalogue.saved_search.saved_list_eyebrow") %></p>
+      <h2><%= t("ui.properties.catalogue.saved_search.saved_list_title") %></h2>
+    </div>
+    <%= link_to t("ui.properties.catalogue.saved_search.manage_in_workspace"), mine_properties_path(anchor: "saved-searches"), class: "button secondary hollow" %>
+  </div>
+
+  <% if @saved_searches.blank? %>
+    <p class="property-catalogue__sidebar-copy property-catalogue__saved-searches-empty" data-testid="catalogue-saved-searches-empty"><%= t("ui.properties.catalogue.saved_search.list_empty") %></p>
+  <% else %>
+    <%= render "properties/saved_searches_cards", saved_searches: @saved_searches %>
+  <% end %>
+</section>
