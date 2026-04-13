@@ -251,9 +251,59 @@ photos:
     caption: Front exterior
     position: 1
     primary: true
+  - property_key: baseline_sale_011
+    image_filename: properties/property_26_meadow_mews_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_sale_012
+    image_filename: properties/property_flat_16_28_church_court_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_sale_013
+    image_filename: properties/property_flat_12_30_priory_street_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_sale_014
+    image_filename: properties/property_32_queens_place_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_sale_015
+    image_filename: properties/property_34_park_close_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_sale_016
+    image_filename: properties/property_flat_9_36_cedar_drive_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_sale_017
+    image_filename: properties/property_flat_5_38_oak_terrace_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_sale_018
+    image_filename: properties/property_40_grosvenor_place_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_sale_019
+    image_filename: properties/property_flat_5_42_station_crescent_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
   - property_key: baseline_sale_020
     image_filename: properties/property_44_grosvenor_crescent_hero.jpg
     caption: Front exterior
+    position: 1
+    primary: true
+  - property_key: baseline_sale_021
+    image_filename: properties/property_flat_16_46_lime_grove_hero.jpg
+    caption: Hero image
     position: 1
     primary: true
   - property_key: baseline_sale_024
