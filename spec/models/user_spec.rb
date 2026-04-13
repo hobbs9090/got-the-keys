@@ -107,4 +107,22 @@ describe "A user" do
     expect(user.errors[:mobile_number]).to include("must be a valid phone number")
   end
 
+  it "strips leading and trailing whitespace from form-backed attributes" do
+    user = User.new(user_attributes(
+      first_name: "  Nina  ",
+      last_name: "  Hughes  ",
+      mobile_number: "  07595 123456  ",
+      email: "  nina.hughes@example.com  ",
+      language: "  en  "
+    ))
+
+    user.valid?
+
+    expect(user.first_name).to eq("Nina")
+    expect(user.last_name).to eq("Hughes")
+    expect(user.mobile_number).to eq("07595 123456")
+    expect(user.email).to eq("nina.hughes@example.com")
+    expect(user.language).to eq("en")
+  end
+
 end

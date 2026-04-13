@@ -142,5 +142,9 @@ RSpec.describe "Devise entry pages", type: :request do
     expect(document.text).to include(I18n.t("devise.views.registrations.edit.title", locale: :de))
     expect(document.text).to include(I18n.t("helpers.label.user.current_password", locale: :de))
     expect(document.text).to include(I18n.t("devise.views.registrations.edit.cancel_action", locale: :de))
+    expect(document.at_css('[data-testid="delete-account-trigger"]')).to be_present
+    expect(document.at_css('#delete-account-modal[data-modal]')).to be_present
+    expect(document.at_css('[data-testid="confirm-delete-account"]')).to be_present
+    expect(document.at_css('[data-testid="confirm-delete-account"]')["disabled"]).to eq("disabled")
   end
 end
