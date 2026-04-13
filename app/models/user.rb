@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :saved_listings, through: :saved_properties, source: :property
 
   after_initialize :set_defaults, if: :new_record?
+  before_validation :strip_form_fields
 
   validates :first_name, :last_name, :mobile_number, presence: true
   validates :terms_of_service, acceptance: true
@@ -43,6 +44,14 @@ class User < ApplicationRecord
 
   def set_defaults
     self.language ||= I18n.default_locale.to_s
+  end
+
+  def strip_form_fields
+    self.first_name = first_name.to_s.strip
+    self.last_name = last_name.to_s.strip
+    self.mobile_number = mobile_number.to_s.strip
+    self.email = email.to_s.strip
+    self.language = language.to_s.strip
   end
 
   public

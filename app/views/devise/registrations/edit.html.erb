@@ -83,13 +83,42 @@
       <p class="section-heading__eyebrow"><%= t('devise.views.registrations.edit.cancel_my_account') %></p>
       <h3><%= t('devise.views.registrations.edit.cancel_my_account') %></h3>
       <p><%= t('devise.views.registrations.edit.danger_body') %></p>
-      <%= link_to t('devise.views.registrations.edit.cancel_action'),
-                  registration_path(resource_name),
-                  class: "button hollow auth-form__danger-link",
-                  data: {
-                    turbo_method: :delete,
-                    turbo_confirm: t('devise.views.registrations.edit.are_you_sure')
-                  } %>
+      <button type="button"
+              class="button hollow auth-form__danger-link"
+              data-modal-trigger="delete-account-modal"
+              data-testid="delete-account-trigger">
+        <%= t('devise.views.registrations.edit.cancel_action') %>
+      </button>
     </section>
   </section>
 </section>
+
+<%= render "shared/modal",
+           id: "delete-account-modal",
+           title: t('devise.views.registrations.edit.cancel_my_account'),
+           size: "small" do %>
+  <div class="auth-modal auth-modal--danger" data-account-delete-confirm>
+    <p class="lead"><%= t('devise.views.registrations.edit.are_you_sure') %></p>
+    <p><%= t('devise.views.registrations.edit.danger_body') %></p>
+
+    <label class="auth-form__checkbox auth-form__checkbox--compact auth-modal__confirm-check">
+      <input type="checkbox" data-account-delete-checkbox>
+      <div>
+        <span class="checkbox-label"><%= t("devise.views.registrations.edit.delete_acknowledgement", default: "I understand this permanently deletes my account and cannot be undone.") %></span>
+      </div>
+    </label>
+
+    <div class="form-actions auth-modal__actions">
+      <button type="button" class="button hollow secondary expanded" data-modal-close>
+        <%= t("ui.common.cancel", default: "Cancel") %>
+      </button>
+      <%= button_to t("devise.views.registrations.edit.delete_account", default: "Delete account"),
+                    registration_path(resource_name),
+                    method: :delete,
+                    class: "button alert expanded",
+                    disabled: true,
+                    form: { data: { testid: "delete-account-form" } },
+                    data: { account_delete_button: true, testid: "confirm-delete-account" } %>
+    </div>
+  </div>
+<% end %>
