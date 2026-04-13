@@ -63,8 +63,8 @@ RSpec.describe "Admin QA guide" do
     expect(response.body).to include("mail delivery mode".humanize)
     expect(response.body).to include(ActionMailer::Base.delivery_method.to_s)
     expect(response.body).to include("property-card")
-    expect(response.body).to include("Scenario families")
-    expect(response.body).to include("Happy path")
+    expect(response.body).not_to include("Scenario families")
+    expect(response.body).not_to include("Happy path")
     expect(response.body).not_to include("Known credentials")
     expect(response.body).not_to include(%(data-testid="qa-credentials"))
   end

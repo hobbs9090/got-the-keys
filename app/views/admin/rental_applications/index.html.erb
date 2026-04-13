@@ -12,7 +12,7 @@
 <section class="admin-grid admin-grid--board">
   <% @applications_by_status.each do |status, applications| %>
     <article class="admin-panel" data-testid="rental-applications-column-<%= status %>">
-      <h2><%= t("ui.rental_applications.statuses.#{status}", default: status.humanize) %></h2>
+      <h2><%= t("ui.rental_applications.statuses.#{status}", default: status.humanize).to_s.capitalize %></h2>
       <% if applications.any? %>
         <div class="admin-list">
           <% applications.each do |application| %>
