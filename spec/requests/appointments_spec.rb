@@ -15,17 +15,25 @@ RSpec.describe "Appointments" do
       configure_booking_rules!(open_weekdays: %w[1 2 3 4 5], office_opens_at: "09:00", office_closes_at: "17:00")
     end
 
-    it "renders the booking form" do
+    it "redirects back to the property booking panel" do
       get new_property_appointment_path(property)
 
-      expect(response).to have_http_status(:ok)
-      expect(response.body).to include("Book a viewing")
+      expect(response).to redirect_to(property_path(property, anchor: "booking-panel"))
     end
 
-    it "prefills the booking form for signed-in users" do
+    it "preserves the selected slot when redirecting back to the property page" do
+      slot = next_booking_slot
+
+      get new_property_appointment_path(property, slot: slot.iso8601)
+
+      expect(response).to redirect_to(property_path(property, slot: slot.iso8601, anchor: "booking-panel"))
+    end
+
+    it "prefills the booking form for signed-in users on the property page" do
       sign_in(user)
 
       get new_property_appointment_path(property)
+      follow_redirect!
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include(%(value="#{ERB::Util.html_escape(user.full_name)}"))
@@ -44,6 +52,7 @@ RSpec.describe "Appointments" do
       )
 
       get new_property_appointment_path(property)
+      follow_redirect!
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include(%(value="#{late_slot.iso8601}"))

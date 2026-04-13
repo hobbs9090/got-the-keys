@@ -49,6 +49,7 @@
                     </div>
                     <div class="property-workspace-card__appointment-actions">
                       <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+                      <%= link_to t("ui.properties.mine.open_details", default: "Open details"), property_path(appointment.property), class: "button hollow secondary" %>
                       <%= link_to t("ui.properties.mine.view_booking", default: "View booking"), appointment_path(appointment, token: appointment.access_token), class: "button hollow secondary" %>
                     </div>
                   </div>
@@ -191,7 +192,10 @@
                             <strong><%= appointment.customer_name %></strong>
                             <p><%= appointment.customer_email %> · <%= formatted_date_time(appointment.scheduled_at) %></p>
                           </div>
-                          <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+                          <div class="property-workspace-card__appointment-actions">
+                            <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+                            <%= link_to t("ui.properties.mine.open_details", default: "Open details"), property_path(property), class: "button hollow secondary" %>
+                          </div>
                         </div>
                       <% end %>
                     </div>
@@ -210,7 +214,10 @@
                             <strong><%= appointment.customer_name %></strong>
                             <p><%= appointment.customer_email %> · <%= formatted_date_time(appointment.scheduled_at) %></p>
                           </div>
-                          <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+                          <div class="property-workspace-card__appointment-actions">
+                            <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+                            <%= link_to t("ui.properties.mine.open_details", default: "Open details"), property_path(property), class: "button hollow secondary" %>
+                          </div>
                         </div>
                       <% end %>
                     </div>
@@ -229,7 +236,10 @@
                             <strong><%= appointment.customer_name %></strong>
                             <p><%= appointment.customer_email %> · <%= formatted_date_time(appointment.scheduled_at) %></p>
                           </div>
-                          <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+                          <div class="property-workspace-card__appointment-actions">
+                            <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+                            <%= link_to t("ui.properties.mine.open_details", default: "Open details"), property_path(property), class: "button hollow secondary" %>
+                          </div>
                         </div>
                       <% end %>
                     </div>

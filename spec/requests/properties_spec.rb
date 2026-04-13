@@ -264,10 +264,17 @@ describe "Properties" do
       enquiry_panel = document.at_css(%([data-testid="property-enquiry-panel"]))
       offer_panel = document.at_css(%([data-testid="property-offer-panel"]))
       branch_panel = document.at_css(%([data-testid="property-branch-card"]))
+      booking_shortcut_form = document.at_css(%([data-testid="property-booking-shortcut-form"]))
+      booking_form = document.at_css(%([data-testid="appointment-form"]))
+      booking_slot_picker = document.at_css(%([data-testid="requested-time-picker"]))
 
       expect(response).to have_http_status(:ok)
       expect(showcase.at_css(".property-hero__media--ratio-3-2")).to be_present
       expect(booking_panel).to be_present
+      expect(booking_shortcut_form).not_to be_present
+      expect(booking_form).to be_present
+      expect(booking_form["action"]).to eq(property_appointments_path(property))
+      expect(booking_slot_picker).to be_present
       expect(enquiry_panel).to be_present
       expect(enquiry_panel["class"]).to include("empty-state")
       expect(enquiry_panel["class"]).to include("property-booking-panel__support-card")
@@ -496,6 +503,7 @@ describe "Properties" do
       expect(response.body).to include("Upcoming Customer")
       expect(response.body).to include("Previous Customer")
       expect(response.body).to include("Cancelled Customer")
+      expect(response.body).to include(property_path(property))
       expect(response.body).not_to include("Other Customer")
       expect(response.body).to include(I18n.t("ui.appointments.statuses.confirmed"))
       expect(response.body).to include(I18n.t("ui.appointments.statuses.completed"))
@@ -518,6 +526,8 @@ describe "Properties" do
       expect(response.body).to include("Saved homes")
       expect(response.body).to include("Saved Lane")
       expect(response.body).to include("Owned Lane")
+      expect(response.body).to include(property_path(saved_property))
+      expect(response.body).to include(property_path(owned_property))
       expect(response.body).to include("Remove from saved list")
       expect(saved_cards.count).to eq(1)
       expect(owner_cards.count).to be >= 1
@@ -590,6 +600,9 @@ describe "Properties" do
       expect(response.body).to include("Previous Booking House")
       expect(response.body).to include("Cancelled Booking House")
       expect(response.body).not_to include("Someone Else's Booking House")
+      expect(response.body).to include(property_path(upcoming_property))
+      expect(response.body).to include(property_path(previous_property))
+      expect(response.body).to include(property_path(cancelled_property))
       expect(response.body).to include(appointment_path(upcoming_appointment, token: upcoming_appointment.access_token))
       expect(response.body).to include(appointment_path(previous_appointment, token: previous_appointment.access_token))
       expect(response.body).to include(appointment_path(cancelled_appointment, token: cancelled_appointment.access_token))

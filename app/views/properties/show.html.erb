@@ -94,7 +94,7 @@
     <% end %>
   </article>
 
-  <aside class="property-booking-panel" data-testid="booking-panel">
+  <aside class="property-booking-panel" data-testid="booking-panel" id="booking-panel">
     <% if current_user != @property.user %>
       <div class="empty-state property-booking-panel__support-card property-booking-panel__save-card" data-testid="property-save-panel">
         <h3><%= t("ui.saved_properties.panel_title", default: "Save this listing") %></h3>
@@ -115,18 +115,55 @@
     <h2><%= t("ui.common.book_a_viewing") %></h2>
     <p><%= t("ui.properties.show.booking_body") %></p>
 
+    <%= render "shared/errors", object: @appointment %>
+
     <% if @available_slots.any? %>
-      <ul class="slot-list">
-        <% @available_slots.each do |slot| %>
-          <li>
-            <%= link_to new_property_appointment_path(@property, slot: slot.starts_at.iso8601), class: "slot-list__link", data: { testid: "slot-option-#{slot.starts_at.to_i}" } do %>
-              <strong><%= formatted_date_time(slot.starts_at) %></strong>
-              <span><%= t("ui.properties.show.slot_finish", time: l(slot.ends_at, format: :time_only)) %></span>
-            <% end %>
-          </li>
-        <% end %>
-      </ul>
-      <%= link_to t("ui.properties.show.request_viewing"), new_property_appointment_path(@property), class: "button primary expanded", data: { testid: "book-viewing-cta" } %>
+      <%= form_with model: [@property, @appointment], local: true, class: "stacked-form", data: { testid: "appointment-form" } do |f| %>
+        <div>
+          <%= f.label :customer_name, t("ui.common.full_name"), **form_label_options(@appointment, :customer_name) %>
+          <%= f.text_field :customer_name, required: true, autocomplete: "name", maxlength: 100, **form_control_options(@appointment, :customer_name) %>
+          <%= field_error_messages(@appointment, :customer_name) %>
+        </div>
+
+        <div>
+          <%= f.label :customer_email, t("ui.common.email_address"), **form_label_options(@appointment, :customer_email) %>
+          <%= f.email_field :customer_email, required: true, autocomplete: "email", **form_control_options(@appointment, :customer_email) %>
+          <%= field_error_messages(@appointment, :customer_email) %>
+        </div>
+
+        <div>
+          <%= f.label :customer_phone, t("ui.common.phone_number"), **form_label_options(@appointment, :customer_phone) %>
+          <%= f.telephone_field :customer_phone, required: true, autocomplete: "tel", maxlength: 20, **form_control_options(@appointment, :customer_phone) %>
+          <%= field_error_messages(@appointment, :customer_phone) %>
+        </div>
+
+        <div>
+          <%= f.label :requested_time, t("ui.appointments.new.preferred_slot"), **form_label_options(@appointment, :requested_time) %>
+        <%= render "appointments/slot_picker",
+                   slots: @available_slots,
+                   field_name: "appointment[requested_time]",
+                   field_id: "appointment_requested_time",
+                   selected_value: @appointment.requested_time&.iso8601,
+                   eyebrow: t("ui.appointments.new.preferred_slot"),
+                   summary_prefix: t("ui.appointments.new.preferred_slot"),
+                   empty_summary: t("ui.appointments.new.choose_slot"),
+                   date_label: t("ui.appointments.new.preferred_slot"),
+                   fallback_label: t("ui.appointments.new.preferred_slot"),
+                   fallback_prompt: t("ui.appointments.new.choose_slot"),
+                   testid: "requested-time-picker" %>
+          <%= field_error_messages(@appointment, :requested_time) %>
+        </div>
+
+        <div>
+          <%= f.label :notes, t("ui.appointments.new.notes_label"), **form_label_options(@appointment, :notes) %>
+          <%= f.text_area :notes, rows: 4, maxlength: 2000, placeholder: t("ui.appointments.new.notes_placeholder"), **form_control_options(@appointment, :notes) %>
+          <%= field_error_messages(@appointment, :notes) %>
+        </div>
+
+        <div class="form-actions">
+          <%= f.submit t("ui.appointments.new.submit"), class: "button primary expanded", data: { testid: "book-viewing-cta" } %>
+        </div>
+      <% end %>
     <% else %>
       <div class="empty-state">
         <h3><%= t("ui.properties.show.no_slots_title") %></h3>

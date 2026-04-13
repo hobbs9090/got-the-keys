@@ -48,6 +48,12 @@ Baseline credentials after seeding:
 - Seller examples:
   - `charlotte.hughes@example.com` / `secret`
   - `daniel.mercer@example.com` / `secret`
+  - `matthew.wells@example.com` / `secret`
+  - `lucy.mcclure@example.com` / `secret`
+- Buyer examples:
+  - `nina.hughes@example.com` / `secret`
+  - `alex.cole@example.com` / `secret`
+  - `sam.turner@example.com` / `secret`
 
 ## Documentation Map
 
