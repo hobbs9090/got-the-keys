@@ -1149,7 +1149,7 @@ en:
           journey: "Journey"
           risk: "Risk"
           locales: "Locales"
-          baseline_only_description: "Use this to rebuild the shared baseline training dataset. Other curated resets are hidden for now so the admin flow stays simple."
+          baseline_only_description: "Use this to rebuild the shared baseline training dataset."
         counts:
           properties:
             one: "property"

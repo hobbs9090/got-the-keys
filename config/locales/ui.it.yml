@@ -925,8 +925,7 @@ it:
           risk: Rischio
           locales: Lingue
           baseline_only_description: Usa questa azione per ricostruire il dataset
-            condiviso di base. Gli altri reset curati sono nascosti per ora cosi
-            il flusso admin resta semplice.
+            condiviso di base.
         counts:
           properties:
             one: immobile

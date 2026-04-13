@@ -911,7 +911,6 @@ zh:
           risk: 风险
           locales: 语言
           baseline_only_description: 使用此操作可以重建共享的基线训练数据集。
-            其他策划好的重置目前先隐藏，以保持后台流程简单清晰。
         counts:
           properties:
             one: 房源

@@ -18,8 +18,9 @@ RSpec.describe "Admin two-factor authentication", type: :request do
     [secret, backup_codes]
   end
 
-  def sign_in_admin(otp_attempt: nil)
-    params = { admin: { email: admin.email, password: password } }
+  def sign_in_admin(otp_attempt: nil, include_password: true)
+    params = { admin: { email: admin.email } }
+    params[:admin][:password] = password if include_password
     params[:admin][:otp_attempt] = otp_attempt if otp_attempt.present?
     post admin_session_path, params:
   end
@@ -61,6 +62,7 @@ RSpec.describe "Admin two-factor authentication", type: :request do
     expect(response.body).to include("Enter your verification code or a backup code to finish signing in.")
     expect(response.body).to include("Verification code or backup code")
     expect(response.body).to include("Enter an authenticator code or one of your backup codes.")
+    expect(response.body).not_to include('name="admin[password]"')
     expect(response.body).not_to include("Invalid email or password.")
     expect(response.body).not_to include("error prohibited this admin from being saved")
 

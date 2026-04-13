@@ -60,75 +60,28 @@
         <%= button_to(@pending_otp_secret.present? ? t("ui.admin.security.restart_setup") : t("ui.admin.security.begin_setup"), enroll_admin_security_path, method: :post, class: "button primary") %>
       <% end %>
     </div>
-  </article>
-
-  <article class="admin-panel admin-two-factor-mode-panel" data-testid="admin-two-factor-mode-panel">
-    <h2><%= t("ui.admin.qa.admin_two_factor.title") %></h2>
-    <p><%= t("ui.admin.qa.admin_two_factor.body") %></p>
-
-    <%= render "shared/errors", object: @booking_configuration %>
-
-    <%= form_with model: [:admin, @booking_configuration], url: admin_security_path, method: :patch, class: "stacked-form", local: true do |f| %>
-      <div class="form-grid">
-        <div>
-          <label class="admin-two-factor-mode-panel__choice">
-            <%= f.radio_button :admin_two_factor_mode, "optional" %>
-            <span>
-              <strong><%= admin_two_factor_mode_label("optional") %></strong><br>
-              <%= t("ui.admin.qa.admin_two_factor.optional_help") %>
-            </span>
-          </label>
-        </div>
-
-        <div>
-          <label class="admin-two-factor-mode-panel__choice">
-            <%= f.radio_button :admin_two_factor_mode, "disabled" %>
-            <span>
-              <strong><%= admin_two_factor_mode_label("disabled") %></strong><br>
-              <%= t("ui.admin.qa.admin_two_factor.disabled_help") %>
-            </span>
-          </label>
-        </div>
-
-        <div class="form-grid__full">
-          <div class="callout warning admin-two-factor-mode-panel__warning" data-testid="admin-two-factor-warning-callout">
-            <p><strong><%= t("ui.admin.qa.admin_two_factor.warning_title") %>:</strong> <%= t("ui.admin.qa.admin_two_factor.warning_body") %></p>
-          </div>
-        </div>
-
-        <div class="form-grid__full">
-          <%= label_tag :confirm_disable_admin_two_factor, t("ui.admin.qa.admin_two_factor.confirmation_label", phrase: admin_two_factor_disable_confirmation_phrase) %>
-          <%= text_field_tag :confirm_disable_admin_two_factor, params[:confirm_disable_admin_two_factor], placeholder: admin_two_factor_disable_confirmation_phrase %>
-          <p class="help-text"><%= t("ui.admin.qa.admin_two_factor.confirmation_help") %></p>
-        </div>
-      </div>
+    <section class="admin-security-global-mode-controls" data-testid="admin-two-factor-mode-controls">
+      <h3><%= t("ui.admin.qa.admin_two_factor.title") %></h3>
+      <p><%= t("ui.admin.qa.admin_two_factor.body") %></p>
+      <%= render "shared/errors", object: @booking_configuration %>
 
       <div class="form-actions">
-        <%= f.submit t("ui.admin.qa.admin_two_factor.save"), class: "button primary" %>
+        <% if @booking_configuration.admin_two_factor_disabled? %>
+          <%= button_to t("ui.admin.security.modes.optional", default: "Optional"),
+                        admin_security_path(booking_configuration: { admin_two_factor_mode: "optional" }),
+                        method: :patch,
+                        class: "button secondary" %>
+        <% else %>
+          <button type="button" class="button alert" data-modal-trigger="disable-admin-two-factor-mode-modal">
+            <%= t("ui.admin.security.modes.disabled", default: "Disabled") %>
+          </button>
+        <% end %>
       </div>
-    <% end %>
-
-    <dl class="detail-list">
-      <div>
-        <dt><%= t("ui.admin.qa.admin_two_factor.current_mode") %></dt>
-        <dd data-testid="qa-admin-two-factor-mode"><%= admin_two_factor_mode_label(@booking_configuration.admin_two_factor_mode) %></dd>
-      </div>
-
-      <% if @last_admin_two_factor_mode_change.present? %>
-        <div>
-          <dt><%= t("ui.admin.qa.admin_two_factor.last_changed_by") %></dt>
-          <dd data-testid="qa-admin-two-factor-actor"><%= @last_admin_two_factor_mode_change.actor_display %></dd>
-        </div>
-        <div>
-          <dt><%= t("ui.admin.qa.admin_two_factor.last_changed_at") %></dt>
-          <dd data-testid="qa-admin-two-factor-changed-at"><%= formatted_date_time(@last_admin_two_factor_mode_change.occurred_at) %></dd>
-        </div>
-      <% end %>
-    </dl>
+    </section>
   </article>
 
   <% if @pending_otp_secret.present? %>
-    <article class="admin-panel admin-security-enrollment" data-testid="admin-security-enrollment-panel">
+    <article id="admin-security-enrollment-panel" class="admin-panel admin-security-enrollment" data-testid="admin-security-enrollment-panel" <%= 'data-scroll-into-view-on-load="true"' if @scroll_to_enrollment_panel %>>
       <h2><%= t("ui.admin.security.enrollment_title") %></h2>
       <p><%= t("ui.admin.security.enrollment_body") %></p>
 
@@ -149,7 +102,7 @@
       <%= form_with url: confirm_admin_security_path, method: :patch, class: "stacked-form", local: true do %>
         <div>
           <%= label_tag "admin_otp_attempt", t("ui.admin.security.confirm_code"), **form_label_options(current_admin, :otp_attempt) %>
-          <%= text_field_tag "admin[otp_attempt]", params.dig(:admin, :otp_attempt), required: true, autocomplete: "one-time-code", data: { testid: "admin-security-otp-attempt" }, **form_control_options(current_admin, :otp_attempt) %>
+          <%= text_field_tag "admin[otp_attempt]", params.dig(:admin, :otp_attempt), required: true, autofocus: current_admin.errors[:otp_attempt].present?, autocomplete: "one-time-code", data: { testid: "admin-security-otp-attempt" }, **form_control_options(current_admin, :otp_attempt) %>
           <%= field_error_messages(current_admin, :otp_attempt) %>
         </div>
 
@@ -181,6 +134,29 @@
     </article>
   <% end %>
 </section>
+
+<%= render "shared/modal",
+           id: "disable-admin-two-factor-mode-modal",
+           title: t("ui.admin.qa.admin_two_factor.title"),
+           size: "small" do %>
+  <div class="admin-two-factor-mode-panel__disable-controls">
+    <div class="callout warning admin-two-factor-mode-panel__warning" data-testid="admin-two-factor-warning-callout">
+      <p><strong><%= t("ui.admin.qa.admin_two_factor.warning_title") %>:</strong> <%= t("ui.admin.qa.admin_two_factor.warning_body") %></p>
+    </div>
+
+    <%= form_with url: admin_security_path, method: :patch, class: "stacked-form", local: true do %>
+      <%= hidden_field_tag "booking_configuration[admin_two_factor_mode]", "disabled" %>
+      <%= label_tag :confirm_disable_admin_two_factor, t("ui.admin.qa.admin_two_factor.confirmation_label", phrase: admin_two_factor_disable_confirmation_phrase) %>
+      <%= text_field_tag :confirm_disable_admin_two_factor, nil, placeholder: admin_two_factor_disable_confirmation_phrase, required: true, pattern: admin_two_factor_disable_confirmation_phrase %>
+      <p class="help-text"><%= t("ui.admin.qa.admin_two_factor.confirmation_help") %></p>
+
+      <div class="form-actions">
+        <button type="button" class="button hollow secondary" data-modal-close><%= t("ui.common.cancel", default: "Cancel") %></button>
+        <%= submit_tag t("ui.admin.qa.admin_two_factor.save"), class: "button alert" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
 
 <section class="admin-panel" data-testid="admin-security-activity-panel">
   <h2><%= t("ui.admin.security.activity_title") %></h2>

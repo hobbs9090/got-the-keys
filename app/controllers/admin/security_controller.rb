@@ -40,7 +40,7 @@ class Admin::SecurityController < Admin::BaseController
     end
 
     session[:admin_pending_otp_secret] = Admin.generate_otp_secret
-    redirect_to admin_security_path, notice: t("ui.admin.security.enrollment_started_notice")
+    redirect_to admin_security_path(anchor: "admin-security-enrollment-panel"), notice: t("ui.admin.security.enrollment_started_notice")
   end
 
   def confirm
@@ -56,6 +56,7 @@ class Admin::SecurityController < Admin::BaseController
 
     if timestamp.blank?
       current_admin.errors.add(:otp_attempt, t("ui.admin.security.invalid_code"))
+      @scroll_to_enrollment_panel = true
       render :show, status: :unprocessable_content
       return
     end

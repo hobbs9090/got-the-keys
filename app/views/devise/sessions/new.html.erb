@@ -1,5 +1,6 @@
 <% admin_sign_in = request.fullpath.match?(/^\/admins/) %>
 <% session_title = admin_sign_in ? t('devise.views.links.sign_in_as_admin') : t('devise.views.sessions.new.title') %>
+<% admin_two_factor_challenge = admin_sign_in && @admin_two_factor_challenge_token.present? %>
 <%
   admin_otp_prompt =
     if admin_sign_in && BookingConfiguration.current.admin_two_factor_optional? && resource.email.present?
@@ -39,6 +40,7 @@
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "stacked-form auth-form", data: { turbo: false } }) do |f| %>
       <%= hidden_field_tag :return_to, pending_return_to_path if pending_return_to_path.present? %>
       <%= hidden_field_tag :save_property_id, pending_save_property_id if pending_save_property_id.present? %>
+      <%= hidden_field_tag "#{resource_name}[two_factor_challenge_token]", @admin_two_factor_challenge_token if admin_two_factor_challenge %>
 
       <% if resource.errors[:base].any? %>
         <div class="auth-form__hint" role="alert" aria-live="polite">
@@ -49,15 +51,21 @@
       <div class="auth-form__stack">
         <div>
           <%= f.label :email, nil, **form_label_options(resource, :email) %>
-          <%= f.email_field :email, autofocus: true, required: true, autocomplete: "email", **form_control_options(resource, :email) %>
+          <% if admin_two_factor_challenge %>
+            <%= f.email_field :email, readonly: true, required: true, autocomplete: "email", **form_control_options(resource, :email) %>
+          <% else %>
+            <%= f.email_field :email, autofocus: true, required: true, autocomplete: "email", **form_control_options(resource, :email) %>
+          <% end %>
           <%= field_error_messages(resource, :email) %>
         </div>
 
-        <div>
-          <%= f.label :password, nil, **form_label_options(resource, :password) %>
-          <%= f.password_field :password, required: true, autocomplete: "current-password", **form_control_options(resource, :password) %>
-          <%= field_error_messages(resource, :password) %>
-        </div>
+        <% unless admin_two_factor_challenge %>
+          <div>
+            <%= f.label :password, nil, **form_label_options(resource, :password) %>
+            <%= f.password_field :password, required: true, autocomplete: "current-password", **form_control_options(resource, :password) %>
+            <%= field_error_messages(resource, :password) %>
+          </div>
+        <% end %>
 
         <% if admin_otp_prompt %>
           <div>
