@@ -46,6 +46,7 @@
                 class="appointment-slot-picker__date-button<%= " is-selected" if is_selected %>"
                 aria-label="<%= day.fetch(:label) %>"
                 aria-pressed="<%= is_selected %>"
+                disabled
                 data-slot-picker-date="<%= day.fetch(:key) %>"
                 data-testid="<%= "#{testid}-date-#{day.fetch(:key)}" %>">
                 <strong class="appointment-slot-picker__date-day"><%= day.fetch(:day_number) %></strong>
@@ -78,6 +79,7 @@
             <button
               type="button"
               class="appointment-slot-picker__time-button<%= " is-selected" if is_selected %>"
+              disabled
               data-slot-picker-time="<%= time.fetch(:value) %>"
               data-slot-picker-date-key="<%= day.fetch(:key) %>"
               data-testid="<%= "#{testid}-time-#{time.fetch(:value).parameterize}" %>">

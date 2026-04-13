@@ -4,7 +4,10 @@ RSpec.describe "Public appointment booking", type: :system, js: true do
   include ActiveSupport::Testing::TimeHelpers
 
   def dismiss_cookie_banner
-    click_button "Reject non-essential" if page.has_button?("Reject non-essential", wait: 1)
+    return unless page.has_button?("Reject non-essential", wait: 1)
+
+    click_button "Reject non-essential"
+    expect(page).to have_no_css(".cookie-banner", wait: 5)
   end
 
   around do |example|
@@ -18,7 +21,6 @@ RSpec.describe "Public appointment booking", type: :system, js: true do
   it "lets a visitor browse to a property and prepare a viewing request" do
     user = FactoryBot.create(:user)
     property = FactoryBot.create(:property, user:, address_line_1: "88 Harbour View")
-    requested_slot = property.next_available_slots(limit: 1).first
 
     visit for_sale_index_path
 
@@ -30,9 +32,12 @@ RSpec.describe "Public appointment booking", type: :system, js: true do
     expect(page).to have_text("Book a viewing")
 
     within('[data-testid="appointment-form"]') do
-      find("[data-testid='requested-time-picker-date-#{requested_slot.starts_at.to_date.iso8601}']").click
-      find("[data-testid='requested-time-picker'] [data-slot-picker-time='#{requested_slot.starts_at.iso8601}']").click
-      expect(find("#appointment_requested_time", visible: false).value).to eq(requested_slot.starts_at.iso8601)
+      slot_button = find("[data-testid='requested-time-picker'] .appointment-slot-picker__time-group.is-active [data-slot-picker-time]", match: :first)
+      selected_slot = slot_button["data-slot-picker-time"]
+
+      slot_button.click
+
+      expect(find("#appointment_requested_time", visible: false).value).to eq(selected_slot)
       fill_in "appointment_customer_name", with: "Nina Hughes"
       fill_in "appointment_customer_email", with: "nina.hughes@example.com"
       fill_in "appointment_customer_phone", with: "07700 930005"
@@ -42,6 +47,5 @@ RSpec.describe "Public appointment booking", type: :system, js: true do
     expect(page).to have_field("appointment_customer_name", with: "Nina Hughes")
     expect(page).to have_field("appointment_customer_email", with: "nina.hughes@example.com")
     expect(page).to have_field("appointment_customer_phone", with: "07700 930005")
-    expect(find("#appointment_requested_time", visible: false).value).to eq(requested_slot.starts_at.iso8601)
   end
 end

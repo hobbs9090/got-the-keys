@@ -65,6 +65,8 @@ const bindPicker = (picker) => {
   const cleanup = [];
 
   picker.querySelectorAll("[data-slot-picker-date]").forEach((button) => {
+    button.disabled = false;
+
     const handleClick = () => {
       const selectedTimeForDay = slots
         .find((day) => day.key === button.dataset.slotPickerDate)
@@ -79,6 +81,8 @@ const bindPicker = (picker) => {
   });
 
   picker.querySelectorAll("[data-slot-picker-time]").forEach((button) => {
+    button.disabled = false;
+
     const handleClick = () => {
       setSelectedDate(picker, button.dataset.slotPickerDateKey);
       setSelectedTime(picker, button.dataset.slotPickerTime);

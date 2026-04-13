@@ -2,7 +2,10 @@ require "rails_helper"
 
 RSpec.describe "User registration", type: :system, js: true do
   def dismiss_cookie_banner
-    click_button "Reject non-essential" if page.has_button?("Reject non-essential", wait: 1)
+    return unless page.has_button?("Reject non-essential", wait: 1)
+
+    click_button "Reject non-essential"
+    expect(page).to have_no_css(".cookie-banner", wait: 5)
   end
 
   def sign_in_as_user(user, password: "changeme")

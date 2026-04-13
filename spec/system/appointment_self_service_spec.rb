@@ -4,7 +4,10 @@ RSpec.describe "Appointment self service", type: :system, js: true do
   include ActiveSupport::Testing::TimeHelpers
 
   def dismiss_cookie_banner
-    click_button "Reject non-essential" if page.has_button?("Reject non-essential", wait: 1)
+    return unless page.has_button?("Reject non-essential", wait: 1)
+
+    click_button "Reject non-essential"
+    expect(page).to have_no_css(".cookie-banner", wait: 5)
   end
 
   around do |example|
