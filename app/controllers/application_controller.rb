@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   before_action :set_user_language
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :persist_pending_saved_property_request
+  rescue_from ActionController::InvalidAuthenticityToken, with: :log_invalid_authenticity_token
 
   helper AppVersionHelper
   helper_method :available_languages, :booking_configuration, :chinese_locale?,
@@ -158,5 +159,14 @@ class ApplicationController < ActionController::Base
   def clear_pending_saved_property_request
     session.delete(:pending_save_property_id)
     session.delete(:pending_return_to)
+  end
+
+  def log_invalid_authenticity_token(exception)
+    Rails.logger.error(
+      "[csrf-debug] InvalidAuthenticityToken request_id=#{request.request_id} method=#{request.request_method} " \
+      "path=#{request.fullpath} referer=#{request.referer.inspect} origin=#{request.headers['Origin'].inspect} " \
+      "user_agent=#{request.user_agent.inspect} filtered_params=#{request.filtered_parameters.except('authenticity_token').inspect}"
+    )
+    raise exception
   end
 end

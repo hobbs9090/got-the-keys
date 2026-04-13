@@ -3,7 +3,9 @@
 <% admin_two_factor_challenge = admin_sign_in && @admin_two_factor_challenge_token.present? %>
 <%
   admin_otp_prompt =
-    if admin_sign_in && BookingConfiguration.current.admin_two_factor_optional? && resource.email.present?
+    if admin_two_factor_challenge
+      true
+    elsif admin_sign_in && BookingConfiguration.current.admin_two_factor_optional? && resource.email.present?
       Admin.find_for_database_authentication(email: resource.email.to_s)&.two_factor_enrolled?
     else
       false
@@ -34,7 +36,11 @@
         <p class="section-heading__eyebrow"><%= t('devise.views.sessions.new.form_badge') %></p>
         <h2 class="auth-form-card__title"><%= session_title %></h2>
       </div>
-      <p class="auth-form-card__intro"><%= t('devise.views.sessions.new.form_intro') %></p>
+      <% if admin_two_factor_challenge %>
+        <p class="auth-form-card__intro"><%= t("devise.views.sessions.new.admin_two_factor_challenge_hint", default: "Password verified. Enter your code to continue.") %></p>
+      <% else %>
+        <p class="auth-form-card__intro"><%= t('devise.views.sessions.new.form_intro') %></p>
+      <% end %>
     </div>
 
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "stacked-form auth-form", data: { turbo: false } }) do |f| %>
