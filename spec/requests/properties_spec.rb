@@ -267,29 +267,55 @@ describe "Properties" do
       booking_shortcut_form = document.at_css(%([data-testid="property-booking-shortcut-form"]))
       booking_form = document.at_css(%([data-testid="appointment-form"]))
       booking_slot_picker = document.at_css(%([data-testid="requested-time-picker"]))
+      booking_sign_in_link = document.at_css(%([data-testid="book-viewing-sign-in-link"]))
+      enquiry_link = document.at_css(%([data-testid="open-enquiry-form"]))
+      offer_link = document.at_css(%([data-testid="open-offer-form"]))
+      sign_in_return_path = new_user_session_path(return_to: property_path(property, anchor: "booking-panel"))
 
       expect(response).to have_http_status(:ok)
       expect(showcase.at_css(".property-hero__media--ratio-3-2")).to be_present
       expect(booking_panel).to be_present
       expect(booking_shortcut_form).not_to be_present
-      expect(booking_form).to be_present
-      expect(booking_form["action"]).to eq(property_appointments_path(property))
-      expect(booking_slot_picker).to be_present
+      expect(booking_form).not_to be_present
+      expect(booking_slot_picker).not_to be_present
+      expect(booking_sign_in_link).to be_present
+      expect(booking_sign_in_link["href"]).to eq(sign_in_return_path)
       expect(enquiry_panel).to be_present
       expect(enquiry_panel["class"]).to include("empty-state")
       expect(enquiry_panel["class"]).to include("property-booking-panel__support-card")
+      expect(enquiry_link).to be_present
+      expect(enquiry_link["href"]).to eq(sign_in_return_path)
       expect(offer_panel).to be_present
       expect(offer_panel["class"]).to include("empty-state")
       expect(offer_panel["class"]).to include("property-booking-panel__support-card")
+      expect(offer_link).to be_present
+      expect(offer_link["href"]).to eq(sign_in_return_path)
       expect(branch_panel).to be_present
       expect(branch_panel["class"]).to include("empty-state")
       expect(branch_panel["class"]).to include("property-booking-panel__support-card")
+      expect(response.body).to include("Sign in or create an account")
       expect(response.body).to include("Built")
       expect(response.body).to include(property.year_built.to_s)
       expect(response.body).to include("Last refurbished")
       expect(response.body).to include(property.refurbished_year.to_s)
       expect(response.body).not_to include(I18n.t("ui.branch_profile.team_label"))
       expect(showcase.text).not_to include(I18n.t("ui.properties.listing_states.published"))
+    end
+
+    it "shows the booking form to signed-in users" do
+      sign_in user
+
+      get property_path(property)
+
+      document = Nokogiri::HTML(response.body)
+      booking_form = document.at_css(%([data-testid="appointment-form"]))
+      booking_slot_picker = document.at_css(%([data-testid="requested-time-picker"]))
+
+      expect(response).to have_http_status(:ok)
+      expect(booking_form).to be_present
+      expect(booking_form["action"]).to eq(property_appointments_path(property))
+      expect(booking_slot_picker).to be_present
+      expect(document.at_css(%([data-testid="book-viewing-sign-in-link"]))).not_to be_present
     end
 
     it "keeps the property hero media on a non-stretched 3:2 frame in the stylesheet" do

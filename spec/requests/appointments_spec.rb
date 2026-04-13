@@ -16,17 +16,26 @@ RSpec.describe "Appointments" do
     end
 
     it "redirects back to the property booking panel" do
+      sign_in(user)
+
       get new_property_appointment_path(property)
 
       expect(response).to redirect_to(property_path(property, anchor: "booking-panel"))
     end
 
     it "preserves the selected slot when redirecting back to the property page" do
+      sign_in(user)
       slot = next_booking_slot
 
       get new_property_appointment_path(property, slot: slot.iso8601)
 
       expect(response).to redirect_to(property_path(property, slot: slot.iso8601, anchor: "booking-panel"))
+    end
+
+    it "redirects signed-out visitors to sign in before booking" do
+      get new_property_appointment_path(property)
+
+      expect(response).to redirect_to(new_user_session_path(return_to: property_path(property, anchor: "booking-panel")))
     end
 
     it "prefills the booking form for signed-in users on the property page" do
@@ -42,6 +51,7 @@ RSpec.describe "Appointments" do
     end
 
     it "includes later slots that are still within the 21-day booking window" do
+      sign_in(user)
       late_slot = booking_time(2026, 4, 20, 9, 0)
       FactoryBot.create(
         :availability_window,
@@ -61,6 +71,7 @@ RSpec.describe "Appointments" do
 
   describe "POST /properties/:property_id/appointments" do
     it "creates a pending appointment and redirects to the secure show page" do
+      sign_in(user)
       slot = next_booking_slot
 
       expect do
@@ -79,6 +90,24 @@ RSpec.describe "Appointments" do
 
       expect(response).to redirect_to(appointment_path(appointment, token: appointment.access_token))
       expect(appointment.status).to eq("pending")
+    end
+
+    it "redirects signed-out visitors to sign in instead of creating an appointment" do
+      slot = next_booking_slot
+
+      expect do
+        post property_appointments_path(property), params: {
+          appointment: {
+            customer_name: "Nina Hughes",
+            customer_email: "nina.hughes@example.com",
+            customer_phone: "07700 930005",
+            requested_time: slot.iso8601,
+            notes: "Please confirm whether parking is allocated."
+          }
+        }
+      end.not_to change(Appointment, :count)
+
+      expect(response).to redirect_to(new_user_session_path(return_to: property_path(property, anchor: "booking-panel")))
     end
   end
 

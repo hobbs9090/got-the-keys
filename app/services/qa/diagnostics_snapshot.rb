@@ -36,13 +36,26 @@ module Qa
     end
 
     def seeded_personas
-      admins = Array(active_scenario_payload[:admins]).map { |entry| entry[:email] }
-      users = Array(active_scenario_payload[:users]).map { |entry| entry[:email] }
+      admins = credential_lines(Array(active_scenario_payload[:admins]))
+      users = Array(active_scenario_payload[:users])
+      seller_emails = Array(active_scenario_payload[:properties]).filter_map { |entry| entry[:owner_email] }.uniq
+      sellers, buyers = users.partition { |entry| seller_emails.include?(entry[:email]) }
 
-      [
-        (I18n.t("ui.admin.qa.seeded_personas.admins", list: admins.join(", ")) if admins.any?),
-        (I18n.t("ui.admin.qa.seeded_personas.sellers", list: users.join(", ")) if users.any?)
-      ].compact.join(" | ")
+      {
+        admins: admins,
+        sellers: credential_lines(sellers),
+        buyers: credential_lines(buyers)
+      }
+    end
+
+    def credential_lines(entries)
+      entries.filter_map do |entry|
+        email = entry[:email].to_s.strip
+        password = entry[:password].to_s.strip
+        next if email.blank?
+
+        password.present? ? "#{email} / #{password}" : email
+      end
     end
   end
 end

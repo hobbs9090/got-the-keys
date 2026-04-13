@@ -50,7 +50,7 @@ RSpec.describe "Admin QA guide" do
     expect(version_box.at_css(%([data-testid="qa-app-version"])).text).to eq("v2.4.0+abc1234.42")
     expect(version_box.at_css(%([data-testid="qa-git-sha"])).text).to eq("abc1234")
     expect(version_box.at_css(%([data-testid="qa-build-number"])).text).to eq("42")
-    expect(version_box.at_css(%([data-testid="qa-deployed-at"])).text).to eq(I18n.l(Time.zone.parse("2026-03-26T09:00:00Z"), format: :long))
+    expect(version_box.at_css(%([data-testid="qa-deployed-at"])).text).to eq("#{I18n.l(Time.zone.parse("2026-03-26T09:00:00Z"), format: :long)} UTC")
     expect(version_box.at_css(%([data-testid="qa-environment"])).text).to eq("staging host, Rails env test")
   end
 

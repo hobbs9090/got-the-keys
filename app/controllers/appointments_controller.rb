@@ -2,6 +2,7 @@ class AppointmentsController < ApplicationController
   BOOKING_FORM_SLOT_LIMIT = 1000
 
   before_action :set_property, only: %i[new create]
+  before_action :require_authenticated_user_for_booking!, only: %i[new create]
   before_action :set_appointment, only: %i[show edit_self_service reschedule_self_service cancel_self_service]
   before_action :authorize_public_access!, only: %i[show edit_self_service reschedule_self_service cancel_self_service]
   before_action :authorize_customer_self_service!, only: %i[edit_self_service reschedule_self_service cancel_self_service]
@@ -102,6 +103,12 @@ class AppointmentsController < ApplicationController
     Time.zone.parse(params.require(:appointment).fetch(:requested_time))
   rescue ActionController::ParameterMissing, ArgumentError, TypeError
     nil
+  end
+
+  def require_authenticated_user_for_booking!
+    return if user_signed_in?
+
+    redirect_to new_user_session_path(return_to: property_path(@property, anchor: "booking-panel"))
   end
 
 end

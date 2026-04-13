@@ -16,7 +16,7 @@ module AppVersionHelper
     return if value.blank?
 
     timestamp = Time.zone.parse(value)
-    timestamp ? l(timestamp, format: :long) : value
+    timestamp ? "#{l(timestamp, format: :long)} UTC" : value
   rescue ArgumentError, TypeError
     value
   end

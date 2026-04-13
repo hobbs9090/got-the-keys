@@ -11,8 +11,10 @@ RSpec.describe Qa::DiagnosticsSnapshot do
     expect(snapshot[:active_scenario]).to eq(I18n.t("ui.admin.demo_data.scenario_keys.baseline"))
     expect(snapshot[:mail_delivery_mode]).to eq(ActionMailer::Base.delivery_method.to_s)
     expect(snapshot[:job_adapter]).to be_present
-    expect(snapshot[:seeded_personas]).to include(I18n.t("ui.admin.qa.seeded_personas.admins", list: ""))
-    expect(snapshot[:seeded_personas]).to include(I18n.t("ui.admin.qa.seeded_personas.sellers", list: ""))
+    expect(snapshot[:seeded_personas]).to be_a(Hash)
+    expect(snapshot[:seeded_personas][:admins]).to include("steven@gotthekeys.uk / secret", "kate@gotthekeys.uk / secret")
+    expect(snapshot[:seeded_personas][:sellers]).to include("charlotte.hughes@example.com / secret")
+    expect(snapshot[:seeded_personas][:buyers]).to include("nina.hughes@example.com / secret")
   end
 
   it "uses the translated label when the active scenario is a curated catalogue key" do

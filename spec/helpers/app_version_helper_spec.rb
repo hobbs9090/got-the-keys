@@ -42,7 +42,7 @@ RSpec.describe AppVersionHelper, type: :helper do
   it "formats the deployed timestamp for display" do
     version_config.deployed_at = "2026-03-26T09:00:00Z"
 
-    expect(helper.app_deployed_at).to eq(I18n.l(Time.zone.parse("2026-03-26T09:00:00Z"), format: :long))
+    expect(helper.app_deployed_at).to eq("#{I18n.l(Time.zone.parse("2026-03-26T09:00:00Z"), format: :long)} UTC")
   end
 
   it "returns the raw deployed value when it cannot be parsed as a timestamp" do
