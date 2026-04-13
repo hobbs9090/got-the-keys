@@ -331,6 +331,16 @@ photos:
     caption: Hero image
     position: 1
     primary: true
+  - property_key: baseline_sale_022
+    image_filename: properties/property_48_beech_place_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_sale_023
+    image_filename: properties/property_flat_13_50_highfield_terrace_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
   - property_key: baseline_sale_024
     image_filename: properties/property_52_mount_lane_hero.jpg
     caption: Front exterior
@@ -351,14 +361,49 @@ photos:
     caption: Hero image
     position: 1
     primary: true
+  - property_key: baseline_sale_028
+    image_filename: properties/property_60_calverley_terrace_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_sale_029
+    image_filename: properties/property_flat_4_62_priory_gardens_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_sale_030
+    image_filename: properties/property_flat_16_64_grosvenor_drive_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
   - property_key: baseline_sale_031
     image_filename: properties/property_66_rectory_lane_hero.jpg
     caption: Front exterior
     position: 1
     primary: true
+  - property_key: baseline_sale_032
+    image_filename: properties/property_68_priory_place_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_sale_033
+    image_filename: properties/property_70_meadow_court_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_sale_034
+    image_filename: properties/property_flat_12_72_beech_street_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
   - property_key: baseline_sale_036
     image_filename: properties/property_76_beech_gardens_hero.jpg
     caption: Front exterior
+    position: 1
+    primary: true
+  - property_key: baseline_sale_037
+    image_filename: properties/property_flat_16_78_priory_place_hero.jpg
+    caption: Hero image
     position: 1
     primary: true
 floor_plans:
