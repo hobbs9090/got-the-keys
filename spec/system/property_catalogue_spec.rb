@@ -63,6 +63,24 @@ RSpec.describe "Property catalogue", type: :system do
     expect(page).to have_css('[data-testid="save-property-filters"]')
   end
 
+  it "shows save filter on the for-sale catalogue for a signed-in user" do
+    user = FactoryBot.create(:user, email: "buyer-filters@example.com", password: "changeme", password_confirmation: "changeme")
+
+    sign_in_as(user)
+    visit for_sale_index_path
+
+    expect(page).to have_css('[data-testid="save-property-filters"]')
+  end
+
+  it "shows save filter on the search page for a signed-in user" do
+    user = FactoryBot.create(:user, email: "search-filters@example.com", password: "changeme", password_confirmation: "changeme")
+
+    sign_in_as(user)
+    visit searches_path
+
+    expect(page).to have_css('[data-testid="save-property-filters"]')
+  end
+
   it "links save filter to sign-in for guests on the for-rent catalogue" do
     visit for_rent_index_path(town_city: "Sevenoaks")
 
@@ -70,10 +88,30 @@ RSpec.describe "Property catalogue", type: :system do
     expect(link[:href]).to include(CGI.escape(for_rent_index_path(town_city: "Sevenoaks")))
   end
 
+  it "links save filter to sign-in for guests on the for-sale catalogue" do
+    visit for_sale_index_path(town_city: "Guildford")
+
+    link = page.find('[data-testid="save-property-filters-sign-in"]')
+    expect(link[:href]).to include(CGI.escape(for_sale_index_path(town_city: "Guildford")))
+  end
+
+  it "links save filter to sign-in for guests on the search page" do
+    visit searches_path(town_city: "Sevenoaks")
+
+    link = page.find('[data-testid="save-property-filters-sign-in"]')
+    expect(link[:href]).to include(CGI.escape(searches_path(town_city: "Sevenoaks")))
+  end
+
   it "lets a signed-in visitor save filters from the for-rent catalogue via the filter form", js: true do
     owner = FactoryBot.create(:user)
     renter = FactoryBot.create(:user, email: "renter-save-filter@example.com", password: "changeme", password_confirmation: "changeme")
-    create_property(user: owner, sale_status: Property::SALE_STATUSES[:for_rent], address_line_1: "Riverside View", town_city: "Sevenoaks")
+    create_property(
+      user: owner,
+      sale_status: Property::SALE_STATUSES[:for_rent],
+      address_line_1: "Riverside View",
+      town_city: "Sevenoaks",
+      asking_price: 2_200
+    )
 
     sign_in_as(renter)
     visit for_rent_index_path
@@ -85,6 +123,29 @@ RSpec.describe "Property catalogue", type: :system do
     expect(page).to have_text("Saved search created")
     expect(SavedSearch.last.search_query).to eq("Riverside")
     expect(SavedSearch.last.sale_status).to eq(Property::SALE_STATUSES[:for_rent])
+  end
+
+  it "lets a signed-in visitor save filters from the search page and returns to search results", js: true do
+    owner = FactoryBot.create(:user)
+    searcher = FactoryBot.create(:user, email: "search-save-filter@example.com", password: "changeme", password_confirmation: "changeme")
+    create_property(
+      user: owner,
+      sale_status: Property::SALE_STATUSES[:for_sale],
+      address_line_1: "Hillcrest Terrace",
+      town_city: "Reigate",
+      asking_price: 550_000
+    )
+
+    sign_in_as(searcher)
+    visit searches_path
+
+    fill_in "q", with: "Hillcrest"
+
+    find('[data-testid="save-property-filters"]').click
+
+    expect(page).to have_text("Saved search created")
+    expect(page).to have_current_path(searches_path, ignore_query: true)
+    expect(SavedSearch.last.search_query).to eq("Hillcrest")
   end
 
   it "shows the saved searches band with an empty state when signed in and none are saved yet" do

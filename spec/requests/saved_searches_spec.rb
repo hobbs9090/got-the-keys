@@ -140,6 +140,39 @@ RSpec.describe "Saved searches", type: :request do
     )
   end
 
+  it "redirects to the search page after create when catalogue_scope is searches" do
+    sign_in user
+
+    expect do
+      post saved_searches_path, params: {
+        saved_search: {
+          locale: "en",
+          sale_status: Property::SALE_STATUSES[:for_sale],
+          search_query: "terrace",
+          town_city: "Reigate",
+          min_bedrooms: 2,
+          min_price: "500,000",
+          max_price: "800,000",
+          sort: "newest",
+          alerts_enabled: "1",
+          catalogue_scope: "searches"
+        }
+      }
+    end.to change(SavedSearch, :count).by(1)
+
+    expect(response).to redirect_to(
+      searches_path(
+        q: "terrace",
+        sale_status: Property::SALE_STATUSES[:for_sale],
+        town_city: "Reigate",
+        min_bedrooms: 2,
+        min_price: 500_000,
+        max_price: 800_000,
+        sort: "newest"
+      )
+    )
+  end
+
   it "returns a guest to the filtered catalogue after sign in" do
     get properties_path(town_city: "Sevenoaks", min_bedrooms: 3)
 

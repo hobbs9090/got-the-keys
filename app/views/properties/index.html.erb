@@ -35,7 +35,7 @@
 
       <p class="property-catalogue__sidebar-copy"><%= t("ui.properties.catalogue.sidebar_copy") %></p>
 
-      <%= render "properties/filters", url: properties_path, selected_sale_status: params[:sale_status], show_status_select: true %>
+      <%= render "properties/filters", url: properties_path, selected_sale_status: params[:sale_status], show_status_select: true, catalogue_scope: "properties" %>
     </section>
 
     <section class="site-card property-catalogue__saved-search" data-testid="saved-search-panel">

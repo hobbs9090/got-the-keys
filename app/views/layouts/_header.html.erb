@@ -39,7 +39,6 @@
               <%= link_to t("ui.site_header.sign_out"), destroy_admin_session_path, class: "button alert hollow", data: { turbo_method: :delete } %>
             <% else %>
               <%= link_to t("ui.site_header.my_listings", default: "My listings"), mine_properties_path, class: "button secondary hollow", data: { testid: "my-listings-link" } %>
-              <%= link_to t("ui.site_header.saved_searches", default: "Saved searches"), mine_properties_path(anchor: "saved-searches"), class: "button secondary hollow", data: { testid: "saved-searches-link" } %>
               <%= link_to t("ui.site_header.add_property"), new_property_path, class: "button primary", data: { testid: "add-property-link" } %>
               <%= link_to t("ui.site_header.profile"), edit_user_registration_path, class: "button hollow" %>
               <%= link_to t("ui.site_header.sign_out"), destroy_user_session_path, class: "button alert hollow", data: { turbo_method: :delete } %>

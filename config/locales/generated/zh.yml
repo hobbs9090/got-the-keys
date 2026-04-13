@@ -15,6 +15,16 @@ zh:
           are_you_sure: Are you sure?
           update: Update
   ui:
-    common:
-      system_actor: 系统
-      'true': 是
+    admin:
+      qa:
+        seeded_personas:
+          admins_label: Admins
+          buyers_label: Buyers
+          sellers_label: Sellers
+    properties:
+      show:
+        booking_sign_in_body: Sign in or create an account to request a viewing and pick from the published time slots for this home.
+        booking_sign_in_cta: Sign in to book a viewing
+        enquiry_body_guest: Sign in or create an account to ask for brochure information, a landlord or seller callback, or clarification before you pick a viewing slot.
+        offer_body_guest: Sign in or create an account to register your buying position and submit an offer.
+        rental_application_body_guest: Sign in or create an account to share your intended move-in timing and affordability notes with the lettings team.

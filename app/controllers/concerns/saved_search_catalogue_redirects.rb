@@ -3,7 +3,7 @@ module SavedSearchCatalogueRedirects
 
   private
 
-  ALLOWED_CATALOGUE_SCOPES = %w[properties for_rent for_sale].freeze
+  ALLOWED_CATALOGUE_SCOPES = %w[properties searches for_rent for_sale].freeze
 
   def catalogue_redirect_path_for(filter_params, scope)
     fp = filter_params.symbolize_keys
@@ -12,6 +12,8 @@ module SavedSearchCatalogueRedirects
       for_rent_index_path(fp)
     when "for_sale"
       for_sale_index_path(fp)
+    when "searches"
+      searches_path(fp)
     else
       properties_path(fp)
     end
