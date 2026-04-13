@@ -19,6 +19,7 @@ server ENV.fetch("DEPLOY_HOST", "192.168.2.204"),
 
 set :deploy_to, ENV.fetch("DEPLOY_TO", "/var/www/gotthekeys-staging")
 set :rails_env, "staging"
+set :reset_db_on_deploy, true
 set :bundle_without, %w[development test doc production].join(' ')
 set :default_env, {
   "PATH" => "$HOME/.local/bin:$HOME/.rbenv/bin:$HOME/.rbenv/shims:/usr/local/bin:/usr/bin:/bin",

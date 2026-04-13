@@ -35,6 +35,7 @@ Typical stage defaults:
   - host `192.168.2.204`
   - deploy root `/var/www/gotthekeys-staging`
   - `APP_HOST=stevenhobbs.co.uk`
+  - automatically runs `db:reset` after publish so the staging database is cleared and reseeded on every deploy
 - `production`
   - same overall host path
   - `APP_HOST=gotthekeys.uk` by default
@@ -55,11 +56,21 @@ The deploy process also writes build metadata into:
 
 That supports admin and QA runtime version reporting.
 
+Staging also invokes the existing Capistrano `deploy:reset` task after `deploy:published`.
+That means every future staging deploy rebuilds the database and reloads seed data from scratch.
+Production does not use this hook.
+
 ## Recommended Staging Deploy
 
 ```bash
 bin/deploy_staging
 ```
+
+Important:
+
+- staging deploys are intentionally destructive to data
+- every deploy clears the staging database and reseeds it
+- do not use staging for data you expect to preserve between releases
 
 GitHub Actions also deploys staging automatically after the `CI` workflow succeeds for a push to `main`.
 If that staging deploy completes successfully, the production deploy workflow now promotes the same commit automatically.
