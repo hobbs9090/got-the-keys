@@ -176,6 +176,7 @@ zh:
         max_monthly_rental: 最高月租
         sort: 排序
         apply: 应用筛选
+        save_filter: 保存筛选
         search_chip: 搜索：%{query}
         min_bedrooms_chip: "%{count}+ 间卧室"
         min_price_chip: "%{price} 起"

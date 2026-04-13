@@ -204,6 +204,7 @@ en:
         max_monthly_rental: "Max monthly rental"
         sort: "Sort"
         apply: "Apply filters"
+        save_filter: "Save filter"
         search_chip: "Search: %{query}"
         min_bedrooms_chip: "%{count}+ bedrooms"
         min_price_chip: "From %{price}"

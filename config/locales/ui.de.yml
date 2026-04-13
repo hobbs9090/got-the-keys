@@ -191,6 +191,7 @@ de:
         max_monthly_rental: Höchstmiete pro Monat
         sort: Sortierung
         apply: Filter anwenden
+        save_filter: Filter speichern
         search_chip: 'Suche: %{query}'
         min_bedrooms_chip: "%{count}+ Schlafzimmer"
         min_price_chip: Ab %{price}

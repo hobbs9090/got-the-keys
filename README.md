@@ -33,8 +33,23 @@ npm install
 bin/rails db:prepare
 bin/rails db:seed
 npm run build
-bin/rails server
+bin/dev
 ```
+
+`bin/dev` starts the Rails server and **`npm run watch:css`** together via [Foreman](https://github.com/ddollar/foreman) and `Procfile.dev`, so edits to SCSS under `app/assets/stylesheets/` are compiled into `app/assets/builds/application.css` as you work. Stop both processes with one **Ctrl+C**.
+
+If you only run `bin/rails server`, stylesheets will not update until you compile CSS separately (see below).
+
+### Frontend assets (CSS and JavaScript)
+
+Styles and scripts are bundled with **cssbundling-rails** and **jsbundling-rails**:
+
+- **Sources:** `app/assets/stylesheets/application.scss` (and imports) → `app/assets/builds/application.css`; `app/javascript/application.js` → `app/assets/builds/application.js`.
+- **Built files** live under `app/assets/builds/` and are **gitignored**; they are produced by Sass and esbuild, not checked in.
+- **During development**, prefer **`bin/dev`** so `watch:css` keeps the CSS bundle up to date.
+- **One-off compile** (for example before `bin/rails server` without Foreman): `bin/rails css:build`, `npm run build:css`, or full `npm run build` (CSS and JS).
+
+To also auto-rebuild JavaScript while developing, add a `js` line to `Procfile.dev` (for example `js: npm run watch:js`) and restart `bin/dev`.
 
 Open:
 

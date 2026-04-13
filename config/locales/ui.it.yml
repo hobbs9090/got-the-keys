@@ -191,6 +191,7 @@ it:
         max_monthly_rental: Affitto mensile massimo
         sort: Ordina
         apply: Applica filtri
+        save_filter: Salva filtro
         search_chip: 'Ricerca: %{query}'
         min_bedrooms_chip: "%{count}+ camere"
         min_price_chip: Da %{price}

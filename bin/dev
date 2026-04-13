@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+set -e
+cd -P "$(dirname "$0")/.." || exit 1
+exec bundle exec foreman start -f Procfile.dev "$@"

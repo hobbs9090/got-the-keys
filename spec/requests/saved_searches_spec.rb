@@ -70,8 +70,74 @@ RSpec.describe "Saved searches", type: :request do
       delete saved_search_path(search)
     end.to change(SavedSearch, :count).by(-1)
 
-    expect(response).to redirect_to(properties_path(search.filter_params))
+    expect(response).to redirect_to(for_sale_index_path(search.filter_params))
     expect(flash[:notice]).to eq(I18n.t("ui.saved_searches.destroyed"))
+  end
+
+  it "redirects to the for-rent catalogue after create when catalogue_scope is for_rent" do
+    sign_in user
+
+    expect do
+      post saved_searches_path, params: {
+        saved_search: {
+          locale: "en",
+          sale_status: Property::SALE_STATUSES[:for_rent],
+          search_query: "garden",
+          town_city: "Sevenoaks",
+          min_bedrooms: 2,
+          min_price: "1,500",
+          max_price: "3,000",
+          sort: "recommended",
+          alerts_enabled: "1",
+          catalogue_scope: "for_rent"
+        }
+      }
+    end.to change(SavedSearch, :count).by(1)
+
+    expect(response).to redirect_to(
+      for_rent_index_path(
+        q: "garden",
+        sale_status: Property::SALE_STATUSES[:for_rent],
+        town_city: "Sevenoaks",
+        min_bedrooms: 2,
+        min_price: 1500,
+        max_price: 3000,
+        sort: "recommended"
+      )
+    )
+  end
+
+  it "redirects to the for-sale catalogue after create when catalogue_scope is for_sale" do
+    sign_in user
+
+    expect do
+      post saved_searches_path, params: {
+        saved_search: {
+          locale: "en",
+          sale_status: Property::SALE_STATUSES[:for_sale],
+          search_query: "cottage",
+          town_city: "Guildford",
+          min_bedrooms: 3,
+          min_price: "400,000",
+          max_price: "900,000",
+          sort: "price_low",
+          alerts_enabled: "1",
+          catalogue_scope: "for_sale"
+        }
+      }
+    end.to change(SavedSearch, :count).by(1)
+
+    expect(response).to redirect_to(
+      for_sale_index_path(
+        q: "cottage",
+        sale_status: Property::SALE_STATUSES[:for_sale],
+        town_city: "Guildford",
+        min_bedrooms: 3,
+        min_price: 400_000,
+        max_price: 900_000,
+        sort: "price_low"
+      )
+    )
   end
 
   it "returns a guest to the filtered catalogue after sign in" do

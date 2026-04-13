@@ -14,7 +14,7 @@
 </section>
 
 <section class="page-section">
-  <%= render "properties/filters", url: for_sale_index_path, selected_sale_status: Property::SALE_STATUSES[:for_sale], show_status_select: false %>
+  <%= render "properties/filters", url: for_sale_index_path, selected_sale_status: Property::SALE_STATUSES[:for_sale], show_status_select: false, catalogue_scope: "for_sale" %>
 </section>
 
 <section class="page-section">

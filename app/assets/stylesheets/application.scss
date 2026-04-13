@@ -1,3 +1,4 @@
+// SCSS → app/assets/builds/application.css. Use bin/dev (runs watch:css) or bin/rails css:build.
 @import "foundation-sites/scss/foundation";
 
 @include foundation-everything;

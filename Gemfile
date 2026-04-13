@@ -31,6 +31,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'foreman', '~> 0.90', require: false
   gem 'capistrano', '~> 3.20'
   gem 'capistrano-passenger', '~> 0.2.1'
   gem 'capistrano-rails', '~> 1.7'

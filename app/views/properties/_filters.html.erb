@@ -1,3 +1,4 @@
+<% catalogue_scope = local_assigns.fetch(:catalogue_scope, "properties") %>
 <% current_sale_status = selected_sale_status.presence_in(Property::SALE_STATUS) %>
 <% current_min_price_placeholder = current_sale_status == Property::SALE_STATUSES[:for_rent] ? "1,500" : "250,000" %>
 <% current_max_price_placeholder = current_sale_status == Property::SALE_STATUSES[:for_rent] ? "10,000" : "1,000,000" %>
@@ -51,5 +52,22 @@
   <div class="property-filters__actions">
     <%= button_tag t("ui.properties.filters.apply"), class: "button primary", data: { testid: "apply-property-filters" } %>
     <%= link_to t("ui.common.reset"), url, class: "button hollow secondary" %>
+    <% if user_signed_in? %>
+      <%= button_tag t("ui.properties.filters.save_filter"),
+                     type: "button",
+                     class: "button hollow secondary",
+                     data: {
+                       testid: "save-property-filters",
+                       property_filter_save: true,
+                       save_search_url: saved_searches_path,
+                       catalogue_scope: catalogue_scope,
+                       saved_search_locale: I18n.locale.to_s
+                     } %>
+    <% else %>
+      <%= link_to t("ui.properties.filters.save_filter"),
+                  new_user_session_path(return_to: request.fullpath),
+                  class: "button hollow secondary",
+                  data: { testid: "save-property-filters-sign-in" } %>
+    <% end %>
   </div>
 <% end %>
