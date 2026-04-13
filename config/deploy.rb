@@ -54,6 +54,11 @@ set :bundle_without, %w[development test doc].join(' ')
 set :keep_releases, 3
 
 namespace :deploy do
+  desc "Reset and reseed the database when the stage requires it"
+  task :reset_if_configured do
+    invoke "deploy:reset" if fetch(:reset_db_on_deploy, false)
+  end
+
   desc "Writes deploy build metadata for runtime diagnostics"
   task :write_build_metadata do
     on roles(:app) do
@@ -87,4 +92,5 @@ namespace :deploy do
 
 end
 
+after "deploy:published", "deploy:reset_if_configured"
 before "passenger:restart", "deploy:write_build_metadata"
