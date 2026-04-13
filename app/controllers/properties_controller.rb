@@ -1,6 +1,8 @@
 class PropertiesController < ApplicationController
   include PropertyScoped
 
+  PROPERTY_SHOW_SLOT_LIMIT = AppointmentsController::BOOKING_FORM_SLOT_LIMIT
+
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_property, only: [:show, :edit, :update, :destroy]
   before_action :authorize_property_owner!, only: [:edit, :update, :destroy]
@@ -22,13 +24,15 @@ class PropertiesController < ApplicationController
   end
 
   def show
-    @available_slots = @property.next_available_slots(limit: 8)
-    @recent_enquiries = @property.enquiries.recent_first.limit(3)
-    @recent_offers = @property.offers.recent_first.limit(3)
-    @recent_rental_applications = @property.rental_applications.recent_first.limit(3)
-    @public_documents = @property.public_documents
-    @recent_activity = @property.activity_timeline(limit: 8)
-    @saved_property = current_user&.saved_properties&.find_by(property: @property)
+    @appointment = @property.appointments.new(
+      booking_form_defaults.merge(
+        requested_time: preselected_slot,
+        scheduled_at: preselected_slot,
+        duration_minutes: booking_configuration.slot_duration_minutes
+      )
+    )
+    @available_slots = @property.next_available_slots(limit: PROPERTY_SHOW_SLOT_LIMIT)
+    populate_show_supporting_state
   end
 
   def mine
@@ -166,6 +170,33 @@ class PropertiesController < ApplicationController
     else
       grouped[:previous] << appointment
     end
+  end
+
+  def populate_show_supporting_state
+    @recent_enquiries = @property.enquiries.recent_first.limit(3)
+    @recent_offers = @property.offers.recent_first.limit(3)
+    @recent_rental_applications = @property.rental_applications.recent_first.limit(3)
+    @public_documents = @property.public_documents
+    @recent_activity = @property.activity_timeline(limit: 8)
+    @saved_property = current_user&.saved_properties&.find_by(property: @property)
+  end
+
+  def preselected_slot
+    return if params[:slot].blank?
+
+    Time.zone.parse(params[:slot])
+  rescue ArgumentError, TypeError
+    nil
+  end
+
+  def booking_form_defaults
+    return {} unless current_user.present?
+
+    {
+      customer_name: current_user.full_name,
+      customer_email: current_user.email,
+      customer_phone: current_user.mobile_number
+    }
   end
 
 end

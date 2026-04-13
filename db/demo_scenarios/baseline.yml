@@ -54,6 +54,27 @@ users:
     password: secret
     password_confirmation: secret
     language: en
+  - first_name: Nina
+    last_name: Hughes
+    mobile_number: "07700 900105"
+    email: nina.hughes@example.com
+    password: secret
+    password_confirmation: secret
+    language: en
+  - first_name: Alex
+    last_name: Cole
+    mobile_number: "07700 900106"
+    email: alex.cole@example.com
+    password: secret
+    password_confirmation: secret
+    language: en
+  - first_name: Sam
+    last_name: Turner
+    mobile_number: "07700 900107"
+    email: sam.turner@example.com
+    password: secret
+    password_confirmation: secret
+    language: en
 properties:
   - key: sevenoaks_family_home
     owner_email: charlotte.hughes@example.com

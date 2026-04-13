@@ -7,14 +7,7 @@ class AppointmentsController < ApplicationController
   before_action :authorize_customer_self_service!, only: %i[edit_self_service reschedule_self_service cancel_self_service]
 
   def new
-    @appointment = @property.appointments.new(
-      default_appointment_attributes.merge(
-        requested_time: preselected_slot,
-        scheduled_at: preselected_slot,
-        duration_minutes: booking_configuration.slot_duration_minutes
-      )
-    )
-    @available_slots = @property.next_available_slots(limit: BOOKING_FORM_SLOT_LIMIT)
+    redirect_to property_path(@property, slot: params[:slot], anchor: "booking-panel")
   end
 
   def create
@@ -26,7 +19,13 @@ class AppointmentsController < ApplicationController
       redirect_to appointment_path(@appointment, token: @appointment.access_token), notice: t("ui.appointments.new.submitted_notice")
     else
       @available_slots = @property.next_available_slots(limit: BOOKING_FORM_SLOT_LIMIT)
-      render :new, status: :unprocessable_entity
+      @recent_enquiries = @property.enquiries.recent_first.limit(3)
+      @recent_offers = @property.offers.recent_first.limit(3)
+      @recent_rental_applications = @property.rental_applications.recent_first.limit(3)
+      @public_documents = @property.public_documents
+      @recent_activity = @property.activity_timeline(limit: 8)
+      @saved_property = current_user&.saved_properties&.find_by(property: @property)
+      render "properties/show", status: :unprocessable_entity
     end
   end
 
@@ -105,13 +104,4 @@ class AppointmentsController < ApplicationController
     nil
   end
 
-  def default_appointment_attributes
-    return {} unless current_user.present?
-
-    {
-      customer_name: current_user.full_name,
-      customer_email: current_user.email,
-      customer_phone: current_user.mobile_number
-    }
-  end
 end
