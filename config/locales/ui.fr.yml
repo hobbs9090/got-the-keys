@@ -934,8 +934,7 @@ fr:
           risk: Risque
           locales: Langues
           baseline_only_description: Utilisez cette action pour reconstruire le jeu
-            de donnees de base partage. Les autres resets organises sont masques
-            pour le moment afin de garder le flux admin simple.
+            de donnees de base partage.
         counts:
           properties:
             one: bien

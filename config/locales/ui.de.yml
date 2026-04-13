@@ -926,8 +926,7 @@ de:
           risk: Risiko
           locales: Sprachen
           baseline_only_description: Verwenden Sie dies, um den gemeinsamen Basis-Trainingsdatensatz
-            neu aufzubauen. Andere kuratierte Resets sind derzeit ausgeblendet,
-            damit der Admin-Ablauf einfach bleibt.
+            neu aufzubauen.
         counts:
           properties:
             one: Objekt

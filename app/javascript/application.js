@@ -12,9 +12,11 @@ import { bootResponsiveTables, teardownResponsiveTables } from "./responsive_tab
 import { bootSkipLinks, teardownSkipLinks } from "./skip_links";
 import { bootStatisticsCharts, teardownStatisticsCharts } from "./statistics_charts";
 import { bootThemePreference, teardownThemePreference } from "./theme_preference";
+import { bootAdminSecurityScroll, teardownAdminSecurityScroll } from "./admin_security_scroll";
 
 const bootApplication = () => {
   bootThemePreference();
+  bootAdminSecurityScroll();
   bootAppointmentSlotPickers();
   bootCarousels();
   bootModals();
@@ -30,6 +32,7 @@ const bootApplication = () => {
 
 const teardownApplication = () => {
   teardownThemePreference();
+  teardownAdminSecurityScroll();
   teardownAppointmentSlotPickers();
   teardownCarousels();
   teardownModals();

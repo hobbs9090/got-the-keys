@@ -62,7 +62,9 @@ npm run watch:js
 
 After `bin/rails db:seed`:
 
-- Admin: `steven@gotthekeys.uk` / `secret`
+- Admins:
+  - `steven@gotthekeys.uk` / `secret`
+  - `kate@gotthekeys.uk` / `secret`
 - Seller examples:
   - `charlotte.hughes@example.com` / `secret`
   - `daniel.mercer@example.com` / `secret`
