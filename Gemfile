@@ -52,3 +52,5 @@ group :staging, :production do
   gem 'passenger', '~> 6.1'
   gem 'pg', '~> 1.5'
 end
+
+gem "image_processing", "~> 1.14"
