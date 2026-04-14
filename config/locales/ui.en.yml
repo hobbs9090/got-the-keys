@@ -318,6 +318,7 @@ en:
         saved_homes_title: "Saved homes"
         list_eyebrow: "Your records"
         list_title: "Your listings"
+        list_blurb: "Draft and live listings you are working on are shown here for quick access."
         total_label:
           one: "%{count} saved listing"
           other: "%{count} saved listings"
@@ -334,9 +335,13 @@ en:
         empty_title: "No listings yet"
         empty_body: "Create your first property and come back here whenever you want to continue working on it."
         saved_searches_eyebrow: "Property search"
+        customer_bookings_blurb: "Upcoming, previous, and cancelled bookings are grouped here so you can track every viewing in one place."
         saved_searches_title: "Saved searches"
         saved_searches_browse_catalogue: "Browse the catalogue"
+        saved_searches_empty_title: "No saved searches yet"
         saved_searches_empty: "You have not saved any catalogue filters yet. Open the property catalogue and use Save this search in the sidebar while you are signed in."
+        customer_bookings_empty_title: "No bookings yet"
+        customer_bookings_empty: "You do not have any bookings yet."
       seller:
         checks:
           headline: "Headline and summary"

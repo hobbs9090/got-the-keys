@@ -1,14 +1,3 @@
-<div class="section-heading">
-  <div>
-    <h2><%= t("ui.properties.mine.list_title", default: "Saved and partially completed listings") %></h2>
-    <p><%= t("ui.properties.mine.body", default: "Open the listings you have saved, jump back into drafts, and review the property details you have already created.") %></p>
-  </div>
-
-  <div class="section-heading__actions">
-    <%= link_to t("ui.site_header.add_property"), new_property_path, class: "button primary" %>
-  </div>
-</div>
-
 <div class="property-workspace__grid">
   <% @properties.each do |property| %>
     <article class="site-card property-workspace-card" data-testid="owner-property-card">

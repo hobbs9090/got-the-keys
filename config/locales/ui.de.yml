@@ -285,6 +285,7 @@ de:
         saved_homes_title: Gespeicherte Immobilien
         list_eyebrow: Ihre Einträge
         list_title: Ihre Inserate
+        list_blurb: Entwürfe und Live-Inserate, an denen Sie arbeiten, werden hier für schnellen Zugriff angezeigt.
         total_label:
           one: "%{count} gespeichertes Inserat"
           other: "%{count} gespeicherte Inserate"
@@ -303,9 +304,13 @@ de:
         empty_body: Erstellen Sie Ihr erstes Objekt und kehren Sie hierher zurück,
           wenn Sie weiterarbeiten möchten.
         saved_searches_eyebrow: Immobiliensuche
+        customer_bookings_blurb: Bevorstehende, vergangene und stornierte Buchungen werden hier gruppiert, damit Sie jede Besichtigung an einem Ort verfolgen können.
         saved_searches_title: Gespeicherte Suchen
         saved_searches_browse_catalogue: Zum Katalog
+        saved_searches_empty_title: Noch keine gespeicherten Suchen
         saved_searches_empty: Sie haben noch keine Katalogfilter gespeichert. Öffnen Sie den Immobilienkatalog und nutzen Sie „Suche speichern“ in der Seitenleiste, während Sie angemeldet sind.
+        customer_bookings_empty_title: Noch keine Buchungen
+        customer_bookings_empty: Sie haben noch keine Buchungen.
       trust_cues:
         recently_updated: Kürzlich aktualisiert
         available_now: Sofort verfügbar

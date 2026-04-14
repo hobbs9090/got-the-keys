@@ -2928,7 +2928,11 @@ html[data-theme="dark"] {
   margin: 0;
 }
 
-.property-workspace-section--empty-listings h3 {
+.property-workspace-section--empty-listings {
+  margin-top: 0.75rem;
+}
+
+.property-workspace-section__empty-title {
   font-size: 1.65rem;
   line-height: 1.2;
 }

@@ -665,6 +665,37 @@ describe "Properties" do
       expect(response.body).to include("No listings yet")
       expect(response.body).to include(new_property_path)
     end
+
+    it "always renders listings, bookings, and saved searches sections when listings are empty" do
+      sign_in FactoryBot.create(:user)
+
+      get mine_properties_path
+
+      document = Nokogiri::HTML(response.body)
+
+      expect(response).to have_http_status(:ok)
+      expect(document.at_css(%([data-testid="owner-listings-section"]))).to be_present
+      expect(document.at_css(%([data-testid="customer-bookings-section"]))).to be_present
+      expect(document.at_css(%([data-testid="workspace-saved-searches"]))).to be_present
+      expect(response.body).to include("No listings yet")
+      expect(response.body).to include("No bookings yet")
+      expect(response.body).to include("No saved searches yet")
+    end
+
+    it "always renders listings, bookings, and saved searches sections when listings exist" do
+      sign_in user
+      FactoryBot.create(:property, user:, address_line_1: "Consistent Listings Card")
+
+      get mine_properties_path
+
+      document = Nokogiri::HTML(response.body)
+
+      expect(response).to have_http_status(:ok)
+      expect(document.at_css(%([data-testid="owner-listings-section"]))).to be_present
+      expect(document.at_css(%([data-testid="customer-bookings-section"]))).to be_present
+      expect(document.at_css(%([data-testid="workspace-saved-searches"]))).to be_present
+      expect(document.css(%([data-testid="owner-property-card"])).count).to be >= 1
+    end
   end
 
   describe "POST /properties" do

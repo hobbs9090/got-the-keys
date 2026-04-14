@@ -286,6 +286,7 @@ it:
         saved_homes_title: Case salvate
         list_eyebrow: I tuoi record
         list_title: I tuoi annunci
+        list_blurb: Le bozze e gli annunci online su cui stai lavorando compaiono qui per un accesso rapido.
         total_label:
           one: "%{count} annuncio salvato"
           other: "%{count} annunci salvati"
@@ -304,9 +305,13 @@ it:
         empty_body: Crea il tuo primo immobile e torna qui ogni volta che vuoi continuare
           a lavorarci.
         saved_searches_eyebrow: Ricerca immobiliare
+        customer_bookings_blurb: Le prenotazioni imminenti, passate e annullate sono raggruppate qui cosi puoi seguire ogni visita in un unico posto.
         saved_searches_title: Ricerche salvate
         saved_searches_browse_catalogue: Sfoglia il catalogo
+        saved_searches_empty_title: Nessuna ricerca salvata per ora
         saved_searches_empty: Non hai ancora salvato filtri del catalogo. Apri il catalogo immobili e usa Salva questa ricerca nella barra laterale mentre sei connesso.
+        customer_bookings_empty_title: Nessuna prenotazione per ora
+        customer_bookings_empty: Non hai ancora prenotazioni.
       trust_cues:
         recently_updated: Aggiornato di recente
         available_now: Disponibile ora
