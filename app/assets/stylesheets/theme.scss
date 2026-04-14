@@ -2575,11 +2575,15 @@ html[data-theme="dark"] {
 }
 
 .admin-filter-form[data-testid="admin-properties-search"] {
-  grid-template-columns: minmax(22rem, 2fr) auto;
+  align-items: end;
+  grid-template-columns: minmax(0, 1fr) max-content;
 }
 
 .admin-filter-form[data-testid="admin-properties-search"] .admin-filter-form__actions {
+  align-self: end;
+  flex-wrap: nowrap;
   grid-column: auto;
+  justify-content: flex-end;
 }
 
 .property-filters label,

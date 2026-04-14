@@ -1,8 +1,9 @@
-<% form_model = local_assigns.fetch(:form_model, @property) %>
+<% form_route_model = local_assigns.fetch(:form_model, @property) %>
+<% form_model = form_route_model.is_a?(Array) ? form_route_model.last : form_route_model %>
 <% cancel_path = local_assigns.fetch(:cancel_path, properties_path) %>
 <% allow_destroy = local_assigns.fetch(:allow_destroy, true) %>
 
-<%= form_with model: form_model, class: "stacked-form property-listing-form", data: { testid: "property-listing-form" } do |f| %>
+<%= form_with model: form_route_model, class: "stacked-form property-listing-form", data: { testid: "property-listing-form" } do |f| %>
   <%= render "shared/errors", object: form_model %>
 
   <section class="property-panel" data-testid="listing-workflow-panel">
