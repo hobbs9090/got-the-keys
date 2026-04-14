@@ -92,6 +92,43 @@ RSpec.describe "Appointments" do
       expect(appointment.status).to eq("pending")
     end
 
+    it "adds the property to saved homes for the signed-in user" do
+      sign_in(user)
+      slot = next_booking_slot
+
+      expect do
+        post property_appointments_path(property), params: {
+          appointment: {
+            customer_name: "Nina Hughes",
+            customer_email: "nina.hughes@example.com",
+            customer_phone: "07700 930005",
+            requested_time: slot.iso8601,
+            notes: "Please confirm whether parking is allocated."
+          }
+        }
+      end.to change(SavedProperty, :count).by(1)
+
+      expect(user.saved_properties.find_by(property: property)).to be_present
+    end
+
+    it "does not create duplicate saved homes when already saved" do
+      sign_in(user)
+      slot = next_booking_slot
+      FactoryBot.create(:saved_property, user:, property:)
+
+      expect do
+        post property_appointments_path(property), params: {
+          appointment: {
+            customer_name: "Nina Hughes",
+            customer_email: "nina.hughes@example.com",
+            customer_phone: "07700 930005",
+            requested_time: slot.iso8601,
+            notes: "Please confirm whether parking is allocated."
+          }
+        }
+      end.not_to change(SavedProperty, :count)
+    end
+
     it "redirects signed-out visitors to sign in instead of creating an appointment" do
       slot = next_booking_slot
 

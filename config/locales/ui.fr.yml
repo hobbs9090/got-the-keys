@@ -324,7 +324,7 @@ fr:
         saved_searches_eyebrow: Recherche immobiliere
         customer_bookings_eyebrow: Vos visites
         customer_bookings_title: Vos reservations
-        customer_bookings_blurb: Les reservations a venir, passees et annulees sont regroupees ici pour vous permettre de suivre chaque visite au meme endroit.
+        customer_bookings_blurb: Les reservations a venir, passees et annulees sont regroupees ici pour vous permettre de suivre chaque visite au meme endroit. Les reservations de vos propres biens apparaissent au-dessus dans la section Vos annonces.
         upcoming_appointments: A venir
         previous_appointments: Passees
         cancelled_appointments: Annulees

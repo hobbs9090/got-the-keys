@@ -351,7 +351,7 @@ en:
         saved_searches_eyebrow: "Property search"
         customer_bookings_eyebrow: "Your viewings"
         customer_bookings_title: "Your bookings"
-        customer_bookings_blurb: "Upcoming, previous, and cancelled bookings are grouped here so you can track every viewing in one place."
+        customer_bookings_blurb: "Upcoming, previous, and cancelled bookings are grouped here so you can track every viewing in one place. Any bookings for your own properties appear above in Your listings."
         upcoming_appointments: "Upcoming"
         previous_appointments: "Previous"
         cancelled_appointments: "Cancelled"

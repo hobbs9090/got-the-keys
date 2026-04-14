@@ -17,6 +17,7 @@ class AppointmentsController < ApplicationController
     @appointment.scheduled_at = @appointment.requested_time
 
     if @appointment.save
+      save_property_for_current_user!
       redirect_to appointment_path(@appointment, token: @appointment.access_token), notice: t("ui.appointments.new.submitted_notice")
     else
       @available_slots = @property.next_available_slots(limit: BOOKING_FORM_SLOT_LIMIT)
@@ -109,6 +110,12 @@ class AppointmentsController < ApplicationController
     return if user_signed_in?
 
     redirect_to new_user_session_path(return_to: property_path(@property, anchor: "booking-panel"))
+  end
+
+  def save_property_for_current_user!
+    return unless current_user.present?
+
+    current_user.saved_properties.find_or_create_by!(property: @property)
   end
 
 end
