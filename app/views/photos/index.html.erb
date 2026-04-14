@@ -3,10 +3,13 @@
 <section class="page-hero">
   <div>
     <p class="page-hero__eyebrow"><%= t("ui.photos.eyebrow") %></p>
-    <h2><%= t("ui.properties.show.seller_title") %></h2>
     <h1><%= t("ui.photos.heading") %></h1>
     <p><%= t("ui.photos.body") %></p>
   </div>
+</section>
+
+<section class="property-workspace property-workspace--seller">
+  <%= render "properties/seller_workspace_panel", property: @property %>
 </section>
 
 <section class="page-section page-section--stacked-panels">

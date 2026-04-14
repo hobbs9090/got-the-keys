@@ -8,8 +8,11 @@
     </div>
   </div>
 
+  <section class="property-workspace property-workspace--seller">
+    <%= render "properties/seller_workspace_panel", property: @property %>
+  </section>
+
   <article class="admin-panel">
-    <h2><%= t("ui.properties.show.seller_title") %></h2>
     <%= render "properties/form", form_model: [:admin, @property], cancel_path: admin_property_path(@property), allow_destroy: false %>
   </article>
 </section>

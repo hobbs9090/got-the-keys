@@ -1,12 +1,15 @@
 <% title t("ui.property_documents.title", address: @property.address_line_1) %>
 
+<section class="property-workspace property-workspace--seller">
+  <%= render "properties/seller_workspace_panel", property: @property %>
+</section>
+
 <section class="property-layout">
   <article class="property-panel">
     <div class="section-heading">
       <div>
         <p class="section-heading__eyebrow"><%= t("ui.properties.show.seller_title") %></p>
-        <h2><%= t("ui.properties.show.seller_title") %></h2>
-        <h3><%= t("ui.property_documents.heading") %></h3>
+        <h2><%= t("ui.property_documents.heading") %></h2>
       </div>
 
       <div class="section-heading__actions">
