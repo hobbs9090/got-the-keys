@@ -116,13 +116,12 @@
       </div>
     <% end %>
 
-    <% unless current_user == @property.user %>
-      <% if user_signed_in? %>
-        <h2><%= t("ui.common.book_a_viewing") %></h2>
-        <p><%= t("ui.properties.show.booking_body") %></p>
-        <%= render "shared/errors", object: @appointment %>
+    <% if user_signed_in? %>
+      <h2><%= t("ui.common.book_a_viewing") %></h2>
+      <p><%= t("ui.properties.show.booking_body") %></p>
+      <%= render "shared/errors", object: @appointment %>
 
-        <% if @available_slots.any? %>
+      <% if @available_slots.any? %>
         <%= form_with model: [@property, @appointment], local: true, class: "stacked-form", data: { testid: "appointment-form" } do |f| %>
           <div>
             <%= f.label :customer_name, t("ui.common.full_name"), **form_label_options(@appointment, :customer_name) %>
@@ -169,19 +168,18 @@
             <%= f.submit t("ui.appointments.new.submit"), class: "button primary expanded", data: { testid: "book-viewing-cta" } %>
           </div>
         <% end %>
-        <% else %>
-          <div class="empty-state">
-            <h3><%= t("ui.properties.show.no_slots_title") %></h3>
-            <p><%= t("ui.properties.show.no_slots_body") %></p>
-          </div>
-        <% end %>
       <% else %>
-        <div class="empty-state property-booking-panel__support-card" data-testid="book-viewing-sign-in-panel">
-          <h3><%= t("ui.common.book_a_viewing") %></h3>
-          <p><%= t("ui.properties.show.booking_sign_in_body", default: "Sign in or create an account to request a viewing and pick from the published time slots for this home.") %></p>
-          <%= link_to t("ui.properties.show.booking_sign_in_cta", default: "Sign in to book a viewing"), new_user_session_path(return_to: property_path(@property, anchor: "booking-panel")), class: "button primary expanded", data: { testid: "book-viewing-sign-in-link" } %>
+        <div class="empty-state">
+          <h3><%= t("ui.properties.show.no_slots_title") %></h3>
+          <p><%= t("ui.properties.show.no_slots_body") %></p>
         </div>
       <% end %>
+    <% else %>
+      <div class="empty-state property-booking-panel__support-card" data-testid="book-viewing-sign-in-panel">
+        <h3><%= t("ui.common.book_a_viewing") %></h3>
+        <p><%= t("ui.properties.show.booking_sign_in_body", default: "Sign in or create an account to request a viewing and pick from the published time slots for this home.") %></p>
+        <%= link_to t("ui.properties.show.booking_sign_in_cta", default: "Sign in to book a viewing"), new_user_session_path(return_to: property_path(@property, anchor: "booking-panel")), class: "button primary expanded", data: { testid: "book-viewing-sign-in-link" } %>
+      </div>
     <% end %>
 
     <div class="empty-state property-booking-panel__support-card" data-testid="property-enquiry-panel">
