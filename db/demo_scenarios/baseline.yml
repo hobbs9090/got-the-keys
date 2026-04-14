@@ -396,6 +396,11 @@ photos:
     caption: Hero image
     position: 1
     primary: true
+  - property_key: baseline_sale_035
+    image_filename: properties/property_74_highfield_gardens_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
   - property_key: baseline_sale_036
     image_filename: properties/property_76_beech_gardens_hero.jpg
     caption: Front exterior
@@ -403,6 +408,296 @@ photos:
     primary: true
   - property_key: baseline_sale_037
     image_filename: properties/property_flat_16_78_priory_place_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_002
+    image_filename: properties/property_maisonette_18_8_kings_crescent_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_003
+    image_filename: properties/property_10_richmond_road_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_004
+    image_filename: properties/property_apartment_1_12_highfield_court_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_005
+    image_filename: properties/property_flat_15_14_highfield_court_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_006
+    image_filename: properties/property_16_mount_street_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_007
+    image_filename: properties/property_flat_1_18_kings_gardens_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_008
+    image_filename: properties/property_apartment_14_20_orchard_close_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_009
+    image_filename: properties/property_flat_8_22_highfield_place_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_010
+    image_filename: properties/property_apartment_14_24_richmond_grove_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_011
+    image_filename: properties/property_apartment_16_26_richmond_terrace_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_012
+    image_filename: properties/property_flat_7_28_meadow_close_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_013
+    image_filename: properties/property_maisonette_2_30_willow_court_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_014
+    image_filename: properties/property_32_mount_terrace_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_015
+    image_filename: properties/property_flat_2_34_willow_mews_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_016
+    image_filename: properties/property_flat_14_36_church_place_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_017
+    image_filename: properties/property_flat_7_38_queens_close_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_018
+    image_filename: properties/property_maisonette_4_40_oak_crescent_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_019
+    image_filename: properties/property_42_cedar_crescent_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_020
+    image_filename: properties/property_apartment_15_44_orchard_close_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_021
+    image_filename: properties/property_apartment_13_46_kings_close_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_022
+    image_filename: properties/property_apartment_2_48_mount_place_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_023
+    image_filename: properties/property_flat_18_50_station_mews_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_024
+    image_filename: properties/property_flat_11_52_rectory_lane_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_025
+    image_filename: properties/property_flat_9_54_heath_grove_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_026
+    image_filename: properties/property_56_highfield_mews_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_027
+    image_filename: properties/property_flat_10_58_station_court_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_028
+    image_filename: properties/property_60_marlborough_court_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_029
+    image_filename: properties/property_flat_1_62_richmond_lane_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_030
+    image_filename: properties/property_flat_3_64_meadow_place_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_031
+    image_filename: properties/property_apartment_14_66_orchard_crescent_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_032
+    image_filename: properties/property_68_beech_court_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_033
+    image_filename: properties/property_70_kings_place_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_034
+    image_filename: properties/property_apartment_10_72_orchard_drive_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_035
+    image_filename: properties/property_flat_13_74_oak_court_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_036
+    image_filename: properties/property_apartment_10_76_grosvenor_drive_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_037
+    image_filename: properties/property_flat_12_78_marlborough_terrace_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_038
+    image_filename: properties/property_maisonette_2_80_lime_lane_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_039
+    image_filename: properties/property_apartment_8_82_park_mews_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_040
+    image_filename: properties/property_84_mount_place_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_041
+    image_filename: properties/property_86_richmond_mews_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_042
+    image_filename: properties/property_maisonette_12_88_highfield_place_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_043
+    image_filename: properties/property_maisonette_10_90_albion_gardens_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_044
+    image_filename: properties/property_92_church_place_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_045
+    image_filename: properties/property_94_queens_street_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_046
+    image_filename: properties/property_96_willow_court_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_047
+    image_filename: properties/property_maisonette_14_98_richmond_place_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_048
+    image_filename: properties/property_flat_8_100_willow_mews_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_049
+    image_filename: properties/property_apartment_15_102_station_terrace_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_050
+    image_filename: properties/property_flat_14_104_meadow_close_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_051
+    image_filename: properties/property_apartment_1_106_station_grove_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_052
+    image_filename: properties/property_apartment_3_108_kings_mews_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_053
+    image_filename: properties/property_maisonette_1_110_heath_road_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_054
+    image_filename: properties/property_apartment_6_112_rectory_road_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_055
+    image_filename: properties/property_flat_14_114_park_grove_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_056
+    image_filename: properties/property_116_orchard_mews_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_057
+    image_filename: properties/property_flat_6_118_meadow_street_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_058
+    image_filename: properties/property_flat_1_120_priory_lane_hero.jpg
+    caption: Hero image
+    position: 1
+    primary: true
+  - property_key: baseline_rental_059
+    image_filename: properties/property_flat_5_122_beech_mews_hero.jpg
     caption: Hero image
     position: 1
     primary: true
