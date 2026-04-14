@@ -666,7 +666,7 @@ describe "Properties" do
       expect(response.body).to include(new_property_path)
     end
 
-    it "always renders listings, bookings, and saved searches sections when listings are empty" do
+    it "always renders listings, bookings, saved homes, and saved searches sections when listings are empty" do
       sign_in FactoryBot.create(:user)
 
       get mine_properties_path
@@ -676,13 +676,15 @@ describe "Properties" do
       expect(response).to have_http_status(:ok)
       expect(document.at_css(%([data-testid="owner-listings-section"]))).to be_present
       expect(document.at_css(%([data-testid="customer-bookings-section"]))).to be_present
+      expect(document.at_css(%([data-testid="saved-homes-section"]))).to be_present
       expect(document.at_css(%([data-testid="workspace-saved-searches"]))).to be_present
       expect(response.body).to include("No listings yet")
       expect(response.body).to include("No bookings yet")
+      expect(response.body).to include("No saved homes yet")
       expect(response.body).to include("No saved searches yet")
     end
 
-    it "always renders listings, bookings, and saved searches sections when listings exist" do
+    it "always renders listings, bookings, saved homes, and saved searches sections when listings exist" do
       sign_in user
       FactoryBot.create(:property, user:, address_line_1: "Consistent Listings Card")
 
@@ -693,6 +695,7 @@ describe "Properties" do
       expect(response).to have_http_status(:ok)
       expect(document.at_css(%([data-testid="owner-listings-section"]))).to be_present
       expect(document.at_css(%([data-testid="customer-bookings-section"]))).to be_present
+      expect(document.at_css(%([data-testid="saved-homes-section"]))).to be_present
       expect(document.at_css(%([data-testid="workspace-saved-searches"]))).to be_present
       expect(document.css(%([data-testid="owner-property-card"])).count).to be >= 1
     end

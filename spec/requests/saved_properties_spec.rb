@@ -77,6 +77,20 @@ RSpec.describe "Saved properties", type: :request do
     expect(response).to redirect_to(property_path(property))
   end
 
+  it "removes a saved property card via turbo stream in the workspace" do
+    sign_in user
+    FactoryBot.create(:saved_property, user:, property:)
+
+    expect do
+      delete property_saved_property_path(property), headers: { "ACCEPT" => "text/vnd.turbo-stream.html" }
+    end.to change(SavedProperty, :count).by(-1)
+
+    expect(response).to have_http_status(:ok)
+    expect(response.media_type).to eq("text/vnd.turbo-stream.html")
+    expect(response.body).to include(%(turbo-stream action="remove"))
+    expect(response.body).to include(%(target="#{ActionView::RecordIdentifier.dom_id(property, :saved_property_card)}"))
+  end
+
   it "prevents a property owner from saving their own listing" do
     sign_in owner
 

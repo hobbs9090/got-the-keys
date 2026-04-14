@@ -103,6 +103,16 @@ zh:
         stack: 在 Apache + Passenger 下运行的服务端渲染 Rails。
         dependencies: 不依赖 Redis、Sidekiq 或常驻工作进程。
         enhancement: 结合 Foundation、Turbo 和传统表单的渐进增强。
+    saved_properties:
+      panel_title: 保存此房源
+      panel_body: 先把这套房源保存起来，之后无需再次搜索即可快速返回。
+      panel_body_guest: 先把这套房源保存起来，之后无需再次搜索即可快速返回。登录或注册账户后即可保存房源。
+      save_button: 保存房源
+      saved_button: 从已保存列表移除
+      sign_in_to_save: 登录后保存
+      saved_notice: 房源已保存。
+      removed_notice: 房源已从收藏中移除。
+      owner_alert: 你不能保存自己的房源。
     properties:
       headline_fallback: "%{town_city} 的 %{property_type}"
       in_location: "%{location} 的 %{property_type}"
@@ -259,6 +269,9 @@ zh:
         body: 打开你已保存的房源，返回草稿，并查看你已经填写过的房源详情。
         saved_homes_eyebrow: 你的收藏清单
         saved_homes_title: 已收藏房源
+        saved_homes_blurb: 你已收藏的房源会集中显示在这里，方便你快速返回查看详情。
+        saved_homes_empty_title: 还没有收藏房源
+        saved_homes_empty: 你可以从房源目录收藏房源，将你的清单集中在这里管理。
         list_eyebrow: 你的记录
         list_title: 你的房源
         list_blurb: 你正在处理的草稿和已上线房源会显示在这里，方便你快速返回。
@@ -278,8 +291,18 @@ zh:
         empty_title: 还没有房源
         empty_body: 创建你的第一套房源，并在想继续处理时随时回到这里。
         saved_searches_eyebrow: 找房搜索
+        customer_bookings_eyebrow: 你的看房
+        customer_bookings_title: 你的预约
         customer_bookings_blurb: 即将到来、历史和已取消的预约都会汇总在这里，方便你在同一处跟踪每一次看房。
+        upcoming_appointments: 即将到来
+        previous_appointments: 历史
+        cancelled_appointments: 已取消
+        no_upcoming_appointments: 还没有即将到来的预约。
+        no_previous_appointments: 还没有历史预约。
+        no_cancelled_appointments: 还没有已取消的预约。
+        view_booking: 查看预约
         saved_searches_title: 已保存的搜索
+        saved_searches_blurb: 你保存的筛选组合会显示在这里，方便你随时重新打开匹配结果。
         saved_searches_browse_catalogue: 浏览房源目录
         saved_searches_empty_title: 还没有保存的搜索
         saved_searches_empty: 你尚未保存过目录筛选。请打开房源目录，并在登录状态下使用侧边栏的「保存此次搜索」。

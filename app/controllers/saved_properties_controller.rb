@@ -12,7 +12,10 @@ class SavedPropertiesController < ApplicationController
   def destroy
     current_user.saved_properties.where(property: @property).destroy_all
 
-    redirect_to property_path(@property), notice: t("ui.saved_properties.removed_notice", default: "Property removed from saved homes.")
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to property_path(@property), notice: t("ui.saved_properties.removed_notice", default: "Property removed from saved homes.") }
+    end
   end
 
   private

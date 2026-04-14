@@ -114,6 +114,16 @@ fr:
           actifs.
         enhancement: Amelioration progressive avec Foundation, Turbo et des formulaires
           classiques.
+    saved_properties:
+      panel_title: Sauvegarder cette annonce
+      panel_body: Gardez ce logement a portee de main pour y revenir sans refaire de recherche.
+      panel_body_guest: Gardez ce logement a portee de main pour y revenir sans refaire de recherche. Connectez-vous ou creez un compte pour sauvegarder des annonces.
+      save_button: Sauvegarder le bien
+      saved_button: Retirer de la liste sauvegardee
+      sign_in_to_save: Se connecter pour sauvegarder
+      saved_notice: Bien sauvegarde.
+      removed_notice: Bien retire des logements sauvegardes.
+      owner_alert: Vous ne pouvez pas sauvegarder votre propre annonce.
     properties:
       headline_fallback: "%{property_type} a %{town_city}"
       in_location: "%{property_type} a %{location}"
@@ -288,6 +298,9 @@ fr:
           les details des biens deja saisis.
         saved_homes_eyebrow: Votre selection
         saved_homes_title: Logements sauvegardes
+        saved_homes_blurb: Les logements que vous avez mis de cote restent ici pour revenir rapidement aux details.
+        saved_homes_empty_title: Aucun logement sauvegarde pour le moment
+        saved_homes_empty: Sauvegardez des logements depuis le catalogue pour garder votre selection au meme endroit.
         list_eyebrow: Vos dossiers
         list_title: Vos annonces
         list_blurb: Les annonces en brouillon et en ligne sur lesquelles vous travaillez s affichent ici pour un acces rapide.
@@ -309,8 +322,18 @@ fr:
         empty_body: Creez votre premier bien puis revenez ici quand vous voulez reprendre
           le travail.
         saved_searches_eyebrow: Recherche immobiliere
+        customer_bookings_eyebrow: Vos visites
+        customer_bookings_title: Vos reservations
         customer_bookings_blurb: Les reservations a venir, passees et annulees sont regroupees ici pour vous permettre de suivre chaque visite au meme endroit.
+        upcoming_appointments: A venir
+        previous_appointments: Passees
+        cancelled_appointments: Annulees
+        no_upcoming_appointments: Aucune reservation a venir.
+        no_previous_appointments: Aucune reservation passee.
+        no_cancelled_appointments: Aucune reservation annulee.
+        view_booking: Voir la reservation
         saved_searches_title: Recherches enregistrees
+        saved_searches_blurb: Vos combinaisons de filtres sauvegardees sont listees ici pour rouvrir les resultats correspondants a tout moment.
         saved_searches_browse_catalogue: Parcourir le catalogue
         saved_searches_empty_title: Aucune recherche enregistree pour le moment
         saved_searches_empty: Vous n avez pas encore enregistre de filtres du catalogue. Ouvrez le catalogue des biens et utilisez Enregistrer cette recherche dans le panneau lateral pendant que vous etes connecte.

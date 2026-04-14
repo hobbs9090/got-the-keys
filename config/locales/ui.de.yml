@@ -112,6 +112,16 @@ de:
           Workern.
         enhancement: Progressive Enhancement mit Foundation, Turbo und klassischen
           Formularen.
+    saved_properties:
+      panel_title: Dieses Inserat speichern
+      panel_body: Merken Sie sich dieses Zuhause, damit Sie ohne erneute Suche wieder darauf zugreifen konnen.
+      panel_body_guest: Merken Sie sich dieses Zuhause, damit Sie ohne erneute Suche wieder darauf zugreifen konnen. Melden Sie sich an oder erstellen Sie ein Konto, um Inserate zu speichern.
+      save_button: Objekt speichern
+      saved_button: Aus Merkliste entfernen
+      sign_in_to_save: Anmelden zum Speichern
+      saved_notice: Objekt gespeichert.
+      removed_notice: Objekt aus den gespeicherten Immobilien entfernt.
+      owner_alert: Sie konnen Ihr eigenes Inserat nicht speichern.
     properties:
       headline_fallback: "%{property_type} in %{town_city}"
       in_location: "%{property_type} in %{location}"
@@ -283,6 +293,9 @@ de:
           und prüfen Sie die bereits erfassten Objektdetails.
         saved_homes_eyebrow: Ihre Merkliste
         saved_homes_title: Gespeicherte Immobilien
+        saved_homes_blurb: Die von Ihnen vorgemerkten Immobilien bleiben hier, damit Sie schnell zu den Details zuruckkehren konnen.
+        saved_homes_empty_title: Noch keine gespeicherten Immobilien
+        saved_homes_empty: Speichern Sie Immobilien aus dem Katalog, um Ihre Merkliste an einem Ort zu behalten.
         list_eyebrow: Ihre Einträge
         list_title: Ihre Inserate
         list_blurb: Entwürfe und Live-Inserate, an denen Sie arbeiten, werden hier für schnellen Zugriff angezeigt.
@@ -304,8 +317,18 @@ de:
         empty_body: Erstellen Sie Ihr erstes Objekt und kehren Sie hierher zurück,
           wenn Sie weiterarbeiten möchten.
         saved_searches_eyebrow: Immobiliensuche
+        customer_bookings_eyebrow: Ihre Besichtigungen
+        customer_bookings_title: Ihre Buchungen
         customer_bookings_blurb: Bevorstehende, vergangene und stornierte Buchungen werden hier gruppiert, damit Sie jede Besichtigung an einem Ort verfolgen können.
+        upcoming_appointments: Bevorstehend
+        previous_appointments: Vergangen
+        cancelled_appointments: Storniert
+        no_upcoming_appointments: Keine bevorstehenden Termine.
+        no_previous_appointments: Keine vergangenen Termine.
+        no_cancelled_appointments: Keine stornierten Termine.
+        view_booking: Buchung anzeigen
         saved_searches_title: Gespeicherte Suchen
+        saved_searches_blurb: Ihre gespeicherten Filterkombinationen sind hier aufgelistet, damit Sie passende Ergebnisse jederzeit wieder offnen konnen.
         saved_searches_browse_catalogue: Zum Katalog
         saved_searches_empty_title: Noch keine gespeicherten Suchen
         saved_searches_empty: Sie haben noch keine Katalogfilter gespeichert. Öffnen Sie den Immobilienkatalog und nutzen Sie „Suche speichern“ in der Seitenleiste, während Sie angemeldet sind.

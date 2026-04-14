@@ -112,6 +112,16 @@ it:
         dependencies: Nessuna dipendenza da Redis, Sidekiq o worker sempre
           attivi.
         enhancement: Miglioramento progressivo con Foundation, Turbo e moduli tradizionali.
+    saved_properties:
+      panel_title: Salva questo annuncio
+      panel_body: Tieni questa casa a portata di mano per tornarci senza cercarla di nuovo.
+      panel_body_guest: Tieni questa casa a portata di mano per tornarci senza cercarla di nuovo. Accedi o crea un account per salvare annunci.
+      save_button: Salva immobile
+      saved_button: Rimuovi dall elenco salvato
+      sign_in_to_save: Accedi per salvare
+      saved_notice: Immobile salvato.
+      removed_notice: Immobile rimosso dalle case salvate.
+      owner_alert: Non puoi salvare il tuo stesso annuncio.
     properties:
       headline_fallback: "%{property_type} a %{town_city}"
       in_location: "%{property_type} a %{location}"
@@ -284,6 +294,9 @@ it:
           immobili che hai gia creato.
         saved_homes_eyebrow: La tua selezione
         saved_homes_title: Case salvate
+        saved_homes_blurb: Le case che hai messo tra i preferiti restano qui cosi puoi tornare rapidamente ai dettagli.
+        saved_homes_empty_title: Nessuna casa salvata per ora
+        saved_homes_empty: Salva case dal catalogo per tenere la tua selezione in un unico posto.
         list_eyebrow: I tuoi record
         list_title: I tuoi annunci
         list_blurb: Le bozze e gli annunci online su cui stai lavorando compaiono qui per un accesso rapido.
@@ -305,8 +318,18 @@ it:
         empty_body: Crea il tuo primo immobile e torna qui ogni volta che vuoi continuare
           a lavorarci.
         saved_searches_eyebrow: Ricerca immobiliare
+        customer_bookings_eyebrow: Le tue visite
+        customer_bookings_title: Le tue prenotazioni
         customer_bookings_blurb: Le prenotazioni imminenti, passate e annullate sono raggruppate qui cosi puoi seguire ogni visita in un unico posto.
+        upcoming_appointments: In arrivo
+        previous_appointments: Passate
+        cancelled_appointments: Annullate
+        no_upcoming_appointments: Nessuna prenotazione in arrivo.
+        no_previous_appointments: Nessuna prenotazione passata.
+        no_cancelled_appointments: Nessuna prenotazione annullata.
+        view_booking: Vedi prenotazione
         saved_searches_title: Ricerche salvate
+        saved_searches_blurb: Le combinazioni di filtri che hai salvato sono elencate qui, cosi puoi riaprire i risultati corrispondenti in qualsiasi momento.
         saved_searches_browse_catalogue: Sfoglia il catalogo
         saved_searches_empty_title: Nessuna ricerca salvata per ora
         saved_searches_empty: Non hai ancora salvato filtri del catalogo. Apri il catalogo immobili e usa Salva questa ricerca nella barra laterale mentre sei connesso.

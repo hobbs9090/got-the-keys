@@ -71,15 +71,15 @@
     <% end %>
   </section>
 
-  <% if @saved_properties.any? %>
-    <section class="site-card property-workspace-section">
+  <section class="site-card property-workspace-section" data-testid="saved-homes-section">
       <p class="section-heading__eyebrow"><%= t("ui.properties.mine.saved_homes_eyebrow", default: "Your shortlist") %></p>
       <h2><%= t("ui.properties.mine.saved_homes_title", default: "Saved homes") %></h2>
       <p><%= t("ui.properties.mine.saved_homes_blurb", default: "Homes you have shortlisted stay here so you can jump back into details quickly.") %></p>
 
-      <div class="property-workspace__grid">
-        <% @saved_properties.each do |property| %>
-          <article class="site-card property-workspace-card" data-testid="saved-property-card">
+      <% if @saved_properties.any? %>
+        <div class="property-workspace__grid">
+          <% @saved_properties.each do |property| %>
+          <article id="<%= dom_id(property, :saved_property_card) %>" class="site-card property-workspace-card" data-testid="saved-property-card">
             <div class="property-workspace-card__media">
               <%= small_image_for(property) %>
             </div>
@@ -118,14 +118,17 @@
 
               <div class="property-workspace-card__actions">
                 <%= link_to t("ui.properties.mine.open_details", default: "Open details"), property_path(property), class: "button primary" %>
-                <%= button_to t("ui.saved_properties.saved_button", default: "Remove from saved list"), property_saved_property_path(property), method: :delete, class: "button primary hollow" %>
+                <%= button_to t("ui.saved_properties.saved_button", default: "Remove from saved list"), property_saved_property_path(property), method: :delete, class: "button primary hollow", form: { data: { turbo_stream: true } } %>
               </div>
             </div>
-          </article>
-        <% end %>
-      </div>
+            </article>
+          <% end %>
+        </div>
+      <% else %>
+        <h3 class="property-workspace-section__empty-title"><%= t("ui.properties.mine.saved_homes_empty_title", default: "No saved homes yet") %></h3>
+        <p class="empty-copy"><%= t("ui.properties.mine.saved_homes_empty", default: "Save homes from the catalogue to keep your shortlist in one place.") %></p>
+      <% end %>
     </section>
-  <% end %>
 
   <section class="site-card property-workspace-section" id="saved-searches" data-testid="workspace-saved-searches">
     <p class="section-heading__eyebrow"><%= t("ui.properties.mine.saved_searches_eyebrow") %></p>
