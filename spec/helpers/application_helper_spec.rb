@@ -66,10 +66,11 @@ RSpec.describe ApplicationHelper, type: :helper do
   end
 
   describe "#formatted_date_time" do
-    it "returns a localized long timestamp with UTC suffix for present values" do
+    it "returns a localized long timestamp in the configured zone for present values" do
       value = Time.zone.local(2026, 3, 30, 15, 45)
+      zone_value = value.in_time_zone
 
-      expect(helper.formatted_date_time(value)).to eq("#{I18n.l(value, format: :long)} UTC")
+      expect(helper.formatted_date_time(value)).to eq("#{I18n.l(zone_value, format: :long)} #{zone_value.zone}")
     end
 
     it "returns nil for blank values" do
@@ -78,10 +79,11 @@ RSpec.describe ApplicationHelper, type: :helper do
   end
 
   describe "#formatted_public_date_time" do
-    it "returns a localized long timestamp without a UTC suffix" do
+    it "returns a localized long timestamp in the configured zone" do
       value = Time.zone.local(2026, 3, 30, 15, 45)
+      zone_value = value.in_time_zone
 
-      expect(helper.formatted_public_date_time(value)).to eq(I18n.l(value, format: :long))
+      expect(helper.formatted_public_date_time(value)).to eq(I18n.l(zone_value, format: :long))
     end
 
     it "returns nil for blank values" do

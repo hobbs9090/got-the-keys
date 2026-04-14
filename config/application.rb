@@ -28,6 +28,11 @@ module GotTheKeys
     }
     config.filter_parameters += %i[password password_confirmation otp_attempt]
     config.x.got_the_keys.available_languages = %w[en de fr it zh].freeze
+    app_time_zone = ENV.fetch("APP_TIME_ZONE", "Europe/London")
+    raise "APP_TIME_ZONE must be a valid ActiveSupport time zone" unless ActiveSupport::TimeZone[app_time_zone]
+
+    config.time_zone = app_time_zone
+    config.x.got_the_keys.time_zone = app_time_zone
     config.x.got_the_keys.exchange_rate_gbp_to_cny = 9.368
     config.x.got_the_keys.version = semantic_version
     config.x.got_the_keys.build_sha = ENV["APP_BUILD_SHA"].presence || build_metadata["build_sha"].presence

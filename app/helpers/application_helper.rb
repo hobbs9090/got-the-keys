@@ -53,13 +53,14 @@ module ApplicationHelper
   def formatted_date_time(value)
     return if value.blank?
 
-    "#{l(value, format: :long)} UTC"
+    timestamp = value.in_time_zone
+    "#{l(timestamp, format: :long)} #{timestamp.zone}"
   end
 
   def formatted_public_date_time(value)
     return if value.blank?
 
-    l(value, format: :long)
+    l(value.in_time_zone, format: :long)
   end
 
   def formatted_calendar_date(value)
