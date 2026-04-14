@@ -168,7 +168,10 @@ it:
           submit: Salva ricerca
           saved_list_eyebrow: Il tuo account
           saved_list_title: Ricerche salvate
-          view_matches: Vedi annunci corrispondenti
+          view_matches:
+            zero: Nessun annuncio corrispondente
+            one: Vedi 1 annuncio corrispondente
+            other: "Vedi %{count} annunci corrispondenti"
           remove: Rimuovi
           saved_at: "Salvato %{time}"
           alerts_on: Avvisi attivi
@@ -279,6 +282,8 @@ it:
         eyebrow: Area venditore
         body: Apri gli annunci salvati, torna alle bozze e rivedi i dettagli degli
           immobili che hai gia creato.
+        saved_homes_eyebrow: La tua selezione
+        saved_homes_title: Case salvate
         list_eyebrow: I tuoi record
         list_title: I tuoi annunci
         total_label:
@@ -294,6 +299,7 @@ it:
           price: Prezzo indicativo
           readiness: Preparazione
           last_saved: Ultimo salvataggio
+          status: Stato
         empty_title: Nessun annuncio per ora
         empty_body: Crea il tuo primo immobile e torna qui ogni volta che vuoi continuare
           a lavorarci.

@@ -2910,6 +2910,62 @@ html[data-theme="dark"] {
   gap: 1.25rem;
 }
 
+.property-workspace-section {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.property-workspace-section h2 {
+  margin: 0;
+}
+
+.property-workspace-section--empty-listings h3,
+.property-workspace-section--empty-listings p {
+  margin: 0;
+}
+
+.property-workspace-section--empty-listings h3 {
+  font-size: 1.65rem;
+  line-height: 1.2;
+}
+
+.property-workspace-section__actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.property-saved-search-card {
+  display: grid;
+  gap: 1rem;
+}
+
+.property-saved-search-card__main {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.property-saved-search-card__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.property-saved-search-card__meta {
+  align-items: center;
+  border-top: 1px solid var(--color-line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin: 0;
+  padding-top: 0.9rem;
+}
+
+.property-saved-search-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
 .property-workspace-card {
   align-items: start;
   display: grid;
@@ -3871,6 +3927,7 @@ table th {
 
   .property-card__actions,
   .property-workspace-card__actions,
+  .property-saved-search-card__actions,
   .section-heading__actions,
   .admin-inline-actions {
     justify-content: flex-start;

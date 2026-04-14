@@ -176,7 +176,10 @@ en:
           submit: "Save search"
           saved_list_eyebrow: "Your account"
           saved_list_title: "Saved searches"
-          view_matches: "View matching listings"
+          view_matches:
+            zero: "No matching listings"
+            one: "View 1 matching listing"
+            other: "View %{count} matching listings"
           remove: "Remove"
           saved_at: "Saved %{time}"
           alerts_on: "Alerts on"
@@ -311,6 +314,8 @@ en:
         title: "My listings"
         eyebrow: "Seller workspace"
         body: "Open the listings you have saved, jump back into drafts, and review the property details you have already created."
+        saved_homes_eyebrow: "Your shortlist"
+        saved_homes_title: "Saved homes"
         list_eyebrow: "Your records"
         list_title: "Your listings"
         total_label:
@@ -325,6 +330,7 @@ en:
           price: "Guide price"
           readiness: "Readiness"
           last_saved: "Last saved"
+          status: "Status"
         empty_title: "No listings yet"
         empty_body: "Create your first property and come back here whenever you want to continue working on it."
         saved_searches_eyebrow: "Property search"

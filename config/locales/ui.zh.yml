@@ -153,7 +153,10 @@ zh:
           submit: 保存搜索
           saved_list_eyebrow: 我的账户
           saved_list_title: 已保存的搜索
-          view_matches: 查看匹配房源
+          view_matches:
+            zero: 暂无匹配房源
+            one: 查看 1 条匹配房源
+            other: "查看 %{count} 条匹配房源"
           remove: 删除
           saved_at: "保存于 %{time}"
           alerts_on: 提醒已开启
@@ -254,6 +257,8 @@ zh:
         title: 我的房源
         eyebrow: 业主工作区
         body: 打开你已保存的房源，返回草稿，并查看你已经填写过的房源详情。
+        saved_homes_eyebrow: 你的收藏清单
+        saved_homes_title: 已收藏房源
         list_eyebrow: 你的记录
         list_title: 你的房源
         total_label:
@@ -268,6 +273,7 @@ zh:
           price: 参考价格
           readiness: 完成度
           last_saved: 最近保存
+          status: 状态
         empty_title: 还没有房源
         empty_body: 创建你的第一套房源，并在想继续处理时随时回到这里。
         saved_searches_eyebrow: 找房搜索

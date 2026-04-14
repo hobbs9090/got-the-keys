@@ -168,7 +168,10 @@ de:
           submit: Suche speichern
           saved_list_eyebrow: Ihr Konto
           saved_list_title: Gespeicherte Suchen
-          view_matches: Passende Inserate anzeigen
+          view_matches:
+            zero: Keine passenden Inserate
+            one: 1 passendes Inserat anzeigen
+            other: "%{count} passende Inserate anzeigen"
           remove: Entfernen
           saved_at: "Gespeichert %{time}"
           alerts_on: Benachrichtigungen an
@@ -278,6 +281,8 @@ de:
         eyebrow: Verkäuferbereich
         body: Öffnen Sie Ihre gespeicherten Inserate, kehren Sie zu Entwürfen zurück
           und prüfen Sie die bereits erfassten Objektdetails.
+        saved_homes_eyebrow: Ihre Merkliste
+        saved_homes_title: Gespeicherte Immobilien
         list_eyebrow: Ihre Einträge
         list_title: Ihre Inserate
         total_label:
@@ -293,6 +298,7 @@ de:
           price: Angebotspreis
           readiness: Bereitschaft
           last_saved: Zuletzt gespeichert
+          status: Status
         empty_title: Noch keine Inserate
         empty_body: Erstellen Sie Ihr erstes Objekt und kehren Sie hierher zurück,
           wenn Sie weiterarbeiten möchten.

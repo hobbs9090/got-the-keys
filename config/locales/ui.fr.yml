@@ -171,7 +171,10 @@ fr:
           submit: Enregistrer la recherche
           saved_list_eyebrow: Votre compte
           saved_list_title: Recherches enregistrées
-          view_matches: Voir les annonces correspondantes
+          view_matches:
+            zero: Aucune annonce correspondante
+            one: Voir 1 annonce correspondante
+            other: "Voir %{count} annonces correspondantes"
           remove: Supprimer
           saved_at: "Enregistré %{time}"
           alerts_on: Alertes activées
@@ -283,6 +286,8 @@ fr:
         eyebrow: Espace vendeur
         body: Ouvrez vos annonces enregistrees, revenez sur vos brouillons et verifiez
           les details des biens deja saisis.
+        saved_homes_eyebrow: Votre selection
+        saved_homes_title: Logements sauvegardes
         list_eyebrow: Vos dossiers
         list_title: Vos annonces
         total_label:
@@ -298,6 +303,7 @@ fr:
           price: Prix indicatif
           readiness: Etat d'avancement
           last_saved: Derniere sauvegarde
+          status: Statut
         empty_title: Aucune annonce pour le moment
         empty_body: Creez votre premier bien puis revenez ici quand vous voulez reprendre
           le travail.
