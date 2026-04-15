@@ -6,6 +6,7 @@
         <li><%= admin_nav_link_to t("ui.admin.navigation.sales"), admin_sales_path, active: controller_path == "admin/offers", data: { testid: "admin-offers-link" } %></li>
         <li><%= admin_nav_link_to t("ui.admin.navigation.rentals"), admin_rentals_path, active: controller_path == "admin/rental_applications", data: { testid: "admin-rental-applications-link" } %></li>
         <li><%= admin_nav_link_to t("ui.admin.navigation.properties"), admin_properties_path, data: { testid: "admin-properties-link" } %></li>
+        <li><%= admin_nav_link_to t("ui.admin.navigation.customers"), admin_customers_path, active: controller_path == "admin/customers", data: { testid: "admin-customers-link" } %></li>
         <li><%= admin_nav_link_to t("ui.admin.navigation.sellers"), admin_users_path, data: { testid: "admin-users-link" } %></li>
         <li><%= admin_nav_link_to t("ui.admin.navigation.notifications"), admin_notification_logs_path, data: { testid: "admin-notifications-link" } %></li>
         <li><%= admin_nav_link_to t("ui.admin.navigation.booking_rules"), admin_booking_configuration_path, data: { testid: "admin-booking-rules-link" } %></li>
