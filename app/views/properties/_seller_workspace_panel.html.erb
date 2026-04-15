@@ -12,7 +12,7 @@
   </ul>
   <div class="section-heading__actions">
     <% if show_edit_link %>
-      <%= link_to t("ui.properties.show.edit_listing"), edit_property_path(property), class: "button primary" %>
+      <%= link_to t("ui.common.back_to_listing"), edit_property_path(property), class: "button primary" %>
     <% end %>
     <%= link_to t("ui.properties.show.manage_photos"), property_photos_path(property), class: "button hollow secondary", data: { testid: "manage-photos-link" } %>
     <%= link_to t("ui.properties.show.manage_floor_plans"), property_floor_plans_path(property), class: "button hollow secondary" %>

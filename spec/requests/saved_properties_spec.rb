@@ -99,6 +99,7 @@ RSpec.describe "Saved properties", type: :request do
     end.not_to change(SavedProperty, :count)
 
     expect(response).to redirect_to(property_path(property))
+    expect(flash[:alert]).to eq(I18n.t("ui.saved_properties.owner_alert"))
   end
 
   it "returns to the property page and saves the listing after sign in from the save prompt" do

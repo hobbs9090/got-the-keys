@@ -124,6 +124,8 @@ en:
       saved_notice: "Property saved."
       removed_notice: "Property removed from saved homes."
       owner_alert: "You cannot save your own listing."
+      validation:
+        owner_cannot_save: "cannot belong to the owner of this listing"
 
     properties:
       headline_fallback: "%{property_type} in %{town_city}"
