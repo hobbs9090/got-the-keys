@@ -10,6 +10,19 @@
 </section>
 
 <section class="admin-panel">
+  <%= form_with url: admin_customers_path, method: :get, class: "admin-filter-form", local: true, data: { testid: "admin-customers-search" } do |f| %>
+    <div>
+      <%= f.label :q, t("ui.admin.customers.index.search.label") %>
+      <%= f.search_field :q, value: @query, placeholder: t("ui.admin.customers.index.search.placeholder"), data: { testid: "admin-customers-search-input" } %>
+    </div>
+    <div class="admin-filter-form__actions">
+      <%= f.submit t("ui.admin.customers.index.search.submit"), class: "button primary", data: { testid: "admin-customers-search-submit" } %>
+      <%= link_to t("ui.admin.customers.index.search.clear"), admin_customers_path, class: "button hollow secondary", data: { testid: "admin-customers-search-clear" } %>
+    </div>
+  <% end %>
+</section>
+
+<section class="admin-panel">
   <% if @customers.any? %>
     <div class="admin-list">
       <% @customers.each do |customer| %>

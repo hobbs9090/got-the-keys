@@ -1172,6 +1172,11 @@ en:
         index:
           title: "Customers"
           eyebrow: "Customer booking directory"
+          search:
+            label: "Search customers"
+            placeholder: "Name, email, or phone"
+            submit: "Search"
+            clear: "Clear"
           view_bookings: "View bookings"
           appointment_count:
             one: "1 booking"
