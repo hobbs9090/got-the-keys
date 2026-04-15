@@ -122,6 +122,8 @@ de:
       saved_notice: Objekt gespeichert.
       removed_notice: Objekt aus den gespeicherten Immobilien entfernt.
       owner_alert: Sie konnen Ihr eigenes Inserat nicht speichern.
+      validation:
+        owner_cannot_save: darf nicht dem Eigentümer dieses Inserats gehören
     properties:
       headline_fallback: "%{property_type} in %{town_city}"
       in_location: "%{property_type} in %{location}"
@@ -438,6 +440,7 @@ de:
           oder storniert werden kann.
         submitted_notice: Die Terminanfrage wurde gesendet. Wir informieren Sie per
           E-Mail über Updates.
+        owner_alert: Sie können keine Besichtigung für Ihr eigenes Objekt buchen.
         preferred_slot: Bevorzugter Termin
         choose_slot: Termin wählen
         notes_label: Gibt es etwas, das wir wissen sollten?
@@ -521,6 +524,20 @@ de:
         den Sie nach der Buchung erhalten haben.
       thanks_html: Vielen Dank,<br>GotTheKeys
     admin:
+      customers:
+        index:
+          appointment_count:
+            one: 1 Buchung
+            other: "%{count} Buchungen"
+          eyebrow: Kundenverzeichnis für Buchungen
+          no_results: Es gibt noch keine Kunden mit Buchungen.
+          search:
+            clear: Zurücksetzen
+            label: Kunden suchen
+            placeholder: Name, E-Mail oder Telefonnummer
+            submit: Suchen
+          title: Kunden
+          view_bookings: Buchungen ansehen
       navigation:
         aria_label: Admin
         dashboard: Dashboard
@@ -529,6 +546,7 @@ de:
         sales: Verkauf
         rentals: Vermietung
         properties: Objekte
+        customers: Kunden
         sellers: Verkäufer
         demo_data: Demo-Daten
         security: Sicherheit
@@ -690,6 +708,7 @@ de:
           upcoming_appointments: Bevorstehende Termine
           pending_actions: Ausstehende Aktionen
           customers: Kunden
+          properties_requiring_review: Zur Prüfung
           open_leads: Offene Leads
         bookings_eyebrow: Nur für Admins
         bookings_title: Transparenz und Steuerung für Buchungen

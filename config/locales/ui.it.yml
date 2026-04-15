@@ -122,6 +122,8 @@ it:
       saved_notice: Immobile salvato.
       removed_notice: Immobile rimosso dalle case salvate.
       owner_alert: Non puoi salvare il tuo stesso annuncio.
+      validation:
+        owner_cannot_save: non puo appartenere al proprietario di questo annuncio
     properties:
       headline_fallback: "%{property_type} a %{town_city}"
       in_location: "%{property_type} a %{location}"
@@ -438,6 +440,7 @@ it:
           richiesta che lo staff potra confermare, riprogrammare o annullare.
         submitted_notice: La richiesta di appuntamento e stata inviata. Ti aggiorneremo
           via email.
+        owner_alert: Non puoi prenotare una visita per il tuo stesso immobile.
         preferred_slot: Fascia preferita
         choose_slot: Scegli una fascia
         notes_label: C'e qualcosa che dovremmo sapere?
@@ -519,6 +522,20 @@ it:
         inviato dopo la prenotazione.
       thanks_html: Grazie,<br>GotTheKeys
     admin:
+      customers:
+        index:
+          appointment_count:
+            one: 1 prenotazione
+            other: "%{count} prenotazioni"
+          eyebrow: Elenco clienti con prenotazioni
+          no_results: Non ci sono ancora clienti con prenotazioni.
+          search:
+            clear: Cancella
+            label: Cerca clienti
+            placeholder: Nome, email o telefono
+            submit: Cerca
+          title: Clienti
+          view_bookings: Vedi prenotazioni
       navigation:
         aria_label: Admin
         dashboard: Cruscotto
@@ -527,6 +544,7 @@ it:
         sales: Vendite
         rentals: Affitti
         properties: Immobili
+        customers: Clienti
         sellers: Venditori
         demo_data: Dati demo
         security: Sicurezza
@@ -543,6 +561,7 @@ it:
           upcoming_appointments: Appuntamenti imminenti
           pending_actions: Azioni in sospeso
           customers: Clienti
+          properties_requiring_review: Da verificare
           open_leads: Lead aperti
         bookings_eyebrow: Solo per admin
         bookings_title: Visibilita e controllo delle prenotazioni

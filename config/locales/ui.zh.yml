@@ -113,6 +113,8 @@ zh:
       saved_notice: 房源已保存。
       removed_notice: 房源已从收藏中移除。
       owner_alert: 你不能保存自己的房源。
+      validation:
+        owner_cannot_save: 不能属于该房源的业主
     properties:
       headline_fallback: "%{town_city} 的 %{property_type}"
       in_location: "%{location} 的 %{property_type}"
@@ -406,6 +408,7 @@ zh:
         eyebrow: 看房申请
         hero_body: 选择一个已发布的时段，填写联系信息，然后创建一个可由后台确认、改期或取消的申请。
         submitted_notice: 预约申请已提交。我们会通过电子邮件向你发送更新。
+        owner_alert: 你不能为自己的房源预约看房。
         preferred_slot: 偏好时段
         choose_slot: 选择时段
         notes_label: 还有什么需要我们知道的吗？
@@ -484,6 +487,20 @@ zh:
         sidebar_eyebrow: 后台工作区
         active_demo_scenario: 当前演示场景
         view_site: 查看站点
+      customers:
+        index:
+          appointment_count:
+            one: 1 条预约
+            other: "%{count} 条预约"
+          eyebrow: 客户预约目录
+          no_results: 目前还没有任何有预约的客户。
+          search:
+            clear: 清除
+            label: 搜索客户
+            placeholder: 姓名、邮箱或电话
+            submit: 搜索
+          title: 客户
+          view_bookings: 查看预约
       navigation:
         aria_label: 后台
         dashboard: 仪表盘
@@ -492,6 +509,7 @@ zh:
         sales: 销售
         rentals: 租赁
         properties: 房源
+        customers: 客户
         sellers: 卖家
         demo_data: 演示数据
         security: 安全
@@ -661,6 +679,7 @@ zh:
           upcoming_appointments: 即将到来的预约
           pending_actions: 待处理事项
           customers: 客户
+          properties_requiring_review: 待审核
           open_leads: 开放线索
         bookings_eyebrow: 仅限管理员
         bookings_title: 预约可见性与控制

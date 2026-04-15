@@ -124,6 +124,8 @@ fr:
       saved_notice: Bien sauvegarde.
       removed_notice: Bien retire des logements sauvegardes.
       owner_alert: Vous ne pouvez pas sauvegarder votre propre annonce.
+      validation:
+        owner_cannot_save: ne peut pas appartenir au proprietaire de cette annonce
     properties:
       headline_fallback: "%{property_type} a %{town_city}"
       in_location: "%{property_type} a %{location}"
@@ -442,6 +444,7 @@ fr:
           une demande que l'equipe pourra confirmer, reprogrammer ou annuler.
         submitted_notice: La demande de rendez-vous a ete envoyee. Nous vous informerons
           par e-mail.
+        owner_alert: Vous ne pouvez pas reserver une visite pour votre propre bien.
         preferred_slot: Creneau prefere
         choose_slot: Choisir un creneau
         notes_label: Y a-t-il quelque chose a signaler ?
@@ -525,6 +528,20 @@ fr:
         securise envoye apres la reservation.
       thanks_html: Merci,<br>GotTheKeys
     admin:
+      customers:
+        index:
+          appointment_count:
+            one: 1 reservation
+            other: "%{count} reservations"
+          eyebrow: Repertoire des clients ayant des reservations
+          no_results: Aucun client avec reservation pour le moment.
+          search:
+            clear: Effacer
+            label: Rechercher des clients
+            placeholder: Nom, e-mail ou telephone
+            submit: Rechercher
+          title: Clients
+          view_bookings: Voir les reservations
       navigation:
         aria_label: Admin
         dashboard: Tableau de bord
@@ -533,6 +550,7 @@ fr:
         sales: Ventes
         rentals: Locations
         properties: Biens
+        customers: Clients
         sellers: Vendeurs
         demo_data: Donnees de demo
         security: Securite
@@ -549,6 +567,7 @@ fr:
           upcoming_appointments: Rendez-vous a venir
           pending_actions: Actions en attente
           customers: Clients
+          properties_requiring_review: A valider
           open_leads: Prospects ouverts
         bookings_eyebrow: Reserve aux admins
         bookings_title: Visibilite et controle des reservations
