@@ -73,7 +73,7 @@ RSpec.describe "Admin properties", type: :request do
 
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Listing readiness")
-    expect(response.body).to include("admin-shot.jpg")
+    expect(response.body).to include(%(data-testid="admin-property-photo-thumbnail-))
     expect(response.body).to include("Ground floor")
     expect(response.body).to include("Admin brochure")
     expect(response.body).to include(%(data-testid="admin-property-activity-timeline"))

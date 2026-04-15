@@ -627,6 +627,10 @@ pre code {
   padding: var(--space-panel-padding);
 }
 
+.admin-main > .admin-panel + .admin-panel {
+  margin-top: 1rem;
+}
+
 .section-heading,
 .page-hero,
 .property-card__footer,
@@ -2587,7 +2591,21 @@ html[data-theme="dark"] {
   grid-template-columns: minmax(0, 1fr) max-content;
 }
 
+.admin-filter-form[data-testid="admin-users-search"],
+.admin-filter-form[data-testid="admin-customers-search"] {
+  align-items: end;
+  grid-template-columns: minmax(0, 1fr) max-content;
+}
+
 .admin-filter-form[data-testid="admin-properties-search"] .admin-filter-form__actions {
+  align-self: end;
+  flex-wrap: nowrap;
+  grid-column: auto;
+  justify-content: flex-end;
+}
+
+.admin-filter-form[data-testid="admin-users-search"] .admin-filter-form__actions,
+.admin-filter-form[data-testid="admin-customers-search"] .admin-filter-form__actions {
   align-self: end;
   flex-wrap: nowrap;
   grid-column: auto;
@@ -2623,6 +2641,7 @@ html[data-theme="dark"] {
   flex-direction: column;
   gap: 1rem;
   overflow: hidden;
+  padding: var(--space-panel-padding-compact);
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
@@ -3559,14 +3578,22 @@ html[data-theme="dark"] {
 }
 
 .detail-list > div,
-.admin-table__row,
-.admin-list__item {
+.admin-table__row {
   align-items: start;
   border-bottom: 1px solid var(--color-line);
   display: grid;
   gap: 0.85rem;
   grid-template-columns: minmax(140px, 0.4fr) minmax(0, 1fr);
   padding: 0.8rem 0;
+}
+
+.admin-list__item {
+  align-items: start;
+  border-bottom: 1px solid var(--color-line);
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: minmax(140px, 0.4fr) minmax(0, 1fr);
+  padding: var(--space-panel-padding-compact);
 }
 
 .detail-list > div:last-child,
@@ -3680,6 +3707,31 @@ html[data-theme="dark"] {
 
 .admin-calendar-grid--day {
   grid-template-columns: 1fr;
+}
+
+.admin-asset-item {
+  align-items: center;
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: 72px minmax(0, 1fr);
+}
+
+.admin-asset-item__thumbnail {
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  display: block;
+  height: 72px;
+  object-fit: cover;
+  width: 72px;
+}
+
+.admin-asset-item__thumbnail--contain {
+  object-fit: contain;
+}
+
+.admin-asset-item__filename {
+  margin: 0;
+  overflow-wrap: anywhere;
 }
 
 .admin-calendar-day {

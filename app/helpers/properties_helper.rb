@@ -213,6 +213,11 @@ module PropertiesHelper
     t("ui.properties.activity_actions.#{action}", default: action.to_s.tr("_", " ").humanize)
   end
 
+  def previewable_image_file?(file_name)
+    extension = File.extname(file_name.to_s).downcase
+    extension.in?(%w[.jpg .jpeg .png .webp .gif])
+  end
+
   private
 
   def property_filter_price_translation_key(bound, sale_status, suffix: nil)

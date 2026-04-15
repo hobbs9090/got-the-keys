@@ -81,9 +81,17 @@
         <div class="admin-list">
           <% @property.ordered_photos.each do |photo| %>
             <div class="admin-list__item">
-              <div>
-                <strong><%= photo.primary? ? t("ui.properties.show.primary_image") : t("ui.admin.properties.show.photo_position", position: photo.position) %></strong>
-                <p><%= photo.image_filename %></p>
+              <div class="admin-asset-item">
+                <% if previewable_image_file?(photo.image_filename) %>
+                  <%= image_tag listing_image_source(photo.image_filename),
+                                alt: photo.primary? ? t("ui.properties.show.primary_image") : t("ui.admin.properties.show.photo_position", position: photo.position),
+                                class: "admin-asset-item__thumbnail",
+                                loading: "lazy",
+                                data: { testid: "admin-property-photo-thumbnail-#{photo.id}" } %>
+                <% end %>
+                <div>
+                  <strong><%= photo.primary? ? t("ui.properties.show.primary_image") : t("ui.admin.properties.show.photo_position", position: photo.position) %></strong>
+                </div>
               </div>
             </div>
           <% end %>
@@ -99,9 +107,20 @@
         <div class="admin-list">
           <% @property.ordered_floor_plans.each do |floor_plan| %>
             <div class="admin-list__item">
-              <div>
-                <strong><%= floor_plan.label.presence || t("ui.admin.properties.show.floor_plan_position", position: floor_plan.position) %></strong>
-                <p><%= floor_plan.floor_plans %></p>
+              <div class="admin-asset-item">
+                <% if previewable_image_file?(floor_plan.floor_plans) %>
+                  <%= image_tag listing_image_source(floor_plan.floor_plans),
+                                alt: floor_plan.label.presence || t("ui.admin.properties.show.floor_plan_position", position: floor_plan.position),
+                                class: "admin-asset-item__thumbnail admin-asset-item__thumbnail--contain",
+                                loading: "lazy",
+                                data: { testid: "admin-property-floor-plan-thumbnail-#{floor_plan.id}" } %>
+                <% end %>
+                <div>
+                  <strong><%= floor_plan.label.presence || t("ui.admin.properties.show.floor_plan_position", position: floor_plan.position) %></strong>
+                  <% unless previewable_image_file?(floor_plan.floor_plans) %>
+                    <p class="admin-asset-item__filename"><%= floor_plan.floor_plans %></p>
+                  <% end %>
+                </div>
               </div>
             </div>
           <% end %>
