@@ -137,3 +137,14 @@ jobs:
           DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
         run: bin/deploy_staging
+
+      - name: Dispatch staging acceptance
+        env:
+          GH_TOKEN: ${{ secrets.ACCEPTANCE_REPO_DISPATCH_TOKEN }}
+        run: |
+          gh api \
+            repos/hobbs9090/rails_got_the_keys_acceptance/dispatches \
+            --method POST \
+            -f event_type=staging_acceptance \
+            -F client_payload[environment]=staging \
+            -F client_payload[base_url]=https://stevenhobbs.co.uk/
