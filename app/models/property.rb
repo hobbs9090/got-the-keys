@@ -14,6 +14,7 @@ class Property < ApplicationRecord
   }.freeze
   SALE_STATUS = SALE_STATUSES.values.freeze
   LISTING_STATES = %w[draft review_pending published under_offer let_agreed sold let withdrawn].freeze
+  SELLER_ALLOWED_LISTING_STATES = %w[draft review_pending].freeze
   PUBLIC_LISTING_STATES = %w[published under_offer let_agreed].freeze
   SORT_OPTIONS = %w[recommended newest price_low price_high bedrooms_high].freeze
 

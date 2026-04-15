@@ -252,6 +252,8 @@ describe "Properties" do
       expect(response).to have_http_status(:ok)
       expect(country_field["value"]).to eq("United Kingdom")
       expect(listing_state_select.at_css('option[selected][value="draft"]')).to be_present
+      option_values = listing_state_select.css("option").map { |o| o["value"] }.compact_blank
+      expect(option_values).to eq(%w[draft review_pending])
     end
   end
 
@@ -472,6 +474,56 @@ describe "Properties" do
     end
   end
 
+  describe "GET /properties/:id/edit" do
+    it "renders seller workspace inside the listing panel after the form" do
+      sign_in user
+
+      get edit_property_path(property)
+
+      document = Nokogiri::HTML(response.body)
+      panel = document.at_css("section.page-section > article.property-panel")
+      form = document.at_css(%([data-testid="property-listing-form"]))
+      workspace = document.at_css(%([data-testid="seller-listing-workspace"]))
+
+      expect(response).to have_http_status(:ok)
+      expect(panel).to be_present
+      expect(form).to be_present
+      expect(workspace).to be_present
+      expect(workspace.ancestors.map(&:name)).to include("form")
+      actions = document.at_css(".property-listing-form__actions")
+      expect(actions).to be_present
+      expect(workspace.next_element).to eq(actions)
+    end
+
+    it "ignores seller attempts to set admin-only workflow fields" do
+      sign_in user
+      published = FactoryBot.create(
+        :property,
+        user:,
+        address_line_1: "Published Cottage",
+        listing_state: "published",
+        sale_status: Property::SALE_STATUSES[:for_sale],
+        featured: false
+      )
+
+      patch property_path(published), params: {
+        property: property_attributes.merge(
+          address_line_1: "Renamed Cottage",
+          listing_state: "sold",
+          sale_status: Property::SALE_STATUSES[:for_rent],
+          featured: true
+        )
+      }
+
+      expect(response).to redirect_to(property_path(published))
+      published.reload
+      expect(published.address_line_1).to eq("Renamed Cottage")
+      expect(published.listing_state).to eq("published")
+      expect(published.sale_status).to eq(Property::SALE_STATUSES[:for_sale])
+      expect(published.featured).to be(false)
+    end
+  end
+
   describe "GET /properties/mine" do
     it "requires a signed-in seller" do
       get mine_properties_path
@@ -656,6 +708,53 @@ describe "Properties" do
       expect(response.body).to include("View booking")
     end
 
+    it "lists upcoming customer bookings with the earliest scheduled visit first" do
+      sign_in user
+
+      later_property = FactoryBot.create(:property, address_line_1: "Later Visit Property")
+      earlier_property = FactoryBot.create(:property, address_line_1: "Earlier Visit Property")
+
+      later_time = Time.zone.local(2026, 4, 17, 11, 0)
+      earlier_time = Time.zone.local(2026, 4, 15, 13, 0)
+
+      FactoryBot.create(
+        :appointment,
+        property: later_property,
+        customer_name: user.full_name,
+        customer_email: user.email,
+        customer_phone: user.mobile_number,
+        requested_time: later_time,
+        scheduled_at: later_time,
+        status: "pending",
+        skip_slot_validation: true
+      )
+      FactoryBot.create(
+        :appointment,
+        property: earlier_property,
+        customer_name: user.full_name,
+        customer_email: user.email,
+        customer_phone: user.mobile_number,
+        requested_time: earlier_time,
+        scheduled_at: earlier_time,
+        status: "pending",
+        skip_slot_validation: true
+      )
+
+      travel_to(Time.zone.local(2026, 4, 8, 12, 0)) do
+        get mine_properties_path
+      end
+
+      document = Nokogiri::HTML(response.body)
+      panel = document.at_css(%([data-testid="customer-bookings-panel"]))
+      expect(panel).to be_present
+
+      upcoming_section = panel.css(".property-workspace-bookings__section").first
+      rows = upcoming_section.css(%([data-testid="customer-booking-row"]))
+      expect(rows.map { |row| row.at_css("strong")&.text&.strip }).to eq(
+        ["Earlier Visit Property", "Later Visit Property"]
+      )
+    end
+
     it "shows an empty state when the seller has not created any listings yet" do
       sign_in FactoryBot.create(:user)
 
@@ -764,6 +863,17 @@ describe "Properties" do
       expect(response.body).not_to include('role="content"')
     end
 
+    it "includes the original listing image in current photos when not yet added as a photo record" do
+      sign_in user
+      property.update!(image_file_name: "/uploads/property_images/#{property.id}/legacy-listing-image.jpg")
+
+      get property_photos_path(property)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("/uploads/property_images/#{property.id}/legacy-listing-image.jpg")
+      expect(response.body).to include("Primary listing image")
+    end
+
     it "lets the owner create a marketing photo" do
       sign_in user
 
@@ -803,6 +913,46 @@ describe "Properties" do
 
       expect(response).to redirect_to(property_floor_plans_path(property))
       expect(property.floor_plans.order(:id).last.label).to eq("Ground floor")
+    end
+
+    it "lets the owner upload a floor plan file" do
+      sign_in user
+
+      post property_floor_plans_path(property), params: {
+        floor_plan: {
+          floor_plan_upload: Rack::Test::UploadedFile.new(
+            Rails.root.join("spec/fixtures/files/property-upload.jpeg"),
+            "image/jpeg"
+          ),
+          label: "Uploaded floor plan",
+          position: 2
+        }
+      }
+
+      floor_plan = property.floor_plans.order(:id).last
+
+      expect(response).to redirect_to(property_floor_plans_path(property))
+      expect(floor_plan.floor_plans).to match(%r{\A/uploads/property_floor_plans/#{property.id}/#{floor_plan.id}/[0-9a-f]{32}\.jpeg\z})
+      expect(Rails.root.join("tmp", "uploads", floor_plan.floor_plans.delete_prefix("/uploads/"))).to exist
+    end
+  end
+
+  describe "GET /properties/1/documents" do
+    it "matches the stacked seller tools layout used by photos and floor plans" do
+      sign_in user
+
+      get property_property_documents_path(property)
+
+      document = Nokogiri::HTML(response.body)
+      stacked_section = document.at_css("section.page-section.page-section--stacked-panels")
+      panels = stacked_section&.css("> article.property-panel")
+
+      expect(response).to have_http_status(:ok)
+      expect(stacked_section).to be_present
+      expect(panels&.count).to eq(2)
+      expect(response.body).to include("Add document")
+      expect(response.body).to include("Manage documents")
+      expect(response.body).to include(edit_property_path(property))
     end
   end
 

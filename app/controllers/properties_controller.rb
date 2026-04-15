@@ -89,11 +89,19 @@ class PropertiesController < ApplicationController
     params.require(:property).permit(
       :address_line_1, :address_line_2, :town_city, :county, :postcode, :country,
       :property_description, :bedrooms, :bathrooms, :property_type, :listing_tagline,
-      :image_file_name, :image_upload, :sale_status, :asking_price, :featured, :listing_state, :tenure,
+      :image_file_name, :image_upload, :asking_price, :tenure,
       :council_tax_band, :furnishing, :available_from, :parking, :outdoor_space,
       :floor_area_sq_ft, :deposit_amount, :pets_allowed, :service_charge_amount,
       :lease_length_years, :year_built, :refurbished_year
-    )
+    ).merge(seller_listing_state_params)
+  end
+
+  def seller_listing_state_params
+    state = params.dig(:property, :listing_state)
+    return {} if state.blank?
+    return {} unless state.to_s.in?(Property::SELLER_ALLOWED_LISTING_STATES)
+
+    { listing_state: state }
   end
 
   def set_property
@@ -125,7 +133,9 @@ class PropertiesController < ApplicationController
   def default_property_attributes
     {
       listing_state: "draft",
-      country: "United Kingdom"
+      country: "United Kingdom",
+      sale_status: Property::SALE_STATUSES[:for_sale],
+      featured: false
     }
   end
 
@@ -133,12 +143,14 @@ class PropertiesController < ApplicationController
     property_ids = properties.map(&:id)
     return {} if property_ids.empty?
 
-    appointments = Appointment.where(property_id: property_ids).recent_first.to_a
+    appointments = Appointment.where(property_id: property_ids).to_a
 
-    appointments.each_with_object({}) do |appointment, grouped|
-      buckets = grouped[appointment.property_id] ||= empty_appointment_buckets
+    grouped = appointments.each_with_object({}) do |appointment, acc|
+      buckets = acc[appointment.property_id] ||= empty_appointment_buckets
       bucket_appointment!(buckets, appointment)
     end
+    grouped.each_value { |buckets| sort_appointment_buckets!(buckets) }
+    grouped
   end
 
   def customer_appointment_buckets_for(user)
@@ -146,14 +158,14 @@ class PropertiesController < ApplicationController
 
     appointments = Appointment.includes(:property)
       .where("lower(customer_email) = ?", user.email.downcase)
-      .recent_first
       .to_a
 
-    appointments.each_with_object(empty_appointment_buckets) do |appointment, grouped|
+    grouped = appointments.each_with_object(empty_appointment_buckets) do |appointment, acc|
       next if appointment.property.blank?
 
-      bucket_appointment!(grouped, appointment)
+      bucket_appointment!(acc, appointment)
     end
+    sort_appointment_buckets!(grouped)
   end
 
   def empty_appointment_buckets
@@ -172,6 +184,13 @@ class PropertiesController < ApplicationController
     else
       grouped[:previous] << appointment
     end
+  end
+
+  def sort_appointment_buckets!(buckets)
+    %i[upcoming previous cancelled].each do |key|
+      buckets[key].sort_by! { |appointment| [appointment.scheduled_at, appointment.id] }
+    end
+    buckets
   end
 
   def populate_show_supporting_state

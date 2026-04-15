@@ -158,6 +158,14 @@ module PropertiesHelper
     Property::LISTING_STATES.map { |state| [translated_listing_state(state), state] }
   end
 
+  def property_listing_state_options_for_seller
+    Property::SELLER_ALLOWED_LISTING_STATES.map { |state| [translated_listing_state(state), state] }
+  end
+
+  def admin_property_listing_form?(form_route_model)
+    form_route_model.is_a?(Array) && form_route_model.first == :admin
+  end
+
   def listing_state_badge_class(state)
     {
       "draft" => "badge badge--muted",

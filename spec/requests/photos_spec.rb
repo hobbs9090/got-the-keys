@@ -16,4 +16,28 @@ RSpec.describe "Photos", type: :request do
     expect(primary_checkbox).to be_present
     expect(primary_checkbox["checked"]).to eq("checked")
   end
+
+  it "creates a photo from an uploaded image file" do
+    sign_in owner
+
+    expect do
+      post property_photos_path(property), params: {
+        photo: {
+          image_upload: Rack::Test::UploadedFile.new(
+            Rails.root.join("spec/fixtures/files/property-upload.jpeg"),
+            "image/jpeg"
+          ),
+          caption: "Front elevation",
+          position: 1,
+          primary: true
+        }
+      }
+    end.to change(Photo, :count).by(1)
+
+    photo = property.photos.order(:id).last
+
+    expect(response).to redirect_to(property_photos_path(property))
+    expect(photo.image_filename).to match(%r{\A/uploads/property_photos/#{property.id}/#{photo.id}/[0-9a-f]{32}\.jpeg\z})
+    expect(Rails.root.join("tmp", "uploads", photo.image_filename.delete_prefix("/uploads/"))).to exist
+  end
 end

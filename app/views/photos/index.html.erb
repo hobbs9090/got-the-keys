@@ -24,6 +24,10 @@
           <%= f.text_field :image_filename, placeholder: t("ui.photos.fields.image_filename_placeholder") %>
         </div>
         <div>
+          <%= f.label :image_upload, t("ui.photos.fields.image_upload", default: "Upload image") %>
+          <%= f.file_field :image_upload, accept: "image/jpeg,image/png,image/webp,image/gif,.jpg,.jpeg,.png,.webp,.gif" %>
+        </div>
+        <div>
           <%= f.label :caption, t("ui.photos.fields.caption") %>
           <%= f.text_field :caption, placeholder: t("ui.photos.fields.caption_placeholder") %>
         </div>
@@ -46,8 +50,29 @@
 
   <article class="property-panel">
     <h2><%= t("ui.photos.current_title") %></h2>
-    <% if @photos.any? %>
+    <% listing_image_filename = @property.image_file_name.to_s.strip %>
+    <% listing_image_in_photo_records = listing_image_filename.present? && @photos.any? { |photo| photo.image_filename.to_s == listing_image_filename } %>
+
+    <% if listing_image_filename.present? || @photos.any? %>
       <div class="admin-list">
+        <% if listing_image_filename.present? && !listing_image_in_photo_records %>
+          <div class="admin-list__item">
+            <div class="property-panel">
+              <div class="form-grid">
+                <div>
+                  <label><%= t("ui.photos.fields.image_filename") %></label>
+                  <input type="text" value="<%= listing_image_filename %>" readonly>
+                </div>
+                <div>
+                  <label><%= t("ui.photos.fields.caption") %></label>
+                  <input type="text" value="<%= t("ui.photos.primary_listing_image", default: "Primary listing image") %>" readonly>
+                </div>
+              </div>
+              <p class="empty-copy"><%= t("ui.photos.listing_image_note", default: "This image is attached to the listing record and can be updated from Edit listing.") %></p>
+            </div>
+          </div>
+        <% end %>
+
         <% @photos.each do |photo| %>
           <% photo_form = photo == @edited_photo ? @edited_photo : photo %>
           <div class="admin-list__item">

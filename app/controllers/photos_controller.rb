@@ -51,7 +51,7 @@ class PhotosController < ApplicationController
   end
 
   def photo_params
-    params.require(:photo).permit(:image_filename, :caption, :position, :primary)
+    params.require(:photo).permit(:image_filename, :image_upload, :caption, :position, :primary)
   end
 
   def next_position

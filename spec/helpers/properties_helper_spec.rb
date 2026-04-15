@@ -62,6 +62,22 @@ RSpec.describe PropertiesHelper, type: :helper do
     end
   end
 
+  describe "#property_listing_state_options_for_seller" do
+    it "only exposes draft and review pending" do
+      expect(helper.property_listing_state_options_for_seller.map(&:last)).to eq(%w[draft review_pending])
+    end
+  end
+
+  describe "#admin_property_listing_form?" do
+    it "is true for admin routed models" do
+      expect(helper.admin_property_listing_form?([:admin, FactoryBot.build(:property)])).to be(true)
+    end
+
+    it "is false for seller-owned property models" do
+      expect(helper.admin_property_listing_form?(FactoryBot.build(:property))).to be(false)
+    end
+  end
+
   describe "#listing_state_badge_class" do
     it "keeps sale-status and listing-state badges visually distinct for active deal states" do
       expect(helper.listing_state_badge_class("under_offer")).to eq("badge badge--warning")

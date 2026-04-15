@@ -2,27 +2,43 @@
 <% form_model = form_route_model.is_a?(Array) ? form_route_model.last : form_route_model %>
 <% cancel_path = local_assigns.fetch(:cancel_path, properties_path) %>
 <% allow_destroy = local_assigns.fetch(:allow_destroy, true) %>
+<% show_seller_workspace_panel = local_assigns.fetch(:show_seller_workspace_panel, false) %>
+<% listing_workflow_admin = admin_property_listing_form?(form_route_model) %>
 
 <%= form_with model: form_route_model, class: "stacked-form property-listing-form", data: { testid: "property-listing-form" } do |f| %>
   <%= render "shared/errors", object: form_model %>
 
   <section class="property-panel" data-testid="listing-workflow-panel">
     <h2><%= t("ui.properties.editor.workflow_title") %></h2>
+    <% unless listing_workflow_admin %>
+      <p class="empty-copy"><%= t("ui.properties.editor.seller_workflow_note") %></p>
+    <% end %>
     <div class="form-grid">
       <div>
         <%= f.label :listing_state, t("ui.properties.editor.fields.listing_state"), **form_label_options(form_model, :listing_state) %>
-        <%= f.select :listing_state, property_listing_state_options, {}, form_control_options(form_model, :listing_state, classes: nil, data: { testid: "listing-state-select" }) %>
+        <% if listing_workflow_admin %>
+          <%= f.select :listing_state, property_listing_state_options, {}, form_control_options(form_model, :listing_state, classes: nil, data: { testid: "listing-state-select" }) %>
+        <% else %>
+          <%= f.select :listing_state, property_listing_state_options_for_seller, {}, form_control_options(form_model, :listing_state, classes: nil, data: { testid: "listing-state-select" }) %>
+        <% end %>
         <%= field_error_messages(form_model, :listing_state) %>
       </div>
-      <div>
-        <%= f.label :sale_status, t("ui.properties.editor.fields.sale_status"), **form_label_options(form_model, :sale_status) %>
-        <%= f.select :sale_status, Property::SALE_STATUS, { prompt: t('properties.pick_one') }, form_control_options(form_model, :sale_status, classes: nil, data: { property_sale_status: true }) %>
-        <%= field_error_messages(form_model, :sale_status) %>
-      </div>
-      <div class="form-grid__checkbox">
-        <%= f.check_box :featured %>
-        <%= f.label :featured, t("ui.properties.editor.fields.featured"), class: "checkbox-label" %>
-      </div>
+      <% if listing_workflow_admin %>
+        <div>
+          <%= f.label :sale_status, t("ui.properties.editor.fields.sale_status"), **form_label_options(form_model, :sale_status) %>
+          <%= f.select :sale_status, Property::SALE_STATUS, { prompt: t('properties.pick_one') }, form_control_options(form_model, :sale_status, classes: nil, data: { property_sale_status: true }) %>
+          <%= field_error_messages(form_model, :sale_status) %>
+        </div>
+        <div class="form-grid__checkbox">
+          <%= f.check_box :featured %>
+          <%= f.label :featured, t("ui.properties.editor.fields.featured"), class: "checkbox-label" %>
+        </div>
+      <% else %>
+        <div>
+          <p><strong><%= t("ui.properties.editor.seller_readonly_sale_status") %></strong> <%= translated_sale_status(form_model.sale_status) %></p>
+          <p><strong><%= t("ui.properties.editor.seller_readonly_featured") %></strong> <%= form_model.featured? ? t("ui.properties.editor.featured_yes") : t("ui.properties.editor.featured_no") %></p>
+        </div>
+      <% end %>
     </div>
   </section>
 
@@ -180,12 +196,16 @@
     </div>
   </section>
 
+  <% if show_seller_workspace_panel %>
+    <%= render "properties/seller_workspace_panel", property: form_model, show_edit_link: false %>
+  <% end %>
+
   <div class="form-actions property-listing-form__actions">
     <%= f.submit t("ui.properties.editor.submit"), class: "button primary" %>
     <%= link_to t("ui.common.cancel"), cancel_path, class: "button hollow secondary" %>
     <% if allow_destroy && !current_page?(controller: 'properties', action: 'new') %>
       <%= link_to t("ui.properties.editor.delete_property"),
-                  @property,
+                  form_route_model,
                   class: 'button alert hollow',
                   data: { turbo_method: :delete, turbo_confirm: t("ui.properties.editor.confirm_delete") } %>
     <% end %>

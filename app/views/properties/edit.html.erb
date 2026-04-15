@@ -8,12 +8,8 @@
   </div>
 </section>
 
-<section class="property-workspace property-workspace--seller">
-  <%= render "properties/seller_workspace_panel", property: @property %>
-</section>
-
 <section class="page-section">
   <article class="property-panel">
-    <%= render "form" %>
+    <%= render "form", show_seller_workspace_panel: true %>
   </article>
 </section>

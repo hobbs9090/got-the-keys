@@ -195,10 +195,17 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
   end
 
   it "toggles the furnishing field based on the selected sale status" do
-    user = FactoryBot.create(:user, email: "listing-user@example.com", password: "changeme", password_confirmation: "changeme")
+    admin = FactoryBot.create(:admin, email: "listing-admin@example.com", password: "changeme", password_confirmation: "changeme")
+    owner = FactoryBot.create(:user)
+    property = FactoryBot.create(
+      :property,
+      user: owner,
+      tenure: "Leasehold",
+      sale_status: Property::SALE_STATUSES[:for_sale]
+    )
 
-    sign_in_as_user(user)
-    visit new_property_path
+    sign_in_as_admin(admin)
+    visit edit_admin_property_path(property)
 
     expect(page).to have_css("[data-property-furnishing-field][hidden]", visible: false)
     expect(page).to have_css("[data-property-rental-only-field][hidden]", visible: false, count: 2)
@@ -457,7 +464,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     styles = page.evaluate_script(<<~JS)
       (() => {
         const textField = document.getElementById("property_address_line_1");
-        const selectField = document.getElementById("property_sale_status");
+        const selectField = document.getElementById("property_listing_state");
         const textareaField = document.getElementById("property_property_description");
         const dateField = document.getElementById("property_available_from");
 
