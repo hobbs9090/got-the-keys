@@ -121,6 +121,7 @@ module DemoData
       OfferEvent.delete_all
       RentalApplicationEvent.delete_all
       SavedProperty.delete_all
+      SavedSearch.delete_all
       Appointment.delete_all
       Enquiry.delete_all
       Offer.delete_all
