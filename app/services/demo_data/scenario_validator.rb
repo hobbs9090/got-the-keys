@@ -275,16 +275,35 @@ module DemoData
         featured = batch.key?(:featured) ? ActiveModel::Type::Boolean.new.cast(batch[:featured]) : nil
         random_seed = Integer(batch.fetch(:random_seed, 0))
         generator = PropertyBlueprintGenerator.new(random: Random.new(random_seed))
+        overrides = normalize_property_batch_overrides(batch[:overrides], key_prefix:)
 
         generator.build_batch(count:, sale_status:, featured:).each_with_index do |blueprint, index|
           sequence = index + 1
+          generated_key = "#{key_prefix}_#{format('%03d', sequence)}"
 
           expanded_properties << blueprint.except(:prompt_context).merge(
-            key: "#{key_prefix}_#{format('%03d', sequence)}",
+            key: generated_key,
             owner_email: owner_emails[index % owner_emails.length],
             listing_state:
-          )
+          ).merge(overrides.fetch(generated_key, {}))
         end
+      end
+    end
+
+    def normalize_property_batch_overrides(overrides, key_prefix:)
+      Array(overrides).each_with_object({}) do |entry, normalized|
+        entry = entry.deep_symbolize_keys
+        key = entry[:key].to_s
+
+        if key.blank? && entry[:sequence].present?
+          key = "#{key_prefix}_#{format('%03d', Integer(entry[:sequence]))}"
+        end
+
+        raise ValidationError, "Property batch #{key_prefix} override must include key or sequence" if key.blank?
+        raise ValidationError, "Property batch #{key_prefix} override key #{key.inspect} must start with #{key_prefix}_" unless key.start_with?("#{key_prefix}_")
+        raise ValidationError, "Property batch #{key_prefix} contains duplicate override for #{key}" if normalized.key?(key)
+
+        normalized[key] = entry.except(:key, :sequence)
       end
     end
 

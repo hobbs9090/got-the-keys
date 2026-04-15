@@ -217,11 +217,12 @@ module DemoData
       area = AREA_CATALOG.sample(random: random)
       property_type = property_type_for(sale_status)
       bedrooms = bedrooms_for(property_type, sale_status)
-      bathrooms = [1, [bedrooms - 1, 1].max, bedrooms].min
       features = feature_bank_for(property_type).sample(3, random: random)
 
       address_line_1, address_line_2 = address_for(property_type, area:, index:)
       base_price = base_price_for(area: area, sale_status: sale_status, bedrooms: bedrooms, property_type: property_type)
+      bedrooms = upgrade_bedrooms_for_premium_market(property_type:, bedrooms:, sale_status:, base_price:)
+      bathrooms = bathrooms_for(property_type:, bedrooms:, base_price:)
       chronology = chronology_generator.generate(property_type:, sale_status:)
 
       {
@@ -276,6 +277,41 @@ module DemoData
     def property_type_for(sale_status)
       key = sale_status == 'For Sale' ? :sale : :rent
       PROPERTY_TYPES.fetch(key).sample(random: random)
+    end
+
+    def bathrooms_for(property_type:, bedrooms:, base_price:)
+      return 1 if bedrooms <= 1
+
+      if house_property_type?(property_type)
+        case bedrooms
+        when 3, 4
+          2
+        else
+          return 3 if property_type == 'detached house' && base_price >= 900_000
+
+          2
+        end
+      else
+        case bedrooms
+        when 2
+          1
+        else
+          2
+        end
+      end
+    end
+
+    def house_property_type?(property_type)
+      normalized_type = property_type.to_s.downcase
+      normalized_type.include?('house') || normalized_type.include?('terrace') || normalized_type == 'townhouse'
+    end
+
+    def upgrade_bedrooms_for_premium_market(property_type:, bedrooms:, sale_status:, base_price:)
+      return bedrooms unless sale_status == 'For Sale'
+      return bedrooms unless property_type == 'detached house'
+      return bedrooms unless bedrooms == 5 && base_price >= 1_300_000
+
+      6
     end
 
     def bedrooms_for(property_type, sale_status)

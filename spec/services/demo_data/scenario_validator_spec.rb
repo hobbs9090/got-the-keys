@@ -356,6 +356,38 @@ RSpec.describe DemoData::ScenarioValidator do
     expect(normalized[:properties].last(2).pluck(:featured).uniq).to eq([false])
   end
 
+  it "applies explicit overrides to generated property batches" do
+    payload = base_payload.deep_dup
+    payload[:property_batches] = [
+      {
+        key_prefix: "baseline-rental",
+        count: 2,
+        owner_emails: ["owner@example.com"],
+        sale_status: "For Rent",
+        listing_state: "published",
+        featured: false,
+        random_seed: 20260328,
+        overrides: [
+          {
+            sequence: 2,
+            bedrooms: 4,
+            bathrooms: 2,
+            property_description: "An overridden description for the premium generated rental."
+          }
+        ]
+      }
+    ]
+
+    normalized = validator.validate!(payload)
+    overridden_property = normalized[:properties].find { |property| property[:key] == "baseline_rental_002" }
+
+    expect(overridden_property).to include(
+      bedrooms: 4,
+      bathrooms: 2,
+      property_description: "An overridden description for the premium generated rental."
+    )
+  end
+
   it "expands generated activity batches against matching property groups" do
     payload = base_payload.deep_dup
     payload[:property_batches] = [
