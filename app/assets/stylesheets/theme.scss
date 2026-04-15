@@ -631,6 +631,10 @@ pre code {
   margin-top: 1rem;
 }
 
+.admin-section > .admin-panel + .admin-panel {
+  margin-top: 1rem;
+}
+
 .section-heading,
 .page-hero,
 .property-card__footer,

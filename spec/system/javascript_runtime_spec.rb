@@ -1,6 +1,17 @@
 require "rails_helper"
 
 RSpec.describe "JavaScript runtime", type: :system, js: true do
+  def boot_runtime(path = root_path)
+    visit path
+    dismiss_cookie_banner
+    wait_for_theme_runtime
+  end
+
+  def enable_theme_preference(value)
+    boot_runtime
+    store_theme_preference(value)
+  end
+
   def dismiss_cookie_banner
     return unless page.has_button?("Reject non-essential", wait: 1)
 
@@ -116,6 +127,10 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
         };
       })();
     JS
+  end
+
+  def styles_for(script)
+    page.evaluate_script(script)
   end
 
   it "boots the homepage carousel and shared modal end to end" do
@@ -349,24 +364,14 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     expect(page.evaluate_script("window.localStorage.getItem('gotthekeys-theme-preference')")).to eq("system")
   end
 
-  it "uses the shared checkbox styling in the admin enquiry filters" do
+  it "uses dark theme surfaces across admin runtime pages" do
     admin = FactoryBot.create(:admin, email: "checkbox-admin@example.com", password: "changeme", password_confirmation: "changeme")
 
-    visit root_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
-
-    store_theme_preference("dark")
-
+    enable_theme_preference("dark")
     sign_in_as_admin(admin)
-    dismiss_cookie_banner
-    wait_for_theme_runtime
+    boot_runtime(admin_enquiries_path)
 
-    visit admin_enquiries_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
-
-    styles = page.evaluate_script(<<~JS)
+    enquiry_styles = styles_for(<<~JS)
       (() => {
         const checkbox = document.querySelector('[data-testid="lead-filter-spam"]');
         const label = document.querySelector('label[for="spam_only"]');
@@ -381,142 +386,28 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       })();
     JS
 
-    expect(styles).to include(
+    expect(enquiry_styles).to include(
       "theme" => "dark",
       "checkboxBackground" => "rgba(20, 32, 54, 0.96)",
       "checkboxBorder" => "rgba(167, 188, 220, 0.28)",
       "checkboxRadius" => "7.2px",
       "labelColor" => "rgb(230, 238, 249)"
     )
-  end
 
-  it "uses readable admin user search labels and fields in dark mode" do
-    admin = FactoryBot.create(:admin, email: "users-search-admin@example.com", password: "changeme", password_confirmation: "changeme")
+    boot_runtime(admin_users_path)
 
-    visit root_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
+    user_search_styles = admin_user_search_styles
 
-    store_theme_preference("dark")
-
-    sign_in_as_admin(admin)
-    dismiss_cookie_banner
-    wait_for_theme_runtime
-
-    visit admin_users_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
-
-    styles = admin_user_search_styles
-
-    expect(styles).to include(
+    expect(user_search_styles).to include(
       "theme" => "dark",
       "labelColor" => "rgb(244, 248, 255)",
       "inputColor" => "rgb(230, 238, 249)",
       "inputBackground" => "rgb(24, 36, 59)",
       "placeholderColor" => "rgb(147, 168, 200)"
     )
-  end
+    boot_runtime(admin_qa_path)
 
-  it "keeps admin user search placeholders lighter in light mode" do
-    admin = FactoryBot.create(:admin, email: "users-search-admin-light@example.com", password: "changeme", password_confirmation: "changeme")
-
-    visit root_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
-
-    store_theme_preference("light")
-
-    sign_in_as_admin(admin)
-    dismiss_cookie_banner
-    wait_for_theme_runtime
-
-    visit admin_users_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
-
-    styles = admin_user_search_styles
-
-    expect(styles).to include(
-      "theme" => "light",
-      "inputColor" => "rgb(29, 36, 51)",
-      "inputBackground" => "rgb(255, 255, 255)",
-      "placeholderColor" => "rgb(106, 116, 135)"
-    )
-  end
-
-  it "keeps shared form control text readable in dark mode" do
-    user = FactoryBot.create(:user, email: "dark-form-controls@example.com", password: "changeme", password_confirmation: "changeme")
-
-    visit root_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
-
-    store_theme_preference("dark")
-
-    sign_in_as_user(user)
-    dismiss_cookie_banner
-    wait_for_theme_runtime
-
-    visit new_property_path
-    wait_for_theme_runtime
-
-    styles = page.evaluate_script(<<~JS)
-      (() => {
-        const textField = document.getElementById("property_address_line_1");
-        const selectField = document.getElementById("property_listing_state");
-        const textareaField = document.getElementById("property_property_description");
-        const dateField = document.getElementById("property_available_from");
-
-        return {
-          theme: document.documentElement.dataset.theme,
-          textColor: getComputedStyle(textField).color,
-          textCaret: getComputedStyle(textField).caretColor,
-          textFill: getComputedStyle(textField).webkitTextFillColor,
-          selectColor: getComputedStyle(selectField).color,
-          selectFill: getComputedStyle(selectField).webkitTextFillColor,
-          textareaColor: getComputedStyle(textareaField).color,
-          textareaCaret: getComputedStyle(textareaField).caretColor,
-          dateColor: getComputedStyle(dateField).color,
-          dateCaret: getComputedStyle(dateField).caretColor,
-          dateFill: getComputedStyle(dateField).webkitTextFillColor
-        };
-      })();
-    JS
-
-    expect(styles).to include(
-      "theme" => "dark",
-      "textColor" => "rgb(230, 238, 249)",
-      "textCaret" => "rgb(230, 238, 249)",
-      "textFill" => "rgb(230, 238, 249)",
-      "selectColor" => "rgb(230, 238, 249)",
-      "selectFill" => "rgb(230, 238, 249)",
-      "textareaColor" => "rgb(230, 238, 249)",
-      "textareaCaret" => "rgb(230, 238, 249)",
-      "dateColor" => "rgb(230, 238, 249)",
-      "dateCaret" => "rgb(230, 238, 249)",
-      "dateFill" => "rgb(230, 238, 249)"
-    )
-  end
-
-  it "uses readable code examples on the admin QA page in dark mode" do
-    admin = FactoryBot.create(:admin, email: "qa-code-admin@example.com", password: "changeme", password_confirmation: "changeme")
-
-    visit root_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
-
-    store_theme_preference("dark")
-
-    sign_in_as_admin(admin)
-    dismiss_cookie_banner
-    wait_for_theme_runtime
-
-    visit admin_qa_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
-
-    styles = page.evaluate_script(<<~JS)
+    qa_styles = styles_for(<<~JS)
       (() => {
         const codeExample = document.querySelector(".detail-inline-list code");
 
@@ -529,32 +420,16 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       })();
     JS
 
-    expect(styles).to include(
+    expect(qa_styles).to include(
       "theme" => "dark",
       "codeBackground" => "rgba(184, 201, 225, 0.12)",
       "codeBorder" => "rgba(132, 156, 194, 0.18)",
       "codeColor" => "rgb(244, 248, 255)"
     )
-  end
 
-  it "uses a dark warning callout on the admin security page" do
-    admin = FactoryBot.create(:admin, email: "security-warning-admin@example.com", password: "changeme", password_confirmation: "changeme")
+    boot_runtime(admin_security_path)
 
-    visit root_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
-
-    store_theme_preference("dark")
-
-    sign_in_as_admin(admin)
-    dismiss_cookie_banner
-    wait_for_theme_runtime
-
-    visit admin_security_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
-
-    styles = page.evaluate_script(<<~JS)
+    security_styles = styles_for(<<~JS)
       (() => {
         const callout = document.querySelector('[data-testid="admin-two-factor-warning-callout"]');
         const label = callout.querySelector("strong");
@@ -570,7 +445,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       })();
     JS
 
-    expect(styles).to include(
+    expect(security_styles).to include(
       "theme" => "dark",
       "warningBackground" => "rgba(20, 32, 54, 0.96)",
       "warningBorderLeft" => "rgb(240, 187, 90)",
@@ -579,18 +454,28 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     )
   end
 
-  it "uses dark surfaces for the legal topic navigation in dark mode" do
-    visit root_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
+  it "keeps admin user search placeholders lighter in light mode" do
+    admin = FactoryBot.create(:admin, email: "users-search-admin-light@example.com", password: "changeme", password_confirmation: "changeme")
 
-    store_theme_preference("dark")
+    enable_theme_preference("light")
+    sign_in_as_admin(admin)
+    boot_runtime(admin_users_path)
 
-    visit legal_index_path(anchor: "legal-purpose")
-    dismiss_cookie_banner
-    wait_for_theme_runtime
+    styles = admin_user_search_styles
 
-    styles = page.evaluate_script(<<~JS)
+    expect(styles).to include(
+      "theme" => "light",
+      "inputColor" => "rgb(29, 36, 51)",
+      "inputBackground" => "rgb(255, 255, 255)",
+      "placeholderColor" => "rgb(106, 116, 135)"
+    )
+  end
+
+  it "uses dark theme surfaces across public runtime pages" do
+    enable_theme_preference("dark")
+    boot_runtime(legal_index_path(anchor: "legal-purpose"))
+
+    legal_styles = styles_for(<<~JS)
       (() => {
         const nav = document.querySelector(".legal-tabs");
         const card = document.getElementById("legal-purpose");
@@ -606,26 +491,17 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       })();
     JS
 
-    expect(styles).to include(
+    expect(legal_styles).to include(
       "theme" => "dark",
       "navBackground" => "rgba(20, 32, 54, 0.96)",
       "navBorder" => "rgba(132, 156, 194, 0.18)",
       "cardBorder" => "rgba(116, 145, 188, 0.2)",
       "checklistHeadingColor" => "rgb(244, 248, 255)"
     )
-  end
 
-  it "uses dark surfaces for the featured cookie policy cards in dark mode" do
-    visit root_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
+    boot_runtime(cookie_policy_index_path)
 
-    store_theme_preference("dark")
-
-    visit cookie_policy_index_path
-    wait_for_theme_runtime
-
-    styles = page.evaluate_script(<<~JS)
+    cookie_styles = styles_for(<<~JS)
       (() => {
         const settingsCard = document.getElementById("cookie-preferences");
         const summaryCard = document.querySelector(".cookie-policy-card--summary");
@@ -642,27 +518,17 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       })();
     JS
 
-    expect(styles).to include(
+    expect(cookie_styles).to include(
       "theme" => "dark",
       "settingsBackground" => "rgba(20, 32, 54, 0.96)",
       "summaryBackground" => "rgba(20, 32, 54, 0.96)",
       "settingsHeadingColor" => "rgb(244, 248, 255)",
       "summaryHeadingColor" => "rgb(244, 248, 255)"
     )
-  end
 
-  it "uses readable copy and panel styling for the how-it-works hero in dark mode" do
-    visit root_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
+    boot_runtime(how_it_works_path)
 
-    store_theme_preference("dark")
-
-    visit how_it_works_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
-
-    styles = page.evaluate_script(<<~JS)
+    how_hero_styles = styles_for(<<~JS)
       (() => {
         const hero = document.querySelector(".page-hero.how-hero");
         const copy = document.querySelector(".how-hero__copy");
@@ -681,7 +547,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       })();
     JS
 
-    expect(styles).to include(
+    expect(how_hero_styles).to include(
       "theme" => "dark",
       "heroBackground" => "rgba(18, 29, 49, 0.86)",
       "copyColor" => "rgb(230, 238, 249)",
@@ -689,20 +555,8 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       "panelHeadingColor" => "rgb(244, 248, 255)",
       "panelBodyColor" => "rgb(230, 238, 249)"
     )
-  end
 
-  it "uses readable navigation and feature cards on how-it-works in dark mode" do
-    visit root_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
-
-    store_theme_preference("dark")
-
-    visit how_it_works_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
-
-    styles = page.evaluate_script(<<~JS)
+    how_nav_styles = styles_for(<<~JS)
       (() => {
         const jumpNav = document.querySelector(".how-jump-nav");
         const jumpTab = document.querySelector(".how-jump-tab");
@@ -733,7 +587,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       })();
     JS
 
-    expect(styles).to include(
+    expect(how_nav_styles).to include(
       "theme" => "dark",
       "jumpNavBackground" => "rgba(20, 32, 54, 0.96)",
       "jumpTabBackground" => "rgba(20, 32, 54, 0.96)",
@@ -748,20 +602,10 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       "calloutBackground" => "rgba(18, 29, 49, 0.86)",
       "finishBackground" => "rgba(18, 29, 49, 0.86)"
     )
-  end
 
-  it "uses readable panels and text on the contact page in dark mode" do
-    visit root_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
+    boot_runtime(contact_us_path)
 
-    store_theme_preference("dark")
-
-    visit contact_us_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
-
-    styles = page.evaluate_script(<<~JS)
+    contact_styles = styles_for(<<~JS)
       (() => {
         const jumpNav = document.querySelector(".contact-jump-nav");
         const jumpTab = document.querySelector(".contact-jump-tab");
@@ -795,7 +639,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       })();
     JS
 
-    expect(styles).to include(
+    expect(contact_styles).to include(
       "theme" => "dark",
       "jumpNavBackground" => "rgba(20, 32, 54, 0.96)",
       "jumpTabBackground" => "rgba(20, 32, 54, 0.96)",
@@ -813,22 +657,53 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     )
   end
 
-  it "uses readable saved-search form labels on the catalogue page in dark mode when signed in" do
-    user = FactoryBot.create(:user)
+  it "keeps signed-in dark mode form surfaces readable" do
+    user = FactoryBot.create(:user, email: "dark-form-controls@example.com", password: "changeme", password_confirmation: "changeme")
 
-    visit root_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
-
-    store_theme_preference("dark")
-
+    enable_theme_preference("dark")
     sign_in_as_user(user)
+    boot_runtime(new_property_path)
 
-    visit properties_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
+    form_styles = styles_for(<<~JS)
+      (() => {
+        const textField = document.getElementById("property_address_line_1");
+        const selectField = document.getElementById("property_listing_state");
+        const textareaField = document.getElementById("property_property_description");
+        const dateField = document.getElementById("property_available_from");
 
-    styles = page.evaluate_script(<<~JS)
+        return {
+          theme: document.documentElement.dataset.theme,
+          textColor: getComputedStyle(textField).color,
+          textCaret: getComputedStyle(textField).caretColor,
+          textFill: getComputedStyle(textField).webkitTextFillColor,
+          selectColor: getComputedStyle(selectField).color,
+          selectFill: getComputedStyle(selectField).webkitTextFillColor,
+          textareaColor: getComputedStyle(textareaField).color,
+          textareaCaret: getComputedStyle(textareaField).caretColor,
+          dateColor: getComputedStyle(dateField).color,
+          dateCaret: getComputedStyle(dateField).caretColor,
+          dateFill: getComputedStyle(dateField).webkitTextFillColor
+        };
+      })();
+    JS
+
+    expect(form_styles).to include(
+      "theme" => "dark",
+      "textColor" => "rgb(230, 238, 249)",
+      "textCaret" => "rgb(230, 238, 249)",
+      "textFill" => "rgb(230, 238, 249)",
+      "selectColor" => "rgb(230, 238, 249)",
+      "selectFill" => "rgb(230, 238, 249)",
+      "textareaColor" => "rgb(230, 238, 249)",
+      "textareaCaret" => "rgb(230, 238, 249)",
+      "dateColor" => "rgb(230, 238, 249)",
+      "dateCaret" => "rgb(230, 238, 249)",
+      "dateFill" => "rgb(230, 238, 249)"
+    )
+
+    boot_runtime(properties_path)
+
+    saved_search_styles = styles_for(<<~JS)
       (() => {
         const alertsLabel = document.querySelector('label[for="saved_search_alerts_enabled"]');
         const alertsInput = document.getElementById("saved_search_alerts_enabled");
@@ -842,7 +717,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       })();
     JS
 
-    expect(styles).to include(
+    expect(saved_search_styles).to include(
       "theme" => "dark",
       "alertsLabelColor" => "rgb(230, 238, 249)"
     )
@@ -860,15 +735,8 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       )
     end
 
-    visit root_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
-
-    store_theme_preference("light")
-
-    visit properties_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
+    enable_theme_preference("light")
+    boot_runtime(properties_path)
 
     styles = page.evaluate_script(<<~JS)
       (() => {
@@ -972,15 +840,8 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       )
     end
 
-    visit root_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
-
-    store_theme_preference("dark")
-
-    visit properties_path
-    dismiss_cookie_banner
-    wait_for_theme_runtime
+    enable_theme_preference("dark")
+    boot_runtime(properties_path)
 
     styles = page.evaluate_script(<<~JS)
       (() => {

@@ -57,6 +57,14 @@ Open:
 - Admin sign-in: [http://gotthekeys.uk/admins/sign_in](http://gotthekeys.uk/admins/sign_in)
 - QA guide in-app: [http://gotthekeys.uk/admin/qa](http://gotthekeys.uk/admin/qa)
 
+## Testing
+
+Run the full RSpec suite with:
+
+```bash
+bundle exec rspec
+```
+
 Baseline credentials after seeding:
 
 - Admins:

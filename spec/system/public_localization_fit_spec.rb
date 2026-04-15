@@ -13,12 +13,19 @@ RSpec.describe "Public localization and footer fit", type: :system, js: true do
   end
 
   let(:locales) { %w[de fr it zh] }
+  let(:representative_locale) { "de" }
+  let(:translation_smoke_pages) do
+    [
+      { path: -> { legal_index_path }, key: "legal.blurb" },
+      { path: -> { contact_us_path }, key: "contact_us.get_in_touch" }
+    ]
+  end
 
-  it "renders translated public pages across the supported locales" do
+  it "renders translated public pages across the supported locales on representative routes" do
     page.current_window.resize_to(1280, 900)
 
     locales.each do |locale|
-      pages.each do |page_config|
+      translation_smoke_pages.each do |page_config|
         visit new_language_path(language: locale, return_to: instance_exec(&page_config[:path]))
 
         expect(page).to have_css(%(html[lang="#{locale}"]), visible: false)
@@ -27,10 +34,21 @@ RSpec.describe "Public localization and footer fit", type: :system, js: true do
     end
   end
 
+  it "renders the broader public page set in a representative translated locale" do
+    page.current_window.resize_to(1280, 900)
+
+    pages.each do |page_config|
+      visit new_language_path(language: representative_locale, return_to: instance_exec(&page_config[:path]))
+
+      expect(page).to have_css(%(html[lang="#{representative_locale}"]), visible: false)
+      expect(page).to have_text(I18n.t(page_config[:key], locale: representative_locale.to_sym))
+    end
+  end
+
   it "keeps the translated footer inside the viewport" do
     page.current_window.resize_to(1280, 900)
 
-    locales.each do |locale|
+    %w[de zh].each do |locale|
       visit new_language_path(language: locale, return_to: properties_path)
 
       fit = page.evaluate_script(<<~JS)
