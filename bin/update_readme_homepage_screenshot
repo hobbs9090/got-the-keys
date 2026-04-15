@@ -13,8 +13,8 @@ module ReadmeHomepageScreenshot
 
     output_path = File.expand_path(ENV.fetch("README_SCREENSHOT_PATH", "docs/readme/homepage.png"), Dir.pwd)
     url = ENV.fetch("README_SCREENSHOT_URL", "http://127.0.0.1:3000/")
-    width = Integer(ENV.fetch("README_SCREENSHOT_WIDTH", "960"))
-    height = Integer(ENV.fetch("README_SCREENSHOT_HEIGHT", "2200"))
+    width = Integer(ENV.fetch("README_SCREENSHOT_WIDTH", "1280"))
+    height = Integer(ENV.fetch("README_SCREENSHOT_HEIGHT", "2600"))
     delay = Float(ENV.fetch("README_SCREENSHOT_DELAY", "0.8"))
 
     FileUtils.mkdir_p(File.dirname(output_path))
@@ -25,6 +25,8 @@ module ReadmeHomepageScreenshot
     sleep(delay)
     dismiss_cookie_banner(driver)
     sleep(delay)
+    disable_motion(driver)
+    wait_for_images(driver)
     driver.save_screenshot(output_path)
 
     puts "Saved README screenshot to #{output_path}"
@@ -46,6 +48,39 @@ module ReadmeHomepageScreenshot
 
   def accept_all_button?(element)
     [element.text, element.attribute("value")].compact.any? { |value| value.strip == "Accept all" }
+  end
+
+  def disable_motion(driver)
+    driver.execute_script(<<~JS)
+      (() => {
+        if (document.getElementById("readme-screenshot-disable-motion")) return;
+
+        const style = document.createElement("style");
+        style.id = "readme-screenshot-disable-motion";
+        style.textContent = `
+          *,
+          *::before,
+          *::after {
+            animation: none !important;
+            transition: none !important;
+            scroll-behavior: auto !important;
+            caret-color: transparent !important;
+          }
+        `;
+
+        document.head.appendChild(style);
+      })();
+    JS
+  end
+
+  def wait_for_images(driver)
+    Selenium::WebDriver::Wait.new(timeout: 5).until do
+      driver.execute_script(<<~JS)
+        return Array.from(document.images).every((image) => image.complete);
+      JS
+    end
+  rescue Selenium::WebDriver::Error::TimeoutError
+    nil
   end
 
   def detected_browser
