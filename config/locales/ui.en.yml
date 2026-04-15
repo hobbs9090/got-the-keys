@@ -427,6 +427,7 @@ en:
         eyebrow: "Viewing request"
         hero_body: "Choose a published slot, add your contact details, and create a request that staff can confirm, reschedule, or cancel from the admin appointment book."
         submitted_notice: "Appointment request submitted. We will email you with updates."
+        owner_alert: "You cannot book a viewing for your own property."
         preferred_slot: "Preferred slot"
         choose_slot: "Choose a slot"
         notes_label: "Anything we should know?"

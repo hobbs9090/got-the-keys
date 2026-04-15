@@ -28,6 +28,10 @@
           <%= f.text_field :floor_plans, placeholder: t("ui.floor_plans.fields.file_name_placeholder") %>
         </div>
         <div>
+          <%= f.label :floor_plan_upload, t("ui.floor_plans.fields.upload", default: "Upload floor plan") %>
+          <%= f.file_field :floor_plan_upload, accept: "application/pdf,image/jpeg,image/png,image/webp,.pdf,.jpg,.jpeg,.png,.webp" %>
+        </div>
+        <div>
           <%= f.label :position, t("ui.floor_plans.fields.position") %>
           <%= f.number_field :position, min: 0, step: 1 %>
         </div>

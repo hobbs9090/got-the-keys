@@ -50,7 +50,7 @@ class FloorPlansController < ApplicationController
   end
 
   def floor_plan_params
-    params.require(:floor_plan).permit(:floor_plans, :label, :position)
+    params.require(:floor_plan).permit(:floor_plans, :floor_plan_upload, :label, :position)
   end
 
   def next_position

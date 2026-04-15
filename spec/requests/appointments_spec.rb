@@ -4,7 +4,8 @@ RSpec.describe "Appointments" do
   include ActiveSupport::Testing::TimeHelpers
 
   let(:user) { FactoryBot.create(:user) }
-  let(:property) { FactoryBot.create(:property, user:, address_line_1: "44 Mount Ephraim") }
+  let(:owner) { FactoryBot.create(:user) }
+  let(:property) { FactoryBot.create(:property, user: owner, address_line_1: "44 Mount Ephraim") }
 
   describe "GET /properties/:property_id/appointments/new" do
     around do |example|
@@ -48,6 +49,15 @@ RSpec.describe "Appointments" do
       expect(response.body).to include(%(value="#{ERB::Util.html_escape(user.full_name)}"))
       expect(response.body).to include(%(value="#{ERB::Util.html_escape(user.email)}"))
       expect(response.body).to include(%(value="#{ERB::Util.html_escape(user.mobile_number)}"))
+    end
+
+    it "prevents owners from accessing the booking panel redirect" do
+      sign_in(owner)
+
+      get new_property_appointment_path(property)
+
+      expect(response).to redirect_to(property_path(property, anchor: "booking-panel"))
+      expect(flash[:alert]).to eq(I18n.t("ui.appointments.new.owner_alert"))
     end
 
     it "includes later slots that are still within the 21-day booking window" do
@@ -145,6 +155,26 @@ RSpec.describe "Appointments" do
       end.not_to change(Appointment, :count)
 
       expect(response).to redirect_to(new_user_session_path(return_to: property_path(property, anchor: "booking-panel")))
+    end
+
+    it "prevents owners from booking a viewing on their own property" do
+      sign_in(owner)
+      slot = next_booking_slot
+
+      expect do
+        post property_appointments_path(property), params: {
+          appointment: {
+            customer_name: "Nina Hughes",
+            customer_email: "nina.hughes@example.com",
+            customer_phone: "07700 930005",
+            requested_time: slot.iso8601,
+            notes: "Please confirm whether parking is allocated."
+          }
+        }
+      end.not_to change(Appointment, :count)
+
+      expect(response).to redirect_to(property_path(property, anchor: "booking-panel"))
+      expect(flash[:alert]).to eq(I18n.t("ui.appointments.new.owner_alert"))
     end
   end
 

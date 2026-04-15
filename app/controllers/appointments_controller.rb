@@ -3,6 +3,7 @@ class AppointmentsController < ApplicationController
 
   before_action :set_property, only: %i[new create]
   before_action :require_authenticated_user_for_booking!, only: %i[new create]
+  before_action :prevent_owner_booking!, only: %i[new create]
   before_action :set_appointment, only: %i[show edit_self_service reschedule_self_service cancel_self_service]
   before_action :authorize_public_access!, only: %i[show edit_self_service reschedule_self_service cancel_self_service]
   before_action :authorize_customer_self_service!, only: %i[edit_self_service reschedule_self_service cancel_self_service]
@@ -116,6 +117,12 @@ class AppointmentsController < ApplicationController
     return unless current_user.present?
 
     current_user.saved_properties.find_or_create_by!(property: @property)
+  end
+
+  def prevent_owner_booking!
+    return unless @property.user == current_user
+
+    redirect_to property_path(@property, anchor: "booking-panel"), alert: t("ui.appointments.new.owner_alert")
   end
 
 end
