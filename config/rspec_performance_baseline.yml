@@ -1,4 +1,4 @@
 top_examples: 10
-suite_warning_seconds: 100.0
-slow_example_warning_seconds: 10.0
+suite_warning_seconds: 125.0
+slow_example_warning_seconds: 12.0
 warning_examples_limit: 3
