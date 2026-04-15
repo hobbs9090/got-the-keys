@@ -16,7 +16,7 @@ describe "Properties" do
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to match(%r{favicon-house-[^"]+\.svg})
-      expect(response.body).not_to include("favicon.ico")
+      expect(response.body).to include("favicon.ico")
       expect(footer_brand).to be_present
       expect(footer_brand.text.squish).to eq("© 2026 Steven Hobbs")
       expect(footer_copy).to be_present

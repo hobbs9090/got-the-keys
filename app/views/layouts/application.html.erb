@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= content_for?(:title) ? yield(:title) : t('gotthekeys.gotthekeys') %></title>
     <%= favicon_link_tag "favicon-house.svg", rel: "icon", type: "image/svg+xml", sizes: "any" %>
+    <%= favicon_link_tag "/favicon.png", rel: "icon", type: "image/png", sizes: "32x32" %>
+    <%= favicon_link_tag "/favicon.ico", rel: "shortcut icon", type: "image/x-icon" %>
+    <%= favicon_link_tag "/apple-touch-icon.png", rel: "apple-touch-icon", type: "image/png", sizes: "180x180" %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= javascript_tag theme_preference_bootstrap_script, nonce: true %>

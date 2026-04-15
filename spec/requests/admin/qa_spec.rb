@@ -37,7 +37,7 @@ RSpec.describe "Admin QA guide" do
 
     expect(response).to have_http_status(:ok)
     expect(response.body).to match(%r{favicon-house-[^"]+\.svg})
-    expect(response.body).not_to include("favicon.ico")
+    expect(response.body).to include("favicon.ico")
 
     document = Nokogiri::HTML.parse(response.body)
     top_section = document.at_css(".admin-section")
