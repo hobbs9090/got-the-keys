@@ -26,6 +26,11 @@ RSpec.describe "Admin properties", type: :request do
     expect(search_input).to be_present
     expect(search_input["placeholder"]).to eq("Address, postcode, seller, or status")
 
+    status_select = search_form.at_css('[data-testid="admin-properties-status-select"]')
+    expect(status_select).to be_present
+    expect(status_select.at_css('option[value=""]')&.text).to eq("All statuses")
+    expect(status_select.css("option").map { |option| option["value"] }).to include(*Property::LISTING_STATES)
+
     clear_link = search_form.at_css('[data-testid="admin-properties-search-clear"]')
     expect(clear_link).to be_present
     expect(clear_link["href"]).to eq(admin_properties_path)
@@ -58,6 +63,20 @@ RSpec.describe "Admin properties", type: :request do
     empty_copy = parsed_html.at_css(".empty-copy")
     expect(empty_copy).to be_present
     expect(empty_copy.text.strip).to eq("No properties match this search.")
+  end
+
+  it "filters properties by listing status" do
+    review_property = FactoryBot.create(:property, :review_pending, address_line_1: "Review Queue House")
+    published_property = FactoryBot.create(:property, listing_state: "published", address_line_1: "Published Lane")
+
+    get admin_properties_path, params: { listing_state: "review_pending" }
+
+    card_ids = parsed_html.css('[data-testid^="admin-property-card-"]').map { |row| row["data-testid"] }
+    expect(card_ids).to include("admin-property-card-#{review_property.id}")
+    expect(card_ids).not_to include("admin-property-card-#{published_property.id}")
+
+    status_select = parsed_html.at_css('[data-testid="admin-properties-status-select"]')
+    expect(status_select.at_css('option[selected][value="review_pending"]')).to be_present
   end
 
   it "shows listing readiness and asset inventory on the admin detail page" do

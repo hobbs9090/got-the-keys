@@ -1105,6 +1105,8 @@ en:
           search:
             label: "Search properties"
             placeholder: "Address, postcode, seller, or status"
+            status: "Status"
+            all_statuses: "All statuses"
             submit: "Search"
             clear: "Clear"
           appointment_count:

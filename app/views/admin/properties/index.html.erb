@@ -15,8 +15,12 @@
       <%= f.label :q, t("ui.admin.properties.index.search.label") %>
       <%= f.search_field :q, value: @query, placeholder: t("ui.admin.properties.index.search.placeholder"), data: { testid: "admin-properties-search-input" } %>
     </div>
+    <div>
+      <%= f.label :listing_state, t("ui.admin.properties.index.search.status") %>
+      <%= f.select :listing_state, options_for_select([[t("ui.admin.properties.index.search.all_statuses"), ""]] + Property::LISTING_STATES.map { |state| [translated_listing_state(state), state] }, @listing_state), {}, data: { testid: "admin-properties-status-select" } %>
+    </div>
     <div class="admin-filter-form__actions">
-      <%= f.submit t("ui.admin.properties.index.search.submit"), class: "button primary", data: { testid: "admin-properties-search-submit" } %>
+      <%= f.button t("ui.admin.properties.index.search.submit"), type: :submit, class: "button primary", data: { testid: "admin-properties-search-submit" } %>
       <%= link_to t("ui.admin.properties.index.search.clear"), admin_properties_path, class: "button hollow secondary", data: { testid: "admin-properties-search-clear" } %>
     </div>
   <% end %>

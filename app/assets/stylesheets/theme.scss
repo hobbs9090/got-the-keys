@@ -2592,7 +2592,7 @@ html[data-theme="dark"] {
 
 .admin-filter-form[data-testid="admin-properties-search"] {
   align-items: end;
-  grid-template-columns: minmax(0, 1fr) max-content;
+  grid-template-columns: minmax(0, 1fr) minmax(190px, 240px) max-content;
 }
 
 .admin-filter-form[data-testid="admin-users-search"],
@@ -2603,9 +2603,15 @@ html[data-theme="dark"] {
 
 .admin-filter-form[data-testid="admin-properties-search"] .admin-filter-form__actions {
   align-self: end;
+  align-items: stretch;
   flex-wrap: nowrap;
+  gap: 0.65rem;
   grid-column: auto;
   justify-content: flex-end;
+}
+
+.admin-filter-form[data-testid="admin-properties-search"] .admin-filter-form__actions .button {
+  margin-bottom: 0;
 }
 
 .admin-filter-form[data-testid="admin-users-search"] .admin-filter-form__actions,
