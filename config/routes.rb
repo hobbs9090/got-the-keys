@@ -29,6 +29,7 @@ GotTheKeys::Application.routes.draw do
     resources :properties, only: [:index, :show, :edit, :update] do
       patch :transition, on: :member
     end
+    resources :customers, only: :index
     resources :users, only: [:index, :show]
     resources :notification_logs, only: :index
     resources :demo_scenarios, only: [:index, :show], path: 'demo-data' do

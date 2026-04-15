@@ -3,6 +3,7 @@ class Admin::PropertiesController < Admin::BaseController
 
   def index
     @query = params[:q].to_s.squish
+    @listing_state = params[:listing_state].presence_in(Property::LISTING_STATES)
     @properties = filtered_properties
       .recommended_order
       .preload(:user, :appointments, :photos, :floor_plans)
@@ -69,6 +70,7 @@ class Admin::PropertiesController < Admin::BaseController
 
   def filtered_properties
     scope = Property.left_joins(:user).distinct
+    scope = scope.where(listing_state: @listing_state) if @listing_state.present?
     return scope if @query.blank?
 
     @query.split.each do |term|

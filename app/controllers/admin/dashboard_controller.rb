@@ -13,6 +13,7 @@ class Admin::DashboardController < Admin::BaseController
     @latest_demo_run = DemoScenarioRun.recent_first.first
     @metrics = {
       properties: Property.count,
+      properties_requiring_review: Property.where(listing_state: "review_pending").count,
       upcoming_appointments: Appointment.upcoming.count,
       pending_actions: Appointment.pending_action.count,
       customers: Appointment.distinct.count(:customer_email),

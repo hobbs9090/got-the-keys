@@ -741,6 +741,7 @@ en:
         sales: "Sales"
         rentals: "Rentals"
         properties: "Properties"
+        customers: "Customers"
         sellers: "Sellers"
         demo_data: "Demo Data"
         security: "Security"
@@ -908,6 +909,7 @@ en:
         open_bookings_desk: "Open bookings desk"
         metrics:
           properties: "Properties"
+          properties_requiring_review: "Require review"
           upcoming_appointments: "Upcoming appointments"
           pending_actions: "Pending actions"
           customers: "Customers"
@@ -1166,6 +1168,15 @@ en:
           no_properties: "This seller has not created any listings yet."
           recent_booking_activity_title: "Recent booking activity"
           no_activity: "No appointment activity on this seller's properties yet."
+      customers:
+        index:
+          title: "Customers"
+          eyebrow: "Customer booking directory"
+          view_bookings: "View bookings"
+          appointment_count:
+            one: "1 booking"
+            other: "%{count} bookings"
+          no_results: "No customers with bookings yet."
       notification_logs:
         title: "Notification log"
         eyebrow: "Customer communication"

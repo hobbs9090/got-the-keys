@@ -3,12 +3,14 @@ module Admin::DashboardHelper
     case metric_key.to_sym
     when :properties
       admin_properties_path
+    when :properties_requiring_review
+      admin_properties_path(listing_state: "review_pending")
     when :upcoming_appointments
       admin_appointments_path(view: "agenda")
     when :pending_actions
       admin_appointments_path(view: "agenda", queue: "pending_action")
     when :customers
-      admin_appointments_path(view: "agenda")
+      admin_customers_path
     when :open_leads
       admin_enquiries_path
     else
