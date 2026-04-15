@@ -1,4 +1,5 @@
 require "chunky_png"
+require "tempfile"
 require "zlib"
 
 class PropertyDocumentPayloadBuilder
@@ -351,6 +352,8 @@ class PropertyDocumentPayloadBuilder
       build_jpeg_image_asset(file_path)
     when ".png"
       build_png_image_asset(file_path)
+    when ".webp"
+      build_webp_image_asset(file_path)
     end
   end
 
@@ -400,6 +403,18 @@ class PropertyDocumentPayloadBuilder
       filter: "/FlateDecode",
       data: Zlib::Deflate.deflate(pixels)
     }
+  end
+
+  def build_webp_image_asset(path)
+    Tempfile.create(["property-document-image", ".png"]) do |png_file|
+      png_path = png_file.path
+      png_file.close
+
+      success = system("dwebp", path.to_s, "-quiet", "-o", png_path)
+      return unless success && File.exist?(png_path)
+
+      build_png_image_asset(Pathname(png_path))
+    end
   end
 
   def composite_channel(channel, alpha)

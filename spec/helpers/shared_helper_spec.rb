@@ -6,8 +6,8 @@ RSpec.describe SharedHelper, type: :helper do
       it "renders the homepage hero image with 1x and 2x sources" do
         markup = helper.public_send("hero_#{index}_image")
 
-        expect(markup).to match(%r{src="/assets/hero_#{index}-[^"]+\.jpg"})
-        expect(markup).to match(%r{srcset="/assets/hero_#{index}-[^"]+\.jpg 1x, /assets/hero_#{index}@2x-[^"]+\.jpg 2x"})
+        expect(markup).to match(%r{src="/assets/hero_#{index}-[^"]+\.webp"})
+        expect(markup).to match(%r{srcset="/assets/hero_#{index}-[^"]+\.webp 1x, /assets/hero_#{index}@2x-[^"]+\.webp 2x"})
       end
     end
   end
@@ -16,8 +16,8 @@ RSpec.describe SharedHelper, type: :helper do
     it "renders the world image with 1x and 2x sources" do
       markup = helper.world_image
 
-      expect(markup).to match(%r{src="/assets/placeholder_world-[^"]+\.jpg"})
-      expect(markup).to match(%r{srcset="/assets/placeholder_world-[^"]+\.jpg 1x, /assets/placeholder_world@2x-[^"]+\.jpg 2x"})
+      expect(markup).to match(%r{src="/assets/placeholder_world-[^"]+\.webp"})
+      expect(markup).to match(%r{srcset="/assets/placeholder_world-[^"]+\.webp 1x, /assets/placeholder_world@2x-[^"]+\.webp 2x"})
     end
   end
 

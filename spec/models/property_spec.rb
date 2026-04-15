@@ -256,11 +256,11 @@ describe "A property" do
     expect(property.lease_length_years).to eq(125)
   end
 
-  it "rejects unsupported image filename extensions" do
+  it "accepts webp image filenames" do
     property = build_property(image_file_name: "properties/property_placeholder_listing.webp")
 
-    expect(property.valid?).to be false
-    expect(property.errors[:image_file_name]).to include("must reference a GIF, JPG, JPEG, PNG, or SVG image")
+    expect(property.valid?).to be true
+    expect(property.errors[:image_file_name]).to be_empty
   end
 
   it "uses the primary photo as the hero image when present" do

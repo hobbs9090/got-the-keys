@@ -22,7 +22,7 @@ RSpec.describe Ci::SpecChangeGuard do
 
     it 'ignores exempt static asset changes' do
       result = described_class.new(
-        changed_files: ['app/assets/images/hero_5.jpg']
+        changed_files: ['app/assets/images/hero_5.webp']
       ).evaluate
 
       expect(result.success?).to be(true)

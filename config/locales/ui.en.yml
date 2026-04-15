@@ -378,7 +378,7 @@ en:
       flash:
         not_public: "This listing is not currently public."
       validation:
-        image_file_name: "must reference a GIF, JPG, JPEG, PNG, or SVG image"
+        image_file_name: "must reference a GIF, JPG, JPEG, PNG, SVG, or WEBP image"
         image_upload: "must be a JPG or JPEG image"
         refurbished_year: "must be greater than or equal to the year built"
         duplicate_address: "has already been listed for this address"

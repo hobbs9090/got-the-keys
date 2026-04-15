@@ -23,7 +23,7 @@ story_cards = [
     category: t('blog.story_1_category'),
     title: t('blog.story_1_title'),
     excerpt: t('blog.story_1_excerpt'),
-    image: ['hero_5.jpg', 'hero_5@2x.jpg']
+    image: ['hero_5.webp', 'hero_5@2x.webp']
   },
   {
     category: t('blog.story_2_category'),
@@ -35,7 +35,7 @@ story_cards = [
     category: t('blog.story_3_category'),
     title: t('blog.story_3_title'),
     excerpt: t('blog.story_3_excerpt'),
-    image: ['hero_3.jpg', 'hero_3@2x.jpg']
+    image: ['hero_3.webp', 'hero_3@2x.webp']
   }
 ]
 
@@ -82,7 +82,7 @@ editorial_points = [
   <div class="blog-main">
     <article class="site-card blog-feature" data-testid="blog-featured-post">
       <div class="blog-feature__media">
-        <%= pixel_density_image_tag('hero_4.jpg', retina_source: 'hero_4@2x.jpg', class: 'blog-feature__image', alt: featured_story[:title]) %>
+        <%= pixel_density_image_tag('hero_4.webp', retina_source: 'hero_4@2x.webp', class: 'blog-feature__image', alt: featured_story[:title]) %>
       </div>
 
       <div class="blog-feature__body">

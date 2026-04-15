@@ -3,7 +3,7 @@ require "fileutils"
 class Property < ApplicationRecord
   paginates_per 12
 
-  IMAGE_FILE_NAME_FORMAT = /\A[\w.\-\/ ]+\.(gif|jpg|jpeg|png|svg)\z/i.freeze
+  IMAGE_FILE_NAME_FORMAT = /\A[\w.\-\/ ]+\.(gif|jpg|jpeg|png|svg|webp)\z/i.freeze
   IMAGE_UPLOAD_EXTENSIONS = %w[.jpg .jpeg].freeze
   IMAGE_UPLOAD_CONTENT_TYPES = %w[image/jpeg image/pjpeg image/jpg].freeze
   UPLOADED_IMAGE_PREFIX = "/uploads/property_images/".freeze
@@ -54,7 +54,7 @@ class Property < ApplicationRecord
             allow_blank: true,
             format: {
               with: IMAGE_FILE_NAME_FORMAT,
-              message: ->(_record, _data) { I18n.t("ui.properties.validation.image_file_name", default: "must reference a GIF, JPG, JPEG, PNG, or SVG image") }
+              message: ->(_record, _data) { I18n.t("ui.properties.validation.image_file_name", default: "must reference a GIF, JPG, JPEG, PNG, SVG, or WEBP image") }
             }
   validates :sale_status, inclusion: { in: SALE_STATUS }, allow_blank: true
   validates :listing_state, inclusion: { in: LISTING_STATES }

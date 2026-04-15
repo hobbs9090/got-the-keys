@@ -9,16 +9,16 @@ RSpec.describe PropertiesHelper, type: :helper do
       FactoryBot.create(
         :photo,
         property: property,
-        image_filename: "properties/property_18_cedar_road_hero.jpg",
+        image_filename: "properties/property_18_cedar_road_hero.webp",
         primary: true,
         position: 1
       )
 
       markup = helper.small_image_for(property)
 
-      expect(markup).to match(%r{src="/assets/properties/property_18_cedar_road_hero-[^"]+\.jpg"})
+      expect(markup).to match(%r{src="/assets/properties/property_18_cedar_road_hero-[^"]+\.webp"})
       expect(markup).to match(
-        %r{srcset="/assets/properties/property_18_cedar_road_hero-[^"]+\.jpg 1x, /assets/properties/property_18_cedar_road_hero@2x-[^"]+\.jpg 2x"}
+        %r{srcset="/assets/properties/property_18_cedar_road_hero-[^"]+\.webp 1x, /assets/properties/property_18_cedar_road_hero@2x-[^"]+\.webp 2x"}
       )
     end
 

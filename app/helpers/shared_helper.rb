@@ -1,26 +1,26 @@
 module SharedHelper
   def hero_1_image
-    pixel_density_image_tag('hero_1.jpg', retina_source: 'hero_1@2x.jpg')
+    pixel_density_image_tag('hero_1.webp', retina_source: 'hero_1@2x.webp')
   end
 
   def hero_2_image
-    pixel_density_image_tag('hero_2.jpg', retina_source: 'hero_2@2x.jpg')
+    pixel_density_image_tag('hero_2.webp', retina_source: 'hero_2@2x.webp')
   end
 
   def hero_3_image
-    pixel_density_image_tag('hero_3.jpg', retina_source: 'hero_3@2x.jpg')
+    pixel_density_image_tag('hero_3.webp', retina_source: 'hero_3@2x.webp')
   end
 
   def hero_4_image
-    pixel_density_image_tag('hero_4.jpg', retina_source: 'hero_4@2x.jpg')
+    pixel_density_image_tag('hero_4.webp', retina_source: 'hero_4@2x.webp')
   end
 
   def hero_5_image
-    pixel_density_image_tag('hero_5.jpg', retina_source: 'hero_5@2x.jpg')
+    pixel_density_image_tag('hero_5.webp', retina_source: 'hero_5@2x.webp')
   end
 
   def world_image
-    pixel_density_image_tag('placeholder_world.jpg', retina_source: 'placeholder_world@2x.jpg')
+    pixel_density_image_tag('placeholder_world.webp', retina_source: 'placeholder_world@2x.webp')
   end
 
   def under_construction_image

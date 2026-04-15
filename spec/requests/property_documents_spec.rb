@@ -39,7 +39,7 @@ RSpec.describe "Property documents", type: :request do
 
   it "allows public visitors to download public documents" do
     document = FactoryBot.create(:property_document, property:, title: "Sales brochure", file_name: "granville-road-brochure.pdf")
-    FactoryBot.create(:photo, property:, image_filename: "properties/property_18_cedar_road_hero.jpg", primary: true, position: 1)
+    FactoryBot.create(:photo, property:, image_filename: "properties/property_18_cedar_road_hero.webp", primary: true, position: 1)
 
     get download_property_property_document_path(property, document)
 

@@ -17,10 +17,10 @@ RSpec.describe "Welcome", type: :request do
       get root_path
 
       expect(response).to have_http_status(:ok)
-      expect(response.body).to match(%r{/assets/hero_4-[^"]+\.jpg})
-      expect(response.body).to match(%r{/assets/hero_4@2x-[^"]+\.jpg})
-      expect(response.body).to match(%r{/assets/hero_5-[^"]+\.jpg})
-      expect(response.body).to match(%r{/assets/hero_5@2x-[^"]+\.jpg})
+      expect(response.body).to match(%r{/assets/hero_4-[^"]+\.webp})
+      expect(response.body).to match(%r{/assets/hero_4@2x-[^"]+\.webp})
+      expect(response.body).to match(%r{/assets/hero_5-[^"]+\.webp})
+      expect(response.body).to match(%r{/assets/hero_5@2x-[^"]+\.webp})
 
       document = Nokogiri::HTML.parse(response.body)
 

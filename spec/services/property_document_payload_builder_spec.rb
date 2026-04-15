@@ -34,7 +34,7 @@ RSpec.describe PropertyDocumentPayloadBuilder do
     FactoryBot.create(
       :photo,
       property:,
-      image_filename: "properties/property_18_cedar_road_hero.jpg",
+      image_filename: "properties/property_18_cedar_road_hero.webp",
       primary: true,
       position: 1
     )
