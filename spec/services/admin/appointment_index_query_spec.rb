@@ -90,6 +90,34 @@ RSpec.describe Admin::AppointmentIndexQuery do
     expect(result.appointments.to_a).to eq([in_range])
   end
 
+  it "filters the agenda view to pending and rescheduled appointments for the pending action queue" do
+    pending_match = FactoryBot.create(
+      :appointment,
+      :pending,
+      property: primary_property,
+      requested_time: booking_time(2026, 4, 3, 10, 0),
+      scheduled_at: booking_time(2026, 4, 3, 10, 0)
+    )
+    rescheduled_match = FactoryBot.create(
+      :appointment,
+      :rescheduled,
+      property: primary_property,
+      requested_time: booking_time(2026, 4, 3, 11, 0),
+      scheduled_at: booking_time(2026, 4, 3, 11, 0)
+    )
+    FactoryBot.create(
+      :appointment,
+      :confirmed,
+      property: primary_property,
+      requested_time: booking_time(2026, 4, 3, 14, 0),
+      scheduled_at: booking_time(2026, 4, 3, 14, 0)
+    )
+
+    result = described_class.new(params: { queue: "pending_action" }).call
+
+    expect(result.appointments.to_a).to eq([pending_match, rescheduled_match])
+  end
+
   it "orders bookings from earliest to latest scheduled time" do
     later = FactoryBot.create(
       :appointment,

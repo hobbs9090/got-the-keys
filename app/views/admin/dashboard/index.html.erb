@@ -11,12 +11,14 @@
 
   <div class="admin-dashboard__status-grid" data-testid="admin-dashboard-status-grid">
     <% @metrics.each do |label, value| %>
-      <article class="admin-dashboard__status-card admin-dashboard__status-card--<%= label.to_s.dasherize %>" data-testid="admin-status-card-<%= label %>">
-        <strong class="admin-dashboard__status-value"><%= number_with_delimiter(value, delimiter: ",") %></strong>
-        <div class="admin-dashboard__status-copy">
-          <span class="admin-dashboard__status-label"><%= t("ui.admin.dashboard.metrics.#{label}", default: label.to_s.humanize) %></span>
-        </div>
-      </article>
+      <%= link_to admin_dashboard_metric_path(label), class: "admin-dashboard__status-card-link", data: { testid: "admin-status-card-link-#{label}" } do %>
+        <article class="admin-dashboard__status-card admin-dashboard__status-card--<%= label.to_s.dasherize %>" data-testid="admin-status-card-<%= label %>">
+          <strong class="admin-dashboard__status-value"><%= number_with_delimiter(value, delimiter: ",") %></strong>
+          <div class="admin-dashboard__status-copy">
+            <span class="admin-dashboard__status-label"><%= t("ui.admin.dashboard.metrics.#{label}", default: label.to_s.humanize) %></span>
+          </div>
+        </article>
+      <% end %>
     <% end %>
   </div>
 </section>

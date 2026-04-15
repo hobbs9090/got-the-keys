@@ -29,6 +29,7 @@ class Admin::AppointmentIndexQuery
   def filtered_scope(view_mode:, anchor_date:)
     scope = relation.includes(:property, :admin).recent_first
     scope = scope.where(property_id: params[:property_id]) if params[:property_id].present?
+    scope = scope.where(status: %w[pending rescheduled]) if params[:queue] == "pending_action"
     scope = scope.where(status: params[:status]) if params[:status].present?
     scope = scope.where(visit_outcome: params[:visit_outcome]) if params[:visit_outcome].present?
     scope = scope.where(admin_id: params[:admin_id]) if params[:admin_id].present?
