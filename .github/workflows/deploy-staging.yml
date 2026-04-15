@@ -138,6 +138,33 @@ jobs:
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
         run: bin/deploy_staging
 
+      - name: Ensure GitHub CLI
+        run: |
+          if command -v gh >/dev/null 2>&1; then
+            echo "Using gh at $(command -v gh)"
+            gh --version
+            exit 0
+          fi
+
+          if ! command -v apt-get >/dev/null 2>&1; then
+            echo "gh is missing and this runner does not expose apt-get for installation." >&2
+            exit 1
+          fi
+
+          if command -v sudo >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y gh
+          elif [ "$(id -u)" -eq 0 ]; then
+            apt-get update
+            apt-get install -y gh
+          else
+            echo "gh is missing and passwordless sudo is not available to install it." >&2
+            exit 1
+          fi
+
+          echo "Installed gh at $(command -v gh)"
+          gh --version
+
       - name: Dispatch staging acceptance
         env:
           GH_TOKEN: ${{ secrets.ACCEPTANCE_REPO_DISPATCH_TOKEN }}
