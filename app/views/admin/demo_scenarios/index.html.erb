@@ -117,7 +117,7 @@
             <%= label_tag "performance_seed_model", t("ui.admin.demo_data.performance_seed.fields.model") %>
             <%= select_tag "performance_seed[model]",
                            options_for_select(
-                             OpenaiEnrichmentModels::AVAILABLE.map { |model| [model, model] },
+                             DemoData::OpenaiEnrichmentModels::AVAILABLE.map { |model| [model, model] },
                              @performance_seed_form.fetch(:model)
                            ),
                            required: true,

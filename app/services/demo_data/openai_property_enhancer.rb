@@ -2,8 +2,8 @@ require 'json'
 
 module DemoData
   class OpenaiPropertyEnhancer
-    DEFAULT_MODEL = OpenaiEnrichmentModels::DEFAULT
-    AVAILABLE_MODELS = OpenaiEnrichmentModels::AVAILABLE
+    DEFAULT_MODEL = DemoData::OpenaiEnrichmentModels::DEFAULT
+    AVAILABLE_MODELS = DemoData::OpenaiEnrichmentModels::AVAILABLE
 
     JSON_SCHEMA = {
       type: 'object',

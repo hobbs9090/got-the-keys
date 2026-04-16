@@ -43,7 +43,7 @@ RSpec.describe "Admin demo scenarios" do
     expect(parsed_html.at_css('[data-testid="performance-seed-property-count"]')["value"]).to eq(DemoData::Populator::DEFAULT_PROPERTY_COUNT.to_s)
     expect(parsed_html.at_css('[data-testid="performance-seed-password"]')["value"]).to eq("secret")
     expect(parsed_html.at_css('[data-testid="performance-seed-batch-size"]')["value"]).to eq(DemoData::Populator::DEFAULT_BATCH_SIZE.to_s)
-    expect(parsed_html.at_css('[data-testid="performance-seed-model"] option[selected]')["value"]).to eq(OpenaiEnrichmentModels::DEFAULT)
+    expect(parsed_html.at_css('[data-testid="performance-seed-model"] option[selected]')["value"]).to eq(DemoData::OpenaiEnrichmentModels::DEFAULT)
   end
 
   it "restores the baseline scenario when the typed gate phrase is correct" do

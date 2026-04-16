@@ -8,7 +8,7 @@ class Admin::DemoScenariosController < Admin::BaseController
     password: "secret",
     ai_mode: "off",
     batch_size: DemoData::Populator::DEFAULT_BATCH_SIZE,
-    model: OpenaiEnrichmentModels::DEFAULT
+    model: DemoData::OpenaiEnrichmentModels::DEFAULT
   }.freeze
 
   def index
@@ -182,7 +182,7 @@ class Admin::DemoScenariosController < Admin::BaseController
 
   def normalized_model!(value)
     model = normalized_string!(value, field: :model)
-    return model if OpenaiEnrichmentModels::AVAILABLE.include?(model)
+    return model if DemoData::OpenaiEnrichmentModels::AVAILABLE.include?(model)
 
     raise ArgumentError, t("ui.admin.demo_data.performance_seed.validation.model")
   end
