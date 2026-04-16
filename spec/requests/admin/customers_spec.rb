@@ -93,6 +93,32 @@ RSpec.describe "Admin customers", type: :request do
     expect(search_input["value"]).to eq("alex.buyer@")
   end
 
+  it "treats q as case-insensitive" do
+    property = FactoryBot.create(:property)
+    FactoryBot.create(
+      :appointment,
+      :pending,
+      property:,
+      customer_name: "Alex Buyer",
+      customer_email: "alex.buyer@example.com",
+      customer_phone: "07700 930010"
+    )
+    FactoryBot.create(
+      :appointment,
+      :pending,
+      property:,
+      customer_name: "Taylor Stone",
+      customer_email: "taylor.stone@example.com",
+      customer_phone: "07700 930011"
+    )
+
+    get admin_customers_path, params: { q: "ALEx.BuYeR@" }
+
+    expect(response).to have_http_status(:ok)
+    row_ids = parsed_html.css('[data-testid^="admin-customer-row-"]').map { |row| row["data-testid"] }
+    expect(row_ids).to eq(["admin-customer-row-alex-buyer-example-com"])
+  end
+
   it "filters customers by phone and shows an empty state when there are no matches" do
     property = FactoryBot.create(:property)
     FactoryBot.create(

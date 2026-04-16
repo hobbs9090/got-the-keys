@@ -20,6 +20,46 @@ RSpec.describe "Admin enquiries", type: :request do
     expect(response.body).to include(%(data-testid="lead-inbox-filters"))
   end
 
+  it "treats q as case-insensitive" do
+    matching = FactoryBot.create(
+      :enquiry,
+      :contacted,
+      property:,
+      admin:,
+      customer_name: "Priya Shah",
+      customer_email: "PRIYA.SHAH@EXAMPLE.COM",
+      message: "Interested in HARBOUR options"
+    )
+    FactoryBot.create(
+      :enquiry,
+      :contacted,
+      property:,
+      admin:,
+      customer_name: "Hidden Lead",
+      customer_email: "hidden@example.com",
+      message: "Completely different lead"
+    )
+
+    get admin_enquiries_path, params: {
+      status: "contacted",
+      admin_id: admin.id,
+      q: "pRiYa sHaH"
+    }
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include(matching.customer_name)
+    expect(response.body).not_to include("Hidden Lead")
+
+    get admin_enquiries_path, params: {
+      status: "contacted",
+      admin_id: admin.id,
+      q: "hArBoUr"
+    }
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include(matching.customer_name)
+  end
+
   it "updates assignment, status, and notes" do
     enquiry = FactoryBot.create(:enquiry, property:, customer_name: "Mina Khan")
 

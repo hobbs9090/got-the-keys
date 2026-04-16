@@ -46,6 +46,19 @@ RSpec.describe "Admin users", type: :request do
     expect(search_input["value"]).to eq("Taylor Stone")
   end
 
+  it "treats q as case-insensitive" do
+    matching_user = FactoryBot.create(:user, first_name: "Taylor", last_name: "Stone", email: "taylor.stone@example.com")
+    non_matching_user = FactoryBot.create(:user, first_name: "Morgan", last_name: "Lake", email: "morgan@example.com")
+
+    get admin_users_path, params: { q: "tAYlOr sToNe" }
+
+    expect(response).to have_http_status(:ok)
+
+    row_ids = parsed_html.css('[data-testid^="admin-user-row-"]').map { |row| row["data-testid"] }
+    expect(row_ids).to include("admin-user-row-#{matching_user.id}")
+    expect(row_ids).not_to include("admin-user-row-#{non_matching_user.id}")
+  end
+
   it "filters sellers by email and shows an empty state when there are no matches" do
     FactoryBot.create(:user, first_name: "Taylor", last_name: "Stone", email: "taylor.stone@example.com")
     matching_user = FactoryBot.create(:user, first_name: "Casey", last_name: "Blue", email: "casey.blue@example.com")

@@ -46,21 +46,21 @@ RSpec.describe PropertyCatalogueQuery do
 
     result = described_class.new(
       params: {
-        q: "Harbour",
+        q: "harbour",
         min_bedrooms: "3",
         min_price: "500,000",
         max_price: "800,000",
-        town_city: "Sevenoaks",
+        town_city: "sevenoaks",
         sort: "price_high"
       }
     ).call
 
     expect(result.filters).to include(
-      q: "Harbour",
+      q: "harbour",
       min_bedrooms: "3",
       min_price: "500000",
       max_price: "800000",
-      town_city: "Sevenoaks",
+      town_city: "sevenoaks",
       sort: "price_high"
     )
     expect(result.properties.to_a.first(2)).to eq([higher_price, lower_price])

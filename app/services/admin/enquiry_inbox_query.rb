@@ -14,9 +14,9 @@ class Admin::EnquiryInboxQuery
     enquiries = enquiries.flagged_spam if spam_only?
 
     if filters[:q].present?
-      query = "%#{Enquiry.sanitize_sql_like(filters[:q])}%"
+      query = "%#{Enquiry.sanitize_sql_like(filters[:q])}%".downcase
       enquiries = enquiries.where(
-        "customer_name LIKE :query OR customer_email LIKE :query OR message LIKE :query OR lead_reference LIKE :query",
+        "LOWER(customer_name) LIKE :query OR LOWER(customer_email) LIKE :query OR LOWER(message) LIKE :query OR LOWER(lead_reference) LIKE :query",
         query:
       )
     end

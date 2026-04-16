@@ -177,9 +177,9 @@ class Property < ApplicationRecord
       listings = listings.where(sale_status: filters[:sale_status]) if filters[:sale_status].present?
 
       if filters[:q].present?
-        sanitized_query = "%#{sanitize_sql_like(filters[:q])}%"
+        sanitized_query = "%#{sanitize_sql_like(filters[:q])}%".downcase
         listings = listings.where(
-          'address_line_1 LIKE :query OR town_city LIKE :query OR county LIKE :query OR postcode LIKE :query OR property_description LIKE :query',
+          'LOWER(address_line_1) LIKE :query OR LOWER(town_city) LIKE :query OR LOWER(county) LIKE :query OR LOWER(postcode) LIKE :query OR LOWER(property_description) LIKE :query',
           query: sanitized_query
         )
       end
@@ -187,7 +187,9 @@ class Property < ApplicationRecord
       listings = listings.where('bedrooms >= ?', filters[:min_bedrooms].to_i) if filters[:min_bedrooms].present?
       listings = listings.where('asking_price >= ?', filters[:min_price].to_i) if filters[:min_price].present?
       listings = listings.where('asking_price <= ?', filters[:max_price].to_i) if filters[:max_price].present?
-      listings = listings.where(town_city: filters[:town_city]) if filters[:town_city].present?
+      if filters[:town_city].present?
+        listings = listings.where("LOWER(town_city) = ?", filters[:town_city].to_s.downcase)
+      end
 
       case filters[:sort]
       when 'price_low'

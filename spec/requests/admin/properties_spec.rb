@@ -53,6 +53,20 @@ RSpec.describe "Admin properties", type: :request do
     expect(search_input["value"]).to eq("Taylor Cedar")
   end
 
+  it "treats q as case-insensitive" do
+    matching_user = FactoryBot.create(:user, first_name: "Taylor", last_name: "Stone", email: "taylor.stone@example.com")
+    matching_property = FactoryBot.create(:property, user: matching_user, address_line_1: "Cedar View")
+    non_matching_property = FactoryBot.create(:property, address_line_1: "Maple House")
+
+    get admin_properties_path, params: { q: "tAYlOr cEdAr" }
+
+    expect(response).to have_http_status(:ok)
+
+    card_ids = parsed_html.css('[data-testid^="admin-property-card-"]').map { |row| row["data-testid"] }
+    expect(card_ids).to include("admin-property-card-#{matching_property.id}")
+    expect(card_ids).not_to include("admin-property-card-#{non_matching_property.id}")
+  end
+
   it "shows an empty state when no properties match the search" do
     FactoryBot.create(:property, address_line_1: "Willow Lodge")
 
