@@ -32,7 +32,7 @@
       <% @properties.each do |property| %>
         <article class="<%= property_card_classes(property) %>" data-testid="admin-property-card-<%= property.id %>">
           <div class="property-card__body">
-            <p class="property-card__eyebrow"><%= property.user.full_name.presence || property.user.email %></p>
+            <p class="property-card__eyebrow"><%= property.seller_display_name %></p>
             <h3><%= property.address_line_1 %></h3>
             <p><%= property.headline %></p>
             <p><%= format_price(property) %> · <%= format_bedrooms(property) %></p>

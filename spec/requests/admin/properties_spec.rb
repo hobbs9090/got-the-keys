@@ -79,6 +79,17 @@ RSpec.describe "Admin properties", type: :request do
     expect(status_select.at_css('option[selected][value="review_pending"]')).to be_present
   end
 
+  it "keeps the index working when a property has no seller record" do
+    orphaned_property = FactoryBot.create(:property, address_line_1: "Orphaned House")
+    orphaned_property.update_column(:user_id, nil)
+
+    get admin_properties_path
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("Orphaned House")
+    expect(response.body).to include("Missing seller record")
+  end
+
   it "shows listing readiness and asset inventory on the admin detail page" do
     FactoryBot.create(:photo, property:, primary: true, image_filename: "admin-shot.jpg")
     FactoryBot.create(:floor_plan, property:, label: "Ground floor")
@@ -104,6 +115,17 @@ RSpec.describe "Admin properties", type: :request do
     expect(download_link).to be_present
     expect(download_link["data-turbo"]).to eq("false")
     expect(download_link["download"]).to eq("admin-brochure.pdf")
+  end
+
+  it "shows a fallback seller label on the admin detail page when the seller record is missing" do
+    orphaned_property = FactoryBot.create(:property, :review_pending, address_line_1: "Detached Support Case")
+    orphaned_property.update_column(:user_id, nil)
+
+    get admin_property_path(orphaned_property)
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("Detached Support Case")
+    expect(response.body).to include("Missing seller record")
   end
 
   it "lets admins move a listing through moderation states" do

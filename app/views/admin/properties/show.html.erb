@@ -19,7 +19,7 @@
     <h2><%= t("ui.admin.properties.show.summary_title") %></h2>
     <p><strong><%= @property.headline %></strong></p>
     <p><%= @property.property_description %></p>
-    <p><%= @property.user.full_name.presence || @property.user.email %> · <%= @property.user.email %></p>
+    <p><%= @property.seller_summary %></p>
     <p><span class="<%= listing_state_badge_class(@property.listing_state) %>"><%= translated_listing_state(@property.listing_state) %></span></p>
     <% if property_fact_rows(@property).any? %>
       <dl class="detail-list">

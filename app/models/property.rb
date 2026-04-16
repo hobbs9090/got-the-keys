@@ -256,6 +256,23 @@ class Property < ApplicationRecord
     primary_photo&.image_filename.presence || image_file_name
   end
 
+  def seller_display_name
+    seller = user
+    return I18n.t("ui.admin.properties.owner_missing", default: "Missing seller record") if seller.blank?
+
+    seller.full_name.presence || seller.email.presence || I18n.t("ui.admin.properties.owner_missing", default: "Missing seller record")
+  end
+
+  def seller_email
+    user&.email
+  end
+
+  def seller_summary
+    return seller_display_name if seller_email.blank? || seller_display_name == seller_email
+
+    "#{seller_display_name} · #{seller_email}"
+  end
+
   def persist_image_upload!
     return if image_upload.blank? || !persisted?
 
@@ -302,7 +319,7 @@ class Property < ApplicationRecord
       {
         key: :contact,
         label: I18n.t("ui.properties.seller.checks.contact"),
-        complete: user.email.present? && user.mobile_number.present?
+        complete: seller_email.present? && user&.mobile_number.present?
       }
     ]
   end
