@@ -58,6 +58,12 @@ describe "A property" do
     expect(property).not_to be_ready_for_review
   end
 
+  it "enforces a required seller at the database level" do
+    property = FactoryBot.create(:property, user:)
+
+    expect { property.update_column(:user_id, nil) }.to raise_error(ActiveRecord::NotNullViolation)
+  end
+
   it "requires a Address line 1" do
     property = build_property(address_line_1: "")
 

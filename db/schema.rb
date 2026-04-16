@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_15_173000) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_16_101500) do
   create_table "admins", force: :cascade do |t|
     t.integer "consumed_timestep"
     t.datetime "created_at", precision: nil
@@ -156,7 +156,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_15_173000) do
     t.string "floor_plans"
     t.string "label"
     t.integer "position", default: 0, null: false
-    t.integer "property_id"
+    t.integer "property_id", null: false
     t.datetime "updated_at", precision: nil
     t.index ["property_id", "position"], name: "index_floor_plans_on_property_id_and_position"
     t.index ["property_id"], name: "index_floor_plans_on_property_id"
@@ -220,7 +220,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_15_173000) do
     t.string "image_filename"
     t.integer "position", default: 0, null: false
     t.boolean "primary", default: false, null: false
-    t.integer "property_id"
+    t.integer "property_id", null: false
     t.datetime "updated_at", precision: nil
     t.index ["property_id", "position"], name: "index_photos_on_property_id_and_position"
     t.index ["property_id"], name: "index_photos_on_property_id"
@@ -258,7 +258,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_15_173000) do
     t.string "tenure"
     t.string "town_city"
     t.datetime "updated_at", precision: nil
-    t.integer "user_id"
+    t.integer "user_id", null: false
     t.integer "year_built"
     t.index ["available_from"], name: "index_properties_on_available_from"
     t.index ["bedrooms"], name: "index_properties_on_bedrooms"
@@ -386,7 +386,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_15_173000) do
   create_table "viewing_times", force: :cascade do |t|
     t.datetime "created_at", precision: nil
     t.datetime "end_time", precision: nil
-    t.integer "property_id"
+    t.integer "property_id", null: false
     t.datetime "start_time", precision: nil
     t.datetime "updated_at", precision: nil
     t.index ["property_id"], name: "index_viewing_times_on_property_id"
@@ -401,12 +401,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_15_173000) do
   add_foreign_key "availability_windows", "properties"
   add_foreign_key "enquiries", "admins"
   add_foreign_key "enquiries", "properties"
+  add_foreign_key "floor_plans", "properties"
   add_foreign_key "notification_logs", "appointments"
   add_foreign_key "notification_logs", "enquiries"
   add_foreign_key "offer_events", "admins"
   add_foreign_key "offer_events", "offers"
   add_foreign_key "offers", "admins"
   add_foreign_key "offers", "properties"
+  add_foreign_key "photos", "properties"
+  add_foreign_key "properties", "users"
   add_foreign_key "property_documents", "properties"
   add_foreign_key "rental_application_events", "admins"
   add_foreign_key "rental_application_events", "rental_applications"
@@ -415,4 +418,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_15_173000) do
   add_foreign_key "saved_properties", "properties"
   add_foreign_key "saved_properties", "users"
   add_foreign_key "saved_searches", "users"
+  add_foreign_key "viewing_times", "properties"
 end
