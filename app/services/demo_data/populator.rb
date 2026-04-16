@@ -86,7 +86,7 @@ module DemoData
       @logger = logger
       @blueprint_generator = blueprint_generator
       @enhancer = enhancer
-      @generated_user_count = 0
+      @generated_user_count = User.count
     end
 
     def populate!
@@ -125,8 +125,7 @@ module DemoData
     end
 
     def create_user
-      sequence = next_user_sequence
-      first_name, last_name = generated_name_for(sequence)
+      sequence, first_name, last_name = next_available_user_identity
 
       User.create!(
         first_name: first_name,
@@ -178,6 +177,16 @@ module DemoData
       sequence = @generated_user_count
       @generated_user_count += 1
       sequence
+    end
+
+    def next_available_user_identity
+      loop do
+        sequence = next_user_sequence
+        first_name, last_name = generated_name_for(sequence)
+        email = generated_email_for(first_name:, last_name:, sequence:)
+
+        return [sequence, first_name, last_name] unless User.exists?(email: email)
+      end
     end
 
     def generated_name_for(sequence)

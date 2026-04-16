@@ -56,7 +56,7 @@
               <section class="property-workspace-bookings__section">
                 <div class="property-workspace-bookings__header">
                   <p class="property-workspace-card__appointment-heading"><%= heading %></p>
-                  <span class="badge badge--neutral"><%= appointments.count %></span>
+                  <span class="badge badge--neutral"><%= display_number(appointments.count) %></span>
                 </div>
 
                 <% if appointments.any? %>

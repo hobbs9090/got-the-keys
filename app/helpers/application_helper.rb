@@ -75,6 +75,16 @@ module ApplicationHelper
     "#{formatted_calendar_date(value)} \u00b7 #{l(value, format: :time_only)}"
   end
 
+  def display_number(value)
+    return if value.blank? && value != 0
+
+    number_with_delimiter(value, delimiter: ",")
+  end
+
+  def translate_count(key, count, **options)
+    t(key, **options.merge(count:, display_count: display_number(count)))
+  end
+
   def appointment_slot_picker_payload(slots)
     slots
       .group_by { |slot| slot.starts_at.to_date }

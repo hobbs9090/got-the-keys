@@ -129,10 +129,10 @@ de:
       in_location: "%{property_type} in %{location}"
       bedroom_count:
         one: 1 Schlafzimmer
-        other: "%{count} Schlafzimmer"
+        other: "%{display_count} Schlafzimmer"
       bathroom_count:
         one: 1 Bad
-        other: "%{count} Bäder"
+        other: "%{display_count} Bäder"
       sale_statuses:
         for_sale: Zum Verkauf
         for_rent: Zur Miete
@@ -143,7 +143,7 @@ de:
           Sie dann direkt von der Objektseite eine Besichtigung.
         active_filter_count:
           one: 1 aktiver Filter
-          other: "%{count} aktive Filter"
+          other: "%{display_count} aktive Filter"
         overview_badge: Katalogübersicht
         matching_properties:
           one: passendes Objekt
@@ -162,7 +162,7 @@ de:
         results_eyebrow: Live-Ergebnisse
         results_title:
           one: 1 Objekt bereit zur Erkundung
-          other: "%{count} Objekte bereit zur Erkundung"
+          other: "%{display_count} Objekte bereit zur Erkundung"
         empty_copy: Der vollständige Katalog wird angezeigt. Verwenden Sie die Filterleiste,
           um nach Lage, Preis und Schlafzimmeranzahl einzugrenzen.
         saved_search:
@@ -183,7 +183,7 @@ de:
           view_matches:
             zero: Keine passenden Inserate
             one: 1 passendes Inserat anzeigen
-            other: "%{count} passende Inserate anzeigen"
+            other: "%{display_count} passende Inserate anzeigen"
           remove: Entfernen
           saved_at: "Gespeichert %{time}"
           alerts_on: Benachrichtigungen an
@@ -207,7 +207,7 @@ de:
         apply: Filter anwenden
         save_filter: Filter speichern
         search_chip: 'Suche: %{query}'
-        min_bedrooms_chip: "%{count}+ Schlafzimmer"
+        min_bedrooms_chip: "%{display_count}+ Schlafzimmer"
         min_price_chip: Ab %{price}
         max_price_chip: Bis %{price}
         min_monthly_rental_chip: Monatsmiete ab %{price}
@@ -259,7 +259,7 @@ de:
           Einzugstermin und Ihre Finanzierungsnotizen mit.
         rental_application_cta: Mietantrag starten
         seller_title: Verkäuferbereich
-        readiness_summary: vollständig · %{score}/%{total} Bereitschaftspunkte erledigt
+        readiness_summary: vollständig · %{display_score}/%{display_total} Bereitschaftspunkte erledigt
         done: Erledigt
         needed: Offen
         edit_listing: Inserat bearbeiten
@@ -302,8 +302,8 @@ de:
         list_title: Ihre Inserate
         list_blurb: Entwürfe und Live-Inserate, an denen Sie arbeiten, werden hier für schnellen Zugriff angezeigt.
         total_label:
-          one: "%{count} gespeichertes Inserat"
-          other: "%{count} gespeicherte Inserate"
+          one: "%{display_count} gespeichertes Inserat"
+          other: "%{display_count} gespeicherte Inserate"
         state_summary: "%{drafts} Entwurf oder in Prüfung · %{live} live"
         open_details: Details öffnen
         visibility_live: Auf der öffentlichen Website sichtbar.
@@ -461,7 +461,7 @@ de:
         summary_title: Buchungsübersicht
         duration_minutes:
           one: 1 Minute
-          other: "%{count} Minuten"
+          other: "%{display_count} Minuten"
         timeline_title: Statusverlauf
         visit_outcome: Besuchsergebnis
         manage_title: Ihre Besichtigung verwalten
@@ -528,7 +528,7 @@ de:
         index:
           appointment_count:
             one: 1 Buchung
-            other: "%{count} Buchungen"
+            other: "%{display_count} Buchungen"
           eyebrow: Kundenverzeichnis für Buchungen
           no_results: Es gibt noch keine Kunden mit Buchungen.
           search:
@@ -889,7 +889,7 @@ de:
             clear: Zurücksetzen
           appointment_count:
             one: 1 Termin
-            other: "%{count} Termine"
+            other: "%{display_count} Termine"
           open: Öffnen
         show:
           title: Objekt %{address}
@@ -935,7 +935,7 @@ de:
             clear: Zurücksetzen
           property_count:
             one: 1 Objekt
-            other: "%{count} Objekte"
+            other: "%{display_count} Objekte"
         show:
           title: Verkäufer %{name}
           eyebrow: Verkäuferprofil
@@ -944,7 +944,7 @@ de:
           properties: Objekte
           listing_count:
             one: 1 Inserat
-            other: "%{count} Inserate"
+            other: "%{display_count} Inserate"
           listings_title: Inserate und Status
           no_properties: Dieser Verkäufer hat noch keine Inserate erstellt.
           recent_booking_activity_title: Letzte Buchungsaktivität
@@ -1210,7 +1210,7 @@ de:
     saved_searches:
       notice:
         one: Gespeicherte Suche für 1 passendes Inserat erstellt.
-        other: Gespeicherte Suche für %{count} passende Inserate erstellt.
+        other: Gespeicherte Suche für %{display_count} passende Inserate erstellt.
       destroyed: Gespeicherte Suche entfernt.
       validation:
         max_price: muss größer oder gleich dem Mindestpreis sein

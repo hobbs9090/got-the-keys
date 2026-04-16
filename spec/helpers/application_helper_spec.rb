@@ -99,6 +99,12 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
+  describe "#display_number" do
+    it "formats numbers with comma delimiters" do
+      expect(helper.display_number(1234567)).to eq("1,234,567")
+    end
+  end
+
   describe "#appointment_slot_picker_calendar_months" do
     it "builds consecutive month grids across month boundaries" do
       picker_slots = [

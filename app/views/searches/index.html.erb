@@ -9,7 +9,7 @@
 
   <div class="page-hero__meta">
     <strong><%= number_with_delimiter(@number_search_results.count, delimiter: ",") %></strong>
-    <span><%= t("ui.search.results_count", count: @number_search_results.count) %></span>
+    <span><%= translate_count("ui.search.results_count", @number_search_results.count) %></span>
   </div>
 </section>
 

@@ -16,6 +16,48 @@ zh:
           update: Update
   ui:
     admin:
+      demo_data:
+        actions:
+          populate: Appended performance data
+        performance_seed:
+          ai_modes:
+            auto: Auto
+            'off': 'Off'
+            'on': 'On'
+          description: Use this to append a large volume of generated sellers and properties without resetting the baseline dataset.
+          eyebrow: Performance data
+          field_help:
+            ai_mode: Off skips OpenAI, Auto enables it only when an API key is present, and On requires it.
+            batch_size: How many property blueprints to send per AI enrichment batch.
+            model: The OpenAI model to use when AI enrichment runs.
+            password: Every generated seller account uses this password.
+            property_count: Creates this many additional properties and distributes ownership across the generated sellers.
+            user_count: Creates this many additional seller accounts.
+          fields:
+            ai_mode: AI enrichment mode
+            batch_size: AI batch size
+            model: AI model
+            password: Generated user password
+            property_count: Properties to add
+            user_count: Users to add
+          instructions:
+          - This action appends demo users and properties to the current database. It does not reset the baseline scenario first.
+          - Set the exact user and property counts you want to add. User count accepts any positive number, so you can scale to match the performance run you are planning.
+          - The password you enter will be applied to every generated seller account.
+          - For the fastest large run, keep AI mode set to Off. Auto and On may call OpenAI depending on server configuration.
+          - AI mode On requires OPENAI_API_KEY to be configured on the server. Batch size and model only affect AI-enriched runs.
+          instructions_title: Instructions
+          parameters_title: Parameters
+          password_summary: Uses the password entered when the job was run.
+          submit: Add performance data
+          title: Append performance test data
+          validation:
+            ai_mode: AI enrichment mode must be Off, Auto, or On.
+            integer: "%{field} must be a whole number."
+            integer_minimum: "%{field} must be %{minimum} or greater."
+            required: "%{field} cannot be blank."
+      flash:
+        populated_performance_demo_data: Added %{users} users and %{properties} properties for performance testing.
       properties:
         index:
           search:

@@ -91,7 +91,7 @@
       <article class="admin-calendar-day">
         <header>
           <strong><%= l(day, format: :calendar_day) %></strong>
-          <span><%= t("ui.admin.appointments.bookings_count", count: @appointments_by_day.fetch(day, []).count) %></span>
+          <span><%= translate_count("ui.admin.appointments.bookings_count", @appointments_by_day.fetch(day, []).count) %></span>
         </header>
         <div class="admin-calendar-day__body">
           <% @appointments_by_day.fetch(day, []).first(@view_mode == "month" ? 4 : 12).each do |appointment| %>

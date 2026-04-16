@@ -131,10 +131,10 @@ fr:
       in_location: "%{property_type} a %{location}"
       bedroom_count:
         one: 1 chambre
-        other: "%{count} chambres"
+        other: "%{display_count} chambres"
       bathroom_count:
         one: 1 salle de bain
-        other: "%{count} salles de bain"
+        other: "%{display_count} salles de bain"
       sale_statuses:
         for_sale: A vendre
         for_rent: A louer
@@ -146,7 +146,7 @@ fr:
           une visite depuis chaque fiche.
         active_filter_count:
           one: 1 filtre actif
-          other: "%{count} filtres actifs"
+          other: "%{display_count} filtres actifs"
         overview_badge: Vue d'ensemble du catalogue
         matching_properties:
           one: bien correspondant
@@ -165,7 +165,7 @@ fr:
         results_eyebrow: Resultats en direct
         results_title:
           one: 1 bien pret a explorer
-          other: "%{count} biens prets a explorer"
+          other: "%{display_count} biens prets a explorer"
         empty_copy: Le catalogue complet est affiche. Utilisez le panneau de filtres
           pour affiner par lieu, prix et nombre de chambres.
         saved_search:
@@ -186,7 +186,7 @@ fr:
           view_matches:
             zero: Aucune annonce correspondante
             one: Voir 1 annonce correspondante
-            other: "Voir %{count} annonces correspondantes"
+            other: "Voir %{display_count} annonces correspondantes"
           remove: Supprimer
           saved_at: "Enregistré %{time}"
           alerts_on: Alertes activées
@@ -210,7 +210,7 @@ fr:
         apply: Appliquer les filtres
         save_filter: Enregistrer le filtre
         search_chip: 'Recherche : %{query}'
-        min_bedrooms_chip: "%{count}+ chambres"
+        min_bedrooms_chip: "%{display_count}+ chambres"
         min_price_chip: A partir de %{price}
         max_price_chip: Jusqu'a %{price}
         min_monthly_rental_chip: Loyer mensuel a partir de %{price}
@@ -263,7 +263,7 @@ fr:
           de solvabilite avec l equipe location.
         rental_application_cta: Demarrer le dossier locatif
         seller_title: Espace vendeur
-        readiness_summary: complet · %{score}/%{total} controles effectues
+        readiness_summary: complet · %{display_score}/%{display_total} controles effectues
         done: Fait
         needed: A faire
         edit_listing: Modifier l'annonce
@@ -307,8 +307,8 @@ fr:
         list_title: Vos annonces
         list_blurb: Les annonces en brouillon et en ligne sur lesquelles vous travaillez s affichent ici pour un acces rapide.
         total_label:
-          one: "%{count} annonce enregistree"
-          other: "%{count} annonces enregistrees"
+          one: "%{display_count} annonce enregistree"
+          other: "%{display_count} annonces enregistrees"
         state_summary: "%{drafts} brouillon ou en validation - %{live} en ligne"
         open_details: Ouvrir les details
         visibility_live: Visible sur le site public.
@@ -465,7 +465,7 @@ fr:
         summary_title: Resume de la reservation
         duration_minutes:
           one: 1 minute
-          other: "%{count} minutes"
+          other: "%{display_count} minutes"
         timeline_title: Chronologie du statut
         visit_outcome: Resultat de la visite
         manage_title: Gerer votre visite
@@ -532,7 +532,7 @@ fr:
         index:
           appointment_count:
             one: 1 reservation
-            other: "%{count} reservations"
+            other: "%{display_count} reservations"
           eyebrow: Repertoire des clients ayant des reservations
           no_results: Aucun client avec reservation pour le moment.
           search:
@@ -893,7 +893,7 @@ fr:
             clear: Effacer
           appointment_count:
             one: 1 rendez-vous
-            other: "%{count} rendez-vous"
+            other: "%{display_count} rendez-vous"
           open: Ouvrir
         show:
           title: Bien %{address}
@@ -939,7 +939,7 @@ fr:
             clear: Effacer
           property_count:
             one: 1 bien
-            other: "%{count} biens"
+            other: "%{display_count} biens"
         show:
           title: Vendeur %{name}
           eyebrow: Profil vendeur
@@ -948,7 +948,7 @@ fr:
           properties: Biens
           listing_count:
             one: 1 annonce
-            other: "%{count} annonces"
+            other: "%{display_count} annonces"
           listings_title: Annonces et statuts
           no_properties: Ce vendeur n'a pas encore cree d'annonces.
           recent_booking_activity_title: Activite recente des reservations
@@ -1220,7 +1220,7 @@ fr:
     saved_searches:
       notice:
         one: Recherche enregistree creee pour 1 annonce correspondante.
-        other: Recherche enregistree creee pour %{count} annonces correspondantes.
+        other: Recherche enregistree creee pour %{display_count} annonces correspondantes.
       destroyed: Recherche enregistree supprimee.
       validation:
         max_price: doit etre superieur ou egal au prix minimum

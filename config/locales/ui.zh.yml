@@ -120,10 +120,10 @@ zh:
       in_location: "%{location} 的 %{property_type}"
       bedroom_count:
         one: 1 间卧室
-        other: "%{count} 间卧室"
+        other: "%{display_count} 间卧室"
       bathroom_count:
         one: 1 间浴室
-        other: "%{count} 间浴室"
+        other: "%{display_count} 间浴室"
       sale_statuses:
         for_sale: 出售
         for_rent: 出租
@@ -133,7 +133,7 @@ zh:
         hero_body: 按区域、价格和卧室数量搜索，然后直接从房源详情页预约看房。
         active_filter_count:
           one: 1 个筛选条件
-          other: "%{count} 个筛选条件"
+          other: "%{display_count} 个筛选条件"
         overview_badge: 目录概览
         matching_properties:
           one: 条匹配房源
@@ -150,7 +150,7 @@ zh:
         results_eyebrow: 实时结果
         results_title:
           one: 1 套房源可供查看
-          other: "%{count} 套房源可供查看"
+          other: "%{display_count} 套房源可供查看"
         empty_copy: 当前显示完整目录。使用筛选面板按位置、价格和卧室数量缩小范围。
         saved_search:
           eyebrow: 保持关注
@@ -168,7 +168,7 @@ zh:
           view_matches:
             zero: 暂无匹配房源
             one: 查看 1 条匹配房源
-            other: "查看 %{count} 条匹配房源"
+            other: "查看 %{display_count} 条匹配房源"
           remove: 删除
           saved_at: "保存于 %{time}"
           alerts_on: 提醒已开启
@@ -192,7 +192,7 @@ zh:
         apply: 应用筛选
         save_filter: 保存筛选
         search_chip: 搜索：%{query}
-        min_bedrooms_chip: "%{count}+ 间卧室"
+        min_bedrooms_chip: "%{display_count}+ 间卧室"
         min_price_chip: "%{price} 起"
         max_price_chip: 最高 %{price}
         min_monthly_rental_chip: 月租 %{price} 起
@@ -238,7 +238,7 @@ zh:
         rental_application_body: 向租赁团队说明你计划入住的时间和支付能力说明。
         rental_application_cta: 开始租房申请
         seller_title: 业主工作区
-        readiness_summary: 已完成 · %{score}/%{total} 项准备检查
+        readiness_summary: 已完成 · %{display_score}/%{display_total} 项准备检查
         done: 完成
         needed: 需要
         edit_listing: 编辑房源
@@ -278,8 +278,8 @@ zh:
         list_title: 你的房源
         list_blurb: 你正在处理的草稿和已上线房源会显示在这里，方便你快速返回。
         total_label:
-          one: "%{count} 套已保存房源"
-          other: "%{count} 套已保存房源"
+          one: "%{display_count} 套已保存房源"
+          other: "%{display_count} 套已保存房源"
         state_summary: "%{drafts} 套草稿或审核中 · %{live} 套已上线"
         open_details: 打开详情
         visibility_live: 已在公开网站展示。
@@ -425,7 +425,7 @@ zh:
         summary_title: 预约摘要
         duration_minutes:
           one: 1 分钟
-          other: "%{count} 分钟"
+          other: "%{display_count} 分钟"
         timeline_title: 状态时间线
         visit_outcome: 看房结果
         manage_title: 管理你的看房
@@ -491,7 +491,7 @@ zh:
         index:
           appointment_count:
             one: 1 条预约
-            other: "%{count} 条预约"
+            other: "%{display_count} 条预约"
           eyebrow: 客户预约目录
           no_results: 目前还没有任何有预约的客户。
           search:
@@ -720,7 +720,7 @@ zh:
         cancel: 取消
         bookings_count:
           one: 1 个预约
-          other: "%{count} 个预约"
+          other: "%{display_count} 个预约"
         show:
           title: 预约 %{reference}
           eyebrow: 预约详情
@@ -876,7 +876,7 @@ zh:
             clear: 清除
           appointment_count:
             one: 1 个预约
-            other: "%{count} 个预约"
+            other: "%{display_count} 个预约"
           open: 打开
         show:
           title: 房源 %{address}
@@ -921,7 +921,7 @@ zh:
             clear: 清除
           property_count:
             one: 1 套房源
-            other: "%{count} 套房源"
+            other: "%{display_count} 套房源"
         show:
           title: 卖家 %{name}
           eyebrow: 卖家资料
@@ -930,7 +930,7 @@ zh:
           properties: 房源
           listing_count:
             one: 1 个房源
-            other: "%{count} 个房源"
+            other: "%{display_count} 个房源"
           listings_title: 房源与状态
           no_properties: 这位卖家还没有创建任何房源。
           recent_booking_activity_title: 最近预约活动
@@ -1185,7 +1185,7 @@ zh:
     saved_searches:
       notice:
         one: 已创建保存搜索，匹配 1 套房源。
-        other: 已创建保存搜索，匹配 %{count} 套房源。
+        other: 已创建保存搜索，匹配 %{display_count} 套房源。
       destroyed: 已删除保存的搜索。
       validation:
         max_price: 必须大于或等于最低价格

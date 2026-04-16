@@ -79,6 +79,63 @@ RSpec.describe "Admin properties", type: :request do
     expect(status_select.at_css('option[selected][value="review_pending"]')).to be_present
   end
 
+  it "shows saved filters at the top of the admin properties page" do
+    owner_user = FactoryBot.create(:user, email: admin.email)
+    saved_search = FactoryBot.create(:saved_search, user: owner_user, town_city: "Sevenoaks", min_bedrooms: 3, alerts_enabled: true)
+    stale_search = FactoryBot.create(:saved_search, user: owner_user, town_city: "Old Town", alerts_enabled: true)
+    stale_search.update_column(:created_at, 6.months.ago)
+    disabled_search = FactoryBot.create(:saved_search, user: owner_user, town_city: "Disabled Town", alerts_enabled: false)
+    other_user_search = FactoryBot.create(:saved_search, town_city: "Other User Town", alerts_enabled: true)
+
+    get admin_properties_path
+
+    expect(response).to have_http_status(:ok)
+
+    panel = parsed_html.at_css('[data-testid="admin-saved-filters-panel"]')
+    expect(panel).to be_present
+    expect(parsed_html.css('[data-testid="admin-saved-filter-card"]').count).to eq(1)
+
+    apply_link = parsed_html.at_css(%([data-testid="admin-apply-saved-filter-#{saved_search.id}"]))
+    expect(apply_link).to be_present
+    expect(apply_link["href"]).to include("town_city=Sevenoaks")
+    expect(apply_link["href"]).to include("min_bedrooms=3")
+    remove_button = parsed_html.at_css(%(form button[data-testid="admin-remove-saved-filter-#{saved_search.id}"]))
+    expect(remove_button).to be_present
+    expect(parsed_html.at_css(%([data-testid="admin-apply-saved-filter-#{stale_search.id}"]))).not_to be_present
+    expect(parsed_html.at_css(%([data-testid="admin-apply-saved-filter-#{disabled_search.id}"]))).not_to be_present
+    expect(parsed_html.at_css(%([data-testid="admin-apply-saved-filter-#{other_user_search.id}"]))).not_to be_present
+  end
+
+  it "applies saved filter params on the admin properties index" do
+    FactoryBot.create(
+      :property,
+      address_line_1: "Filter Match House",
+      town_city: "Sevenoaks",
+      bedrooms: 4,
+      asking_price: 650_000,
+      sale_status: Property::SALE_STATUSES[:for_sale]
+    )
+    FactoryBot.create(
+      :property,
+      address_line_1: "Filtered Out Rental",
+      town_city: "Sevenoaks",
+      bedrooms: 4,
+      asking_price: 2_100,
+      sale_status: Property::SALE_STATUSES[:for_rent]
+    )
+
+    get admin_properties_path, params: {
+      sale_status: Property::SALE_STATUSES[:for_sale],
+      town_city: "Sevenoaks",
+      min_bedrooms: 4,
+      min_price: 600_000
+    }
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("Filter Match House")
+    expect(response.body).not_to include("Filtered Out Rental")
+  end
+
   it "shows listing readiness and asset inventory on the admin detail page" do
     FactoryBot.create(:photo, property:, primary: true, image_filename: "admin-shot.jpg")
     FactoryBot.create(:floor_plan, property:, label: "Ground floor")

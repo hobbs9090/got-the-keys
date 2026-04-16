@@ -9,7 +9,7 @@
 
   <div class="page-hero__meta">
     <strong><%= number_with_delimiter(@total_for_sale, delimiter: ",") %></strong>
-    <span><%= t("ui.for_sale.count_label", count: @total_for_sale) %></span>
+    <span><%= translate_count("ui.for_sale.count_label", @total_for_sale) %></span>
   </div>
 </section>
 

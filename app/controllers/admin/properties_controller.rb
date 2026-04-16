@@ -4,6 +4,12 @@ class Admin::PropertiesController < Admin::BaseController
   def index
     @query = params[:q].to_s.squish
     @listing_state = params[:listing_state].presence_in(Property::LISTING_STATES)
+    @sale_status = params[:sale_status].presence_in(Property::SALE_STATUS)
+    @town_city = params[:town_city].to_s.squish.presence
+    @min_bedrooms = normalize_integer_param(params[:min_bedrooms])
+    @min_price = normalize_integer_param(params[:min_price])
+    @max_price = normalize_integer_param(params[:max_price])
+    @saved_searches = personal_saved_searches
     @properties = filtered_properties
       .recommended_order
       .preload(:user, :appointments, :photos, :floor_plans)
@@ -71,6 +77,11 @@ class Admin::PropertiesController < Admin::BaseController
   def filtered_properties
     scope = Property.left_joins(:user).distinct
     scope = scope.where(listing_state: @listing_state) if @listing_state.present?
+    scope = scope.where(sale_status: @sale_status) if @sale_status.present?
+    scope = scope.where("LOWER(properties.town_city) = ?", @town_city.downcase) if @town_city.present?
+    scope = scope.where("properties.bedrooms >= ?", @min_bedrooms) if @min_bedrooms.present?
+    scope = scope.where("properties.asking_price >= ?", @min_price) if @min_price.present?
+    scope = scope.where("properties.asking_price <= ?", @max_price) if @max_price.present?
     return scope if @query.blank?
 
     @query.split.each do |term|
@@ -96,5 +107,32 @@ class Admin::PropertiesController < Admin::BaseController
     end
 
     scope
+  end
+
+  def personal_saved_searches
+    owner = saved_search_owner_user
+    return SavedSearch.none if owner.blank?
+
+    owner.saved_searches
+      .includes(:user)
+      .where(alerts_enabled: true)
+      .where("saved_searches.created_at >= ?", 90.days.ago)
+      .order(created_at: :desc)
+      .limit(12)
+  end
+
+  def saved_search_owner_user
+    return current_user if current_user.present?
+    return if current_admin.blank?
+
+    User.find_by(email: current_admin.email)
+  end
+
+  def normalize_integer_param(value)
+    normalized = value.to_s.gsub(/[,\s]/, "")
+    return if normalized.blank?
+    return unless normalized.match?(/\A\d+\z/)
+
+    normalized.to_i
   end
 end

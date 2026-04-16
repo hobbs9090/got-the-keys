@@ -31,7 +31,7 @@
       </div>
       <div>
         <dt><%= t("ui.common.duration") %></dt>
-        <dd><%= t("ui.appointments.show.duration_minutes", count: @appointment.duration_minutes) %></dd>
+        <dd><%= translate_count("ui.appointments.show.duration_minutes", @appointment.duration_minutes) %></dd>
       </div>
       <% if @appointment.visit_outcome.present? %>
         <div>

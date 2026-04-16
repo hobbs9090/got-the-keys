@@ -129,10 +129,10 @@ it:
       in_location: "%{property_type} a %{location}"
       bedroom_count:
         one: 1 camera
-        other: "%{count} camere"
+        other: "%{display_count} camere"
       bathroom_count:
         one: 1 bagno
-        other: "%{count} bagni"
+        other: "%{display_count} bagni"
       sale_statuses:
         for_sale: In vendita
         for_rent: In affitto
@@ -144,7 +144,7 @@ it:
           dalla pagina di ogni immobile.
         active_filter_count:
           one: 1 filtro attivo
-          other: "%{count} filtri attivi"
+          other: "%{display_count} filtri attivi"
         overview_badge: Panoramica catalogo
         matching_properties:
           one: immobile corrispondente
@@ -163,7 +163,7 @@ it:
         results_eyebrow: Risultati in tempo reale
         results_title:
           one: 1 immobile pronto da esplorare
-          other: "%{count} immobili pronti da esplorare"
+          other: "%{display_count} immobili pronti da esplorare"
         empty_copy: Stai visualizzando l'intero catalogo. Usa il pannello filtri per
           restringere per posizione, prezzo e numero di camere.
         saved_search:
@@ -183,7 +183,7 @@ it:
           view_matches:
             zero: Nessun annuncio corrispondente
             one: Vedi 1 annuncio corrispondente
-            other: "Vedi %{count} annunci corrispondenti"
+            other: "Vedi %{display_count} annunci corrispondenti"
           remove: Rimuovi
           saved_at: "Salvato %{time}"
           alerts_on: Avvisi attivi
@@ -207,7 +207,7 @@ it:
         apply: Applica filtri
         save_filter: Salva filtro
         search_chip: 'Ricerca: %{query}'
-        min_bedrooms_chip: "%{count}+ camere"
+        min_bedrooms_chip: "%{display_count}+ camere"
         min_price_chip: Da %{price}
         max_price_chip: Fino a %{price}
         min_monthly_rental_chip: Affitto mensile da %{price}
@@ -260,7 +260,7 @@ it:
           desiderata e le note di sostenibilita.
         rental_application_cta: Avvia domanda di affitto
         seller_title: Area venditore
-        readiness_summary: completo · %{score}/%{total} controlli completati
+        readiness_summary: completo · %{display_score}/%{display_total} controlli completati
         done: Fatto
         needed: Da fare
         edit_listing: Modifica annuncio
@@ -303,8 +303,8 @@ it:
         list_title: I tuoi annunci
         list_blurb: Le bozze e gli annunci online su cui stai lavorando compaiono qui per un accesso rapido.
         total_label:
-          one: "%{count} annuncio salvato"
-          other: "%{count} annunci salvati"
+          one: "%{display_count} annuncio salvato"
+          other: "%{display_count} annunci salvati"
         state_summary: "%{drafts} bozza o in revisione - %{live} online"
         open_details: Apri dettagli
         visibility_live: Visibile sul sito pubblico.
@@ -461,7 +461,7 @@ it:
         summary_title: Riepilogo prenotazione
         duration_minutes:
           one: 1 minuto
-          other: "%{count} minuti"
+          other: "%{display_count} minuti"
         timeline_title: Cronologia dello stato
         visit_outcome: Esito visita
         manage_title: Gestisci la tua visita
@@ -526,7 +526,7 @@ it:
         index:
           appointment_count:
             one: 1 prenotazione
-            other: "%{count} prenotazioni"
+            other: "%{display_count} prenotazioni"
           eyebrow: Elenco clienti con prenotazioni
           no_results: Non ci sono ancora clienti con prenotazioni.
           search:
@@ -887,7 +887,7 @@ it:
             clear: Cancella
           appointment_count:
             one: 1 appuntamento
-            other: "%{count} appuntamenti"
+            other: "%{display_count} appuntamenti"
           open: Apri
         show:
           title: Immobile %{address}
@@ -933,7 +933,7 @@ it:
             clear: Cancella
           property_count:
             one: 1 immobile
-            other: "%{count} immobili"
+            other: "%{display_count} immobili"
         show:
           title: Venditore %{name}
           eyebrow: Profilo venditore
@@ -942,7 +942,7 @@ it:
           properties: Immobili
           listing_count:
             one: 1 annuncio
-            other: "%{count} annunci"
+            other: "%{display_count} annunci"
           listings_title: Annunci e stato
           no_properties: Questo venditore non ha ancora creato annunci.
           recent_booking_activity_title: Attivita recenti di prenotazione
@@ -1208,7 +1208,7 @@ it:
     saved_searches:
       notice:
         one: Ricerca salvata creata per 1 annuncio corrispondente.
-        other: Ricerca salvata creata per %{count} annunci corrispondenti.
+        other: Ricerca salvata creata per %{display_count} annunci corrispondenti.
       destroyed: Ricerca salvata rimossa.
       validation:
         max_price: deve essere maggiore o uguale al prezzo minimo

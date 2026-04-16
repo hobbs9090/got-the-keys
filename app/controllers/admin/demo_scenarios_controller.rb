@@ -2,10 +2,17 @@ class Admin::DemoScenariosController < Admin::BaseController
   before_action :load_scenario_loader
   before_action :ensure_baseline_admin_scenario!, only: %i[show apply]
 
+  PERFORMANCE_SEED_DEFAULTS = {
+    user_count: DemoData::Populator::DEFAULT_USER_COUNT,
+    property_count: DemoData::Populator::DEFAULT_PROPERTY_COUNT,
+    password: "secret",
+    ai_mode: "off",
+    batch_size: DemoData::Populator::DEFAULT_BATCH_SIZE,
+    model: DemoData::OpenaiPropertyEnhancer::DEFAULT_MODEL
+  }.freeze
+
   def index
-    @baseline_scenario = @scenario_loader.preview("baseline")
-    @latest_run = DemoScenarioRun.recent_first.first
-    @diagnostics = diagnostics_payload
+    load_dashboard_state
   end
 
   def show
@@ -27,6 +34,45 @@ class Admin::DemoScenariosController < Admin::BaseController
     redirect_to admin_demo_scenarios_path, notice: t("ui.admin.flash.restored_baseline_demo_scenario", name: summary.fetch(:name))
   rescue StandardError => error
     redirect_to admin_demo_scenarios_path, alert: error.message
+  end
+
+  def populate_performance
+    form = normalized_performance_seed_form
+    summary = DemoData::Populator.new(
+      user_count: form.fetch(:user_count),
+      property_count: form.fetch(:property_count),
+      password: form.fetch(:password),
+      ai_mode: DemoData::Populator.ai_mode_from_env(form.fetch(:ai_mode)),
+      batch_size: form.fetch(:batch_size),
+      model: form.fetch(:model),
+      logger: Rails.logger
+    ).populate!
+
+    DemoScenarioRun.create!(
+      scenario_key: BookingConfiguration.current.active_demo_scenario_key,
+      action_type: "populate",
+      initiated_by_email: current_admin.email,
+      source: "populate",
+      summary_data: {
+        users_added: summary.fetch(:users_used),
+        properties_added: summary.fetch(:properties_created),
+        total_user_count: User.count,
+        total_property_count: Property.count,
+        password_hint: t("ui.admin.demo_data.performance_seed.password_summary", default: "Uses the password entered when the job was run."),
+        ai_mode: summary.fetch(:ai_mode).to_s,
+        model: summary.fetch(:model) || form.fetch(:model),
+        batch_size: form.fetch(:batch_size)
+      }
+    )
+
+    redirect_to(
+      admin_demo_scenarios_path,
+      notice: t("ui.admin.flash.populated_performance_demo_data", users: summary.fetch(:users_used), properties: summary.fetch(:properties_created))
+    )
+  rescue StandardError => error
+    load_dashboard_state(form_values: performance_seed_form_values)
+    flash.now[:alert] = error.message
+    render :index, status: :unprocessable_content
   end
 
   def import
@@ -59,6 +105,13 @@ class Admin::DemoScenariosController < Admin::BaseController
 
   private
 
+  def load_dashboard_state(form_values: nil)
+    @baseline_scenario = @scenario_loader.preview("baseline")
+    @latest_run = DemoScenarioRun.recent_first.first
+    @diagnostics = diagnostics_payload
+    @performance_seed_form = PERFORMANCE_SEED_DEFAULTS.merge(form_values || {})
+  end
+
   def load_scenario_loader
     @scenario_loader = DemoData::ScenarioLoader.new
   end
@@ -84,6 +137,51 @@ class Admin::DemoScenariosController < Admin::BaseController
       mail_delivery_mode: ActionMailer::Base.delivery_method.to_s,
       job_adapter: ActiveJob::Base.queue_adapter.class.name.demodulize.underscore
     }
+  end
+
+  def performance_seed_form_values
+    params.fetch(:performance_seed, {}).permit(:user_count, :property_count, :password, :ai_mode, :batch_size, :model).to_h.symbolize_keys
+  end
+
+  def normalized_performance_seed_form
+    values = PERFORMANCE_SEED_DEFAULTS.merge(performance_seed_form_values)
+
+    {
+      user_count: normalized_integer!(values[:user_count], field: :user_count, minimum: 1),
+      property_count: normalized_integer!(values[:property_count], field: :property_count, minimum: 0),
+      password: normalized_string!(values[:password], field: :password),
+      ai_mode: normalized_ai_mode!(values[:ai_mode]),
+      batch_size: normalized_integer!(values[:batch_size], field: :batch_size, minimum: 1),
+      model: normalized_string!(values[:model], field: :model)
+    }
+  end
+
+  def normalized_integer!(value, field:, minimum:)
+    integer = Integer(value)
+  rescue ArgumentError, TypeError
+    raise ArgumentError, t("ui.admin.demo_data.performance_seed.validation.integer", field: performance_seed_field_label(field))
+  else
+    raise ArgumentError, t("ui.admin.demo_data.performance_seed.validation.integer_minimum", field: performance_seed_field_label(field), minimum:) if integer < minimum
+
+    integer
+  end
+
+  def normalized_string!(value, field:)
+    string = value.to_s.strip
+    raise ArgumentError, t("ui.admin.demo_data.performance_seed.validation.required", field: performance_seed_field_label(field)) if string.blank?
+
+    string
+  end
+
+  def normalized_ai_mode!(value)
+    mode = value.to_s.strip.downcase
+    return mode if %w[off auto on].include?(mode)
+
+    raise ArgumentError, t("ui.admin.demo_data.performance_seed.validation.ai_mode")
+  end
+
+  def performance_seed_field_label(field)
+    t("ui.admin.demo_data.performance_seed.fields.#{field}")
   end
 
   def reject_unconfirmed_demo_scenario!(scenario)

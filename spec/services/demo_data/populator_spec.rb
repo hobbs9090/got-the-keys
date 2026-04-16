@@ -39,4 +39,14 @@ RSpec.describe DemoData::Populator do
     expect(generated_users.map(&:email)).to all(match(/\A[a-z]+(?:\.[a-z]+)+@(?:gmail|outlook|icloud|btinternet)\.example\z/))
     expect(generated_users.map(&:mobile_number)).to all(match(/\A07700 \d{6}\z/))
   end
+
+  it 'can append generated users across multiple runs without reusing emails' do
+    first_result = described_class.new(user_count: 2, property_count: 0, ai_mode: :off).populate!
+    second_result = described_class.new(user_count: 2, property_count: 0, ai_mode: :off).populate!
+    generated_users = User.order(:id).last(4)
+
+    expect(first_result[:users_used]).to eq(2)
+    expect(second_result[:users_used]).to eq(2)
+    expect(generated_users.map(&:email).uniq.size).to eq(4)
+  end
 end

@@ -1,5 +1,5 @@
 class DemoScenarioRun < ApplicationRecord
-  ACTION_TYPES = %w[apply restore import export].freeze
+  ACTION_TYPES = %w[apply restore import export populate].freeze
 
   validates :action_type, inclusion: { in: ACTION_TYPES }
 

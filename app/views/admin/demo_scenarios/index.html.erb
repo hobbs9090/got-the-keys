@@ -43,6 +43,81 @@
   </div>
 </section>
 
+<section class="admin-panel" data-testid="performance-seed-panel">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow"><%= t("ui.admin.demo_data.performance_seed.eyebrow") %></p>
+      <h2><%= t("ui.admin.demo_data.performance_seed.title") %></h2>
+      <p><%= t("ui.admin.demo_data.performance_seed.description") %></p>
+    </div>
+  </div>
+
+  <div class="admin-grid admin-grid--split">
+    <article class="admin-panel">
+      <h3><%= t("ui.admin.demo_data.performance_seed.instructions_title") %></h3>
+      <ol>
+        <% t("ui.admin.demo_data.performance_seed.instructions").each do |instruction| %>
+          <li><%= instruction %></li>
+        <% end %>
+      </ol>
+    </article>
+
+    <article class="admin-panel">
+      <h3><%= t("ui.admin.demo_data.performance_seed.parameters_title") %></h3>
+      <dl class="detail-list">
+        <% %i[user_count property_count password ai_mode batch_size model].each do |field| %>
+          <div>
+            <dt><%= t("ui.admin.demo_data.performance_seed.fields.#{field}") %></dt>
+            <dd><%= t("ui.admin.demo_data.performance_seed.field_help.#{field}") %></dd>
+          </div>
+        <% end %>
+      </dl>
+    </article>
+  </div>
+
+  <%= form_with url: populate_performance_admin_demo_scenarios_path, method: :post, class: "stacked-form", local: true, data: { testid: "performance-seed-form" } do %>
+    <div class="admin-grid admin-grid--split">
+      <div>
+        <%= label_tag "performance_seed_user_count", t("ui.admin.demo_data.performance_seed.fields.user_count") %>
+        <%= number_field_tag "performance_seed[user_count]", @performance_seed_form.fetch(:user_count), min: 1, step: 1, required: true, data: { testid: "performance-seed-user-count" } %>
+      </div>
+      <div>
+        <%= label_tag "performance_seed_property_count", t("ui.admin.demo_data.performance_seed.fields.property_count") %>
+        <%= number_field_tag "performance_seed[property_count]", @performance_seed_form.fetch(:property_count), min: 0, step: 1, required: true, data: { testid: "performance-seed-property-count" } %>
+      </div>
+      <div>
+        <%= label_tag "performance_seed_password", t("ui.admin.demo_data.performance_seed.fields.password") %>
+        <%= text_field_tag "performance_seed[password]", @performance_seed_form.fetch(:password), required: true, data: { testid: "performance-seed-password" } %>
+      </div>
+      <div>
+        <%= label_tag "performance_seed_ai_mode", t("ui.admin.demo_data.performance_seed.fields.ai_mode") %>
+        <%= select_tag "performance_seed[ai_mode]",
+                       options_for_select(
+                         [
+                           [t("ui.admin.demo_data.performance_seed.ai_modes.off"), "off"],
+                           [t("ui.admin.demo_data.performance_seed.ai_modes.auto"), "auto"],
+                           [t("ui.admin.demo_data.performance_seed.ai_modes.on"), "on"]
+                         ],
+                         @performance_seed_form.fetch(:ai_mode)
+                       ),
+                       data: { testid: "performance-seed-ai-mode" } %>
+      </div>
+      <div>
+        <%= label_tag "performance_seed_batch_size", t("ui.admin.demo_data.performance_seed.fields.batch_size") %>
+        <%= number_field_tag "performance_seed[batch_size]", @performance_seed_form.fetch(:batch_size), min: 1, step: 1, required: true, data: { testid: "performance-seed-batch-size" } %>
+      </div>
+      <div>
+        <%= label_tag "performance_seed_model", t("ui.admin.demo_data.performance_seed.fields.model") %>
+        <%= text_field_tag "performance_seed[model]", @performance_seed_form.fetch(:model), required: true, data: { testid: "performance-seed-model" } %>
+      </div>
+    </div>
+
+    <div class="admin-filter-form__actions">
+      <%= button_tag t("ui.admin.demo_data.performance_seed.submit"), class: "button primary", data: { testid: "performance-seed-submit" } %>
+    </div>
+  <% end %>
+</section>
+
 <section class="admin-section">
   <div class="section-heading">
     <div>

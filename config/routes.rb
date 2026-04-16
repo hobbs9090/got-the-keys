@@ -36,6 +36,7 @@ GotTheKeys::Application.routes.draw do
       post :apply, on: :member
       collection do
         post :restore_baseline
+        post :populate_performance
         get :import
         post :preview_import
         post :apply_import

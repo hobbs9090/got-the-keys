@@ -150,10 +150,10 @@ en:
         withdrawn: "Withdrawn"
       bedroom_count:
         one: "1 bedroom"
-        other: "%{count} bedrooms"
+        other: "%{display_count} bedrooms"
       bathroom_count:
         one: "1 bathroom"
-        other: "%{count} bathrooms"
+        other: "%{display_count} bathrooms"
       sale_statuses:
         for_sale: "For Sale"
         for_rent: "For Rent"
@@ -163,7 +163,7 @@ en:
         hero_body: "Search by area, price, and bedroom count, then book a viewing from each property page."
         active_filter_count:
           one: "1 active filter"
-          other: "%{count} active filters"
+          other: "%{display_count} active filters"
         overview_badge: "Catalogue overview"
         matching_properties:
           one: "matching property"
@@ -193,7 +193,7 @@ en:
           view_matches:
             zero: "No matching listings"
             one: "View 1 matching listing"
-            other: "View %{count} matching listings"
+            other: "View %{display_count} matching listings"
           remove: "Remove"
           saved_at: "Saved %{time}"
           alerts_on: "Alerts on"
@@ -204,7 +204,7 @@ en:
         results_eyebrow: "Live results"
         results_title:
           one: "1 property ready to explore"
-          other: "%{count} properties ready to explore"
+          other: "%{display_count} properties ready to explore"
         empty_copy: "Showing the full catalogue. Use the filter panel to narrow by location, price, and bedroom count."
       filters:
         listing_type: "Listing type"
@@ -222,7 +222,7 @@ en:
         apply: "Apply filters"
         save_filter: "Save filter"
         search_chip: "Search: %{query}"
-        min_bedrooms_chip: "%{count}+ bedrooms"
+        min_bedrooms_chip: "%{display_count}+ bedrooms"
         min_price_chip: "From %{price}"
         max_price_chip: "Up to %{price}"
         min_monthly_rental_chip: "Monthly rent from %{price}"
@@ -273,7 +273,7 @@ en:
         rental_application_body_guest: "Sign in or create an account to share your intended move-in timing and affordability notes with the lettings team."
         rental_application_cta: "Start rental application"
         seller_title: "Seller workspace"
-        readiness_summary: "complete · %{score}/%{total} readiness checks done"
+        readiness_summary: "complete · %{display_score}/%{display_total} readiness checks done"
         done: "Done"
         needed: "Needed"
         edit_listing: "Edit listing"
@@ -337,8 +337,8 @@ en:
         list_title: "Your listings"
         list_blurb: "Draft and live listings you are working on are shown here for quick access."
         total_label:
-          one: "%{count} saved listing"
-          other: "%{count} saved listings"
+          one: "%{display_count} saved listing"
+          other: "%{display_count} saved listings"
         state_summary: "%{drafts} draft or in review · %{live} live"
         open_details: "Open details"
         visibility_live: "Visible on the public site."
@@ -453,7 +453,7 @@ en:
         self_service_closed: "The self-service window for this viewing has now closed."
         duration_minutes:
           one: "1 minute"
-          other: "%{count} minutes"
+          other: "%{display_count} minutes"
         timeline_title: "Status timeline"
       self_service:
         title: "Manage viewing %{reference}"
@@ -597,7 +597,7 @@ en:
     saved_searches:
       notice:
         one: "Saved search created for 1 matching listing."
-        other: "Saved search created for %{count} matching listings."
+        other: "Saved search created for %{display_count} matching listings."
       destroyed: "Saved search removed."
       validation:
         max_price: "must be greater than or equal to the minimum price"
@@ -955,7 +955,7 @@ en:
         cancel: "Cancel"
         bookings_count:
           one: "1 booking"
-          other: "%{count} bookings"
+          other: "%{display_count} bookings"
         show:
           title: "Appointment %{reference}"
           eyebrow: "Appointment details"
@@ -1001,6 +1001,7 @@ en:
         demo_scenario_confirmation_required: "Type %{phrase} exactly to run this seed reset."
         applied_demo_scenario: "Applied demo scenario %{name}."
         restored_baseline_demo_scenario: "Restored baseline demo scenario (%{name})."
+        populated_performance_demo_data: "Added %{users} users and %{properties} properties for performance testing."
         imported_demo_scenario: "Imported demo scenario %{name}."
       enquiries:
         index:
@@ -1104,6 +1105,10 @@ en:
           title: "Properties"
           eyebrow: "Catalogue management"
           no_results: "No properties match this search."
+          saved_filters:
+            eyebrow: "Saved search filters"
+            title: "Apply a saved filter"
+            apply: "Apply filter"
           search:
             label: "Search properties"
             placeholder: "Address, postcode, seller, or status"
@@ -1113,7 +1118,7 @@ en:
             clear: "Clear"
           appointment_count:
             one: "1 appointment"
-            other: "%{count} appointments"
+            other: "%{display_count} appointments"
           open: "Open"
         show:
           title: "Property %{address}"
@@ -1158,7 +1163,7 @@ en:
             clear: "Clear"
           property_count:
             one: "1 property"
-            other: "%{count} properties"
+            other: "%{display_count} properties"
         show:
           title: "Seller %{name}"
           eyebrow: "Seller profile"
@@ -1167,7 +1172,7 @@ en:
           properties: "Properties"
           listing_count:
             one: "1 listing"
-            other: "%{count} listings"
+            other: "%{display_count} listings"
           listings_title: "Listings and status"
           no_properties: "This seller has not created any listings yet."
           recent_booking_activity_title: "Recent booking activity"
@@ -1184,7 +1189,7 @@ en:
           view_bookings: "View bookings"
           appointment_count:
             one: "1 booking"
-            other: "%{count} bookings"
+            other: "%{display_count} bookings"
           no_results: "No customers with bookings yet."
       notification_logs:
         title: "Notification log"
@@ -1218,8 +1223,45 @@ en:
         export_current_data: "Export current data"
         diagnostics_title: "Diagnostics"
         last_demo_action_title: "Last demo action"
-        no_actions: "No resets, imports, or exports have been recorded yet."
+        no_actions: "No resets, imports, exports, or performance data loads have been recorded yet."
         preview_action: "Preview"
+        performance_seed:
+          eyebrow: "Performance data"
+          title: "Append performance test data"
+          description: "Use this to append a large volume of generated sellers and properties without resetting the baseline dataset."
+          instructions_title: "Instructions"
+          parameters_title: "Parameters"
+          submit: "Add performance data"
+          password_summary: "Uses the password entered when the job was run."
+          instructions:
+            - "This action appends demo users and properties to the current database. It does not reset the baseline scenario first."
+            - "Set the exact user and property counts you want to add. User count accepts any positive number, so you can scale to match the performance run you are planning."
+            - "The password you enter will be applied to every generated seller account."
+            - "For the fastest large run, keep AI mode set to Off. Auto and On may call OpenAI depending on server configuration."
+            - "AI mode On requires OPENAI_API_KEY to be configured on the server. Batch size and model only affect AI-enriched runs."
+          fields:
+            user_count: "Users to add"
+            property_count: "Properties to add"
+            password: "Generated user password"
+            ai_mode: "AI enrichment mode"
+            batch_size: "AI batch size"
+            model: "AI model"
+          field_help:
+            user_count: "Creates this many additional seller accounts."
+            property_count: "Creates this many additional properties and distributes ownership across the generated sellers."
+            password: "Every generated seller account uses this password."
+            ai_mode: "Off skips OpenAI, Auto enables it only when an API key is present, and On requires it."
+            batch_size: "How many property blueprints to send per AI enrichment batch."
+            model: "The OpenAI model to use when AI enrichment runs."
+          ai_modes:
+            "off": "Off"
+            auto: "Auto"
+            "on": "On"
+          validation:
+            integer: "%{field} must be a whole number."
+            integer_minimum: "%{field} must be %{minimum} or greater."
+            required: "%{field} cannot be blank."
+            ai_mode: "AI enrichment mode must be Off, Auto, or On."
         seed_resets:
           eyebrow: "Danger zone"
           title: "Seed data resets"
@@ -1272,6 +1314,7 @@ en:
           restore: "Restored"
           import: "Imported"
           export: "Exported"
+          populate: "Appended performance data"
         scenario_keys:
           baseline: "Baseline"
           custom_sevenoaks_westerham_catalogue: "Curated Sevenoaks and Westerham catalogue"

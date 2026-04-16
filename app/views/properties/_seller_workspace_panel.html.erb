@@ -2,7 +2,7 @@
 
 <section class="property-panel" data-testid="seller-listing-workspace">
   <h2><%= t("ui.properties.show.seller_title") %></h2>
-  <p><strong><%= property.listing_completeness_percentage %>%</strong> <%= t("ui.properties.show.readiness_summary", score: property.listing_completeness_score, total: property.listing_completeness_checks.size) %></p>
+  <p><strong><%= property.listing_completeness_percentage %>%</strong> <%= t("ui.properties.show.readiness_summary", score: property.listing_completeness_score, total: property.listing_completeness_checks.size, display_score: display_number(property.listing_completeness_score), display_total: display_number(property.listing_completeness_checks.size)) %></p>
   <ul class="detail-inline-list" data-testid="seller-listing-checklist">
     <% property.listing_completeness_checks.each do |check| %>
       <li class="<%= check[:complete] ? "text-success" : "text-danger" %>">

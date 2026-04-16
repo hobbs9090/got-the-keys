@@ -1,0 +1,41 @@
+<% return if saved_searches.blank? %>
+
+<section class="admin-panel" data-testid="admin-saved-filters-panel">
+  <div class="property-results-panel__head">
+    <div>
+      <p class="section-heading__eyebrow"><%= t("ui.admin.properties.index.saved_filters.eyebrow", default: "Saved search filters") %></p>
+      <h2><%= t("ui.admin.properties.index.saved_filters.title", default: "Apply a saved filter") %></h2>
+    </div>
+  </div>
+
+  <div class="property-workspace__grid property-saved-searches-grid">
+    <% saved_searches.each do |search| %>
+      <% chip_labels = property_filter_chip_labels(search.filter_params) %>
+      <% admin_params = search.filter_params.slice(:q, :sale_status, :town_city, :min_bedrooms, :min_price, :max_price) %>
+      <article class="site-card property-saved-search-card" data-testid="admin-saved-filter-card">
+        <div class="property-saved-search-card__main">
+          <div class="property-saved-search-card__chips">
+            <% if chip_labels.any? %>
+              <% chip_labels.each do |label| %>
+                <span class="badge badge--neutral"><%= label %></span>
+              <% end %>
+            <% else %>
+              <span class="badge badge--neutral"><%= t("ui.properties.filters.all_listings") %></span>
+            <% end %>
+          </div>
+
+          <p class="property-saved-search-card__meta">
+            <span><%= search.user&.email %></span>
+            <span><%= t("ui.properties.catalogue.saved_search.saved_at", time: formatted_date_time(search.created_at)) %></span>
+          </p>
+        </div>
+
+        <div class="property-saved-search-card__actions">
+          <% matches_count = search.matching_properties_count %>
+          <%= link_to translate_count("ui.properties.catalogue.saved_search.view_matches", matches_count), admin_properties_path(admin_params), class: "button primary hollow", data: { testid: "admin-apply-saved-filter-#{search.id}" } %>
+          <%= button_to t("ui.properties.catalogue.saved_search.remove"), saved_search_path(search), method: :delete, class: "button secondary hollow", data: { testid: "admin-remove-saved-filter-#{search.id}" } %>
+        </div>
+      </article>
+    <% end %>
+  </div>
+</section>

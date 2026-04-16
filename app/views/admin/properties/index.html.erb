@@ -9,6 +9,8 @@
   </div>
 </section>
 
+<%= render "saved_filters", saved_searches: @saved_searches %>
+
 <section class="admin-panel">
   <%= form_with url: admin_properties_path, method: :get, class: "admin-filter-form", local: true, data: { testid: "admin-properties-search" } do |f| %>
     <div>
@@ -39,7 +41,7 @@
             <p><span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span></p>
           </div>
           <footer class="property-card__footer">
-            <span><%= property.listing_completeness_percentage %>% complete · <%= t("ui.admin.properties.index.appointment_count", count: property.appointments.size) %></span>
+            <span><%= property.listing_completeness_percentage %>% complete · <%= translate_count("ui.admin.properties.index.appointment_count", property.appointments.size) %></span>
             <%= link_to t("ui.admin.properties.index.open"), admin_property_path(property), class: "button primary hollow" %>
           </footer>
         </article>

@@ -23,12 +23,12 @@ module PropertiesHelper
     if property.bedrooms == 0
       content_tag(:span, t(:studio_flat))
     else
-      t("ui.properties.bedroom_count", count: property.bedrooms)
+      translate_count("ui.properties.bedroom_count", property.bedrooms)
     end
   end
 
   def format_bathrooms(count)
-    t("ui.properties.bathroom_count", count:)
+    translate_count("ui.properties.bathroom_count", count)
   end
 
   def format_price(property)
@@ -135,7 +135,7 @@ module PropertiesHelper
     chips << translated_sale_status(filters[:sale_status]) if filters[:sale_status].present?
     chips << t("ui.properties.filters.search_chip", query: filters[:q]) if filters[:q].present?
     chips << filters[:town_city] if filters[:town_city].present?
-    chips << t("ui.properties.filters.min_bedrooms_chip", count: filters[:min_bedrooms]) if filters[:min_bedrooms].present?
+    chips << translate_count("ui.properties.filters.min_bedrooms_chip", filters[:min_bedrooms]) if filters[:min_bedrooms].present?
     chips << t(
       property_filter_price_translation_key(:min, filters[:sale_status], suffix: :chip),
       price: number_to_currency(filters[:min_price], unit: '£', precision: 0)
@@ -188,12 +188,12 @@ module PropertiesHelper
       [t("ui.properties.facts.tenure"), property.tenure],
       [t("ui.properties.facts.council_tax_band"), property.council_tax_band],
       [t("ui.properties.facts.furnishing"), property.sale_status == Property::SALE_STATUSES[:for_rent] ? property.furnishing : nil],
-      [t("ui.properties.facts.year_built"), property.year_built],
-      [t("ui.properties.facts.refurbished_year"), property.refurbished_year],
+      [t("ui.properties.facts.year_built"), property.year_built.present? ? display_number(property.year_built) : nil],
+      [t("ui.properties.facts.refurbished_year"), property.refurbished_year.present? ? display_number(property.refurbished_year) : nil],
       [t("ui.properties.facts.available_from"), property.available_from.present? ? l(property.available_from, format: :long) : nil],
       [t("ui.properties.facts.parking"), property.parking],
       [t("ui.properties.facts.outdoor_space"), property.outdoor_space],
-      [t("ui.properties.facts.floor_area"), property.floor_area_sq_ft.present? ? t("ui.properties.facts.floor_area_value", area: property.floor_area_sq_ft) : nil],
+      [t("ui.properties.facts.floor_area"), property.floor_area_sq_ft.present? ? t("ui.properties.facts.floor_area_value", area: display_number(property.floor_area_sq_ft)) : nil],
       [t("ui.properties.facts.deposit"), property.deposit_amount.present? ? number_to_currency(property.deposit_amount, unit: "£", precision: 0) : nil],
       [t("ui.properties.facts.pets_allowed"), property.pets_allowed? ? t("ui.common.yes") : nil],
       [t("ui.properties.facts.service_charge"), property.service_charge_amount.present? ? number_to_currency(property.service_charge_amount, unit: "£", precision: 0) : nil],

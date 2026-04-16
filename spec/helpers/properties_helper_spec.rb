@@ -45,7 +45,15 @@ RSpec.describe PropertiesHelper, type: :helper do
 
       facts = helper.property_fact_rows(property)
 
-      expect(facts).to include(["Built", 1998], ["Last refurbished", 2022])
+      expect(facts).to include(["Built", "1,998"], ["Last refurbished", "2,022"])
+    end
+
+    it "formats large numeric fact values with comma delimiters" do
+      property = FactoryBot.build(:property, user:, floor_area_sq_ft: 2150)
+
+      facts = helper.property_fact_rows(property)
+
+      expect(facts).to include(["Floor area", "2,150 sq ft"])
     end
   end
 

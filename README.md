@@ -81,6 +81,33 @@ Baseline credentials after seeding:
   - `alex.cole@example.com` / `********`
   - `sam.turner@example.com` / `********`
 
+## Performance Seed Data
+
+The admin demo-data area now supports bulk performance seeding from `Admin -> Demo Data` at `/admin/demo-data`.
+
+Use the `Append performance test data` panel when you want to add a large number of generated sellers and properties without resetting the current baseline dataset first.
+
+Parameters:
+
+- `Users to add`: creates this many additional seller accounts. This accepts any positive whole number.
+- `Properties to add`: creates this many additional properties and distributes them across the generated sellers.
+- `Generated user password`: the password applied to every generated seller created by that run.
+- `AI enrichment mode`: `Off` is fastest and local-only; `Auto` uses OpenAI only when an API key is present; `On` requires `OPENAI_API_KEY`.
+- `AI batch size`: how many property blueprints are sent per AI enrichment batch when AI mode is enabled.
+- `AI model`: the OpenAI model used for AI-enriched runs.
+
+Operational notes:
+
+- This action appends data. It does not reset the database first.
+- Re-running the performance seeder is supported. Generated seller emails stay unique across repeated runs.
+- For the fastest large dataset generation, keep AI mode set to `Off`.
+
+There is also a CLI entry point for the same underlying generator:
+
+```bash
+SEED_USERS=500 SEED_PROPERTIES=10000 SEED_AI_MODE=off bundle exec rake db:populate
+```
+
 ## Documentation Map
 
 - [Documentation index](docs/INDEX.md)

@@ -23,7 +23,7 @@
       </div>
       <div>
         <dt><%= t("ui.admin.users.show.properties") %></dt>
-        <dd><%= t("ui.admin.users.show.listing_count", count: @user.properties.count) %></dd>
+        <dd><%= translate_count("ui.admin.users.show.listing_count", @user.properties.count) %></dd>
       </div>
     </dl>
   </article>

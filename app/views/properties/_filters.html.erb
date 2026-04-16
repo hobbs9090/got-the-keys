@@ -52,7 +52,7 @@
   <div class="property-filters__actions">
     <%= button_tag t("ui.properties.filters.apply"), class: "button primary", data: { testid: "apply-property-filters" } %>
     <%= link_to t("ui.common.reset"), url, class: "button hollow secondary" %>
-    <% if user_signed_in? %>
+    <% if user_signed_in? || current_admin.present? %>
       <%= button_tag t("ui.properties.filters.save_filter"),
                      type: "button",
                      class: "button hollow secondary",

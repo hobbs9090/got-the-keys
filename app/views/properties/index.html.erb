@@ -14,7 +14,7 @@
   <div class="page-hero__meta property-catalogue-hero__meta">
     <div class="property-catalogue-hero__stat" role="status">
       <strong class="property-catalogue-hero__stat-number"><%= number_with_delimiter(@total_properties, delimiter: ",") %></strong>
-      <span class="property-catalogue-hero__stat-caption"><%= t("ui.properties.catalogue.matching_properties", count: @total_properties) %></span>
+      <span class="property-catalogue-hero__stat-caption"><%= translate_count("ui.properties.catalogue.matching_properties", @total_properties) %></span>
     </div>
   </div>
 </section>
@@ -29,7 +29,7 @@
         </div>
 
         <% if active_filter_labels.any? %>
-          <span class="badge badge--accent"><%= t("ui.properties.catalogue.active_filter_count", count: active_filter_labels.count) %></span>
+          <span class="badge badge--accent"><%= translate_count("ui.properties.catalogue.active_filter_count", active_filter_labels.count) %></span>
         <% end %>
       </div>
 
@@ -90,7 +90,7 @@
       <div class="property-results-panel__head">
         <div>
           <p class="section-heading__eyebrow"><%= t("ui.properties.catalogue.results_eyebrow") %></p>
-          <h2><%= t("ui.properties.catalogue.results_title", count: @total_properties) %></h2>
+          <h2><%= translate_count("ui.properties.catalogue.results_title", @total_properties) %></h2>
         </div>
 
         <% if active_filter_labels.any? %>

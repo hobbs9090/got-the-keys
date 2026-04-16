@@ -12,6 +12,8 @@ RSpec.describe "Saved searches", type: :request do
   end
 
   let(:user) { FactoryBot.create(:user) }
+  let(:admin_user) { FactoryBot.create(:user, email: "admin-saved-search@example.com") }
+  let(:admin) { FactoryBot.create(:admin, email: admin_user.email, password: "secret123", password_confirmation: "secret123") }
 
   it "redirects guests to sign in" do
     expect do
@@ -60,6 +62,77 @@ RSpec.describe "Saved searches", type: :request do
     expect(saved.min_price).to eq(600_000)
     expect(saved.max_price).to eq(700_000)
     expect(matching_property).to be_present
+  end
+
+  it "stores the current catalogue filters for a signed-in admin mapped to a user email" do
+    sign_in admin
+
+    expect do
+      post saved_searches_path, params: {
+        saved_search: {
+          locale: "en",
+          sale_status: Property::SALE_STATUSES[:for_sale],
+          search_query: "admin filter",
+          town_city: "Sevenoaks",
+          min_bedrooms: 2,
+          min_price: "500,000",
+          max_price: "750,000",
+          sort: "recommended",
+          alerts_enabled: "1"
+        }
+      }
+    end.to change(SavedSearch, :count).by(1)
+
+    saved = SavedSearch.last
+    expect(saved.user_id).to eq(admin_user.id)
+    expect(response).to redirect_to(
+      properties_path(
+        q: "admin filter",
+        sale_status: Property::SALE_STATUSES[:for_sale],
+        town_city: "Sevenoaks",
+        min_bedrooms: 2,
+        min_price: 500_000,
+        max_price: 750_000,
+        sort: "recommended"
+      )
+    )
+  end
+
+  it "creates a saved-search user record for admins without a matching user account" do
+    unmapped_admin = FactoryBot.create(:admin, email: "orphan-admin@example.com", password: "secret123", password_confirmation: "secret123")
+    sign_in unmapped_admin
+
+    expect do
+      post saved_searches_path, params: {
+        saved_search: {
+          locale: "en",
+          sale_status: Property::SALE_STATUSES[:for_sale],
+          search_query: "admin created user",
+          town_city: "Sevenoaks",
+          min_bedrooms: 2,
+          min_price: "450,000",
+          max_price: "700,000",
+          sort: "recommended",
+          alerts_enabled: "1"
+        }
+      }
+    end.to change(SavedSearch, :count).by(1)
+      .and change(User, :count).by(1)
+
+    generated_user = User.find_by(email: unmapped_admin.email)
+    expect(generated_user).to be_present
+    expect(SavedSearch.last.user_id).to eq(generated_user.id)
+    expect(response).to redirect_to(
+      properties_path(
+        q: "admin created user",
+        sale_status: Property::SALE_STATUSES[:for_sale],
+        town_city: "Sevenoaks",
+        min_bedrooms: 2,
+        min_price: 450_000,
+        max_price: 700_000,
+        sort: "recommended"
+      )
+    )
   end
 
   it "lets a signed-in user remove a saved search" do

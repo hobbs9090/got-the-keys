@@ -27,7 +27,7 @@
 
       <div class="property-saved-search-card__actions">
         <% matches_count = search.matching_properties_count %>
-        <%= link_to t("ui.properties.catalogue.saved_search.view_matches", count: matches_count), properties_path(search.filter_params), class: "button primary hollow" %>
+        <%= link_to translate_count("ui.properties.catalogue.saved_search.view_matches", matches_count), properties_path(search.filter_params), class: "button primary hollow" %>
         <%= button_to t("ui.properties.catalogue.saved_search.remove"), saved_search_path(search), method: :delete, class: "button secondary hollow" %>
       </div>
     </article>
