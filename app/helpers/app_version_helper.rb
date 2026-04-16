@@ -7,6 +7,20 @@ module AppVersionHelper
     Rails.configuration.x.got_the_keys.build_sha.presence
   end
 
+  def short_app_build_sha(length = 7)
+    app_build_sha&.first(length)
+  end
+
+  def local_app_build?
+    Rails.configuration.x.got_the_keys.local_build
+  end
+
+  def display_app_build_sha
+    return if short_app_build_sha.blank?
+
+    local_app_build? ? "#{short_app_build_sha} + local" : short_app_build_sha
+  end
+
   def app_build_number
     Rails.configuration.x.got_the_keys.build_number.presence
   end

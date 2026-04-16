@@ -53,6 +53,14 @@
   overflow-wrap: anywhere;
 }
 
+.qa-version-box__commit {
+  color: var(--color-primary-strong);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin: 0;
+}
+
 .qa-version-box__list {
   display: grid;
   gap: 0.75rem;

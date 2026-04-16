@@ -572,6 +572,18 @@ html[data-theme="dark"] .marketing-wordmark-stack--theme-aware .marketing-wordma
   margin-right: 0.35rem;
 }
 
+.site-footer__build::before {
+  color: var(--color-footer-muted);
+  content: "\00b7";
+  margin-right: 0.35rem;
+}
+
+.site-footer__build {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
 .site-footer__small a {
   color: var(--color-footer-text);
   font-weight: 700;

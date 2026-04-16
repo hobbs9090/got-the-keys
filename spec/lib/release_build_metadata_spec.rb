@@ -7,6 +7,42 @@ RSpec.describe ReleaseBuildMetadata do
     end
   end
 
+  describe ".current_revision" do
+    it "returns the current short git sha for a git repository" do
+      allow(Open3).to receive(:capture2)
+        .with("git", "-C", "/tmp/example-repo", "rev-parse", "--short=7", "HEAD")
+        .and_return(["fd481e9\n", instance_double(Process::Status, success?: true)])
+
+      expect(described_class.current_revision("/tmp/example-repo")).to eq("fd481e9")
+    end
+
+    it "returns nil when git cannot provide a revision" do
+      allow(Open3).to receive(:capture2)
+        .with("git", "-C", "/tmp/example-repo", "rev-parse", "--short=7", "HEAD")
+        .and_return(["", instance_double(Process::Status, success?: false)])
+
+      expect(described_class.current_revision("/tmp/example-repo")).to be_nil
+    end
+  end
+
+  describe ".workspace_dirty?" do
+    it "returns true when git reports uncommitted changes" do
+      allow(Open3).to receive(:capture2)
+        .with("git", "-C", "/tmp/example-repo", "status", "--porcelain")
+        .and_return([" M app/models/user.rb\n", instance_double(Process::Status, success?: true)])
+
+      expect(described_class.workspace_dirty?("/tmp/example-repo")).to be(true)
+    end
+
+    it "returns false when the git workspace is clean" do
+      allow(Open3).to receive(:capture2)
+        .with("git", "-C", "/tmp/example-repo", "status", "--porcelain")
+        .and_return(["", instance_double(Process::Status, success?: true)])
+
+      expect(described_class.workspace_dirty?("/tmp/example-repo")).to be(false)
+    end
+  end
+
   describe ".payload" do
     it "uses the requested build number when it is newer than the previous build" do
       payload = described_class.payload(

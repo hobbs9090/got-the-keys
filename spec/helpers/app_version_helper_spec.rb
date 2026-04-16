@@ -7,6 +7,7 @@ RSpec.describe AppVersionHelper, type: :helper do
     original_values = {
       version: version_config.version,
       build_sha: version_config.build_sha,
+      local_build: version_config.local_build,
       build_number: version_config.build_number,
       deployed_at: version_config.deployed_at,
       deploy_target: version_config.deploy_target
@@ -16,6 +17,7 @@ RSpec.describe AppVersionHelper, type: :helper do
   ensure
     version_config.version = original_values[:version]
     version_config.build_sha = original_values[:build_sha]
+    version_config.local_build = original_values[:local_build]
     version_config.build_number = original_values[:build_number]
     version_config.deployed_at = original_values[:deployed_at]
     version_config.deploy_target = original_values[:deploy_target]
@@ -32,7 +34,28 @@ RSpec.describe AppVersionHelper, type: :helper do
     version_config.build_number = "42"
 
     expect(helper.app_build_sha).to eq("abc1234")
+    expect(helper.short_app_build_sha).to eq("abc1234")
     expect(helper.app_build_number).to eq("42")
+  end
+
+  it "truncates longer build shas for compact UI displays" do
+    version_config.build_sha = "abc1234def5678"
+
+    expect(helper.short_app_build_sha).to eq("abc1234")
+  end
+
+  it "appends a local suffix when the running build includes uncommitted changes" do
+    version_config.build_sha = "abc1234def5678"
+    version_config.local_build = true
+
+    expect(helper.display_app_build_sha).to eq("abc1234 + local")
+  end
+
+  it "returns the short build sha unchanged for clean builds" do
+    version_config.build_sha = "abc1234def5678"
+    version_config.local_build = false
+
+    expect(helper.display_app_build_sha).to eq("abc1234")
   end
 
   it "falls back cleanly when build metadata is missing" do

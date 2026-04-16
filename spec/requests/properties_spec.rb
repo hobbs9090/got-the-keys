@@ -5,9 +5,25 @@ describe "Properties" do
 
   let!(:user) { FactoryBot.create(:user, email: "request-user@example.com") }
   let!(:property) { FactoryBot.create(:property, user:) }
+  let(:version_config) { Rails.configuration.x.got_the_keys }
+
+  around do |example|
+    original_values = {
+      build_sha: version_config.build_sha,
+      local_build: version_config.local_build
+    }
+
+    example.run
+  ensure
+    version_config.build_sha = original_values[:build_sha]
+    version_config.local_build = original_values[:local_build]
+  end
 
   describe "GET /properties" do
     it "should retrieve page" do
+      version_config.build_sha = "fd481e9abcdef0"
+      version_config.local_build = true
+
       get properties_path
       document = Nokogiri::HTML(response.body)
       footer_copy = document.at_css(".site-footer__copy")
@@ -25,8 +41,10 @@ describe "Properties" do
       expect(footer_meta.at_css(".site-footer__meta-copy")).not_to be_present
       expect(footer_meta.at_css(%(a[href="#{cookie_policy_index_path(anchor: "cookie-preferences")}"]))).to be_present
       expect(footer_meta.at_css(%([data-testid="public-app-version"]))).to be_present
-      expect(footer_meta.at_css(".site-footer__utility")&.text.to_s.squish).to eq("Cookie settings v#{Rails.configuration.x.got_the_keys.version}")
+      expect(footer_meta.at_css(%([data-testid="public-build-commit"]))).to be_present
+      expect(footer_meta.at_css(".site-footer__utility")&.text.to_s.squish).to eq("Cookie settings v#{Rails.configuration.x.got_the_keys.version} Commit fd481e9 + local")
       expect(response.body).to include("v#{Rails.configuration.x.got_the_keys.version}")
+      expect(response.body).to include("Commit fd481e9 + local")
     end
 
     it "renders a full first page of 12 property cards" do

@@ -16,6 +16,8 @@ module GotTheKeys
     build_info_path = root.join("storage", "build_info.json")
     semantic_version = ENV["APP_VERSION"].presence || version_path.read.strip.presence
     build_metadata = ReleaseBuildMetadata.load(build_info_path)
+    current_revision = ReleaseBuildMetadata.current_revision(root)
+    using_runtime_git_revision = ENV["APP_BUILD_SHA"].blank? && build_metadata["build_sha"].blank? && current_revision.present?
     raise "VERSION file must contain a semantic version" if semantic_version.blank?
 
     config.i18n.available_locales = %i[en zh de fr it]
@@ -35,7 +37,8 @@ module GotTheKeys
     config.x.got_the_keys.time_zone = app_time_zone
     config.x.got_the_keys.exchange_rate_gbp_to_cny = 9.368
     config.x.got_the_keys.version = semantic_version
-    config.x.got_the_keys.build_sha = ENV["APP_BUILD_SHA"].presence || build_metadata["build_sha"].presence
+    config.x.got_the_keys.build_sha = ENV["APP_BUILD_SHA"].presence || build_metadata["build_sha"].presence || current_revision
+    config.x.got_the_keys.local_build = using_runtime_git_revision && ReleaseBuildMetadata.workspace_dirty?(root)
     config.x.got_the_keys.build_number = ENV["APP_BUILD_NUMBER"].presence || build_metadata["build_number"].presence
     config.x.got_the_keys.deployed_at = build_metadata["deployed_at"].presence
     config.x.got_the_keys.deploy_target = ENV["APP_DEPLOY_TARGET"].presence

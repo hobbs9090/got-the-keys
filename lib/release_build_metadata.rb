@@ -1,4 +1,5 @@
 require "json"
+require "open3"
 require "time"
 
 module ReleaseBuildMetadata
@@ -18,6 +19,20 @@ module ReleaseBuildMetadata
       build_number: next_build_number(previous_metadata, requested_build_number),
       deployed_at: present_string(deployed_at)
     }.reject { |_key, value| value.nil? }
+  end
+
+  def current_revision(path = Dir.pwd)
+    stdout, status = Open3.capture2("git", "-C", path.to_s, "rev-parse", "--short=7", "HEAD")
+    status.success? ? present_string(stdout) : nil
+  rescue Errno::ENOENT
+    nil
+  end
+
+  def workspace_dirty?(path = Dir.pwd)
+    stdout, status = Open3.capture2("git", "-C", path.to_s, "status", "--porcelain")
+    status.success? && present_string(stdout).present?
+  rescue Errno::ENOENT
+    false
   end
 
   def next_build_number(previous_metadata, requested_build_number)

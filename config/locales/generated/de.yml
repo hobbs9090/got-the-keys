@@ -256,6 +256,8 @@ de:
           book_viewing_cta: '`data-testid="book-viewing-cta"` on property booking CTA'
           property_card: '`data-testid="property-card"` on listing cards'
         selectors_title: Automation-friendly selectors
+        version_box:
+          commit_badge: Commit %{sha}
     properties:
       show:
         booking_sign_in_body: Sign in or create an account to request a viewing and pick from the published time slots for this home.
@@ -263,6 +265,8 @@ de:
         enquiry_body_guest: Sign in or create an account to ask for brochure information, a landlord or seller callback, or clarification before you pick a viewing slot.
         offer_body_guest: Sign in or create an account to register your buying position and submit an offer.
         rental_application_body_guest: Sign in or create an account to share your intended move-in timing and affordability notes with the lettings team.
+    site_footer:
+      build_badge: Commit %{sha}
   under_construction: Under Construction
   user:
     ago: ago

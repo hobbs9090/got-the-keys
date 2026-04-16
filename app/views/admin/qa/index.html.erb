@@ -13,6 +13,9 @@
     <div class="qa-version-box__hero">
       <p class="qa-version-box__label"><%= t("ui.admin.qa.app_version") %></p>
       <p class="qa-version-box__version" data-testid="qa-app-version"><%= full_app_version %></p>
+      <% if display_app_build_sha.present? %>
+        <p class="qa-version-box__commit" data-testid="qa-build-commit"><%= t("ui.admin.qa.version_box.commit_badge", sha: display_app_build_sha) %></p>
+      <% end %>
     </div>
     <dl class="qa-version-box__list">
       <div>
@@ -112,4 +115,3 @@
     <% end %>
   </article>
 </section>
-

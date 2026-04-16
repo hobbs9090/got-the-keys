@@ -16,6 +16,7 @@ en:
 
     site_footer:
       copy: "Modern property discovery, appointment booking, and deterministic QA scenarios in one server-rendered Rails application. Built for realistic demos, acceptance testing, and AI-driven browser automation training."
+      build_badge: "Commit %{sha}"
     theme_toggle:
       label: "Theme"
       options:
@@ -756,6 +757,7 @@ en:
         app_version: "App version"
         version_box:
           title: "Release build"
+          commit_badge: "Commit %{sha}"
           git_sha: "Git SHA"
           build_number: "Build number"
           deployed_at: "Deployed at"
