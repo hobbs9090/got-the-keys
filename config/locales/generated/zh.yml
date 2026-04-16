@@ -16,6 +16,11 @@ zh:
           update: Update
   ui:
     admin:
+      properties:
+        index:
+          search:
+            all_statuses: All statuses
+            status: Status
       qa:
         seeded_personas:
           admins_label: Admins

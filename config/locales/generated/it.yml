@@ -238,6 +238,11 @@ it:
         sidebar_eyebrow: Admin Workspace
         title: Admin | %{app_name}
         view_site: View site
+      properties:
+        index:
+          search:
+            all_statuses: All statuses
+            status: Status
       qa:
         available_scenarios_title: Available scenarios
         seeded_personas:
