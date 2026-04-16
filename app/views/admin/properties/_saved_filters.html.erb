@@ -10,8 +10,23 @@
 
   <div class="property-workspace__grid property-saved-searches-grid">
     <% saved_searches.each do |search| %>
-      <% chip_labels = property_filter_chip_labels(search.filter_params) %>
-      <% admin_params = search.filter_params.slice(:q, :sale_status, :town_city, :min_bedrooms, :min_price, :max_price) %>
+      <% chip_labels = [] %>
+      <% admin_params = {} %>
+      <% matches_count = 0 %>
+      <% begin %>
+        <% filter_params = search.filter_params %>
+        <% chip_labels = property_filter_chip_labels(filter_params) %>
+        <% admin_params = filter_params.slice(:q, :sale_status, :town_city, :min_bedrooms, :min_price, :max_price) %>
+      <% rescue StandardError %>
+        <%# Fall back to still rendering the card even if filter parsing breaks. %>
+      <% end %>
+
+      <% begin %>
+        <% matches_count = search.matching_properties_count %>
+      <% rescue StandardError %>
+        <%# Fall back to 0 if the match-count query fails (bad legacy data, casting, etc). %>
+        <% matches_count = 0 %>
+      <% end %>
       <article class="site-card property-saved-search-card" data-testid="admin-saved-filter-card">
         <div class="property-saved-search-card__main">
           <div class="property-saved-search-card__chips">
@@ -31,7 +46,6 @@
         </div>
 
         <div class="property-saved-search-card__actions">
-          <% matches_count = search.matching_properties_count %>
           <%= link_to translate_count("ui.properties.catalogue.saved_search.view_matches", matches_count), admin_properties_path(admin_params), class: "button primary hollow", data: { testid: "admin-apply-saved-filter-#{search.id}" } %>
           <%= button_to t("ui.properties.catalogue.saved_search.remove"), saved_search_path(search), method: :delete, class: "button secondary hollow", data: { testid: "admin-remove-saved-filter-#{search.id}" } %>
         </div>

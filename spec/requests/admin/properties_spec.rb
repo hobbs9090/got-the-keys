@@ -170,4 +170,14 @@ RSpec.describe "Admin properties", type: :request do
     expect(property.reload.listing_state).to eq("published")
     expect(property.audit_logs.recent_first.first.action).to eq("listing_state_changed")
   end
+
+  it "renders the admin properties index in a non-English admin language" do
+    admin.update!(language: "de")
+    sign_in admin
+
+    get admin_properties_path
+
+    expect(response).to have_http_status(:ok)
+    expect(parsed_html.at_css('[data-testid="admin-properties-search"]')).to be_present
+  end
 end
