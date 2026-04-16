@@ -102,15 +102,115 @@
                        ),
                        data: { testid: "performance-seed-ai-mode" } %>
       </div>
-      <div>
-        <%= label_tag "performance_seed_batch_size", t("ui.admin.demo_data.performance_seed.fields.batch_size") %>
-        <%= number_field_tag "performance_seed[batch_size]", @performance_seed_form.fetch(:batch_size), min: 1, step: 1, required: true, data: { testid: "performance-seed-batch-size" } %>
-      </div>
-      <div>
-        <%= label_tag "performance_seed_model", t("ui.admin.demo_data.performance_seed.fields.model") %>
-        <%= text_field_tag "performance_seed[model]", @performance_seed_form.fetch(:model), required: true, data: { testid: "performance-seed-model" } %>
+      <% ai_mode_is_off = @performance_seed_form.fetch(:ai_mode).to_s == "off" %>
+      <div style="grid-column: 1 / -1; display: grid; gap: 1rem;">
+        <div style="color: var(--color-muted); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.82rem;">
+          <%= t("ui.admin.demo_data.performance_seed.fields.ai_mode") %> dependent settings
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem;">
+          <div>
+            <%= label_tag "performance_seed_batch_size", t("ui.admin.demo_data.performance_seed.fields.batch_size") %>
+            <%= number_field_tag "performance_seed[batch_size]", @performance_seed_form.fetch(:batch_size), min: 1, step: 1, required: true, disabled: ai_mode_is_off, data: { testid: "performance-seed-batch-size" } %>
+          </div>
+          <div>
+            <%= label_tag "performance_seed_model", t("ui.admin.demo_data.performance_seed.fields.model") %>
+            <%= select_tag "performance_seed[model]",
+                           options_for_select(
+                             OpenaiEnrichmentModels::AVAILABLE.map { |model| [model, model] },
+                             @performance_seed_form.fetch(:model)
+                           ),
+                           required: true,
+                           disabled: ai_mode_is_off,
+                           data: { testid: "performance-seed-model" } %>
+          </div>
+        </div>
       </div>
     </div>
+
+    <%= javascript_tag nonce: true do %>
+      // Keep AI enrichment dependent settings in sync with the selected mode.
+      // This inline script makes the behavior reliable even if the JS bundle
+      // isn't immediately updated in a dev/browser refresh scenario.
+      (() => {
+        const form = document.querySelector('[data-testid="performance-seed-form"]');
+        if (!form) return;
+
+        const aiModeSelect = form.querySelector('[data-testid="performance-seed-ai-mode"]');
+        const batchSizeInput = form.querySelector('[data-testid="performance-seed-batch-size"]');
+        const modelInput = form.querySelector('[data-testid="performance-seed-model"]');
+        if (!aiModeSelect || !batchSizeInput || !modelInput) return;
+
+        const storageKey = "gotthekeys-admin-performance-seed-form";
+
+        const readPersisted = () => {
+          try {
+            const raw = window.sessionStorage.getItem(storageKey);
+            return raw ? JSON.parse(raw) : {};
+          } catch (_error) {
+            return {};
+          }
+        };
+
+        const writePersisted = (next) => {
+          try {
+            window.sessionStorage.setItem(storageKey, JSON.stringify(next));
+          } catch (_error) {
+            // Ignore persistence failures (e.g. storage disabled).
+          }
+        };
+
+        const apply = () => {
+          const aiModeValue = (aiModeSelect.value || "").toString().trim().toLowerCase();
+          const isAiModeOff = aiModeValue === "off";
+
+          batchSizeInput.disabled = isAiModeOff;
+          modelInput.disabled = isAiModeOff;
+          batchSizeInput.required = !isAiModeOff;
+          modelInput.required = !isAiModeOff;
+        };
+
+        const persisted = readPersisted();
+        const persistedAiMode = (persisted.ai_mode || "").toString().trim().toLowerCase();
+        if (persistedAiMode && ["off", "auto", "on"].includes(persistedAiMode)) {
+          aiModeSelect.value = persistedAiMode;
+          // If we also persisted values, restore them before applying disabled/enabled.
+          if (persisted.batch_size != null) batchSizeInput.value = persisted.batch_size;
+          if (persisted.model != null) modelInput.value = persisted.model;
+        }
+
+        const onAiModeChange = () => {
+          writePersisted({
+            ai_mode: aiModeSelect.value,
+            batch_size: batchSizeInput.value,
+            model: modelInput.value
+          });
+          apply();
+        };
+
+        // Some environments may fire `input` instead of `change` for select changes.
+        aiModeSelect.addEventListener("change", onAiModeChange);
+        aiModeSelect.addEventListener("input", onAiModeChange);
+
+        batchSizeInput.addEventListener("input", () => {
+          writePersisted({
+            ai_mode: aiModeSelect.value,
+            batch_size: batchSizeInput.value,
+            model: modelInput.value
+          });
+        });
+
+        modelInput.addEventListener("input", () => {
+          writePersisted({
+            ai_mode: aiModeSelect.value,
+            batch_size: batchSizeInput.value,
+            model: modelInput.value
+          });
+        });
+
+        apply();
+      })();
+    <% end %>
 
     <div class="admin-filter-form__actions">
       <%= button_tag t("ui.admin.demo_data.performance_seed.submit"), class: "button primary", data: { testid: "performance-seed-submit" } %>

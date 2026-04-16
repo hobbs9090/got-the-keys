@@ -1262,6 +1262,7 @@ en:
             integer_minimum: "%{field} must be %{minimum} or greater."
             required: "%{field} cannot be blank."
             ai_mode: "AI enrichment mode must be Off, Auto, or On."
+            model: "AI model must be one of the supported dropdown options."
         seed_resets:
           eyebrow: "Danger zone"
           title: "Seed data resets"

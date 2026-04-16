@@ -2,7 +2,8 @@ require 'json'
 
 module DemoData
   class OpenaiPropertyEnhancer
-    DEFAULT_MODEL = 'gpt-5-mini'.freeze
+    DEFAULT_MODEL = OpenaiEnrichmentModels::DEFAULT
+    AVAILABLE_MODELS = OpenaiEnrichmentModels::AVAILABLE
 
     JSON_SCHEMA = {
       type: 'object',

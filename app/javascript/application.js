@@ -14,10 +14,12 @@ import { bootSkipLinks, teardownSkipLinks } from "./skip_links";
 import { bootStatisticsCharts, teardownStatisticsCharts } from "./statistics_charts";
 import { bootThemePreference, teardownThemePreference } from "./theme_preference";
 import { bootAdminSecurityScroll, teardownAdminSecurityScroll } from "./admin_security_scroll";
+import { bootAdminDemoPerformanceSeedForms, teardownAdminDemoPerformanceSeedForms } from "./admin_demo_performance_seed_form";
 
 const bootApplication = () => {
   bootThemePreference();
   bootAdminSecurityScroll();
+  bootAdminDemoPerformanceSeedForms();
   bootAppointmentSlotPickers();
   bootCarousels();
   bootModals();
@@ -35,6 +37,7 @@ const bootApplication = () => {
 const teardownApplication = () => {
   teardownThemePreference();
   teardownAdminSecurityScroll();
+  teardownAdminDemoPerformanceSeedForms();
   teardownAppointmentSlotPickers();
   teardownCarousels();
   teardownModals();

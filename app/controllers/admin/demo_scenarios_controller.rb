@@ -8,7 +8,7 @@ class Admin::DemoScenariosController < Admin::BaseController
     password: "secret",
     ai_mode: "off",
     batch_size: DemoData::Populator::DEFAULT_BATCH_SIZE,
-    model: DemoData::OpenaiPropertyEnhancer::DEFAULT_MODEL
+    model: OpenaiEnrichmentModels::DEFAULT
   }.freeze
 
   def index
@@ -152,7 +152,7 @@ class Admin::DemoScenariosController < Admin::BaseController
       password: normalized_string!(values[:password], field: :password),
       ai_mode: normalized_ai_mode!(values[:ai_mode]),
       batch_size: normalized_integer!(values[:batch_size], field: :batch_size, minimum: 1),
-      model: normalized_string!(values[:model], field: :model)
+      model: normalized_model!(values[:model])
     }
   end
 
@@ -178,6 +178,13 @@ class Admin::DemoScenariosController < Admin::BaseController
     return mode if %w[off auto on].include?(mode)
 
     raise ArgumentError, t("ui.admin.demo_data.performance_seed.validation.ai_mode")
+  end
+
+  def normalized_model!(value)
+    model = normalized_string!(value, field: :model)
+    return model if OpenaiEnrichmentModels::AVAILABLE.include?(model)
+
+    raise ArgumentError, t("ui.admin.demo_data.performance_seed.validation.model")
   end
 
   def performance_seed_field_label(field)
