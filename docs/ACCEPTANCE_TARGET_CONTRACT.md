@@ -31,6 +31,7 @@ The baseline scenario currently defines:
 
 - primary admin credential: `steven@gotthekeys.uk / ********`
 - secondary admin credential: `kate@gotthekeys.uk / ********`
+- additional admin credential: `inarra@gotthekeys.uk / ********`
 - active scenario name: `Baseline`
 
 ## Deterministic Property Identity

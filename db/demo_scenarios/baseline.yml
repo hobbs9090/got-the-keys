@@ -29,6 +29,10 @@ admins:
     password: secret
     password_confirmation: secret
     language: en
+  - email: inarra@gotthekeys.uk
+    password: secret
+    password_confirmation: secret
+    language: en
 users:
   - first_name: Charlotte
     last_name: Hughes

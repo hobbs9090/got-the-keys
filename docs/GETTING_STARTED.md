@@ -65,6 +65,7 @@ After `bin/rails db:seed`:
 - Admins:
   - `steven@gotthekeys.uk` / `********`
   - `kate@gotthekeys.uk` / `********`
+  - `inarra@gotthekeys.uk` / `********`
 - Seller examples:
   - `charlotte.hughes@example.com` / `********`
   - `daniel.mercer@example.com` / `********`
