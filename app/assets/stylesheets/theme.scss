@@ -4027,6 +4027,16 @@ table th {
     justify-content: flex-start;
   }
 
+  .property-card__actions {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+  }
+
+  .property-card__actions .button {
+    width: 100%;
+  }
+
   .property-workspace-card__meta {
     grid-template-columns: 1fr;
   }
