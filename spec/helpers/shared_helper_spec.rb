@@ -12,12 +12,12 @@ RSpec.describe SharedHelper, type: :helper do
     end
   end
 
-  describe "retina portrait helpers" do
-    it "renders the world image with 1x and 2x sources" do
+  describe "world image helper" do
+    it "renders the SVG world image" do
       markup = helper.world_image
 
-      expect(markup).to match(%r{src="/assets/placeholder_world-[^"]+\.webp"})
-      expect(markup).to match(%r{srcset="/assets/placeholder_world-[^"]+\.webp 1x, /assets/placeholder_world@2x-[^"]+\.webp 2x"})
+      expect(markup).to match(%r{src="/assets/placeholder_world-[^"]+\.svg"})
+      expect(markup).not_to include("srcset=")
     end
   end
 

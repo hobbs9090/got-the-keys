@@ -20,7 +20,7 @@ module SharedHelper
   end
 
   def world_image
-    pixel_density_image_tag('placeholder_world.webp', retina_source: 'placeholder_world@2x.webp')
+    image_tag('placeholder_world.svg')
   end
 
   def under_construction_image

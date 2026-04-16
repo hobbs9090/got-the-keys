@@ -178,11 +178,11 @@ RSpec.describe ApplicationHelper, type: :helper do
 
   describe "#pixel_density_image_tag" do
     it "includes a 1x and 2x srcset when a retina asset is provided" do
-      markup = helper.pixel_density_image_tag("placeholder_world.webp", retina_source: "placeholder_world@2x.webp")
+      markup = helper.pixel_density_image_tag("hero_1.webp", retina_source: "hero_1@2x.webp")
 
-      expect(markup).to match(%r{src="/assets/placeholder_world-[^"]+\.webp"})
+      expect(markup).to match(%r{src="/assets/hero_1-[^"]+\.webp"})
       expect(markup).to match(
-        %r{srcset="/assets/placeholder_world-[^"]+\.webp 1x, /assets/placeholder_world@2x-[^"]+\.webp 2x"}
+        %r{srcset="/assets/hero_1-[^"]+\.webp 1x, /assets/hero_1@2x-[^"]+\.webp 2x"}
       )
     end
 
