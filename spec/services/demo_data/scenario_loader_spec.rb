@@ -33,8 +33,12 @@ RSpec.describe DemoData::ScenarioLoader do
 
     expect(summary[:property_count]).to eq(100)
     expect(BookingConfiguration.current.active_demo_scenario_key).to eq("baseline")
-    expect(Admin.count).to eq(2)
-    expect(Admin.pluck(:email)).to match_array(["steven@gotthekeys.uk", "kate@gotthekeys.uk"])
+    expect(Admin.count).to eq(3)
+    expect(Admin.pluck(:email)).to match_array([
+      "steven@gotthekeys.uk",
+      "kate@gotthekeys.uk",
+      "inarra@gotthekeys.uk"
+    ])
     expect(User.count).to eq(7)
     expect(Property.count).to eq(100)
     expect(Property.for_sale.count).to eq(40)
@@ -105,6 +109,7 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(exported).to include("baseline")
     expect(exported).to include("steven@gotthekeys.uk")
     expect(exported).to include("kate@gotthekeys.uk")
+    expect(exported).to include("inarra@gotthekeys.uk")
     expect(exported).to include("photos:")
     expect(exported).to include("listing_state:")
     expect(exported).to include("enquiries:")
