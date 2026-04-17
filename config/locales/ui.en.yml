@@ -60,6 +60,35 @@ en:
       phone_number: "Phone number"
       status: "Status"
 
+    seo:
+      defaults:
+        public: "Browse property listings, save searches, and book viewings with GotTheKeys."
+        admin: "Manage property listings, customers, enquiries, bookings, and operations in the GotTheKeys admin area."
+      descriptions:
+        welcome:
+          index: "Discover modern property listings, live viewing availability, and a clearer way to browse homes with GotTheKeys."
+        searches:
+          index: "Search property listings by area, price, and bedrooms, then save your filters or book a viewing online."
+        for_sale:
+          index: "Browse homes for sale, compare listing details, and book viewings directly through GotTheKeys."
+        for_rent:
+          index: "Explore homes to rent, check listing details, and book viewings through GotTheKeys."
+        about_us:
+          index: "Learn how GotTheKeys helps sellers and searchers with clearer property listings, simpler booking, and better control."
+        how_it_works:
+          index: "See how GotTheKeys helps market homes, handle enquiries, and make viewings easier to manage."
+        contact_us:
+          index: "Contact the GotTheKeys team for help with listings, viewings, and general property platform questions."
+        legal:
+          index: "Read the key legal terms, responsibilities, and platform conditions that apply when using GotTheKeys."
+        blog:
+          index: "Read GotTheKeys articles on property listings, enquiries, and practical ways to improve marketing performance."
+        cookie_policy:
+          index: "See how GotTheKeys uses cookies to support sign-in, preferences, and essential site features."
+        properties:
+          index: "Browse the full GotTheKeys property catalogue, refine by location and price, and save searches for later."
+          show: "View property details, photos, documents, and viewing options on GotTheKeys."
+
     contact:
       office_name: "GotTheKeys Limited"
       office_line_1: "123 Awesome Road"

@@ -38,6 +38,9 @@ RSpec.describe "Public content pages", type: :request do
       expect(response.body).to include(page[:text])
       expect(response.body).not_to include('role="content"')
       expect(document.at_css("h1")).to be_present
+      expect(document.at_css('meta[name="description"]')&.[]("content")).to be_present
+      expect(document.at_css('meta[name="description"]')["content"]).not_to be_blank
+      expect(document.at_css('meta[name="robots"]')["content"]).to eq("noindex, nofollow")
     end
   end
 

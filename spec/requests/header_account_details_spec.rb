@@ -30,6 +30,8 @@ RSpec.describe "Header account details", type: :request do
     expect(body_classes).not_to include("welcome--from-admin")
     expect(parsed_html.at_css("html")["data-theme-preference"]).to eq("system")
     expect(parsed_html.at_css('meta[name="turbo-cache-control"]')["content"]).to eq("no-preview")
+    expect(parsed_html.at_css('meta[name="description"]')["content"]).to eq(I18n.t("ui.seo.descriptions.welcome.index"))
+    expect(parsed_html.at_css('meta[name="robots"]')["content"]).to eq("noindex, nofollow")
     expect(response.body).to match(%r{/assets/public-[^"]+\.css})
     expect(response.body).to match(%r{/assets/public-[^"]+\.js})
     expect(response.body).not_to match(%r{/assets/admin-[^"]+\.css})

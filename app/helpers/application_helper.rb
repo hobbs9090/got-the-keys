@@ -23,6 +23,33 @@ module ApplicationHelper
     return content_tag(:h1, page_title, options)
   end
 
+  def meta_description(description)
+    content_for(:meta_description, description.to_s.squish)
+    nil
+  end
+
+  def meta_robots(content)
+    content_for(:meta_robots, content.to_s.squish)
+    nil
+  end
+
+  def page_meta_description
+    explicit_description = content_for(:meta_description).to_s.squish
+    return explicit_description if explicit_description.present?
+
+    I18n.t(
+      :"ui.seo.descriptions.#{controller_path.tr('/', '.')}.#{action_name}",
+      default: [
+        :"ui.seo.descriptions.#{controller_path.tr('/', '.')}.default",
+        generated_meta_description
+      ]
+    ).to_s.squish
+  end
+
+  def page_meta_robots
+    content_for(:meta_robots).to_s.squish.presence || "noindex, nofollow"
+  end
+
   def appointment_status_badge_class(status)
     {
       "pending" => "badge badge--warning",
@@ -351,6 +378,30 @@ module ApplicationHelper
   end
 
   private
+
+  def generated_meta_description
+    default_description = I18n.t(
+      admin_namespace? ? "ui.seo.defaults.admin" : "ui.seo.defaults.public",
+      default: admin_namespace? ?
+        "Manage property listings, customers, enquiries, bookings, and operations in the GotTheKeys admin area." :
+        "Browse property listings, save searches, and book viewings with GotTheKeys."
+    ).to_s.squish
+
+    title_text = page_title_text
+    return default_description if title_text.blank?
+    return default_description if title_text == t("gotthekeys.gotthekeys", default: "got the keys")
+
+    "#{title_text}. #{default_description}".squish
+  end
+
+  def page_title_text
+    raw_title = content_for?(:title) ? content_for(:title) : t("gotthekeys.gotthekeys", default: "got the keys")
+    strip_tags(raw_title.to_s).squish
+  end
+
+  def admin_namespace?
+    controller_path.start_with?("admin/")
+  end
 
   def image_options_with_intrinsic_dimensions(source, **options)
     dimensions = intrinsic_image_dimensions_for(source)
