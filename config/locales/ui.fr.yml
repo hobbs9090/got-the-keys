@@ -533,6 +533,9 @@ fr:
           appointment_count:
             one: 1 reservation
             other: "%{display_count} reservations"
+          count_label:
+            one: 1 client au total
+            other: "%{display_count} clients au total"
           eyebrow: Repertoire des clients ayant des reservations
           no_results: Aucun client avec reservation pour le moment.
           search:
@@ -885,6 +888,9 @@ fr:
         index:
           title: Biens
           eyebrow: Gestion du catalogue
+          count_label:
+            one: 1 bien au total
+            other: "%{display_count} biens au total"
           no_results: Aucun bien ne correspond a cette recherche.
           search:
             label: Rechercher des biens
@@ -931,6 +937,9 @@ fr:
         index:
           title: Vendeurs
           eyebrow: Gestion des clients et vendeurs
+          count_label:
+            one: 1 vendeur au total
+            other: "%{display_count} vendeurs au total"
           no_results: Aucun vendeur ne correspond a cette recherche.
           search:
             label: Rechercher des vendeurs

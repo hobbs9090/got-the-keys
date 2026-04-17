@@ -1104,6 +1104,9 @@ en:
         index:
           title: "Properties"
           eyebrow: "Catalogue management"
+          count_label:
+            one: "1 property total"
+            other: "%{display_count} properties total"
           no_results: "No properties match this search."
           saved_filters:
             eyebrow: "Saved search filters"
@@ -1155,6 +1158,9 @@ en:
         index:
           title: "Sellers"
           eyebrow: "Customer and seller management"
+          count_label:
+            one: "1 seller total"
+            other: "%{display_count} sellers total"
           no_results: "No sellers match this search."
           search:
             label: "Search sellers"
@@ -1181,6 +1187,9 @@ en:
         index:
           title: "Customers"
           eyebrow: "Customer booking directory"
+          count_label:
+            one: "1 customer total"
+            other: "%{display_count} customers total"
           search:
             label: "Search customers"
             placeholder: "Name, email, or phone"

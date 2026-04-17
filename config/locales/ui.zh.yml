@@ -492,6 +492,9 @@ zh:
           appointment_count:
             one: 1 条预约
             other: "%{display_count} 条预约"
+          count_label:
+            one: 共 1 位客户
+            other: 共 %{display_count} 位客户
           eyebrow: 客户预约目录
           no_results: 目前还没有任何有预约的客户。
           search:
@@ -868,6 +871,9 @@ zh:
         index:
           title: 房源
           eyebrow: 目录管理
+          count_label:
+            one: 共 1 套房源
+            other: 共 %{display_count} 套房源
           no_results: 没有房源符合当前搜索。
           search:
             label: 搜索房源
@@ -913,6 +919,9 @@ zh:
         index:
           title: 卖家
           eyebrow: 客户与卖家管理
+          count_label:
+            one: 共 1 位卖家
+            other: 共 %{display_count} 位卖家
           no_results: 没有卖家符合当前搜索。
           search:
             label: 搜索卖家

@@ -527,6 +527,9 @@ it:
           appointment_count:
             one: 1 prenotazione
             other: "%{display_count} prenotazioni"
+          count_label:
+            one: 1 cliente in totale
+            other: "%{display_count} clienti in totale"
           eyebrow: Elenco clienti con prenotazioni
           no_results: Non ci sono ancora clienti con prenotazioni.
           search:
@@ -879,6 +882,9 @@ it:
         index:
           title: Immobili
           eyebrow: Gestione catalogo
+          count_label:
+            one: 1 immobile in totale
+            other: "%{display_count} immobili in totale"
           no_results: Nessun immobile corrisponde a questa ricerca.
           search:
             label: Cerca immobili
@@ -925,6 +931,9 @@ it:
         index:
           title: Venditori
           eyebrow: Gestione clienti e venditori
+          count_label:
+            one: 1 venditore in totale
+            other: "%{display_count} venditori in totale"
           no_results: Nessun venditore corrisponde a questa ricerca.
           search:
             label: Cerca venditori

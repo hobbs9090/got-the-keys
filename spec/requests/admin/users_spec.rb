@@ -13,6 +13,8 @@ RSpec.describe "Admin users", type: :request do
   end
 
   it "shows a seller search form on the index" do
+    FactoryBot.create_list(:user, 2)
+
     get admin_users_path
 
     expect(response).to have_http_status(:ok)
@@ -28,6 +30,10 @@ RSpec.describe "Admin users", type: :request do
     clear_link = search_form.at_css('[data-testid="admin-users-search-clear"]')
     expect(clear_link).to be_present
     expect(clear_link["href"]).to eq(admin_users_path)
+
+    count_label = parsed_html.at_css('[data-testid="admin-users-count"]')
+    expect(count_label).to be_present
+    expect(count_label.text.strip).to eq("2 sellers total")
   end
 
   it "filters sellers by full name" do
@@ -77,6 +83,34 @@ RSpec.describe "Admin users", type: :request do
     empty_copy = parsed_html.at_css(".empty-copy")
     expect(empty_copy).to be_present
     expect(empty_copy.text.strip).to eq("No sellers match this search.")
+  end
+
+  it "paginates sellers with the same page size as the customers index" do
+    created_users = 26.times.map do |index|
+      FactoryBot.create(
+        :user,
+        first_name: "Seller",
+        last_name: format("User %02d", index),
+        email: "seller-#{index}@example.com"
+      )
+    end
+
+    get admin_users_path
+
+    expect(response).to have_http_status(:ok)
+
+    page_one_row_ids = parsed_html.css('[data-testid^="admin-user-row-"]').map { |row| row["data-testid"] }
+    expect(page_one_row_ids.length).to eq(25)
+    expect(page_one_row_ids).to include("admin-user-row-#{created_users.first.id}")
+    expect(page_one_row_ids).not_to include("admin-user-row-#{created_users.last.id}")
+    expect(parsed_html.at_css(".pagination")).to be_present
+
+    get admin_users_path, params: { page: 2 }
+
+    expect(response).to have_http_status(:ok)
+
+    page_two_row_ids = parsed_html.css('[data-testid^="admin-user-row-"]').map { |row| row["data-testid"] }
+    expect(page_two_row_ids).to eq(["admin-user-row-#{created_users.last.id}"])
   end
 
   it "lists all of the seller's properties with their current statuses on the profile page" do

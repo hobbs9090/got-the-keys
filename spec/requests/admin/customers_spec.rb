@@ -13,6 +13,24 @@ RSpec.describe "Admin customers", type: :request do
   end
 
   it "shows a customer search form on the index" do
+    property = FactoryBot.create(:property)
+    FactoryBot.create(
+      :appointment,
+      :pending,
+      property:,
+      customer_name: "Alex Buyer",
+      customer_email: "alex.buyer@example.com",
+      customer_phone: "07700 930010"
+    )
+    FactoryBot.create(
+      :appointment,
+      :pending,
+      property:,
+      customer_name: "Taylor Stone",
+      customer_email: "taylor.stone@example.com",
+      customer_phone: "07700 930011"
+    )
+
     get admin_customers_path
 
     expect(response).to have_http_status(:ok)
@@ -28,6 +46,10 @@ RSpec.describe "Admin customers", type: :request do
     clear_link = search_form.at_css('[data-testid="admin-customers-search-clear"]')
     expect(clear_link).to be_present
     expect(clear_link["href"]).to eq(admin_customers_path)
+
+    count_label = parsed_html.at_css('[data-testid="admin-customers-count"]')
+    expect(count_label).to be_present
+    expect(count_label.text.strip).to eq("2 customers total")
   end
 
   it "shows grouped customers from bookings with a CTA to filtered appointments" do

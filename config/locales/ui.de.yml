@@ -529,6 +529,9 @@ de:
           appointment_count:
             one: 1 Buchung
             other: "%{display_count} Buchungen"
+          count_label:
+            one: 1 Kunde insgesamt
+            other: "%{display_count} Kunden insgesamt"
           eyebrow: Kundenverzeichnis für Buchungen
           no_results: Es gibt noch keine Kunden mit Buchungen.
           search:
@@ -881,6 +884,9 @@ de:
         index:
           title: Objekte
           eyebrow: Katalogverwaltung
+          count_label:
+            one: 1 Objekt insgesamt
+            other: "%{display_count} Objekte insgesamt"
           no_results: Keine Objekte entsprechen dieser Suche.
           search:
             label: Objekte suchen
@@ -927,6 +933,9 @@ de:
         index:
           title: Verkäufer
           eyebrow: Kunden- und Verkäuferverwaltung
+          count_label:
+            one: 1 Verkäufer insgesamt
+            other: "%{display_count} Verkäufer insgesamt"
           no_results: Keine Verkäufer entsprechen dieser Suche.
           search:
             label: Verkäufer suchen

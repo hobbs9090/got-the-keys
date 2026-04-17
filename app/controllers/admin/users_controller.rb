@@ -3,7 +3,7 @@ class Admin::UsersController < Admin::BaseController
 
   def index
     @query = params[:q].to_s.squish
-    @users = filtered_users.order(:last_name, :first_name)
+    @users = filtered_users.order(:last_name, :first_name).page(params[:page]).per(25)
   end
 
   def show

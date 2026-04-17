@@ -5,6 +5,7 @@
     <div>
       <p class="section-heading__eyebrow"><%= t("ui.admin.customers.index.eyebrow") %></p>
       <h1><%= t("ui.admin.customers.index.title") %></h1>
+      <p data-testid="admin-customers-count"><%= translate_count("ui.admin.customers.index.count_label", @customers.total_count) %></p>
     </div>
   </div>
 

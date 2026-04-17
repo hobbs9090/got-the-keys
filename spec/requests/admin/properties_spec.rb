@@ -14,6 +14,8 @@ RSpec.describe "Admin properties", type: :request do
   end
 
   it "shows a property search form on the index" do
+    FactoryBot.create_list(:property, 2)
+
     get admin_properties_path
 
     expect(response).to have_http_status(:ok)
@@ -34,6 +36,10 @@ RSpec.describe "Admin properties", type: :request do
     clear_link = search_form.at_css('[data-testid="admin-properties-search-clear"]')
     expect(clear_link).to be_present
     expect(clear_link["href"]).to eq(admin_properties_path)
+
+    count_label = parsed_html.at_css('[data-testid="admin-properties-count"]')
+    expect(count_label).to be_present
+    expect(count_label.text.strip).to eq("2 properties total")
   end
 
   it "filters properties by address and seller details" do
