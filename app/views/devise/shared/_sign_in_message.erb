@@ -1,6 +1,0 @@
-<% url = request.fullpath if url.nil? %>
-<% if url.match(/^\/admins/) %>
-    <h4><%= t('devise.views.links.sign_in_as_admin') %></h4>
-<% else %>
-    <h4><%= t('devise.views.links.sign_in') %></h4>
-<% end %>
