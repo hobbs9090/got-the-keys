@@ -513,24 +513,32 @@ pre code {
 
 .skip-link {
   background: var(--color-heading);
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
   border-radius: 0.85rem;
   color: #fff;
   font-weight: 700;
   left: var(--space-site-shell);
+  overflow: hidden;
   padding: 0.75rem 1rem;
   position: absolute;
   top: 0.75rem;
-  transform: translateY(-150%);
-  transition: transform 0.18s ease;
+  white-space: nowrap;
+  width: 1px;
+  height: 1px;
   z-index: 1200;
 }
 
 .skip-link:focus,
 .skip-link:focus-visible {
+  clip: auto;
+  clip-path: none;
   color: #fff;
+  height: auto;
   outline: 3px solid var(--color-focus-ring);
   outline-offset: 3px;
-  transform: translateY(0);
+  overflow: visible;
+  width: auto;
 }
 
 .site-main,
