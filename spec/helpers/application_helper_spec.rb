@@ -187,6 +187,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       markup = helper.pixel_density_image_tag("hero_1.webp", retina_source: "hero_1@2x.webp")
 
       expect(markup).to match(%r{src="/assets/hero_1-[^"]+\.webp"})
+      expect(markup).to include('alt=""')
       expect(markup).to match(
         %r{srcset="/assets/hero_1-[^"]+\.webp 1x, /assets/hero_1@2x-[^"]+\.webp 2x"}
       )
@@ -196,7 +197,14 @@ RSpec.describe ApplicationHelper, type: :helper do
       markup = helper.pixel_density_image_tag("hero_1.webp")
 
       expect(markup).to match(%r{src="/assets/hero_1-[^"]+\.webp"})
+      expect(markup).to include('alt=""')
       expect(markup).not_to include("srcset=")
+    end
+
+    it "preserves an explicit alt when one is provided" do
+      markup = helper.pixel_density_image_tag("hero_1.webp", alt: "Homepage hero")
+
+      expect(markup).to include('alt="Homepage hero"')
     end
   end
 

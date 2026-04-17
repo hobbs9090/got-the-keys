@@ -7,6 +7,7 @@ RSpec.describe SharedHelper, type: :helper do
         markup = helper.public_send("hero_#{index}_image")
 
         expect(markup).to match(%r{src="/assets/hero_#{index}-[^"]+\.webp"})
+        expect(markup).to include('alt=""')
         expect(markup).to match(%r{srcset="/assets/hero_#{index}-[^"]+\.webp 1x, /assets/hero_#{index}@2x-[^"]+\.webp 2x"})
       end
     end
@@ -17,7 +18,17 @@ RSpec.describe SharedHelper, type: :helper do
       markup = helper.world_image
 
       expect(markup).to match(%r{src="/assets/placeholder_world-[^"]+\.svg"})
+      expect(markup).to include('alt=""')
       expect(markup).not_to include("srcset=")
+    end
+  end
+
+  describe "under construction image helper" do
+    it "renders the image with an explicit decorative alt" do
+      markup = helper.under_construction_image
+
+      expect(markup).to match(%r{src="/assets/under_construction-[^"]+\.svg"})
+      expect(markup).to include('alt=""')
     end
   end
 

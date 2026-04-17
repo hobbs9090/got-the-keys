@@ -1,30 +1,30 @@
 module SharedHelper
   def hero_1_image
-    pixel_density_image_tag('hero_1.webp', retina_source: 'hero_1@2x.webp')
+    pixel_density_image_tag('hero_1.webp', retina_source: 'hero_1@2x.webp', alt: "")
   end
 
   def hero_2_image
-    pixel_density_image_tag('hero_2.webp', retina_source: 'hero_2@2x.webp')
+    pixel_density_image_tag('hero_2.webp', retina_source: 'hero_2@2x.webp', alt: "")
   end
 
   def hero_3_image
-    pixel_density_image_tag('hero_3.webp', retina_source: 'hero_3@2x.webp')
+    pixel_density_image_tag('hero_3.webp', retina_source: 'hero_3@2x.webp', alt: "")
   end
 
   def hero_4_image
-    pixel_density_image_tag('hero_4.webp', retina_source: 'hero_4@2x.webp')
+    pixel_density_image_tag('hero_4.webp', retina_source: 'hero_4@2x.webp', alt: "")
   end
 
   def hero_5_image
-    pixel_density_image_tag('hero_5.webp', retina_source: 'hero_5@2x.webp')
+    pixel_density_image_tag('hero_5.webp', retina_source: 'hero_5@2x.webp', alt: "")
   end
 
   def world_image
-    image_tag('placeholder_world.svg')
+    image_tag('placeholder_world.svg', alt: "")
   end
 
   def under_construction_image
-    image_tag('under_construction.svg', size: '80x80', class: 'under_construction')
+    image_tag('under_construction.svg', size: '80x80', class: 'under_construction', alt: "")
   end
 
   def property_image_small(class_name: nil)

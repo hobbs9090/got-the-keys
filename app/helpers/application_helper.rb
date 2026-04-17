@@ -242,6 +242,7 @@ module ApplicationHelper
 
   def pixel_density_image_tag(source, retina_source: nil, **options)
     image_options = options.dup
+    image_options[:alt] = "" unless image_options.key?(:alt)
 
     if retina_source.present?
       image_options[:srcset] = [
