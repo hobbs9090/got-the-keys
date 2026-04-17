@@ -75,7 +75,10 @@ class Admin::PropertiesController < Admin::BaseController
   end
 
   def filtered_properties
-    scope = Property.left_joins(:user).distinct
+    # `users` is a belongs_to join, so this relation is already one row per property.
+    # Avoid DISTINCT here because PostgreSQL rejects DISTINCT queries ordered by the
+    # custom CASE expression used in `recommended_order`.
+    scope = Property.left_joins(:user)
     scope = scope.where(listing_state: @listing_state) if @listing_state.present?
     scope = scope.where(sale_status: @sale_status) if @sale_status.present?
     scope = scope.where("LOWER(properties.town_city) = ?", @town_city.downcase) if @town_city.present?
