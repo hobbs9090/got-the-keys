@@ -1,2 +1,0 @@
-class CoffeeController < ApplicationController
-end

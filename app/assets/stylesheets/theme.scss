@@ -191,6 +191,24 @@ h5 {
   letter-spacing: -0.02em;
 }
 
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.legacy-page-heading {
+  font-size: 1.4375rem;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
 p,
 li,
 dd {
@@ -825,7 +843,9 @@ html[data-theme="dark"] .pagination .ellipsis::after {
   padding: var(--space-panel-padding-compact);
 }
 
+.legal-callout h2,
 .legal-callout h3,
+.legal-support-card h2,
 .legal-support-card h3 {
   font-size: 1.25rem;
   margin-bottom: 0.6rem;
@@ -2984,6 +3004,11 @@ html[data-theme="dark"] {
 .property-workspace-section__actions {
   display: flex;
   justify-content: flex-start;
+}
+
+.property-sidebar__title,
+.property-sidebar__brand {
+  margin: 0 0 1rem;
 }
 
 .property-saved-search-card {

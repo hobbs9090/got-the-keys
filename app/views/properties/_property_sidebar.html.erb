@@ -2,7 +2,7 @@
 
   <% unless current_page?(controller: 'properties', action: 'new') %>
 
-      <h5><%= t('user.property_details') %></h5>
+      <p class="property-sidebar__title"><strong><%= t('user.property_details') %></strong></p>
       <ul class="side-nav">
         <li><%= link_to t('photos.title'), property_photos_path(@property) %></li>
         <li><%= link_to t('floor_plans.title'), property_floor_plans_path(@property) %></li>
@@ -13,7 +13,7 @@
   <% end %>
 
   <div class="panel">
-    <h5><%= render "layouts/gotthekeys", variant: :theme_aware %></h5>
+    <div class="property-sidebar__brand"><%= render "layouts/gotthekeys", variant: :theme_aware %></div>
 
     <p><%= t(:need_help) %></p>
 

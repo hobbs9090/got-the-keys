@@ -75,7 +75,6 @@ zh:
     account_details: "帐户明细"
     add_property: "添加属性"
     user_profile: "用户配置文件"
-    coffeescripts: "咖啡脚本"
     appointments: "约会"
     manage_account: "管理帐户"
     administration: "管理"
@@ -177,11 +176,6 @@ zh:
     property_details: "房产详细信息"
     appointments: "约会"
     no_appointments: "没有约会"
-
-# CoffeeScript
-  coffeescript:
-    title: "咖啡脚本测试页"
-    blurb: "这是一个测试页面，用于实验咖啡脚本"
 
 # Member Area
 # Welcome

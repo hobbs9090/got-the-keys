@@ -75,7 +75,6 @@ en:
     account_details: "Account Details"
     add_property: "Add Property"
     user_profile: "User Profile"
-    coffeescripts: "CoffeeScripts"
     appointments: "Appointments"
     manage_account: "Manage Account"
     administration: "Administration"
@@ -177,11 +176,6 @@ en:
     property_details: "Property Details"
     appointments: "Appointments"
     no_appointments: "No Appointments"
-
-# CoffeeScript
-  coffeescript:
-    title: "CoffeeScript Test Page"
-    blurb: "This is a test page used for experiments in CoffeeScript"
 
 # Member Area
 # Welcome

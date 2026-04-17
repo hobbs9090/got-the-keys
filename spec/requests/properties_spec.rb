@@ -573,6 +573,7 @@ describe "Properties" do
       expect(response.body).not_to include(I18n.t("ui.properties.listing_states.published"))
       expect(response.body).to include(property_path(draft_property))
       expect(response.body).to include(edit_property_path(draft_property))
+      expect(document.at_css("h1")&.text&.strip).to eq(I18n.t("ui.properties.mine.title", default: "My listings"))
     end
 
     it "shows upcoming, previous, and cancelled appointments for the seller's properties" do
@@ -990,10 +991,12 @@ describe "Properties" do
   describe "GET /location/1" do
     it "should retrieve page" do
       get location_path(property)
+      document = Nokogiri::HTML(response.body)
 
       expect(response).to have_http_status(:ok)
       expect(response.body).not_to include('role="content"')
       expect(response.body).to include(%(alt="Map showing the area around #{property.address_line_1}"))
+      expect(document.at_css("h1")&.text&.strip).to include(property.address_line_1)
     end
   end
 
@@ -1004,16 +1007,20 @@ describe "Properties" do
 
     it "renders the viewing times index without invalid ARIA roles" do
       get property_viewing_times_path(property)
+      document = Nokogiri::HTML(response.body)
 
       expect(response).to have_http_status(:ok)
       expect(response.body).not_to include('role="content"')
+      expect(document.at_css("h1")&.text&.strip).to include(property.address_line_1)
     end
 
     it "renders the new viewing time page without invalid ARIA roles" do
       get new_property_viewing_time_path(property)
+      document = Nokogiri::HTML(response.body)
 
       expect(response).to have_http_status(:ok)
       expect(response.body).not_to include('role="content"')
+      expect(document.at_css("h1")&.text&.strip).to include(property.address_line_1)
     end
 
     it "uses the stacked panel layout on photo and floor-plan management pages" do

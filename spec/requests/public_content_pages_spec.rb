@@ -25,7 +25,6 @@ RSpec.describe "Public content pages", type: :request do
     { description: "about us", path: "/about_us", text: "We built the service for owners who want clearer costs, better control, and a more direct route to serious enquiries." },
     { description: "contact us", path: "/contact_us", text: "Get in Touch!" },
     { description: "blog", path: "/blog", text: "Five Small Listing Improvements That Generate Better Enquiries" },
-    { description: "coffee", path: "/coffee", text: I18n.t("coffeescript.blurb") },
     { description: "for sale", path: "/for_sale", text: "Homes available to buy" },
     { description: "for rent", path: "/for_rent", text: "Homes available to rent" }
   ]
@@ -33,10 +32,12 @@ RSpec.describe "Public content pages", type: :request do
   pages.each do |page|
     it "renders the #{page[:description]} page" do
       get page[:path]
+      document = parsed_html
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include(page[:text])
       expect(response.body).not_to include('role="content"')
+      expect(document.at_css("h1")).to be_present
     end
   end
 

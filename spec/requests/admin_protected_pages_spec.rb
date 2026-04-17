@@ -16,9 +16,11 @@ RSpec.describe "Admin-protected pages", type: :request do
       user
 
       get "/members"
+      document = Nokogiri::HTML(response.body)
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include(user.email)
+      expect(document.at_css("h1")&.text).to include(I18n.t("members.sale_or_rental"))
     end
   end
   describe "GET /users/:id" do
@@ -32,10 +34,12 @@ RSpec.describe "Admin-protected pages", type: :request do
       sign_in admin
 
       get user_path(user)
+      document = Nokogiri::HTML(response.body)
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include("Taylor Stone")
       expect(response.body).to include("taylor.stone@example.com")
+      expect(document.at_css("h1")&.text&.strip).to eq("Taylor Stone")
     end
   end
 

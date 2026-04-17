@@ -1,6 +1,7 @@
 <% title t("ui.properties.mine.title", default: "My listings") %>
 
 <section class="property-workspace">
+  <h1 class="visually-hidden"><%= t("ui.properties.mine.title", default: "My listings") %></h1>
   <section class="site-card property-workspace-section <%= "property-workspace-section--empty-listings" if @properties.blank? %>" data-testid="owner-listings-section">
     <p class="section-heading__eyebrow"><%= t("ui.properties.mine.list_eyebrow", default: "Your records") %></p>
     <h2><%= t("ui.properties.mine.list_title", default: "Saved and partially completed listings") %></h2>

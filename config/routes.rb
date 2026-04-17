@@ -57,8 +57,6 @@ GotTheKeys::Application.routes.draw do
 
   resources :members, only: [:index]
 
-  resources :coffee, only: [:index]
-
   resources :properties do
     collection do
       get :mine

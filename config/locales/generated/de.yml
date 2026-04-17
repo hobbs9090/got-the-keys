@@ -41,9 +41,6 @@ de:
     sale: Sale
     sale_vs_rent: For Sale vs For Rent
     united_kingdom: United Kingdom
-  coffeescript:
-    blurb: This is a test page used for experiments in CoffeeScript
-    title: CoffeeScript Test Page
   devise:
     failure:
       admin_otp_attempt_missing: Enter your verification code or a backup code to finish signing in.
@@ -158,7 +155,6 @@ de:
     add_property: Add Property
     administration: Administration
     appointments: Appointments
-    coffeescripts: CoffeeScripts
     description: Description
     edit_details: Edit Details
     floor_plans: Floor Plans
