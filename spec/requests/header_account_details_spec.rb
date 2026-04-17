@@ -29,6 +29,7 @@ RSpec.describe "Header account details", type: :request do
     expect(body_classes).to include("site-shell", "welcome")
     expect(body_classes).not_to include("welcome--from-admin")
     expect(parsed_html.at_css("html")["data-theme-preference"]).to eq("system")
+    expect(parsed_html.at_css('meta[name="turbo-cache-control"]')["content"]).to eq("no-preview")
     expect(response.body).to include("gotthekeys-theme-preference")
     expect(response.body).to include("prefers-color-scheme: dark")
     expect(parsed_html.at_css('a.skip-link')["href"]).to eq("#main-content")
