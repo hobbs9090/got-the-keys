@@ -178,44 +178,10 @@ en:
     appointments: "Appointments"
     no_appointments: "No Appointments"
 
-# Statistics
-  statistics:
-    title: "Statistics"
-    property_totals: "Property Totals"
-    total_number_users: "Number of users"
-    num_english_users: "English users"
-    num_chinese_users: "Chinese users"
-    total_value_properties: "Value of properties"
-    total_num_properties: "Number of properties"
-    num_properties_sale: "Number for sale"
-    num_properties_rent: "Number for rent"
-    property_sizes: "Property Sizes"
-    bed: "bed"
-    site_statistics: "Website Statistics"
-    active_users_today: "Active users today"
-    properties_added_today: "Properties added today"
-    new_members_today: "New members today"
-    tbc: "tbc"
-
 # CoffeeScript
   coffeescript:
     title: "CoffeeScript Test Page"
     blurb: "This is a test page used for experiments in CoffeeScript"
-
-#  Charts:
-  charts:
-    english_vs_chinese: "English vs Chinese"
-    language: "Language"
-    english: "English"
-    chinese: "Chinese"
-    sale_vs_rent: "For Sale vs For Rent"
-    sale: "Sale"
-    rent: "Rent"
-    bed: "bed"
-    country: "Country"
-    popularity: "Popularity"
-    united_kingdom: "United Kingdom"
-    china: "China"
 
 # Member Area
 # Welcome

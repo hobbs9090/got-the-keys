@@ -45,6 +45,9 @@ RSpec.describe "Admin header navigation" do
 
     topbar_wrap = parsed_html.at_css(".admin-topbar-wrap")
     expect(topbar_wrap).to be_present
+    expect(response.body).to match(%r{/assets/admin-[^"]+\.css})
+    expect(response.body).to match(%r{/assets/admin-[^"]+\.js})
+    expect(response.body).not_to match(%r{/assets/public-[^"]+\.css})
     expect(parsed_html.at_css('a.skip-link')["href"]).to eq("#admin-main-content")
     expect(parsed_html.at_css("#admin-main-content[tabindex='-1']")).to be_present
 

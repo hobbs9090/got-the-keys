@@ -12,8 +12,8 @@
     <%= csp_meta_tag %>
     <%= tag.meta name: "turbo-cache-control", content: "no-preview" %>
     <%= javascript_tag theme_preference_bootstrap_script, nonce: true %>
-    <%= stylesheet_link_tag "application", media: "all", "data-turbo-track" => "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track" => "reload", defer: true %>
+    <%= stylesheet_link_tag "public", media: "all", "data-turbo-track" => "reload" %>
+    <%= javascript_include_tag "public", "data-turbo-track" => "reload", defer: true %>
   </head>
 
   <body class="site-shell <%= controller_path.tr('/', '-') %><%= " welcome--from-admin" if homepage_from_admin_referrer? %>"

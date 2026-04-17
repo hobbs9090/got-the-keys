@@ -190,23 +190,6 @@ it:
   read_more: Read more
   side:
     section: Section
-  statistics:
-    active_users_today: Active users today
-    bed: bed
-    new_members_today: New members today
-    num_chinese_users: Chinese users
-    num_english_users: English users
-    num_properties_rent: Number for rent
-    num_properties_sale: Number for sale
-    properties_added_today: Properties added today
-    property_sizes: Property Sizes
-    property_totals: Property Totals
-    site_statistics: Website Statistics
-    tbc: tbc
-    title: Statistics
-    total_num_properties: Number of properties
-    total_number_users: Number of users
-    total_value_properties: Value of properties
   successfully_created: Property successfully created!
   successfully_deleted: Property successfully deleted!
   successfully_updated: Property successfully updated!

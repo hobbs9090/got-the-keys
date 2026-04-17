@@ -1,0 +1,12 @@
+// Admin SCSS bundle source → app/assets/builds/admin.css
+@import "foundation-sites/scss/foundation";
+
+@include foundation-everything;
+
+@import "theme";
+@import "components/admin_security";
+@import "components/admin_shell";
+@import "components/modal";
+@import "components/property_trust";
+@import "components/qa_version_box";
+@import "components/site_chrome";

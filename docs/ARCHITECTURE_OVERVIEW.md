@@ -86,14 +86,17 @@ For the explicit rules, read:
 
 The frontend runtime is bundled through:
 
-- `app/javascript/application.js`
+- `app/javascript/public_bundle.js`
+- `app/javascript/admin_bundle.js`
+
+This split is intentional: most customers only touch the public site, so they should not pay the cost of admin CSS and JavaScript on first load. Admin-only and diagnostics-heavy surfaces should be isolated from the public bundle where practical.
 
 It boots:
 
 - native validation localization
 - property listing helpers
-- property search filter label switching
-- pagination, modal, and theme helpers
+- property search filter label switching on public pages
+- pagination, modal, theme, and admin utility helpers through layout-specific bundles
 
 The styling layer is split between:
 

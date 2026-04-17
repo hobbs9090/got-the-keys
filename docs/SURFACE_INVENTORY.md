@@ -103,8 +103,6 @@ Framework-owned endpoints such as Active Storage, Action Mailbox, and Turbo nati
   Legacy compatibility redirect to `/blog`.
 - `/members`
   Older admin-only seller directory retained for deep-link/reporting use.
-- `/statistics`
-  Older admin-only reporting page retained while the newer `/admin` workspace expands.
 - `/users/:id`
   Older admin-only seller profile surface linked from `/members`.
 

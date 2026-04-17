@@ -178,44 +178,10 @@ zh:
     appointments: "约会"
     no_appointments: "没有约会"
 
-# Statistics
-  statistics:
-    title: "统计"
-    property_totals: "物业总计"
-    total_number_users: "用户数"
-    num_english_users: "英语用户"
-    num_chinese_users: "中国用户"
-    total_value_properties: "书总物业价值 "
-    total_num_properties: "物业数目"
-    num_properties_sale: "待售物业总数 "
-    num_properties_rent: "出租物业总数 "
-    property_sizes: "物业尺寸"
-    bed: "卧室"
-    site_statistics: "网站流量统计"
-    active_users_today: "今天活跃用户"
-    properties_added_today: "今天加入属性"
-    new_members_today: "今天的新成员"
-    tbc: "正在建设中"
-
 # CoffeeScript
   coffeescript:
     title: "咖啡脚本测试页"
     blurb: "这是一个测试页面，用于实验咖啡脚本"
-
-#  Charts:
-  charts:
-    english_vs_chinese: "英语与中文"
-    language: "语"
-    english: "英语"
-    chinese: "中国的"
-    sale_vs_rent: "出售与出租"
-    sale: "卖"
-    rent: "租"
-    bed: "床"
-    country: "国家"
-    popularity: "声望(zh)"
-    united_kingdom: "联合王国"
-    china: "中国"
 
 # Member Area
 # Welcome
