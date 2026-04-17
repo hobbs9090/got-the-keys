@@ -20,7 +20,7 @@
   </div>
 
   <div class="site-card contact-hero__art">
-    <%= image_tag 'contact_hero_ai.svg', alt: '', class: 'contact-hero__image' %>
+    <%= image_tag 'contact_hero_ai.svg', alt: '', class: 'contact-hero__image', width: 1200, height: 900 %>
 
     <div class="contact-hero__art-meta">
       <span class="badge badge--neutral"><%= t('contact_us.hero_badge') %></span>
@@ -76,7 +76,7 @@
         </ul>
 
         <div class="contact-form-card__art">
-          <%= image_tag 'contact_concierge_ai.svg', alt: '', class: 'contact-form-card__art-image' %>
+          <%= image_tag 'contact_concierge_ai.svg', alt: '', class: 'contact-form-card__art-image', width: 900, height: 760 %>
         </div>
       </div>
 
@@ -124,7 +124,7 @@
         <% contact_people.each do |person| %>
           <a href="mailto:<%= person[:email] %>" class="contact-person-card">
             <div class="contact-person-card__media">
-              <%= image_tag person[:art], alt: '', class: 'contact-person-card__image', loading: 'lazy' %>
+              <%= image_tag person[:art], alt: '', class: 'contact-person-card__image', loading: 'lazy', width: 768, height: 768 %>
               <span class="badge badge--neutral contact-person-card__badge"><%= person[:role] %></span>
             </div>
 

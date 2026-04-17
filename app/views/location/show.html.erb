@@ -9,7 +9,9 @@
     <div>
       <%= image_tag(
             "https://maps.googleapis.com/maps/api/staticmap?center=#{@property.postcode}&zoom=14&size=720x450&markers=#{@property.postcode}&sensor=false",
-            alt: "Map showing the area around #{@property.address_line_1}"
+            alt: "Map showing the area around #{@property.address_line_1}",
+            width: 720,
+            height: 450
           ) %>
     </div>
 

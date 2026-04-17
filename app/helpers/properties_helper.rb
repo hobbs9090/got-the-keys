@@ -242,7 +242,13 @@ module PropertiesHelper
 
   def listing_image_tag(image_name, class_name:, alt:, loading: nil, fetchpriority: nil)
     retina_name = listing_retina_image_name(image_name)
-    html_options = { class: class_name, alt: alt, loading: loading, fetchpriority: fetchpriority }.compact
+    html_options = image_options_with_intrinsic_dimensions(
+      image_name,
+      class: class_name,
+      alt: alt,
+      loading: loading,
+      fetchpriority: fetchpriority
+    ).compact
 
     if retina_name.present?
       pixel_density_image_tag(image_name, retina_source: retina_name, **html_options)

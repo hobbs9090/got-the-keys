@@ -159,6 +159,15 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(markup).to match(%r{src="/assets/gotthekeys-wordmark-green-[^"]+\.svg"})
       expect(markup).to include('alt="GotTheKeys"')
       expect(markup).to include('class="marketing-wordmark brand-lockup"')
+      expect(markup).to include('width="1600"')
+      expect(markup).to include('height="360"')
+    end
+
+    it "derives the matching height when a custom width is provided" do
+      markup = helper.marketing_wordmark_tag(width: 180)
+
+      expect(markup).to include('width="180"')
+      expect(markup).to include('height="41"')
     end
 
     it "renders decorative variants with presentation attributes" do
@@ -168,6 +177,8 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(markup).to include('alt=""')
       expect(markup).to include('aria-hidden="true"')
       expect(markup).to include('role="presentation"')
+      expect(markup).to include('width="1600"')
+      expect(markup).to include('height="360"')
     end
   end
 
@@ -189,6 +200,8 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(markup).to match(%r{src="/assets/hero_1-[^"]+\.webp"})
       expect(markup).to include('alt=""')
       expect(markup).to include('decoding="async"')
+      expect(markup).to include('width="641"')
+      expect(markup).to include('height="392"')
       expect(markup).to match(
         %r{srcset="/assets/hero_1-[^"]+\.webp 1x, /assets/hero_1@2x-[^"]+\.webp 2x"}
       )
@@ -200,6 +213,8 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(markup).to match(%r{src="/assets/hero_1-[^"]+\.webp"})
       expect(markup).to include('alt=""')
       expect(markup).to include('decoding="async"')
+      expect(markup).to include('width="641"')
+      expect(markup).to include('height="392"')
       expect(markup).not_to include("srcset=")
     end
 

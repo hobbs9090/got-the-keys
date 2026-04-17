@@ -1,4 +1,22 @@
 module ApplicationHelper
+  IMAGE_INTRINSIC_DIMENSIONS = {
+    "gotthekeys-wordmark-green.svg" => [1600, 360],
+    "gotthekeys-wordmark-green-dark.svg" => [1600, 360],
+    "contact_hero_ai.svg" => [1200, 900],
+    "contact_concierge_ai.svg" => [900, 760],
+    "contact_avatar_ai_1.svg" => [768, 768],
+    "contact_avatar_ai_2.svg" => [768, 768],
+    "contact_avatar_ai_3.svg" => [768, 768],
+    "placeholder_world.svg" => [900, 550],
+    "properties/property_placeholder_listing.svg" => [1000, 675],
+    "hero_1.webp" => [641, 392],
+    "hero_2.webp" => [641, 392],
+    "hero_3.webp" => [641, 392],
+    "hero_4.webp" => [641, 392],
+    "hero_5.webp" => [641, 392],
+    "welcome_1.webp" => [480, 360]
+  }.freeze
+
 
   def title(page_title, options={})
     content_for(:title, page_title.to_s)
@@ -183,17 +201,20 @@ module ApplicationHelper
   def marketing_wordmark_tag(class_name: nil, alt: nil, decorative: false, variant: :default, **options)
     return theme_aware_marketing_wordmark_tag(class_name:, alt:, decorative:, **options) if variant.to_sym == :theme_aware
 
-    image_options = {
-      alt: decorative ? "" : (alt.presence || t("gotthekeys.gotthekeys", default: "got the keys")),
-      class: ["marketing-wordmark", class_name].compact.join(" ")
-    }
+    image_options = image_options_with_intrinsic_dimensions(
+      marketing_wordmark_asset_name(variant),
+      **options.merge(
+        alt: decorative ? "" : (alt.presence || t("gotthekeys.gotthekeys", default: "got the keys")),
+        class: ["marketing-wordmark", class_name].compact.join(" ")
+      )
+    )
 
     if decorative
       image_options[:aria] = { hidden: true }
       image_options[:role] = "presentation"
     end
 
-    image_tag(marketing_wordmark_asset_name(variant), **image_options.merge(options))
+    image_tag(marketing_wordmark_asset_name(variant), **image_options)
   end
 
   def theme_preference_storage_key
@@ -255,7 +276,7 @@ module ApplicationHelper
   end
 
   def pixel_density_image_tag(source, retina_source: nil, **options)
-    image_options = options.dup
+    image_options = image_options_with_intrinsic_dimensions(source, **options)
     image_options[:alt] = "" unless image_options.key?(:alt)
     image_options[:decoding] ||= "async"
 
@@ -331,6 +352,37 @@ module ApplicationHelper
 
   private
 
+  def image_options_with_intrinsic_dimensions(source, **options)
+    dimensions = intrinsic_image_dimensions_for(source)
+    return options if dimensions.blank?
+
+    width, height = dimensions
+    normalized_options = options.dup
+
+    if normalized_options[:width].present? && normalized_options[:height].blank?
+      normalized_options[:height] = scaled_dimension(normalized_options[:width], width, height)
+    elsif normalized_options[:height].present? && normalized_options[:width].blank?
+      normalized_options[:width] = scaled_dimension(normalized_options[:height], height, width)
+    else
+      normalized_options[:width] ||= width
+      normalized_options[:height] ||= height
+    end
+
+    normalized_options
+  end
+
+  def intrinsic_image_dimensions_for(source)
+    normalized_source = source.to_s.sub(%r{\A/}, "")
+    return IMAGE_INTRINSIC_DIMENSIONS[normalized_source] if IMAGE_INTRINSIC_DIMENSIONS.key?(normalized_source)
+    return [453, 302] if normalized_source.start_with?("properties/") && normalized_source.end_with?(".webp")
+
+    nil
+  end
+
+  def scaled_dimension(value, original_from, original_to)
+    (value.to_f * original_to / original_from).round
+  end
+
   def theme_aware_marketing_wordmark_tag(class_name:, alt:, decorative:, **options)
     alt_text = alt.presence || t("gotthekeys.gotthekeys", default: "got the keys")
 
@@ -346,10 +398,13 @@ module ApplicationHelper
       wrapper_options[:role] = "img"
     end
 
-    image_options = options.merge(
-      alt: "",
-      aria: { hidden: true },
-      role: "presentation"
+    image_options = image_options_with_intrinsic_dimensions(
+      marketing_wordmark_asset_name(:default),
+      **options.merge(
+        alt: "",
+        aria: { hidden: true },
+        role: "presentation"
+      )
     )
 
     light_wordmark = image_tag(

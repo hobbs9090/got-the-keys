@@ -9,6 +9,8 @@ RSpec.describe SharedHelper, type: :helper do
         expect(markup).to match(%r{src="/assets/hero_#{index}-[^"]+\.webp"})
         expect(markup).to include('alt=""')
         expect(markup).to include('decoding="async"')
+        expect(markup).to include('width="641"')
+        expect(markup).to include('height="392"')
         expect(markup).to match(%r{srcset="/assets/hero_#{index}-[^"]+\.webp 1x, /assets/hero_#{index}@2x-[^"]+\.webp 2x"})
       end
     end
@@ -29,6 +31,8 @@ RSpec.describe SharedHelper, type: :helper do
 
       expect(markup).to match(%r{src="/assets/placeholder_world-[^"]+\.svg"})
       expect(markup).to include('alt=""')
+      expect(markup).to include('width="900"')
+      expect(markup).to include('height="550"')
       expect(markup).not_to include("srcset=")
     end
   end
@@ -48,16 +52,16 @@ RSpec.describe SharedHelper, type: :helper do
 
       expect(markup).to include('alt="Property placeholder image"')
       expect(markup).to include('class="listing-card__image"')
-      expect(markup).to include('width="160"')
-      expect(markup).to include('height="160"')
+      expect(markup).to include('width="1000"')
+      expect(markup).to include('height="675"')
     end
 
     it "renders a medium property placeholder" do
       markup = helper.property_image_medium
 
       expect(markup).to include('alt="Property placeholder image"')
-      expect(markup).to include('width="250"')
-      expect(markup).to include('height="250"')
+      expect(markup).to include('width="1000"')
+      expect(markup).to include('height="675"')
     end
   end
 

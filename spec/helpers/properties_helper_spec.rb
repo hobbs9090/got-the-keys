@@ -17,6 +17,8 @@ RSpec.describe PropertiesHelper, type: :helper do
       markup = helper.small_image_for(property)
 
       expect(markup).to match(%r{src="/assets/properties/property_18_cedar_road_hero-[^"]+\.webp"})
+      expect(markup).to include('width="453"')
+      expect(markup).to include('height="302"')
       expect(markup).to match(
         %r{srcset="/assets/properties/property_18_cedar_road_hero-[^"]+\.webp 1x, /assets/properties/property_18_cedar_road_hero@2x-[^"]+\.webp 2x"}
       )
@@ -35,6 +37,8 @@ RSpec.describe PropertiesHelper, type: :helper do
       markup = helper.small_image_for(property)
 
       expect(markup).to include(%(src="/gallery-cover.jpg"))
+      expect(markup).not_to include('width="')
+      expect(markup).not_to include('height="')
       expect(markup).not_to include("srcset=")
     end
   end

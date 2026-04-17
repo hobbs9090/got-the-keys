@@ -20,7 +20,7 @@ module SharedHelper
   end
 
   def world_image
-    image_tag('placeholder_world.svg', alt: "")
+    image_tag('placeholder_world.svg', alt: "", width: 900, height: 550)
   end
 
   def under_construction_image
@@ -30,7 +30,8 @@ module SharedHelper
   def property_image_small(class_name: nil)
     image_tag(
       'properties/property_placeholder_listing.svg',
-      size: '160',
+      width: 1000,
+      height: 675,
       class: class_name,
       alt: t("ui.shared.property_placeholder_alt")
     )
@@ -39,7 +40,8 @@ module SharedHelper
   def property_image_medium(class_name: nil)
     image_tag(
       'properties/property_placeholder_listing.svg',
-      size: '250',
+      width: 1000,
+      height: 675,
       class: class_name,
       alt: t("ui.shared.property_placeholder_alt")
     )
