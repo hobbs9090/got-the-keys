@@ -231,6 +231,20 @@ module ApplicationHelper
     JS
   end
 
+  def async_stylesheet_include_tag(source, **options)
+    preload_options = options.except(:media).merge(rel: "preload", as: "style")
+    stylesheet_options = options.merge(media: "print", onload: "this.media='all'")
+
+    safe_join(
+      [
+        tag.link(**path_to_stylesheet(source).yield_self { |href| preload_options.merge(href:) }),
+        tag.link(**path_to_stylesheet(source).yield_self { |href| stylesheet_options.merge(rel: "stylesheet", href:) }),
+        content_tag(:noscript, stylesheet_link_tag(source, **options))
+      ],
+      "\n"
+    )
+  end
+
   def marketing_wordmark_asset_name(variant)
     case variant.to_sym
     when :dark
