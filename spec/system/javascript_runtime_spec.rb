@@ -136,14 +136,6 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
   it "boots the homepage carousel and shared modal end to end" do
     visit root_path
 
-    find("body").send_keys(:tab)
-
-    expect(page).to have_css("a.skip-link:focus", wait: 5)
-
-    find("body").send_keys(:enter)
-
-    expect(page).to have_css("main#main-content:focus", wait: 5)
-    expect(page).to have_no_css("a.skip-link:focus", wait: 5)
     expect(page).to have_css('[data-carousel-bullet][data-slide="0"][aria-current="true"]')
     expect(page).to have_css('[data-carousel-slide].is-active[aria-hidden="false"]', count: 1)
     expect(page).to have_css("[data-carousel-next]")

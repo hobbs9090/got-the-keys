@@ -3,7 +3,6 @@ import "@hotwired/turbo-rails";
 import { bootModals, teardownModals } from "./modals";
 import { bootNativeValidations, teardownNativeValidations } from "./native_validations";
 import { bootPropertyListingForms, teardownPropertyListingForms } from "./property_listing_form";
-import { bootSkipLinks, teardownSkipLinks } from "./skip_links";
 import { bootThemePreference, teardownThemePreference } from "./theme_preference";
 import { bootAdminSecurityScroll, teardownAdminSecurityScroll } from "./admin_security_scroll";
 import { bootAdminDemoPerformanceSeedForms, teardownAdminDemoPerformanceSeedForms } from "./admin_demo_performance_seed_form";
@@ -15,7 +14,6 @@ const bootApplication = () => {
   bootModals();
   bootNativeValidations();
   bootPropertyListingForms();
-  bootSkipLinks();
 };
 
 const teardownApplication = () => {
@@ -25,7 +23,6 @@ const teardownApplication = () => {
   teardownModals();
   teardownNativeValidations();
   teardownPropertyListingForms();
-  teardownSkipLinks();
 };
 
 if (document.readyState === "loading") {

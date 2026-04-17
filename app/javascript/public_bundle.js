@@ -10,7 +10,6 @@ import { bootPropertySearchFilters, teardownPropertySearchFilters } from "./prop
 import { bootPropertyFilterSave, teardownPropertyFilterSave } from "./property_filter_save";
 import { bootAccountDeleteConfirm, teardownAccountDeleteConfirm } from "./account_delete_confirm";
 import { bootResponsiveTables, teardownResponsiveTables } from "./responsive_tables";
-import { bootSkipLinks, teardownSkipLinks } from "./skip_links";
 import { bootThemePreference, teardownThemePreference } from "./theme_preference";
 import { bootCurrentPageLinkGuard, teardownCurrentPageLinkGuard } from "./current_page_link_guard";
 
@@ -27,7 +26,6 @@ const bootApplication = () => {
   bootPropertyFilterSave();
   bootAccountDeleteConfirm();
   bootResponsiveTables();
-  bootSkipLinks();
 };
 
 const teardownApplication = () => {
@@ -43,7 +41,6 @@ const teardownApplication = () => {
   teardownPropertyFilterSave();
   teardownAccountDeleteConfirm();
   teardownResponsiveTables();
-  teardownSkipLinks();
 };
 
 if (document.readyState === "loading") {

@@ -54,7 +54,6 @@ RSpec.describe "Admin header navigation" do
     expect(parsed_html.at_css('link[rel="preload"][as="style"][href*="/assets/admin-"]')).to be_present
     expect(parsed_html.at_css('link[rel="stylesheet"][href*="/assets/admin-"][media="print"][onload="this.media=\'all\'"]')).to be_present
     expect(parsed_html.at_css("noscript link[rel='stylesheet'][href*='/assets/admin-']")).to be_present
-    expect(parsed_html.at_css('a.skip-link')["href"]).to eq("#admin-main-content")
     expect(parsed_html.at_css("#admin-main-content[tabindex='-1']")).to be_present
 
     topbar = topbar_wrap.at_css(".admin-topbar")

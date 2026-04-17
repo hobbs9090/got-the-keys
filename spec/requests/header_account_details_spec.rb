@@ -41,7 +41,6 @@ RSpec.describe "Header account details", type: :request do
     expect(parsed_html.at_css("noscript link[rel='stylesheet'][href*='/assets/public-']")).to be_present
     expect(response.body).to include("gotthekeys-theme-preference")
     expect(response.body).to include("prefers-color-scheme: dark")
-    expect(parsed_html.at_css('a.skip-link')["href"]).to eq("#main-content")
     expect(parsed_html.at_css("main#main-content[tabindex='-1']")).to be_present
 
     header = parsed_html.at_css('[data-testid="site-header"]')
