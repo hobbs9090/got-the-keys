@@ -11,10 +11,6 @@ class PhotosController < ApplicationController
     @new_photo = @property.photos.new(default_photo_attributes)
   end
 
-  def new
-    redirect_to property_photos_path(@property)
-  end
-
   def create
     @photos = @property.photos.ordered
     @new_photo = @property.photos.new(photo_params)

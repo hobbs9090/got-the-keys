@@ -63,8 +63,8 @@ GotTheKeys::Application.routes.draw do
     end
 
     resource :saved_property, only: [:create, :destroy]
-    resources :photos, only: [:index, :new, :create, :update, :destroy]
-    resources :floor_plans, only: [:index, :new, :create, :update, :destroy]
+    resources :photos, only: [:index, :create, :update, :destroy]
+    resources :floor_plans, only: [:index, :create, :update, :destroy]
     resources :property_documents, path: "documents", only: [:index, :new, :create, :update, :destroy] do
       get :download, on: :member
     end

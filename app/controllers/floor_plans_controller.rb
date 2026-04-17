@@ -11,10 +11,6 @@ class FloorPlansController < ApplicationController
     @new_floor_plan = @property.floor_plans.new(position: next_position)
   end
 
-  def new
-    redirect_to property_floor_plans_path(@property)
-  end
-
   def create
     @floor_plans = @property.floor_plans.ordered
     @new_floor_plan = @property.floor_plans.new(floor_plan_params)
