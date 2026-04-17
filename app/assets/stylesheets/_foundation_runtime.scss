@@ -1,0 +1,12 @@
+@mixin gotthekeys-foundation-core {
+  @include foundation-global-styles;
+  @include foundation-forms;
+  @include foundation-typography;
+  @include foundation-xy-grid-classes;
+  @include foundation-button;
+  @include foundation-callout;
+  @include foundation-menu;
+  @include foundation-pagination;
+  @include foundation-table;
+  @include foundation-visibility-classes;
+}
