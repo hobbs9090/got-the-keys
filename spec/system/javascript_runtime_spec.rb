@@ -185,6 +185,29 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     expect(page).to have_no_css('[data-modal][aria-hidden="false"]', visible: false)
   end
 
+  it "keeps the public header navigation working with Turbo visits" do
+    visit contact_us_path
+
+    click_button "View Map"
+
+    expect(page).to have_css("#map-modal[aria-hidden='false']", visible: true)
+    expect(page).to have_css("body.site-modal-open", visible: false)
+
+    page.execute_script("document.querySelector('[data-testid=\"site-nav\"] a[href=\"/searches\"]').click()")
+
+    expect(page).to have_current_path(searches_path, wait: 5)
+    expect(page).to have_no_css("body.site-modal-open", visible: false)
+    expect(page).to have_no_css('[data-modal][aria-hidden="false"]', visible: false)
+    expect(page).to have_title("Search")
+
+    page.execute_script("document.querySelector('[data-testid=\"home-link\"]').click()")
+
+    expect(page).to have_current_path(root_path, wait: 5)
+    expect(page).to have_no_css("body.site-modal-open", visible: false)
+    expect(page).to have_no_css('[data-modal][aria-hidden="false"]', visible: false)
+    expect(page).to have_title("GotTheKeys")
+  end
+
   it "clears modal overlay state during navigation lifecycle events", js: true do
     visit contact_us_path
 

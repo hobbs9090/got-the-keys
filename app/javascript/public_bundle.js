@@ -11,11 +11,9 @@ import { bootPropertyFilterSave, teardownPropertyFilterSave } from "./property_f
 import { bootAccountDeleteConfirm, teardownAccountDeleteConfirm } from "./account_delete_confirm";
 import { bootResponsiveTables, teardownResponsiveTables } from "./responsive_tables";
 import { bootThemePreference, teardownThemePreference } from "./theme_preference";
-import { bootCurrentPageLinkGuard, teardownCurrentPageLinkGuard } from "./current_page_link_guard";
 
 const bootApplication = () => {
   bootThemePreference();
-  bootCurrentPageLinkGuard();
   bootAppointmentSlotPickers();
   bootCarousels();
   bootModals();
@@ -30,7 +28,6 @@ const bootApplication = () => {
 
 const teardownApplication = () => {
   teardownThemePreference();
-  teardownCurrentPageLinkGuard();
   teardownAppointmentSlotPickers();
   teardownCarousels();
   teardownModals();

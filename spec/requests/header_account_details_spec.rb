@@ -78,7 +78,7 @@ RSpec.describe "Header account details", type: :request do
     expect(link_hrefs('[data-testid="guest-header-actions"] a.button')).to eq([new_user_registration_path, new_user_session_path])
   end
 
-  it "exposes a root home-link without aria-current so redundant root visits can be skipped in JS" do
+  it "exposes a root home-link without aria-current" do
     get root_path
 
     expect(response).to have_http_status(:ok)
