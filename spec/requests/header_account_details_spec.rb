@@ -69,6 +69,17 @@ RSpec.describe "Header account details", type: :request do
     expect(link_hrefs('[data-testid="guest-header-actions"] a.button')).to eq([new_user_registration_path, new_user_session_path])
   end
 
+  it "exposes a root home-link without aria-current so redundant root visits can be skipped in JS" do
+    get root_path
+
+    expect(response).to have_http_status(:ok)
+
+    home_link = parsed_html.at_css('[data-testid="home-link"]')
+    expect(home_link).to be_present
+    expect(home_link["aria-current"]).to be_nil
+    expect(home_link["href"]).to eq(root_path)
+  end
+
   it "marks the active public navigation item with aria-current" do
     get searches_path
 

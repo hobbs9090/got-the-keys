@@ -7,26 +7,31 @@ const isPlainLeftClick = (event) =>
   !event.shiftKey &&
   !event.altKey;
 
-const normalizeUrl = (url) => {
-  const normalized = new URL(url, window.location.origin);
-  normalized.hash = "";
-  return normalized.toString();
+const samePathname = (a, b) => {
+  const left = new URL(a, window.location.origin);
+  const right = new URL(b, window.location.origin);
+  return left.pathname === right.pathname;
 };
 
 export const bootCurrentPageLinkGuard = () => {
   if (currentPageLinkGuardHandler) return;
 
   currentPageLinkGuardHandler = (event) => {
-    const link = event.target.closest?.('a[aria-current="page"]');
+    const target = event.target instanceof Element ? event.target : event.target?.parentElement;
+    const link = target?.closest?.("a[href]");
     if (!link) return;
     if (!isPlainLeftClick(event)) return;
     if (link.target && link.target !== "_self") return;
     if (link.hasAttribute("download")) return;
     if (link.dataset.turboMethod || link.dataset.method) return;
 
-    const currentUrl = normalizeUrl(window.location.href);
-    const linkUrl = normalizeUrl(link.href);
-    if (currentUrl !== linkUrl) return;
+    const isAriaCurrentPage = link.getAttribute("aria-current") === "page";
+    const isHomeBrandCurrent =
+      link.dataset.testid === "home-link" &&
+      samePathname(window.location.href, link.href);
+
+    if (!isAriaCurrentPage && !isHomeBrandCurrent) return;
+    if (isAriaCurrentPage && !samePathname(window.location.href, link.href)) return;
 
     event.preventDefault();
   };
