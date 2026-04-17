@@ -2991,6 +2991,59 @@ html[data-theme="dark"] {
   gap: 1rem;
 }
 
+.admin-saved-filters-disclosure {
+  display: grid;
+  gap: 1rem;
+}
+
+.admin-saved-filters-disclosure__summary {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  list-style: none;
+}
+
+.admin-saved-filters-disclosure__summary::-webkit-details-marker {
+  display: none;
+}
+
+.admin-saved-filters-disclosure__summary::marker {
+  content: "";
+}
+
+.admin-saved-filters-disclosure__summary::after {
+  color: var(--color-heading);
+  content: "+";
+  flex: 0 0 auto;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.admin-saved-filters-disclosure[open] .admin-saved-filters-disclosure__summary::after {
+  content: "\2212";
+}
+
+.admin-saved-filters-disclosure__summary > div {
+  min-width: 0;
+}
+
+.admin-saved-filters-disclosure__summary h2,
+.admin-saved-filters-disclosure__summary p {
+  margin: 0;
+}
+
+.admin-saved-filters-disclosure__count {
+  flex: 0 0 auto;
+}
+
+.admin-saved-filters-disclosure__content {
+  display: grid;
+  gap: 1rem;
+}
+
 .property-saved-search-card__main {
   display: grid;
   gap: 0.9rem;
@@ -4025,6 +4078,11 @@ table th {
   .section-heading__actions,
   .admin-inline-actions {
     justify-content: flex-start;
+  }
+
+  .admin-saved-filters-disclosure__summary {
+    align-items: flex-start;
+    flex-wrap: wrap;
   }
 
   .property-card__actions {

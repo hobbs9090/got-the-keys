@@ -34,6 +34,10 @@ class SavedSearch < ApplicationRecord
     }.compact_blank
   end
 
+  def admin_filter_params
+    filter_params.slice(:q, :sale_status, :town_city, :min_bedrooms, :min_price, :max_price, :sort)
+  end
+
   def matching_properties_count
     PropertyCatalogueQuery.new(params: filter_params).call.total_count
   end

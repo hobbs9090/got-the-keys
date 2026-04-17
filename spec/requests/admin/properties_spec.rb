@@ -26,7 +26,7 @@ RSpec.describe "Admin properties", type: :request do
 
     search_input = search_form.at_css('[data-testid="admin-properties-search-input"]')
     expect(search_input).to be_present
-    expect(search_input["placeholder"]).to eq("Address, postcode, seller, or status")
+    expect(search_input["placeholder"]).to eq("Try Sevenoaks, TN13 or garden")
 
     status_select = search_form.at_css('[data-testid="admin-properties-status-select"]')
     expect(status_select).to be_present
@@ -42,12 +42,12 @@ RSpec.describe "Admin properties", type: :request do
     expect(count_label.text.strip).to eq("2 properties total")
   end
 
-  it "filters properties by address and seller details" do
+  it "filters properties by address details using the public catalogue query semantics" do
     matching_user = FactoryBot.create(:user, first_name: "Taylor", last_name: "Stone", email: "taylor.stone@example.com")
     matching_property = FactoryBot.create(:property, user: matching_user, address_line_1: "Cedar View")
     non_matching_property = FactoryBot.create(:property, address_line_1: "Maple House")
 
-    get admin_properties_path, params: { q: "Taylor Cedar" }
+    get admin_properties_path, params: { q: "Cedar" }
 
     expect(response).to have_http_status(:ok)
 
@@ -56,7 +56,7 @@ RSpec.describe "Admin properties", type: :request do
     expect(card_ids).not_to include("admin-property-card-#{non_matching_property.id}")
 
     search_input = parsed_html.at_css('[data-testid="admin-properties-search-input"]')
-    expect(search_input["value"]).to eq("Taylor Cedar")
+    expect(search_input["value"]).to eq("Cedar")
   end
 
   it "treats q as case-insensitive" do
@@ -64,7 +64,7 @@ RSpec.describe "Admin properties", type: :request do
     matching_property = FactoryBot.create(:property, user: matching_user, address_line_1: "Cedar View")
     non_matching_property = FactoryBot.create(:property, address_line_1: "Maple House")
 
-    get admin_properties_path, params: { q: "tAYlOr cEdAr" }
+    get admin_properties_path, params: { q: "cEdAr" }
 
     expect(response).to have_http_status(:ok)
 
@@ -113,6 +113,10 @@ RSpec.describe "Admin properties", type: :request do
 
     panel = parsed_html.at_css('[data-testid="admin-saved-filters-panel"]')
     expect(panel).to be_present
+    expect(panel.name).to eq("details")
+    expect(panel["open"]).to be_nil
+    expect(parsed_html.at_css('[data-testid="admin-saved-filters-toggle"]')).to be_present
+    expect(parsed_html.at_css('[data-testid="admin-saved-filters-count"]')&.text&.strip).to eq("1 saved filter")
     expect(parsed_html.css('[data-testid="admin-saved-filter-card"]').count).to eq(1)
 
     apply_link = parsed_html.at_css(%([data-testid="admin-apply-saved-filter-#{saved_search.id}"]))
@@ -124,6 +128,40 @@ RSpec.describe "Admin properties", type: :request do
     expect(parsed_html.at_css(%([data-testid="admin-apply-saved-filter-#{stale_search.id}"]))).not_to be_present
     expect(parsed_html.at_css(%([data-testid="admin-apply-saved-filter-#{disabled_search.id}"]))).not_to be_present
     expect(parsed_html.at_css(%([data-testid="admin-apply-saved-filter-#{other_user_search.id}"]))).not_to be_present
+  end
+
+  it "uses the admin property query for saved filter match counts" do
+    owner_user = FactoryBot.create(:user, email: admin.email)
+    saved_search = FactoryBot.create(
+      :saved_search,
+      user: owner_user,
+      search_query: "Mount Ephraim",
+      sale_status: nil,
+      town_city: nil,
+      min_bedrooms: nil,
+      min_price: nil,
+      max_price: nil,
+      alerts_enabled: true
+    )
+    matching_property = FactoryBot.create(:property, address_line_1: "44 Mount Ephraim")
+    hidden_match = FactoryBot.create(:property, :draft, address_line_1: "Hidden Mount Ephraim")
+    non_matching_property = FactoryBot.create(:property, address_line_1: "44 Cedar View", town_city: "Sevenoaks")
+
+    get admin_properties_path
+
+    expect(response).to have_http_status(:ok)
+
+    apply_link = parsed_html.at_css(%([data-testid="admin-apply-saved-filter-#{saved_search.id}"]))
+    expect(apply_link).to be_present
+    expect(apply_link.text.strip).to eq("View 1 matching listing")
+
+    get apply_link["href"]
+
+    expect(response).to have_http_status(:ok)
+    card_ids = parsed_html.css('[data-testid^="admin-property-card-"]').map { |row| row["data-testid"] }
+    expect(card_ids).to eq(["admin-property-card-#{matching_property.id}"])
+    expect(card_ids).not_to include("admin-property-card-#{hidden_match.id}")
+    expect(card_ids).not_to include("admin-property-card-#{non_matching_property.id}")
   end
 
   it "applies saved filter params on the admin properties index" do

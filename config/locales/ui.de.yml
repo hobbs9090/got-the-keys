@@ -888,6 +888,13 @@ de:
             one: 1 Objekt insgesamt
             other: "%{display_count} Objekte insgesamt"
           no_results: Keine Objekte entsprechen dieser Suche.
+          saved_filters:
+            eyebrow: Gespeicherte Suchfilter
+            title: Gespeicherten Filter anwenden
+            count_label:
+              one: 1 gespeicherter Filter
+              other: "%{display_count} gespeicherte Filter"
+            apply: Filter anwenden
           search:
             label: Objekte suchen
             placeholder: Adresse, Postleitzahl, Verkäufer oder Status

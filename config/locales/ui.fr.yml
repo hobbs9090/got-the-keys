@@ -892,6 +892,13 @@ fr:
             one: 1 bien au total
             other: "%{display_count} biens au total"
           no_results: Aucun bien ne correspond a cette recherche.
+          saved_filters:
+            eyebrow: Filtres de recherche enregistres
+            title: Appliquer un filtre enregistre
+            count_label:
+              one: 1 filtre enregistre
+              other: "%{display_count} filtres enregistres"
+            apply: Appliquer le filtre
           search:
             label: Rechercher des biens
             placeholder: Adresse, code postal, vendeur ou statut

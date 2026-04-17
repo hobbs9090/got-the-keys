@@ -16,7 +16,7 @@
   <%= form_with url: admin_properties_path, method: :get, class: "admin-filter-form", local: true, data: { testid: "admin-properties-search" } do |f| %>
     <div>
       <%= f.label :q, t("ui.admin.properties.index.search.label") %>
-      <%= f.search_field :q, value: @query, placeholder: t("ui.admin.properties.index.search.placeholder"), data: { testid: "admin-properties-search-input" } %>
+      <%= f.search_field :q, value: @query, placeholder: t("ui.properties.filters.query_placeholder"), data: { testid: "admin-properties-search-input" } %>
     </div>
     <div>
       <%= f.label :listing_state, t("ui.admin.properties.index.search.status") %>

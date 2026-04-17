@@ -886,6 +886,13 @@ it:
             one: 1 immobile in totale
             other: "%{display_count} immobili in totale"
           no_results: Nessun immobile corrisponde a questa ricerca.
+          saved_filters:
+            eyebrow: Filtri di ricerca salvati
+            title: Applica un filtro salvato
+            count_label:
+              one: 1 filtro salvato
+              other: "%{display_count} filtri salvati"
+            apply: Applica filtro
           search:
             label: Cerca immobili
             placeholder: Indirizzo, CAP, venditore o stato

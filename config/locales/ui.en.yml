@@ -1111,6 +1111,9 @@ en:
           saved_filters:
             eyebrow: "Saved search filters"
             title: "Apply a saved filter"
+            count_label:
+              one: "1 saved filter"
+              other: "%{display_count} saved filters"
             apply: "Apply filter"
           search:
             label: "Search properties"

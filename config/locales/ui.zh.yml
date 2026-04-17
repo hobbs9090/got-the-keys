@@ -875,6 +875,13 @@ zh:
             one: 共 1 套房源
             other: 共 %{display_count} 套房源
           no_results: 没有房源符合当前搜索。
+          saved_filters:
+            eyebrow: 已保存的搜索筛选
+            title: 应用已保存的筛选
+            count_label:
+              one: 1 个已保存筛选
+              other: "%{display_count} 个已保存筛选"
+            apply: 应用筛选
           search:
             label: 搜索房源
             placeholder: 地址、邮编、卖家或状态
