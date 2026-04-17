@@ -19,7 +19,7 @@ class PropertyCatalogueQuery
       filters:,
       scope:,
       properties:,
-      available_towns: town_scope.order(:town_city).distinct.pluck(:town_city),
+      available_towns: relation.model.cached_available_towns(scope: town_scope),
       total_count: properties.total_count
     )
   end

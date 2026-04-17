@@ -12,7 +12,8 @@ class PropertiesController < ApplicationController
     catalogue = PropertyCatalogueQuery.new(params:).call
 
     @filters = catalogue.filters
-    @properties = catalogue.properties
+    @properties = catalogue.properties.load
+    @next_available_slots_by_property_id = PropertyNextAvailableSlotLookup.new(properties: @properties).call
     @available_towns = catalogue.available_towns
     @total_properties = catalogue.total_count
     @catalogue_totals = {

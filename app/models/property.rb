@@ -123,6 +123,19 @@ class Property < ApplicationRecord
       Rails.cache.fetch([name, 'for_rent_total', publicly_visible.maximum(:updated_at)]) { publicly_visible.for_rent.count }
     end
 
+    def cached_available_towns(scope: publicly_visible)
+      cache_key =
+        [
+          name,
+          "available_towns",
+          scope.where.not(town_city: [nil, ""]).maximum(:updated_at)
+        ]
+
+      Rails.cache.fetch(cache_key) do
+        scope.where.not(town_city: [nil, ""]).order(:town_city).distinct.pluck(:town_city)
+      end
+    end
+
     def search(query, sale_status:)
       filter(q: query, sale_status: sale_status)
     end

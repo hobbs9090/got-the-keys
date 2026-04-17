@@ -122,6 +122,13 @@ module PropertiesHelper
     document.title
   end
 
+  def property_card_next_slot(property)
+    preloaded_slots = instance_variable_defined?(:@next_available_slots_by_property_id) ? @next_available_slots_by_property_id : nil
+    return preloaded_slots[property.id] if preloaded_slots&.key?(property.id)
+
+    property.next_available_slots(limit: 1).first
+  end
+
   def property_update_label(property)
     return t("ui.properties.update_labels.recently_updated") if property.recently_updated?
     return t("ui.properties.update_labels.stale") if property.stale_listing?

@@ -74,7 +74,7 @@
         <footer class="property-card__footer">
           <div>
             <p class="property-card__availability"><%= property_update_label(property) %></p>
-            <% next_slot = property.next_available_slots(limit: 1).first %>
+            <% next_slot = property_card_next_slot(property) %>
             <% if next_slot.present? %>
               <p class="property-card__availability"><%= t("ui.properties.card.next_slot", time: formatted_public_date_time(next_slot.starts_at)) %></p>
             <% else %>
