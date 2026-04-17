@@ -65,6 +65,14 @@ Deploy metadata can also surface:
 
 This information is written during Capistrano deploys and surfaced in admin/QA diagnostics.
 
+Local development behaves slightly differently:
+
+- on localhost, the footer commit badge and app-version helpers read the current Git SHA at render time when no deploy build number is present
+- that means new local commits show up in the footer and `/admin/qa` without restarting the Rails server
+- the `+ local` suffix is also based on the current working tree state, so uncommitted changes are reflected live in development
+
+Hosted environments continue to use deploy metadata written at release time rather than recalculating Git state on each request.
+
 ## Assets And Static Files
 
 Frontend assets are built through:

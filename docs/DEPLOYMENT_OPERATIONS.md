@@ -55,6 +55,7 @@ The deploy process also writes build metadata into:
 - `shared/storage/build_info.json`
 
 That supports admin and QA runtime version reporting.
+In hosted environments, those version surfaces use the deployed build metadata rather than recalculating the Git SHA on each request.
 
 Staging also invokes the existing Capistrano `deploy:reset` task after `deploy:published`.
 That means every future staging deploy rebuilds the database and reloads seed data from scratch.
