@@ -1,0 +1,102 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "open3"
+require_relative "../lib/ci/spec_change_guard"
+
+def git_stdout(*args)
+  stdout, stderr, status = Open3.capture3("git", *args)
+  return stdout if status.success?
+
+  warn stderr unless stderr.to_s.strip.empty?
+  abort "Unable to read staged git state for the spec coverage guard."
+end
+
+def staged_changed_files
+  status_stdout = git_stdout("diff", "--cached", "--name-status")
+  numstat_stdout = git_stdout("diff", "--cached", "--numstat")
+
+  merge_change_metadata(
+    status_stdout.lines.filter_map { |line| parse_changed_file_status(line) },
+    numstat_stdout.lines.filter_map { |line| parse_changed_file_counts(line) }
+  )
+end
+
+def parse_changed_file_status(line)
+  parts = line.split("\t").map(&:strip).reject(&:empty?)
+  return if parts.empty?
+
+  status = parts.shift
+  path = parts.last
+  return if path.nil? || path.empty?
+
+  { path:, status: }
+end
+
+def parse_changed_file_counts(line)
+  parts = line.split("\t").map(&:strip).reject(&:empty?)
+  return if parts.length < 3
+
+  additions, deletions = parts.shift(2)
+  path = parts.last
+  return if path.nil? || path.empty?
+
+  {
+    path:,
+    additions: additions.match?(/\A\d+\z/) ? additions.to_i : nil,
+    deletions: deletions.match?(/\A\d+\z/) ? deletions.to_i : nil
+  }
+end
+
+def merge_change_metadata(status_entries, count_entries)
+  counts_by_path = count_entries.each_with_object({}) do |entry, result|
+    result[entry[:path]] = entry
+  end
+
+  status_entries.map do |entry|
+    entry.merge(counts_by_path.fetch(entry[:path], {}))
+  end
+end
+
+def git_file_exists_at_ref?(ref, path)
+  _stdout, _stderr, status = Open3.capture3("git", "cat-file", "-e", "#{ref}:#{path}")
+  status.success?
+end
+
+def file_contents_at_ref(ref, path)
+  return unless git_file_exists_at_ref?(ref, path)
+
+  stdout, stderr, status = Open3.capture3("git", "show", "#{ref}:#{path}")
+  return stdout if status.success?
+
+  warn stderr
+  abort "Unable to read #{path} from #{ref} for the staged spec coverage guard."
+end
+
+def file_contents_from_index(path)
+  stdout, stderr, status = Open3.capture3("git", "show", ":#{path}")
+  return stdout if status.success?
+  return if stderr.to_s.include?("exists on disk, but not in the index") || stderr.to_s.include?("pathspec")
+
+  warn stderr unless stderr.to_s.strip.empty?
+  abort "Unable to read staged #{path} from the git index for the spec coverage guard."
+end
+
+changed_files = staged_changed_files
+
+if changed_files.empty?
+  puts "No staged changes detected for the pre-commit spec coverage guard."
+  exit 0
+end
+
+results = []
+results << Ci::SpecChangeGuard.new(changed_files: changed_files).evaluate
+results << Ci::TopLevelControllerCoverageGuard.new(
+  changed_files: changed_files,
+  before_reader: ->(path) { file_contents_at_ref("HEAD", path) },
+  after_reader: ->(path) { file_contents_from_index(path) }
+).evaluate
+
+results.each { |result| puts result.message }
+
+exit(results.all?(&:success?) ? 0 : 1)

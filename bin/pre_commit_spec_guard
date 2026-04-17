@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+cd "$repo_root"
+
+if ! command -v ruby >/dev/null 2>&1; then
+  echo "ruby is required to run the pre-commit spec coverage guard." >&2
+  exit 1
+fi
+
+if [ ! -x "bin/ensure_staged_spec_changes" ]; then
+  echo "Missing executable helper: bin/ensure_staged_spec_changes" >&2
+  exit 1
+fi
+
+log_dir="${PRE_COMMIT_SPEC_GUARD_LOG_DIR:-tmp/git-hooks/pre_commit}"
+timestamp="$(date +%Y%m%d-%H%M%S)"
+log_file="${log_dir}/${timestamp}.log"
+latest_log="${log_dir}/latest.log"
+
+mkdir -p "$log_dir"
+
+echo "pre-commit: checking staged product/spec changes..."
+echo "Saving detailed output to ${log_file}"
+
+set +e
+ruby bin/ensure_staged_spec_changes 2>&1 | tee "$log_file" >&2
+guard_status=${PIPESTATUS[0]}
+set -e
+
+ln -sf "$(basename "$log_file")" "$latest_log"
+
+if [ "$guard_status" -eq 0 ]; then
+  echo "pre-commit: spec coverage guard passed. Log saved to ${latest_log}"
+else
+  echo "pre-commit: spec coverage guard failed. Commit cancelled." >&2
+  echo "Review ${latest_log} for the full output." >&2
+fi
+
+exit "$guard_status"

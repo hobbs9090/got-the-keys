@@ -7,4 +7,4 @@ cd "$repo_root"
 git config --local core.hooksPath .githooks
 
 echo "Configured Git hooks for ${repo_root}"
-echo "Git will now run .githooks/pre-push before every push."
+echo "Git will now run .githooks/pre-commit before every commit and .githooks/pre-push before every push."

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+cd "$repo_root"
+
+if [ ! -x "bin/pre_commit_spec_guard" ]; then
+  echo "Missing executable helper: bin/pre_commit_spec_guard" >&2
+  exit 1
+fi
+
+exec bin/pre_commit_spec_guard

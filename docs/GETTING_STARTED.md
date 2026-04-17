@@ -110,7 +110,7 @@ bin/i18n_health
 
 ## Git Hook Workflow
 
-The repo ships with a tracked pre-push hook.
+The repo ships with tracked `pre-commit` and `pre-push` hooks.
 
 Install it once:
 
@@ -118,7 +118,13 @@ Install it once:
 bin/install_git_hooks
 ```
 
-That hook runs `bundle exec rspec` before pushes and stores logs in:
+The `pre-commit` hook runs the staged spec coverage guards before commits. This also applies when committing through the VS Code Source Control button, because Git still executes the tracked hook through `core.hooksPath`.
+
+If a VS Code commit fails, review:
+
+- `tmp/git-hooks/pre_commit/latest.log`
+
+The `pre-push` hook runs `bundle exec rspec` before pushes and stores logs in:
 
 - `tmp/rspec/pre_push/latest.log`
 
