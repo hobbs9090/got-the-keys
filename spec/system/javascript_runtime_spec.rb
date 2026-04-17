@@ -500,6 +500,8 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     )
 
     boot_runtime(cookie_policy_index_path)
+    expect(page).to have_css("#cookie-preferences")
+    expect(page).to have_css(".cookie-policy-card--summary")
 
     cookie_styles = styles_for(<<~JS)
       (() => {
@@ -527,6 +529,8 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     )
 
     boot_runtime(how_it_works_path)
+    expect(page).to have_css(".page-hero.how-hero")
+    expect(page).to have_css(".how-hero__panel")
 
     how_hero_styles = styles_for(<<~JS)
       (() => {
