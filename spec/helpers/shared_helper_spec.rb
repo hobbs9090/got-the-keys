@@ -8,8 +8,18 @@ RSpec.describe SharedHelper, type: :helper do
 
         expect(markup).to match(%r{src="/assets/hero_#{index}-[^"]+\.webp"})
         expect(markup).to include('alt=""')
+        expect(markup).to include('decoding="async"')
         expect(markup).to match(%r{srcset="/assets/hero_#{index}-[^"]+\.webp 1x, /assets/hero_#{index}@2x-[^"]+\.webp 2x"})
       end
+    end
+  end
+
+  describe "hero image loading hints" do
+    it "allows the first hero slide to opt into eager loading" do
+      markup = helper.hero_1_image(loading: "eager", fetchpriority: "high")
+
+      expect(markup).to include('loading="eager"')
+      expect(markup).to include('fetchpriority="high"')
     end
   end
 

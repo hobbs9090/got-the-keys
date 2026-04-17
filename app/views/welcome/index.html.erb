@@ -1,4 +1,10 @@
-<% hero_slides = [hero_1_image, hero_2_image, hero_3_image, hero_4_image, hero_5_image] %>
+<% hero_slides = [
+  hero_1_image(loading: "eager", fetchpriority: "high"),
+  hero_2_image(loading: "lazy", fetchpriority: "low"),
+  hero_3_image(loading: "lazy", fetchpriority: "low"),
+  hero_4_image(loading: "lazy", fetchpriority: "low"),
+  hero_5_image(loading: "lazy", fetchpriority: "low")
+] %>
 <% hero_slide_labels = %w[first second third fourth fifth] %>
 
 <%= render "hero_carousel", slides: hero_slides, labels: hero_slide_labels %>

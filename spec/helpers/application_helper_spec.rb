@@ -188,6 +188,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       expect(markup).to match(%r{src="/assets/hero_1-[^"]+\.webp"})
       expect(markup).to include('alt=""')
+      expect(markup).to include('decoding="async"')
       expect(markup).to match(
         %r{srcset="/assets/hero_1-[^"]+\.webp 1x, /assets/hero_1@2x-[^"]+\.webp 2x"}
       )
@@ -198,6 +199,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       expect(markup).to match(%r{src="/assets/hero_1-[^"]+\.webp"})
       expect(markup).to include('alt=""')
+      expect(markup).to include('decoding="async"')
       expect(markup).not_to include("srcset=")
     end
 
@@ -205,6 +207,13 @@ RSpec.describe ApplicationHelper, type: :helper do
       markup = helper.pixel_density_image_tag("hero_1.webp", alt: "Homepage hero")
 
       expect(markup).to include('alt="Homepage hero"')
+    end
+
+    it "preserves explicit loading and fetchpriority hints" do
+      markup = helper.pixel_density_image_tag("hero_1.webp", loading: "lazy", fetchpriority: "low")
+
+      expect(markup).to include('loading="lazy"')
+      expect(markup).to include('fetchpriority="low"')
     end
   end
 

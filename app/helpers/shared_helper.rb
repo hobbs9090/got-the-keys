@@ -1,22 +1,22 @@
 module SharedHelper
-  def hero_1_image
-    pixel_density_image_tag('hero_1.webp', retina_source: 'hero_1@2x.webp', alt: "")
+  def hero_1_image(loading: nil, fetchpriority: nil)
+    pixel_density_image_tag('hero_1.webp', retina_source: 'hero_1@2x.webp', alt: "", loading:, fetchpriority:)
   end
 
-  def hero_2_image
-    pixel_density_image_tag('hero_2.webp', retina_source: 'hero_2@2x.webp', alt: "")
+  def hero_2_image(loading: nil, fetchpriority: nil)
+    pixel_density_image_tag('hero_2.webp', retina_source: 'hero_2@2x.webp', alt: "", loading:, fetchpriority:)
   end
 
-  def hero_3_image
-    pixel_density_image_tag('hero_3.webp', retina_source: 'hero_3@2x.webp', alt: "")
+  def hero_3_image(loading: nil, fetchpriority: nil)
+    pixel_density_image_tag('hero_3.webp', retina_source: 'hero_3@2x.webp', alt: "", loading:, fetchpriority:)
   end
 
-  def hero_4_image
-    pixel_density_image_tag('hero_4.webp', retina_source: 'hero_4@2x.webp', alt: "")
+  def hero_4_image(loading: nil, fetchpriority: nil)
+    pixel_density_image_tag('hero_4.webp', retina_source: 'hero_4@2x.webp', alt: "", loading:, fetchpriority:)
   end
 
-  def hero_5_image
-    pixel_density_image_tag('hero_5.webp', retina_source: 'hero_5@2x.webp', alt: "")
+  def hero_5_image(loading: nil, fetchpriority: nil)
+    pixel_density_image_tag('hero_5.webp', retina_source: 'hero_5@2x.webp', alt: "", loading:, fetchpriority:)
   end
 
   def world_image

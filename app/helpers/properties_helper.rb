@@ -5,7 +5,7 @@ module PropertiesHelper
     if image_name.blank?
       property_image_small(class_name: 'property-card__image')
     else
-      listing_image_tag(image_name, class_name: 'property-card__image', alt: property.headline)
+      listing_image_tag(image_name, class_name: 'property-card__image', alt: property.headline, loading: "lazy", fetchpriority: "low")
     end
   end
 
@@ -15,7 +15,7 @@ module PropertiesHelper
     if image_name.blank?
       property_image_medium(class_name: 'property-hero__image')
     else
-      listing_image_tag(image_name, class_name: 'property-hero__image', alt: property.headline)
+      listing_image_tag(image_name, class_name: 'property-hero__image', alt: property.headline, fetchpriority: "high")
     end
   end
 
@@ -233,13 +233,14 @@ module PropertiesHelper
     "ui.properties.filters.#{base_key}#{normalized_suffix}"
   end
 
-  def listing_image_tag(image_name, class_name:, alt:)
+  def listing_image_tag(image_name, class_name:, alt:, loading: nil, fetchpriority: nil)
     retina_name = listing_retina_image_name(image_name)
+    html_options = { class: class_name, alt: alt, loading: loading, fetchpriority: fetchpriority }.compact
 
     if retina_name.present?
-      pixel_density_image_tag(image_name, retina_source: retina_name, class: class_name, alt: alt)
+      pixel_density_image_tag(image_name, retina_source: retina_name, **html_options)
     else
-      tag.img(src: listing_image_source(image_name), class: class_name, alt: alt)
+      tag.img(src: listing_image_source(image_name), **html_options)
     end
   end
 
