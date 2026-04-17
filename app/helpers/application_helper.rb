@@ -431,10 +431,10 @@ module ApplicationHelper
   end
 
   def public_indexing_enabled?
-    return ActiveModel::Type::Boolean.new.cast(ENV["ALLOW_INDEXING"]) if ENV.key?("ALLOW_INDEXING")
-    return true if Rails.env.production?
+    return boolean_config_value(ENV["PUBLIC_INDEXING_ENABLED"]) if ENV.key?("PUBLIC_INDEXING_ENABLED")
+    return boolean_config_value(ENV["ALLOW_INDEXING"]) if ENV.key?("ALLOW_INDEXING")
 
-    false
+    boolean_config_value(Rails.configuration.x.got_the_keys.public_indexing_enabled)
   end
 
   def canonical_query_parameters
@@ -449,6 +449,10 @@ module ApplicationHelper
       "town_city",
       "page"
     ).reject { |_key, value| value.blank? }
+  end
+
+  def boolean_config_value(value)
+    ActiveModel::Type::Boolean.new.cast(value)
   end
 
   def image_options_with_intrinsic_dimensions(source, **options)

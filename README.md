@@ -58,6 +58,20 @@ Open:
 - Admin sign-in: [http://gotthekeys.uk/admins/sign_in](http://gotthekeys.uk/admins/sign_in)
 - QA guide in-app: [http://gotthekeys.uk/admin/qa](http://gotthekeys.uk/admin/qa)
 
+## SEO Indexing Defaults
+
+Public indexing is controlled by the `PUBLIC_INDEXING_ENABLED` environment variable, with per-environment defaults in the Rails config:
+
+- `development`: off
+- `test`: off
+- `staging`: off
+- `production`: on
+
+When `PUBLIC_INDEXING_ENABLED` is set, it overrides the environment default for public pages.
+Admin pages remain `noindex, nofollow` in every environment.
+
+For backwards compatibility, the older `ALLOW_INDEXING` variable is still honored if `PUBLIC_INDEXING_ENABLED` is not set, but new deploys should prefer `PUBLIC_INDEXING_ENABLED`.
+
 ## Testing
 
 Run the full RSpec suite with:

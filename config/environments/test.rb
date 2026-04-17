@@ -11,6 +11,7 @@ GotTheKeys::Application.configure do
   config.action_mailer.delivery_method = :test
   config.action_mailer.default_url_options = { host: 'www.example.com' }
   config.active_job.queue_adapter = (config.x.got_the_keys.active_job_queue_adapter || "test").to_sym
+  config.x.got_the_keys.public_indexing_enabled = false
   config.active_support.deprecation = :stderr
   config.active_support.disallowed_deprecation = :raise
   config.active_support.disallowed_deprecation_warnings = []

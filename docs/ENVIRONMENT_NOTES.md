@@ -32,6 +32,7 @@ Common runtime variables:
 - `RAILS_SERVE_STATIC_FILES`
 - `RAILS_LOG_LEVEL`
 - `ACTIVE_JOB_QUEUE_ADAPTER`
+- `PUBLIC_INDEXING_ENABLED`
 - `APP_VERSION`
 - `APP_BUILD_SHA`
 - `APP_BUILD_NUMBER`
@@ -50,6 +51,30 @@ Mail variables when SMTP is enabled:
 - `SMTP_PASSWORD`
 - `SMTP_AUTHENTICATION`
 - `SMTP_STARTTLS_AUTO`
+
+## SEO Indexing Defaults
+
+Public-page indexing defaults are defined in the Rails environment configs:
+
+- `development`: disabled
+- `test`: disabled
+- `staging`: disabled
+- `production`: enabled
+
+These defaults control both the public-page `<meta name="robots">` tag and the generated `/robots.txt` response.
+
+Deployment override:
+
+- `PUBLIC_INDEXING_ENABLED=true|false`
+
+Compatibility note:
+
+- `ALLOW_INDEXING` is still accepted as a legacy fallback when `PUBLIC_INDEXING_ENABLED` is not present
+
+Important:
+
+- admin pages always stay `noindex, nofollow`
+- staging stays non-indexable by default even though it otherwise mirrors production behavior closely
 
 ## Build Metadata
 

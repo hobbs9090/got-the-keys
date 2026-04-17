@@ -43,6 +43,7 @@ module GotTheKeys
     config.x.got_the_keys.deployed_at = build_metadata["deployed_at"].presence
     config.x.got_the_keys.deploy_target = ENV["APP_DEPLOY_TARGET"].presence
     config.x.got_the_keys.active_job_queue_adapter = ENV["ACTIVE_JOB_QUEUE_ADAPTER"].presence
+    config.x.got_the_keys.public_indexing_enabled = false
     config.middleware.insert_before ActionDispatch::Cookies, PassengerSetCookieCompatibility
 
     config.generators do |g|

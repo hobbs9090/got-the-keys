@@ -54,6 +54,48 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
+  describe "#page_meta_robots" do
+    let(:seo_config) { Rails.configuration.x.got_the_keys }
+
+    around do |example|
+      original_public_indexing_enabled = seo_config.public_indexing_enabled
+      original_public_indexing_env = ENV["PUBLIC_INDEXING_ENABLED"]
+      original_allow_indexing_env = ENV["ALLOW_INDEXING"]
+
+      example.run
+    ensure
+      seo_config.public_indexing_enabled = original_public_indexing_enabled
+      ENV["PUBLIC_INDEXING_ENABLED"] = original_public_indexing_env
+      ENV["ALLOW_INDEXING"] = original_allow_indexing_env
+    end
+
+    before do
+      seo_config.public_indexing_enabled = false
+      ENV.delete("PUBLIC_INDEXING_ENABLED")
+      ENV.delete("ALLOW_INDEXING")
+      allow(helper).to receive(:controller_path).and_return("welcome")
+    end
+
+    it "uses the environment-configured default for public pages" do
+      seo_config.public_indexing_enabled = true
+
+      expect(helper.page_meta_robots).to eq("index, follow")
+    end
+
+    it "lets PUBLIC_INDEXING_ENABLED override the environment default" do
+      ENV["PUBLIC_INDEXING_ENABLED"] = "true"
+
+      expect(helper.page_meta_robots).to eq("index, follow")
+    end
+
+    it "keeps admin pages noindex even when public indexing is enabled" do
+      seo_config.public_indexing_enabled = true
+      allow(helper).to receive(:controller_path).and_return("admin/properties")
+
+      expect(helper.page_meta_robots).to eq("noindex, nofollow")
+    end
+  end
+
   describe "#appointment_status_badge_class" do
     it "maps known statuses to badge classes" do
       expect(helper.appointment_status_badge_class(:confirmed)).to eq("badge badge--success")
