@@ -3,8 +3,8 @@
   "private": true,
   "scripts": {
     "build": "npm run build:css && npm run build:js",
-    "build:css": "sass --no-source-map --silence-deprecation=import,global-builtin,color-functions,if-function --load-path=node_modules app/assets/stylesheets/public_bundle.scss:app/assets/builds/public.css app/assets/stylesheets/admin_bundle.scss:app/assets/builds/admin.css",
-    "build:js": "esbuild public=app/javascript/public_bundle.js admin=app/javascript/admin_bundle.js --bundle --sourcemap --format=iife --outdir=app/assets/builds",
+    "build:css": "node scripts/build-css.mjs",
+    "build:js": "node scripts/build-js.mjs",
     "watch:css": "npm run build:css -- --watch",
     "watch:js": "npm run build:js -- --watch"
   },
