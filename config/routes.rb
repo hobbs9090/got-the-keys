@@ -1,4 +1,5 @@
 GotTheKeys::Application.routes.draw do
+  get "/robots.txt", to: "robots#show"
 
   root 'welcome#index'
 

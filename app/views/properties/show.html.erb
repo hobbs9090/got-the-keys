@@ -1,4 +1,5 @@
-<% title "#{t('properties.edit_property_details_for')} #{@property.address_line_1}" %>
+<% title "#{@property.address_line_1} | #{t('gotthekeys.gotthekeys')}" %>
+<% meta_description "#{@property.headline.presence || @property.property_type} in #{@property.town_city}. #{format_price(@property)}. #{pluralize(@property.bedrooms, 'bedroom')}, #{pluralize(@property.bathrooms, 'bathroom')}." %>
 
 <section class="property-hero" data-testid="property-showcase">
   <div class="property-hero__content">

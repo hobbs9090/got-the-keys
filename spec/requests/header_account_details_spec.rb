@@ -32,6 +32,7 @@ RSpec.describe "Header account details", type: :request do
     expect(parsed_html.at_css('meta[name="turbo-cache-control"]')["content"]).to eq("no-preview")
     expect(parsed_html.at_css('meta[name="description"]')["content"]).to eq(I18n.t("ui.seo.descriptions.welcome.index"))
     expect(parsed_html.at_css('meta[name="robots"]')["content"]).to eq("noindex, nofollow")
+    expect(parsed_html.at_css('link[rel="canonical"]')["href"]).to eq(root_url)
     expect(response.body).to match(%r{/assets/public-[^"]+\.css})
     expect(response.body).to match(%r{/assets/public-[^"]+\.js})
     expect(response.body).not_to match(%r{/assets/admin-[^"]+\.css})

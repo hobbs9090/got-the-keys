@@ -41,6 +41,7 @@ RSpec.describe "Public content pages", type: :request do
       expect(document.at_css('meta[name="description"]')&.[]("content")).to be_present
       expect(document.at_css('meta[name="description"]')["content"]).not_to be_blank
       expect(document.at_css('meta[name="robots"]')["content"]).to eq("noindex, nofollow")
+      expect(document.at_css('link[rel="canonical"]')&.[]("href")).to be_present
     end
   end
 

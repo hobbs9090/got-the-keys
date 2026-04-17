@@ -61,6 +61,31 @@ en:
       status: "Status"
 
     seo:
+      titles:
+        welcome:
+          index: "GotTheKeys"
+        searches:
+          index: "Search"
+        for_sale:
+          index: "For Sale"
+        for_rent:
+          index: "For Rent"
+        about_us:
+          index: "About Us | GotTheKeys"
+        how_it_works:
+          index: "How It Works | GotTheKeys"
+        contact_us:
+          index: "Contact Us | GotTheKeys"
+        legal:
+          index: "Legal | GotTheKeys"
+        cookie_policy:
+          index: "Cookie Policy | GotTheKeys"
+        blog:
+          index: "Blog | GotTheKeys"
+        properties:
+          index: "Property Listings | GotTheKeys"
+        admin:
+          default: "Admin | GotTheKeys"
       defaults:
         public: "Browse property listings, save searches, and book viewings with GotTheKeys."
         admin: "Manage property listings, customers, enquiries, bookings, and operations in the GotTheKeys admin area."

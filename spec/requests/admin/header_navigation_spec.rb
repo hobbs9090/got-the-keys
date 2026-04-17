@@ -50,6 +50,7 @@ RSpec.describe "Admin header navigation" do
     expect(response.body).not_to match(%r{/assets/public-[^"]+\.css})
     expect(parsed_html.at_css('meta[name="description"]')["content"]).to include("Manage property listings, customers, enquiries, bookings, and operations")
     expect(parsed_html.at_css('meta[name="robots"]')["content"]).to eq("noindex, nofollow")
+    expect(parsed_html.at_css('link[rel="canonical"]')["href"]).to eq(admin_enquiries_url)
     expect(parsed_html.at_css('link[rel="preload"][as="style"][href*="/assets/admin-"]')).to be_present
     expect(parsed_html.at_css('link[rel="stylesheet"][href*="/assets/admin-"][media="print"][onload="this.media=\'all\'"]')).to be_present
     expect(parsed_html.at_css("noscript link[rel='stylesheet'][href*='/assets/admin-']")).to be_present

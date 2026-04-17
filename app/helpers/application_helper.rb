@@ -23,6 +23,20 @@ module ApplicationHelper
     return content_tag(:h1, page_title, options)
   end
 
+  def page_title
+    explicit_title = content_for(:title).to_s.squish
+    return explicit_title if explicit_title.present?
+
+    defaults = [:"ui.seo.titles.#{controller_path.tr('/', '.')}.default"]
+    defaults << :"ui.seo.titles.admin.default" if admin_namespace?
+    defaults << t("gotthekeys.gotthekeys", default: "GotTheKeys")
+
+    I18n.t(
+      :"ui.seo.titles.#{controller_path.tr('/', '.')}.#{action_name}",
+      default: defaults
+    ).to_s.squish
+  end
+
   def meta_description(description)
     content_for(:meta_description, description.to_s.squish)
     nil
@@ -47,7 +61,14 @@ module ApplicationHelper
   end
 
   def page_meta_robots
-    content_for(:meta_robots).to_s.squish.presence || "noindex, nofollow"
+    content_for(:meta_robots).to_s.squish.presence || default_meta_robots_content
+  end
+
+  def page_canonical_url
+    return if request.blank?
+
+    query = canonical_query_parameters.to_query
+    query.present? ? "#{request.base_url}#{request.path}?#{query}" : "#{request.base_url}#{request.path}"
   end
 
   def appointment_status_badge_class(status)
@@ -395,12 +416,39 @@ module ApplicationHelper
   end
 
   def page_title_text
-    raw_title = content_for?(:title) ? content_for(:title) : t("gotthekeys.gotthekeys", default: "got the keys")
-    strip_tags(raw_title.to_s).squish
+    strip_tags(page_title.to_s).squish
   end
 
   def admin_namespace?
     controller_path.start_with?("admin/")
+  end
+
+  def default_meta_robots_content
+    return "noindex, nofollow" if admin_namespace?
+    return "index, follow" if public_indexing_enabled?
+
+    "noindex, nofollow"
+  end
+
+  def public_indexing_enabled?
+    return ActiveModel::Type::Boolean.new.cast(ENV["ALLOW_INDEXING"]) if ENV.key?("ALLOW_INDEXING")
+    return true if Rails.env.production?
+
+    false
+  end
+
+  def canonical_query_parameters
+    return {} if request.blank?
+
+    request.query_parameters.slice(
+      "q",
+      "sale_status",
+      "min_price",
+      "max_price",
+      "minimum_bedrooms",
+      "town_city",
+      "page"
+    ).reject { |_key, value| value.blank? }
   end
 
   def image_options_with_intrinsic_dimensions(source, **options)
