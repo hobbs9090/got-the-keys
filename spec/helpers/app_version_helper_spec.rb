@@ -38,6 +38,41 @@ RSpec.describe AppVersionHelper, type: :helper do
     expect(helper.app_build_number).to eq("42")
   end
 
+  it "uses the live git sha on localhost development renders" do
+    version_config.build_sha = "stale123"
+    version_config.build_number = nil
+
+    allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new("development"))
+    allow(ReleaseBuildMetadata).to receive(:current_revision).with(Rails.root).and_return("fresh456")
+
+    expect(helper.app_build_sha).to eq("fresh456")
+    expect(helper.short_app_build_sha).to eq("fresh45")
+  end
+
+  it "uses the live workspace dirty state on localhost development renders" do
+    version_config.local_build = false
+    version_config.build_number = nil
+
+    allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new("development"))
+    allow(ReleaseBuildMetadata).to receive(:workspace_dirty?).with(Rails.root).and_return(true)
+
+    expect(helper.local_app_build?).to be(true)
+  end
+
+  it "keeps configured build metadata outside localhost development" do
+    version_config.build_sha = "abc1234"
+    version_config.local_build = false
+    version_config.build_number = "42"
+
+    allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new("production"))
+
+    expect(ReleaseBuildMetadata).not_to receive(:current_revision)
+    expect(ReleaseBuildMetadata).not_to receive(:workspace_dirty?)
+
+    expect(helper.app_build_sha).to eq("abc1234")
+    expect(helper.local_app_build?).to be(false)
+  end
+
   it "truncates longer build shas for compact UI displays" do
     version_config.build_sha = "abc1234def5678"
 
