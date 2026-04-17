@@ -36,10 +36,12 @@ RSpec.describe "Appointment self service", type: :system, js: true do
     dismiss_cookie_banner
 
     click_link "Request a new time"
+    expect(page).to have_css("[data-testid='self-service-reschedule-form'][data-turbo='false']")
     find("[data-testid='self-service-slot-picker'] .appointment-slot-picker__time-group.is-active [data-slot-picker-time]", match: :first).click
     click_button "Reschedule viewing"
 
     expect(page).to have_text("Your viewing has been rescheduled.")
+    expect(page).to have_css("[data-testid='cancel-viewing-button'][data-turbo='false']")
 
     click_button "Cancel viewing"
 

@@ -19,7 +19,7 @@
     <%= render "shared/errors", object: @appointment %>
 
     <% if @available_slots.any? %>
-      <%= form_with model: @appointment, url: reschedule_self_service_appointment_path(@appointment, token: @appointment.access_token), method: :patch, data: { testid: "self-service-reschedule-form" } do |f| %>
+      <%= form_with model: @appointment, url: reschedule_self_service_appointment_path(@appointment, token: @appointment.access_token), method: :patch, data: { testid: "self-service-reschedule-form", turbo: false } do |f| %>
         <div>
           <%= f.label :requested_time, t("ui.appointments.self_service.choose_slot"), **form_label_options(@appointment, :requested_time) %>
           <%= render "slot_picker",

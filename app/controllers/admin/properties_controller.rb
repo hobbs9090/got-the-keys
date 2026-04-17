@@ -75,7 +75,7 @@ class Admin::PropertiesController < Admin::BaseController
     )
   end
 
-  def filtered_properties(filters)
+  def filtered_properties(filters = property_index_filters)
     Admin::PropertyIndexQuery.new(params: filters).call
   end
 
