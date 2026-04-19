@@ -22,8 +22,23 @@ class SavedSearchesController < ApplicationController
     search = saved_search_owner.saved_searches.find(params[:id])
     filter_params = search.filter_params
     scope = catalogue_scope_for_destroy(search)
+    @removed_saved_search = search
     search.destroy!
-    redirect_to catalogue_redirect_path_for(filter_params, scope), notice: t("ui.saved_searches.destroyed")
+    remaining = saved_search_owner.saved_searches.count
+
+    respond_to do |format|
+      format.turbo_stream do
+        if params[:admin_saved_filter_removal].present?
+          @remaining_saved_searches_count = remaining
+          render :destroy
+        else
+          redirect_to catalogue_redirect_path_for(filter_params, scope), notice: t("ui.saved_searches.destroyed")
+        end
+      end
+      format.html do
+        redirect_to catalogue_redirect_path_for(filter_params, scope), notice: t("ui.saved_searches.destroyed")
+      end
+    end
   end
 
   private

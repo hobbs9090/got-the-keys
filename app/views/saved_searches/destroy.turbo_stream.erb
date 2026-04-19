@@ -1,0 +1,8 @@
+<% if @remaining_saved_searches_count.zero? %>
+  <%= turbo_stream.remove "admin-saved-filters-panel" %>
+<% else %>
+  <%= turbo_stream.remove dom_id(@removed_saved_search, :admin_saved_filter) %>
+  <%= turbo_stream.update "admin-saved-filters-count" do %>
+    <%= translate_count("ui.admin.properties.index.saved_filters.count_label", @remaining_saved_searches_count) %>
+  <% end %>
+<% end %>

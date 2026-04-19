@@ -1,12 +1,12 @@
 <% return if saved_searches.blank? %>
 
-<details class="admin-panel admin-saved-filters-disclosure" data-testid="admin-saved-filters-panel">
+<details class="admin-panel admin-saved-filters-disclosure" id="admin-saved-filters-panel" data-testid="admin-saved-filters-panel">
   <summary class="property-results-panel__head admin-saved-filters-disclosure__summary" data-testid="admin-saved-filters-toggle">
     <div>
       <p class="section-heading__eyebrow"><%= t("ui.admin.properties.index.saved_filters.eyebrow", default: "Saved search filters") %></p>
       <h2><%= t("ui.admin.properties.index.saved_filters.title", default: "Apply a saved filter") %></h2>
     </div>
-    <span class="badge badge--neutral admin-saved-filters-disclosure__count" data-testid="admin-saved-filters-count">
+    <span class="badge badge--neutral admin-saved-filters-disclosure__count" id="admin-saved-filters-count" data-testid="admin-saved-filters-count">
       <%= translate_count("ui.admin.properties.index.saved_filters.count_label", saved_searches.size) %>
     </span>
   </summary>
@@ -30,7 +30,7 @@
           <%# Fall back to 0 if the match-count query fails (bad legacy data, casting, etc). %>
           <% matches_count = 0 %>
         <% end %>
-        <article class="site-card property-saved-search-card" data-testid="admin-saved-filter-card">
+        <article class="site-card property-saved-search-card" id="<%= dom_id(search, :admin_saved_filter) %>" data-testid="admin-saved-filter-card">
           <div class="property-saved-search-card__main">
             <div class="property-saved-search-card__chips">
               <% if chip_labels.any? %>
@@ -50,7 +50,7 @@
 
           <div class="property-saved-search-card__actions">
             <%= link_to translate_count("ui.properties.catalogue.saved_search.view_matches", matches_count), admin_properties_path(admin_params), class: "button primary hollow", data: { testid: "admin-apply-saved-filter-#{search.id}" } %>
-            <%= button_to t("ui.properties.catalogue.saved_search.remove"), saved_search_path(search), method: :delete, class: "button secondary hollow", data: { testid: "admin-remove-saved-filter-#{search.id}" } %>
+            <%= button_to t("ui.properties.catalogue.saved_search.remove"), saved_search_path(search), method: :delete, class: "button secondary hollow", params: { admin_saved_filter_removal: "1" }, data: { testid: "admin-remove-saved-filter-#{search.id}" }, form: { data: { turbo_stream: true } } %>
           </div>
         </article>
       <% end %>

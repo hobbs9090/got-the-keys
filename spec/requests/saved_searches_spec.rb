@@ -147,6 +147,44 @@ RSpec.describe "Saved searches", type: :request do
     expect(flash[:notice]).to eq(I18n.t("ui.saved_searches.destroyed"))
   end
 
+  it "responds with Turbo Stream when removing from the admin saved filters panel" do
+    turbo_admin = FactoryBot.create(:admin, email: "turbo-saved-search-admin@example.com", password: "secret123", password_confirmation: "secret123")
+    sign_in turbo_admin
+    owner_user = FactoryBot.create(:user, email: turbo_admin.email)
+    search_to_remove = FactoryBot.create(:saved_search, user: owner_user, town_city: "Sevenoaks")
+    FactoryBot.create(:saved_search, user: owner_user, town_city: "Tunbridge Wells")
+
+    expect do
+      delete saved_search_path(search_to_remove),
+             params: { admin_saved_filter_removal: "1" },
+             headers: { "ACCEPT" => "text/vnd.turbo-stream.html" }
+    end.to change(SavedSearch, :count).by(-1)
+
+    expect(response).to have_http_status(:ok)
+    expect(response.media_type).to eq("text/vnd.turbo-stream.html")
+    expected_target = ActionView::RecordIdentifier.dom_id(search_to_remove, :admin_saved_filter)
+    expect(response.body).to include(%(target="#{expected_target}"))
+    expect(response.body).to include('action="remove"')
+    expect(response.body).to include('action="update"')
+    expect(response.body).to include("admin-saved-filters-count")
+  end
+
+  it "removes the whole saved filters panel via Turbo Stream when the last filter is deleted from admin" do
+    turbo_admin = FactoryBot.create(:admin, email: "turbo-saved-search-last@example.com", password: "secret123", password_confirmation: "secret123")
+    sign_in turbo_admin
+    owner_user = FactoryBot.create(:user, email: turbo_admin.email)
+    search = FactoryBot.create(:saved_search, user: owner_user)
+
+    expect do
+      delete saved_search_path(search),
+             params: { admin_saved_filter_removal: "1" },
+             headers: { "ACCEPT" => "text/vnd.turbo-stream.html" }
+    end.to change(SavedSearch, :count).by(-1)
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include(%(target="admin-saved-filters-panel"))
+  end
+
   it "redirects to the for-rent catalogue after create when catalogue_scope is for_rent" do
     sign_in user
 

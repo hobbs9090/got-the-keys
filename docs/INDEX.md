@@ -20,6 +20,7 @@ Use this page as the front door for the project documentation.
 - [Repository map](REPOSITORY_MAP.md)
 - [Deployment operations](DEPLOYMENT_OPERATIONS.md)
 - [Environment notes](ENVIRONMENT_NOTES.md)
+- [Server maintenance checklist](SERVER_MAINTENANCE_CHECKLIST.md)
 
 ## Related Deep Dives
 
