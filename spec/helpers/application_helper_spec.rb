@@ -274,6 +274,22 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
+  describe "#async_external_stylesheet_tag" do
+    it "renders preload, async stylesheet, and noscript fallback tags" do
+      markup = helper.async_external_stylesheet_tag("https://example.com/fonts.css")
+      document = Nokogiri::HTML.fragment(markup)
+
+      preload = document.at_css('link[rel="preload"][as="style"][href="https://example.com/fonts.css"]')
+      stylesheet = document.at_css('link[rel="stylesheet"][href="https://example.com/fonts.css"][media="print"]')
+      fallback = document.at_css('noscript link[rel="stylesheet"][href="https://example.com/fonts.css"]')
+
+      expect(preload).to be_present
+      expect(stylesheet).to be_present
+      expect(stylesheet["onload"]).to eq("this.media='all'")
+      expect(fallback).to be_present
+    end
+  end
+
   describe "#native_validation_messages" do
     it "returns translated browser validation copy with interpolation tokens" do
       I18n.with_locale(:de) do

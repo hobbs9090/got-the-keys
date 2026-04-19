@@ -5,6 +5,7 @@ GotTheKeys::Application.configure do
   config.eager_load = false
   config.consider_all_requests_local = true
   config.server_timing = true
+  config.middleware.use Rack::Deflater
 
   if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.perform_caching = true

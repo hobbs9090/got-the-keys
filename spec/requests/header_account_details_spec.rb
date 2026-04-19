@@ -36,8 +36,12 @@ RSpec.describe "Header account details", type: :request do
     expect(response.body).to match(%r{/assets/public-[^"]+\.css})
     expect(response.body).to match(%r{/assets/public-[^"]+\.js})
     expect(response.body).not_to match(%r{/assets/admin-[^"]+\.css})
+    expect(parsed_html.at_css('link[rel="preconnect"][href="https://fonts.googleapis.com"]')).to be_present
+    expect(parsed_html.at_css('link[rel="preconnect"][href="https://fonts.gstatic.com"][crossorigin]')).to be_present
+    expect(parsed_html.at_css('link[rel="preload"][as="style"][href*="fonts.googleapis.com/css2"]')).to be_present
+    expect(parsed_html.at_css('link[rel="stylesheet"][href*="fonts.googleapis.com/css2"][media="print"]')).to be_present
     expect(parsed_html.at_css('link[rel="preload"][as="style"][href*="/assets/public-"]')).not_to be_present
-    expect(parsed_html.at_css('link[rel="stylesheet"][href*="/assets/public-"][media="all"]')).to be_present
+    expect(parsed_html.at_css('link[rel="stylesheet"][href*="/assets/public-"]')).to be_present
     expect(parsed_html.at_css("noscript link[rel='stylesheet'][href*='/assets/public-']")).not_to be_present
     expect(response.body).to include("gotthekeys-theme-preference")
     expect(response.body).to include("prefers-color-scheme: dark")

@@ -24,6 +24,11 @@ RSpec.describe "Welcome", type: :request do
 
       document = Nokogiri::HTML.parse(response.body)
 
+      expect(document.at_css('link[rel="preconnect"][href="https://fonts.googleapis.com"]')).to be_present
+      expect(document.at_css('link[rel="preconnect"][href="https://fonts.gstatic.com"][crossorigin]')).to be_present
+      expect(document.at_css('link[rel="preload"][as="style"][href*="fonts.googleapis.com/css2"]')).to be_present
+      expect(document.at_css('link[rel="stylesheet"][href*="fonts.googleapis.com/css2"][media="print"]')).to be_present
+      expect(document.at_css('link[rel="stylesheet"][href*="/assets/public-"]')).to be_present
       expect(document.css("[data-carousel] [data-carousel-slide]").count).to eq(5)
       expect(document.css(".hero-carousel__bullets button").count).to eq(5)
     end

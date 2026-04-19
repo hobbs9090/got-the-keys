@@ -7,6 +7,7 @@ GotTheKeys::Application.configure do
   config.eager_load = true
   config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
+  config.middleware.use Rack::Deflater
   config.public_file_server.enabled = serve_static_files
   config.middleware.insert_before(ActionDispatch::Static, AssetPublicFileServer, Rails.root.join("public").to_s) if serve_static_files
   config.assume_ssl = true if ENV['ASSUME_SSL'].present?

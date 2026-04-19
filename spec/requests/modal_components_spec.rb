@@ -19,6 +19,7 @@ RSpec.describe "Modal components" do
     expect(modal.at_css(".site-modal__dialog")["tabindex"]).to eq("-1")
     expect(document.css("iframe").map { |frame| frame["title"] }).to all(eq(I18n.t("contact_us.where_we_are")))
     expect(document.css("iframe").map { |frame| frame["tabindex"] }).to all(eq("-1"))
+    expect(document.css("iframe").map { |frame| frame["loading"] }).to all(eq("lazy"))
   end
 
   it "uses the shared modal contract on the registration page" do
