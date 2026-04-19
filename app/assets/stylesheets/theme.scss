@@ -871,7 +871,9 @@ html[data-theme="dark"] .pagination .ellipsis::after {
   width: 100%;
 }
 
-.legal-tabs {
+// Foundation typography sets `ul { list-style-type: disc; list-style-position: outside }`.
+// Use `ul.tabs.legal-tabs` so this wins in the cascade and markers never paint outside the card.
+ul.tabs.legal-tabs {
   background: var(--color-surface-raised);
   border: 1px solid var(--color-panel-border);
   border-radius: var(--radius-lg);
@@ -884,9 +886,13 @@ html[data-theme="dark"] .pagination .ellipsis::after {
   padding: 0.45rem;
 }
 
-.legal-tabs > .tabs-title {
+ul.tabs.legal-tabs > li.tabs-title {
   float: none;
   list-style: none;
+}
+
+ul.tabs.legal-tabs > li.tabs-title::marker {
+  content: none;
 }
 
 .legal-tabs > .tabs-title > a {
