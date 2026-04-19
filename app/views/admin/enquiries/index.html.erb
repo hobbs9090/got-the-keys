@@ -32,7 +32,7 @@
       <%= f.label :spam_only, t("ui.admin.enquiries.index.filters.spam_only"), class: "checkbox-label" %>
     </div>
     <div class="form-actions">
-      <%= f.submit t("ui.admin.enquiries.index.filters.apply"), class: "button primary" %>
+      <%= f.button t("ui.admin.enquiries.index.filters.apply"), type: :submit, class: "button primary" %>
       <%= link_to t("ui.admin.enquiries.index.filters.clear"), admin_enquiries_path, class: "button hollow secondary" %>
     </div>
   <% end %>

@@ -201,7 +201,7 @@
   <% end %>
 
   <div class="form-actions property-listing-form__actions">
-    <%= f.submit t("ui.properties.editor.submit"), class: "button primary" %>
+    <%= f.button t("ui.properties.editor.submit"), type: :submit, class: "button primary" %>
     <%= link_to t("ui.common.cancel"), cancel_path, class: "button hollow secondary" %>
     <% if allow_destroy && !current_page?(controller: 'properties', action: 'new') %>
       <%= link_to t("ui.properties.editor.delete_property"),

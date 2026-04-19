@@ -85,7 +85,7 @@ module DemoData
           start_time: start_time,
           cadence_hours: cadence_hours
         )
-        customer = contact_for(index, prefix: "viewer")
+        customer = contact_for(index, prefix: nil)
 
         {
           property_key: property.fetch(:key),

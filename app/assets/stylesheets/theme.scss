@@ -385,6 +385,20 @@ select:-webkit-autofill:focus {
     transform 0.2s ease;
 }
 
+button.button,
+input[type="submit"].button,
+input[type="button"].button {
+  appearance: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0;
+  vertical-align: middle;
+}
+
 .button.large {
   font-size: 0.98rem;
   padding: 0.84rem 1.35rem;
@@ -2548,6 +2562,7 @@ html[data-theme="dark"] {
 }
 
 .property-listing-form__actions {
+  align-items: stretch;
   flex-wrap: wrap;
   justify-content: flex-end;
   padding-top: 0.35rem;
@@ -2558,13 +2573,14 @@ html[data-theme="dark"] {
 }
 
 .property-filters__actions {
+  align-items: stretch;
   flex-wrap: wrap;
   grid-column: 1 / -1;
   justify-content: flex-start;
 }
 
 .admin-filter-form__actions {
-  align-items: center;
+  align-items: stretch;
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
@@ -2572,13 +2588,18 @@ html[data-theme="dark"] {
   justify-content: flex-start;
 }
 
-.property-filters__actions .button {
+/* Match .button.small — horizontal filter/editor toolbars (mixed button, input, link). */
+.admin-filter-form__actions .button,
+form[data-testid="lead-inbox-filters"] .form-actions .button,
+.property-filters__actions .button,
+.property-listing-form__actions .button {
+  font-size: 0.84rem;
+  font-weight: 700;
+  gap: 0.35rem;
+  margin-bottom: 0;
+  margin-top: 0;
   min-width: fit-content;
-  white-space: nowrap;
-}
-
-.admin-filter-form__actions .button {
-  min-width: fit-content;
+  padding: 0.62rem 1rem;
   white-space: nowrap;
 }
 
@@ -2614,15 +2635,10 @@ html[data-theme="dark"] {
 
 .admin-filter-form[data-testid="admin-properties-search"] .admin-filter-form__actions {
   align-self: end;
-  align-items: stretch;
   flex-wrap: nowrap;
   gap: 0.65rem;
   grid-column: auto;
   justify-content: flex-end;
-}
-
-.admin-filter-form[data-testid="admin-properties-search"] .admin-filter-form__actions .button {
-  margin-bottom: 0;
 }
 
 .admin-filter-form[data-testid="admin-users-search"] .admin-filter-form__actions,
@@ -3757,7 +3773,26 @@ html[data-theme="dark"] {
 
 .admin-grid--board {
   align-items: start;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  /* Require ~20rem per column before fitting another — avoids three ultra-narrow Kanban columns. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+}
+
+/* Kanban cards: stack body and status so addresses are not squeezed beside badges. */
+.admin-grid--board .admin-list__item {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.admin-grid--board .admin-list__item > div:first-child {
+  min-width: 0;
+  width: 100%;
+}
+
+.admin-grid--board .admin-list__item > div:first-child p {
+  margin-top: 0.35rem;
+  overflow-wrap: anywhere;
 }
 
 .admin-list,
