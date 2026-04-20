@@ -37,12 +37,8 @@ module DemoData
     }.freeze
 
     PROPERTY_TYPE_STYLE_NOTES = {
-      "Detached house" => "Show a handsome detached family home with confident kerb appeal, balanced frontage, and a neat driveway or approach.",
-      "Semi-detached house" => "Show an elegant semi-detached house with strong symmetry, tidy frontage, and a warm family-home feel.",
-      "End-of-terrace house" => "Show a polished end-of-terrace home with side access, smart frontage, and generous natural light.",
-      "Townhouse" => "Show a refined multi-storey townhouse with tall windows, crisp lines, and a premium residential feel.",
-      "Terraced house" => "Show a well-kept terraced house with attractive brickwork, inviting frontage, and tasteful planting.",
-      "Cottage" => "Show a charming Kent cottage with characterful detailing, painted joinery, and mature planting."
+      "House" => "Show a handsome British house with confident kerb appeal, balanced frontage, and a neat driveway or approach where appropriate.",
+      "Flat" => "Show a polished flat or apartment building entrance or facade with contemporary residential appeal and believable UK context."
     }.freeze
 
     FEATURE_VISUAL_CUES = [
@@ -108,7 +104,7 @@ module DemoData
 
     def interior_focused_property?(property)
       type = property.property_type.to_s.downcase
-      interior_type = type.match?(/flat|apartment|maisonette|duplex|loft/)
+      interior_type = type == "flat"
       searchable_text = [property.listing_tagline, property.property_description].compact.join(" ")
       has_strong_exterior_cue = searchable_text.match?(/garden|terrace|balcony|driveway|parking|facade|frontage/i)
 

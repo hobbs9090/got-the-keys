@@ -69,12 +69,7 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(Property.find_by!(address_line_1: "Apartment 11, 9 Park Lane").available_from).to eq(Date.new(2026, 4, 25))
     expect(RentalApplication.minimum(:move_in_date)).to be >= Date.new(2026, 4, 15)
 
-    seeded_houses = Property.where(
-      "lower(property_type) LIKE ? OR lower(property_type) LIKE ? OR lower(property_type) = ?",
-      "%house%",
-      "%terrace%",
-      "townhouse"
-    )
+    seeded_houses = Property.where(property_type: "House")
     family_houses = seeded_houses.where(bedrooms: 3..5)
     most_expensive_house = seeded_houses.order(asking_price: :desc).first
 

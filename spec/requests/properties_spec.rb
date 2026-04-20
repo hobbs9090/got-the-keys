@@ -440,12 +440,12 @@ describe "Properties" do
 
       document = Nokogiri::HTML(response.body)
       deposit_field = document.at_css("[data-property-rental-only-field] input[name='property[deposit_amount]']")
-      pets_field = document.at_css("[data-property-rental-only-field] input[name='property[pets_allowed]']")
+      pets_field = document.at_css("[data-property-pets-allowed-field] input[name='property[pets_allowed]']")
       lease_length_field = document.at_css("[data-property-lease-length-field]")
 
       expect(response).to have_http_status(:ok)
       expect(deposit_field.ancestors("[data-property-rental-only-field]").first["hidden"]).to eq("")
-      expect(pets_field.ancestors("[data-property-rental-only-field]").first["hidden"]).to eq("")
+      expect(pets_field.ancestors("[data-property-pets-allowed-field]").first["hidden"]).to eq("")
       expect(lease_length_field["hidden"]).to be_nil
     end
 
@@ -461,6 +461,20 @@ describe "Properties" do
 
       expect(response).to have_http_status(:ok)
       expect(lease_length_field["hidden"]).to be_nil
+    end
+
+    it "hides lease length when tenure is freehold" do
+      sign_in user
+
+      property.update!(sale_status: Property::SALE_STATUSES[:for_sale], tenure: "Freehold", lease_length_years: 200)
+
+      get edit_property_path(property)
+
+      document = Nokogiri::HTML(response.body)
+      lease_length_field = document.at_css("[data-property-lease-length-field]")
+
+      expect(response).to have_http_status(:ok)
+      expect(lease_length_field["hidden"]).to eq("")
     end
 
     it "renders the asking price field as comma-friendly numeric text input" do

@@ -236,9 +236,11 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
 
     sign_in_as_admin(admin)
     visit edit_admin_property_path(property)
+    dismiss_cookie_banner
 
     expect(page).to have_css("[data-property-furnishing-field][hidden]", visible: false)
-    expect(page).to have_css("[data-property-rental-only-field][hidden]", visible: false, count: 2)
+    expect(page).to have_css("[data-property-rental-only-field][hidden]", visible: false, count: 1)
+    expect(page).to have_selector("[data-property-pets-allowed-field]", visible: :hidden)
     expect(page).to have_no_css("[data-property-lease-length-field][hidden]", visible: false)
 
     select "For Rent", from: "property_sale_status"
@@ -247,23 +249,39 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     expect(page.evaluate_script("document.getElementById('property_furnishing').disabled")).to be(false)
     expect(page).to have_no_css("[data-property-rental-only-field][hidden]", visible: false)
     expect(page.evaluate_script("document.getElementById('property_deposit_amount').disabled")).to be(false)
+    expect(page).to have_selector("[data-property-pets-allowed-field]", visible: :visible)
     expect(page.evaluate_script("document.getElementById('property_pets_allowed').disabled")).to be(false)
     expect(page).to have_no_css("[data-property-lease-length-field][hidden]", visible: false)
+
+    select "Freehold", from: "property_tenure"
+
+    expect(page).to have_selector("[data-property-pets-allowed-field]", visible: :hidden)
+    expect(page.evaluate_script("document.getElementById('property_pets_allowed').disabled")).to be(true)
+    expect(page).to have_selector("[data-property-lease-length-field]", visible: :hidden)
+    expect(page.evaluate_script("document.getElementById('property_lease_length_years').disabled")).to be(true)
+
+    select "Leasehold", from: "property_tenure"
+
+    expect(page).to have_selector("[data-property-pets-allowed-field]", visible: :visible)
+    expect(page.evaluate_script("document.getElementById('property_pets_allowed').disabled")).to be(false)
+    expect(page).to have_selector("[data-property-lease-length-field]", visible: :visible)
+    expect(page.evaluate_script("document.getElementById('property_lease_length_years').disabled")).to be(false)
 
     select "For Sale", from: "property_sale_status"
 
     expect(page).to have_css("[data-property-furnishing-field][hidden]", visible: false)
     expect(page.evaluate_script("document.getElementById('property_furnishing').disabled")).to be(true)
-    expect(page).to have_css("[data-property-rental-only-field][hidden]", visible: false, count: 2)
+    expect(page).to have_css("[data-property-rental-only-field][hidden]", visible: false, count: 1)
+    expect(page).to have_selector("[data-property-pets-allowed-field]", visible: :hidden)
     expect(page.evaluate_script("document.getElementById('property_deposit_amount').disabled")).to be(true)
     expect(page.evaluate_script("document.getElementById('property_pets_allowed').disabled")).to be(true)
 
-    fill_in "property_tenure", with: "Freehold"
+    select "Freehold", from: "property_tenure"
 
     expect(page).to have_css("[data-property-lease-length-field][hidden]", visible: false)
     expect(page.evaluate_script("document.getElementById('property_lease_length_years').disabled")).to be(true)
 
-    fill_in "property_tenure", with: "Leasehold"
+    select "Leasehold", from: "property_tenure"
 
     expect(page).to have_no_css("[data-property-lease-length-field][hidden]", visible: false)
     expect(page.evaluate_script("document.getElementById('property_lease_length_years').disabled")).to be(false)

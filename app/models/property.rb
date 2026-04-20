@@ -17,6 +17,8 @@ class Property < ApplicationRecord
   SELLER_ALLOWED_LISTING_STATES = %w[draft review_pending].freeze
   PUBLIC_LISTING_STATES = %w[published under_offer let_agreed].freeze
   SORT_OPTIONS = %w[recommended newest price_low price_high bedrooms_high].freeze
+  PROPERTY_TYPES = %w[House Flat].freeze
+  TENURE_OPTIONS = ["Freehold", "Leasehold", "Commonhold", "Shared Ownership"].freeze
 
   belongs_to :user, counter_cache: true
   has_many :saved_properties, dependent: :destroy
@@ -42,7 +44,7 @@ class Property < ApplicationRecord
   validates :address_line_1, :town_city, :county, :postcode, :country,
             :property_description, :bedrooms, :sale_status, :asking_price,
             :user_id, presence: true
-  validates :property_type, presence: true, length: { maximum: 50 }
+  validates :property_type, presence: true, inclusion: { in: PROPERTY_TYPES }
   validates :address_line_1, :address_line_2, :town_city, :county, :postcode,
             :country, length: { maximum: 50 }
   validates :listing_tagline, length: { maximum: 120 }, allow_blank: true
@@ -58,7 +60,8 @@ class Property < ApplicationRecord
             }
   validates :sale_status, inclusion: { in: SALE_STATUS }, allow_blank: true
   validates :listing_state, inclusion: { in: LISTING_STATES }
-  validates :tenure, :council_tax_band, :furnishing, :parking, :outdoor_space, length: { maximum: 60 }, allow_blank: true
+  validates :tenure, inclusion: { in: TENURE_OPTIONS }, allow_blank: true
+  validates :council_tax_band, :furnishing, :parking, :outdoor_space, length: { maximum: 60 }, allow_blank: true
   validates :floor_area_sq_ft, :deposit_amount, :service_charge_amount, :lease_length_years,
             numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_blank: true
   validates :year_built, :refurbished_year,
@@ -72,7 +75,8 @@ class Property < ApplicationRecord
   before_validation :apply_listing_defaults
   before_validation :clear_furnishing_for_sale_listings
   before_validation :clear_rental_only_fields_for_sale_listings
-  before_validation :clear_lease_length_for_freehold_sale_listings
+  before_validation :clear_pets_allowed_for_freehold_rental_listings
+  before_validation :clear_lease_length_for_freehold_listings
   validate :refurbished_year_not_before_year_built
   validate :image_upload_is_jpeg
   validate :prevent_duplicate_exact_address
@@ -442,8 +446,14 @@ class Property < ApplicationRecord
     self.pets_allowed = false
   end
 
-  def clear_lease_length_for_freehold_sale_listings
-    return unless sale_status == SALE_STATUSES[:for_sale]
+  def clear_pets_allowed_for_freehold_rental_listings
+    return unless sale_status == SALE_STATUSES[:for_rent]
+    return unless tenure.to_s.strip.casecmp("Freehold").zero?
+
+    self.pets_allowed = false
+  end
+
+  def clear_lease_length_for_freehold_listings
     return unless tenure.to_s.strip.casecmp("Freehold").zero?
 
     self.lease_length_years = nil

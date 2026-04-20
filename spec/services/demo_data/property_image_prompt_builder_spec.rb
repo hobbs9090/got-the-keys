@@ -12,7 +12,7 @@ RSpec.describe DemoData::PropertyImagePromptBuilder do
       county: "Kent",
       postcode: "TN13 2AB",
       country: "United Kingdom",
-      property_type: "Detached house",
+      property_type: "House",
       listing_tagline: "Detached house near Sevenoaks station with generous rear garden",
       property_description: "A well-presented detached house with a bright kitchen diner, generous rear garden, off-street parking, and a study for home working.",
       bedrooms: 4,
@@ -27,7 +27,7 @@ RSpec.describe DemoData::PropertyImagePromptBuilder do
   it "builds a premium-looking estate-agent image prompt from the property details" do
     prompt = described_class.new.prompt_for(property)
 
-    expect(prompt).to include("4-bedroom, 3-bathroom detached house in Sevenoaks, Kent")
+    expect(prompt).to include("4-bedroom, 3-bathroom house in Sevenoaks, Kent")
     expect(prompt).to include("leafy Sevenoaks residential lane")
     expect(prompt).to include("bright kitchen diner")
     expect(prompt).to include("off-street parking")
@@ -42,7 +42,7 @@ RSpec.describe DemoData::PropertyImagePromptBuilder do
 
   it "prefers interior compositions for flat-like homes" do
     property.update!(
-      property_type: "Garden Flat",
+      property_type: "Flat",
       listing_tagline: "Garden flat with bright reception room",
       property_description: "A polished flat with a bright reception room, calm bedroom, and refined interior finishes."
     )

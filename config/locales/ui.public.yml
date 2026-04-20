@@ -42,6 +42,15 @@ en:
           service_charge_amount: "Service charge"
           lease_length_years: "Lease length (years)"
           pets_allowed: "Pets allowed"
+        property_types:
+          house: "House"
+          flat: "Flat"
+        tenure_prompt: "Select tenure"
+        tenure_options:
+          freehold: "Freehold"
+          leasehold: "Leasehold"
+          commonhold: "Commonhold"
+          shared_ownership: "Shared Ownership"
         placeholders:
           listing_tagline: "A calm family home close to the station"
           image_file_name: "properties/property_placeholder_listing.svg"
@@ -97,6 +106,15 @@ de:
           service_charge_amount: "Servicegebuehr"
           lease_length_years: "Laufzeit (Jahre)"
           pets_allowed: "Haustiere erlaubt"
+        property_types:
+          house: "Haus"
+          flat: "Wohnung"
+        tenure_prompt: "Eigentumsform waehlen"
+        tenure_options:
+          freehold: "Freies Eigentum (Freehold)"
+          leasehold: "Erbbaurecht (Leasehold)"
+          commonhold: "Commonhold"
+          shared_ownership: "Miteigentum (Shared Ownership)"
         placeholders:
           listing_tagline: "Ein ruhiges Familienhaus nahe dem Bahnhof"
           image_file_name: "properties/property_placeholder_listing.svg"
@@ -152,6 +170,15 @@ fr:
           service_charge_amount: "Charges"
           lease_length_years: "Duree du bail (ans)"
           pets_allowed: "Animaux acceptes"
+        property_types:
+          house: "Maison"
+          flat: "Appartement"
+        tenure_prompt: "Choisir le statut de propriete"
+        tenure_options:
+          freehold: "Pleine propriete (freehold)"
+          leasehold: "Bail (leasehold)"
+          commonhold: "Commonhold"
+          shared_ownership: "Copropriete progressive (shared ownership)"
         placeholders:
           listing_tagline: "Une maison familiale paisible proche de la gare"
           image_file_name: "properties/property_placeholder_listing.svg"
@@ -207,6 +234,15 @@ it:
           service_charge_amount: "Spese di servizio"
           lease_length_years: "Durata del lease (anni)"
           pets_allowed: "Animali ammessi"
+        property_types:
+          house: "Casa"
+          flat: "Appartamento"
+        tenure_prompt: "Seleziona il titolo"
+        tenure_options:
+          freehold: "Proprieta assoluta (freehold)"
+          leasehold: "Diritto di superficie (leasehold)"
+          commonhold: "Commonhold"
+          shared_ownership: "Comproprieta graduale (shared ownership)"
         placeholders:
           listing_tagline: "Una tranquilla casa di famiglia vicino alla stazione"
           image_file_name: "properties/property_placeholder_listing.svg"
@@ -262,6 +298,15 @@ zh:
           service_charge_amount: "服务费"
           lease_length_years: "租约年限（年）"
           pets_allowed: "可带宠物"
+        property_types:
+          house: "独栋房屋"
+          flat: "公寓"
+        tenure_prompt: "选择产权类型"
+        tenure_options:
+          freehold: "永久产权（Freehold）"
+          leasehold: "租赁产权（Leasehold）"
+          commonhold: "共有永久产权（Commonhold）"
+          shared_ownership: "共有产权（Shared Ownership）"
         placeholders:
           listing_tagline: "安静的家庭住宅，靠近车站"
           image_file_name: "properties/property_placeholder_listing.svg"

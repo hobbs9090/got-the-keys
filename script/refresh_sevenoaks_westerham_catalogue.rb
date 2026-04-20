@@ -218,12 +218,13 @@ ActiveRecord::Base.transaction do
   listings.each_with_index do |sale_status, index|
     area = areas.fetch(index % areas.length)
     bedrooms = bedrooms_for(sale_status:, random:)
-    property_type =
+    style_descriptor =
       if sale_status == "For Sale"
         sale_property_types.fetch(index % sale_property_types.length)
       else
         rent_property_types.fetch(index % rent_property_types.length)
       end
+    record_property_type = style_descriptor.match?(/flat|apartment|loft|maisonette|penthouse|studio|duplex/i) ? "Flat" : "House"
     features = shared_features.sample(3, random: random)
     owner = owners.fetch(index % owners.length)
     address_line_1 = address_pool.fetch(index)
@@ -236,9 +237,9 @@ ActiveRecord::Base.transaction do
       county: area.fetch(:county),
       postcode: postcode_for(area:, random:, index:),
       country: "United Kingdom",
-      property_type: property_type,
-      listing_tagline: tagline_for(property_type:, sale_status:, area:, feature: features.first),
-      property_description: description_for(property_type:, sale_status:, area:, bedrooms:, features:),
+      property_type: record_property_type,
+      listing_tagline: tagline_for(property_type: style_descriptor, sale_status:, area:, feature: features.first),
+      property_description: description_for(property_type: style_descriptor, sale_status:, area:, bedrooms:, features:),
       bedrooms: bedrooms,
       bathrooms: bathrooms_for(bedrooms),
       sale_status: sale_status,

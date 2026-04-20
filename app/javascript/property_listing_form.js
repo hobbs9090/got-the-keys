@@ -5,7 +5,14 @@ const freeholdTenure = "freehold";
 
 const toggleFieldGroup = (fields, visible) => {
   fields.forEach((container) => {
-    container.hidden = !visible;
+    if (visible) {
+      container.removeAttribute("hidden");
+      container.style.removeProperty("display");
+    } else {
+      container.setAttribute("hidden", "");
+      // `.form-grid__checkbox { display: flex }` overrides the `[hidden]` UA rule; force collapse.
+      container.style.display = "none";
+    }
     container.querySelectorAll("input, select, textarea").forEach((field) => {
       field.disabled = !visible;
     });
@@ -19,11 +26,13 @@ const toggleListingFields = (form) => {
   if (!state) return;
 
   const isRental = state.saleStatusSelect.value === rentalSaleStatus;
-  const showLeaseLength = isRental || !tenureIsFreehold(state.tenureField.value);
+  const showLeaseLength = !tenureIsFreehold(state.tenureField.value);
+  const showPetsAllowed = isRental && !tenureIsFreehold(state.tenureField.value);
 
   toggleFieldGroup([state.furnishingField], isRental);
   toggleFieldGroup(state.rentalOnlyFields, isRental);
   toggleFieldGroup([state.leaseLengthField], showLeaseLength);
+  toggleFieldGroup([state.petsAllowedField], showPetsAllowed);
 };
 
 const setupListingForm = (form) => {
@@ -34,18 +43,20 @@ const setupListingForm = (form) => {
   const tenureField = form.querySelector("[data-property-tenure]");
   const leaseLengthField = form.querySelector("[data-property-lease-length-field]");
   const rentalOnlyFields = Array.from(form.querySelectorAll("[data-property-rental-only-field]"));
+  const petsAllowedField = form.querySelector("[data-property-pets-allowed-field]");
 
-  if (!saleStatusSelect || !furnishingField || !tenureField || !leaseLengthField) return;
+  if (!saleStatusSelect || !furnishingField || !tenureField || !leaseLengthField || !petsAllowedField) return;
 
   const changeHandler = () => toggleListingFields(form);
   saleStatusSelect.addEventListener("change", changeHandler);
-  tenureField.addEventListener("input", changeHandler);
+  tenureField.addEventListener("change", changeHandler);
 
   listingFormState.set(form, {
     saleStatusSelect,
     furnishingField,
     tenureField,
     leaseLengthField,
+    petsAllowedField,
     rentalOnlyFields,
     changeHandler
   });
@@ -63,7 +74,7 @@ export const teardownPropertyListingForms = () => {
     if (!state) return;
 
     state.saleStatusSelect.removeEventListener("change", state.changeHandler);
-    state.tenureField.removeEventListener("input", state.changeHandler);
+    state.tenureField.removeEventListener("change", state.changeHandler);
     listingFormState.delete(form);
   });
 };

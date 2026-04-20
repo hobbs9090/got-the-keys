@@ -1,4 +1,17 @@
 module PropertiesHelper
+  def property_type_select_options
+    Property::PROPERTY_TYPES.map do |type|
+      [I18n.t("ui.properties.editor.property_types.#{type.downcase}", default: type), type]
+    end
+  end
+
+  def tenure_select_options
+    Property::TENURE_OPTIONS.map do |value|
+      key = value == "Shared Ownership" ? "shared_ownership" : value.parameterize.underscore
+      [I18n.t("ui.properties.editor.tenure_options.#{key}", default: value), value]
+    end
+  end
+
   def small_image_for(property)
     image_name = property.hero_image_name
 

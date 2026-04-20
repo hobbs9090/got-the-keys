@@ -9,6 +9,7 @@ RSpec.describe DemoData::PropertyBlueprintGenerator do
     property = Property.new(blueprint.except(:prompt_context).merge(user: FactoryBot.create(:user)))
 
     expect(property).to be_valid
+    expect(blueprint[:property_type]).to be_in(Property::PROPERTY_TYPES)
     expect(property.country).to eq('United Kingdom')
     expect(%w[For\ Sale For\ Rent]).to include(property.sale_status)
     expect(property.asking_price).to be >= 750

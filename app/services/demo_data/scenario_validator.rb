@@ -210,6 +210,10 @@ module DemoData
       properties.map do |property|
         validate_presence!(property, *REQUIRED_PROPERTY_KEYS)
         chronology = chronology_for(property)
+        property_type = property.fetch(:property_type, "House")
+        unless Property::PROPERTY_TYPES.include?(property_type)
+          raise ValidationError, "Unsupported property type #{property_type.inspect} for property #{property.fetch(:key)}"
+        end
 
         {
           key: property.fetch(:key),
@@ -223,7 +227,7 @@ module DemoData
           property_description: property.fetch(:property_description),
           bedrooms: Integer(property.fetch(:bedrooms)),
           bathrooms: Integer(property.fetch(:bathrooms, 1)),
-          property_type: property.fetch(:property_type, "House"),
+          property_type: property_type,
           listing_tagline: property[:listing_tagline],
           sale_status: property.fetch(:sale_status),
           asking_price: Integer(property.fetch(:asking_price)),

@@ -92,7 +92,7 @@ properties:
     county: Kent
     postcode: TN13 2AB
     country: United Kingdom
-    property_type: Detached house
+    property_type: House
     listing_tagline: Calm family living close to the station and schools
     property_description: A bright detached home with a landscaped garden, a generous kitchen diner, and flexible study space for hybrid working. It is ideal for buyers who want a polished move-in-ready house close to Sevenoaks station.
     bedrooms: 4
@@ -117,7 +117,7 @@ properties:
     county: Kent
     postcode: TN4 8BZ
     country: United Kingdom
-    property_type: Garden apartment
+    property_type: Flat
     listing_tagline: A polished apartment with private outside space
     property_description: A well-finished garden apartment with excellent storage, a separate utility cupboard, and French doors opening to a private terrace. The Pantiles, rail links, and café culture are all within easy reach.
     bedrooms: 2
@@ -143,7 +143,7 @@ properties:
     county: Surrey
     postcode: GU1 3UY
     country: United Kingdom
-    property_type: Townhouse
+    property_type: House
     listing_tagline: Flexible modern space in the heart of Guildford
     property_description: A contemporary townhouse with open-plan reception space, a top-floor principal suite, and practical storage across three levels. It suits commuters and families who want a walkable town-centre location.
     bedrooms: 3
@@ -165,7 +165,7 @@ properties:
     county: Greater London
     postcode: CR0 1JA
     country: United Kingdom
-    property_type: Loft apartment
+    property_type: Flat
     listing_tagline: Design-led rental close to East Croydon
     property_description: A striking rental apartment with high ceilings, a streamlined kitchen, and a comfortable open-plan lounge. It is well placed for fast rail connections, restaurants, and local retail.
     bedrooms: 2

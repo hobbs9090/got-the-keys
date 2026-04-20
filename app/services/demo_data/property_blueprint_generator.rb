@@ -232,7 +232,7 @@ module DemoData
         county: area.fetch(:county),
         postcode: postcode_for(area),
         country: 'United Kingdom',
-        property_type: property_type.titleize,
+        property_type: layout_kind(property_type),
         listing_tagline: tagline_for(property_type:, area:, features:),
         property_description: description_for(
           property_type: property_type,
@@ -405,6 +405,10 @@ module DemoData
 
     def article_for(property_type)
       property_type.match?(/\A[aeiou]/i) ? 'An' : 'A'
+    end
+
+    def layout_kind(archetype)
+      house_property_type?(archetype) ? 'House' : 'Flat'
     end
   end
 end

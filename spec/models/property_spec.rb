@@ -250,6 +250,30 @@ describe "A property" do
     expect(property.pets_allowed).to be(false)
   end
 
+  it "clears pets allowed for freehold rental listings" do
+    property = build_property(
+      sale_status: Property::SALE_STATUSES[:for_rent],
+      tenure: "Freehold",
+      pets_allowed: true
+    )
+
+    property.valid?
+
+    expect(property.pets_allowed).to be(false)
+  end
+
+  it "clears lease length for freehold rental listings" do
+    property = build_property(
+      sale_status: Property::SALE_STATUSES[:for_rent],
+      tenure: "Freehold",
+      lease_length_years: 999
+    )
+
+    property.valid?
+
+    expect(property.lease_length_years).to be_nil
+  end
+
   it "keeps lease length for non-freehold sale listings" do
     property = build_property(
       sale_status: Property::SALE_STATUSES[:for_sale],

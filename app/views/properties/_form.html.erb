@@ -77,7 +77,7 @@
     </div>
     <div>
       <%= f.label :property_type, t("ui.properties.editor.fields.property_type"), **form_label_options(form_model, :property_type) %>
-      <%= f.text_field :property_type, required: true, maxlength: 50, **form_control_options(form_model, :property_type) %>
+      <%= f.select :property_type, property_type_select_options, {}, required: true, **form_control_options(form_model, :property_type) %>
       <%= field_error_messages(form_model, :property_type) %>
     </div>
     <div>
@@ -130,7 +130,11 @@
     <div class="form-grid">
       <div>
         <%= f.label :tenure, t("ui.properties.editor.fields.tenure"), **form_label_options(form_model, :tenure) %>
-        <%= f.text_field :tenure, placeholder: t("ui.properties.editor.placeholders.tenure"), data: { property_tenure: true }, **form_control_options(form_model, :tenure) %>
+        <%= f.select :tenure,
+                     tenure_select_options,
+                     { include_blank: t("ui.properties.editor.tenure_prompt", default: "Select tenure") },
+                     data: { property_tenure: true },
+                     **form_control_options(form_model, :tenure) %>
         <%= field_error_messages(form_model, :tenure) %>
       </div>
       <div>
@@ -184,12 +188,14 @@
         <%= f.number_field :service_charge_amount, min: 0, step: 50, **form_control_options(form_model, :service_charge_amount) %>
         <%= field_error_messages(form_model, :service_charge_amount) %>
       </div>
-      <div data-property-lease-length-field <%= "hidden" if form_model.sale_status == Property::SALE_STATUSES[:for_sale] && form_model.tenure.to_s.strip.casecmp("Freehold").zero? %>>
+      <div data-property-lease-length-field <%= "hidden" if form_model.tenure.to_s.strip.casecmp("Freehold").zero? %>>
         <%= f.label :lease_length_years, t("ui.properties.editor.fields.lease_length_years"), **form_label_options(form_model, :lease_length_years) %>
         <%= f.number_field :lease_length_years, min: 0, step: 1, **form_control_options(form_model, :lease_length_years) %>
         <%= field_error_messages(form_model, :lease_length_years) %>
       </div>
-      <div class="form-grid__checkbox" data-property-rental-only-field <%= "hidden" if form_model.sale_status != Property::SALE_STATUSES[:for_rent] %>>
+      <div class="form-grid__checkbox"
+           data-property-pets-allowed-field
+           <%= "hidden" if form_model.sale_status != Property::SALE_STATUSES[:for_rent] || form_model.tenure.to_s.strip.casecmp("Freehold").zero? %>>
         <%= f.check_box :pets_allowed %>
         <%= f.label :pets_allowed, t("ui.properties.editor.fields.pets_allowed"), class: "checkbox-label" %>
       </div>

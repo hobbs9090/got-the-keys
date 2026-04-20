@@ -4,6 +4,20 @@ module DemoData
   class PropertyChronologyGenerator
     YEAR_PROFILES = [
       {
+        pattern: /\Aflat\z/i,
+        build_range: 1990..2023,
+        refurbish_start: 2016,
+        refurbish_probability: 0.48,
+        min_refurbishment_gap: 4
+      },
+      {
+        pattern: /\Ahouse\z/i,
+        build_range: 1955..2020,
+        refurbish_start: 2012,
+        refurbish_probability: 0.55,
+        min_refurbishment_gap: 8
+      },
+      {
         pattern: /victorian terrace|cottage/i,
         build_range: 1850..1905,
         refurbish_start: 2008,

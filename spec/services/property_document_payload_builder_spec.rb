@@ -8,7 +8,7 @@ RSpec.describe PropertyDocumentPayloadBuilder do
       town_city: "Sevenoaks",
       county: "Kent",
       postcode: "TN13 1AA",
-      property_type: "Detached house",
+      property_type: "House",
       listing_tagline: "Architect-designed family home",
       property_description: "A bright, design-led family home with a generous kitchen diner, landscaped garden, and flexible study space for hybrid working.",
       bedrooms: 4,

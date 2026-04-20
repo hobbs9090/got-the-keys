@@ -12,7 +12,7 @@ RSpec.describe DemoData::PropertyImageGenerator do
       county: "Kent",
       postcode: "TN16 4FS",
       country: "United Kingdom",
-      property_type: "Semi-detached house",
+      property_type: "House",
       listing_tagline: "Semi-detached house for buyers near the green with a bright kitchen diner",
       property_description: "A polished semi-detached house with a bright kitchen diner, a separate utility room, and good built-in storage.",
       bedrooms: 3,

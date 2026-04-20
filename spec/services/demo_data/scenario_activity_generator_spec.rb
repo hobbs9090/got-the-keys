@@ -6,7 +6,7 @@ RSpec.describe DemoData::ScenarioActivityGenerator do
   let(:generator) { described_class.new }
   let(:properties) do
     [
-      { key: "baseline_rental_001", town_city: "Croydon", property_type: "Apartment", asking_price: 1950 }
+      { key: "baseline_rental_001", town_city: "Croydon", property_type: "Flat", asking_price: 1950 }
     ]
   end
 
