@@ -906,6 +906,50 @@ describe "Properties" do
       expect(response).to have_http_status(:ok)
       expect(response.body).to include("/uploads/property_images/#{property.id}/legacy-listing-image.jpg")
       expect(response.body).to include("Primary listing image")
+      expect(response.body).to include(%(data-testid="property-listing-image-thumbnail"))
+    end
+
+    it "shows thumbnails for saved photo records in current photos" do
+      sign_in user
+      photo = property.photos.create!(
+        image_filename: "/uploads/property_photos/#{property.id}/1/gallery-photo.jpg",
+        caption: "Garden view",
+        position: 2,
+        primary: false
+      )
+
+      get property_photos_path(property)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(photo.image_filename)
+      expect(response.body).to include(%(data-testid="property-photo-thumbnail-#{photo.id}"))
+      expect(response.body).to include("Garden view")
+    end
+
+    it "uses radio buttons for the shared primary image selection" do
+      sign_in user
+      primary_photo = property.photos.create!(
+        image_filename: "/uploads/property_photos/#{property.id}/1/primary-photo.jpg",
+        caption: "Front elevation",
+        position: 1,
+        primary: true
+      )
+      secondary_photo = property.photos.create!(
+        image_filename: "/uploads/property_photos/#{property.id}/2/secondary-photo.jpg",
+        caption: "Kitchen",
+        position: 2,
+        primary: false
+      )
+
+      get property_photos_path(property)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(%(id="new-photo-primary-#{property.id}"))
+      expect(response.body).to include(%(id="photo-#{primary_photo.id}-primary"))
+      expect(response.body).to include(%(id="photo-#{secondary_photo.id}-primary"))
+      expect(response.body).to include(%(type="radio"))
+      expect(response.body).to include(%(data-primary-photo-radio="true"))
+      expect(response.body).not_to include(%(type="checkbox" name="photo[primary]"))
     end
 
     it "lets the owner create a marketing photo" do

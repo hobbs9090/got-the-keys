@@ -1,4 +1,5 @@
 require "rails_helper"
+require "fileutils"
 
 RSpec.describe DemoData::ScenarioLoader do
   include ActiveSupport::Testing::TimeHelpers
@@ -166,5 +167,98 @@ RSpec.describe DemoData::ScenarioLoader do
       .and change(SavedSearch, :count)
       .from(1)
       .to(0)
+  end
+
+  it "auto-attaches supplementary property images that follow the hero naming convention" do
+    hero_filename = "properties/property_21_market_lane_hero.webp"
+    supplementary_filenames = [
+      "properties/property_21_market_lane_supp_1.webp",
+      "properties/property_21_market_lane_supp_2.webp"
+    ]
+    asset_root = Rails.root.join("app/assets/images/properties")
+    created_paths = supplementary_filenames.map { |filename| asset_root.join(File.basename(filename)) }
+
+    created_paths.each do |path|
+      FileUtils.mkdir_p(path.dirname)
+      File.binwrite(path, "supplementary-image")
+    end
+
+    loader.apply_yaml!(yaml_source: <<~YAML, actor_email: "spec@example.com")
+      key: supplementary-demo
+      name: Supplementary Demo
+      description: Verifies supplementary image discovery.
+      booking_configuration:
+        slot_duration_minutes: 60
+        lead_time_hours: 4
+        buffer_minutes: 15
+        office_opens_at: "09:00"
+        office_closes_at: "18:00"
+        open_weekdays: [1, 2, 3, 4, 5]
+      admins:
+        - email: admin@example.com
+          password: secret
+          password_confirmation: secret
+          language: en
+      users:
+        - first_name: Casey
+          last_name: Hart
+          mobile_number: "07700 900250"
+          email: casey.hart@example.com
+          password: secret
+          password_confirmation: secret
+          language: en
+      properties:
+        - key: supplementary_home
+          owner_email: casey.hart@example.com
+          address_line_1: 21 Market Lane
+          town_city: Sevenoaks
+          county: Kent
+          postcode: TN13 1AA
+          country: United Kingdom
+          property_type: House
+          listing_state: published
+          sale_status: For Sale
+          furnished_state: unfurnished
+          featured: false
+          bedrooms: 3
+          bathrooms: 2
+          asking_price: 650000
+      photos:
+        - property_key: supplementary_home
+          image_filename: #{hero_filename}
+          caption: Front exterior
+          position: 1
+          primary: true
+      floor_plans: []
+      property_documents: []
+      availability_windows: []
+      appointments: []
+      enquiries: []
+      offers: []
+      rental_applications: []
+      qa:
+        family: happy_path
+        intended_journey: Supplementary image discovery
+        complexity: foundational
+        risk_type: workflow
+        locale_coverage: [en]
+        quick_reset: false
+    YAML
+
+    photos = Property.find_by!(address_line_1: "21 Market Lane").photos.ordered
+
+    expect(photos.pluck(:image_filename)).to eq([
+      hero_filename,
+      *supplementary_filenames
+    ])
+    expect(photos.pluck(:primary)).to eq([true, false, false])
+    expect(photos.pluck(:position)).to eq([1, 2, 3])
+    expect(photos.pluck(:caption)).to eq([
+      "Front exterior",
+      "Supplementary image 1",
+      "Supplementary image 2"
+    ])
+  ensure
+    created_paths&.each { |path| FileUtils.rm_f(path) }
   end
 end

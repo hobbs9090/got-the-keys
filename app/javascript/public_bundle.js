@@ -6,6 +6,7 @@ import { bootModals, teardownModals } from "./modals";
 import { bootNativeValidations, teardownNativeValidations } from "./native_validations";
 import { bootPaginationScroll, teardownPaginationScroll } from "./pagination_scroll";
 import { bootPropertyListingForms, teardownPropertyListingForms } from "./property_listing_form";
+import { bootPhotoPrimaryRadios, teardownPhotoPrimaryRadios } from "./photo_primary_radios";
 import { bootPropertySearchFilters, teardownPropertySearchFilters } from "./property_search_filters";
 import { bootPropertyFilterSave, teardownPropertyFilterSave } from "./property_filter_save";
 import { bootAccountDeleteConfirm, teardownAccountDeleteConfirm } from "./account_delete_confirm";
@@ -20,6 +21,7 @@ const bootApplication = () => {
   bootNativeValidations();
   bootPaginationScroll();
   bootPropertyListingForms();
+  bootPhotoPrimaryRadios();
   bootPropertySearchFilters();
   bootPropertyFilterSave();
   bootAccountDeleteConfirm();
@@ -34,6 +36,7 @@ const teardownApplication = () => {
   teardownNativeValidations();
   teardownPaginationScroll();
   teardownPropertyListingForms();
+  teardownPhotoPrimaryRadios();
   teardownPropertySearchFilters();
   teardownPropertyFilterSave();
   teardownAccountDeleteConfirm();

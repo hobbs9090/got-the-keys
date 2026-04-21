@@ -36,8 +36,14 @@
           <%= f.number_field :position, min: 0, step: 1 %>
         </div>
         <div class="form-grid__checkbox">
-          <%= f.check_box :primary %>
-          <%= f.label :primary, t("ui.photos.fields.primary"), class: "checkbox-label" %>
+          <% primary_radio_id = "new-photo-primary-#{@property.id}" %>
+          <%= f.hidden_field :primary, value: false %>
+          <%= f.radio_button :primary,
+                             true,
+                             id: primary_radio_id,
+                             checked: @new_photo.primary?,
+                             data: { primary_photo_radio: true, primary_photo_group: "property-#{@property.id}-photos" } %>
+          <%= label_tag primary_radio_id, t("ui.photos.fields.primary"), class: "checkbox-label" %>
         </div>
       </div>
 
@@ -58,6 +64,18 @@
         <% if listing_image_filename.present? && !listing_image_in_photo_records %>
           <div class="admin-list__item">
             <div class="property-panel">
+              <% if previewable_image_file?(listing_image_filename) %>
+                <div class="admin-asset-item admin-asset-item--workspace-photo">
+                  <%= image_tag listing_image_source(listing_image_filename),
+                                alt: t("ui.photos.primary_listing_image", default: "Primary listing image"),
+                                class: "admin-asset-item__thumbnail",
+                                loading: "lazy",
+                                data: { testid: "property-listing-image-thumbnail" } %>
+                  <div>
+                    <strong><%= t("ui.photos.primary_listing_image", default: "Primary listing image") %></strong>
+                  </div>
+                </div>
+              <% end %>
               <div class="form-grid">
                 <div>
                   <label><%= t("ui.photos.fields.image_filename") %></label>
@@ -77,6 +95,18 @@
           <% photo_form = photo == @edited_photo ? @edited_photo : photo %>
           <div class="admin-list__item">
             <div class="property-panel">
+              <% if previewable_image_file?(photo.image_filename) %>
+                <div class="admin-asset-item admin-asset-item--workspace-photo">
+                  <%= image_tag listing_image_source(photo.image_filename),
+                                alt: photo.primary? ? t("ui.photos.fields.primary_image", default: "Primary image") : photo.caption.presence || t("ui.photos.photo_position", position: photo.position, default: "Photo %{position}"),
+                                class: "admin-asset-item__thumbnail",
+                                loading: "lazy",
+                                data: { testid: "property-photo-thumbnail-#{photo.id}" } %>
+                  <div>
+                    <strong><%= photo.primary? ? t("ui.photos.fields.primary_image", default: "Primary image") : t("ui.photos.photo_position", position: photo.position, default: "Photo %{position}") %></strong>
+                  </div>
+                </div>
+              <% end %>
               <%= form_with model: [@property, photo_form], method: :patch do |f| %>
                 <div class="form-grid">
                   <div>
@@ -92,8 +122,14 @@
                     <%= f.number_field :position, min: 0, step: 1 %>
                   </div>
                   <div class="form-grid__checkbox">
-                    <%= f.check_box :primary %>
-                    <%= f.label :primary, t("ui.photos.fields.primary_image"), class: "checkbox-label" %>
+                    <% primary_radio_id = "photo-#{photo.id}-primary" %>
+                    <%= f.hidden_field :primary, value: false %>
+                    <%= f.radio_button :primary,
+                                       true,
+                                       id: primary_radio_id,
+                                       checked: photo_form.primary?,
+                                       data: { primary_photo_radio: true, primary_photo_group: "property-#{@property.id}-photos" } %>
+                    <%= label_tag primary_radio_id, t("ui.photos.fields.primary_image"), class: "checkbox-label" %>
                   </div>
                 </div>
                 <div class="form-actions">

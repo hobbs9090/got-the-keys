@@ -1,5 +1,9 @@
+require "set"
+
 module DemoData
   class ScenarioLoader
+    SUPPLEMENTARY_IMAGE_CAPTION = "Supplementary image %{number}".freeze
+
     def initialize(catalog: ScenarioCatalog.new, validator: ScenarioValidator.new, exporter: ScenarioExporter.new)
       @catalog = catalog
       @validator = validator
@@ -176,11 +180,34 @@ module DemoData
     end
 
     def create_photos(photo_specs, properties:)
+      created_filenames_by_property = Hash.new { |hash, key| hash[key] = Set.new }
+
       photo_specs.each do |attributes|
-        properties.fetch(attributes.fetch(:property_key)).photos.create!(
-          attributes.except(:property_key)
-        )
+        property = properties.fetch(attributes.fetch(:property_key))
+        photo = property.photos.create!(attributes.except(:property_key))
+        created_filenames_by_property[property.id] << photo.image_filename.to_s
+
+        supplementary_photo_attributes_for(photo).each do |supplementary_attributes|
+          next if created_filenames_by_property[property.id].include?(supplementary_attributes.fetch(:image_filename))
+
+          supplementary_photo = property.photos.create!(supplementary_attributes)
+          created_filenames_by_property[property.id] << supplementary_photo.image_filename.to_s
+        end
       end
+    end
+
+    def supplementary_photo_attributes_for(photo)
+      DemoData::PropertyImageAssetNaming
+        .supplementary_assets_for(photo.image_filename)
+        .each_with_index
+        .map do |asset, index|
+          {
+            image_filename: asset.fetch(:filename),
+            caption: format(SUPPLEMENTARY_IMAGE_CAPTION, number: asset.fetch(:number)),
+            position: photo.position.to_i + index + 1,
+            primary: false
+          }
+        end
     end
 
     def create_floor_plans(floor_plan_specs, properties:)

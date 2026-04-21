@@ -3613,12 +3613,12 @@ form[data-testid="lead-inbox-filters"] .form-actions .button,
   display: none !important;
 }
 
-.form-grid__checkbox input[type="checkbox"] {
+.form-grid__checkbox input[type="checkbox"],
+.form-grid__checkbox input[type="radio"] {
   -webkit-appearance: none;
   appearance: none;
   background: var(--color-surface-raised);
   border: 1.5px solid var(--color-panel-border-strong);
-  border-radius: 0.45rem;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
   cursor: pointer;
   display: grid;
@@ -3632,6 +3632,14 @@ form[data-testid="lead-inbox-filters"] .form-actions .button,
   width: 1.35rem;
 }
 
+.form-grid__checkbox input[type="checkbox"] {
+  border-radius: 0.45rem;
+}
+
+.form-grid__checkbox input[type="radio"] {
+  border-radius: 999px;
+}
+
 .form-grid__checkbox input[type="checkbox"]::before {
   border-bottom: 2.5px solid #fff;
   border-left: 2.5px solid #fff;
@@ -3643,7 +3651,24 @@ form[data-testid="lead-inbox-filters"] .form-actions .button,
   width: 0.72rem;
 }
 
+.form-grid__checkbox input[type="radio"]::before {
+  background: #fff;
+  border-radius: 999px;
+  content: "";
+  height: 0.55rem;
+  transform: scale(0);
+  transform-origin: center;
+  transition: transform 0.16s ease;
+  width: 0.55rem;
+}
+
 .form-grid__checkbox input[type="checkbox"]:checked {
+  background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
+  border-color: transparent;
+  box-shadow: 0 12px 24px rgba(20, 87, 214, 0.18);
+}
+
+.form-grid__checkbox input[type="radio"]:checked {
   background: linear-gradient(135deg, var(--button-primary-start), var(--button-primary-end));
   border-color: transparent;
   box-shadow: 0 12px 24px rgba(20, 87, 214, 0.18);
@@ -3653,8 +3678,14 @@ form[data-testid="lead-inbox-filters"] .form-actions .button,
   transform: rotate(-45deg) scale(1);
 }
 
+.form-grid__checkbox input[type="radio"]:checked::before {
+  transform: scale(1);
+}
+
 .form-grid__checkbox input[type="checkbox"]:focus,
-.form-grid__checkbox input[type="checkbox"]:focus-visible {
+.form-grid__checkbox input[type="checkbox"]:focus-visible,
+.form-grid__checkbox input[type="radio"]:focus,
+.form-grid__checkbox input[type="radio"]:focus-visible {
   box-shadow: 0 0 0 4px var(--color-focus-ring);
   outline: none;
 }
@@ -3866,6 +3897,15 @@ form[data-testid="lead-inbox-filters"] .form-actions .button,
   height: 72px;
   object-fit: cover;
   width: 72px;
+}
+
+.admin-asset-item--workspace-photo {
+  grid-template-columns: 96px minmax(0, 1fr);
+}
+
+.admin-asset-item--workspace-photo .admin-asset-item__thumbnail {
+  height: 96px;
+  width: 96px;
 }
 
 .admin-asset-item__thumbnail--contain {
