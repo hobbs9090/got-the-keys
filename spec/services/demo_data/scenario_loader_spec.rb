@@ -39,12 +39,14 @@ RSpec.describe DemoData::ScenarioLoader do
       "kate@gotthekeys.uk",
       "inarra@gotthekeys.uk"
     ])
-    expect(User.count).to eq(7)
+    expect(User.count).to eq(92)
     expect(Property.count).to eq(100)
     expect(Property.for_sale.count).to eq(40)
     expect(Property.for_rent.count).to eq(60)
     expect(Property.publicly_visible.for_sale.count).to eq(40)
     expect(Property.publicly_visible.for_rent.count).to eq(60)
+    expect(User.where("properties_count > 0").count).to eq(88)
+    expect(User.where(properties_count: 1).count).to eq(81)
     expect(Property.where.not(year_built: nil).count).to eq(100)
     expect(Photo.count).to eq(100)
     expect(FloorPlan.count).to eq(2)
@@ -55,15 +57,36 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(Offer.count).to eq(10)
     expect(RentalApplication.count).to eq(14)
     expect(User.pluck(:language).uniq).to eq(["en"])
-    expect(User.order(:email).pluck(:email)).to match_array([
+    expect(User.order(:email).pluck(:email)).to include(
       "alex.cole@example.com",
       "charlotte.hughes@example.com",
       "daniel.mercer@example.com",
       "lucy.mcclure@example.com",
       "matthew.wells@example.com",
       "nina.hughes@example.com",
-      "sam.turner@example.com"
-    ])
+      "owner01.seed01@example.com",
+      "owner33.seed33@example.com",
+      "owner34.seed34@example.com",
+      "owner85.seed85@example.com",
+      "sam.turner@example.com",
+    )
+    sale_owner_listing_counts = Property.for_sale.group(:user_id).count.values.sort
+    rental_owner_listing_counts = Property.for_rent.group(:user_id).count.values.sort
+
+    expect(sale_owner_listing_counts.count(1)).to eq(33)
+    expect(sale_owner_listing_counts.count(2)).to eq(2)
+    expect(sale_owner_listing_counts.count(3)).to eq(1)
+    expect(sale_owner_listing_counts.uniq).to eq([1, 2, 3])
+
+    expect(rental_owner_listing_counts.count(1)).to eq(49)
+    expect(rental_owner_listing_counts.count(2)).to eq(2)
+    expect(rental_owner_listing_counts.count(3)).to eq(1)
+    expect(rental_owner_listing_counts.count(4)).to eq(1)
+    expect(rental_owner_listing_counts.uniq).to eq([1, 2, 3, 4])
+
+    shared_owner = User.find_by!(email: "owner85.seed85@example.com")
+    expect(shared_owner.properties.for_sale.count).to eq(1)
+    expect(shared_owner.properties.for_rent.count).to eq(4)
     expect(Property.find_by!(address_line_1: "18 Cedar Road").available_from).to eq(Date.new(2026, 4, 15))
     expect(Property.find_by!(address_line_1: "Flat 3, 44 Mount Ephraim").available_from).to eq(Date.new(2026, 5, 1))
     expect(Property.find_by!(address_line_1: "Apartment 11, 9 Park Lane").available_from).to eq(Date.new(2026, 4, 25))
