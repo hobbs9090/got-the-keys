@@ -81,6 +81,13 @@ RSpec.describe "Admin QA guide" do
     expect(response.body).not_to include(%(data-testid="admin-two-factor-mode-panel"))
   end
 
+  it "does not render the shared cookie banner on admin pages" do
+    get admin_qa_path
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).not_to include(%(class="cookie-banner"))
+  end
+
   it "places the QA guide link at the bottom of the admin workspace navigation" do
     get admin_root_path
 
