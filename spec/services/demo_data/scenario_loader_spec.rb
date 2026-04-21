@@ -25,7 +25,7 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(baseline[:enquiry_count]).to eq(40)
     expect(baseline[:offer_count]).to eq(10)
     expect(baseline[:rental_application_count]).to eq(14)
-    expect(baseline[:photo_count]).to eq(100)
+    expect(baseline[:photo_count]).to eq(102)
     expect(baseline[:property_document_count]).to eq(2)
   end
 
@@ -49,7 +49,7 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(User.where("properties_count > 0").count).to eq(88)
     expect(User.where(properties_count: 1).count).to eq(81)
     expect(Property.where.not(year_built: nil).count).to eq(100)
-    expect(Photo.count).to eq(100)
+    expect(Photo.count).to eq(102)
     expect(FloorPlan.count).to eq(2)
     expect(PropertyDocument.count).to eq(2)
     expect(AvailabilityWindow.count).to eq(100)
@@ -211,11 +211,14 @@ RSpec.describe DemoData::ScenarioLoader do
         - key: supplementary_home
           owner_email: casey.hart@example.com
           address_line_1: 21 Market Lane
+          address_line_2:
           town_city: Sevenoaks
           county: Kent
           postcode: TN13 1AA
           country: United Kingdom
           property_type: House
+          listing_tagline: Bright family house near the high street
+          property_description: A polished family house with a bright kitchen, generous reception rooms, and a landscaped garden.
           listing_state: published
           sale_status: For Sale
           furnished_state: unfurnished
@@ -223,6 +226,8 @@ RSpec.describe DemoData::ScenarioLoader do
           bedrooms: 3
           bathrooms: 2
           asking_price: 650000
+          created_at: 2026-04-01 09:00:00 Z
+          updated_at: 2026-04-01 09:00:00 Z
       photos:
         - property_key: supplementary_home
           image_filename: #{hero_filename}

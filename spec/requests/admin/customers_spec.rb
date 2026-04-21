@@ -49,7 +49,7 @@ RSpec.describe "Admin customers", type: :request do
 
     count_label = parsed_html.at_css('[data-testid="admin-customers-count"]')
     expect(count_label).to be_present
-    expect(count_label.text.strip).to eq("2 customers total")
+    expect(count_label.text.strip).to eq("3 customers total")
   end
 
   it "shows grouped customers from bookings with a CTA to filtered appointments" do

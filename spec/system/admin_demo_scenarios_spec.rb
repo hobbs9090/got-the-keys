@@ -7,6 +7,7 @@ RSpec.describe "Admin demo scenarios", type: :system do
     fill_in "admin_email", with: email
     fill_in "admin_password", with: password
     click_button "Sign in"
+    visit admin_demo_scenarios_path
   end
 
   it "restores the baseline scenario from the admin area with the typed gate" do

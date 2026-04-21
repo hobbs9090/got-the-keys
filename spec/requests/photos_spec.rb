@@ -10,11 +10,11 @@ RSpec.describe "Photos", type: :request do
     get property_photos_path(property)
 
     page = Nokogiri::HTML(response.body)
-    primary_checkbox = page.at_css('input[type="checkbox"][name="photo[primary]"]')
+    primary_radio = page.at_css('input[type="radio"][name="photo[primary]"]')
 
     expect(response).to have_http_status(:ok)
-    expect(primary_checkbox).to be_present
-    expect(primary_checkbox["checked"]).to eq("checked")
+    expect(primary_radio).to be_present
+    expect(primary_radio["checked"]).to eq("checked")
   end
 
   it "creates a photo from an uploaded image file" do

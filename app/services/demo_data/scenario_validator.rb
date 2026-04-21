@@ -1,3 +1,4 @@
+require "set"
 require "zlib"
 
 module DemoData
@@ -118,7 +119,7 @@ module DemoData
         admin_count: normalized.fetch(:admins).count,
         user_count: normalized.fetch(:users).count,
         property_count: normalized.fetch(:properties).count,
-        photo_count: normalized.fetch(:photos).count,
+        photo_count: effective_photo_count(normalized),
         floor_plan_count: normalized.fetch(:floor_plans).count,
         property_document_count: normalized.fetch(:property_documents).count,
         availability_window_count: normalized.fetch(:availability_windows).count,
@@ -767,7 +768,7 @@ module DemoData
         admins: normalized.fetch(:admins).count,
         users: normalized.fetch(:users).count,
         properties: normalized.fetch(:properties).count,
-        photos: normalized.fetch(:photos).count,
+        photos: effective_photo_count(normalized),
         floor_plans: normalized.fetch(:floor_plans).count,
         property_documents: normalized.fetch(:property_documents).count,
         availability_windows: normalized.fetch(:availability_windows).count,
@@ -776,6 +777,15 @@ module DemoData
         offers: normalized.fetch(:offers).count,
         rental_applications: normalized.fetch(:rental_applications).count
       }
+    end
+
+    def effective_photo_count(normalized)
+      existing_filenames = normalized.fetch(:photos).map { |photo| photo.fetch(:image_filename).to_s }.to_set
+      supplementary_filenames = normalized.fetch(:photos).flat_map do |photo|
+        DemoData::PropertyImageAssetNaming.supplementary_filenames_for(photo.fetch(:image_filename))
+      end
+
+      (existing_filenames | supplementary_filenames.to_set).count
     end
   end
 end

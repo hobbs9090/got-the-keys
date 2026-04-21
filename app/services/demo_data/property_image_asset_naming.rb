@@ -3,14 +3,16 @@
 module DemoData
   class PropertyImageAssetNaming
     PROPERTY_ASSET_DIR = Rails.root.join("app/assets/images/properties")
-    HERO_FILENAME_PATTERN = /\Aproperties\/(?<slug>property_.+)_hero\.(?<extension>jpg|jpeg|png|webp|gif|svg)\z/i.freeze
-    SUPPLEMENTARY_BASENAME_PATTERN = /\A(?<slug>property_.+)_supp_(?<number>\d+)\.(?<extension>jpg|jpeg|png|webp|gif|svg)\z/i.freeze
+    HERO_FILENAME_PATTERN = /\Aproperties\/(?<slug>property_.+)_hero(?<retina>@2x)?\.(?<extension>jpg|jpeg|png|webp|gif|svg)\z/i.freeze
+    SUPPLEMENTARY_BASENAME_PATTERN = /\A(?<slug>property_.+)_supp_(?<number>\d+)(?<retina>@2x)?\.(?<extension>jpg|jpeg|png|webp|gif|svg)\z/i.freeze
 
     def self.valid_property_asset_filename?(filename)
       relative_path = filename.to_s
       return true if relative_path.match?(HERO_FILENAME_PATTERN)
 
       basename = File.basename(relative_path)
+      return true if relative_path == "properties/property_placeholder_listing.svg"
+
       relative_path.start_with?("properties/") && basename.match?(SUPPLEMENTARY_BASENAME_PATTERN)
     end
 

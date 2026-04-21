@@ -16,6 +16,7 @@ RSpec.describe "Admin security", type: :system do
     fill_in "admin_password", with: password
     fill_in "admin_otp_attempt", with: otp_attempt if otp_attempt.present?
     click_button "Sign in"
+    visit admin_security_path
   end
 
   def enroll_admin!(admin)

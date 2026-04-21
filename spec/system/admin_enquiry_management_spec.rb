@@ -7,6 +7,7 @@ RSpec.describe "Admin enquiry management", type: :system do
     fill_in "admin_email", with: admin.email
     fill_in "admin_password", with: "changeme"
     click_button "Sign in"
+    visit admin_enquiries_path
   end
 
   it "lets an admin triage a new lead from the inbox" do

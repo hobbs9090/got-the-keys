@@ -17,6 +17,7 @@ RSpec.describe "Admin appointment management", type: :system do
     fill_in "admin_email", with: admin.email
     fill_in "admin_password", with: "changeme"
     click_button "Sign in"
+    visit admin_bookings_path
   end
 
   it "lets an admin sign in and confirm a pending appointment from the bookings desk" do

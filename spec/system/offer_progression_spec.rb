@@ -14,6 +14,7 @@ RSpec.describe "Offer progression", type: :system do
     fill_in "admin_email", with: admin.email
     fill_in "admin_password", with: "changeme"
     click_button "Sign in"
+    visit admin_sales_path
   end
 
   it "lets a buyer submit an offer and an admin accept it" do
