@@ -330,6 +330,23 @@ it:
         no_previous_appointments: Nessuna prenotazione passata.
         no_cancelled_appointments: Nessuna prenotazione annullata.
         view_booking: Vedi prenotazione
+        customer_offers_eyebrow: Il tuo percorso di acquisto
+        customer_offers_title: Le tue offerte
+        customer_offers_blurb: Tieni traccia di tutte le offerte che hai inviato e verifica se sono ancora in attesa, accettate, rifiutate o concluse.
+        customer_offer_submitted: Inviata %{time}
+        withdraw_offer: Ritira offerta
+        withdraw_offer_confirm: Ritirare questa offerta?
+        customer_offers_empty_title: Nessuna offerta per ora
+        customer_offers_empty: Non hai ancora inviato offerte.
+        customer_rental_applications_eyebrow: Il tuo percorso di affitto
+        customer_rental_applications_title: Le tue domande di affitto
+        customer_rental_applications_blurb: Tieni d'occhio ogni domanda di affitto e verifica se e ancora in revisione, approvata o rifiutata.
+        customer_rental_application_move_in: Ingresso preferito %{date}
+        customer_rental_application_submitted: Inviata %{time}
+        withdraw_rental_application: Ritira domanda
+        withdraw_rental_application_confirm: Ritirare questa domanda di affitto?
+        customer_rental_applications_empty_title: Nessuna domanda di affitto per ora
+        customer_rental_applications_empty: Non hai ancora inviato domande di affitto.
         saved_searches_title: Ricerche salvate
         saved_searches_blurb: Le combinazioni di filtri che hai salvato sono elencate qui, cosi puoi riaprire i risultati corrispondenti in qualsiasi momento.
         saved_searches_browse_catalogue: Sfoglia il catalogo
@@ -1167,6 +1184,8 @@ it:
         la tua posizione di acquisto con il team.
       fields:
         amount: Importo offerta
+        increase_amount: Aumenta importo offerta
+        decrease_amount: Riduci importo offerta
         chain_position: Posizione di acquisto
         chain_position_placeholder: Acquirente cash, nessuna catena a monte
         notes: Note
@@ -1183,8 +1202,11 @@ it:
       alerts:
         sale_only: Le offerte sono disponibili solo per gli immobili in vendita.
         owner_cannot_offer: Non puoi inviare un'offerta per il tuo stesso immobile.
+        cannot_withdraw: Questa offerta non puo piu essere ritirata.
+        not_your_offer: Puoi gestire solo le tue offerte.
       flash:
         created: Offerta inviata. Il team la esaminera a breve.
+        withdrawn: Offerta ritirata.
       events:
         received: Offerta ricevuta a %{amount}.
         status_changed: Stato offerta cambiato da %{from_status} a %{to_status}.
@@ -1214,8 +1236,11 @@ it:
       alerts:
         rental_only: Le domande di affitto sono disponibili solo per gli immobili
           in affitto.
+        cannot_withdraw: Questa domanda di affitto non puo piu essere ritirata.
+        not_your_application: Puoi gestire solo le tue domande di affitto.
       flash:
         created: Domanda di affitto inviata. Il team la esaminera a breve.
+        withdrawn: Domanda di affitto ritirata.
       events:
         received: Domanda di affitto ricevuta per %{move_in_date}.
         status_changed: Stato domanda cambiato da %{from_status} a %{to_status}.

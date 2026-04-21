@@ -1,15 +1,15 @@
-<% title t("ui.properties.mine.title", default: "My listings") %>
+<% title t("ui.properties.mine.title") %>
 
 <section class="property-workspace">
-  <h1 class="visually-hidden"><%= t("ui.properties.mine.title", default: "My listings") %></h1>
+  <h1 class="visually-hidden"><%= t("ui.properties.mine.title") %></h1>
   <section class="site-card property-workspace-section <%= "property-workspace-section--empty-listings" if @properties.blank? %>" data-testid="owner-listings-section">
-    <p class="section-heading__eyebrow"><%= t("ui.properties.mine.list_eyebrow", default: "Your records") %></p>
-    <h2><%= t("ui.properties.mine.list_title", default: "Saved and partially completed listings") %></h2>
-    <p><%= t("ui.properties.mine.list_blurb", default: "Draft and live listings you are working on are shown here for quick access.") %></p>
+    <p class="section-heading__eyebrow"><%= t("ui.properties.mine.list_eyebrow") %></p>
+    <h2><%= t("ui.properties.mine.list_title") %></h2>
+    <p><%= t("ui.properties.mine.list_blurb") %></p>
 
     <% if @properties.blank? %>
-      <h3 class="property-workspace-section__empty-title"><%= t("ui.properties.mine.empty_title", default: "No saved listings yet") %></h3>
-      <p><%= t("ui.properties.mine.empty_body", default: "Create your first property and come back here whenever you want to continue working on it.") %></p>
+      <h3 class="property-workspace-section__empty-title"><%= t("ui.properties.mine.empty_title") %></h3>
+      <p><%= t("ui.properties.mine.empty_body") %></p>
       <div class="property-workspace-section__actions">
         <%= link_to t("ui.site_header.add_property"), new_property_path, class: "button primary" %>
       </div>
@@ -22,17 +22,17 @@
   </section>
 
   <section class="site-card property-workspace-section" data-testid="customer-bookings-section">
-    <p class="section-heading__eyebrow"><%= t("ui.properties.mine.customer_bookings_eyebrow", default: "Your viewings") %></p>
-    <h2><%= t("ui.properties.mine.customer_bookings_title", default: "Your bookings") %></h2>
-    <p><%= t("ui.properties.mine.customer_bookings_blurb", default: "Upcoming, previous, and cancelled bookings are grouped here so you can track every viewing in one place.") %></p>
+    <p class="section-heading__eyebrow"><%= t("ui.properties.mine.customer_bookings_eyebrow") %></p>
+    <h2><%= t("ui.properties.mine.customer_bookings_title") %></h2>
+    <p><%= t("ui.properties.mine.customer_bookings_blurb") %></p>
 
     <% if @customer_appointment_buckets.values.any?(&:any?) %>
       <section class="site-card property-workspace-panel property-workspace-panel--appointments" data-testid="customer-bookings-panel">
         <div class="property-workspace-bookings">
           <% [
-            [:upcoming, t("ui.properties.mine.upcoming_appointments", default: "Upcoming"), t("ui.properties.mine.no_upcoming_appointments", default: "No upcoming appointments.")],
-            [:previous, t("ui.properties.mine.previous_appointments", default: "Previous"), t("ui.properties.mine.no_previous_appointments", default: "No previous appointments.")],
-            [:cancelled, t("ui.properties.mine.cancelled_appointments", default: "Cancelled"), t("ui.properties.mine.no_cancelled_appointments", default: "No cancelled appointments.")]
+            [:upcoming, t("ui.properties.mine.upcoming_appointments"), t("ui.properties.mine.no_upcoming_appointments")],
+            [:previous, t("ui.properties.mine.previous_appointments"), t("ui.properties.mine.no_previous_appointments")],
+            [:cancelled, t("ui.properties.mine.cancelled_appointments"), t("ui.properties.mine.no_cancelled_appointments")]
           ].each do |bucket_key, heading, empty_copy| %>
             <% appointments = @customer_appointment_buckets.fetch(bucket_key) %>
 
@@ -54,8 +54,8 @@
                       </div>
                       <div class="property-workspace-card__appointment-actions">
                         <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
-                        <%= link_to t("ui.properties.mine.open_details", default: "Open details"), property_path(appointment.property), class: "button primary property-workspace-card__appointment-button" %>
-                        <%= link_to t("ui.properties.mine.view_booking", default: "View booking"), appointment_path(appointment, token: appointment.access_token), class: "button hollow primary property-workspace-card__appointment-button" %>
+                        <%= link_to t("ui.properties.mine.open_details"), property_path(appointment.property), class: "button primary property-workspace-card__appointment-button" %>
+                        <%= link_to t("ui.properties.mine.view_booking"), appointment_path(appointment, token: appointment.access_token), class: "button hollow primary property-workspace-card__appointment-button" %>
                       </div>
                     </div>
                   <% end %>
@@ -68,22 +68,22 @@
         </div>
       </section>
     <% else %>
-      <h3 class="property-workspace-section__empty-title"><%= t("ui.properties.mine.customer_bookings_empty_title", default: "No bookings yet") %></h3>
-      <p class="empty-copy"><%= t("ui.properties.mine.customer_bookings_empty", default: "You do not have any bookings yet.") %></p>
+      <h3 class="property-workspace-section__empty-title"><%= t("ui.properties.mine.customer_bookings_empty_title") %></h3>
+      <p class="empty-copy"><%= t("ui.properties.mine.customer_bookings_empty") %></p>
     <% end %>
   </section>
 
   <section class="site-card property-workspace-section" data-testid="customer-offers-section">
-    <p class="section-heading__eyebrow"><%= t("ui.properties.mine.customer_offers_eyebrow", default: "Your buying journey") %></p>
-    <h2><%= t("ui.properties.mine.customer_offers_title", default: "Your offers") %></h2>
-    <p><%= t("ui.properties.mine.customer_offers_blurb", default: "Track every offer you have submitted and see whether it is still pending, accepted, rejected, or complete.") %></p>
+    <p class="section-heading__eyebrow"><%= t("ui.properties.mine.customer_offers_eyebrow") %></p>
+    <h2><%= t("ui.properties.mine.customer_offers_title") %></h2>
+    <p><%= t("ui.properties.mine.customer_offers_blurb") %></p>
 
     <% if @customer_offers.any? %>
       <section class="site-card property-workspace-panel property-workspace-panel--appointments" data-testid="customer-offers-panel">
         <div class="property-workspace-bookings">
           <section class="property-workspace-bookings__section">
             <div class="property-workspace-bookings__header">
-              <p class="property-workspace-card__appointment-heading"><%= t("ui.properties.mine.customer_offers_title", default: "Your offers") %></p>
+              <p class="property-workspace-card__appointment-heading"><%= t("ui.properties.mine.customer_offers_title") %></p>
               <span class="badge badge--neutral"><%= display_number(@customer_offers.count) %></span>
             </div>
 
@@ -94,17 +94,17 @@
                     <span class="<%= property_sale_status_badge_class(offer.property.sale_status) %>" data-testid="customer-offer-sale-status-<%= offer.id %>"><%= translated_sale_status(offer.property.sale_status) %></span>
                     <strong><%= offer.property.address_line_1 %></strong>
                     <p><%= number_to_currency(offer.amount, unit: "£", precision: 0) %></p>
-                    <p><%= t("ui.properties.mine.customer_offer_submitted", default: "Submitted %{time}", time: formatted_date_time(offer.created_at)) %></p>
+                    <p><%= t("ui.properties.mine.customer_offer_submitted", time: formatted_date_time(offer.created_at)) %></p>
                   </div>
                   <div class="property-workspace-card__appointment-actions">
-                    <span class="<%= offer_status_badge_class(offer.status) %>"><%= t("ui.offers.statuses.#{offer.status}", default: offer.status.humanize) %></span>
-                    <%= link_to t("ui.properties.mine.open_details", default: "Open details"), property_path(offer.property), class: "button primary property-workspace-card__appointment-button" %>
+                    <span class="<%= offer_status_badge_class(offer.status) %>"><%= t("ui.offers.statuses.#{offer.status}") %></span>
+                    <%= link_to t("ui.properties.mine.open_details"), property_path(offer.property), class: "button primary property-workspace-card__appointment-button" %>
                     <% if offer.withdrawable? %>
-                      <%= button_to t("ui.properties.mine.withdraw_offer", default: "Withdraw offer"),
+                      <%= button_to t("ui.properties.mine.withdraw_offer"),
                                     withdraw_property_offer_path(offer.property, offer),
                                     method: :patch,
                                     class: "button hollow secondary property-workspace-card__appointment-button",
-                                    data: { turbo_confirm: t("ui.properties.mine.withdraw_offer_confirm", default: "Withdraw this offer?") } %>
+                                    data: { turbo_confirm: t("ui.properties.mine.withdraw_offer_confirm") } %>
                     <% end %>
                   </div>
                 </div>
@@ -114,22 +114,22 @@
         </div>
       </section>
     <% else %>
-      <h3 class="property-workspace-section__empty-title"><%= t("ui.properties.mine.customer_offers_empty_title", default: "No offers yet") %></h3>
-      <p class="empty-copy"><%= t("ui.properties.mine.customer_offers_empty", default: "You have not submitted any offers yet.") %></p>
+      <h3 class="property-workspace-section__empty-title"><%= t("ui.properties.mine.customer_offers_empty_title") %></h3>
+      <p class="empty-copy"><%= t("ui.properties.mine.customer_offers_empty") %></p>
     <% end %>
   </section>
 
   <section class="site-card property-workspace-section" data-testid="customer-rental-applications-section">
-    <p class="section-heading__eyebrow"><%= t("ui.properties.mine.customer_rental_applications_eyebrow", default: "Your renting journey") %></p>
-    <h2><%= t("ui.properties.mine.customer_rental_applications_title", default: "Your rental applications") %></h2>
-    <p><%= t("ui.properties.mine.customer_rental_applications_blurb", default: "Keep an eye on every rental application and see whether it is still being reviewed, approved, or rejected.") %></p>
+    <p class="section-heading__eyebrow"><%= t("ui.properties.mine.customer_rental_applications_eyebrow") %></p>
+    <h2><%= t("ui.properties.mine.customer_rental_applications_title") %></h2>
+    <p><%= t("ui.properties.mine.customer_rental_applications_blurb") %></p>
 
     <% if @customer_rental_applications.any? %>
       <section class="site-card property-workspace-panel property-workspace-panel--appointments" data-testid="customer-rental-applications-panel">
         <div class="property-workspace-bookings">
           <section class="property-workspace-bookings__section">
             <div class="property-workspace-bookings__header">
-              <p class="property-workspace-card__appointment-heading"><%= t("ui.properties.mine.customer_rental_applications_title", default: "Your rental applications") %></p>
+              <p class="property-workspace-card__appointment-heading"><%= t("ui.properties.mine.customer_rental_applications_title") %></p>
               <span class="badge badge--neutral"><%= display_number(@customer_rental_applications.count) %></span>
             </div>
 
@@ -139,18 +139,18 @@
                   <div class="property-workspace-bookings__details">
                     <span class="<%= property_sale_status_badge_class(rental_application.property.sale_status) %>" data-testid="customer-rental-application-sale-status-<%= rental_application.id %>"><%= translated_sale_status(rental_application.property.sale_status) %></span>
                     <strong><%= rental_application.property.address_line_1 %></strong>
-                    <p><%= t("ui.properties.mine.customer_rental_application_move_in", default: "Preferred move-in %{date}", date: l(rental_application.move_in_date, format: :long)) %></p>
-                    <p><%= t("ui.properties.mine.customer_rental_application_submitted", default: "Submitted %{time}", time: formatted_date_time(rental_application.created_at)) %></p>
+                    <p><%= t("ui.properties.mine.customer_rental_application_move_in", date: l(rental_application.move_in_date, format: :long)) %></p>
+                    <p><%= t("ui.properties.mine.customer_rental_application_submitted", time: formatted_date_time(rental_application.created_at)) %></p>
                   </div>
                   <div class="property-workspace-card__appointment-actions">
-                    <span class="<%= rental_application_status_badge_class(rental_application.status) %>"><%= t("ui.rental_applications.statuses.#{rental_application.status}", default: rental_application.status.humanize) %></span>
-                    <%= link_to t("ui.properties.mine.open_details", default: "Open details"), property_path(rental_application.property), class: "button primary property-workspace-card__appointment-button" %>
+                    <span class="<%= rental_application_status_badge_class(rental_application.status) %>"><%= t("ui.rental_applications.statuses.#{rental_application.status}") %></span>
+                    <%= link_to t("ui.properties.mine.open_details"), property_path(rental_application.property), class: "button primary property-workspace-card__appointment-button" %>
                     <% if rental_application.withdrawable? %>
-                      <%= button_to t("ui.properties.mine.withdraw_rental_application", default: "Withdraw application"),
+                      <%= button_to t("ui.properties.mine.withdraw_rental_application"),
                                     withdraw_property_rental_application_path(rental_application.property, rental_application),
                                     method: :patch,
                                     class: "button hollow secondary property-workspace-card__appointment-button",
-                                    data: { turbo_confirm: t("ui.properties.mine.withdraw_rental_application_confirm", default: "Withdraw this rental application?") } %>
+                                    data: { turbo_confirm: t("ui.properties.mine.withdraw_rental_application_confirm") } %>
                     <% end %>
                   </div>
                 </div>
@@ -160,15 +160,15 @@
         </div>
       </section>
     <% else %>
-      <h3 class="property-workspace-section__empty-title"><%= t("ui.properties.mine.customer_rental_applications_empty_title", default: "No rental applications yet") %></h3>
-      <p class="empty-copy"><%= t("ui.properties.mine.customer_rental_applications_empty", default: "You have not submitted any rental applications yet.") %></p>
+      <h3 class="property-workspace-section__empty-title"><%= t("ui.properties.mine.customer_rental_applications_empty_title") %></h3>
+      <p class="empty-copy"><%= t("ui.properties.mine.customer_rental_applications_empty") %></p>
     <% end %>
   </section>
 
   <section class="site-card property-workspace-section" data-testid="saved-homes-section">
-      <p class="section-heading__eyebrow"><%= t("ui.properties.mine.saved_homes_eyebrow", default: "Your shortlist") %></p>
-      <h2><%= t("ui.properties.mine.saved_homes_title", default: "Saved homes") %></h2>
-      <p><%= t("ui.properties.mine.saved_homes_blurb", default: "Homes you have shortlisted stay here so you can jump back into details quickly.") %></p>
+      <p class="section-heading__eyebrow"><%= t("ui.properties.mine.saved_homes_eyebrow") %></p>
+      <h2><%= t("ui.properties.mine.saved_homes_title") %></h2>
+      <p><%= t("ui.properties.mine.saved_homes_blurb") %></p>
 
       <% if @saved_properties.any? %>
         <div class="property-workspace__grid">
@@ -193,44 +193,44 @@
 
               <dl class="property-workspace-card__meta">
                 <div>
-                  <dt><%= t("ui.properties.mine.stats.location", default: "Location") %></dt>
+                  <dt><%= t("ui.properties.mine.stats.location") %></dt>
                   <dd><%= property.location_line %></dd>
                 </div>
                 <div>
-                  <dt><%= t("ui.properties.mine.stats.price", default: "Guide price") %></dt>
+                  <dt><%= t("ui.properties.mine.stats.price") %></dt>
                   <dd><%= format_price(property) %></dd>
                 </div>
                 <div>
-                  <dt><%= t("ui.properties.mine.stats.last_saved", default: "Last saved") %></dt>
+                  <dt><%= t("ui.properties.mine.stats.last_saved") %></dt>
                   <dd><%= formatted_date_time(property.updated_at) %></dd>
                 </div>
                 <div>
-                  <dt><%= t("ui.properties.mine.stats.status", default: "Status") %></dt>
+                  <dt><%= t("ui.properties.mine.stats.status") %></dt>
                   <dd><%= translated_listing_state(property.listing_state) %></dd>
                 </div>
               </dl>
 
               <div class="property-workspace-card__actions">
-                <%= link_to t("ui.properties.mine.open_details", default: "Open details"), property_path(property), class: "button primary" %>
-                <%= button_to t("ui.saved_properties.saved_button", default: "Remove from saved list"), property_saved_property_path(property), method: :delete, class: "button primary hollow", form: { data: { turbo_stream: true } } %>
+                <%= link_to t("ui.properties.mine.open_details"), property_path(property), class: "button primary" %>
+                <%= button_to t("ui.saved_properties.saved_button"), property_saved_property_path(property), method: :delete, class: "button primary hollow", form: { data: { turbo_stream: true } } %>
               </div>
             </div>
             </article>
           <% end %>
         </div>
       <% else %>
-        <h3 class="property-workspace-section__empty-title"><%= t("ui.properties.mine.saved_homes_empty_title", default: "No saved homes yet") %></h3>
-        <p class="empty-copy"><%= t("ui.properties.mine.saved_homes_empty", default: "Save homes from the catalogue to keep your shortlist in one place.") %></p>
+        <h3 class="property-workspace-section__empty-title"><%= t("ui.properties.mine.saved_homes_empty_title") %></h3>
+        <p class="empty-copy"><%= t("ui.properties.mine.saved_homes_empty") %></p>
       <% end %>
     </section>
 
   <section class="site-card property-workspace-section" id="saved-searches" data-testid="workspace-saved-searches">
     <p class="section-heading__eyebrow"><%= t("ui.properties.mine.saved_searches_eyebrow") %></p>
     <h2><%= t("ui.properties.mine.saved_searches_title") %></h2>
-    <p><%= t("ui.properties.mine.saved_searches_blurb", default: "Your saved filter combinations are listed here so you can reopen matching results anytime.") %></p>
+    <p><%= t("ui.properties.mine.saved_searches_blurb") %></p>
 
     <% if @saved_searches.blank? %>
-      <h3 class="property-workspace-section__empty-title"><%= t("ui.properties.mine.saved_searches_empty_title", default: "No saved searches yet") %></h3>
+      <h3 class="property-workspace-section__empty-title"><%= t("ui.properties.mine.saved_searches_empty_title") %></h3>
       <p class="empty-copy"><%= t("ui.properties.mine.saved_searches_empty") %></p>
     <% else %>
       <%= render "properties/saved_searches_cards", saved_searches: @saved_searches %>

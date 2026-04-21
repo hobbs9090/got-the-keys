@@ -329,6 +329,23 @@ de:
         no_previous_appointments: Keine vergangenen Termine.
         no_cancelled_appointments: Keine stornierten Termine.
         view_booking: Buchung anzeigen
+        customer_offers_eyebrow: Ihr Kaufprozess
+        customer_offers_title: Ihre Angebote
+        customer_offers_blurb: Verfolgen Sie alle abgegebenen Angebote und sehen Sie, ob sie noch offen, angenommen, abgelehnt oder abgeschlossen sind.
+        customer_offer_submitted: Eingereicht %{time}
+        withdraw_offer: Angebot zurückziehen
+        withdraw_offer_confirm: Dieses Angebot zurückziehen?
+        customer_offers_empty_title: Noch keine Angebote
+        customer_offers_empty: Sie haben noch keine Angebote abgegeben.
+        customer_rental_applications_eyebrow: Ihr Mietprozess
+        customer_rental_applications_title: Ihre Mietanträge
+        customer_rental_applications_blurb: Behalten Sie jeden Mietantrag im Blick und sehen Sie, ob er noch geprüft, genehmigt oder abgelehnt wird.
+        customer_rental_application_move_in: Gewünschter Einzug %{date}
+        customer_rental_application_submitted: Eingereicht %{time}
+        withdraw_rental_application: Antrag zurückziehen
+        withdraw_rental_application_confirm: Diesen Mietantrag zurückziehen?
+        customer_rental_applications_empty_title: Noch keine Mietanträge
+        customer_rental_applications_empty: Sie haben noch keine Mietanträge eingereicht.
         saved_searches_title: Gespeicherte Suchen
         saved_searches_blurb: Ihre gespeicherten Filterkombinationen sind hier aufgelistet, damit Sie passende Ergebnisse jederzeit wieder offnen konnen.
         saved_searches_browse_catalogue: Zum Katalog
@@ -1169,6 +1186,8 @@ de:
         Kaufposition mit dem Team teilen möchten.
       fields:
         amount: Angebotssumme
+        increase_amount: Angebotssumme erhöhen
+        decrease_amount: Angebotssumme verringern
         chain_position: Kaufposition
         chain_position_placeholder: Barzahler, keine Anschlusskette
         notes: Notizen
@@ -1185,8 +1204,11 @@ de:
       alerts:
         sale_only: Angebote sind nur bei Verkaufsobjekten verfügbar.
         owner_cannot_offer: Sie können kein Angebot für Ihr eigenes Objekt abgeben.
+        cannot_withdraw: Dieses Angebot kann nicht mehr zurückgezogen werden.
+        not_your_offer: Sie können nur Ihre eigenen Angebote verwalten.
       flash:
         created: Angebot eingereicht. Das Team prüft es in Kürze.
+        withdrawn: Angebot zurückgezogen.
       events:
         received: Angebot über %{amount} eingegangen.
         status_changed: Angebotsstatus von %{from_status} zu %{to_status} geändert.
@@ -1216,8 +1238,11 @@ de:
         rental_listing_only: muss ein Mietobjekt sein
       alerts:
         rental_only: Mietanträge sind nur bei Mietobjekten verfügbar.
+        cannot_withdraw: Dieser Mietantrag kann nicht mehr zurückgezogen werden.
+        not_your_application: Sie können nur Ihre eigenen Mietanträge verwalten.
       flash:
         created: Mietantrag eingereicht. Das Team prüft ihn in Kürze.
+        withdrawn: Mietantrag zurückgezogen.
       events:
         received: Mietantrag für %{move_in_date} eingegangen.
         status_changed: Antragsstatus von %{from_status} zu %{to_status} geändert.

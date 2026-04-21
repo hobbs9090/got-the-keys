@@ -334,6 +334,23 @@ fr:
         no_previous_appointments: Aucune reservation passee.
         no_cancelled_appointments: Aucune reservation annulee.
         view_booking: Voir la reservation
+        customer_offers_eyebrow: Votre parcours d achat
+        customer_offers_title: Vos offres
+        customer_offers_blurb: Suivez toutes les offres que vous avez soumises et voyez si elles sont encore en attente, acceptees, refusees ou finalisees.
+        customer_offer_submitted: Envoyee %{time}
+        withdraw_offer: Retirer l offre
+        withdraw_offer_confirm: Retirer cette offre ?
+        customer_offers_empty_title: Aucune offre pour le moment
+        customer_offers_empty: Vous n avez encore soumis aucune offre.
+        customer_rental_applications_eyebrow: Votre parcours locatif
+        customer_rental_applications_title: Vos dossiers locatifs
+        customer_rental_applications_blurb: Suivez chacun de vos dossiers locatifs et voyez s ils sont encore en cours d examen, approuves ou rejetes.
+        customer_rental_application_move_in: Entree souhaitee %{date}
+        customer_rental_application_submitted: Envoye %{time}
+        withdraw_rental_application: Retirer le dossier
+        withdraw_rental_application_confirm: Retirer ce dossier locatif ?
+        customer_rental_applications_empty_title: Aucun dossier locatif pour le moment
+        customer_rental_applications_empty: Vous n avez encore soumis aucun dossier locatif.
         saved_searches_title: Recherches enregistrees
         saved_searches_blurb: Vos combinaisons de filtres sauvegardees sont listees ici pour rouvrir les resultats correspondants a tout moment.
         saved_searches_browse_catalogue: Parcourir le catalogue
@@ -1179,6 +1196,8 @@ fr:
         partager votre position d achat avec l equipe.
       fields:
         amount: Montant de l'offre
+        increase_amount: Augmenter le montant de l'offre
+        decrease_amount: Diminuer le montant de l'offre
         chain_position: Position d'achat
         chain_position_placeholder: Acheteur comptant, sans chaine en cours
         notes: Notes
@@ -1195,8 +1214,11 @@ fr:
       alerts:
         sale_only: Les offres ne sont disponibles que pour les biens a vendre.
         owner_cannot_offer: Vous ne pouvez pas soumettre une offre sur votre propre bien.
+        cannot_withdraw: Cette offre ne peut plus etre retiree.
+        not_your_offer: Vous pouvez uniquement gerer vos propres offres.
       flash:
         created: Offre envoyee. L'equipe va l'examiner rapidement.
+        withdrawn: Offre retiree.
       events:
         received: Offre recue a %{amount}.
         status_changed: Statut de l offre passe de %{from_status} a %{to_status}.
@@ -1226,8 +1248,11 @@ fr:
       alerts:
         rental_only: Les dossiers locatifs sont uniquement disponibles pour les biens
           a louer.
+        cannot_withdraw: Ce dossier locatif ne peut plus etre retire.
+        not_your_application: Vous pouvez uniquement gerer vos propres dossiers locatifs.
       flash:
         created: Dossier locatif envoye. L'equipe va l'examiner rapidement.
+        withdrawn: Dossier locatif retire.
       events:
         received: Dossier locatif recu pour %{move_in_date}.
         status_changed: Statut du dossier passe de %{from_status} a %{to_status}.

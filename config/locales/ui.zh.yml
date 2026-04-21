@@ -303,6 +303,23 @@ zh:
         no_previous_appointments: 还没有历史预约。
         no_cancelled_appointments: 还没有已取消的预约。
         view_booking: 查看预约
+        customer_offers_eyebrow: 你的购房进度
+        customer_offers_title: 你的报价
+        customer_offers_blurb: 在这里跟踪你提交的所有报价，并查看它们是否仍在处理中、已接受、已拒绝或已完成。
+        customer_offer_submitted: 已提交 %{time}
+        withdraw_offer: 撤回报价
+        withdraw_offer_confirm: 确认撤回这份报价吗？
+        customer_offers_empty_title: 还没有报价
+        customer_offers_empty: 你还没有提交任何报价。
+        customer_rental_applications_eyebrow: 你的租房进度
+        customer_rental_applications_title: 你的租房申请
+        customer_rental_applications_blurb: 在这里查看你的每一份租房申请，并了解它们是否仍在审核、已批准或已拒绝。
+        customer_rental_application_move_in: 期望入住 %{date}
+        customer_rental_application_submitted: 已提交 %{time}
+        withdraw_rental_application: 撤回申请
+        withdraw_rental_application_confirm: 确认撤回这份租房申请吗？
+        customer_rental_applications_empty_title: 还没有租房申请
+        customer_rental_applications_empty: 你还没有提交任何租房申请。
         saved_searches_title: 已保存的搜索
         saved_searches_blurb: 你保存的筛选组合会显示在这里，方便你随时重新打开匹配结果。
         saved_searches_browse_catalogue: 浏览房源目录
@@ -1146,6 +1163,8 @@ zh:
       body: 如果你已准备好登记报价并说明购房情况，请使用此表单。
       fields:
         amount: 报价金额
+        increase_amount: 增加报价金额
+        decrease_amount: 减少报价金额
         chain_position: 购房情况
         chain_position_placeholder: 现金买家，无上游链条
         notes: 备注
@@ -1162,8 +1181,11 @@ zh:
       alerts:
         sale_only: 只有出售房源才可提交报价。
         owner_cannot_offer: 你不能为自己的房源提交报价。
+        cannot_withdraw: 这份报价已无法撤回。
+        not_your_offer: 你只能管理自己的报价。
       flash:
         created: 报价已提交，团队会尽快审核。
+        withdrawn: 报价已撤回。
       events:
         received: 已收到 %{amount} 的报价。
         status_changed: 报价状态已从 %{from_status} 变更为 %{to_status}。
@@ -1191,8 +1213,11 @@ zh:
         rental_listing_only: 必须是出租房源
       alerts:
         rental_only: 只有出租房源才可提交租房申请。
+        cannot_withdraw: 这份租房申请已无法撤回。
+        not_your_application: 你只能管理自己的租房申请。
       flash:
         created: 租房申请已提交，团队会尽快审核。
+        withdrawn: 租房申请已撤回。
       events:
         received: 已收到 %{move_in_date} 的租房申请。
         status_changed: 申请状态已从 %{from_status} 变更为 %{to_status}。

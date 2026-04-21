@@ -611,6 +611,8 @@ en:
       body: "Use this form if you are ready to register an offer and share your buying position with the team."
       fields:
         amount: "Offer amount"
+        increase_amount: "Increase offer amount"
+        decrease_amount: "Decrease offer amount"
         chain_position: "Buying position"
         chain_position_placeholder: "Cash buyer, no onward chain"
         notes: "Notes"
