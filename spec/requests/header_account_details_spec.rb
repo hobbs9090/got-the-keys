@@ -2,6 +2,20 @@ require "rails_helper"
 require "nokogiri"
 
 RSpec.describe "Header account details", type: :request do
+  let(:version_config) { Rails.configuration.x.got_the_keys }
+
+  around do |example|
+    original_values = {
+      build_sha: version_config.build_sha,
+      local_build: version_config.local_build
+    }
+
+    example.run
+  ensure
+    version_config.build_sha = original_values[:build_sha]
+    version_config.local_build = original_values[:local_build]
+  end
+
   def parsed_html
     Nokogiri::HTML.parse(response.body)
   end
@@ -23,6 +37,9 @@ RSpec.describe "Header account details", type: :request do
   end
 
   it "groups the guest register and sign-in buttons beside the language selector" do
+    version_config.build_sha = "fd481e9abcdef0"
+    version_config.local_build = true
+
     get root_path
 
     expect(response).to have_http_status(:ok)
@@ -82,6 +99,15 @@ RSpec.describe "Header account details", type: :request do
     expect(guest_actions).to be_present
     expect(link_texts('[data-testid="guest-header-actions"] a.button')).to eq(["Register", "Sign in"])
     expect(link_hrefs('[data-testid="guest-header-actions"] a.button')).to eq([new_user_registration_path, new_user_session_path])
+
+    footer_utility = parsed_html.at_css(".site-footer__utility")
+
+    expect(footer_utility).to be_present
+    expect(footer_utility.at_css('[data-testid="public-app-version"]')).to be_present
+    expect(footer_utility.at_css('[data-testid="public-build-commit"]')).to be_present
+    expect(footer_utility.text.squish).to include("Cookie settings")
+    expect(footer_utility.text.squish).to include("v#{version_config.version}")
+    expect(footer_utility.text.squish).to include("Commit fd481e9 + local")
   end
 
   it "exposes a root home-link without aria-current" do
