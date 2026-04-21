@@ -92,6 +92,30 @@ RSpec.describe "Offers", type: :request do
     expect(Offer.last.amount).to eq(575_000)
   end
 
+  it "lets the signed-in buyer withdraw their own offer" do
+    buyer = FactoryBot.create(:user, email: "naomi@example.com")
+    offer = FactoryBot.create(:offer, property:, buyer_email: buyer.email, status: "received")
+    sign_in buyer
+
+    patch withdraw_property_offer_path(property, offer)
+
+    expect(response).to redirect_to(mine_properties_path)
+    expect(offer.reload.status).to eq("withdrawn")
+  end
+
+  it "does not let a signed-in user withdraw someone else's offer" do
+    intruder = FactoryBot.create(:user, email: "intruder@example.com")
+    offer = FactoryBot.create(:offer, property:, buyer_email: "buyer@example.com", status: "received")
+    sign_in intruder
+
+    patch withdraw_property_offer_path(property, offer)
+
+    expect(response).to redirect_to(mine_properties_path)
+    follow_redirect!
+    expect(response.body).to include(I18n.t("ui.offers.alerts.not_your_offer"))
+    expect(offer.reload.status).to eq("received")
+  end
+
   it "does not let the owner submit an offer for their own property" do
     sign_in property.user
 

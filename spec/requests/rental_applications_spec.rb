@@ -73,4 +73,28 @@ RSpec.describe "Rental applications", type: :request do
     expect(response).to have_http_status(:unprocessable_entity)
     expect(response.body).to include("Preferred move-in date")
   end
+
+  it "lets the signed-in applicant withdraw their own rental application" do
+    applicant = FactoryBot.create(:user, email: "priya@example.com")
+    rental_application = FactoryBot.create(:rental_application, property:, applicant_email: applicant.email, status: "received")
+    sign_in applicant
+
+    patch withdraw_property_rental_application_path(property, rental_application)
+
+    expect(response).to redirect_to(mine_properties_path)
+    expect(rental_application.reload.status).to eq("withdrawn")
+  end
+
+  it "does not let a signed-in user withdraw someone else's rental application" do
+    intruder = FactoryBot.create(:user, email: "intruder@example.com")
+    rental_application = FactoryBot.create(:rental_application, property:, applicant_email: "priya@example.com", status: "received")
+    sign_in intruder
+
+    patch withdraw_property_rental_application_path(property, rental_application)
+
+    expect(response).to redirect_to(mine_properties_path)
+    follow_redirect!
+    expect(response.body).to include(I18n.t("ui.rental_applications.alerts.not_your_application"))
+    expect(rental_application.reload.status).to eq("received")
+  end
 end

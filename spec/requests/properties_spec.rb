@@ -822,6 +822,8 @@ describe "Properties" do
       expect(response.body).to include(property_path(rejected_sale_property))
       expect(response.body).to include(ApplicationController.helpers.number_to_currency(accepted_offer.amount, unit: "£", precision: 0))
       expect(response.body).to include(ApplicationController.helpers.number_to_currency(rejected_offer.amount, unit: "£", precision: 0))
+      expect(response.body).to include(withdraw_property_offer_path(accepted_sale_property, accepted_offer))
+      expect(response.body).not_to include(withdraw_property_offer_path(rejected_sale_property, rejected_offer))
 
       expect(response.body).to include("Your rental applications")
       expect(response.body).to include("Approved Rental House")
@@ -833,6 +835,8 @@ describe "Properties" do
       expect(response.body).to include(property_path(rejected_rental_property))
       expect(response.body).to include(I18n.l(approved_rental_application.move_in_date, format: :long))
       expect(response.body).to include(I18n.l(rejected_rental_application.move_in_date, format: :long))
+      expect(response.body).not_to include(withdraw_property_rental_application_path(approved_rental_property, approved_rental_application))
+      expect(response.body).not_to include(withdraw_property_rental_application_path(rejected_rental_property, rejected_rental_application))
 
       document = Nokogiri::HTML(response.body)
       accepted_offer_badge = document.at_css(%([data-testid="customer-offer-sale-status-#{accepted_offer.id}"]))
@@ -842,6 +846,42 @@ describe "Properties" do
       expect(accepted_offer_badge.text.strip).to eq("For Sale")
       expect(approved_rental_badge).to be_present
       expect(approved_rental_badge.text.strip).to eq("For Rent")
+    end
+
+    it "shows a withdraw action for live rental applications only" do
+      sign_in user
+
+      withdrawable_property = FactoryBot.create(:property, :for_rent, address_line_1: "Withdrawable Rental House")
+      received_application = FactoryBot.create(
+        :rental_application,
+        property: withdrawable_property,
+        applicant_name: user.full_name,
+        applicant_email: user.email,
+        applicant_phone: user.mobile_number,
+        status: "received"
+      )
+      referencing_application = FactoryBot.create(
+        :rental_application,
+        property: FactoryBot.create(:property, :for_rent, address_line_1: "Referencing Rental House"),
+        applicant_name: user.full_name,
+        applicant_email: user.email,
+        applicant_phone: user.mobile_number,
+        status: "referencing"
+      )
+      approved_application = FactoryBot.create(
+        :rental_application,
+        :approved,
+        property: FactoryBot.create(:property, :for_rent, address_line_1: "Approved Rental Later House"),
+        applicant_name: user.full_name,
+        applicant_email: user.email,
+        applicant_phone: user.mobile_number
+      )
+
+      get mine_properties_path
+
+      expect(response.body).to include(withdraw_property_rental_application_path(withdrawable_property, received_application))
+      expect(response.body).to include(withdraw_property_rental_application_path(referencing_application.property, referencing_application))
+      expect(response.body).not_to include(withdraw_property_rental_application_path(approved_application.property, approved_application))
     end
 
     it "lists upcoming customer bookings with the earliest scheduled visit first" do

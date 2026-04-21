@@ -99,6 +99,13 @@
                   <div class="property-workspace-card__appointment-actions">
                     <span class="<%= offer_status_badge_class(offer.status) %>"><%= t("ui.offers.statuses.#{offer.status}", default: offer.status.humanize) %></span>
                     <%= link_to t("ui.properties.mine.open_details", default: "Open details"), property_path(offer.property), class: "button primary property-workspace-card__appointment-button" %>
+                    <% if offer.withdrawable? %>
+                      <%= button_to t("ui.properties.mine.withdraw_offer", default: "Withdraw offer"),
+                                    withdraw_property_offer_path(offer.property, offer),
+                                    method: :patch,
+                                    class: "button hollow secondary property-workspace-card__appointment-button",
+                                    data: { turbo_confirm: t("ui.properties.mine.withdraw_offer_confirm", default: "Withdraw this offer?") } %>
+                    <% end %>
                   </div>
                 </div>
               <% end %>
@@ -138,6 +145,13 @@
                   <div class="property-workspace-card__appointment-actions">
                     <span class="<%= rental_application_status_badge_class(rental_application.status) %>"><%= t("ui.rental_applications.statuses.#{rental_application.status}", default: rental_application.status.humanize) %></span>
                     <%= link_to t("ui.properties.mine.open_details", default: "Open details"), property_path(rental_application.property), class: "button primary property-workspace-card__appointment-button" %>
+                    <% if rental_application.withdrawable? %>
+                      <%= button_to t("ui.properties.mine.withdraw_rental_application", default: "Withdraw application"),
+                                    withdraw_property_rental_application_path(rental_application.property, rental_application),
+                                    method: :patch,
+                                    class: "button hollow secondary property-workspace-card__appointment-button",
+                                    data: { turbo_confirm: t("ui.properties.mine.withdraw_rental_application_confirm", default: "Withdraw this rental application?") } %>
+                    <% end %>
                   </div>
                 </div>
               <% end %>

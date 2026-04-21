@@ -71,8 +71,12 @@ GotTheKeys::Application.routes.draw do
     end
     resources :viewing_times, only: [:index, :new, :create]
     resources :enquiries, only: [:new, :create]
-    resources :offers, only: [:new, :create]
-    resources :rental_applications, only: [:new, :create]
+    resources :offers, only: [:new, :create] do
+      patch :withdraw, on: :member
+    end
+    resources :rental_applications, only: [:new, :create] do
+      patch :withdraw, on: :member
+    end
     resources :appointments, only: [:new, :create]
   end
 

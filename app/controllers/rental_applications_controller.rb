@@ -2,7 +2,10 @@ class RentalApplicationsController < ApplicationController
   include PropertyScoped
 
   before_action :set_property
+  before_action :authenticate_user!, only: :withdraw
   before_action :ensure_rental_listing!
+  before_action :set_rental_application, only: :withdraw
+  before_action :ensure_current_user_owns_rental_application!, only: :withdraw
 
   def new
     @rental_application = @property.rental_applications.new(prefilled_rental_application_attributes)
@@ -16,6 +19,16 @@ class RentalApplicationsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def withdraw
+    unless @rental_application.withdrawable?
+      redirect_to mine_properties_path, alert: t("ui.rental_applications.alerts.cannot_withdraw")
+      return
+    end
+
+    @rental_application.update!(status: "withdrawn")
+    redirect_to mine_properties_path, notice: t("ui.rental_applications.flash.withdrawn")
   end
 
   private
@@ -38,5 +51,15 @@ class RentalApplicationsController < ApplicationController
     return if @property.sale_status == Property::SALE_STATUSES[:for_rent]
 
     redirect_to property_path(@property), alert: t("ui.rental_applications.alerts.rental_only")
+  end
+
+  def set_rental_application
+    @rental_application = @property.rental_applications.find(params[:id])
+  end
+
+  def ensure_current_user_owns_rental_application!
+    return if @rental_application.applicant_email.to_s.strip.casecmp?(current_user.email.to_s.strip)
+
+    redirect_to mine_properties_path, alert: t("ui.rental_applications.alerts.not_your_application")
   end
 end

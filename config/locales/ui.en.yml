@@ -420,6 +420,8 @@ en:
         customer_offers_title: "Your offers"
         customer_offers_blurb: "Track every offer you have submitted and see whether it is still pending, accepted, rejected, or complete."
         customer_offer_submitted: "Submitted %{time}"
+        withdraw_offer: "Withdraw offer"
+        withdraw_offer_confirm: "Withdraw this offer?"
         customer_offers_empty_title: "No offers yet"
         customer_offers_empty: "You have not submitted any offers yet."
         customer_rental_applications_eyebrow: "Your renting journey"
@@ -427,6 +429,8 @@ en:
         customer_rental_applications_blurb: "Keep an eye on every rental application and see whether it is still being reviewed, approved, or rejected."
         customer_rental_application_move_in: "Preferred move-in %{date}"
         customer_rental_application_submitted: "Submitted %{time}"
+        withdraw_rental_application: "Withdraw application"
+        withdraw_rental_application_confirm: "Withdraw this rental application?"
         customer_rental_applications_empty_title: "No rental applications yet"
         customer_rental_applications_empty: "You have not submitted any rental applications yet."
         saved_searches_title: "Saved searches"
@@ -623,8 +627,11 @@ en:
       alerts:
         sale_only: "Offers are only available on sale listings."
         owner_cannot_offer: "You cannot submit an offer on your own property."
+        cannot_withdraw: "This offer can no longer be withdrawn."
+        not_your_offer: "You can only manage your own offers."
       flash:
         created: "Offer submitted. The team will review it shortly."
+        withdrawn: "Offer withdrawn."
       events:
         received: "Offer received at %{amount}."
         status_changed: "Offer status changed from %{from_status} to %{to_status}."
@@ -653,8 +660,11 @@ en:
         rental_listing_only: "must be a rental listing"
       alerts:
         rental_only: "Rental applications are only available on rental listings."
+        cannot_withdraw: "This rental application can no longer be withdrawn."
+        not_your_application: "You can only manage your own rental applications."
       flash:
         created: "Rental application submitted. The team will review it shortly."
+        withdrawn: "Rental application withdrawn."
       events:
         received: "Rental application received for %{move_in_date}."
         status_changed: "Application status changed from %{from_status} to %{to_status}."

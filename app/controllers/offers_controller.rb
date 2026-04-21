@@ -2,8 +2,11 @@ class OffersController < ApplicationController
   include PropertyScoped
 
   before_action :set_property
+  before_action :authenticate_user!, only: :withdraw
   before_action :ensure_sale_listing!
-  before_action :ensure_current_user_is_not_owner!
+  before_action :ensure_current_user_is_not_owner!, only: [:new, :create]
+  before_action :set_offer, only: :withdraw
+  before_action :ensure_current_user_owns_offer!, only: :withdraw
 
   def new
     @offer = @property.offers.new(prefilled_offer_attributes)
@@ -17,6 +20,16 @@ class OffersController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def withdraw
+    unless @offer.withdrawable?
+      redirect_to mine_properties_path, alert: t("ui.offers.alerts.cannot_withdraw")
+      return
+    end
+
+    @offer.update!(status: "withdrawn")
+    redirect_to mine_properties_path, notice: t("ui.offers.flash.withdrawn")
   end
 
   private
@@ -46,5 +59,15 @@ class OffersController < ApplicationController
     return unless current_user == @property.user
 
     redirect_to property_path(@property), alert: t("ui.offers.alerts.owner_cannot_offer")
+  end
+
+  def set_offer
+    @offer = @property.offers.find(params[:id])
+  end
+
+  def ensure_current_user_owns_offer!
+    return if @offer.buyer_email.to_s.strip.casecmp?(current_user.email.to_s.strip)
+
+    redirect_to mine_properties_path, alert: t("ui.offers.alerts.not_your_offer")
   end
 end

@@ -36,6 +36,10 @@ class Offer < ApplicationRecord
     offer_events.chronological
   end
 
+  def withdrawable?
+    status.in?(%w[received accepted])
+  end
+
   private
 
   def normalize_integer_input(value)

@@ -29,6 +29,10 @@ class RentalApplication < ApplicationRecord
     rental_application_events.chronological
   end
 
+  def withdrawable?
+    status.in?(%w[received referencing])
+  end
+
   private
 
   def apply_defaults
