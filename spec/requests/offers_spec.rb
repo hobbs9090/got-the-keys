@@ -11,6 +11,10 @@ RSpec.describe "Offers", type: :request do
     expect(response.body).to include("Submit an offer for 15 Orchard Close")
 
     document = Nokogiri::HTML.parse(response.body)
+    summary = document.at_css('[data-testid="offer-property-summary"]')
+    expect(summary).to be_present
+    expect(summary.text).to include("15 Orchard Close")
+    expect(summary.text).to include(ApplicationController.helpers.format_price(property))
     amount_input = document.at_css('[data-testid="offer-amount"]')
     increase_button = document.at_css('[data-testid="offer-amount-increase"]')
     decrease_button = document.at_css('[data-testid="offer-amount-decrease"]')

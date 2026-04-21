@@ -1,0 +1,49 @@
+<aside class="property-booking-panel offer-property-snapshot"
+       data-testid="offer-property-summary"
+       aria-labelledby="offer-property-summary-title">
+  <div class="offer-property-snapshot__media property-hero__media property-hero__media--ratio-3-2">
+    <%= medium_image_for(property) %>
+  </div>
+
+  <div class="offer-property-snapshot__badges">
+    <span class="<%= property_sale_status_badge_class(property.sale_status) %>"><%= translated_sale_status(property.sale_status) %></span>
+  </div>
+
+  <p class="section-heading__eyebrow"><%= property_location_label(property) %></p>
+
+  <h2 id="offer-property-summary-title" class="offer-property-snapshot__title"><%= property.address_line_1 %></h2>
+
+  <p class="offer-property-snapshot__headline"><%= property.headline %></p>
+
+  <div class="offer-property-snapshot__price">
+    <strong><%= format_price(property) %></strong>
+    <% if chinese_locale? %>
+      <span><%= format_renminbi(property) %></span>
+    <% end %>
+  </div>
+
+  <dl class="offer-property-snapshot__meta">
+    <div>
+      <dt><%= t("properties.bedrooms") %></dt>
+      <dd><%= format_bedrooms(property) %></dd>
+    </div>
+    <div>
+      <dt><%= t("ui.common.bathrooms") %></dt>
+      <dd><%= format_bathrooms(property.bathrooms) %></dd>
+    </div>
+    <div>
+      <dt><%= t("ui.common.postcode") %></dt>
+      <dd><%= property.postcode %></dd>
+    </div>
+    <% if property.available_from.present? %>
+      <div>
+        <dt><%= t("ui.properties.show.available_from") %></dt>
+        <dd><%= l(property.available_from, format: :long) %></dd>
+      </div>
+    <% end %>
+  </dl>
+
+  <p class="offer-property-snapshot__description"><%= truncate(property.property_description, length: 280, separator: " ") %></p>
+
+  <%= link_to t("ui.common.view_property"), property_path(property), class: "button hollow secondary expanded", data: { testid: "offer-property-summary-view-listing" } %>
+</aside>
