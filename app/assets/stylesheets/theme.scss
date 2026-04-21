@@ -2721,6 +2721,7 @@ form[data-testid="lead-inbox-filters"] .form-actions .button,
 
 .property-card__badges .badge,
 .property-hero__labels .badge,
+.property-workspace-bookings__details > .badge,
 .property-workspace-card__badges .badge {
   backdrop-filter: blur(8px);
   box-shadow: 0 10px 24px rgba(16, 33, 63, 0.2);
@@ -2734,24 +2735,28 @@ form[data-testid="lead-inbox-filters"] .form-actions .button,
 
 .property-card__badges .badge--accent,
 .property-hero__labels .badge--accent,
+.property-workspace-bookings__details > .badge--accent,
 .property-workspace-card__badges .badge--accent {
   background: rgba(186, 83, 18, 0.92);
 }
 
 .property-card__badges .badge--success,
 .property-hero__labels .badge--success,
+.property-workspace-bookings__details > .badge--success,
 .property-workspace-card__badges .badge--success {
   background: rgba(17, 125, 87, 0.92);
 }
 
 .property-card__badges .badge--warning,
 .property-hero__labels .badge--warning,
+.property-workspace-bookings__details > .badge--warning,
 .property-workspace-card__badges .badge--warning {
   background: rgba(166, 99, 8, 0.92);
 }
 
 .property-card__badges .badge--danger,
 .property-hero__labels .badge--danger,
+.property-workspace-bookings__details > .badge--danger,
 .property-workspace-card__badges .badge--danger {
   background: rgba(153, 34, 25, 0.92);
 }
@@ -2760,6 +2765,8 @@ form[data-testid="lead-inbox-filters"] .form-actions .button,
 .property-card__badges .badge--neutral,
 .property-hero__labels .badge--muted,
 .property-hero__labels .badge--neutral,
+.property-workspace-bookings__details > .badge--muted,
+.property-workspace-bookings__details > .badge--neutral,
 .property-workspace-card__badges .badge--muted,
 .property-workspace-card__badges .badge--neutral {
   background: rgba(16, 33, 63, 0.86);
@@ -3205,6 +3212,11 @@ form[data-testid="lead-inbox-filters"] .form-actions .button,
 .property-workspace-bookings__details {
   display: grid;
   gap: 0.2rem;
+}
+
+/* Grid items default to stretch; sale-status badges should stay pill-sized like .property-workspace-card__badges */
+.property-workspace-bookings__details > .badge {
+  justify-self: start;
 }
 
 .property-workspace-card__appointment-groups {
