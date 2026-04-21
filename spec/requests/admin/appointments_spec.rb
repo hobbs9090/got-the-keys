@@ -111,6 +111,7 @@ RSpec.describe "Admin appointments" do
     expect(response.body).to include("Termindetails")
     expect(response.body).to include("Zusammenfassung")
     expect(response.body).to include("Kundenhistorie")
+    expect(response.body).to include(%(data-testid="admin-appointment-header-actions"))
   end
 
   it "filters the bookings desk by status and customer email" do
@@ -140,6 +141,30 @@ RSpec.describe "Admin appointments" do
     expect(response).to have_http_status(:ok)
     expect(response.body).to include(matching.customer_name)
     expect(response.body).not_to include("Other Viewer")
+  end
+
+  it "includes a property link on agenda rows for customer-filtered bookings" do
+    slot = next_booking_slot(hour: 12)
+    appointment = FactoryBot.create(
+      :appointment,
+      property:,
+      customer_name: "Zoe Bates",
+      customer_email: "zoe.bates@exmaple.com",
+      requested_time: slot,
+      scheduled_at: slot,
+      status: "confirmed"
+    )
+
+    get admin_bookings_path, params: { customer_email: appointment.customer_email, view: "agenda" }
+
+    expect(response).to have_http_status(:ok)
+
+    document = Nokogiri::HTML.parse(response.body)
+    property_link = document.at_css(%([data-testid="admin-appointment-property-link-#{appointment.id}"]))
+
+    expect(property_link).to be_present
+    expect(property_link.text.strip).to eq("9 Park Lane")
+    expect(property_link["href"]).to eq(admin_property_path(property))
   end
 
   it "filters the bookings desk by date range and visit outcome" do

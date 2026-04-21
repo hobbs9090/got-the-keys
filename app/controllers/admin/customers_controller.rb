@@ -47,10 +47,8 @@ class Admin::CustomersController < Admin::BaseController
       appointment_customer_entries.to_sql,
       registered_user_entries.to_sql,
       property_owner_role_entries.to_sql,
-      offer_buyer_entries.to_sql,
-      rental_applicant_entries.to_sql,
-      saved_property_role_entries.to_sql,
-      saved_search_role_entries.to_sql
+      active_offer_buyer_entries.to_sql,
+      approved_rental_tenant_entries.to_sql
     ].join(" UNION ALL ")
   end
 
@@ -70,8 +68,8 @@ class Admin::CustomersController < Admin::BaseController
         "0 AS registered_user, " \
         "0 AS seller, " \
         "0 AS landlord, " \
-        "MAX(CASE WHEN properties.sale_status = #{quoted(Property::SALE_STATUSES[:for_rent])} THEN 1 ELSE 0 END) AS tenant, " \
-        "MAX(CASE WHEN properties.sale_status = #{quoted(Property::SALE_STATUSES[:for_sale])} THEN 1 ELSE 0 END) AS buyer"
+        "0 AS tenant, " \
+        "0 AS buyer"
       )
       .group("LOWER(customer_email)")
   end
@@ -118,8 +116,9 @@ class Admin::CustomersController < Admin::BaseController
       .group("LOWER(users.email), users.email, users.first_name, users.last_name, users.mobile_number")
   end
 
-  def offer_buyer_entries
+  def active_offer_buyer_entries
     Offer
+      .where(status: %w[received accepted completed])
       .where.not(buyer_email: [nil, ""])
       .select(
         "LOWER(buyer_email) AS email_key, " \
@@ -139,8 +138,9 @@ class Admin::CustomersController < Admin::BaseController
       .group("LOWER(buyer_email)")
   end
 
-  def rental_applicant_entries
+  def approved_rental_tenant_entries
     RentalApplication
+      .where(status: "approved")
       .where.not(applicant_email: [nil, ""])
       .select(
         "LOWER(applicant_email) AS email_key, " \
@@ -158,50 +158,6 @@ class Admin::CustomersController < Admin::BaseController
         "0 AS buyer"
       )
       .group("LOWER(applicant_email)")
-  end
-
-  def saved_property_role_entries
-    SavedProperty
-      .joins(:user, :property)
-      .where.not(users: { email: [nil, ""] })
-      .select(
-        "LOWER(users.email) AS email_key, " \
-        "users.email AS customer_email, " \
-        "NULLIF(TRIM(COALESCE(users.first_name, '') || ' ' || COALESCE(users.last_name, '')), '') AS customer_name, " \
-        "users.mobile_number AS customer_phone, " \
-        "0 AS appointments_count, " \
-        "NULL AS latest_appointment_at, " \
-        "NULL AS registered_at, " \
-        "MAX(saved_properties.created_at) AS sort_at, " \
-        "0 AS registered_user, " \
-        "0 AS seller, " \
-        "0 AS landlord, " \
-        "MAX(CASE WHEN properties.sale_status = #{quoted(Property::SALE_STATUSES[:for_rent])} THEN 1 ELSE 0 END) AS tenant, " \
-        "MAX(CASE WHEN properties.sale_status = #{quoted(Property::SALE_STATUSES[:for_sale])} THEN 1 ELSE 0 END) AS buyer"
-      )
-      .group("LOWER(users.email), users.email, users.first_name, users.last_name, users.mobile_number")
-  end
-
-  def saved_search_role_entries
-    SavedSearch
-      .joins(:user)
-      .where.not(users: { email: [nil, ""] })
-      .select(
-        "LOWER(users.email) AS email_key, " \
-        "users.email AS customer_email, " \
-        "NULLIF(TRIM(COALESCE(users.first_name, '') || ' ' || COALESCE(users.last_name, '')), '') AS customer_name, " \
-        "users.mobile_number AS customer_phone, " \
-        "0 AS appointments_count, " \
-        "NULL AS latest_appointment_at, " \
-        "NULL AS registered_at, " \
-        "MAX(saved_searches.created_at) AS sort_at, " \
-        "0 AS registered_user, " \
-        "0 AS seller, " \
-        "0 AS landlord, " \
-        "MAX(CASE WHEN saved_searches.sale_status = #{quoted(Property::SALE_STATUSES[:for_rent])} THEN 1 ELSE 0 END) AS tenant, " \
-        "MAX(CASE WHEN saved_searches.sale_status = #{quoted(Property::SALE_STATUSES[:for_sale])} THEN 1 ELSE 0 END) AS buyer"
-      )
-      .group("LOWER(users.email), users.email, users.first_name, users.last_name, users.mobile_number")
   end
 
   def quoted(value)

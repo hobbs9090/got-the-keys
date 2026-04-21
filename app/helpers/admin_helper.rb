@@ -156,7 +156,6 @@ module AdminHelper
 
   def admin_customer_badges(customer)
     [
-      customer_badge(customer.registered_user.to_i.positive?, :registered_user, "badge--neutral"),
       customer_badge(customer.seller.to_i.positive?, :seller, "badge--success"),
       customer_badge(customer.landlord.to_i.positive?, :landlord, "badge--accent"),
       customer_badge(customer.tenant.to_i.positive?, :tenant, "badge--warning"),

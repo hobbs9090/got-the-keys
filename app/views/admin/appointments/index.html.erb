@@ -68,7 +68,10 @@
             <div class="admin-list__item" data-testid="admin-appointment-row">
               <div>
                 <%= link_to appointment.customer_name, admin_appointment_path(appointment) %>
-                <p><%= appointment.property.address_line_1 %> · <%= formatted_date_time(appointment.scheduled_at) %></p>
+                <p>
+                  <%= link_to appointment.property.address_line_1, admin_property_path(appointment.property), data: { testid: "admin-appointment-property-link-#{appointment.id}" } %>
+                  · <%= formatted_date_time(appointment.scheduled_at) %>
+                </p>
               </div>
 
               <div class="admin-inline-actions admin-bookings-row__actions" data-testid="admin-bookings-row-actions">

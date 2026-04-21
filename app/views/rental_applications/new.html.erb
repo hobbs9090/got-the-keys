@@ -34,10 +34,6 @@
           <%= f.check_box :guarantor_required, data: { testid: "rental-guarantor-required" } %>
           <%= f.label :guarantor_required, t("ui.rental_applications.fields.guarantor_required"), class: "checkbox-label" %>
         </div>
-        <div class="form-grid__checkbox">
-          <%= f.check_box :guarantor_available, data: { testid: "rental-guarantor-available" } %>
-          <%= f.label :guarantor_available, t("ui.rental_applications.fields.guarantor_available"), class: "checkbox-label" %>
-        </div>
         <div class="form-grid__full">
           <%= f.label :affordability_notes, t("ui.rental_applications.fields.affordability_notes"), **form_label_options(@rental_application, :affordability_notes) %>
           <%= f.text_area :affordability_notes, rows: 4, maxlength: 3000, data: { testid: "rental-affordability-notes" }, **form_control_options(@rental_application, :affordability_notes) %>

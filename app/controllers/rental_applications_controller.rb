@@ -5,7 +5,7 @@ class RentalApplicationsController < ApplicationController
   before_action :ensure_rental_listing!
 
   def new
-    @rental_application = @property.rental_applications.new(move_in_date: Date.current + 14.days)
+    @rental_application = @property.rental_applications.new(prefilled_rental_application_attributes)
   end
 
   def create
@@ -21,7 +21,17 @@ class RentalApplicationsController < ApplicationController
   private
 
   def rental_application_params
-    params.require(:rental_application).permit(:applicant_name, :applicant_email, :applicant_phone, :move_in_date, :guarantor_required, :guarantor_available, :affordability_notes, :notes)
+    params.require(:rental_application).permit(:applicant_name, :applicant_email, :applicant_phone, :move_in_date, :guarantor_required, :affordability_notes, :notes)
+  end
+
+  def prefilled_rental_application_attributes
+    return {} unless user_signed_in?
+
+    {
+      applicant_name: current_user.full_name,
+      applicant_email: current_user.email,
+      applicant_phone: current_user.mobile_number
+    }
   end
 
   def ensure_rental_listing!

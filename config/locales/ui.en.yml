@@ -631,11 +631,11 @@ en:
         notes: "Notes"
       submit: "Submit rental application"
       statuses:
-        received: "received"
-        referencing: "referencing"
-        approved: "approved"
-        rejected: "rejected"
-        withdrawn: "withdrawn"
+        received: "Received"
+        referencing: "Referencing"
+        approved: "Approved"
+        rejected: "Rejected"
+        withdrawn: "Withdrawn"
       validation:
         rental_listing_only: "must be a rental listing"
       alerts:

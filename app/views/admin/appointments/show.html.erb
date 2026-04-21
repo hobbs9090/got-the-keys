@@ -7,7 +7,7 @@
       <h1><%= @appointment.public_reference %></h1>
     </div>
 
-    <div class="section-heading__actions">
+    <div class="section-heading__actions admin-appointment-header-actions" data-testid="admin-appointment-header-actions">
       <span class="<%= appointment_status_badge_class(@appointment.status) %>"><%= @appointment.display_status %></span>
       <%= link_to t("ui.admin.appointments.show.edit"), edit_admin_appointment_path(@appointment), class: "button primary hollow" %>
       <%= button_to t("ui.admin.appointments.show.send_reminder"), send_reminder_admin_appointment_path(@appointment), method: :post, class: "button hollow secondary" if @appointment.status.in?(%w[pending confirmed rescheduled]) %>

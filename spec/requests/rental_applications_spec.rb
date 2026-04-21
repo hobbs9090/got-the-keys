@@ -1,4 +1,5 @@
 require "rails_helper"
+require "nokogiri"
 
 RSpec.describe "Rental applications", type: :request do
   let(:property) { FactoryBot.create(:property, :for_rent, address_line_1: "8 South Parade") }
@@ -8,6 +9,31 @@ RSpec.describe "Rental applications", type: :request do
 
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Start a rental application for 8 South Parade")
+    expect(response.body).not_to include("I already have a guarantor available")
+
+    document = Nokogiri::HTML.parse(response.body)
+    expect(document.at_css('[data-testid="rental-move-in-date"]')["value"]).to be_nil
+  end
+
+  it "prefills the rental application form for signed-in users" do
+    user = FactoryBot.create(
+      :user,
+      first_name: "Zoe",
+      last_name: "Bates",
+      email: "zoe.bates@example.com",
+      mobile_number: "07700 930099"
+    )
+    sign_in user
+
+    get new_property_rental_application_path(property)
+
+    expect(response).to have_http_status(:ok)
+
+    document = Nokogiri::HTML.parse(response.body)
+    expect(document.at_css('[data-testid="rental-applicant-name"]')["value"]).to eq("Zoe Bates")
+    expect(document.at_css('[data-testid="rental-applicant-email"]')["value"]).to eq("zoe.bates@example.com")
+    expect(document.at_css('[data-testid="rental-applicant-phone"]')["value"]).to eq("07700 930099")
+    expect(document.at_css('[data-testid="rental-move-in-date"]')["value"]).to be_nil
   end
 
   it "creates a public rental application" do
@@ -19,7 +45,6 @@ RSpec.describe "Rental applications", type: :request do
           applicant_phone: "07700 905200",
           move_in_date: Date.current + 21.days,
           guarantor_required: "1",
-          guarantor_available: "0",
           affordability_notes: "Budget ready but may need a guarantor.",
           notes: "Could move in next month."
         }
@@ -28,5 +53,24 @@ RSpec.describe "Rental applications", type: :request do
 
     expect(response).to redirect_to(property_path(property))
     expect(RentalApplication.last.status).to eq("received")
+  end
+
+  it "rejects a rental application without a move-in date" do
+    expect do
+      post property_rental_applications_path(property), params: {
+        rental_application: {
+          applicant_name: "Priya Shah",
+          applicant_email: "priya@example.com",
+          applicant_phone: "07700 905200",
+          move_in_date: "",
+          guarantor_required: "1",
+          affordability_notes: "Budget ready but may need a guarantor.",
+          notes: "Could move in next month."
+        }
+      }
+    end.not_to change(RentalApplication, :count)
+
+    expect(response).to have_http_status(:unprocessable_entity)
+    expect(response.body).to include("Preferred move-in date")
   end
 end

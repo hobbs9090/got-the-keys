@@ -221,8 +221,6 @@ RSpec.describe "Admin customers", type: :request do
 
     expect(buyer_row.text).to include("Jamie Buyer", "jamie.buyer@example.com", "0 bookings", "Registered")
     expect(seller_row.text).to include("Sage Seller", "sage.seller@example.com", "0 bookings", "Registered")
-    expect(document.at_css('[data-testid="admin-customer-badge-jamie-buyer-example-com-registered_user"]')).to be_present
-    expect(document.at_css('[data-testid="admin-customer-badge-sage-seller-example-com-registered_user"]')).to be_present
     expect(document.at_css('[data-testid="admin-customer-badge-sage-seller-example-com-seller"]')).to be_present
   end
 
@@ -272,7 +270,7 @@ RSpec.describe "Admin customers", type: :request do
     expect(parsed_html.css('[data-testid="admin-customer-row-alex-buyer-example-com"]').size).to eq(1)
   end
 
-  it "shows role badges for registered users, sellers, landlords, buyers, and tenants" do
+  it "shows role badges for sellers, landlords, buyers with offers, and tenants with approved rental applications" do
     seller = FactoryBot.create(
       :user,
       first_name: "Sky",
@@ -308,14 +306,21 @@ RSpec.describe "Admin customers", type: :request do
       email: "drew.dual@example.com",
       mobile_number: "07700 930024"
     )
+    third_party_seller = FactoryBot.create(
+      :user,
+      first_name: "Parker",
+      last_name: "Owner",
+      email: "parker.owner@example.com",
+      mobile_number: "07700 930025"
+    )
 
     sale_property = FactoryBot.create(:property, user: seller)
     rental_property = FactoryBot.create(:property, :for_rent, user: landlord)
     dual_sale_property = FactoryBot.create(:property, user: dual_role)
+    external_sale_property = FactoryBot.create(:property, user: third_party_seller)
     FactoryBot.create(:property, :for_rent, user: dual_role)
 
     FactoryBot.create(:saved_search, user: buyer, sale_status: Property::SALE_STATUSES[:for_sale])
-    FactoryBot.create(:saved_property, user: tenant, property: rental_property)
     FactoryBot.create(:offer, property: sale_property, buyer_email: buyer.email, buyer_name: buyer.full_name, buyer_phone: buyer.mobile_number)
     FactoryBot.create(
       :rental_application,
@@ -325,13 +330,14 @@ RSpec.describe "Admin customers", type: :request do
       applicant_phone: tenant.mobile_number
     )
     FactoryBot.create(
-      :appointment,
-      :pending,
-      property: dual_sale_property,
-      customer_name: dual_role.full_name,
-      customer_email: dual_role.email,
-      customer_phone: dual_role.mobile_number
+      :rental_application,
+      :approved,
+      property: rental_property,
+      applicant_email: tenant.email,
+      applicant_name: tenant.full_name,
+      applicant_phone: tenant.mobile_number
     )
+    FactoryBot.create(:offer, :accepted, property: external_sale_property, buyer_email: dual_role.email, buyer_name: dual_role.full_name, buyer_phone: dual_role.mobile_number)
 
     get admin_customers_path
 
@@ -339,17 +345,79 @@ RSpec.describe "Admin customers", type: :request do
 
     document = parsed_html
 
-    expect(document.at_css('[data-testid="admin-customer-badge-sky-seller-example-com-registered_user"]')).to be_present
     expect(document.at_css('[data-testid="admin-customer-badge-sky-seller-example-com-seller"]')).to be_present
-    expect(document.at_css('[data-testid="admin-customer-badge-lane-landlord-example-com-registered_user"]')).to be_present
     expect(document.at_css('[data-testid="admin-customer-badge-lane-landlord-example-com-landlord"]')).to be_present
-    expect(document.at_css('[data-testid="admin-customer-badge-blair-buyer-example-com-registered_user"]')).to be_present
     expect(document.at_css('[data-testid="admin-customer-badge-blair-buyer-example-com-buyer"]')).to be_present
-    expect(document.at_css('[data-testid="admin-customer-badge-toni-tenant-example-com-registered_user"]')).to be_present
     expect(document.at_css('[data-testid="admin-customer-badge-toni-tenant-example-com-tenant"]')).to be_present
-    expect(document.at_css('[data-testid="admin-customer-badge-drew-dual-example-com-registered_user"]')).to be_present
     expect(document.at_css('[data-testid="admin-customer-badge-drew-dual-example-com-seller"]')).to be_present
     expect(document.at_css('[data-testid="admin-customer-badge-drew-dual-example-com-landlord"]')).to be_present
     expect(document.at_css('[data-testid="admin-customer-badge-drew-dual-example-com-buyer"]')).to be_present
+  end
+
+  it "does not show the tenant badge for rental interest without an approved application" do
+    landlord = FactoryBot.create(
+      :user,
+      first_name: "Lane",
+      last_name: "Landlord",
+      email: "lane.landlord@example.com",
+      mobile_number: "07700 930021"
+    )
+    interested_renter = FactoryBot.create(
+      :user,
+      first_name: "Iris",
+      last_name: "Interest",
+      email: "iris.interest@example.com",
+      mobile_number: "07700 930031"
+    )
+
+    rental_property = FactoryBot.create(:property, :for_rent, user: landlord)
+    FactoryBot.create(:saved_property, user: interested_renter, property: rental_property)
+    FactoryBot.create(
+      :rental_application,
+      property: rental_property,
+      applicant_email: interested_renter.email,
+      applicant_name: interested_renter.full_name,
+      applicant_phone: interested_renter.mobile_number,
+      status: "received"
+    )
+
+    get admin_customers_path
+
+    expect(response).to have_http_status(:ok)
+    expect(parsed_html.at_css('[data-testid="admin-customer-badge-iris-interest-example-com-tenant"]')).not_to be_present
+  end
+
+  it "does not show the buyer badge for sale interest without an active or completed offer" do
+    seller = FactoryBot.create(
+      :user,
+      first_name: "Sky",
+      last_name: "Seller",
+      email: "sky.seller@example.com",
+      mobile_number: "07700 930020"
+    )
+    interested_buyer = FactoryBot.create(
+      :user,
+      first_name: "Bella",
+      last_name: "Browse",
+      email: "bella.browse@example.com",
+      mobile_number: "07700 930032"
+    )
+
+    sale_property = FactoryBot.create(:property, user: seller)
+    FactoryBot.create(:saved_property, user: interested_buyer, property: sale_property)
+    FactoryBot.create(:saved_search, user: interested_buyer, sale_status: Property::SALE_STATUSES[:for_sale])
+    FactoryBot.create(
+      :appointment,
+      :pending,
+      property: sale_property,
+      customer_name: interested_buyer.full_name,
+      customer_email: interested_buyer.email,
+      customer_phone: interested_buyer.mobile_number
+    )
+
+    get admin_customers_path
+
+    expect(response).to have_http_status(:ok)
+    expect(parsed_html.at_css('[data-testid="admin-customer-badge-bella-browse-example-com-buyer"]')).not_to be_present
   end
 end
