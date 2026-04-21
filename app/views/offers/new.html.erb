@@ -27,7 +27,19 @@
         </div>
         <div>
           <%= f.label :amount, t("ui.offers.fields.amount"), **form_label_options(@offer, :amount) %>
-          <%= f.number_field :amount, min: 1, step: 1000, required: true, data: { testid: "offer-amount" }, **form_control_options(@offer, :amount) %>
+          <%= f.text_field :amount,
+                           value: (@offer.amount.present? ? number_with_delimiter(@offer.amount, delimiter: ",") : nil),
+                           inputmode: "numeric",
+                           maxlength: 15,
+                           pattern: "[0-9,\\s]*",
+                           required: true,
+                           data: {
+                             testid: "offer-amount",
+                             offer_amount_input: true,
+                             offer_amount_step: 1000,
+                             validation_pattern_message: t("ui.validation.number")
+                           },
+                           **form_control_options(@offer, :amount) %>
           <%= field_error_messages(@offer, :amount) %>
         </div>
         <div class="form-grid__full">

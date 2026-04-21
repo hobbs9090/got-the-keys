@@ -47,14 +47,15 @@
                   <% appointments.each do |appointment| %>
                     <div class="property-workspace-card__appointment property-workspace-card__appointment--customer" data-testid="customer-booking-row">
                       <div class="property-workspace-bookings__details">
+                        <span class="<%= property_sale_status_badge_class(appointment.property.sale_status) %>" data-testid="customer-booking-sale-status-<%= appointment.id %>"><%= translated_sale_status(appointment.property.sale_status) %></span>
                         <strong><%= appointment.property.address_line_1 %></strong>
                         <p><%= formatted_date_time(appointment.scheduled_at) %></p>
                         <p><%= appointment.property.location_line %></p>
                       </div>
                       <div class="property-workspace-card__appointment-actions">
                         <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
-                        <%= link_to t("ui.properties.mine.open_details", default: "Open details"), property_path(appointment.property), class: "button hollow secondary" %>
-                        <%= link_to t("ui.properties.mine.view_booking", default: "View booking"), appointment_path(appointment, token: appointment.access_token), class: "button hollow secondary" %>
+                        <%= link_to t("ui.properties.mine.open_details", default: "Open details"), property_path(appointment.property), class: "button primary property-workspace-card__appointment-button" %>
+                        <%= link_to t("ui.properties.mine.view_booking", default: "View booking"), appointment_path(appointment, token: appointment.access_token), class: "button hollow primary property-workspace-card__appointment-button" %>
                       </div>
                     </div>
                   <% end %>

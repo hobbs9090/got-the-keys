@@ -6,7 +6,7 @@ class OffersController < ApplicationController
   before_action :ensure_current_user_is_not_owner!
 
   def new
-    @offer = @property.offers.new
+    @offer = @property.offers.new(prefilled_offer_attributes)
   end
 
   def create
@@ -23,6 +23,17 @@ class OffersController < ApplicationController
 
   def offer_params
     params.require(:offer).permit(:buyer_name, :buyer_email, :buyer_phone, :amount, :chain_position, :notes)
+  end
+
+  def prefilled_offer_attributes
+    attributes = { amount: @property.asking_price }
+    return attributes unless user_signed_in?
+
+    attributes.merge(
+      buyer_name: current_user.full_name,
+      buyer_email: current_user.email,
+      buyer_phone: current_user.mobile_number
+    )
   end
 
   def ensure_sale_listing!

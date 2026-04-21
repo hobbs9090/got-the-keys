@@ -4,6 +4,7 @@ import { bootAppointmentSlotPickers, teardownAppointmentSlotPickers } from "./ap
 import { bootCarousels, teardownCarousels } from "./carousels";
 import { bootModals, teardownModals } from "./modals";
 import { bootNativeValidations, teardownNativeValidations } from "./native_validations";
+import { bootOfferAmountInputs, teardownOfferAmountInputs } from "./offer_amount_input";
 import { bootPaginationScroll, teardownPaginationScroll } from "./pagination_scroll";
 import { bootPropertyListingForms, teardownPropertyListingForms } from "./property_listing_form";
 import { bootPhotoPrimaryRadios, teardownPhotoPrimaryRadios } from "./photo_primary_radios";
@@ -19,6 +20,7 @@ const bootApplication = () => {
   bootCarousels();
   bootModals();
   bootNativeValidations();
+  bootOfferAmountInputs();
   bootPaginationScroll();
   bootPropertyListingForms();
   bootPhotoPrimaryRadios();
@@ -34,6 +36,7 @@ const teardownApplication = () => {
   teardownCarousels();
   teardownModals();
   teardownNativeValidations();
+  teardownOfferAmountInputs();
   teardownPaginationScroll();
   teardownPropertyListingForms();
   teardownPhotoPrimaryRadios();

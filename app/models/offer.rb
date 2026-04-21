@@ -8,6 +8,10 @@ class Offer < ApplicationRecord
   has_many :offer_events, dependent: :destroy
   has_many :audit_logs, as: :auditable, dependent: :destroy
 
+  def amount=(value)
+    super(normalize_integer_input(value))
+  end
+
   before_validation :apply_defaults
 
   validates :public_reference, :buyer_name, :buyer_email, :buyer_phone, :amount, :status, presence: true
@@ -33,6 +37,10 @@ class Offer < ApplicationRecord
   end
 
   private
+
+  def normalize_integer_input(value)
+    value.to_s.gsub(/[,\s]/, "").presence
+  end
 
   def apply_defaults
     self.status ||= "received"

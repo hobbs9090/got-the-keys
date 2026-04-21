@@ -599,11 +599,11 @@ en:
         notes: "Notes"
       submit: "Submit offer"
       statuses:
-        received: "received"
-        accepted: "accepted"
-        rejected: "rejected"
-        withdrawn: "withdrawn"
-        completed: "completed"
+        received: "Received"
+        accepted: "Accepted"
+        rejected: "Rejected"
+        withdrawn: "Withdrawn"
+        completed: "Completed"
       validation:
         sale_listing_only: "must be a sale listing"
         owner_cannot_offer: "cannot belong to the owner of this property"

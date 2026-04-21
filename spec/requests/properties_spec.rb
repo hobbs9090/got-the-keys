@@ -671,7 +671,7 @@ describe "Properties" do
       sign_in user
 
       upcoming_property = FactoryBot.create(:property, address_line_1: "Upcoming Booking House")
-      previous_property = FactoryBot.create(:property, address_line_1: "Previous Booking House")
+      previous_property = FactoryBot.create(:property, :for_rent, address_line_1: "Previous Booking House")
       cancelled_property = FactoryBot.create(:property, address_line_1: "Cancelled Booking House")
       other_users_property = FactoryBot.create(:property, address_line_1: "Someone Else's Booking House")
 
@@ -741,6 +741,15 @@ describe "Properties" do
       expect(response.body).to include(appointment_path(previous_appointment, token: previous_appointment.access_token))
       expect(response.body).to include(appointment_path(cancelled_appointment, token: cancelled_appointment.access_token))
       expect(response.body).to include("View booking")
+
+      document = Nokogiri::HTML(response.body)
+      upcoming_badge = document.at_css(%([data-testid="customer-booking-sale-status-#{upcoming_appointment.id}"]))
+      previous_badge = document.at_css(%([data-testid="customer-booking-sale-status-#{previous_appointment.id}"]))
+
+      expect(upcoming_badge).to be_present
+      expect(upcoming_badge.text.strip).to eq("For Sale")
+      expect(previous_badge).to be_present
+      expect(previous_badge.text.strip).to eq("For Rent")
     end
 
     it "lists upcoming customer bookings with the earliest scheduled visit first" do

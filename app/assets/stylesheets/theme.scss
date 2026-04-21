@@ -3291,6 +3291,13 @@ form[data-testid="lead-inbox-filters"] .form-actions .button,
   white-space: normal;
 }
 
+.property-workspace-card__appointment-button {
+  flex: 0 0 auto;
+  font-size: 0.84rem;
+  padding: 0.62rem 1rem;
+  white-space: nowrap;
+}
+
 .property-workspace__footer {
   display: flex;
   justify-content: center;
@@ -4239,6 +4246,10 @@ table th {
 
   .property-workspace-card__appointment-actions .button {
     width: 100%;
+  }
+
+  .property-workspace-card__appointment-button {
+    white-space: normal;
   }
 
   .contact-jump-nav {
