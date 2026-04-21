@@ -58,6 +58,27 @@ RSpec.describe "Admin security" do
     expect(audit_log.metadata).to include("from" => "optional", "to" => "disabled")
   end
 
+  context "when ADMIN_TWO_FACTOR_REQUIRED env var is set" do
+    around do |example|
+      ENV['ADMIN_TWO_FACTOR_REQUIRED'] = 'true'
+      example.run
+    ensure
+      ENV.delete('ADMIN_TWO_FACTOR_REQUIRED')
+    end
+
+    it "rejects attempts to disable the global 2FA mode" do
+      BookingConfiguration.current.update!(admin_two_factor_mode: "optional")
+
+      patch admin_security_path, params: {
+        booking_configuration: { admin_two_factor_mode: "disabled" },
+        confirm_disable_admin_two_factor: "DISABLE"
+      }
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(BookingConfiguration.current.admin_two_factor_mode).to eq("optional")
+    end
+  end
+
   it "redirects enrollment start to the enrollment panel anchor" do
     post enroll_admin_security_path
 

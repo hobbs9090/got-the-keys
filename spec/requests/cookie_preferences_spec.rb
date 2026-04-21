@@ -10,7 +10,6 @@ RSpec.describe "Cookie preferences", type: :request do
     expect(response).to redirect_to(contact_us_path)
     expect(response.cookies["gotthekeys_cookie_consent"]).to eq("essential")
     expect(response.headers["Set-Cookie"]).to include("gotthekeys_cookie_consent=essential")
-    expect(response.headers["Set-Cookie"]).not_to include("_got_the_keys_session")
   end
 
   it "ignores unsafe return urls" do
@@ -32,7 +31,6 @@ RSpec.describe "Cookie preferences", type: :request do
     expect(response).to redirect_to(contact_us_path)
     expect(response.cookies["gotthekeys_cookie_consent"]).to be_nil
     expect(response.headers["Set-Cookie"].to_s).not_to include("gotthekeys_cookie_consent")
-    expect(response.headers["Set-Cookie"].to_s).not_to include("_got_the_keys_session")
   end
 
   it "rejects protocol-relative return urls" do

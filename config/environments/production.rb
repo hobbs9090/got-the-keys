@@ -12,7 +12,7 @@ GotTheKeys::Application.configure do
   config.middleware.insert_before(ActionDispatch::Static, AssetPublicFileServer, Rails.root.join("public").to_s) if serve_static_files
   config.assume_ssl = true if ENV['ASSUME_SSL'].present?
   config.assets.compile = false
-  config.force_ssl = ENV['FORCE_SSL'].present?
+  config.force_ssl = true
   config.ssl_options = { hsts: { subdomains: true, preload: true, expires: 2.years } }
   config.log_level = ENV.fetch('RAILS_LOG_LEVEL', 'info')
   config.log_tags = [:request_id]

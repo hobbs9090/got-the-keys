@@ -17,6 +17,13 @@ class Admin::SecurityController < Admin::BaseController
     previous_mode = @booking_configuration.admin_two_factor_mode
     @booking_configuration.assign_attributes(admin_two_factor_mode: admin_two_factor_mode_params[:admin_two_factor_mode])
 
+    if two_factor_mode_locked? && @booking_configuration.admin_two_factor_disabled?
+      @booking_configuration.errors.add(:admin_two_factor_mode, t("ui.admin.qa.admin_two_factor.locked_by_server_config"))
+      load_page_data
+      render :show, status: :unprocessable_content
+      return
+    end
+
     if disabling_without_confirmation?(previous_mode)
       @booking_configuration.errors.add(:admin_two_factor_mode, t("ui.admin.qa.admin_two_factor.confirmation_required"))
       load_page_data
@@ -160,6 +167,10 @@ class Admin::SecurityController < Admin::BaseController
 
   def admin_two_factor_mode_params
     params.fetch(:booking_configuration, {}).permit(:admin_two_factor_mode)
+  end
+
+  def two_factor_mode_locked?
+    ENV['ADMIN_TWO_FACTOR_REQUIRED'].present?
   end
 
   def admin_two_factor_disable_confirmation_phrase

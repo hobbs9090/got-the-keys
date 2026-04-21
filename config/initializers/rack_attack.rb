@@ -2,12 +2,30 @@ Rack::Attack.throttle("sign_in/ip", limit: 10, period: 5.minutes) do |req|
   req.ip if req.path == "/users/sign_in" && req.post?
 end
 
+Rack::Attack.throttle("sign_in/email", limit: 5, period: 5.minutes) do |req|
+  if req.path == "/users/sign_in" && req.post?
+    req.params.dig("user", "email").to_s.downcase.presence
+  end
+end
+
 Rack::Attack.throttle("admin_sign_in/ip", limit: 5, period: 5.minutes) do |req|
   req.ip if req.path == "/admins/sign_in" && req.post?
 end
 
+Rack::Attack.throttle("admin_sign_in/email", limit: 5, period: 5.minutes) do |req|
+  if req.path == "/admins/sign_in" && req.post?
+    req.params.dig("admin", "email").to_s.downcase.presence
+  end
+end
+
 Rack::Attack.throttle("password_reset/ip", limit: 5, period: 10.minutes) do |req|
   req.ip if req.path == "/users/password" && req.post?
+end
+
+Rack::Attack.throttle("password_reset/email", limit: 3, period: 10.minutes) do |req|
+  if req.path == "/users/password" && req.post?
+    req.params.dig("user", "email").to_s.downcase.presence
+  end
 end
 
 Rack::Attack.throttle("account_unlock/ip", limit: 5, period: 10.minutes) do |req|
