@@ -13,10 +13,11 @@ RSpec.describe "Admin users", type: :request do
   end
 
   it "shows a seller search form on the index" do
-    2.times do
-      seller = FactoryBot.create(:user)
-      FactoryBot.create(:property, user: seller)
-    end
+    first_seller = FactoryBot.create(:user)
+    second_seller = FactoryBot.create(:user)
+    FactoryBot.create(:property, user: first_seller)
+    FactoryBot.create(:property, :for_rent, user: first_seller)
+    FactoryBot.create(:property, user: second_seller)
 
     get admin_sellers_path
 
@@ -37,6 +38,14 @@ RSpec.describe "Admin users", type: :request do
     count_label = parsed_html.at_css('[data-testid="admin-users-count"]')
     expect(count_label).to be_present
     expect(count_label.text.strip).to eq("2 sellers total")
+
+    sale_badge = parsed_html.at_css(%([data-testid="admin-user-sale-count-#{first_seller.id}"]))
+    rent_badge = parsed_html.at_css(%([data-testid="admin-user-rent-count-#{first_seller.id}"]))
+
+    expect(sale_badge).to be_present
+    expect(sale_badge.text.strip).to eq("1 For Sale")
+    expect(rent_badge).to be_present
+    expect(rent_badge.text.strip).to eq("1 For Rent")
   end
 
   it "filters sellers by full name" do
@@ -122,6 +131,27 @@ RSpec.describe "Admin users", type: :request do
 
     page_two_row_ids = parsed_html.css('[data-testid^="admin-user-row-"]').map { |row| row["data-testid"] }
     expect(page_two_row_ids).to eq(["admin-user-row-#{created_users.last.id}"])
+  end
+
+  it "shows separate for-sale and for-rent badges on the sellers index" do
+    user = FactoryBot.create(:user, first_name: "Taylor", last_name: "Stone", email: "taylor.stone@example.com")
+    3.times { FactoryBot.create(:property, user: user) }
+    2.times { FactoryBot.create(:property, :for_rent, user: user) }
+
+    get admin_sellers_path
+
+    expect(response).to have_http_status(:ok)
+
+    sale_badge = parsed_html.at_css(%([data-testid="admin-user-sale-count-#{user.id}"]))
+    rent_badge = parsed_html.at_css(%([data-testid="admin-user-rent-count-#{user.id}"]))
+
+    expect(sale_badge).to be_present
+    expect(sale_badge.text.strip).to eq("3 For Sale")
+    expect(sale_badge["class"]).to include("badge--accent")
+
+    expect(rent_badge).to be_present
+    expect(rent_badge.text.strip).to eq("2 For Rent")
+    expect(rent_badge["class"]).to include("badge--success")
   end
 
   it "lists all of the seller's properties with their current statuses on the profile page" do

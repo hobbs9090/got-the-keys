@@ -1218,6 +1218,12 @@ en:
           count_label:
             one: "1 seller total"
             other: "%{display_count} sellers total"
+          sale_count_badge:
+            one: "1 For Sale"
+            other: "%{count} For Sale"
+          rent_count_badge:
+            one: "1 For Rent"
+            other: "%{count} For Rent"
           no_results: "No sellers match this search."
           search:
             label: "Search sellers"

@@ -27,10 +27,20 @@
   <% if @users.any? %>
     <div class="admin-list">
       <% @users.each do |user| %>
+        <% sale_count = user.properties.count { |property| property.sale_status == Property::SALE_STATUSES[:for_sale] } %>
+        <% rent_count = user.properties.count { |property| property.sale_status == Property::SALE_STATUSES[:for_rent] } %>
         <div class="admin-list__item" data-testid="admin-user-row-<%= user.id %>">
           <div>
             <%= link_to user.full_name.presence || user.email, admin_seller_path(user) %>
             <p><%= user.email %> · <%= translate_count("ui.admin.users.index.property_count", user.properties.count) %></p>
+            <div class="admin-customer-badges">
+              <% if sale_count.positive? %>
+                <span class="badge badge--accent" data-testid="admin-user-sale-count-<%= user.id %>"><%= t("ui.admin.users.index.sale_count_badge", count: sale_count) %></span>
+              <% end %>
+              <% if rent_count.positive? %>
+                <span class="badge badge--success" data-testid="admin-user-rent-count-<%= user.id %>"><%= t("ui.admin.users.index.rent_count_badge", count: rent_count) %></span>
+              <% end %>
+            </div>
           </div>
           <span class="badge badge--neutral"><%= user.language.upcase %></span>
         </div>

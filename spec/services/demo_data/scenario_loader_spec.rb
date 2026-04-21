@@ -64,12 +64,22 @@ RSpec.describe DemoData::ScenarioLoader do
       "lucy.mcclure@example.com",
       "matthew.wells@example.com",
       "nina.hughes@example.com",
-      "owner01.seed01@example.com",
-      "owner33.seed33@example.com",
-      "owner34.seed34@example.com",
-      "owner85.seed85@example.com",
+      "amelia.hart@example.com",
+      "holly.wade@example.com",
+      "finn.chapman@example.com",
+      "logan.kemp@example.com",
       "sam.turner@example.com",
     )
+    expect(User.find_by!(email: "amelia.hart@example.com").slice(:first_name, :last_name)).to eq(
+      "first_name" => "Amelia",
+      "last_name" => "Hart"
+    )
+    expect(User.find_by!(email: "logan.kemp@example.com").slice(:first_name, :last_name)).to eq(
+      "first_name" => "Logan",
+      "last_name" => "Kemp"
+    )
+    expect(User.where("first_name LIKE 'Owner%' OR last_name LIKE 'Seed%'")).to be_empty
+
     sale_owner_listing_counts = Property.for_sale.group(:user_id).count.values.sort
     rental_owner_listing_counts = Property.for_rent.group(:user_id).count.values.sort
 
@@ -84,7 +94,7 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(rental_owner_listing_counts.count(4)).to eq(1)
     expect(rental_owner_listing_counts.uniq).to eq([1, 2, 3, 4])
 
-    shared_owner = User.find_by!(email: "owner85.seed85@example.com")
+    shared_owner = User.find_by!(email: "logan.kemp@example.com")
     expect(shared_owner.properties.for_sale.count).to eq(1)
     expect(shared_owner.properties.for_rent.count).to eq(4)
     expect(Property.find_by!(address_line_1: "18 Cedar Road").available_from).to eq(Date.new(2026, 4, 15))
