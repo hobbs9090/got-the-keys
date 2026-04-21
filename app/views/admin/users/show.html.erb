@@ -56,9 +56,12 @@
         <div class="admin-list__item" data-testid="admin-user-property-row-<%= property.id %>">
           <div>
             <%= link_to property.address_line_1, admin_property_path(property) %>
-            <p><%= property.location_line %> · <%= translated_sale_status(property.sale_status) %></p>
+            <p><%= property.location_line %></p>
           </div>
-          <span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span>
+          <div class="admin-inline-actions">
+            <span class="<%= property_sale_status_badge_class(property.sale_status) %>" data-testid="admin-user-property-sale-status-badge-<%= property.id %>"><%= translated_sale_status(property.sale_status) %></span>
+            <span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span>
+          </div>
         </div>
       <% end %>
     </div>

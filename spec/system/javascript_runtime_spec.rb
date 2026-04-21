@@ -427,7 +427,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       "labelColor" => "rgb(230, 238, 249)"
     )
 
-    boot_runtime(admin_users_path)
+    boot_runtime(admin_sellers_path)
 
     user_search_styles = admin_user_search_styles
 
@@ -492,7 +492,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
 
     enable_theme_preference("light")
     sign_in_as_admin(admin)
-    boot_runtime(admin_users_path)
+    boot_runtime(admin_sellers_path)
 
     styles = admin_user_search_styles
 

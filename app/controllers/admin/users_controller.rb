@@ -14,25 +14,26 @@ class Admin::UsersController < Admin::BaseController
   private
 
   def filtered_users
-    scope = User.includes(:properties)
+    scope = User.joins(:properties).includes(:properties).distinct
     return scope if @query.blank?
 
     @query.split.each do |term|
       pattern = "%#{User.sanitize_sql_like(term.downcase)}%"
-
-      scope = scope.where(<<~SQL.squish, pattern:)
+      search_sql = <<~SQL.squish
         LOWER(users.first_name) LIKE :pattern
         OR LOWER(users.last_name) LIKE :pattern
         OR LOWER(users.email) LIKE :pattern
         OR LOWER(users.mobile_number) LIKE :pattern
         OR LOWER(COALESCE(users.first_name, '') || ' ' || COALESCE(users.last_name, '')) LIKE :pattern
       SQL
+
+      scope = scope.where(search_sql, pattern: pattern)
     end
 
     scope
   end
 
   def set_user
-    @user = User.find(params[:id])
+    @user = filtered_users.find(params[:id])
   end
 end

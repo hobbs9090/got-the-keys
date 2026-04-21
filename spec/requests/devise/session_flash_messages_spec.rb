@@ -29,6 +29,17 @@ RSpec.describe "Devise session flash messages" do
     expect(notice_flash["data-auto-dismiss-after"]).to eq("5000")
   end
 
+  it "always redirects admins to the admin dashboard after sign-in" do
+    admin = FactoryBot.create(:admin, email: "stored-admin@gotthekeys.com", password: "changeme", password_confirmation: "changeme")
+
+    get admin_enquiries_path
+    expect(response).to redirect_to(new_admin_session_path)
+
+    post admin_session_path, params: { admin: { email: admin.email, password: "changeme" } }
+
+    expect(response).to redirect_to(admin_root_path)
+  end
+
   it "keeps the generic member sign-in notice" do
     user = FactoryBot.create(:user, email: "flash-user@example.com", password: "changeme", password_confirmation: "changeme")
 

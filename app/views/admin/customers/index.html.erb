@@ -31,7 +31,22 @@
           <div>
             <strong><%= customer.customer_name.presence || customer.customer_email %></strong>
             <p><%= customer.customer_email %> · <%= customer.customer_phone.presence || t("ui.admin.appointments.show.not_supplied") %></p>
-            <p><%= translate_count("ui.admin.customers.index.appointment_count", customer.appointments_count.to_i) %> · <%= formatted_date_time(customer.latest_appointment_at) %></p>
+            <% badges = admin_customer_badges(customer) %>
+            <% if badges.any? %>
+              <div class="admin-customer-badges">
+                <% badges.each do |badge| %>
+                  <span class="badge <%= badge[:css_class] %>" data-testid="admin-customer-badge-<%= customer.email_key.parameterize %>-<%= badge[:key] %>"><%= badge[:label] %></span>
+                <% end %>
+              </div>
+            <% end %>
+            <p>
+              <%= translate_count("ui.admin.customers.index.appointment_count", customer.appointments_count.to_i) %>
+              <% if customer.latest_appointment_at.present? %>
+                · <%= formatted_date_time(customer.latest_appointment_at) %>
+              <% elsif customer.registered_at.present? %>
+                · <%= t("ui.admin.customers.index.registered_on", time: formatted_date_time(customer.registered_at)) %>
+              <% end %>
+            </p>
           </div>
           <div class="admin-inline-actions">
             <%= link_to t("ui.admin.customers.index.view_bookings"), admin_appointments_path(view: "agenda", customer_email: customer.customer_email), class: "button primary hollow", data: { testid: "admin-customer-view-bookings-#{customer.email_key.parameterize}" } %>

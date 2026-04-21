@@ -4,6 +4,9 @@
   <div class="section-heading">
     <div>
       <p class="section-heading__eyebrow"><%= t("ui.admin.properties.show.eyebrow") %></p>
+      <p>
+        <span class="<%= property_sale_status_badge_class(@property.sale_status) %>" data-testid="admin-property-sale-status-badge"><%= translated_sale_status(@property.sale_status) %></span>
+      </p>
       <h1><%= @property.address_line_1 %></h1>
     </div>
 

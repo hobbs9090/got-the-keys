@@ -13,15 +13,18 @@ RSpec.describe "Admin users", type: :request do
   end
 
   it "shows a seller search form on the index" do
-    FactoryBot.create_list(:user, 2)
+    2.times do
+      seller = FactoryBot.create(:user)
+      FactoryBot.create(:property, user: seller)
+    end
 
-    get admin_users_path
+    get admin_sellers_path
 
     expect(response).to have_http_status(:ok)
 
     search_form = parsed_html.at_css('[data-testid="admin-users-search"]')
     expect(search_form).to be_present
-    expect(search_form["action"]).to eq(admin_users_path)
+    expect(search_form["action"]).to eq(admin_sellers_path)
 
     search_input = search_form.at_css('[data-testid="admin-users-search-input"]')
     expect(search_input).to be_present
@@ -29,7 +32,7 @@ RSpec.describe "Admin users", type: :request do
 
     clear_link = search_form.at_css('[data-testid="admin-users-search-clear"]')
     expect(clear_link).to be_present
-    expect(clear_link["href"]).to eq(admin_users_path)
+    expect(clear_link["href"]).to eq(admin_sellers_path)
 
     count_label = parsed_html.at_css('[data-testid="admin-users-count"]')
     expect(count_label).to be_present
@@ -39,8 +42,10 @@ RSpec.describe "Admin users", type: :request do
   it "filters sellers by full name" do
     matching_user = FactoryBot.create(:user, first_name: "Taylor", last_name: "Stone", email: "taylor.stone@example.com")
     non_matching_user = FactoryBot.create(:user, first_name: "Morgan", last_name: "Lake", email: "morgan@example.com")
+    FactoryBot.create(:property, user: matching_user)
+    FactoryBot.create(:property, user: non_matching_user)
 
-    get admin_users_path, params: { q: "Taylor Stone" }
+    get admin_sellers_path, params: { q: "Taylor Stone" }
 
     expect(response).to have_http_status(:ok)
 
@@ -55,8 +60,10 @@ RSpec.describe "Admin users", type: :request do
   it "treats q as case-insensitive" do
     matching_user = FactoryBot.create(:user, first_name: "Taylor", last_name: "Stone", email: "taylor.stone@example.com")
     non_matching_user = FactoryBot.create(:user, first_name: "Morgan", last_name: "Lake", email: "morgan@example.com")
+    FactoryBot.create(:property, user: matching_user)
+    FactoryBot.create(:property, user: non_matching_user)
 
-    get admin_users_path, params: { q: "tAYlOr sToNe" }
+    get admin_sellers_path, params: { q: "tAYlOr sToNe" }
 
     expect(response).to have_http_status(:ok)
 
@@ -66,17 +73,19 @@ RSpec.describe "Admin users", type: :request do
   end
 
   it "filters sellers by email and shows an empty state when there are no matches" do
-    FactoryBot.create(:user, first_name: "Taylor", last_name: "Stone", email: "taylor.stone@example.com")
+    taylor = FactoryBot.create(:user, first_name: "Taylor", last_name: "Stone", email: "taylor.stone@example.com")
     matching_user = FactoryBot.create(:user, first_name: "Casey", last_name: "Blue", email: "casey.blue@example.com")
+    FactoryBot.create(:property, user: taylor)
+    FactoryBot.create(:property, user: matching_user)
 
-    get admin_users_path, params: { q: "casey.blue@" }
+    get admin_sellers_path, params: { q: "casey.blue@" }
 
     expect(response).to have_http_status(:ok)
 
     row_ids = parsed_html.css('[data-testid^="admin-user-row-"]').map { |row| row["data-testid"] }
     expect(row_ids).to eq(["admin-user-row-#{matching_user.id}"])
 
-    get admin_users_path, params: { q: "nobody here" }
+    get admin_sellers_path, params: { q: "nobody here" }
 
     expect(response).to have_http_status(:ok)
 
@@ -87,15 +96,17 @@ RSpec.describe "Admin users", type: :request do
 
   it "paginates sellers with the same page size as the customers index" do
     created_users = 26.times.map do |index|
-      FactoryBot.create(
+      user = FactoryBot.create(
         :user,
         first_name: "Seller",
         last_name: format("User %02d", index),
         email: "seller-#{index}@example.com"
       )
+      FactoryBot.create(:property, user: user)
+      user
     end
 
-    get admin_users_path
+    get admin_sellers_path
 
     expect(response).to have_http_status(:ok)
 
@@ -105,7 +116,7 @@ RSpec.describe "Admin users", type: :request do
     expect(page_one_row_ids).not_to include("admin-user-row-#{created_users.last.id}")
     expect(parsed_html.at_css(".pagination")).to be_present
 
-    get admin_users_path, params: { page: 2 }
+    get admin_sellers_path, params: { page: 2 }
 
     expect(response).to have_http_status(:ok)
 
@@ -115,11 +126,11 @@ RSpec.describe "Admin users", type: :request do
 
   it "lists all of the seller's properties with their current statuses on the profile page" do
     user = FactoryBot.create(:user, first_name: "Taylor", last_name: "Stone", email: "taylor.stone@example.com")
-    published_property = FactoryBot.create(:property, user:, address_line_1: "Cedar View", listing_state: "published")
-    draft_property = FactoryBot.create(:property, :draft, user:, address_line_1: "Maple House")
+    published_property = FactoryBot.create(:property, user: user, address_line_1: "Cedar View", listing_state: "published")
+    draft_property = FactoryBot.create(:property, :draft, :for_rent, user: user, address_line_1: "Maple House")
     other_user_property = FactoryBot.create(:property, address_line_1: "Someone Else's Home")
 
-    get admin_user_path(user)
+    get admin_seller_path(user)
 
     expect(response).to have_http_status(:ok)
 
@@ -134,5 +145,31 @@ RSpec.describe "Admin users", type: :request do
     expect(response.body).not_to include("Someone Else's Home")
     expect(response.body).to include(I18n.t("ui.properties.listing_states.published"))
     expect(response.body).to include(I18n.t("ui.properties.listing_states.draft"))
+
+    sale_badge = parsed_html.at_css(%([data-testid="admin-user-property-sale-status-badge-#{published_property.id}"]))
+    rent_badge = parsed_html.at_css(%([data-testid="admin-user-property-sale-status-badge-#{draft_property.id}"]))
+
+    expect(sale_badge).to be_present
+    expect(sale_badge.text.strip).to eq("For Sale")
+    expect(sale_badge["class"]).to include("badge--accent")
+
+    expect(rent_badge).to be_present
+    expect(rent_badge.text.strip).to eq("For Rent")
+    expect(rent_badge["class"]).to include("badge--success")
+  end
+
+  it "excludes registered users who do not own any properties" do
+    seller = FactoryBot.create(:user, first_name: "Taylor", last_name: "Stone", email: "taylor.stone@example.com")
+    nonseller = FactoryBot.create(:user, first_name: "Alex", last_name: "Cole", email: "alex.cole@example.com")
+    FactoryBot.create(:property, user: seller)
+
+    get admin_sellers_path
+
+    expect(response).to have_http_status(:ok)
+
+    row_ids = parsed_html.css('[data-testid^="admin-user-row-"]').map { |row| row["data-testid"] }
+    expect(row_ids).to include("admin-user-row-#{seller.id}")
+    expect(row_ids).not_to include("admin-user-row-#{nonseller.id}")
+    expect(response.body).not_to include("alex.cole@example.com")
   end
 end

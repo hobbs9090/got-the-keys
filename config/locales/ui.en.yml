@@ -1243,7 +1243,7 @@ en:
       customers:
         index:
           title: "Customers"
-          eyebrow: "Customer booking directory"
+          eyebrow: "Customer directory"
           count_label:
             one: "1 customer total"
             other: "%{display_count} customers total"
@@ -1256,7 +1256,14 @@ en:
           appointment_count:
             one: "1 booking"
             other: "%{display_count} bookings"
-          no_results: "No customers with bookings yet."
+          badges:
+            registered_user: "Registered user"
+            seller: "Seller"
+            landlord: "Landlord"
+            tenant: "Tenant"
+            buyer: "Buyer"
+          registered_on: "Registered %{time}"
+          no_results: "No customers match this search."
       notification_logs:
         title: "Notification log"
         eyebrow: "Customer communication"

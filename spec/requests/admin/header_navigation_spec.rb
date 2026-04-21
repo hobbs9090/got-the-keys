@@ -117,6 +117,11 @@ RSpec.describe "Admin header navigation" do
     expect(customers_link.text.strip).to eq(I18n.t("ui.admin.navigation.customers"))
     expect(customers_link["href"]).to eq(admin_customers_path)
 
+    sellers_link = parsed_html.at_css('[data-testid="admin-users-link"]')
+    expect(sellers_link).to be_present
+    expect(sellers_link.text.strip).to eq(I18n.t("ui.admin.navigation.sellers"))
+    expect(sellers_link["href"]).to eq(admin_sellers_path)
+
     utility_nav = parsed_html.at_css('[data-testid="admin-nav-utility"]')
     expect(utility_nav).to be_present
 

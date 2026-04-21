@@ -3719,6 +3719,13 @@ form[data-testid="lead-inbox-filters"] .form-actions .button,
   border-bottom: 0;
 }
 
+.admin-customer-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0.55rem 0 0;
+}
+
 .empty-state {
   padding: 1.25rem;
   text-align: left;

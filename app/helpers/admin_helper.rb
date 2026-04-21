@@ -153,4 +153,26 @@ module AdminHelper
       mode: admin_two_factor_mode_label(audit_log.metadata&.fetch("global_mode", nil))
     )
   end
+
+  def admin_customer_badges(customer)
+    [
+      customer_badge(customer.registered_user.to_i.positive?, :registered_user, "badge--neutral"),
+      customer_badge(customer.seller.to_i.positive?, :seller, "badge--success"),
+      customer_badge(customer.landlord.to_i.positive?, :landlord, "badge--accent"),
+      customer_badge(customer.tenant.to_i.positive?, :tenant, "badge--warning"),
+      customer_badge(customer.buyer.to_i.positive?, :buyer, "badge--muted")
+    ].compact
+  end
+
+  private
+
+  def customer_badge(show, key, css_class)
+    return unless show
+
+    {
+      key: key,
+      label: t("ui.admin.customers.index.badges.#{key}"),
+      css_class: css_class
+    }
+  end
 end

@@ -221,6 +221,28 @@ RSpec.describe "Admin properties", type: :request do
     expect(download_link["download"]).to eq("admin-brochure.pdf")
   end
 
+  it "shows a clear sale status badge at the top of the admin detail page" do
+    get admin_property_path(property)
+
+    expect(response).to have_http_status(:ok)
+
+    badge = parsed_html.at_css('[data-testid="admin-property-sale-status-badge"]')
+    expect(badge).to be_present
+    expect(badge.text.strip).to eq("For Sale")
+    expect(badge["class"]).to include("badge--accent")
+
+    rental_property = FactoryBot.create(:property, :for_rent)
+
+    get admin_property_path(rental_property)
+
+    expect(response).to have_http_status(:ok)
+
+    badge = parsed_html.at_css('[data-testid="admin-property-sale-status-badge"]')
+    expect(badge).to be_present
+    expect(badge.text.strip).to eq("For Rent")
+    expect(badge["class"]).to include("badge--success")
+  end
+
   it "lets admins move a listing through moderation states" do
     patch transition_admin_property_path(property), params: { listing_state: "published" }
 

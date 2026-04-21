@@ -31,7 +31,7 @@ GotTheKeys::Application.routes.draw do
       patch :transition, on: :member
     end
     resources :customers, only: :index
-    resources :users, only: [:index, :show]
+    resources :sellers, only: [:index, :show], controller: :users
     resources :notification_logs, only: :index
     resources :demo_scenarios, only: [:index, :show], path: 'demo-data' do
       post :apply, on: :member
