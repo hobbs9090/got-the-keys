@@ -20,7 +20,7 @@ RSpec.describe "Admin dashboard", type: :request do
 
     expect(status_grid).to be_present
     expect(status_cards.map { |card| card.at_css(".admin-dashboard__status-label")&.text&.strip }).to eq(
-      ["Properties", "Require review", "Upcoming appointments", "Pending actions", "Customers", "Open leads"]
+      ["Properties", "Require review", "Upcoming appointments", "Pending actions", "Offers", "Customers", "Open leads"]
     )
 
     status_cards.each do |card|
@@ -32,6 +32,7 @@ RSpec.describe "Admin dashboard", type: :request do
     expect(document.at_css('[data-testid="admin-status-card-link-properties_requiring_review"]')["href"]).to eq(admin_properties_path(listing_state: "review_pending"))
     expect(document.at_css('[data-testid="admin-status-card-link-upcoming_appointments"]')["href"]).to eq(admin_appointments_path(view: "agenda"))
     expect(document.at_css('[data-testid="admin-status-card-link-pending_actions"]')["href"]).to eq(admin_appointments_path(view: "agenda", queue: "pending_action"))
+    expect(document.at_css('[data-testid="admin-status-card-link-offers"]')["href"]).to eq(admin_sales_path)
     expect(document.at_css('[data-testid="admin-status-card-link-customers"]')["href"]).to eq(admin_customers_path)
     expect(document.at_css('[data-testid="admin-status-card-link-open_leads"]')["href"]).to eq(admin_enquiries_path)
 

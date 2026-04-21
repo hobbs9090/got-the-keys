@@ -36,6 +36,9 @@ export const bootOfferAmountInputs = () => {
 
   offerAmountInputs().forEach((input) => {
     formatInputValue(input);
+    const wrapper = input.closest("[data-testid='offer-amount-stepper']");
+    const increaseButton = wrapper?.querySelector("[data-offer-amount-increase]");
+    const decreaseButton = wrapper?.querySelector("[data-offer-amount-decrease]");
 
     const handleInput = () => formatInputValue(input);
     const handleKeydown = (event) => {
@@ -47,17 +50,45 @@ export const bootOfferAmountInputs = () => {
         stepInputValue(input, -1);
       }
     };
+    const handleIncreaseClick = () => {
+      stepInputValue(input, 1);
+      input.focus();
+    };
+    const handleDecreaseClick = () => {
+      stepInputValue(input, -1);
+      input.focus();
+    };
 
     input.addEventListener("input", handleInput);
     input.addEventListener("keydown", handleKeydown);
-    amountInputHandlers.push({ input, handleInput, handleKeydown });
+    increaseButton?.addEventListener("click", handleIncreaseClick);
+    decreaseButton?.addEventListener("click", handleDecreaseClick);
+    amountInputHandlers.push({
+      input,
+      increaseButton,
+      decreaseButton,
+      handleInput,
+      handleKeydown,
+      handleIncreaseClick,
+      handleDecreaseClick
+    });
   });
 };
 
 export const teardownOfferAmountInputs = () => {
-  amountInputHandlers.forEach(({ input, handleInput, handleKeydown }) => {
+  amountInputHandlers.forEach(({
+    input,
+    increaseButton,
+    decreaseButton,
+    handleInput,
+    handleKeydown,
+    handleIncreaseClick,
+    handleDecreaseClick
+  }) => {
     input.removeEventListener("input", handleInput);
     input.removeEventListener("keydown", handleKeydown);
+    increaseButton?.removeEventListener("click", handleIncreaseClick);
+    decreaseButton?.removeEventListener("click", handleDecreaseClick);
   });
 
   amountInputHandlers = [];

@@ -16,6 +16,7 @@ class Admin::DashboardController < Admin::BaseController
       properties_requiring_review: Property.where(listing_state: "review_pending").count,
       upcoming_appointments: Appointment.upcoming.count,
       pending_actions: Appointment.pending_action.count,
+      offers: Offer.count,
       customers: Appointment.distinct.count(:customer_email),
       open_leads: Enquiry.open_pipeline.count
     }

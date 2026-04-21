@@ -9,6 +9,8 @@ module Admin::DashboardHelper
       admin_appointments_path(view: "agenda")
     when :pending_actions
       admin_appointments_path(view: "agenda", queue: "pending_action")
+    when :offers
+      admin_sales_path
     when :customers
       admin_customers_path
     when :open_leads

@@ -12,11 +12,17 @@ RSpec.describe "Offers", type: :request do
 
     document = Nokogiri::HTML.parse(response.body)
     amount_input = document.at_css('[data-testid="offer-amount"]')
+    increase_button = document.at_css('[data-testid="offer-amount-increase"]')
+    decrease_button = document.at_css('[data-testid="offer-amount-decrease"]')
 
     expect(amount_input["value"]).to eq(formatted_asking_price)
     expect(amount_input["inputmode"]).to eq("numeric")
     expect(amount_input["pattern"]).to eq("[0-9,\\s]*")
     expect(amount_input["data-offer-amount-step"]).to eq("1000")
+    expect(increase_button).to be_present
+    expect(increase_button["type"]).to eq("button")
+    expect(decrease_button).to be_present
+    expect(decrease_button["type"]).to eq("button")
   end
 
   it "creates a public offer" do

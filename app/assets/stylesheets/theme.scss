@@ -3621,6 +3621,50 @@ form[data-testid="lead-inbox-filters"] .form-actions .button,
   grid-column: 1 / -1;
 }
 
+.offer-amount-stepper {
+  align-items: stretch;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.offer-amount-stepper input {
+  flex: 1 1 auto;
+}
+
+.offer-amount-stepper__buttons {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.5rem;
+}
+
+.offer-amount-stepper__button {
+  align-items: center;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-panel-border-strong);
+  border-radius: 1rem;
+  color: var(--color-text);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 1.1rem;
+  font-weight: 700;
+  justify-content: center;
+  min-width: 3rem;
+  padding: 0 0.9rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.offer-amount-stepper__button:hover {
+  border-color: rgba(42, 104, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+.offer-amount-stepper__button:focus,
+.offer-amount-stepper__button:focus-visible {
+  border-color: rgba(42, 104, 255, 0.45);
+  box-shadow: 0 0 0 4px rgba(42, 104, 255, 0.14);
+  outline: none;
+}
+
 .form-grid__checkbox {
   align-items: start;
   display: flex;
@@ -4262,6 +4306,19 @@ table th {
 
   .property-workspace-card__appointment-button {
     white-space: normal;
+  }
+
+  .offer-amount-stepper {
+    flex-direction: column;
+  }
+
+  .offer-amount-stepper__buttons {
+    width: 100%;
+  }
+
+  .offer-amount-stepper__button {
+    flex: 1 1 0;
+    min-height: 3rem;
   }
 
   .contact-jump-nav {

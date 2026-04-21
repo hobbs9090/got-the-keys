@@ -981,6 +981,7 @@ en:
           properties_requiring_review: "Require review"
           upcoming_appointments: "Upcoming appointments"
           pending_actions: "Pending actions"
+          offers: "Offers"
           customers: "Customers"
           open_leads: "Open leads"
         bookings_eyebrow: "Admin-only section"
