@@ -70,7 +70,7 @@ RSpec.describe "Rental applications", type: :request do
       }
     end.not_to change(RentalApplication, :count)
 
-    expect(response).to have_http_status(:unprocessable_entity)
+    expect(response).to have_http_status(:unprocessable_content)
     expect(response.body).to include("Preferred move-in date")
   end
 

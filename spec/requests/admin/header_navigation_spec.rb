@@ -55,7 +55,9 @@ RSpec.describe "Admin header navigation" do
     expect(parsed_html.at_css('link[rel="preconnect"][href="https://fonts.googleapis.com"]')).to be_present
     expect(parsed_html.at_css('link[rel="preconnect"][href="https://fonts.gstatic.com"][crossorigin]')).to be_present
     expect(parsed_html.at_css('link[rel="preload"][as="style"][href*="fonts.googleapis.com/css2"]')).to be_present
-    expect(parsed_html.at_css('link[rel="stylesheet"][href*="fonts.googleapis.com/css2"][media="print"]')).to be_present
+    font_stylesheet = parsed_html.at_css('link[rel="stylesheet"][href*="fonts.googleapis.com/css2"]')
+    expect(font_stylesheet).to be_present
+    expect(font_stylesheet["media"]).to eq("all")
     expect(parsed_html.at_css("#admin-main-content[tabindex='-1']")).to be_present
 
     topbar = topbar_wrap.at_css(".admin-topbar")

@@ -25,6 +25,7 @@ RSpec.describe "Rails production static asset serving" do
       stdout, stderr, status = Open3.capture3(
         {
           "SECRET_KEY_BASE" => "dummy",
+          "DEVISE_SECRET_KEY" => "dummy-devise-secret-key",
           "RAILS_ENV" => "production"
         }.merge(env),
         RbConfig.ruby,
