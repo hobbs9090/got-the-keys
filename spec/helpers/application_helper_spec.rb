@@ -275,17 +275,17 @@ RSpec.describe ApplicationHelper, type: :helper do
   end
 
   describe "#async_external_stylesheet_tag" do
-    it "renders preload, async stylesheet, and noscript fallback tags" do
+    it "renders preload, stylesheet, and noscript fallback tags without inline handlers" do
       markup = helper.async_external_stylesheet_tag("https://example.com/fonts.css")
       document = Nokogiri::HTML.fragment(markup)
 
       preload = document.at_css('link[rel="preload"][as="style"][href="https://example.com/fonts.css"]')
-      stylesheet = document.at_css('link[rel="stylesheet"][href="https://example.com/fonts.css"][media="print"]')
+      stylesheet = document.at_css('link[rel="stylesheet"][href="https://example.com/fonts.css"][media="all"]')
       fallback = document.at_css('noscript link[rel="stylesheet"][href="https://example.com/fonts.css"]')
 
       expect(preload).to be_present
       expect(stylesheet).to be_present
-      expect(stylesheet["onload"]).to eq("this.media='all'")
+      expect(stylesheet["onload"]).to be_nil
       expect(fallback).to be_present
     end
   end

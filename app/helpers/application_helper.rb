@@ -302,7 +302,7 @@ module ApplicationHelper
 
   def async_stylesheet_include_tag(source, **options)
     preload_options = options.except(:media).merge(rel: "preload", as: "style")
-    stylesheet_options = options.merge(media: "print", onload: "this.media='all'")
+    stylesheet_options = options.merge(media: "all")
 
     safe_join(
       [
@@ -316,7 +316,7 @@ module ApplicationHelper
 
   def async_external_stylesheet_tag(href, **options)
     preload_options = options.except(:media).merge(rel: "preload", as: "style", href:)
-    stylesheet_options = options.merge(rel: "stylesheet", href:, media: "print", onload: "this.media='all'")
+    stylesheet_options = options.merge(rel: "stylesheet", href:, media: "all")
 
     safe_join(
       [
