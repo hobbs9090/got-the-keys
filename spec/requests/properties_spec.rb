@@ -752,6 +752,98 @@ describe "Properties" do
       expect(previous_badge.text.strip).to eq("For Rent")
     end
 
+    it "shows the signed-in customer's offers and rental applications with their current statuses" do
+      sign_in user
+
+      accepted_sale_property = FactoryBot.create(:property, address_line_1: "Accepted Sale House")
+      rejected_sale_property = FactoryBot.create(:property, address_line_1: "Rejected Sale House")
+      approved_rental_property = FactoryBot.create(:property, :for_rent, address_line_1: "Approved Rental House")
+      rejected_rental_property = FactoryBot.create(:property, :for_rent, address_line_1: "Rejected Rental House")
+      other_property = FactoryBot.create(:property, address_line_1: "Someone Else's Offer House")
+
+      accepted_offer = FactoryBot.create(
+        :offer,
+        :accepted,
+        property: accepted_sale_property,
+        buyer_name: user.full_name,
+        buyer_email: user.email.upcase,
+        buyer_phone: user.mobile_number,
+        amount: 625_000
+      )
+      rejected_offer = FactoryBot.create(
+        :offer,
+        :rejected,
+        property: rejected_sale_property,
+        buyer_name: user.full_name,
+        buyer_email: user.email,
+        buyer_phone: user.mobile_number,
+        amount: 610_000
+      )
+      FactoryBot.create(
+        :offer,
+        property: other_property,
+        buyer_name: "Someone Else",
+        buyer_email: "someone@example.com"
+      )
+
+      approved_rental_application = FactoryBot.create(
+        :rental_application,
+        :approved,
+        property: approved_rental_property,
+        applicant_name: user.full_name,
+        applicant_email: user.email.upcase,
+        applicant_phone: user.mobile_number
+      )
+      rejected_rental_application = FactoryBot.create(
+        :rental_application,
+        :rejected,
+        property: rejected_rental_property,
+        applicant_name: user.full_name,
+        applicant_email: user.email,
+        applicant_phone: user.mobile_number
+      )
+      FactoryBot.create(
+        :rental_application,
+        property: FactoryBot.create(:property, :for_rent, address_line_1: "Someone Else's Rental House"),
+        applicant_name: "Someone Else",
+        applicant_email: "someone@example.com"
+      )
+
+      get mine_properties_path
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("Your offers")
+      expect(response.body).to include("Accepted Sale House")
+      expect(response.body).to include("Rejected Sale House")
+      expect(response.body).not_to include("Someone Else's Offer House")
+      expect(response.body).to include(I18n.t("ui.offers.statuses.accepted"))
+      expect(response.body).to include(I18n.t("ui.offers.statuses.rejected"))
+      expect(response.body).to include(property_path(accepted_sale_property))
+      expect(response.body).to include(property_path(rejected_sale_property))
+      expect(response.body).to include(ApplicationController.helpers.number_to_currency(accepted_offer.amount, unit: "£", precision: 0))
+      expect(response.body).to include(ApplicationController.helpers.number_to_currency(rejected_offer.amount, unit: "£", precision: 0))
+
+      expect(response.body).to include("Your rental applications")
+      expect(response.body).to include("Approved Rental House")
+      expect(response.body).to include("Rejected Rental House")
+      expect(response.body).not_to include("Someone Else's Rental House")
+      expect(response.body).to include(I18n.t("ui.rental_applications.statuses.approved"))
+      expect(response.body).to include(I18n.t("ui.rental_applications.statuses.rejected"))
+      expect(response.body).to include(property_path(approved_rental_property))
+      expect(response.body).to include(property_path(rejected_rental_property))
+      expect(response.body).to include(I18n.l(approved_rental_application.move_in_date, format: :long))
+      expect(response.body).to include(I18n.l(rejected_rental_application.move_in_date, format: :long))
+
+      document = Nokogiri::HTML(response.body)
+      accepted_offer_badge = document.at_css(%([data-testid="customer-offer-sale-status-#{accepted_offer.id}"]))
+      approved_rental_badge = document.at_css(%([data-testid="customer-rental-application-sale-status-#{approved_rental_application.id}"]))
+
+      expect(accepted_offer_badge).to be_present
+      expect(accepted_offer_badge.text.strip).to eq("For Sale")
+      expect(approved_rental_badge).to be_present
+      expect(approved_rental_badge.text.strip).to eq("For Rent")
+    end
+
     it "lists upcoming customer bookings with the earliest scheduled visit first" do
       sign_in user
 
@@ -809,7 +901,7 @@ describe "Properties" do
       expect(response.body).to include(new_property_path)
     end
 
-    it "always renders listings, bookings, saved homes, and saved searches sections when listings are empty" do
+    it "always renders listings, bookings, offers, rental applications, saved homes, and saved searches sections when listings are empty" do
       sign_in FactoryBot.create(:user)
 
       get mine_properties_path
@@ -819,15 +911,19 @@ describe "Properties" do
       expect(response).to have_http_status(:ok)
       expect(document.at_css(%([data-testid="owner-listings-section"]))).to be_present
       expect(document.at_css(%([data-testid="customer-bookings-section"]))).to be_present
+      expect(document.at_css(%([data-testid="customer-offers-section"]))).to be_present
+      expect(document.at_css(%([data-testid="customer-rental-applications-section"]))).to be_present
       expect(document.at_css(%([data-testid="saved-homes-section"]))).to be_present
       expect(document.at_css(%([data-testid="workspace-saved-searches"]))).to be_present
       expect(response.body).to include("No listings yet")
       expect(response.body).to include("No bookings yet")
+      expect(response.body).to include("No offers yet")
+      expect(response.body).to include("No rental applications yet")
       expect(response.body).to include("No saved homes yet")
       expect(response.body).to include("No saved searches yet")
     end
 
-    it "always renders listings, bookings, saved homes, and saved searches sections when listings exist" do
+    it "always renders listings, bookings, offers, rental applications, saved homes, and saved searches sections when listings exist" do
       sign_in user
       FactoryBot.create(:property, user:, address_line_1: "Consistent Listings Card")
 
@@ -838,6 +934,8 @@ describe "Properties" do
       expect(response).to have_http_status(:ok)
       expect(document.at_css(%([data-testid="owner-listings-section"]))).to be_present
       expect(document.at_css(%([data-testid="customer-bookings-section"]))).to be_present
+      expect(document.at_css(%([data-testid="customer-offers-section"]))).to be_present
+      expect(document.at_css(%([data-testid="customer-rental-applications-section"]))).to be_present
       expect(document.at_css(%([data-testid="saved-homes-section"]))).to be_present
       expect(document.at_css(%([data-testid="workspace-saved-searches"]))).to be_present
       expect(document.css(%([data-testid="owner-property-card"])).count).to be >= 1

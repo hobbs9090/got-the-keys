@@ -51,6 +51,8 @@ class PropertiesController < ApplicationController
     @properties = owner_properties.preload(:photos).order(updated_at: :desc).page(params[:page])
     @appointments_by_property = appointments_by_property_for(@properties)
     @customer_appointment_buckets = customer_appointment_buckets_for(current_user)
+    @customer_offers = customer_offers_for(current_user)
+    @customer_rental_applications = customer_rental_applications_for(current_user)
   end
 
   def edit
@@ -167,6 +169,26 @@ class PropertiesController < ApplicationController
       bucket_appointment!(acc, appointment)
     end
     sort_appointment_buckets!(grouped)
+  end
+
+  def customer_offers_for(user)
+    return [] if user.email.blank?
+
+    Offer.includes(:property)
+      .where("lower(buyer_email) = ?", user.email.downcase)
+      .recent_first
+      .to_a
+      .select { |offer| offer.property.present? }
+  end
+
+  def customer_rental_applications_for(user)
+    return [] if user.email.blank?
+
+    RentalApplication.includes(:property)
+      .where("lower(applicant_email) = ?", user.email.downcase)
+      .recent_first
+      .to_a
+      .select { |rental_application| rental_application.property.present? }
   end
 
   def empty_appointment_buckets
