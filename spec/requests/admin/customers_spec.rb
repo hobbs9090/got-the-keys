@@ -226,6 +226,28 @@ RSpec.describe "Admin customers", type: :request do
     expect(document.at_css('[data-testid="admin-customer-badge-sage-seller-example-com-seller"]')).to be_present
   end
 
+  it "renders registered timestamps using the user's timezone-aware created_at" do
+    user = FactoryBot.create(
+      :user,
+      first_name: "Zoe",
+      last_name: "Bates",
+      email: "zoe.bates@example.com",
+      mobile_number: "07700 930099"
+    )
+    user.update_column(:created_at, Time.utc(2026, 4, 21, 12, 20, 47))
+
+    get admin_customers_path
+
+    expect(response).to have_http_status(:ok)
+
+    row = parsed_html.at_css('[data-testid="admin-customer-row-zoe-bates-example-com"]')
+    expected_time = "#{I18n.l(user.reload.created_at.in_time_zone, format: :long)} #{user.created_at.in_time_zone.zone}"
+
+    expect(row).to be_present
+    expect(row.text).to include("Registered #{expected_time}")
+    expect(row.text).not_to include("Registered Tuesday, 21 April 2026 at 12:20 BST")
+  end
+
   it "deduplicates users who already exist as booking customers" do
     property = FactoryBot.create(:property)
     FactoryBot.create(

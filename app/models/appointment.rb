@@ -6,6 +6,12 @@ class Appointment < ApplicationRecord
   PHONE_FORMAT = /\A\+?[0-9().\-\s]{7,20}\z/.freeze
   attr_accessor :skip_slot_validation
 
+  # Admin customer directory rows are loaded through Appointment-backed SQL
+  # projections, so these aliases need explicit datetime casting.
+  attribute :latest_appointment_at, :datetime
+  attribute :registered_at, :datetime
+  attribute :sort_at, :datetime
+
   belongs_to :property
   belongs_to :admin, optional: true
 
