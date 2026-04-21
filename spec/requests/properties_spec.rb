@@ -24,6 +24,7 @@ describe "Properties" do
       version_config.build_sha = "fd481e9abcdef0"
       version_config.local_build = true
 
+      sign_in user
       get properties_path
       document = Nokogiri::HTML(response.body)
       footer_copy = document.at_css(".site-footer__copy")

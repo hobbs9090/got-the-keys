@@ -1,6 +1,7 @@
 require_relative 'boot'
 require_relative '../lib/release_build_metadata'
 require_relative '../lib/passenger_set_cookie_compatibility'
+require_relative '../lib/strip_passenger_headers'
 
 require 'rails/all'
 require 'json'
@@ -45,6 +46,8 @@ module GotTheKeys
     config.x.got_the_keys.active_job_queue_adapter = ENV["ACTIVE_JOB_QUEUE_ADAPTER"].presence
     config.x.got_the_keys.public_indexing_enabled = false
     config.middleware.insert_before ActionDispatch::Cookies, PassengerSetCookieCompatibility
+    config.middleware.use StripPassengerHeaders
+    config.middleware.use Rack::Attack
 
     config.generators do |g|
       g.test_framework :rspec, fixture: true

@@ -13,6 +13,7 @@ GotTheKeys::Application.configure do
   config.assume_ssl = true if ENV['ASSUME_SSL'].present?
   config.assets.compile = false
   config.force_ssl = ENV['FORCE_SSL'].present?
+  config.ssl_options = { hsts: { subdomains: true, preload: true, expires: 2.years } }
   config.log_level = ENV.fetch('RAILS_LOG_LEVEL', 'info')
   config.log_tags = [:request_id]
   config.cache_store = :memory_store

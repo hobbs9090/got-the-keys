@@ -57,7 +57,7 @@ RSpec.describe "Devise authentication flows", type: :request do
       post user_session_path, params: { user: { email: user.email, password: "changeme" } }
 
       expect(response).not_to be_redirect
-      expect(response.body).to include(I18n.t("devise.failure.locked"))
+      expect(response.body).to include(I18n.t("devise.failure.invalid", authentication_keys: "Email"))
     end
   end
 
@@ -116,7 +116,7 @@ RSpec.describe "Devise authentication flows", type: :request do
       follow_redirect!
 
       expect(response).to have_http_status(:ok)
-      expect(flash_text).to include(I18n.t("devise.passwords.send_instructions"))
+      expect(flash_text).to include(I18n.t("devise.passwords.send_paranoid_instructions"))
     end
 
     it "updates the password from a valid reset token and accepts the new password" do
@@ -166,7 +166,7 @@ RSpec.describe "Devise authentication flows", type: :request do
       follow_redirect!
 
       expect(response).to have_http_status(:ok)
-      expect(flash_text).to include(I18n.t("devise.unlocks.send_instructions"))
+      expect(flash_text).to include(I18n.t("devise.unlocks.send_paranoid_instructions"))
     end
 
     it "unlocks the account from a valid token and allows sign in again" do

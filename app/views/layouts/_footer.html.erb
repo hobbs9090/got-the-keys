@@ -21,9 +21,11 @@
       <p class="site-footer__small">
         <span class="site-footer__utility">
           <%= link_to t("cookie_policy.manage_preferences"), cookie_policy_index_path(anchor: "cookie-preferences") %>
-          <span class="site-footer__version" data-testid="public-app-version"><%= public_app_version %></span>
-          <% if display_app_build_sha.present? %>
-            <span class="site-footer__build" data-testid="public-build-commit"><%= t("ui.site_footer.build_badge", sha: display_app_build_sha) %></span>
+          <% if user_signed_in? || admin_signed_in? %>
+            <span class="site-footer__version" data-testid="public-app-version"><%= public_app_version %></span>
+            <% if display_app_build_sha.present? %>
+              <span class="site-footer__build" data-testid="public-build-commit"><%= t("ui.site_footer.build_badge", sha: display_app_build_sha) %></span>
+            <% end %>
           <% end %>
         </span>
       </p>
