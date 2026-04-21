@@ -316,9 +316,9 @@ describe "Properties" do
       expect(branch_panel["class"]).to include("property-booking-panel__support-card")
       expect(response.body).to include("Sign in or create an account")
       expect(response.body).to include("Built")
-      expect(response.body).to include(property.year_built.to_fs(:delimited))
+      expect(response.body).to include(property.year_built.to_s)
       expect(response.body).to include("Last refurbished")
-      expect(response.body).to include(property.refurbished_year.to_fs(:delimited))
+      expect(response.body).to include(property.refurbished_year.to_s)
       expect(response.body).not_to include(I18n.t("ui.branch_profile.team_label"))
       expect(showcase.text).not_to include(I18n.t("ui.properties.listing_states.published"))
     end

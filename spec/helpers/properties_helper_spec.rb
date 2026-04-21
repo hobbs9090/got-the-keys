@@ -49,7 +49,7 @@ RSpec.describe PropertiesHelper, type: :helper do
 
       facts = helper.property_fact_rows(property)
 
-      expect(facts).to include(["Built", "1,998"], ["Last refurbished", "2,022"])
+      expect(facts).to include(["Built", "1998"], ["Last refurbished", "2022"])
     end
 
     it "formats large numeric fact values with comma delimiters" do
