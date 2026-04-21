@@ -12,6 +12,11 @@ module PropertiesHelper
     end
   end
 
+  # Seller workspace tools are also linked from admin listing edits; staff use the admin editor URL.
+  def property_listing_edit_path(property)
+    admin_signed_in? ? edit_admin_property_path(property) : edit_property_path(property)
+  end
+
   def small_image_for(property)
     image_name = property.hero_image_name
 

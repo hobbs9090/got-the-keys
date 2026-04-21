@@ -23,6 +23,16 @@ RSpec.describe "Property documents", type: :request do
     expect(response).to redirect_to(property_property_documents_path(property))
   end
 
+  it "allows staff signed in as admin to open the document workspace without a seller session" do
+    admin = FactoryBot.create(:admin, email: "docs-admin@example.com", password: "secret123", password_confirmation: "secret123")
+    sign_in admin
+
+    get property_property_documents_path(property)
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include(I18n.t("ui.property_documents.heading"))
+  end
+
   it "prefills sensible document defaults for the owner form" do
     sign_in owner
 

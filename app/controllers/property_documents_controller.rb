@@ -2,8 +2,8 @@ class PropertyDocumentsController < ApplicationController
   include PropertyScoped
 
   before_action :set_property
-  before_action :authenticate_user!, except: :download
-  before_action :authorize_property_owner!, except: :download
+  before_action :authenticate_user_or_admin!, except: :download
+  before_action :authorize_property_owner_or_admin!, except: :download
   before_action :set_property_document, only: %i[update destroy download]
 
   def index
@@ -23,7 +23,7 @@ class PropertyDocumentsController < ApplicationController
       AuditLogger.log!(
         auditable: @new_property_document,
         property: @property,
-        actor_label: current_user.email,
+        actor_label: property_document_actor_label,
         action: "property_document_created",
         message: t("ui.property_documents.audit.added", category: @new_property_document.category_label, title: @new_property_document.title)
       )
@@ -42,7 +42,7 @@ class PropertyDocumentsController < ApplicationController
       AuditLogger.log!(
         auditable: @property_document,
         property: @property,
-        actor_label: current_user.email,
+        actor_label: property_document_actor_label,
         action: "property_document_updated",
         message: t("ui.property_documents.audit.updated", title: @property_document.title)
       )
@@ -58,7 +58,7 @@ class PropertyDocumentsController < ApplicationController
     AuditLogger.log!(
       auditable: @property,
       property: @property,
-      actor_label: current_user.email,
+      actor_label: property_document_actor_label,
       action: "property_document_removed",
       message: t("ui.property_documents.audit.removed", title:)
     )
@@ -75,7 +75,7 @@ class PropertyDocumentsController < ApplicationController
       auditable: @property_document,
       property: @property,
       admin: current_admin,
-      actor_label: current_user&.email.presence || t("ui.property_documents.public_visitor"),
+      actor_label: property_document_actor_label.presence || t("ui.property_documents.public_visitor"),
       action: "property_document_downloaded",
       message: t("ui.property_documents.audit.downloaded", title: @property_document.title)
     )
@@ -89,6 +89,10 @@ class PropertyDocumentsController < ApplicationController
   end
 
   private
+
+  def property_document_actor_label
+    current_admin&.email.presence || current_user&.email.presence
+  end
 
   def set_property_document
     @property_document = @property.property_documents.find(params[:id])

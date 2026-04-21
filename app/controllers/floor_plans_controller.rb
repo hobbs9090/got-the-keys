@@ -2,8 +2,8 @@ class FloorPlansController < ApplicationController
   include PropertyScoped
 
   before_action :set_property
-  before_action :authenticate_user!, except: [:index]
-  before_action :authorize_property_owner!, except: [:index]
+  before_action :authenticate_user_or_admin!, except: [:index]
+  before_action :authorize_property_owner_or_admin!, except: [:index]
   before_action :set_floor_plan, only: [:update, :destroy]
 
   def index

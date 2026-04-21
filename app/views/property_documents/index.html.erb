@@ -47,7 +47,7 @@
 
       <div class="form-actions">
         <%= f.submit t("ui.property_documents.actions.add"), class: "button primary" %>
-        <%= link_to t("ui.common.back_to_listing"), edit_property_path(@property), class: "button hollow secondary" %>
+        <%= link_to t("ui.common.back_to_listing"), property_listing_edit_path(@property), class: "button hollow secondary" %>
       </div>
     <% end %>
   </article>

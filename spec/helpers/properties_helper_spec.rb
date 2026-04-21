@@ -110,6 +110,22 @@ RSpec.describe PropertiesHelper, type: :helper do
     end
   end
 
+  describe "#property_listing_edit_path" do
+    let(:property) { FactoryBot.build(:property, id: 42) }
+
+    it "uses the seller edit path when no admin session" do
+      allow(helper).to receive(:admin_signed_in?).and_return(false)
+
+      expect(helper.property_listing_edit_path(property)).to eq(edit_property_path(property))
+    end
+
+    it "uses the admin edit path when an admin session is present" do
+      allow(helper).to receive(:admin_signed_in?).and_return(true)
+
+      expect(helper.property_listing_edit_path(property)).to eq(edit_admin_property_path(property))
+    end
+  end
+
   describe "#property_card_document_label" do
     it "uses a short brochure label for brochure documents" do
       document = FactoryBot.build(:property_document, category: "brochure", title: "Sales brochure")
