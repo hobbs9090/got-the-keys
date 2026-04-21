@@ -136,6 +136,7 @@ jobs:
 
       - name: Validate production runtime configuration
         env:
+          DEVISE_SECRET_KEY: ${{ secrets.DEVISE_SECRET_KEY }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
           DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
@@ -143,6 +144,11 @@ jobs:
           DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
         run: |
+          if [ -z "$DEVISE_SECRET_KEY" ]; then
+            echo "Missing required production secret: DEVISE_SECRET_KEY" >&2
+            exit 1
+          fi
+
           if [ -n "$DATABASE_URL" ]; then
             echo "Using DATABASE_URL from GitHub production secrets."
             exit 0
@@ -171,6 +177,7 @@ jobs:
         env:
           RAILS_ENV: production
           APP_HOST: ${{ env.APP_HOST }}
+          DEVISE_SECRET_KEY: ${{ secrets.DEVISE_SECRET_KEY }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
           DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
@@ -197,6 +204,7 @@ jobs:
           APP_BUILD_SHA: ${{ steps.deploy_meta.outputs.short_sha }}
           APP_BUILD_NUMBER: ${{ github.run_number }}
           APP_HOST: ${{ env.APP_HOST }}
+          DEVISE_SECRET_KEY: ${{ secrets.DEVISE_SECRET_KEY }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
           DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
