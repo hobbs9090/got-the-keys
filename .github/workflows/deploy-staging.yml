@@ -138,6 +138,26 @@ jobs:
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
         run: bin/deploy_staging
 
+      - name: Health check staging deployment
+        env:
+          HEALTHCHECK_URL: https://${{ env.APP_HOST }}/up
+        run: |
+          for attempt in $(seq 1 12); do
+            status=$(curl --silent --show-error --output /tmp/staging-health.txt --write-out "%{http_code}" "$HEALTHCHECK_URL" || true)
+            body=$(cat /tmp/staging-health.txt 2>/dev/null || true)
+
+            if [ "$status" = "200" ] && [ "$body" = "OK" ]; then
+              echo "Staging health check passed on attempt ${attempt}."
+              exit 0
+            fi
+
+            echo "Staging health check attempt ${attempt} failed: status=${status} body=${body}"
+            sleep 5
+          done
+
+          echo "Staging health check failed for ${HEALTHCHECK_URL}" >&2
+          exit 1
+
       - name: Dispatch staging acceptance
         env:
           GH_TOKEN: ${{ secrets.ACCEPTANCE_REPO_DISPATCH_TOKEN }}

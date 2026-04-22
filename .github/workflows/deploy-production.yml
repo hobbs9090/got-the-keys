@@ -224,6 +224,26 @@ jobs:
           SMTP_STARTTLS_AUTO: ${{ vars.SMTP_STARTTLS_AUTO }}
         run: bin/deploy_production
 
+      - name: Health check production deployment
+        env:
+          HEALTHCHECK_URL: https://${{ env.APP_HOST }}/up
+        run: |
+          for attempt in $(seq 1 12); do
+            status=$(curl --silent --show-error --output /tmp/production-health.txt --write-out "%{http_code}" "$HEALTHCHECK_URL" || true)
+            body=$(cat /tmp/production-health.txt 2>/dev/null || true)
+
+            if [ "$status" = "200" ] && [ "$body" = "OK" ]; then
+              echo "Production health check passed on attempt ${attempt}."
+              exit 0
+            fi
+
+            echo "Production health check attempt ${attempt} failed: status=${status} body=${body}"
+            sleep 5
+          done
+
+          echo "Production health check failed for ${HEALTHCHECK_URL}" >&2
+          exit 1
+
       - name: Dispatch production acceptance
         env:
           GH_TOKEN: ${{ secrets.ACCEPTANCE_REPO_DISPATCH_TOKEN }}
