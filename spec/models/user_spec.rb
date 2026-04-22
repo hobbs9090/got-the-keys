@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe "A user" do
+  include ActiveSupport::Testing::TimeHelpers
+
 
   it "with example attributes is valid" do
     user = User.new(user_attributes)
@@ -107,6 +109,17 @@ describe "A user" do
     expect(user.errors[:mobile_number]).to include("must be a valid phone number")
   end
 
+  it "does not send password reset instructions for admin-provisioned accounts" do
+    provisioned = FactoryBot.create(
+      :user,
+      email: "provisioned-admin@example.com",
+      mobile_number: nil,
+      admin_provisioned: true
+    )
+
+    expect { provisioned.send_reset_password_instructions }.not_to change { provisioned.reload.reset_password_token }
+  end
+
   it "strips leading and trailing whitespace from form-backed attributes" do
     user = User.new(user_attributes(
       first_name: "  Nina  ",
@@ -123,6 +136,16 @@ describe "A user" do
     expect(user.mobile_number).to eq("07595 123456")
     expect(user.email).to eq("nina.hughes@example.com")
     expect(user.language).to eq("en")
+  end
+
+  it "bumps updated_at on associated records when the user email changes" do
+    user = FactoryBot.create(:user, email: "timestamp-test@example.com")
+    property = FactoryBot.create(:property)
+    appointment = FactoryBot.create(:appointment, property:, customer_email: user.email)
+
+    travel_to(1.minute.from_now) { user.update!(email: "timestamp-test+new@example.com") }
+
+    expect(appointment.reload.updated_at).to be > appointment.created_at
   end
 
   it "updates associated email-keyed records when the user email changes" do

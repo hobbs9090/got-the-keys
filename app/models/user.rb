@@ -10,7 +10,8 @@ class User < ApplicationRecord
   before_validation :strip_form_fields
   after_update_commit :sync_associated_email_records, if: :saved_change_to_email?
 
-  validates :first_name, :last_name, :mobile_number, presence: true
+  validates :first_name, :last_name, presence: true
+  validates :mobile_number, presence: true, unless: :admin_provisioned?
   validates :terms_of_service, acceptance: true
   validates :first_name, :last_name, length: { maximum: 50 }
   validates :mobile_number, format: { with: PHONE_FORMAT, message: ->(_record, _data) { I18n.t("ui.validation.phone_number") } }, allow_blank: true
@@ -51,12 +52,17 @@ class User < ApplicationRecord
   def strip_form_fields
     self.first_name = first_name.to_s.strip
     self.last_name = last_name.to_s.strip
-    self.mobile_number = mobile_number.to_s.strip
+    self.mobile_number = mobile_number&.strip
     self.email = email.to_s.strip
     self.language = language.to_s.strip
   end
 
   public
+
+  def send_reset_password_instructions
+    return if admin_provisioned?
+    super
+  end
 
   def full_name
     [first_name, last_name].reject(&:blank?).join(' ')
@@ -68,10 +74,13 @@ class User < ApplicationRecord
     old_email, new_email = saved_change_to_email
     return if old_email.blank? || new_email.blank?
 
-    Appointment.where("lower(customer_email) = ?", old_email.downcase).update_all(customer_email: new_email)
-    Offer.where("lower(buyer_email) = ?", old_email.downcase).update_all(buyer_email: new_email)
-    RentalApplication.where("lower(applicant_email) = ?", old_email.downcase).update_all(applicant_email: new_email)
-    Enquiry.where("lower(customer_email) = ?", old_email.downcase).update_all(customer_email: new_email)
-    saved_searches.update_all(email: new_email)
+    now = Time.current
+    ApplicationRecord.transaction do
+      Appointment.where("lower(customer_email) = ?", old_email.downcase).update_all(customer_email: new_email, updated_at: now)
+      Offer.where("lower(buyer_email) = ?", old_email.downcase).update_all(buyer_email: new_email, updated_at: now)
+      RentalApplication.where("lower(applicant_email) = ?", old_email.downcase).update_all(applicant_email: new_email, updated_at: now)
+      Enquiry.where("lower(customer_email) = ?", old_email.downcase).update_all(customer_email: new_email, updated_at: now)
+      saved_searches.update_all(email: new_email, updated_at: now)
+    end
   end
 end
