@@ -1,5 +1,5 @@
 GotTheKeys::Application.routes.draw do
-  get "/up", to: proc { [200, { "Content-Type" => "text/plain; charset=utf-8" }, ["OK"]] }
+  get "/up", to: "health#show"
   get "/robots.txt", to: "robots#show"
 
   root 'welcome#index'
