@@ -46,9 +46,14 @@ RSpec.describe "Appointments" do
       follow_redirect!
 
       expect(response).to have_http_status(:ok)
+      document = Nokogiri::HTML.parse(response.body)
+      email_input = document.at_css('input[name="appointment[customer_email]"]')
+
       expect(response.body).to include(%(value="#{ERB::Util.html_escape(user.full_name)}"))
       expect(response.body).to include(%(value="#{ERB::Util.html_escape(user.email)}"))
       expect(response.body).to include(%(value="#{ERB::Util.html_escape(user.mobile_number)}"))
+      expect(email_input).to be_present
+      expect(email_input["readonly"]).to eq("readonly")
     end
 
     it "prevents owners from accessing the booking panel redirect" do
@@ -119,6 +124,24 @@ RSpec.describe "Appointments" do
       end.to change(SavedProperty, :count).by(1)
 
       expect(user.saved_properties.find_by(property: property)).to be_present
+    end
+
+    it "ignores a tampered customer email for signed-in users" do
+      sign_in(user)
+      slot = next_booking_slot
+
+      post property_appointments_path(property), params: {
+        appointment: {
+          customer_name: "Nina Hughes",
+          customer_email: "tampered@example.com",
+          customer_phone: "07700 930005",
+          requested_time: slot.iso8601,
+          notes: "Please confirm whether parking is allocated."
+        }
+      }
+
+      expect(response).to redirect_to(appointment_path(Appointment.last, token: Appointment.last.access_token))
+      expect(Appointment.last.customer_email).to eq(user.email)
     end
 
     it "does not create duplicate saved homes when already saved" do

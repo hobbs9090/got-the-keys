@@ -157,11 +157,11 @@ class PropertiesController < ApplicationController
   end
 
   def customer_appointment_buckets_for(user)
-    return { upcoming: [], previous: [], cancelled: [] } if user.email.blank?
-
     appointments = Appointment.includes(:property)
-      .where("lower(customer_email) = ?", user.email.downcase)
+      .where(customer_appointment_match_clause(user), **customer_appointment_match_params(user))
       .to_a
+
+    return empty_appointment_buckets if appointments.empty?
 
     grouped = appointments.each_with_object(empty_appointment_buckets) do |appointment, acc|
       next if appointment.property.blank?
@@ -214,6 +214,33 @@ class PropertiesController < ApplicationController
       buckets[key].sort_by! { |appointment| [appointment.scheduled_at, appointment.id] }
     end
     buckets
+  end
+
+  def customer_appointment_match_clause(user)
+    clauses = []
+
+    clauses << "lower(customer_email) = :email" if user.email.present?
+
+    if user.full_name.present? && user.mobile_number.present?
+      clauses << "(lower(customer_name) = :customer_name AND customer_phone = :customer_phone)"
+    end
+
+    return "1 = 0" if clauses.empty?
+
+    clauses.join(" OR ")
+  end
+
+  def customer_appointment_match_params(user)
+    params = {}
+
+    params[:email] = user.email.downcase if user.email.present?
+
+    if user.full_name.present? && user.mobile_number.present?
+      params[:customer_name] = user.full_name.downcase
+      params[:customer_phone] = user.mobile_number
+    end
+
+    params
   end
 
   def populate_show_supporting_state

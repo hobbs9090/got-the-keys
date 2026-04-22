@@ -132,7 +132,11 @@
 
           <div>
             <%= f.label :customer_email, t("ui.common.email_address"), **form_label_options(@appointment, :customer_email) %>
-            <%= f.email_field :customer_email, required: true, autocomplete: "email", **form_control_options(@appointment, :customer_email) %>
+            <%= f.email_field :customer_email,
+                              required: true,
+                              autocomplete: "email",
+                              readonly: user_signed_in?,
+                              **form_control_options(@appointment, :customer_email) %>
             <%= field_error_messages(@appointment, :customer_email) %>
           </div>
 

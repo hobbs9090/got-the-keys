@@ -34,7 +34,10 @@ class RentalApplicationsController < ApplicationController
   private
 
   def rental_application_params
-    params.require(:rental_application).permit(:applicant_name, :applicant_email, :applicant_phone, :move_in_date, :guarantor_required, :affordability_notes, :notes)
+    permitted = params.require(:rental_application).permit(:applicant_name, :applicant_email, :applicant_phone, :move_in_date, :guarantor_required, :affordability_notes, :notes)
+    return permitted unless current_user.present?
+
+    permitted.merge(applicant_email: current_user.email)
   end
 
   def prefilled_rental_application_attributes

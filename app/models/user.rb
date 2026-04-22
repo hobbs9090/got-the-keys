@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   after_initialize :set_defaults, if: :new_record?
   before_validation :strip_form_fields
+  after_update_commit :sync_associated_email_records, if: :saved_change_to_email?
 
   validates :first_name, :last_name, :mobile_number, presence: true
   validates :terms_of_service, acceptance: true
@@ -59,5 +60,18 @@ class User < ApplicationRecord
 
   def full_name
     [first_name, last_name].reject(&:blank?).join(' ')
+  end
+
+  private
+
+  def sync_associated_email_records
+    old_email, new_email = saved_change_to_email
+    return if old_email.blank? || new_email.blank?
+
+    Appointment.where("lower(customer_email) = ?", old_email.downcase).update_all(customer_email: new_email)
+    Offer.where("lower(buyer_email) = ?", old_email.downcase).update_all(buyer_email: new_email)
+    RentalApplication.where("lower(applicant_email) = ?", old_email.downcase).update_all(applicant_email: new_email)
+    Enquiry.where("lower(customer_email) = ?", old_email.downcase).update_all(customer_email: new_email)
+    saved_searches.update_all(email: new_email)
   end
 end

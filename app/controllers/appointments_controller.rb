@@ -76,7 +76,10 @@ class AppointmentsController < ApplicationController
   end
 
   def appointment_params
-    params.require(:appointment).permit(:customer_name, :customer_email, :customer_phone, :requested_time, :notes)
+    permitted = params.require(:appointment).permit(:customer_name, :customer_email, :customer_phone, :requested_time, :notes)
+    return permitted unless current_user.present?
+
+    permitted.merge(customer_email: current_user.email)
   end
 
   def authorize_public_access!

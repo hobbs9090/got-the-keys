@@ -125,4 +125,30 @@ describe "A user" do
     expect(user.language).to eq("en")
   end
 
+  it "updates associated email-keyed records when the user email changes" do
+    user = FactoryBot.create(
+      :user,
+      first_name: "Zoe",
+      last_name: "Bates",
+      mobile_number: "07595358089",
+      email: "zoe.bates@example.com"
+    )
+    property = FactoryBot.create(:property)
+    rental_property = FactoryBot.create(:property, :for_rent)
+
+    appointment = FactoryBot.create(:appointment, property:, customer_email: user.email.upcase)
+    offer = FactoryBot.create(:offer, property:, buyer_email: user.email.upcase)
+    rental_application = FactoryBot.create(:rental_application, property: rental_property, applicant_email: user.email.upcase)
+    enquiry = FactoryBot.create(:enquiry, property:, customer_email: user.email.upcase)
+    saved_search = FactoryBot.create(:saved_search, user:, email: user.email)
+
+    user.update!(email: "zoe.bates+updated@example.com")
+
+    expect(appointment.reload.customer_email).to eq("zoe.bates+updated@example.com")
+    expect(offer.reload.buyer_email).to eq("zoe.bates+updated@example.com")
+    expect(rental_application.reload.applicant_email).to eq("zoe.bates+updated@example.com")
+    expect(enquiry.reload.customer_email).to eq("zoe.bates+updated@example.com")
+    expect(saved_search.reload.email).to eq("zoe.bates+updated@example.com")
+  end
+
 end

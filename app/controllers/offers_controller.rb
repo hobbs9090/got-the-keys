@@ -35,7 +35,10 @@ class OffersController < ApplicationController
   private
 
   def offer_params
-    params.require(:offer).permit(:buyer_name, :buyer_email, :buyer_phone, :amount, :chain_position, :notes)
+    permitted = params.require(:offer).permit(:buyer_name, :buyer_email, :buyer_phone, :amount, :chain_position, :notes)
+    return permitted unless current_user.present?
+
+    permitted.merge(buyer_email: current_user.email)
   end
 
   def prefilled_offer_attributes

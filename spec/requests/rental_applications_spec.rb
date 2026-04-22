@@ -34,6 +34,28 @@ RSpec.describe "Rental applications", type: :request do
     expect(document.at_css('[data-testid="rental-applicant-email"]')["value"]).to eq("zoe.bates@example.com")
     expect(document.at_css('[data-testid="rental-applicant-phone"]')["value"]).to eq("07700 930099")
     expect(document.at_css('[data-testid="rental-move-in-date"]')["value"]).to be_nil
+    expect(document.at_css('[data-testid="rental-applicant-email"]')["readonly"]).to eq("readonly")
+  end
+
+  it "ignores a tampered applicant email for signed-in users" do
+    user = FactoryBot.create(:user, email: "zoe.bates@example.com")
+    sign_in user
+
+    expect do
+      post property_rental_applications_path(property), params: {
+        rental_application: {
+          applicant_name: "Zoe Bates",
+          applicant_email: "tampered@example.com",
+          applicant_phone: "07700 905200",
+          move_in_date: Date.current + 21.days,
+          guarantor_required: "1",
+          affordability_notes: "Budget ready.",
+          notes: "Could move in next month."
+        }
+      }
+    end.to change(RentalApplication, :count).by(1)
+
+    expect(RentalApplication.last.applicant_email).to eq(user.email)
   end
 
   it "creates a public rental application" do

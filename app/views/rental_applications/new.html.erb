@@ -17,7 +17,11 @@
         </div>
         <div>
           <%= f.label :applicant_email, t("ui.common.email_address"), **form_label_options(@rental_application, :applicant_email) %>
-          <%= f.email_field :applicant_email, required: true, data: { testid: "rental-applicant-email" }, **form_control_options(@rental_application, :applicant_email) %>
+          <%= f.email_field :applicant_email,
+                            required: true,
+                            readonly: user_signed_in?,
+                            data: { testid: "rental-applicant-email" },
+                            **form_control_options(@rental_application, :applicant_email) %>
           <%= field_error_messages(@rental_application, :applicant_email) %>
         </div>
         <div>

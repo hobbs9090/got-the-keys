@@ -17,7 +17,11 @@
         </div>
         <div>
           <%= f.label :buyer_email, t("ui.common.email_address"), **form_label_options(@offer, :buyer_email) %>
-          <%= f.email_field :buyer_email, required: true, data: { testid: "offer-buyer-email" }, **form_control_options(@offer, :buyer_email) %>
+          <%= f.email_field :buyer_email,
+                            required: true,
+                            readonly: user_signed_in?,
+                            data: { testid: "offer-buyer-email" },
+                            **form_control_options(@offer, :buyer_email) %>
           <%= field_error_messages(@offer, :buyer_email) %>
         </div>
         <div>

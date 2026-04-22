@@ -77,6 +77,27 @@ RSpec.describe "Offers", type: :request do
     expect(document.at_css('[data-testid="offer-buyer-email"]')["value"]).to eq("naomi@example.com")
     expect(document.at_css('[data-testid="offer-buyer-phone"]')["value"]).to eq("07700 905100")
     expect(document.at_css('[data-testid="offer-amount"]')["value"]).to eq(formatted_asking_price)
+    expect(document.at_css('[data-testid="offer-buyer-email"]')["readonly"]).to eq("readonly")
+  end
+
+  it "ignores a tampered buyer email for signed-in users" do
+    buyer = FactoryBot.create(:user, email: "naomi@example.com")
+    sign_in buyer
+
+    expect do
+      post property_offers_path(property), params: {
+        offer: {
+          buyer_name: "Naomi Blake",
+          buyer_email: "tampered@example.com",
+          buyer_phone: "07700 905100",
+          amount: 575_000,
+          chain_position: "Cash buyer",
+          notes: "Flexible on completion timing."
+        }
+      }
+    end.to change(Offer, :count).by(1)
+
+    expect(Offer.last.buyer_email).to eq(buyer.email)
   end
 
   it "accepts a comma-separated amount when submitting an offer" do

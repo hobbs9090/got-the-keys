@@ -931,6 +931,33 @@ describe "Properties" do
       )
     end
 
+    it "includes bookings that match the signed-in user's name and phone when the stored email is outdated" do
+      sign_in user
+
+      corrected_email_property = FactoryBot.create(:property, address_line_1: "Corrected Email Booking House")
+      booked_time = Time.zone.local(2026, 4, 16, 15, 0)
+
+      appointment = FactoryBot.create(
+        :appointment,
+        property: corrected_email_property,
+        customer_name: user.full_name,
+        customer_email: "outdated.email@example.net",
+        customer_phone: user.mobile_number,
+        requested_time: booked_time,
+        scheduled_at: booked_time,
+        status: "confirmed",
+        skip_slot_validation: true
+      )
+
+      travel_to(Time.zone.local(2026, 4, 8, 12, 0)) do
+        get mine_properties_path
+      end
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("Corrected Email Booking House")
+      expect(response.body).to include(appointment_path(appointment, token: appointment.access_token))
+    end
+
     it "shows an empty state when the seller has not created any listings yet" do
       sign_in FactoryBot.create(:user)
 
