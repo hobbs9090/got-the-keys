@@ -1418,23 +1418,23 @@ property_documents:
     position: 1
 availability_windows:
   - property_key: sevenoaks_family_home
-    starts_at: "today+7d 09:00"
-    ends_at: "today+7d 17:00"
+    starts_at: "open+6d 09:00"
+    ends_at: "open+6d 17:00"
     kind: open
     label: Wednesday published slots
   - property_key: sevenoaks_family_home
-    starts_at: "today+7d 12:00"
-    ends_at: "today+7d 13:00"
+    starts_at: "open+6d 12:00"
+    ends_at: "open+6d 13:00"
     kind: blackout
     label: Lunch blackout
   - property_key: tunbridge_garden_flat
-    starts_at: "today+8d 10:00"
-    ends_at: "today+8d 16:00"
+    starts_at: "open+7d 10:00"
+    ends_at: "open+7d 16:00"
     kind: open
     label: Thursday open house
   - property_key: croydon_rental_loft
-    starts_at: "today+9d 09:30"
-    ends_at: "today+9d 15:30"
+    starts_at: "open+8d 09:30"
+    ends_at: "open+8d 15:30"
     kind: open
     label: Friday lettings viewings
 availability_window_batches:
@@ -1452,8 +1452,8 @@ appointments:
     customer_name: Holly Mercer
     customer_email: holly.mercer@example.com
     customer_phone: "07700 900111"
-    requested_time: "today+7d 09:00"
-    scheduled_at: "today+7d 09:00"
+    requested_time: "open+6d 09:00"
+    scheduled_at: "open+6d 09:00"
     duration_minutes: 60
     status: pending
     notes: We are relocating for work and would like to ask about parking.
@@ -1462,8 +1462,8 @@ appointments:
     customer_name: Daniel Porter
     customer_email: daniel.porter@example.com
     customer_phone: "07700 900222"
-    requested_time: "today+7d 10:00"
-    scheduled_at: "today+7d 10:00"
+    requested_time: "open+6d 10:00"
+    scheduled_at: "open+6d 10:00"
     duration_minutes: 60
     status: confirmed
     notes: Coming with my partner and a mortgage adviser.
@@ -1473,8 +1473,8 @@ appointments:
     customer_name: Jasmine Boyd
     customer_email: jasmine.boyd@example.com
     customer_phone: "07700 900333"
-    requested_time: "today+8d 11:00"
-    scheduled_at: "today+9d 14:00"
+    requested_time: "open+7d 11:00"
+    scheduled_at: "open+8d 14:00"
     duration_minutes: 60
     status: rescheduled
     notes: Afternoon is easier if possible.
@@ -1484,8 +1484,8 @@ appointments:
     customer_name: Marcus Lee
     customer_email: marcus.lee@example.com
     customer_phone: "07700 900444"
-    requested_time: "today+10d 15:00"
-    scheduled_at: "today+10d 15:00"
+    requested_time: "open+9d 15:00"
+    scheduled_at: "open+9d 15:00"
     duration_minutes: 60
     status: cancelled
     notes: Please cancel if the property is no longer available.
@@ -1495,8 +1495,8 @@ appointments:
     customer_name: Aisha Rahman
     customer_email: aisha.rahman@example.com
     customer_phone: "07700 900555"
-    requested_time: "today-5d 10:00"
-    scheduled_at: "today-5d 10:00"
+    requested_time: "open-4d 10:00"
+    scheduled_at: "open-4d 10:00"
     duration_minutes: 60
     status: completed
     visit_outcome: feedback_requested
@@ -1507,8 +1507,8 @@ appointments:
     customer_name: Samir Patel
     customer_email: samir.patel@example.com
     customer_phone: "07700 900666"
-    requested_time: "today-1d 13:00"
-    scheduled_at: "today-1d 13:00"
+    requested_time: "open-1d 13:00"
+    scheduled_at: "open-1d 13:00"
     duration_minutes: 60
     status: no_show
     notes: Please call if I am delayed.

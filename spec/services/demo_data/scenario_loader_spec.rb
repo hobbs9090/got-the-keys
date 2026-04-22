@@ -128,6 +128,10 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(approved_application.created_at).to be < approved_application.updated_at
     expect(approved_application.timeline.order(:occurred_at).pluck(:occurred_at)).to eq([approved_application.created_at, approved_application.updated_at])
     expect(approved_application.move_in_date).to be >= approved_application.created_at.to_date + 12.days
+    expect(AvailabilityWindow.pluck(:starts_at).map(&:to_date).map(&:cwday)).to all(satisfy { |day| (1..6).cover?(day) })
+    expect(AvailabilityWindow.pluck(:ends_at).map(&:to_date).map(&:cwday)).to all(satisfy { |day| (1..6).cover?(day) })
+    expect(Appointment.pluck(:requested_time).map(&:to_date).map(&:cwday)).to all(satisfy { |day| (1..6).cover?(day) })
+    expect(Appointment.pluck(:scheduled_at).map(&:to_date).map(&:cwday)).to all(satisfy { |day| (1..6).cover?(day) })
   end
 
   it "exports the current dataset as YAML" do

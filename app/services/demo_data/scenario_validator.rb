@@ -45,20 +45,24 @@ module DemoData
         expand_availability_window_specs(
           Array(scenario[:availability_windows]),
           Array(scenario[:availability_window_batches]),
-          properties: properties
+          properties: properties,
+          open_weekdays: booking_configuration.fetch(:open_weekdays)
         ),
-        property_index:
+        property_index:,
+        open_weekdays: booking_configuration.fetch(:open_weekdays)
       )
       appointments = normalize_appointments(
         expand_appointment_specs(
           Array(scenario[:appointments]),
           Array(scenario[:appointment_batches]),
           properties: properties,
-          default_duration_minutes: booking_configuration.fetch(:slot_duration_minutes)
+          default_duration_minutes: booking_configuration.fetch(:slot_duration_minutes),
+          open_weekdays: booking_configuration.fetch(:open_weekdays)
         ),
         property_index:,
         admin_emails:,
-        default_duration_minutes: booking_configuration.fetch(:slot_duration_minutes)
+        default_duration_minutes: booking_configuration.fetch(:slot_duration_minutes),
+        open_weekdays: booking_configuration.fetch(:open_weekdays)
       )
       enquiries = normalize_enquiries(
         expand_enquiry_specs(
@@ -333,7 +337,7 @@ module DemoData
       Zlib.crc32(seed_source)
     end
 
-    def expand_availability_window_specs(explicit_specs, batches, properties:)
+    def expand_availability_window_specs(explicit_specs, batches, properties:, open_weekdays:)
       expanded = explicit_specs.map { |spec| spec.deep_symbolize_keys }
       return expanded if batches.empty?
 
@@ -350,7 +354,8 @@ module DemoData
             cadence_days: Integer(batch.fetch(:cadence_days, 1)),
             kind: batch.fetch(:kind, "open"),
             capacity: Integer(batch.fetch(:capacity, 1)),
-            label_prefix: batch.fetch(:label_prefix, "Generated viewing availability")
+            label_prefix: batch.fetch(:label_prefix, "Generated viewing availability"),
+            open_weekdays:
           )
         )
       end
@@ -358,7 +363,7 @@ module DemoData
       expanded
     end
 
-    def expand_appointment_specs(explicit_specs, batches, properties:, default_duration_minutes:)
+    def expand_appointment_specs(explicit_specs, batches, properties:, default_duration_minutes:, open_weekdays:)
       expanded = explicit_specs.map { |spec| spec.deep_symbolize_keys }
       return expanded if batches.empty?
 
@@ -376,7 +381,8 @@ module DemoData
             status_cycle: Array(batch.fetch(:status_cycle, %w[pending confirmed completed])),
             start_day_offset: Integer(batch.fetch(:start_day_offset, 8)),
             start_time: batch.fetch(:start_time, "09:00"),
-            cadence_hours: Integer(batch.fetch(:cadence_hours, 2))
+            cadence_hours: Integer(batch.fetch(:cadence_hours, 2)),
+            open_weekdays:
           )
         )
       end
@@ -529,15 +535,20 @@ module DemoData
       end
     end
 
-    def normalize_availability_windows(windows, property_index:)
+    def normalize_availability_windows(windows, property_index:, open_weekdays:)
       windows.map do |window|
         property_key = window.fetch(:property_key)
         raise ValidationError, "Availability window references unknown property key #{property_key}" unless property_index.key?(property_key)
 
+        starts_at = parse_time!(window.fetch(:starts_at), open_weekdays:)
+        ends_at = parse_time!(window.fetch(:ends_at), open_weekdays:)
+        validate_open_weekday!(starts_at, open_weekdays:, label: "Availability window start")
+        validate_open_weekday!(ends_at, open_weekdays:, label: "Availability window end")
+
         {
           property_key:,
-          starts_at: parse_time!(window.fetch(:starts_at)),
-          ends_at: parse_time!(window.fetch(:ends_at)),
+          starts_at:,
+          ends_at:,
           kind: window.fetch(:kind, "open"),
           capacity: Integer(window.fetch(:capacity, 1)),
           label: window[:label],
@@ -546,7 +557,7 @@ module DemoData
       end
     end
 
-    def normalize_appointments(appointments, property_index:, admin_emails:, default_duration_minutes:)
+    def normalize_appointments(appointments, property_index:, admin_emails:, default_duration_minutes:, open_weekdays:)
       appointments.map do |appointment|
         property_key = appointment.fetch(:property_key)
         raise ValidationError, "Appointment references unknown property key #{property_key}" unless property_index.key?(property_key)
@@ -561,9 +572,12 @@ module DemoData
           raise ValidationError, "Unsupported appointment status #{status.inspect}"
         end
 
-        requested_time = parse_time!(appointment.fetch(:requested_time))
+        requested_time = parse_time!(appointment.fetch(:requested_time), open_weekdays:)
         duration_minutes = Integer(appointment.fetch(:duration_minutes, default_duration_minutes))
         validate_supported_duration!(duration_minutes, label: "Appointment duration")
+        scheduled_at = parse_time!(appointment.fetch(:scheduled_at, requested_time), open_weekdays:)
+        validate_open_weekday!(requested_time, open_weekdays:, label: "Appointment requested time")
+        validate_open_weekday!(scheduled_at, open_weekdays:, label: "Appointment scheduled time")
 
         {
           property_key:,
@@ -572,7 +586,7 @@ module DemoData
           customer_email: appointment.fetch(:customer_email),
           customer_phone: appointment[:customer_phone],
           requested_time:,
-          scheduled_at: parse_time!(appointment.fetch(:scheduled_at, requested_time)),
+          scheduled_at:,
           duration_minutes:,
           status:,
           visit_outcome: appointment[:visit_outcome],
@@ -703,8 +717,8 @@ module DemoData
       raise ValidationError, "#{label} must be one of #{BookingConfiguration::SUPPORTED_SLOT_DURATIONS.join(', ')} minutes"
     end
 
-    def parse_time!(value)
-      relative = parse_relative_time(value)
+    def parse_time!(value, open_weekdays: BookingConfiguration::DEFAULT_OPEN_WEEKDAYS)
+      relative = parse_relative_time(value, open_weekdays:)
       return relative if relative.present?
 
       return value.in_time_zone if value.respond_to?(:in_time_zone)
@@ -715,8 +729,8 @@ module DemoData
       parsed
     end
 
-    def parse_date!(value)
-      relative = parse_relative_date(value)
+    def parse_date!(value, open_weekdays: BookingConfiguration::DEFAULT_OPEN_WEEKDAYS)
+      relative = parse_relative_date(value, open_weekdays:)
       return relative if relative.present?
 
       return value if value.is_a?(Date) && !value.is_a?(Time)
@@ -742,25 +756,58 @@ module DemoData
       [created_at, updated_at]
     end
 
-    def parse_relative_time(value)
-      match = value.to_s.strip.match(/\Atoday(?:(?<sign>[+-])(?<days>\d+)d)?\s+(?<hour>\d{2}):(?<minute>\d{2})\z/i)
+    def parse_relative_time(value, open_weekdays:)
+      match = value.to_s.strip.match(/\A(?<anchor>today|open)(?:(?<sign>[+-])(?<days>\d+)d)?\s+(?<hour>\d{2}):(?<minute>\d{2})\z/i)
       return nil unless match
 
-      offset_days = match[:days].to_i
-      offset_days *= -1 if match[:sign] == "-"
-      target_date = Date.current + offset_days
+      target_date = parse_relative_anchor_date(match:, open_weekdays:)
 
       Time.zone.local(target_date.year, target_date.month, target_date.day, match[:hour].to_i, match[:minute].to_i)
     end
 
-    def parse_relative_date(value)
-      match = value.to_s.strip.match(/\Atoday(?:(?<sign>[+-])(?<days>\d+)d)?\z/i)
+    def parse_relative_date(value, open_weekdays:)
+      match = value.to_s.strip.match(/\A(?<anchor>today|open)(?:(?<sign>[+-])(?<days>\d+)d)?\z/i)
       return nil unless match
 
+      parse_relative_anchor_date(match:, open_weekdays:)
+    end
+
+    def parse_relative_anchor_date(match:, open_weekdays:)
       offset_days = match[:days].to_i
       offset_days *= -1 if match[:sign] == "-"
 
-      Date.current + offset_days
+      return Date.current + offset_days unless match[:anchor].casecmp("open").zero?
+
+      shift_to_open_day(offset_days:, open_weekdays:)
+    end
+
+    def shift_to_open_day(offset_days:, open_weekdays:)
+      weekdays = Array(open_weekdays).map(&:to_i)
+      return Date.current + offset_days if weekdays.empty?
+
+      direction = offset_days.negative? ? -1 : 1
+      remaining = offset_days.abs
+      target_date = Date.current
+
+      until weekdays.include?(target_date.cwday)
+        target_date += direction.days
+      end
+
+      while remaining.positive?
+        target_date += direction.days
+        next unless weekdays.include?(target_date.cwday)
+
+        remaining -= 1
+      end
+
+      target_date
+    end
+
+    def validate_open_weekday!(time_or_date, open_weekdays:, label:)
+      weekdays = Array(open_weekdays).map(&:to_i)
+      return if weekdays.empty? || weekdays.include?(time_or_date.to_date.cwday)
+
+      raise ValidationError, "#{label} must fall on an open weekday"
     end
 
     def expected_counts(normalized)

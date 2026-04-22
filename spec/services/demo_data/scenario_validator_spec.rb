@@ -210,6 +210,21 @@ RSpec.describe DemoData::ScenarioValidator do
     expect(normalized[:rental_applications].first[:move_in_date]).to eq(Date.new(2026, 4, 22))
   end
 
+  it "parses open-weekday-relative dates and datetimes" do
+    payload = base_payload.deep_dup
+    payload[:availability_windows].first[:starts_at] = "open+3d 10:00"
+    payload[:availability_windows].first[:ends_at] = "open+3d 11:00"
+    payload[:appointments].first[:requested_time] = "open+4d 10:00"
+    payload[:appointments].first[:scheduled_at] = "open+4d 10:00"
+    payload[:properties].first[:available_from] = "open+8d"
+
+    normalized = validator.validate!(payload)
+
+    expect(normalized[:availability_windows].first[:starts_at]).to eq(Time.zone.local(2026, 4, 6, 10, 0))
+    expect(normalized[:appointments].first[:scheduled_at]).to eq(Time.zone.local(2026, 4, 7, 10, 0))
+    expect(normalized[:properties].first[:available_from]).to eq(Date.new(2026, 4, 10))
+  end
+
   it "parses activity timestamps and rejects inverted activity timelines" do
     payload = base_payload.deep_dup
     payload[:enquiries] = [
@@ -308,6 +323,26 @@ RSpec.describe DemoData::ScenarioValidator do
     expect { validator.validate!(payload) }.to raise_error(
       described_class::ValidationError,
       'Unsupported appointment status "queued"'
+    )
+  end
+
+  it "rejects appointments and availability windows that fall on closed weekdays" do
+    payload = base_payload.deep_dup
+    payload[:availability_windows].first[:starts_at] = "today+4d 10:00"
+    payload[:availability_windows].first[:ends_at] = "today+4d 11:00"
+
+    expect { validator.validate!(payload) }.to raise_error(
+      described_class::ValidationError,
+      "Availability window start must fall on an open weekday"
+    )
+
+    payload = base_payload.deep_dup
+    payload[:appointments].first[:requested_time] = "today+4d 10:00"
+    payload[:appointments].first[:scheduled_at] = "today+4d 10:00"
+
+    expect { validator.validate!(payload) }.to raise_error(
+      described_class::ValidationError,
+      "Appointment requested time must fall on an open weekday"
     )
   end
 

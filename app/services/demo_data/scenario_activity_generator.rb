@@ -60,9 +60,13 @@ module DemoData
       "Sale agreed and ready to move"
     ].freeze
 
-    def availability_windows(properties:, start_day_offset:, start_time:, duration_minutes:, cadence_days:, kind:, capacity:, label_prefix:)
+    def availability_windows(properties:, start_day_offset:, start_time:, duration_minutes:, cadence_days:, kind:, capacity:, label_prefix:, open_weekdays: BookingConfiguration::DEFAULT_OPEN_WEEKDAYS)
       properties.each_with_index.map do |property, index|
-        starts_at = time_for(day_offset: start_day_offset + (index * cadence_days), time_string: shift_time(start_time, (index % 3) * 45))
+        starts_at = time_for(
+          day_offset: start_day_offset + (index * cadence_days),
+          time_string: shift_time(start_time, (index % 3) * 45),
+          open_weekdays:
+        )
 
         {
           property_key: property.fetch(:key),
@@ -75,7 +79,7 @@ module DemoData
       end
     end
 
-    def appointments(properties:, count:, assigned_admin_email:, duration_minutes:, status_cycle:, start_day_offset:, start_time:, cadence_hours:)
+    def appointments(properties:, count:, assigned_admin_email:, duration_minutes:, status_cycle:, start_day_offset:, start_time:, cadence_hours:, open_weekdays: BookingConfiguration::DEFAULT_OPEN_WEEKDAYS)
       build_records(properties:, count:) do |property, index|
         status = cycle_value(status_cycle, index)
         requested_time, scheduled_at = appointment_times_for(
@@ -83,7 +87,8 @@ module DemoData
           status: status,
           start_day_offset: start_day_offset,
           start_time: start_time,
-          cadence_hours: cadence_hours
+          cadence_hours: cadence_hours,
+          open_weekdays:
         )
         customer = contact_for(index, prefix: nil)
 
@@ -201,9 +206,9 @@ module DemoData
       }
     end
 
-    def time_for(day_offset:, time_string:)
+    def time_for(day_offset:, time_string:, open_weekdays: BookingConfiguration::DEFAULT_OPEN_WEEKDAYS)
       hour, minute = time_string.split(":").map(&:to_i)
-      target_date = Date.current + day_offset
+      target_date = open_day_for(day_offset:, open_weekdays:)
 
       Time.zone.local(target_date.year, target_date.month, target_date.day, hour, minute)
     end
@@ -215,22 +220,79 @@ module DemoData
       format("%02d:%02d", shifted_total / 60, shifted_total % 60)
     end
 
-    def appointment_times_for(index:, status:, start_day_offset:, start_time:, cadence_hours:)
+    def appointment_times_for(index:, status:, start_day_offset:, start_time:, cadence_hours:, open_weekdays:)
       day_offset = start_day_offset + (index / 4)
-      requested_time = time_for(day_offset:, time_string: shift_time(start_time, (index % 4) * cadence_hours * 60))
+      requested_time = time_for(
+        day_offset:,
+        time_string: shift_time(start_time, (index % 4) * cadence_hours * 60),
+        open_weekdays:
+      )
 
       case status
       when "rescheduled"
-        [requested_time, requested_time + 1.day + 30.minutes]
+        [requested_time, shift_time_by_open_days(requested_time, day_offset: 1, open_weekdays:) + 30.minutes]
       when "completed"
-        [requested_time - 18.days, requested_time - 18.days]
+        completed_time = shift_time_by_open_days(requested_time, day_offset: -18, open_weekdays:)
+        [completed_time, completed_time]
       when "no_show"
-        [requested_time - 14.days, requested_time - 14.days]
+        no_show_time = shift_time_by_open_days(requested_time, day_offset: -14, open_weekdays:)
+        [no_show_time, no_show_time]
       when "cancelled"
-        [requested_time - 4.days, requested_time - 4.days]
+        cancelled_time = shift_time_by_open_days(requested_time, day_offset: -4, open_weekdays:)
+        [cancelled_time, cancelled_time]
       else
         [requested_time, requested_time]
       end
+    end
+
+    def open_day_for(day_offset:, open_weekdays:)
+      weekdays = Array(open_weekdays).map(&:to_i)
+      return Date.current + day_offset if weekdays.empty?
+
+      direction = day_offset.negative? ? -1 : 1
+      remaining = day_offset.abs
+      target_date = Date.current
+
+      until weekdays.include?(target_date.cwday)
+        target_date += direction.days
+      end
+
+      while remaining.positive?
+        target_date += direction.days
+        next unless weekdays.include?(target_date.cwday)
+
+        remaining -= 1
+      end
+
+      target_date
+    end
+
+    def shift_time_by_open_days(time, day_offset:, open_weekdays:)
+      target_date = shift_date_by_open_days(time.to_date, day_offset:, open_weekdays:)
+
+      Time.zone.local(target_date.year, target_date.month, target_date.day, time.hour, time.min)
+    end
+
+    def shift_date_by_open_days(date, day_offset:, open_weekdays:)
+      weekdays = Array(open_weekdays).map(&:to_i)
+      return date + day_offset if weekdays.empty?
+
+      direction = day_offset.negative? ? -1 : 1
+      remaining = day_offset.abs
+      target_date = date
+
+      until weekdays.include?(target_date.cwday)
+        target_date += direction.days
+      end
+
+      while remaining.positive?
+        target_date += direction.days
+        next unless weekdays.include?(target_date.cwday)
+
+        remaining -= 1
+      end
+
+      target_date
     end
 
     def appointment_outcome_for(status, index)
