@@ -218,10 +218,13 @@ RSpec.describe "Admin appointments" do
 
     document = Nokogiri::HTML.parse(response.body)
     property_link = document.at_css(%([data-testid="admin-appointment-property-link-#{appointment.id}"]))
+    reference = document.at_css(%([data-testid="admin-appointment-reference-#{appointment.id}"]))
 
     expect(property_link).to be_present
     expect(property_link.text.strip).to eq("9 Park Lane")
     expect(property_link["href"]).to eq(admin_property_path(property))
+    expect(reference).to be_present
+    expect(reference.text.strip).to eq(appointment.public_reference)
   end
 
   it "links the booking customer to the customer profile and includes a details link for the appointment" do
