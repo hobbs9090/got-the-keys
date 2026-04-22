@@ -178,6 +178,19 @@ RSpec.describe Appointment do
     expect(appointment.errors[:status]).to include("can only be marked once the appointment time has passed")
   end
 
+  it "does not allow a completed appointment to be changed back to confirmed" do
+    appointment = FactoryBot.create(
+      :appointment,
+      :completed,
+      property:,
+      requested_time: next_booking_slot(hour: 10, from: Time.zone.local(2026, 3, 29, 8, 0)),
+      scheduled_at: next_booking_slot(hour: 10, from: Time.zone.local(2026, 3, 29, 8, 0))
+    )
+
+    expect(appointment.update(status: "confirmed")).to be(false)
+    expect(appointment.errors[:status]).to include("cannot be changed back to confirmed once completed")
+  end
+
   it "prefers the matched user's current email for display and history" do
     matched_user = FactoryBot.create(
       :user,

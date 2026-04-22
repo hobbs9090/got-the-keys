@@ -32,6 +32,7 @@ class Appointment < ApplicationRecord
   validates :notes, :internal_notes, length: { maximum: 2000 }, allow_blank: true
   validate :slot_available_for_active_bookings, if: :needs_slot_validation?
   validate :past_only_statuses_require_elapsed_slot
+  validate :completed_appointments_cannot_return_to_confirmed
 
   scope :chronological, -> { order(:scheduled_at, :created_at) }
   scope :recent_first, -> { order(scheduled_at: :desc, created_at: :desc) }
@@ -149,6 +150,14 @@ class Appointment < ApplicationRecord
     return if scheduled_at.blank? || scheduled_at <= Time.current
 
     errors.add(:status, I18n.t("ui.appointments.validation.past_only_status", default: "can only be marked once the appointment time has passed"))
+  end
+
+  def completed_appointments_cannot_return_to_confirmed
+    return unless persisted?
+    return unless will_save_change_to_status?
+    return unless status_in_database == "completed" && status == "confirmed"
+
+    errors.add(:status, I18n.t("ui.appointments.validation.completed_cannot_be_confirmed", default: "cannot be changed back to confirmed once completed"))
   end
 
   def noteworthy_change?

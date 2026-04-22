@@ -91,6 +91,26 @@ RSpec.describe "Admin appointments" do
     expect(appointment.reload.status).to eq("confirmed")
   end
 
+  it "does not allow an admin to confirm a completed appointment" do
+    slot = booking_time(2026, 3, 31, 11, 0)
+    appointment = FactoryBot.create(
+      :appointment,
+      :completed,
+      property:,
+      customer_name: "Priya Shah",
+      customer_email: "priya.shah@example.com",
+      customer_phone: "07700 930007",
+      requested_time: slot,
+      scheduled_at: slot
+    )
+
+    patch transition_admin_appointment_path(appointment, status: "confirmed")
+
+    expect(response).to redirect_to(admin_appointments_path)
+    expect(flash[:alert]).to eq("Status cannot be changed back to confirmed once completed")
+    expect(appointment.reload.status).to eq("completed")
+  end
+
   it "renders the appointment detail page in the admin's locale" do
     admin.update!(language: "de")
     slot = next_booking_slot(hour: 11)
@@ -239,6 +259,26 @@ RSpec.describe "Admin appointments" do
     expect(details_link).to be_present
     expect(details_link["href"]).to eq(admin_appointment_path(appointment))
     expect(details_link.text.strip).to eq("Details")
+  end
+
+  it "does not show a confirm action for completed bookings on the desk or detail page" do
+    slot = booking_time(2026, 3, 31, 11, 0)
+    appointment = FactoryBot.create(
+      :appointment,
+      :completed,
+      property:,
+      customer_name: "Priya Shah",
+      customer_email: "priya.shah@example.com",
+      customer_phone: "07700 930007",
+      requested_time: slot,
+      scheduled_at: slot
+    )
+
+    get admin_bookings_path, params: { view: "agenda" }
+    expect(response.body).not_to include(transition_admin_appointment_path(appointment, status: "confirmed"))
+
+    get admin_appointment_path(appointment)
+    expect(response.body).not_to include(transition_admin_appointment_path(appointment, status: "confirmed"))
   end
 
   it "shows the registered user's current email on the admin appointment detail page" do
