@@ -119,6 +119,28 @@ jobs:
         with:
           path: tmp/allure-report
 
+  security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Brakeman static analysis
+        run: bundle exec brakeman --no-pager -q
+
+      - name: bundler-audit dependency scan
+        run: |
+          bundle exec bundler-audit update
+          bundle exec bundler-audit check
+
   deploy-rspec-report:
     if: ${{ github.event_name == 'push' && github.ref_name == 'main' && needs.test.result == 'success' && needs.test.outputs.allure_report_present == 'true' && needs.test.outputs.pages_enabled == 'true' }}
     needs: test
