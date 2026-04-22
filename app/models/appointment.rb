@@ -56,6 +56,24 @@ class Appointment < ApplicationRecord
     I18n.t("ui.appointments.statuses.#{status}", default: status.tr("_", " ").humanize)
   end
 
+  def matched_user
+    return @matched_user if defined?(@matched_user)
+
+    @matched_user =
+      User
+        .where(
+          "lower(email) = :email OR (mobile_number = :phone AND lower(trim(coalesce(first_name, '') || ' ' || coalesce(last_name, ''))) = :name)",
+          email: customer_email.to_s.downcase,
+          phone: customer_phone.to_s,
+          name: customer_name.to_s.downcase
+        )
+        .first
+  end
+
+  def display_customer_email
+    matched_user&.email.presence || customer_email
+  end
+
   def timeline
     appointment_events.order(:occurred_at, :created_at)
   end
@@ -79,7 +97,18 @@ class Appointment < ApplicationRecord
   end
 
   def customer_history
-    self.class.where("lower(customer_email) = ?", customer_email.downcase).where.not(id: id).recent_first
+    scope = self.class.where.not(id: id)
+
+    if matched_user.present?
+      scope.where(
+        "lower(customer_email) = :email OR (customer_phone = :phone AND lower(customer_name) = :name)",
+        email: matched_user.email.downcase,
+        phone: matched_user.mobile_number,
+        name: matched_user.full_name.downcase
+      ).recent_first
+    else
+      scope.where("lower(customer_email) = ?", customer_email.downcase).recent_first
+    end
   end
 
   private

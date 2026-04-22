@@ -177,4 +177,35 @@ RSpec.describe Appointment do
     expect(appointment).not_to be_valid
     expect(appointment.errors[:status]).to include("can only be marked once the appointment time has passed")
   end
+
+  it "prefers the matched user's current email for display and history" do
+    matched_user = FactoryBot.create(
+      :user,
+      first_name: "Zoe",
+      last_name: "Bates",
+      email: "zoe.bates@example.com",
+      mobile_number: "07700 930099"
+    )
+    primary = FactoryBot.create(
+      :appointment,
+      property:,
+      customer_name: matched_user.full_name,
+      customer_email: "zoe.bates@exmaple.com",
+      customer_phone: matched_user.mobile_number,
+      requested_time: next_booking_slot(hour: 10),
+      scheduled_at: next_booking_slot(hour: 10)
+    )
+    sibling = FactoryBot.create(
+      :appointment,
+      property:,
+      customer_name: matched_user.full_name,
+      customer_email: "zoe.bates@older.example",
+      customer_phone: matched_user.mobile_number,
+      requested_time: next_booking_slot(hour: 11),
+      scheduled_at: next_booking_slot(hour: 11)
+    )
+
+    expect(primary.display_customer_email).to eq(matched_user.email)
+    expect(primary.customer_history).to include(sibling)
+  end
 end

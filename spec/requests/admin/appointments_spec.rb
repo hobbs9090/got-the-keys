@@ -143,6 +143,43 @@ RSpec.describe "Admin appointments" do
     expect(response.body).not_to include("Other Viewer")
   end
 
+  it "filters the bookings desk by the registered user's current email when the stored booking email is stale" do
+    user = FactoryBot.create(
+      :user,
+      first_name: "Zoe",
+      last_name: "Bates",
+      email: "zoe.bates@example.com",
+      mobile_number: "07700 930099"
+    )
+    matching_slot = next_booking_slot(hour: 12)
+    matching = FactoryBot.create(
+      :appointment,
+      :confirmed,
+      property:,
+      customer_name: user.full_name,
+      customer_email: "zoe.bates@exmaple.com",
+      customer_phone: user.mobile_number,
+      requested_time: matching_slot,
+      scheduled_at: matching_slot
+    )
+    FactoryBot.create(
+      :appointment,
+      :confirmed,
+      property:,
+      customer_name: "Other Viewer",
+      customer_email: "other.viewer@example.com",
+      customer_phone: "07700 930010",
+      requested_time: next_booking_slot(hour: 14),
+      scheduled_at: next_booking_slot(hour: 14)
+    )
+
+    get admin_bookings_path, params: { customer_email: user.email }
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include(matching.customer_name)
+    expect(response.body).not_to include("Other Viewer")
+  end
+
   it "includes a property link on agenda rows for customer-filtered bookings" do
     slot = next_booking_slot(hour: 12)
     appointment = FactoryBot.create(
@@ -165,6 +202,33 @@ RSpec.describe "Admin appointments" do
     expect(property_link).to be_present
     expect(property_link.text.strip).to eq("9 Park Lane")
     expect(property_link["href"]).to eq(admin_property_path(property))
+  end
+
+  it "shows the registered user's current email on the admin appointment detail page" do
+    user = FactoryBot.create(
+      :user,
+      first_name: "Zoe",
+      last_name: "Bates",
+      email: "zoe.bates@example.com",
+      mobile_number: "07700 930099"
+    )
+    slot = next_booking_slot(hour: 11)
+    appointment = FactoryBot.create(
+      :appointment,
+      property:,
+      customer_name: user.full_name,
+      customer_email: "zoe.bates@exmaple.com",
+      customer_phone: user.mobile_number,
+      requested_time: slot,
+      scheduled_at: slot,
+      status: "confirmed"
+    )
+
+    get admin_appointment_path(appointment)
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("zoe.bates@example.com")
+    expect(response.body).not_to include("zoe.bates@exmaple.com")
   end
 
   it "filters the bookings desk by date range and visit outcome" do

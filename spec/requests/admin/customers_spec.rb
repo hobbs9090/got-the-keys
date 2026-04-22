@@ -270,6 +270,38 @@ RSpec.describe "Admin customers", type: :request do
     expect(parsed_html.css('[data-testid="admin-customer-row-alex-buyer-example-com"]').size).to eq(1)
   end
 
+  it "prefers the registered user's current email when older activity still uses a stale address" do
+    user = FactoryBot.create(
+      :user,
+      first_name: "Zoe",
+      last_name: "Bates",
+      email: "zoe.bates@example.com",
+      mobile_number: "07700 930099"
+    )
+    property = FactoryBot.create(:property)
+
+    FactoryBot.create(
+      :appointment,
+      :confirmed,
+      property: property,
+      customer_name: user.full_name,
+      customer_email: "zoe.bates@exmaple.com",
+      customer_phone: user.mobile_number
+    )
+
+    get admin_customers_path, params: { q: "Zoe" }
+
+    expect(response).to have_http_status(:ok)
+
+    document = parsed_html
+    row = document.at_css('[data-testid="admin-customer-row-zoe-bates-example-com"]')
+
+    expect(row).to be_present
+    expect(row.text).to include("zoe.bates@example.com")
+    expect(row.text).not_to include("zoe.bates@exmaple.com")
+    expect(document.css('[data-testid^="admin-customer-row-zoe-bates"]').size).to eq(1)
+  end
+
   it "shows role badges for sellers, landlords, buyers with offers, and tenants with approved rental applications" do
     seller = FactoryBot.create(
       :user,

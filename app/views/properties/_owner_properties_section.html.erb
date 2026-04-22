@@ -65,7 +65,7 @@
                       <div class="property-workspace-card__appointment property-workspace-card__appointment--customer">
                         <div class="property-workspace-bookings__details">
                           <strong><%= appointment.customer_name %></strong>
-                          <p><%= appointment.customer_email %> · <%= formatted_date_time(appointment.scheduled_at) %></p>
+                          <p><%= appointment.display_customer_email %> · <%= formatted_date_time(appointment.scheduled_at) %></p>
                         </div>
                         <div class="property-workspace-card__appointment-actions">
                           <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>

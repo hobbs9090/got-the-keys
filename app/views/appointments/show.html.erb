@@ -41,7 +41,7 @@
       <% end %>
       <div>
         <dt><%= t("ui.common.customer") %></dt>
-        <dd><%= @appointment.customer_name %> · <%= @appointment.customer_email %><% if @appointment.customer_phone.present? %> · <%= @appointment.customer_phone %><% end %></dd>
+        <dd><%= @appointment.customer_name %> · <%= @appointment.display_customer_email %><% if @appointment.customer_phone.present? %> · <%= @appointment.customer_phone %><% end %></dd>
       </div>
     </dl>
 

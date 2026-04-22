@@ -162,7 +162,7 @@
         <div class="admin-list__item">
           <div>
             <%= link_to appointment.customer_name, admin_appointment_path(appointment) %>
-            <p><%= appointment.customer_email %> · <%= formatted_date_time(appointment.scheduled_at) %></p>
+            <p><%= appointment.display_customer_email %> · <%= formatted_date_time(appointment.scheduled_at) %></p>
           </div>
           <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
         </div>

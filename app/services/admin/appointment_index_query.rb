@@ -33,11 +33,24 @@ class Admin::AppointmentIndexQuery
     scope = scope.where(status: params[:status]) if params[:status].present?
     scope = scope.where(visit_outcome: params[:visit_outcome]) if params[:visit_outcome].present?
     scope = scope.where(admin_id: params[:admin_id]) if params[:admin_id].present?
-    scope = scope.where("lower(customer_email) = ?", params[:customer_email].to_s.downcase) if params[:customer_email].present?
+    scope = filter_by_customer_email(scope) if params[:customer_email].present?
 
     range = appointment_range(view_mode:, anchor_date:)
     scope = scope.where(scheduled_at: range) if range.present?
     scope
+  end
+
+  def filter_by_customer_email(scope)
+    normalized_email = params[:customer_email].to_s.downcase
+    matched_user = User.find_by("lower(email) = ?", normalized_email)
+    return scope.where("lower(customer_email) = ?", normalized_email) if matched_user.blank?
+
+    scope.where(
+      "lower(customer_email) = :email OR (customer_phone = :phone AND lower(customer_name) = :name)",
+      email: matched_user.email.downcase,
+      phone: matched_user.mobile_number,
+      name: matched_user.full_name.downcase
+    )
   end
 
   def appointment_range(view_mode:, anchor_date:)

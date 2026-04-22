@@ -55,12 +55,13 @@ class Admin::CustomersController < Admin::BaseController
   def appointment_customer_entries
     Appointment
       .joins(:property)
+      .joins(customer_directory_user_join("appointments.customer_email", "appointments.customer_name", "appointments.customer_phone"))
       .where.not(customer_email: [nil, ""])
       .select(
-        "LOWER(customer_email) AS email_key, " \
-        "MIN(customer_email) AS customer_email, " \
-        "MAX(customer_name) AS customer_name, " \
-        "MAX(customer_phone) AS customer_phone, " \
+        "#{canonical_directory_email_key_sql('appointments.customer_email')} AS email_key, " \
+        "#{canonical_directory_email_sql('appointments.customer_email')} AS customer_email, " \
+        "MAX(COALESCE(NULLIF(TRIM(COALESCE(users.first_name, '') || ' ' || COALESCE(users.last_name, '')), ''), customer_name)) AS customer_name, " \
+        "MAX(COALESCE(users.mobile_number, customer_phone)) AS customer_phone, " \
         "COUNT(*) AS appointments_count, " \
         "MAX(scheduled_at) AS latest_appointment_at, " \
         "NULL AS registered_at, " \
@@ -71,7 +72,7 @@ class Admin::CustomersController < Admin::BaseController
         "0 AS tenant, " \
         "0 AS buyer"
       )
-      .group("LOWER(customer_email)")
+      .group(canonical_directory_email_group_sql("appointments.customer_email"))
   end
 
   def registered_user_entries
@@ -118,49 +119,76 @@ class Admin::CustomersController < Admin::BaseController
 
   def active_offer_buyer_entries
     Offer
+      .joins(customer_directory_user_join("offers.buyer_email", "offers.buyer_name", "offers.buyer_phone"))
       .where(status: %w[received accepted completed])
       .where.not(buyer_email: [nil, ""])
       .select(
-        "LOWER(buyer_email) AS email_key, " \
-        "MIN(buyer_email) AS customer_email, " \
-        "MAX(buyer_name) AS customer_name, " \
-        "MAX(buyer_phone) AS customer_phone, " \
+        "#{canonical_directory_email_key_sql('offers.buyer_email')} AS email_key, " \
+        "#{canonical_directory_email_sql('offers.buyer_email')} AS customer_email, " \
+        "MAX(COALESCE(NULLIF(TRIM(COALESCE(users.first_name, '') || ' ' || COALESCE(users.last_name, '')), ''), buyer_name)) AS customer_name, " \
+        "MAX(COALESCE(users.mobile_number, buyer_phone)) AS customer_phone, " \
         "0 AS appointments_count, " \
         "NULL AS latest_appointment_at, " \
         "NULL AS registered_at, " \
-        "MAX(created_at) AS sort_at, " \
+        "MAX(offers.created_at) AS sort_at, " \
         "0 AS registered_user, " \
         "0 AS seller, " \
         "0 AS landlord, " \
         "0 AS tenant, " \
         "1 AS buyer"
       )
-      .group("LOWER(buyer_email)")
+      .group(canonical_directory_email_group_sql("offers.buyer_email"))
   end
 
   def approved_rental_tenant_entries
     RentalApplication
+      .joins(customer_directory_user_join("rental_applications.applicant_email", "rental_applications.applicant_name", "rental_applications.applicant_phone"))
       .where(status: "approved")
       .where.not(applicant_email: [nil, ""])
       .select(
-        "LOWER(applicant_email) AS email_key, " \
-        "MIN(applicant_email) AS customer_email, " \
-        "MAX(applicant_name) AS customer_name, " \
-        "MAX(applicant_phone) AS customer_phone, " \
+        "#{canonical_directory_email_key_sql('rental_applications.applicant_email')} AS email_key, " \
+        "#{canonical_directory_email_sql('rental_applications.applicant_email')} AS customer_email, " \
+        "MAX(COALESCE(NULLIF(TRIM(COALESCE(users.first_name, '') || ' ' || COALESCE(users.last_name, '')), ''), applicant_name)) AS customer_name, " \
+        "MAX(COALESCE(users.mobile_number, applicant_phone)) AS customer_phone, " \
         "0 AS appointments_count, " \
         "NULL AS latest_appointment_at, " \
         "NULL AS registered_at, " \
-        "MAX(created_at) AS sort_at, " \
+        "MAX(rental_applications.created_at) AS sort_at, " \
         "0 AS registered_user, " \
         "0 AS seller, " \
         "0 AS landlord, " \
         "1 AS tenant, " \
         "0 AS buyer"
       )
-      .group("LOWER(applicant_email)")
+      .group(canonical_directory_email_group_sql("rental_applications.applicant_email"))
   end
 
   def quoted(value)
     ActiveRecord::Base.connection.quote(value)
+  end
+
+  def canonical_directory_email_key_sql(source_email_sql)
+    "LOWER(COALESCE(users.email, #{source_email_sql}))"
+  end
+
+  def canonical_directory_email_sql(source_email_sql)
+    "MIN(COALESCE(users.email, #{source_email_sql}))"
+  end
+
+  def canonical_directory_email_group_sql(source_email_sql)
+    "LOWER(COALESCE(users.email, #{source_email_sql})), COALESCE(users.email, #{source_email_sql})"
+  end
+
+  def customer_directory_user_join(source_email_sql, source_name_sql, source_phone_sql)
+    <<~SQL.squish
+      LEFT JOIN users
+        ON LOWER(users.email) = LOWER(#{source_email_sql})
+        OR (
+          #{source_phone_sql} IS NOT NULL
+          AND #{source_phone_sql} != ''
+          AND LOWER(NULLIF(TRIM(COALESCE(users.first_name, '') || ' ' || COALESCE(users.last_name, '')), '')) = LOWER(#{source_name_sql})
+          AND users.mobile_number = #{source_phone_sql}
+        )
+    SQL
   end
 end
