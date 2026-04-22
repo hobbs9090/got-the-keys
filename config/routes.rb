@@ -30,7 +30,7 @@ GotTheKeys::Application.routes.draw do
     resources :properties, only: [:index, :show, :edit, :update] do
       patch :transition, on: :member
     end
-    resources :customers, only: :index
+    resources :customers, only: [:index, :show], constraints: { id: /[^\/]+/ }, format: false
     resources :sellers, only: [:index, :show], controller: :users
     resources :notification_logs, only: :index
     resources :demo_scenarios, only: [:index, :show], path: 'demo-data' do

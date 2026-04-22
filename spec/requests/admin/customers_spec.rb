@@ -302,6 +302,38 @@ RSpec.describe "Admin customers", type: :request do
     expect(document.css('[data-testid^="admin-customer-row-zoe-bates"]').size).to eq(1)
   end
 
+  it "shows a customer profile page with recent bookings" do
+    user = FactoryBot.create(
+      :user,
+      first_name: "Zoe",
+      last_name: "Bates",
+      email: "zoe.bates@example.com",
+      mobile_number: "07700 930099"
+    )
+    property = FactoryBot.create(:property, address_line_1: "48 Mount Place")
+    appointment = FactoryBot.create(
+      :appointment,
+      :confirmed,
+      property:,
+      customer_name: user.full_name,
+      customer_email: "zoe.bates@exmaple.com",
+      customer_phone: user.mobile_number
+    )
+
+    get admin_customer_path(user.email)
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("Customer Zoe Bates")
+    expect(response.body).to include("zoe.bates@example.com")
+    expect(response.body).to include("Recent bookings")
+    expect(response.body).to include(appointment.public_reference)
+    expect(response.body).to include("48 Mount Place")
+
+    document = parsed_html
+    bookings_link = document.at_css(%(a[href="#{admin_appointments_path(view: "agenda", customer_email: user.email)}"]))
+    expect(bookings_link).to be_present
+  end
+
   it "shows role badges for sellers, landlords, buyers with offers, and tenants with approved rental applications" do
     seller = FactoryBot.create(
       :user,

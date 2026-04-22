@@ -76,8 +76,8 @@ module ApplicationHelper
       "pending" => "badge badge--warning",
       "confirmed" => "badge badge--success",
       "rescheduled" => "badge badge--accent",
-      "cancelled" => "badge badge--muted",
-      "completed" => "badge badge--neutral",
+      "cancelled" => "badge badge--danger",
+      "completed" => "badge badge--accent",
       "no_show" => "badge badge--danger"
     }.fetch(status.to_s, "badge")
   end

@@ -67,7 +67,7 @@
           <% appointments.each do |appointment| %>
             <div class="admin-list__item" data-testid="admin-appointment-row">
               <div>
-                <%= link_to appointment.customer_name, admin_appointment_path(appointment) %>
+                <%= link_to appointment.customer_name, admin_customer_path(appointment.display_customer_email.downcase), data: { testid: "admin-appointment-customer-link-#{appointment.id}" } %>
                 <p>
                   <%= link_to appointment.property.address_line_1, admin_property_path(appointment.property), data: { testid: "admin-appointment-property-link-#{appointment.id}" } %>
                   · <%= formatted_date_time(appointment.scheduled_at) %>
@@ -79,6 +79,7 @@
                 <% if appointment.visit_outcome.present? %>
                   <span class="badge badge--neutral admin-bookings-row__pill"><%= appointment.visit_outcome.to_s.humanize %></span>
                 <% end %>
+                <%= link_to t("ui.admin.appointments.index.details"), admin_appointment_path(appointment), class: "button primary hollow admin-bookings-row__action", data: { testid: "admin-appointment-details-link-#{appointment.id}" } %>
                 <%= button_to t("ui.admin.appointments.confirm"), transition_admin_appointment_path(appointment, status: "confirmed"), method: :patch, class: "button success hollow admin-bookings-row__action" unless appointment.status == "confirmed" %>
                 <%= button_to t("ui.admin.appointments.cancel"), transition_admin_appointment_path(appointment, status: "cancelled"), method: :patch, class: "button alert hollow admin-bookings-row__action" unless appointment.status == "cancelled" %>
               </div>

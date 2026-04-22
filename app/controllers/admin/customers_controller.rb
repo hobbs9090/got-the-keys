@@ -4,6 +4,11 @@ class Admin::CustomersController < Admin::BaseController
     @customers = grouped_customers.page(params[:page]).per(25)
   end
 
+  def show
+    @customer = grouped_customers.find_by!("email_key = ?", params[:id].to_s.downcase)
+    @appointments = customer_appointments(@customer).limit(10)
+  end
+
   private
 
   def grouped_customers
@@ -40,6 +45,17 @@ class Admin::CustomersController < Admin::BaseController
     end
 
     scope.order(Arel.sql("sort_at DESC, customer_email ASC"))
+  end
+
+  def customer_appointments(customer)
+    Appointment.includes(:property)
+      .where(
+        "lower(customer_email) = :email OR (customer_phone = :phone AND lower(customer_name) = :name)",
+        email: customer.customer_email.to_s.downcase,
+        phone: customer.customer_phone.to_s,
+        name: customer.customer_name.to_s.downcase
+      )
+      .recent_first
   end
 
   def customer_directory_entries_sql

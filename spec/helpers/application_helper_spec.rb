@@ -99,6 +99,8 @@ RSpec.describe ApplicationHelper, type: :helper do
   describe "#appointment_status_badge_class" do
     it "maps known statuses to badge classes" do
       expect(helper.appointment_status_badge_class(:confirmed)).to eq("badge badge--success")
+      expect(helper.appointment_status_badge_class(:completed)).to eq("badge badge--accent")
+      expect(helper.appointment_status_badge_class(:cancelled)).to eq("badge badge--danger")
       expect(helper.appointment_status_badge_class("no_show")).to eq("badge badge--danger")
     end
 

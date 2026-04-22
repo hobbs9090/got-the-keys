@@ -204,6 +204,43 @@ RSpec.describe "Admin appointments" do
     expect(property_link["href"]).to eq(admin_property_path(property))
   end
 
+  it "links the booking customer to the customer profile and includes a details link for the appointment" do
+    user = FactoryBot.create(
+      :user,
+      first_name: "Zoe",
+      last_name: "Bates",
+      email: "zoe.bates@example.com",
+      mobile_number: "07700 930099"
+    )
+    slot = next_booking_slot(hour: 12)
+    appointment = FactoryBot.create(
+      :appointment,
+      property:,
+      customer_name: user.full_name,
+      customer_email: "zoe.bates@exmaple.com",
+      customer_phone: user.mobile_number,
+      requested_time: slot,
+      scheduled_at: slot,
+      status: "confirmed"
+    )
+
+    get admin_bookings_path, params: { customer_email: user.email, view: "agenda" }
+
+    expect(response).to have_http_status(:ok)
+
+    document = Nokogiri::HTML.parse(response.body)
+    customer_link = document.at_css(%([data-testid="admin-appointment-customer-link-#{appointment.id}"]))
+    details_link = document.at_css(%([data-testid="admin-appointment-details-link-#{appointment.id}"]))
+
+    expect(customer_link).to be_present
+    expect(customer_link["href"]).to eq(admin_customer_path(user.email))
+    expect(customer_link.text.strip).to eq("Zoe Bates")
+
+    expect(details_link).to be_present
+    expect(details_link["href"]).to eq(admin_appointment_path(appointment))
+    expect(details_link.text.strip).to eq("Details")
+  end
+
   it "shows the registered user's current email on the admin appointment detail page" do
     user = FactoryBot.create(
       :user,

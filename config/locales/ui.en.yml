@@ -1018,6 +1018,7 @@ en:
         title: "Bookings desk"
         eyebrow: "Admin-only booking management"
         hero_body: "Review upcoming bookings, filter by property or status, and take action on requests that need an admin decision."
+        details: "Details"
         views:
           agenda: "Agenda"
           day: "Day"
@@ -1296,6 +1297,17 @@ en:
             buyer: "Buyer"
           registered_on: "Registered %{time}"
           no_results: "No customers match this search."
+        show:
+          title: "Customer %{name}"
+          eyebrow: "Customer profile"
+          account_details_title: "Account details"
+          booking_count: "Bookings"
+          latest_booking: "Latest booking"
+          registered_on: "Registered on"
+          recent_bookings_title: "Recent bookings"
+          no_bookings: "No bookings found for this customer."
+          view_bookings: "View bookings"
+          back: "Back"
       notification_logs:
         title: "Notification log"
         eyebrow: "Customer communication"

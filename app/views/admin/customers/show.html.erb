@@ -1,0 +1,74 @@
+<% title t("ui.admin.customers.show.title", name: @customer.customer_name.presence || @customer.customer_email) %>
+
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <p class="section-heading__eyebrow"><%= t("ui.admin.customers.show.eyebrow") %></p>
+      <h1><%= @customer.customer_name.presence || @customer.customer_email %></h1>
+      <p><%= @customer.customer_email %></p>
+    </div>
+
+    <div class="section-heading__actions">
+      <%= link_to t("ui.admin.customers.show.view_bookings"), admin_appointments_path(view: "agenda", customer_email: @customer.customer_email), class: "button primary hollow" %>
+      <%= link_to t("ui.admin.customers.show.back"), admin_customers_path, class: "button hollow secondary" %>
+    </div>
+  </div>
+</section>
+
+<section class="admin-grid admin-grid--split">
+  <article class="admin-panel">
+    <h2><%= t("ui.admin.customers.show.account_details_title") %></h2>
+    <dl class="detail-list">
+      <div>
+        <dt><%= t("ui.common.email_address") %></dt>
+        <dd><%= @customer.customer_email %></dd>
+      </div>
+      <div>
+        <dt><%= t("ui.common.phone_number") %></dt>
+        <dd><%= @customer.customer_phone.presence || t("ui.admin.appointments.show.not_supplied") %></dd>
+      </div>
+      <div>
+        <dt><%= t("ui.admin.customers.show.booking_count") %></dt>
+        <dd><%= translate_count("ui.admin.customers.index.appointment_count", @customer.appointments_count.to_i) %></dd>
+      </div>
+      <div>
+        <dt><%= t("ui.common.status") %></dt>
+        <dd>
+          <% admin_customer_badges(@customer).each do |badge| %>
+            <span class="badge <%= badge[:css_class] %>"><%= badge[:label] %></span>
+          <% end %>
+        </dd>
+      </div>
+      <% if @customer.latest_appointment_at.present? %>
+        <div>
+          <dt><%= t("ui.admin.customers.show.latest_booking") %></dt>
+          <dd><%= formatted_date_time(@customer.latest_appointment_at) %></dd>
+        </div>
+      <% elsif @customer.registered_at.present? %>
+        <div>
+          <dt><%= t("ui.admin.customers.show.registered_on") %></dt>
+          <dd><%= formatted_date_time(@customer.registered_at) %></dd>
+        </div>
+      <% end %>
+    </dl>
+  </article>
+
+  <article class="admin-panel">
+    <h2><%= t("ui.admin.customers.show.recent_bookings_title") %></h2>
+    <% if @appointments.any? %>
+      <div class="admin-list">
+        <% @appointments.each do |appointment| %>
+          <div class="admin-list__item">
+            <div>
+              <%= link_to appointment.public_reference, admin_appointment_path(appointment) %>
+              <p><%= appointment.property.address_line_1 %> · <%= formatted_date_time(appointment.scheduled_at) %></p>
+            </div>
+            <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="empty-copy"><%= t("ui.admin.customers.show.no_bookings") %></p>
+    <% end %>
+  </article>
+</section>
