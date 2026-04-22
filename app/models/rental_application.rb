@@ -80,11 +80,13 @@ class RentalApplication < ApplicationRecord
   end
 
   def sync_property_progression
-    case status
-    when "approved"
-      property.update!(listing_state: "let_agreed")
-    when "rejected", "withdrawn"
-      property.update!(listing_state: "published") if property.listing_state == "let_agreed" && property.rental_applications.where(status: "approved").where.not(id: id).none?
+    property.with_lock do
+      case status
+      when "approved"
+        property.update!(listing_state: "let_agreed")
+      when "rejected", "withdrawn"
+        property.update!(listing_state: "published") if property.listing_state == "let_agreed" && property.rental_applications.where(status: "approved").where.not(id: id).none?
+      end
     end
   end
 

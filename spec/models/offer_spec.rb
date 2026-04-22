@@ -11,6 +11,19 @@ RSpec.describe Offer do
     expect(offer.timeline.last.event_type).to eq("accepted")
   end
 
+  it "does not move the property back to published when another accepted offer still exists" do
+    property = FactoryBot.create(:property)
+    offer_a = FactoryBot.create(:offer, property:)
+    offer_b = FactoryBot.create(:offer, property:)
+
+    offer_a.update!(status: "accepted")
+    offer_b.update!(status: "accepted")
+
+    offer_a.update!(status: "rejected")
+
+    expect(property.reload.listing_state).to eq("under_offer")
+  end
+
   it "rejects offers that use the property owner's email address" do
     property = FactoryBot.create(:property, user: FactoryBot.create(:user, email: "owner@example.com"))
     offer = FactoryBot.build(

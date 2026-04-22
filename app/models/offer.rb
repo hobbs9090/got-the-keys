@@ -101,13 +101,15 @@ class Offer < ApplicationRecord
   end
 
   def sync_property_progression
-    case status
-    when "accepted"
-      property.update!(listing_state: "under_offer")
-    when "completed"
-      property.update!(listing_state: "sold")
-    when "rejected", "withdrawn"
-      property.update!(listing_state: "published") if property.listing_state == "under_offer" && property.offers.where(status: "accepted").where.not(id: id).none?
+    property.with_lock do
+      case status
+      when "accepted"
+        property.update!(listing_state: "under_offer")
+      when "completed"
+        property.update!(listing_state: "sold")
+      when "rejected", "withdrawn"
+        property.update!(listing_state: "published") if property.listing_state == "under_offer" && property.offers.where(status: "accepted").where.not(id: id).none?
+      end
     end
   end
 
