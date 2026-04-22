@@ -47,6 +47,16 @@ RSpec.describe "Admin dashboard", type: :request do
     end
   end
 
+  it "serves metrics from cache on repeated requests" do
+    get admin_root_path
+    expect(response).to have_http_status(:ok)
+
+    expect(Rails.cache).to receive(:fetch).with("admin/dashboard/metrics", expires_in: 5.minutes).and_call_original
+
+    get admin_root_path
+    expect(response).to have_http_status(:ok)
+  end
+
   it "uses compact status pills in the recent activity table" do
     property = FactoryBot.create(:property)
     appointment = FactoryBot.create(:appointment, property:, status: "pending")

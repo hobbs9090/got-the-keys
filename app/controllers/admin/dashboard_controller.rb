@@ -11,14 +11,16 @@ class Admin::DashboardController < Admin::BaseController
     @recent_enquiries = Enquiry.recent_first.limit(6)
     @notification_logs = NotificationLog.recent_first.limit(6)
     @latest_demo_run = DemoScenarioRun.recent_first.first
-    @metrics = {
-      properties: Property.count,
-      properties_requiring_review: Property.where(listing_state: "review_pending").count,
-      upcoming_appointments: Appointment.upcoming.count,
-      pending_actions: Appointment.pending_action.count,
-      offers: Offer.count,
-      customers: Appointment.distinct.count(:customer_email),
-      open_leads: Enquiry.open_pipeline.count
-    }
+    @metrics = Rails.cache.fetch("admin/dashboard/metrics", expires_in: 5.minutes) do
+      {
+        properties: Property.count,
+        properties_requiring_review: Property.where(listing_state: "review_pending").count,
+        upcoming_appointments: Appointment.upcoming.count,
+        pending_actions: Appointment.pending_action.count,
+        offers: Offer.count,
+        customers: Appointment.distinct.count(:customer_email),
+        open_leads: Enquiry.open_pipeline.count
+      }
+    end
   end
 end
