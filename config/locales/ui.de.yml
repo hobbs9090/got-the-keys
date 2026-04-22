@@ -404,7 +404,7 @@ de:
       flash:
         not_public: Dieses Inserat ist derzeit nicht öffentlich.
       validation:
-        image_file_name: muss auf ein GIF-, JPG-, JPEG-, PNG- oder SVG-Bild verweisen
+        image_file_name: muss auf ein GIF-, JPG-, JPEG-, PNG-, SVG- oder WEBP-Bild verweisen
         image_upload: muss ein JPG- oder JPEG-Bild sein
         refurbished_year: muss größer oder gleich dem Baujahr sein
         duplicate_address: wurde für diese Adresse bereits eingetragen

@@ -3,7 +3,7 @@ require "fileutils"
 class Property < ApplicationRecord
   paginates_per 12
 
-  IMAGE_FILE_NAME_FORMAT = /\A[\w.\-\/ ]+\.(gif|jpg|jpeg|png|svg|webp)\z/i.freeze
+  IMAGE_FILE_NAME_FORMAT = /\A[\w.\-\/]+\.(gif|jpg|jpeg|png|svg|webp)\z/i.freeze
   IMAGE_UPLOAD_EXTENSIONS = %w[.jpg .jpeg].freeze
   IMAGE_UPLOAD_CONTENT_TYPES = %w[image/jpeg image/pjpeg image/jpg].freeze
   UPLOADED_IMAGE_PREFIX = "/uploads/property_images/".freeze
@@ -404,7 +404,10 @@ class Property < ApplicationRecord
   def uploaded_image_absolute_path(path)
     return if path.blank? || !uploaded_property_image_path?(path)
 
-    image_upload_root.join(path.delete_prefix("/uploads/"))
+    candidate = image_upload_root.join(path.delete_prefix("/uploads/"))
+    return unless candidate.expand_path.to_s.start_with?(image_upload_root.expand_path.to_s)
+
+    candidate
   end
 
   def purge_uploaded_image(path)

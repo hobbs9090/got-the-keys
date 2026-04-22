@@ -405,7 +405,7 @@ it:
       flash:
         not_public: Questo annuncio non e attualmente pubblico.
       validation:
-        image_file_name: deve fare riferimento a un immagine GIF, JPG, JPEG, PNG o SVG
+        image_file_name: deve fare riferimento a un immagine GIF, JPG, JPEG, PNG, SVG o WEBP
         image_upload: deve essere un immagine JPG o JPEG
         refurbished_year: deve essere maggiore o uguale all anno di costruzione
         duplicate_address: e gia stato inserito per questo indirizzo

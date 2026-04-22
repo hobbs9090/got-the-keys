@@ -205,6 +205,13 @@ describe "A property" do
     expect(property.errors[:image_file_name]).to be_empty
   end
 
+  it "rejects image filenames with spaces" do
+    property = build_property(image_file_name: "my image.jpg")
+
+    expect(property.valid?).to be false
+    expect(property.errors[:image_file_name]).to be_present
+  end
+
   it "strips commas from asking price before validation" do
     property = build_property(asking_price: "650,000")
 
@@ -291,6 +298,13 @@ describe "A property" do
 
     expect(property.valid?).to be true
     expect(property.errors[:image_file_name]).to be_empty
+  end
+
+  it "does not resolve upload paths outside the upload root" do
+    property = FactoryBot.create(:property, user:)
+    property.update_column(:image_file_name, "/uploads/property_images/../../../etc/passwd.jpg")
+
+    expect(property.send(:uploaded_image_absolute_path, property.image_file_name)).to be_nil
   end
 
   it "uses the primary photo as the hero image when present" do

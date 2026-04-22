@@ -409,7 +409,7 @@ fr:
       flash:
         not_public: Cette annonce n'est pas actuellement publique.
       validation:
-        image_file_name: doit faire reference a une image GIF, JPG, JPEG, PNG ou SVG
+        image_file_name: doit faire reference a une image GIF, JPG, JPEG, PNG, SVG ou WEBP
         image_upload: doit etre une image JPG ou JPEG
         refurbished_year: doit etre superieure ou egale a l annee de construction
         duplicate_address: a deja ete enregistree pour cette adresse
