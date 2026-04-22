@@ -143,6 +143,19 @@ RSpec.describe Appointment do
     expect(appointment.valid_access_token?(appointment.access_token)).to be(true)
   end
 
+  it "records events for all changed fields in a single save, not just the first" do
+    slot = next_booking_slot(hour: 12)
+    new_slot = next_booking_slot(hour: 14)
+    appointment = FactoryBot.create(:appointment, property:, admin:, requested_time: slot, scheduled_at: slot)
+    event_count_before = appointment.appointment_events.count
+
+    appointment.update!(status: "confirmed", scheduled_at: new_slot, admin:)
+
+    new_events = appointment.appointment_events.order(:created_at).offset(event_count_before)
+    event_types = new_events.pluck(:event_type)
+    expect(event_types).to include("confirmed", "rescheduled")
+  end
+
   it "records a visit outcome event when follow-up progress is updated" do
     appointment = FactoryBot.create(
       :appointment,
