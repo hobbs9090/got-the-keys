@@ -246,6 +246,9 @@ select {
   background-size: 0.34rem 0.34rem, 0.34rem 0.34rem;
   border: 1px solid var(--color-field-border);
   color: var(--color-ink);
+  /* Match #{text-inputs()} min-height; Foundation sets a shorter fixed height on selects. */
+  height: auto;
+  min-height: 3rem;
   padding-right: 2.2rem;
   -webkit-text-fill-color: var(--color-ink);
 }
@@ -3207,6 +3210,7 @@ form[data-testid="lead-inbox-filters"] .form-actions .button,
   display: flex;
   gap: 0.75rem;
   justify-content: space-between;
+  padding-bottom: 0.1rem;
 }
 
 .property-workspace-bookings__details {
@@ -3236,9 +3240,10 @@ form[data-testid="lead-inbox-filters"] .form-actions .button,
 
 .property-workspace-card__appointment-heading {
   color: var(--color-muted);
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
+  line-height: 1.1;
   text-transform: uppercase;
 }
 

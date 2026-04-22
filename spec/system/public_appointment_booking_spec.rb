@@ -45,7 +45,13 @@ RSpec.describe "Public appointment booking", type: :system, js: true do
   end
 
   it "lets a signed-in user prepare a viewing request" do
-    user = FactoryBot.create(:user)
+    user = FactoryBot.create(
+      :user,
+      first_name: "Nina",
+      last_name: "Hughes",
+      email: "nina.hughes@example.com",
+      mobile_number: "07700 930005"
+    )
     property = FactoryBot.create(:property, user:, address_line_1: "88 Harbour View")
 
     sign_in_as_user(user)
@@ -61,14 +67,11 @@ RSpec.describe "Public appointment booking", type: :system, js: true do
       slot_button.click
 
       expect(find("#appointment_requested_time", visible: false).value).to eq(selected_slot)
-      fill_in "appointment_customer_name", with: "Nina Hughes"
-      fill_in "appointment_customer_email", with: "nina.hughes@example.com"
-      fill_in "appointment_customer_phone", with: "07700 930005"
       fill_in "appointment_notes", with: "Please confirm whether parking is allocated."
     end
 
     expect(page).to have_field("appointment_customer_name", with: "Nina Hughes")
-    expect(page).to have_field("appointment_customer_email", with: "nina.hughes@example.com")
+    expect(page).to have_field("appointment_customer_email", with: "nina.hughes@example.com", readonly: true)
     expect(page).to have_field("appointment_customer_phone", with: "07700 930005")
   end
 end

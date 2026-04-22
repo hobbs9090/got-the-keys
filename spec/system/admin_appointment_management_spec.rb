@@ -76,10 +76,12 @@ RSpec.describe "Admin appointment management", type: :system do
     sign_in_as(admin)
 
     within(find("[data-testid='admin-appointment-row']", text: appointment.customer_name)) do
-      click_link appointment.customer_name
+      click_link "Details"
     end
 
-    click_link "Edit"
+    within("[data-testid='admin-appointment-header-actions']") do
+      click_link "Edit"
+    end
 
     fill_in "appointment_scheduled_at", with: rescheduled_slot.strftime("%Y-%m-%dT%H:%M")
     select "Rescheduled", from: "appointment_status"
