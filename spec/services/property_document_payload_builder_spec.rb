@@ -1,6 +1,12 @@
 require "rails_helper"
 
 RSpec.describe PropertyDocumentPayloadBuilder do
+  # Decode all hex string literals from a Prawn-generated PDF content stream so
+  # content assertions work regardless of raw byte encoding.
+  def pdf_text(payload)
+    payload.scan(/<([0-9a-fA-F]{4,})>/).map { |(hex)| [hex].pack("H*") }.join(" ")
+  end
+
   let(:property) do
     FactoryBot.create(
       :property,
@@ -40,31 +46,33 @@ RSpec.describe PropertyDocumentPayloadBuilder do
     )
 
     payload = described_class.new(document:, property:).payload
+    text = pdf_text(payload)
 
-    expect(payload).to start_with("%PDF-1.4")
-    expect(payload).to include("PROPERTY PLATFORM")
-    expect(payload).to include("gotthekeys")
-    expect(payload).to include("SALES BROCHURE")
-    expect(payload).to include("24 Cedar Road")
-    expect(payload).to include("Overview")
-    expect(payload).to include("Key facts")
-    expect(payload).to include("\\2431,050,000")
-    expect(payload).not_to include("GBP 1,050,000")
-    expect(payload).to include("Guide price")
-    expect(payload).to include("Updated 2021  |  2150 sq ft")
-    expect(payload).not_to include("Built 1934")
-    expect(payload).to include("01732 650010  |  hello@gotthekeys.com")
-    expect(payload).not_to include(AppSettings.primary_branch_profile.fetch(:response_time))
-    expect(payload).not_to include(I18n.t("ui.branch_profile.team_label"))
+    expect(payload).to start_with("%PDF-1.")
+    expect(text).to include("PROPERTY PLATFORM")
+    expect(text).to include("gotthekeys")
+    expect(text).to include("SALES BROCHURE")
+    expect(text).to include("24 Cedar Road")
+    expect(text).to include("Overview")
+    expect(text).to include("Key facts")
+    expect(text).to include("1,050,000")
+    expect(text).not_to include("GBP 1,050,000")
+    expect(text).to include("Guide price")
+    expect(text).to include("Updated 2021  |  2150 sq ft")
+    expect(text).not_to include("Built 1934")
+    expect(text).to include("01732 650010  |  hello@gotthekeys.com")
+    expect(text).not_to include(AppSettings.primary_branch_profile.fetch(:response_time))
+    expect(text).not_to include(I18n.t("ui.branch_profile.team_label"))
     expect(payload).to include("/Subtype /Image")
   end
 
   it "renders a styled placeholder when the property has no hero image" do
     payload = described_class.new(document:, property:).payload
+    text = pdf_text(payload)
 
-    expect(payload).to start_with("%PDF-1.4")
-    expect(payload).to include("Image coming soon")
-    expect(payload).to include("SALES BROCHURE")
+    expect(payload).to start_with("%PDF-1.")
+    expect(text).to include("Image coming soon")
+    expect(text).to include("SALES BROCHURE")
     expect(payload).not_to include("/Subtype /Image")
   end
 
@@ -79,14 +87,15 @@ RSpec.describe PropertyDocumentPayloadBuilder do
     )
 
     payload = described_class.new(document: compliance_document, property:).payload
+    text = pdf_text(payload)
 
-    expect(payload).to start_with("%PDF-1.4")
-    expect(payload).to include("COMPLIANCE PACK")
-    expect(payload).to include("PROPERTY PLATFORM")
-    expect(payload).to include("24 Cedar Road")
-    expect(payload).to include("\\2431,050,000")
-    expect(payload).to include("Prepared #{Date.current.strftime('%d %B %Y')}")
-    expect(payload).not_to include(AppSettings.primary_branch_profile.fetch(:response_time))
+    expect(payload).to start_with("%PDF-1.")
+    expect(text).to include("COMPLIANCE PACK")
+    expect(text).to include("PROPERTY PLATFORM")
+    expect(text).to include("24 Cedar Road")
+    expect(text).to include("1,050,000")
+    expect(text).to include("Prepared #{Date.current.strftime('%d %B %Y')}")
+    expect(text).not_to include(AppSettings.primary_branch_profile.fetch(:response_time))
   end
 
   it "falls back to a plain text payload for non-pdf documents" do

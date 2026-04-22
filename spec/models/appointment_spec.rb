@@ -172,6 +172,25 @@ RSpec.describe Appointment do
     expect(appointment.timeline.last.message).to include(I18n.t("ui.appointments.visit_outcomes.feedback_requested"))
   end
 
+  it "does not create a visit outcome event when the outcome is cleared to blank" do
+    slot = next_booking_slot(hour: 12)
+    appointment = FactoryBot.create(
+      :appointment,
+      property:,
+      admin: admin,
+      requested_time: slot,
+      scheduled_at: slot,
+      visit_outcome: "attended"
+    )
+
+    expect do
+      appointment.update!(visit_outcome: "", admin: admin)
+    end.not_to raise_error
+
+    expect(appointment.timeline.pluck(:event_type)).not_to include("")
+    expect(appointment.timeline.pluck(:event_type)).not_to include(nil)
+  end
+
   it "rejects completed and no-show statuses for future appointments" do
     future_slot = next_booking_slot(hour: 14)
     appointment = FactoryBot.build(

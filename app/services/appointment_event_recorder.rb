@@ -75,6 +75,7 @@ class AppointmentEventRecorder
 
   def record_visit_outcome_change
     _from_outcome, to_outcome = previous_changes.fetch("visit_outcome")
+    return if to_outcome.blank?
 
     appointment_events.create!(
       admin:,
