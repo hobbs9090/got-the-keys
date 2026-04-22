@@ -224,6 +224,32 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     expect(page).to have_css("#map-modal[hidden][aria-hidden='true']", visible: false)
   end
 
+  it "recovers from stale overlay state on page load", js: true do
+    visit root_path
+
+    page.execute_script(<<~JS)
+      document.body.classList.add("site-modal-open");
+
+      const staleModal = document.createElement("div");
+      staleModal.dataset.modal = "stale";
+      staleModal.hidden = false;
+      staleModal.setAttribute("aria-hidden", "false");
+      document.body.appendChild(staleModal);
+
+      document.cookie = "gotthekeys_cookie_consent=essential; path=/";
+
+      const staleBanner = document.createElement("section");
+      staleBanner.className = "cookie-banner";
+      document.body.appendChild(staleBanner);
+    JS
+
+    visit root_path
+
+    expect(page).to have_no_css("body.site-modal-open", visible: false)
+    expect(page).to have_no_css('[data-modal][aria-hidden="false"]', visible: false)
+    expect(page).to have_no_css(".cookie-banner", wait: 5)
+  end
+
   it "toggles the furnishing field based on the selected sale status" do
     admin = FactoryBot.create(:admin, email: "listing-admin@example.com", password: "changeme", password_confirmation: "changeme")
     owner = FactoryBot.create(:user)

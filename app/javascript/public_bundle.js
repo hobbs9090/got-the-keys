@@ -5,6 +5,7 @@ import { bootCarousels, teardownCarousels } from "./carousels";
 import { bootModals, teardownModals } from "./modals";
 import { bootNativeValidations, teardownNativeValidations } from "./native_validations";
 import { bootOfferAmountInputs, teardownOfferAmountInputs } from "./offer_amount_input";
+import { bootOverlayRecovery, teardownOverlayRecovery } from "./overlay_recovery";
 import { bootPaginationScroll, teardownPaginationScroll } from "./pagination_scroll";
 import { bootPropertyListingForms, teardownPropertyListingForms } from "./property_listing_form";
 import { bootPhotoPrimaryRadios, teardownPhotoPrimaryRadios } from "./photo_primary_radios";
@@ -21,6 +22,7 @@ const bootApplication = () => {
   bootModals();
   bootNativeValidations();
   bootOfferAmountInputs();
+  bootOverlayRecovery();
   bootPaginationScroll();
   bootPropertyListingForms();
   bootPhotoPrimaryRadios();
@@ -37,6 +39,7 @@ const teardownApplication = () => {
   teardownModals();
   teardownNativeValidations();
   teardownOfferAmountInputs();
+  teardownOverlayRecovery();
   teardownPaginationScroll();
   teardownPropertyListingForms();
   teardownPhotoPrimaryRadios();
