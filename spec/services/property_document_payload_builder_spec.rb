@@ -98,6 +98,16 @@ RSpec.describe PropertyDocumentPayloadBuilder do
     expect(text).not_to include(AppSettings.primary_branch_profile.fetch(:response_time))
   end
 
+  it "shows FOR RENT badge and omits price label for rental properties" do
+    rental_property = FactoryBot.create(:property, :for_rent, asking_price: 2200)
+    rental_document = FactoryBot.create(:property_document, property: rental_property, file_name: "let.pdf")
+
+    text = pdf_text(described_class.new(document: rental_document, property: rental_property).payload)
+
+    expect(text).to include("FOR RENT")
+    expect(text).not_to include("FOR SALE")
+  end
+
   it "falls back to a plain text payload for non-pdf documents" do
     docx_document = FactoryBot.create(
       :property_document,

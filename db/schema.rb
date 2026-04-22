@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_19_163000) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_22_100000) do
   create_table "admins", force: :cascade do |t|
     t.integer "consumed_timestep"
     t.datetime "created_at", precision: nil
@@ -354,6 +354,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_19_163000) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.boolean "admin_provisioned", default: false, null: false
     t.datetime "confirmation_sent_at", precision: nil
     t.string "confirmation_token"
     t.datetime "confirmed_at", precision: nil

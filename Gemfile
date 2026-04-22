@@ -32,6 +32,8 @@ group :development, :test do
 end
 
 group :development do
+  gem 'brakeman', require: false
+  gem 'bundler-audit', require: false
   gem 'foreman', '~> 0.90', require: false
   gem 'capistrano', '~> 3.20'
   gem 'capistrano-passenger', '~> 0.2.1'
@@ -58,3 +60,4 @@ group :staging, :production do
 end
 
 gem "image_processing", "~> 1.14"
+gem "prawn", "~> 2.5"
