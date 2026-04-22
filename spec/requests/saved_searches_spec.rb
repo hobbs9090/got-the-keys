@@ -121,6 +121,8 @@ RSpec.describe "Saved searches", type: :request do
 
     generated_user = User.find_by(email: unmapped_admin.email)
     expect(generated_user).to be_present
+    expect(generated_user.admin_provisioned).to be(true)
+    expect(generated_user.mobile_number).to be_nil
     expect(SavedSearch.last.user_id).to eq(generated_user.id)
     expect(response).to redirect_to(
       properties_path(

@@ -8,5 +8,11 @@ FactoryBot.define do
     sequence(:email) { |n| "user#{n}@example.com" }
     password { 'changeme' }
     password_confirmation { 'changeme' }
+    admin_provisioned { false }
+
+    trait :admin_provisioned do
+      mobile_number { nil }
+      admin_provisioned { true }
+    end
   end
 end

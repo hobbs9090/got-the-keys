@@ -67,9 +67,9 @@ class SavedSearchesController < ApplicationController
       email: current_admin.email,
       first_name: "Admin",
       last_name: "User",
-      mobile_number: "07000000000",
       language: I18n.default_locale.to_s,
       terms_of_service: true,
+      admin_provisioned: true,
       password: generated_password,
       password_confirmation: generated_password
     )
