@@ -53,6 +53,8 @@ end
 group :staging, :production do
   gem 'passenger', '~> 6.1'
   gem 'pg', '~> 1.5'
+  gem 'solid_cache'
+  gem 'solid_queue'
 end
 
 gem "image_processing", "~> 1.14"

@@ -16,9 +16,10 @@ GotTheKeys::Application.configure do
   config.ssl_options = { hsts: { subdomains: true, preload: true, expires: 2.years } }
   config.log_level = ENV.fetch('RAILS_LOG_LEVEL', 'info')
   config.log_tags = [:request_id]
-  config.cache_store = :memory_store
+  config.cache_store = :solid_cache_store, { connects_to: { database: { writing: :primary } } }
   config.action_mailer.perform_caching = false
-  config.active_job.queue_adapter = (config.x.got_the_keys.active_job_queue_adapter || "async").to_sym
+  config.active_job.queue_adapter = :solid_queue
+  config.solid_queue.connects_to = { database: { writing: :primary } }
   config.x.got_the_keys.public_indexing_enabled = true
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default_url_options = {
