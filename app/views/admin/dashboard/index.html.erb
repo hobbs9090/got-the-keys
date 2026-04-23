@@ -133,13 +133,3 @@
     <% end %>
   </article>
 </section>
-
-<section class="admin-panel">
-  <h2><%= t("ui.admin.dashboard.last_demo_data_action") %></h2>
-  <% if @latest_demo_run.present? %>
-    <p><strong><%= admin_demo_action_label(@latest_demo_run.action_type) %></strong> <%= t("ui.admin.dashboard.on") %> <%= formatted_date_time(@latest_demo_run.created_at) %></p>
-    <p><%= @latest_demo_run.summary_data&.fetch("name", translated_demo_scenario_key(@latest_demo_run.scenario_key)) %></p>
-  <% else %>
-    <p class="empty-copy"><%= t("ui.admin.dashboard.no_demo_action") %></p>
-  <% end %>
-</section>

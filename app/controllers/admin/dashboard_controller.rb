@@ -10,7 +10,6 @@ class Admin::DashboardController < Admin::BaseController
     @recent_appointments = Appointment.recent_first.limit(8)
     @recent_enquiries = Enquiry.recent_first.limit(6)
     @notification_logs = NotificationLog.recent_first.limit(6)
-    @latest_demo_run = DemoScenarioRun.recent_first.first
     @metrics = Rails.cache.fetch(dashboard_metrics_cache_key, expires_in: 5.minutes) { dashboard_metrics }
   end
 

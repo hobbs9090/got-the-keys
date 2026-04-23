@@ -11,29 +11,29 @@
   <article class="admin-panel">
     <%= render "shared/errors", object: @booking_configuration %>
 
-    <%= form_with model: [:admin, @booking_configuration], url: admin_booking_configuration_path, class: "stacked-form" do |f| %>
+    <%= form_with model: [:admin, @booking_configuration], url: admin_booking_configuration_path, class: "stacked-form", data: { testid: "booking-configuration-form" } do |f| %>
       <div class="form-grid">
         <div>
           <%= f.label :slot_duration_minutes, t("ui.admin.booking_configuration.slot_duration_minutes"), **form_label_options(@booking_configuration, :slot_duration_minutes) %>
           <%= f.select :slot_duration_minutes,
                        BookingConfiguration::SUPPORTED_SLOT_DURATIONS.map { |duration| ["#{duration} minutes", duration] },
                        {},
-                       form_control_options(@booking_configuration, :slot_duration_minutes) %>
+                       form_control_options(@booking_configuration, :slot_duration_minutes).merge(data: { testid: "booking-config-slot-duration" }) %>
           <%= field_error_messages(@booking_configuration, :slot_duration_minutes) %>
         </div>
         <div>
           <%= f.label :booking_window_days, t("ui.admin.booking_configuration.booking_window_days"), **form_label_options(@booking_configuration, :booking_window_days) %>
-          <%= f.number_field :booking_window_days, min: 1, max: 60, step: 1, required: true, **form_control_options(@booking_configuration, :booking_window_days) %>
+          <%= f.number_field :booking_window_days, min: 1, max: 60, step: 1, required: true, **form_control_options(@booking_configuration, :booking_window_days), data: { testid: "booking-config-window-days" } %>
           <%= field_error_messages(@booking_configuration, :booking_window_days) %>
         </div>
         <div>
           <%= f.label :lead_time_hours, t("ui.admin.booking_configuration.lead_time_hours"), **form_label_options(@booking_configuration, :lead_time_hours) %>
-          <%= f.number_field :lead_time_hours, min: 0, max: 336, step: 1, required: true, **form_control_options(@booking_configuration, :lead_time_hours) %>
+          <%= f.number_field :lead_time_hours, min: 0, max: 336, step: 1, required: true, **form_control_options(@booking_configuration, :lead_time_hours), data: { testid: "booking-config-lead-time" } %>
           <%= field_error_messages(@booking_configuration, :lead_time_hours) %>
         </div>
         <div>
           <%= f.label :buffer_minutes, t("ui.admin.booking_configuration.buffer_minutes"), **form_label_options(@booking_configuration, :buffer_minutes) %>
-          <%= f.number_field :buffer_minutes, min: 0, max: 180, step: 5, required: true, **form_control_options(@booking_configuration, :buffer_minutes) %>
+          <%= f.number_field :buffer_minutes, min: 0, max: 180, step: 5, required: true, **form_control_options(@booking_configuration, :buffer_minutes), data: { testid: "booking-config-buffer" } %>
           <%= field_error_messages(@booking_configuration, :buffer_minutes) %>
         </div>
         <div>
@@ -62,7 +62,7 @@
       </div>
 
       <div class="form-actions">
-        <%= f.submit t("ui.admin.booking_configuration.save"), class: "button primary" %>
+        <%= f.submit t("ui.admin.booking_configuration.save"), class: "button primary", data: { testid: "booking-config-submit" } %>
       </div>
     <% end %>
   </article>

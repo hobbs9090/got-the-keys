@@ -1,9 +1,12 @@
 class Admin::OffersController < Admin::BaseController
   before_action :set_offer, only: [:show, :update]
 
+  BOARD_COLUMN_LIMIT = 50
+
   def index
-    @offers = Offer.includes(:property, :admin).recent_first
-    @offers_by_status = Offer::STATUSES.index_with { |status| @offers.select { |offer| offer.status == status } }
+    @offers_by_status = Offer::STATUSES.index_with do |status|
+      Offer.includes(:property, :admin).where(status:).recent_first.limit(BOARD_COLUMN_LIMIT)
+    end
   end
 
   def show

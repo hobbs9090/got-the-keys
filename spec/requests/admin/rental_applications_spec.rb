@@ -29,6 +29,13 @@ RSpec.describe "Admin rental applications", type: :request do
     expect(details_link.text.strip).to eq("Details")
   end
 
+  it "shows empty-state testid anchors on columns with no applications" do
+    get admin_rentals_path
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include(%(data-testid="rental-applications-column-empty-received"))
+  end
+
   it "updates a rental application and syncs progression" do
     patch admin_rental_path(application), params: {
       rental_application: {

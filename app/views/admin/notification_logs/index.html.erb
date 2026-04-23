@@ -10,7 +10,7 @@
 
   <div class="admin-list">
     <% @notification_logs.each do |log| %>
-      <article class="admin-list__item">
+      <article class="admin-list__item" data-testid="notification-log-row">
         <div>
           <strong><%= log.subject %></strong>
           <p><%= log.recipient_email.presence || t("ui.admin.notification_logs.no_recipient") %> · <%= formatted_date_time(log.created_at) %></p>

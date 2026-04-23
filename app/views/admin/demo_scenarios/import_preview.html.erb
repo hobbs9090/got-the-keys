@@ -8,7 +8,7 @@
     </div>
   </div>
 
-  <article class="admin-panel">
+  <article class="admin-panel" data-testid="import-preview-panel">
     <p><%= @preview.fetch(:description) %></p>
     <dl class="detail-list">
       <% @preview.except(:name, :description).each do |label, value| %>
@@ -20,7 +20,7 @@
     </dl>
 
     <div class="form-actions">
-      <%= button_to t("ui.admin.demo_data.import_preview.apply_imported_scenario"), apply_import_admin_demo_scenarios_path, method: :post, class: "button primary" %>
+      <%= button_to t("ui.admin.demo_data.import_preview.apply_imported_scenario"), apply_import_admin_demo_scenarios_path, method: :post, class: "button primary", form: { data: { testid: "import-apply-form" } } %>
       <%= link_to t("ui.admin.demo_data.import_preview.back_to_import"), import_admin_demo_scenarios_path, class: "button hollow secondary" %>
     </div>
   </article>

@@ -1,10 +1,11 @@
 class Admin::RentalApplicationsController < Admin::BaseController
   before_action :set_rental_application, only: [:show, :update]
 
+  BOARD_COLUMN_LIMIT = 50
+
   def index
-    @rental_applications = RentalApplication.includes(:property, :admin).recent_first
     @applications_by_status = RentalApplication::STATUSES.index_with do |status|
-      @rental_applications.select { |application| application.status == status }
+      RentalApplication.includes(:property, :admin).where(status:).recent_first.limit(BOARD_COLUMN_LIMIT)
     end
   end
 

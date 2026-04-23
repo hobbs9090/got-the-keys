@@ -29,7 +29,7 @@
           <% end %>
         </div>
       <% else %>
-        <p class="empty-copy"><%= t("ui.admin.offers.index.empty_column") %></p>
+        <p class="empty-copy" data-testid="offers-column-empty-<%= status %>"><%= t("ui.admin.offers.index.empty_column") %></p>
       <% end %>
     </article>
   <% end %>

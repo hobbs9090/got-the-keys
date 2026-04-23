@@ -337,6 +337,38 @@ RSpec.describe "Admin appointments" do
     expect(response.body).to include("Feedback Lead")
     expect(response.body).not_to include("Outside Range")
     expect(response.body).to include(%(data-testid="admin-bookings-filters"))
+
+    document = Nokogiri::HTML.parse(response.body)
+    expect(document.at_css('[data-testid="admin-bookings-filter-apply"]')).to be_present
+    expect(document.at_css('[data-testid="admin-bookings-filter-reset"]')).to be_present
+    expect(document.at_css('[data-testid="bookings-filter-queue"]')).to be_present
+  end
+
+  it "filters the bookings desk by the pending action queue" do
+    pending_slot = next_booking_slot(hour: 11)
+    pending = FactoryBot.create(:appointment, :pending, property:, customer_name: "Queued Pending", requested_time: pending_slot, scheduled_at: pending_slot)
+    rescheduled_slot = next_booking_slot(hour: 13)
+    rescheduled = FactoryBot.create(:appointment, property:, customer_name: "Queued Rescheduled", requested_time: rescheduled_slot, scheduled_at: rescheduled_slot, status: "rescheduled")
+    confirmed_slot = next_booking_slot(hour: 15)
+    FactoryBot.create(:appointment, :confirmed, property:, customer_name: "Not In Queue", requested_time: confirmed_slot, scheduled_at: confirmed_slot)
+
+    get admin_bookings_path, params: { queue: "pending_action" }
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include(pending.customer_name)
+    expect(response.body).to include(rescheduled.customer_name)
+    expect(response.body).not_to include("Not In Queue")
+  end
+
+  it "shows confirm and cancel testid anchors on pending appointment rows" do
+    slot = next_booking_slot(hour: 10)
+    appointment = FactoryBot.create(:appointment, :pending, property:, customer_name: "Action Row", requested_time: slot, scheduled_at: slot)
+
+    get admin_bookings_path
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include(%(data-testid="admin-appointment-confirm-#{appointment.id}"))
+    expect(response.body).to include(%(data-testid="admin-appointment-cancel-#{appointment.id}"))
   end
 
   it "queues a reminder from the admin detail page" do

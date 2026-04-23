@@ -19,6 +19,30 @@ selectors:
     surface: Public property detail
     selector: data-testid="property-documents-panel"
     purpose: Public brochure and document-download panel.
+  - key: flash_stack
+    surface: Global — admin shell
+    selector: data-testid="flash-stack"
+    purpose: Flash message container for asserting notice or alert presence after any admin action.
+  - key: flash_notice
+    surface: Global — admin shell
+    selector: data-testid="flash-notice"
+    purpose: Success flash shown after redirects from successful admin actions.
+  - key: flash_alert
+    surface: Global — admin shell
+    selector: data-testid="flash-alert"
+    purpose: Error or warning flash shown after failed or rejected admin actions.
+  - key: admin_dashboard_status_grid
+    surface: Admin dashboard
+    selector: data-testid="admin-dashboard-status-grid"
+    purpose: Metric card grid for asserting headline counts (properties, appointments, offers, customers, leads).
+  - key: admin_bookings_filters
+    surface: Admin bookings desk
+    selector: data-testid="admin-bookings-filters"
+    purpose: Bookings filter form shell for status, date range, queue, and customer-email filter assertions.
+  - key: admin_bookings_view_switch
+    surface: Admin bookings desk
+    selector: data-testid="admin-bookings-view-switch"
+    purpose: View mode switcher (agenda/day/week/month) on the bookings desk.
   - key: admin_appointment_row
     surface: Admin bookings desk
     selector: data-testid="admin-appointment-row"
@@ -31,6 +55,42 @@ selectors:
     surface: Admin lead detail
     selector: data-testid="lead-activity-timeline"
     purpose: Lead activity timeline for follow-up and audit checks.
+  - key: offers_column
+    surface: Admin offers board
+    selector: data-testid="offers-column-{status}"
+    purpose: Individual status column on the offers kanban board (received, accepted, rejected, withdrawn, etc.).
+  - key: rental_applications_column
+    surface: Admin rental applications board
+    selector: data-testid="rental-applications-column-{status}"
+    purpose: Individual status column on the rental applications kanban board.
+  - key: booking_configuration_form
+    surface: Admin booking rules
+    selector: data-testid="booking-configuration-form"
+    purpose: Booking rules form shell for asserting and updating scheduling parameters.
+  - key: notification_log_row
+    surface: Admin notification logs
+    selector: data-testid="notification-log-row"
+    purpose: Individual notification log row for delivery status and recipient assertions.
+  - key: performance_seed_form
+    surface: Admin demo data
+    selector: data-testid="performance-seed-form"
+    purpose: Performance test data seed form for appending large user and property volumes.
+  - key: scenario_run_history_panel
+    surface: Admin demo data
+    selector: data-testid="scenario-run-history-panel"
+    purpose: Recent demo data activity log showing the last 10 resets, imports, exports, and seeds.
+  - key: import_scenario_form
+    surface: Admin demo data — import
+    selector: data-testid="import-scenario-form"
+    purpose: Import scenario form shell for file-upload and YAML-paste import journeys.
+  - key: import_preview_panel
+    surface: Admin demo data — import preview
+    selector: data-testid="import-preview-panel"
+    purpose: Preview panel shown before applying an imported scenario, listing expected counts.
+  - key: qa_version_box
+    surface: Admin QA guide
+    selector: data-testid="qa-version-box"
+    purpose: Build version and environment panel for release verification in automated QA runs.
   - key: active_demo_scenario
     surface: Admin shell
     selector: data-testid="active-demo-scenario"

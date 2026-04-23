@@ -47,6 +47,13 @@ RSpec.describe "Admin dashboard", type: :request do
     end
   end
 
+  it "does not show the last demo data action on the dashboard" do
+    get admin_root_path
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).not_to include(I18n.t("ui.admin.dashboard.last_demo_data_action"))
+  end
+
   it "serves metrics from cache on repeated requests" do
     get admin_root_path
     expect(response).to have_http_status(:ok)

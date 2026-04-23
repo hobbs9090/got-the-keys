@@ -29,6 +29,13 @@ RSpec.describe "Admin offers", type: :request do
     expect(details_link.text.strip).to eq("Details")
   end
 
+  it "shows empty-state testid anchors on columns with no offers" do
+    get admin_sales_path
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include(%(data-testid="offers-column-empty-received"))
+  end
+
   it "updates an offer and syncs progression" do
     patch admin_sale_path(offer), params: {
       offer: {

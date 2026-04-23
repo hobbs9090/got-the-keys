@@ -43,7 +43,7 @@
     <h2><%= t("ui.admin.qa.diagnostics_title") %></h2>
     <dl class="detail-list">
       <% @diagnostics.each do |label, value| %>
-        <div>
+        <div data-testid="qa-diagnostic-<%= label.to_s.dasherize %>">
           <dt><%= t("ui.admin.qa.diagnostic_labels.#{label}") %></dt>
           <dd>
             <% if value.is_a?(DemoScenarioRun) %>

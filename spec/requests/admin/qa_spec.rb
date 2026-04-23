@@ -67,6 +67,8 @@ RSpec.describe "Admin QA guide" do
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("mail delivery mode".humanize)
     expect(response.body).to include(ActionMailer::Base.delivery_method.to_s)
+    expect(response.body).to include(%(data-testid="qa-diagnostic-mail-delivery-mode"))
+    expect(response.body).to include(%(data-testid="qa-diagnostic-active-scenario"))
     expect(response.body).to include("property-card")
     expect(response.body).not_to include("Scenario families")
     expect(response.body).not_to include("Happy path")
