@@ -1,5 +1,5 @@
 <% if object.errors.any? %>
-  <section id="errors" aria-live="polite">
+  <section id="errors" data-testid="form-errors" aria-live="polite">
     <header>
       <h2>
         <%= t('errors.oops') %>! <%= t('errors.the') %> <%= object.model_name.human.downcase %> <%= t('errors.could_not_be_saved') %>.

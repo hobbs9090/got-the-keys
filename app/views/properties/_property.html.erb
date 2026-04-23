@@ -83,7 +83,7 @@
           </div>
 
           <div class="property-card__actions">
-            <%= link_to t("ui.common.view_property"), property_path(property), class: "button primary hollow" %>
+            <%= link_to t("ui.common.view_property"), property_path(property), class: "button primary hollow", data: { testid: "property-card-view-#{property.id}" } %>
             <% if user_signed_in? %>
               <%= link_to t("ui.common.book_a_viewing"), new_property_appointment_path(property), class: "button primary", data: { testid: "book-viewing-link-#{property.id}" } %>
             <% else %>
@@ -95,7 +95,7 @@
     <% end %>
   </div>
 <% else %>
-  <section class="site-card empty-state">
+  <section class="site-card empty-state" data-testid="property-catalogue-empty">
     <p class="section-heading__eyebrow"><%= t("ui.properties.empty.eyebrow") %></p>
     <h2><%= t("ui.properties.empty.title") %></h2>
     <p><%= t("ui.properties.empty.body") %></p>

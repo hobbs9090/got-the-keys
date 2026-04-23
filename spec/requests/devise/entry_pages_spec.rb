@@ -60,6 +60,33 @@ RSpec.describe "Devise entry pages", type: :request do
     expect(response.body).to include("Sign in")
   end
 
+  it "renders the sign-in form with stable testid anchors" do
+    get new_user_session_path
+
+    document = Nokogiri::HTML.parse(response.body)
+
+    expect(document.at_css(%([data-testid="sign-in-form"]))).to be_present
+    expect(document.at_css(%([data-testid="sign-in-email"]))).to be_present
+    expect(document.at_css(%([data-testid="sign-in-password"]))).to be_present
+    expect(document.at_css(%([data-testid="sign-in-submit"]))).to be_present
+  end
+
+  it "renders the registration form with stable testid anchors" do
+    get new_user_registration_path
+
+    document = Nokogiri::HTML.parse(response.body)
+
+    expect(document.at_css(%([data-testid="registration-form"]))).to be_present
+    expect(document.at_css(%([data-testid="registration-first-name"]))).to be_present
+    expect(document.at_css(%([data-testid="registration-last-name"]))).to be_present
+    expect(document.at_css(%([data-testid="registration-mobile-number"]))).to be_present
+    expect(document.at_css(%([data-testid="registration-email"]))).to be_present
+    expect(document.at_css(%([data-testid="registration-password"]))).to be_present
+    expect(document.at_css(%([data-testid="registration-password-confirmation"]))).to be_present
+    expect(document.at_css(%([data-testid="registration-terms"]))).to be_present
+    expect(document.at_css(%([data-testid="registration-submit"]))).to be_present
+  end
+
   it "renders the admin sign-in page" do
     get new_admin_session_path
 

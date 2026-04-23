@@ -95,3 +95,95 @@ selectors:
     surface: Admin shell
     selector: data-testid="active-demo-scenario"
     purpose: Global active-scenario indicator used after resets and imports.
+  - key: sign_in_form
+    surface: Public — sign in
+    selector: data-testid="sign-in-form"
+    purpose: Sign-in form shell for auth-flow automation (email, password, OTP, submit).
+  - key: registration_form
+    surface: Public — registration
+    selector: data-testid="registration-form"
+    purpose: Registration form shell for new-account automation.
+  - key: form_errors
+    surface: Public — any form with errors
+    selector: data-testid="form-errors"
+    purpose: Shared validation error summary rendered when a model has errors.
+  - key: pagination
+    surface: Public — paginated lists
+    selector: data-testid="pagination"
+    purpose: Pagination wrapper for asserting page controls on paginated catalogue views.
+  - key: property_filter_reset
+    surface: Public catalogue
+    selector: data-testid="property-filter-reset"
+    purpose: Reset link that clears all active property search filters.
+  - key: property_filter_town_city
+    surface: Public catalogue
+    selector: data-testid="property-filter-town-city"
+    purpose: Town/city filter select on the property catalogue.
+  - key: property_filter_bedrooms
+    surface: Public catalogue
+    selector: data-testid="property-filter-bedrooms"
+    purpose: Minimum bedrooms filter select on the property catalogue.
+  - key: property_filter_min_price
+    surface: Public catalogue
+    selector: data-testid="property-filter-min-price"
+    purpose: Minimum price filter input on the property catalogue.
+  - key: property_filter_max_price
+    surface: Public catalogue
+    selector: data-testid="property-filter-max-price"
+    purpose: Maximum price filter input on the property catalogue.
+  - key: property_filter_sort
+    surface: Public catalogue
+    selector: data-testid="property-filter-sort"
+    purpose: Sort order select on the property catalogue.
+  - key: property_catalogue_empty
+    surface: Public catalogue
+    selector: data-testid="property-catalogue-empty"
+    purpose: Empty state shown when no properties match the active filters.
+  - key: property_card_view
+    surface: Public catalogue
+    selector: data-testid="property-card-view-{id}"
+    purpose: Per-property view link on catalogue cards for drill-in navigation.
+  - key: owner_listings_empty
+    surface: Public workspace — listings
+    selector: data-testid="owner-listings-empty"
+    purpose: Empty state on the owner listings section before any property is listed.
+  - key: customer_bookings_empty
+    surface: Public workspace — bookings
+    selector: data-testid="customer-bookings-empty"
+    purpose: Empty state on the customer bookings section when no appointments exist.
+  - key: customer_offers_empty
+    surface: Public workspace — offers
+    selector: data-testid="customer-offers-empty"
+    purpose: Empty state on the customer offers section when no offers have been made.
+  - key: customer_rental_applications_empty
+    surface: Public workspace — rental applications
+    selector: data-testid="customer-rental-applications-empty"
+    purpose: Empty state on the customer rental applications section when none exist.
+  - key: saved_homes_empty
+    surface: Public workspace — saved homes
+    selector: data-testid="saved-homes-empty"
+    purpose: Empty state on the saved homes section before any properties are saved.
+  - key: saved_searches_empty
+    surface: Public workspace — saved searches
+    selector: data-testid="saved-searches-empty"
+    purpose: Empty state on the saved searches section before any alerts are set up.
+  - key: floor_plan_add_form
+    surface: Seller workspace — floor plans
+    selector: data-testid="floor-plan-add-form"
+    purpose: Add floor plan form for upload and label automation.
+  - key: floor_plan_item
+    surface: Seller workspace — floor plans
+    selector: data-testid="floor-plan-item-{id}"
+    purpose: Individual floor plan item in the existing plans list.
+  - key: floor_plans_empty
+    surface: Seller workspace — floor plans
+    selector: data-testid="floor-plans-empty"
+    purpose: Empty state on the floor plans list before any plans are uploaded.
+  - key: viewing_times_list
+    surface: Seller workspace — viewing times
+    selector: data-testid="viewing-times-list"
+    purpose: List of configured viewing time slots for a property.
+  - key: add_viewing_time_link
+    surface: Seller workspace — viewing times
+    selector: data-testid="add-viewing-time-link"
+    purpose: Link to add a new viewing time slot for a property.

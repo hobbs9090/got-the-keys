@@ -22,7 +22,7 @@
       <p class="auth-form-card__intro"><%= t('devise.views.registrations.new.form_intro') %></p>
     </div>
 
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "stacked-form auth-form", data: { turbo: false } }) do |f| %>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "stacked-form auth-form", data: { turbo: false, testid: "registration-form" } }) do |f| %>
       <%= hidden_field_tag :return_to, pending_return_to_path if pending_return_to_path.present? %>
       <%= hidden_field_tag :save_property_id, pending_save_property_id if pending_save_property_id.present? %>
 
@@ -31,23 +31,23 @@
       <div class="form-grid auth-form__grid">
         <div>
           <%= f.label :first_name, nil, **form_label_options(resource, :first_name) %>
-          <%= f.text_field :first_name, autofocus: true, required: true, maxlength: 50, autocomplete: "given-name", **form_control_options(resource, :first_name) %>
+          <%= f.text_field :first_name, autofocus: true, required: true, maxlength: 50, autocomplete: "given-name", data: { testid: "registration-first-name" }, **form_control_options(resource, :first_name) %>
           <%= field_error_messages(resource, :first_name) %>
         </div>
         <div>
           <%= f.label :last_name, nil, **form_label_options(resource, :last_name) %>
-          <%= f.text_field :last_name, required: true, maxlength: 50, autocomplete: "family-name", **form_control_options(resource, :last_name) %>
+          <%= f.text_field :last_name, required: true, maxlength: 50, autocomplete: "family-name", data: { testid: "registration-last-name" }, **form_control_options(resource, :last_name) %>
           <%= field_error_messages(resource, :last_name) %>
         </div>
         <div class="form-grid__full auth-form__stack auth-form__contact-fields">
           <div>
             <%= f.label :mobile_number, nil, **form_label_options(resource, :mobile_number) %>
-            <%= f.text_field :mobile_number, required: true, maxlength: 20, autocomplete: "tel", **form_control_options(resource, :mobile_number) %>
+            <%= f.text_field :mobile_number, required: true, maxlength: 20, autocomplete: "tel", data: { testid: "registration-mobile-number" }, **form_control_options(resource, :mobile_number) %>
             <%= field_error_messages(resource, :mobile_number) %>
           </div>
           <div>
             <%= f.label :email, nil, **form_label_options(resource, :email) %>
-            <%= f.email_field :email, required: true, autocomplete: "email", **form_control_options(resource, :email) %>
+            <%= f.email_field :email, required: true, autocomplete: "email", data: { testid: "registration-email" }, **form_control_options(resource, :email) %>
             <%= field_error_messages(resource, :email) %>
           </div>
         </div>
@@ -62,17 +62,17 @@
         <div class="form-grid__full auth-form__stack auth-form__password-fields">
           <div>
             <%= f.label :password, nil, **form_label_options(resource, :password) %>
-            <%= f.password_field :password, required: true, minlength: 6, autocomplete: "new-password", **form_control_options(resource, :password) %>
+            <%= f.password_field :password, required: true, minlength: 6, autocomplete: "new-password", data: { testid: "registration-password" }, **form_control_options(resource, :password) %>
             <%= field_error_messages(resource, :password) %>
           </div>
           <div>
             <%= f.label :password_confirmation, nil, **form_label_options(resource, :password_confirmation) %>
-            <%= f.password_field :password_confirmation, required: true, minlength: 6, autocomplete: "new-password", **form_control_options(resource, :password_confirmation) %>
+            <%= f.password_field :password_confirmation, required: true, minlength: 6, autocomplete: "new-password", data: { testid: "registration-password-confirmation" }, **form_control_options(resource, :password_confirmation) %>
             <%= field_error_messages(resource, :password_confirmation) %>
           </div>
         </div>
         <div class="form-grid__full auth-form__checkbox">
-          <%= f.check_box :terms_of_service %>
+          <%= f.check_box :terms_of_service, data: { testid: "registration-terms" } %>
           <div>
             <%= f.label :terms_of_service, nil, class: "checkbox-label" %>
             <%= field_error_messages(resource, :terms_of_service) %>
@@ -82,7 +82,7 @@
 
       <div class="form-actions auth-form__actions">
         <p class="auth-form__note"><%= t('devise.views.registrations.new.paragraph_4') %></p>
-        <%= f.submit t('devise.views.links.register'), class: "button primary large auth-form__submit" %>
+        <%= f.submit t('devise.views.links.register'), class: "button primary large auth-form__submit", data: { testid: "registration-submit" } %>
       </div>
     <% end %>
 

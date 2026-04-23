@@ -8,7 +8,7 @@
     <p><%= t("ui.properties.mine.list_blurb") %></p>
 
     <% if @properties.blank? %>
-      <h3 class="property-workspace-section__empty-title"><%= t("ui.properties.mine.empty_title") %></h3>
+      <h3 class="property-workspace-section__empty-title" data-testid="owner-listings-empty"><%= t("ui.properties.mine.empty_title") %></h3>
       <p><%= t("ui.properties.mine.empty_body") %></p>
       <div class="property-workspace-section__actions">
         <%= link_to t("ui.site_header.add_property"), new_property_path, class: "button primary" %>
@@ -68,7 +68,7 @@
         </div>
       </section>
     <% else %>
-      <h3 class="property-workspace-section__empty-title"><%= t("ui.properties.mine.customer_bookings_empty_title") %></h3>
+      <h3 class="property-workspace-section__empty-title" data-testid="customer-bookings-empty"><%= t("ui.properties.mine.customer_bookings_empty_title") %></h3>
       <p class="empty-copy"><%= t("ui.properties.mine.customer_bookings_empty") %></p>
     <% end %>
   </section>
@@ -114,7 +114,7 @@
         </div>
       </section>
     <% else %>
-      <h3 class="property-workspace-section__empty-title"><%= t("ui.properties.mine.customer_offers_empty_title") %></h3>
+      <h3 class="property-workspace-section__empty-title" data-testid="customer-offers-empty"><%= t("ui.properties.mine.customer_offers_empty_title") %></h3>
       <p class="empty-copy"><%= t("ui.properties.mine.customer_offers_empty") %></p>
     <% end %>
   </section>
@@ -160,7 +160,7 @@
         </div>
       </section>
     <% else %>
-      <h3 class="property-workspace-section__empty-title"><%= t("ui.properties.mine.customer_rental_applications_empty_title") %></h3>
+      <h3 class="property-workspace-section__empty-title" data-testid="customer-rental-applications-empty"><%= t("ui.properties.mine.customer_rental_applications_empty_title") %></h3>
       <p class="empty-copy"><%= t("ui.properties.mine.customer_rental_applications_empty") %></p>
     <% end %>
   </section>
@@ -219,7 +219,7 @@
           <% end %>
         </div>
       <% else %>
-        <h3 class="property-workspace-section__empty-title"><%= t("ui.properties.mine.saved_homes_empty_title") %></h3>
+        <h3 class="property-workspace-section__empty-title" data-testid="saved-homes-empty"><%= t("ui.properties.mine.saved_homes_empty_title") %></h3>
         <p class="empty-copy"><%= t("ui.properties.mine.saved_homes_empty") %></p>
       <% end %>
     </section>
@@ -230,7 +230,7 @@
     <p><%= t("ui.properties.mine.saved_searches_blurb") %></p>
 
     <% if @saved_searches.blank? %>
-      <h3 class="property-workspace-section__empty-title"><%= t("ui.properties.mine.saved_searches_empty_title") %></h3>
+      <h3 class="property-workspace-section__empty-title" data-testid="saved-searches-empty"><%= t("ui.properties.mine.saved_searches_empty_title") %></h3>
       <p class="empty-copy"><%= t("ui.properties.mine.saved_searches_empty") %></p>
     <% else %>
       <%= render "properties/saved_searches_cards", saved_searches: @saved_searches %>

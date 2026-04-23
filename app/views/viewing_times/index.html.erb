@@ -1,28 +1,23 @@
 <% title "#{@property.address_line_1} - #{t('viewing_times.title')}" %>
 
-<div class="row">
+<section class="page-section">
+  <h1><%= t('viewing_times.viewing_times_for') %> <%= link_to(@property.address_line_1, @property) %></h1>
 
-  <div class="large-9 columns">
-
-    <h1 class="legacy-page-heading"><%= t('viewing_times.viewing_times_for') %> <%= link_to(@property.address_line_1, @property) %></h1>
-
-    <ol>
-      <% @viewing_times.each do |viewing_time| %>
-          <li>
-            <span><strong><%= t("ui.legacy.from") %></strong> <%= format_time(viewing_time.start_time) %></span> <strong><%= t("ui.legacy.to") %></strong>
-            <span><%= format_time(viewing_time.end_time) %></span>
-          </li>
-      <% end %>
-    </ol>
-
-    <% if current_user == @property.user %>
-        <p>
-          <%= link_to t("ui.legacy.add_viewing_time"), new_property_viewing_time_path(@property), class: 'button' %>
-        </p>
+  <ol data-testid="viewing-times-list">
+    <% @viewing_times.each do |viewing_time| %>
+      <li data-testid="viewing-time-item">
+        <span><strong><%= t("ui.legacy.from") %></strong> <%= format_time(viewing_time.start_time) %></span>
+        <strong><%= t("ui.legacy.to") %></strong>
+        <span><%= format_time(viewing_time.end_time) %></span>
+      </li>
     <% end %>
+  </ol>
 
-  </div>
+  <% if current_user == @property.user %>
+    <p>
+      <%= link_to t("ui.legacy.add_viewing_time"), new_property_viewing_time_path(@property), class: "button", data: { testid: "add-viewing-time-link" } %>
+    </p>
+  <% end %>
+</section>
 
-  <%= render "properties/property_sidebar" %>
-
-</div>
+<%= render "properties/property_sidebar" %>

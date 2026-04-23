@@ -243,6 +243,60 @@ describe "Properties" do
       )
     end
 
+    it "renders the catalogue filter with stable testid anchors on all inputs" do
+      get properties_path
+
+      document = Nokogiri::HTML.parse(response.body)
+
+      expect(document.at_css(%([data-testid="property-filter-form"]))).to be_present
+      expect(document.at_css(%([data-testid="property-search-query"]))).to be_present
+      expect(document.at_css(%([data-testid="property-filter-town-city"]))).to be_present
+      expect(document.at_css(%([data-testid="property-filter-bedrooms"]))).to be_present
+      expect(document.at_css(%([data-testid="property-filter-min-price"]))).to be_present
+      expect(document.at_css(%([data-testid="property-filter-max-price"]))).to be_present
+      expect(document.at_css(%([data-testid="property-filter-sort"]))).to be_present
+      expect(document.at_css(%([data-testid="apply-property-filters"]))).to be_present
+      expect(document.at_css(%([data-testid="property-filter-reset"]))).to be_present
+    end
+
+    it "renders the view-property link and empty-state testid anchors on property cards" do
+      get properties_path
+
+      document = Nokogiri::HTML.parse(response.body)
+      card = document.at_css(%([data-testid="property-card"]))
+      view_link = document.at_css(%([data-testid="property-card-view-#{property.id}"]))
+
+      expect(card).to be_present
+      expect(view_link).to be_present
+      expect(view_link["href"]).to eq(property_path(property))
+    end
+
+    it "renders the catalogue empty state testid when no properties match" do
+      property.update!(listing_state: "withdrawn")
+
+      get properties_path
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(%(data-testid="property-catalogue-empty"))
+    end
+
+    it "renders the pagination testid wrapper when results span multiple pages" do
+      12.times do |index|
+        FactoryBot.create(
+          :property,
+          user:,
+          address_line_1: "Pagination Test #{index + 2}",
+          postcode: format("SE1 %<n>1AB", n: index + 2)
+        )
+      end
+
+      get properties_path
+
+      document = Nokogiri::HTML.parse(response.body)
+
+      expect(document.at_css(%([data-testid="pagination"]))).to be_present
+    end
+
     it "omits the browse card, catalogue overview, recommended, and response-time labels from the catalogue page" do
       get properties_path
 
@@ -968,6 +1022,21 @@ describe "Properties" do
       expect(response.body).to include(new_property_path)
     end
 
+    it "renders empty state testid anchors on all workspace sections for a fresh user" do
+      sign_in FactoryBot.create(:user)
+
+      get mine_properties_path
+
+      document = Nokogiri::HTML.parse(response.body)
+
+      expect(document.at_css(%([data-testid="owner-listings-empty"]))).to be_present
+      expect(document.at_css(%([data-testid="customer-bookings-empty"]))).to be_present
+      expect(document.at_css(%([data-testid="customer-offers-empty"]))).to be_present
+      expect(document.at_css(%([data-testid="customer-rental-applications-empty"]))).to be_present
+      expect(document.at_css(%([data-testid="saved-homes-empty"]))).to be_present
+      expect(document.at_css(%([data-testid="saved-searches-empty"]))).to be_present
+    end
+
     it "always renders listings, bookings, offers, rental applications, saved homes, and saved searches sections when listings are empty" do
       sign_in FactoryBot.create(:user)
 
@@ -1153,6 +1222,31 @@ describe "Properties" do
       expect(response.body).not_to include('role="content"')
     end
 
+    it "renders the floor plans page with stable testid anchors" do
+      sign_in user
+      floor_plan = FactoryBot.create(:floor_plan, property:, label: "Ground floor")
+
+      get property_floor_plans_path(property)
+
+      document = Nokogiri::HTML.parse(response.body)
+
+      expect(document.at_css(%([data-testid="floor-plan-add-form"]))).to be_present
+      expect(document.at_css(%([data-testid="floor-plan-file-input"]))).to be_present
+      expect(document.at_css(%([data-testid="floor-plan-add-submit"]))).to be_present
+      expect(document.at_css(%([data-testid="floor-plan-item-#{floor_plan.id}"]))).to be_present
+      expect(document.at_css(%([data-testid="floor-plan-update-#{floor_plan.id}"]))).to be_present
+      expect(document.at_css(%([data-testid="floor-plan-remove-#{floor_plan.id}"]))).to be_present
+    end
+
+    it "renders the empty state testid when no floor plans exist" do
+      sign_in user
+
+      get property_floor_plans_path(property)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(%(data-testid="floor-plans-empty"))
+    end
+
     it "lets the owner create a floor plan" do
       sign_in user
 
@@ -1245,6 +1339,16 @@ describe "Properties" do
       expect(response).to have_http_status(:ok)
       expect(response.body).not_to include('role="content"')
       expect(document.at_css("h1")&.text&.strip).to include(property.address_line_1)
+    end
+
+    it "renders the viewing times page with stable testid anchors" do
+      get property_viewing_times_path(property)
+
+      document = Nokogiri::HTML.parse(response.body)
+
+      expect(document.at_css(%([data-testid="viewing-times-list"]))).to be_present
+      expect(document.at_css(%([data-testid="add-viewing-time-link"]))).to be_present
+      expect(document.at_css(%([data-testid="add-viewing-time-link"]))["href"]).to eq(new_property_viewing_time_path(property))
     end
 
     it "renders the new viewing time page without invalid ARIA roles" do

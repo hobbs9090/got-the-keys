@@ -17,7 +17,7 @@
     <h2><%= t("ui.floor_plans.add_title") %></h2>
     <%= render "shared/errors", object: @new_floor_plan %>
 
-    <%= form_with model: [@property, @new_floor_plan] do |f| %>
+    <%= form_with model: [@property, @new_floor_plan], data: { testid: "floor-plan-add-form" } do |f| %>
       <div class="form-grid">
         <div>
           <%= f.label :label, t("ui.floor_plans.fields.label") %>
@@ -29,7 +29,7 @@
         </div>
         <div>
           <%= f.label :floor_plan_upload, t("ui.floor_plans.fields.upload", default: "Upload floor plan") %>
-          <%= f.file_field :floor_plan_upload, accept: "application/pdf,image/jpeg,image/png,image/webp,.pdf,.jpg,.jpeg,.png,.webp" %>
+          <%= f.file_field :floor_plan_upload, accept: "application/pdf,image/jpeg,image/png,image/webp,.pdf,.jpg,.jpeg,.png,.webp", data: { testid: "floor-plan-file-input" } %>
         </div>
         <div>
           <%= f.label :position, t("ui.floor_plans.fields.position") %>
@@ -38,7 +38,7 @@
       </div>
 
       <div class="form-actions">
-        <%= f.submit t("ui.floor_plans.actions.add"), class: "button primary" %>
+        <%= f.submit t("ui.floor_plans.actions.add"), class: "button primary", data: { testid: "floor-plan-add-submit" } %>
         <%= link_to t("ui.common.back_to_listing"), property_listing_edit_path(@property), class: "button hollow secondary" %>
       </div>
     <% end %>
@@ -50,7 +50,7 @@
       <div class="admin-list">
         <% @floor_plans.each do |floor_plan| %>
           <% floor_plan_form = floor_plan == @edited_floor_plan ? @edited_floor_plan : floor_plan %>
-          <div class="admin-list__item">
+          <div class="admin-list__item" data-testid="floor-plan-item-<%= floor_plan.id %>">
             <div class="property-panel">
               <%= form_with model: [@property, floor_plan_form], method: :patch do |f| %>
                 <div class="form-grid">
@@ -68,11 +68,11 @@
                   </div>
                 </div>
                 <div class="form-actions">
-                  <%= f.submit t("ui.common.save"), class: "button primary hollow" %>
+                  <%= f.submit t("ui.common.save"), class: "button primary hollow", data: { testid: "floor-plan-update-#{floor_plan.id}" } %>
                   <%= link_to t("ui.common.remove"),
                               property_floor_plan_path(@property, floor_plan),
                               class: "button alert hollow",
-                              data: { turbo_method: :delete, turbo_confirm: t("ui.floor_plans.actions.remove_confirm") } %>
+                              data: { testid: "floor-plan-remove-#{floor_plan.id}", turbo_method: :delete, turbo_confirm: t("ui.floor_plans.actions.remove_confirm") } %>
                 </div>
               <% end %>
             </div>
@@ -80,7 +80,7 @@
         <% end %>
       </div>
     <% else %>
-      <p class="empty-copy"><%= t("ui.floor_plans.empty") %></p>
+      <p class="empty-copy" data-testid="floor-plans-empty"><%= t("ui.floor_plans.empty") %></p>
     <% end %>
   </article>
 </section>

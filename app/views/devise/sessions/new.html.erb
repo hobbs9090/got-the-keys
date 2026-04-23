@@ -43,7 +43,7 @@
       <% end %>
     </div>
 
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "stacked-form auth-form", data: { turbo: false } }) do |f| %>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "stacked-form auth-form", data: { turbo: false, testid: "sign-in-form" } }) do |f| %>
       <%= hidden_field_tag :return_to, pending_return_to_path if pending_return_to_path.present? %>
       <%= hidden_field_tag :save_property_id, pending_save_property_id if pending_save_property_id.present? %>
       <%= hidden_field_tag "#{resource_name}[two_factor_challenge_token]", @admin_two_factor_challenge_token if admin_two_factor_challenge %>
@@ -58,9 +58,9 @@
         <div>
           <%= f.label :email, nil, **form_label_options(resource, :email) %>
           <% if admin_two_factor_challenge %>
-            <%= f.email_field :email, readonly: true, required: true, autocomplete: "email", **form_control_options(resource, :email) %>
+            <%= f.email_field :email, readonly: true, required: true, autocomplete: "email", data: { testid: "sign-in-email" }, **form_control_options(resource, :email) %>
           <% else %>
-            <%= f.email_field :email, autofocus: true, required: true, autocomplete: "email", **form_control_options(resource, :email) %>
+            <%= f.email_field :email, autofocus: true, required: true, autocomplete: "email", data: { testid: "sign-in-email" }, **form_control_options(resource, :email) %>
           <% end %>
           <%= field_error_messages(resource, :email) %>
         </div>
@@ -68,7 +68,7 @@
         <% unless admin_two_factor_challenge %>
           <div>
             <%= f.label :password, nil, **form_label_options(resource, :password) %>
-            <%= f.password_field :password, required: true, autocomplete: "current-password", **form_control_options(resource, :password) %>
+            <%= f.password_field :password, required: true, autocomplete: "current-password", data: { testid: "sign-in-password" }, **form_control_options(resource, :password) %>
             <%= field_error_messages(resource, :password) %>
           </div>
         <% end %>
@@ -76,7 +76,7 @@
         <% if admin_otp_prompt %>
           <div>
             <%= f.label :otp_attempt, t("devise.views.sessions.new.otp_attempt", default: "Verification code or backup code"), **form_label_options(resource, :otp_attempt) %>
-            <%= f.text_field :otp_attempt, autocomplete: "one-time-code", autocapitalize: "off", spellcheck: false, maxlength: 64, **form_control_options(resource, :otp_attempt) %>
+            <%= f.text_field :otp_attempt, autocomplete: "one-time-code", autocapitalize: "off", spellcheck: false, maxlength: 64, data: { testid: "sign-in-otp-attempt" }, **form_control_options(resource, :otp_attempt) %>
             <p class="help-text auth-form__hint"><%= t("devise.views.sessions.new.otp_attempt_hint", default: "Enter an authenticator code or one of your backup codes.") %></p>
             <%= field_error_messages(resource, :otp_attempt) %>
           </div>
@@ -94,7 +94,7 @@
 
       <div class="form-actions auth-form__actions">
         <p class="auth-form__note"><%= t('devise.views.sessions.new.support_note') %></p>
-        <%= f.submit t('devise.views.sessions.new.submit'), class: "button primary large auth-form__submit" %>
+        <%= f.submit t('devise.views.sessions.new.submit'), class: "button primary large auth-form__submit", data: { testid: "sign-in-submit" } %>
       </div>
     <% end %>
 
