@@ -9,6 +9,7 @@ RSpec.describe DeviseMailer, type: :mailer do
 
       expect(mail.subject).to eq("Reset password instructions")
       expect(mail.body.encoded).to include("marketing-wordmark--mailer")
+      expect(mail.body.encoded).to include("http://www.example.com/assets/gotthekeys-wordmark-green")
       expect(mail.body.encoded).to include("reset_password_token=test-token")
     end
   end

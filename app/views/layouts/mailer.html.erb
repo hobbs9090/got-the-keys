@@ -2,6 +2,13 @@
 <html>
   <body style="background:#f4f7fb;color:#1d2433;font-family:Manrope,Arial,sans-serif;margin:0;padding:32px;">
     <div style="background:#ffffff;border-radius:20px;box-shadow:0 20px 55px rgba(20,37,63,0.12);margin:0 auto;max-width:640px;padding:32px;">
+      <div style="margin:0 0 24px;">
+        <%= image_tag "#{root_url.chomp('/')}#{image_path('gotthekeys-wordmark-green.svg')}",
+                      width: 200,
+                      height: 45,
+                      alt: t("gotthekeys.gotthekeys", default: "GotTheKeys"),
+                      class: "marketing-wordmark marketing-wordmark--mailer" %>
+      </div>
       <%= yield %>
     </div>
   </body>
