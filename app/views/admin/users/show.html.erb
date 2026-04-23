@@ -69,3 +69,26 @@
     <p class="empty-copy"><%= t("ui.admin.users.show.no_properties") %></p>
   <% end %>
 </section>
+
+<section class="admin-panel">
+  <h2><%= t("ui.admin.users.show.saved_properties_title") %></h2>
+  <% if @saved_properties.any? %>
+    <div class="admin-list">
+      <% @saved_properties.each do |saved_property| %>
+        <% property = saved_property.property %>
+        <div class="admin-list__item" data-testid="admin-user-saved-property-row-<%= property.id %>">
+          <div>
+            <%= link_to property.address_line_1, admin_property_path(property) %>
+            <p><%= property.location_line %></p>
+          </div>
+          <div class="admin-inline-actions">
+            <span class="<%= property_sale_status_badge_class(property.sale_status) %>" data-testid="admin-user-saved-property-sale-status-badge-<%= property.id %>"><%= translated_sale_status(property.sale_status) %></span>
+            <span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="empty-copy"><%= t("ui.admin.users.show.no_saved_properties") %></p>
+  <% end %>
+</section>

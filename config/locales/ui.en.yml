@@ -1272,6 +1272,8 @@ en:
           listings_title: "Listings and status"
           no_properties: "This seller has not created any listings yet."
           recent_booking_activity_title: "Recent booking activity"
+          saved_properties_title: "Saved properties"
+          no_saved_properties: "This seller has not saved any properties yet."
           no_activity: "No appointment activity on this seller's properties yet."
       customers:
         index:

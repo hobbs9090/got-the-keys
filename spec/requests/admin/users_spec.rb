@@ -191,6 +191,38 @@ RSpec.describe "Admin users", type: :request do
     expect(rent_badge["class"]).to include("badge--success")
   end
 
+  it "lists all of the seller's saved properties on the profile page" do
+    user = FactoryBot.create(:user, first_name: "Taylor", last_name: "Stone", email: "taylor.stone@example.com")
+    FactoryBot.create(:property, user: user, address_line_1: "Owned Home")
+    saved_sale_property = FactoryBot.create(:property, address_line_1: "Saved Sale Home", listing_state: "published")
+    saved_rent_property = FactoryBot.create(:property, :for_rent, :draft, address_line_1: "Saved Rental Home")
+    unsaved_property = FactoryBot.create(:property, address_line_1: "Not Saved Home")
+
+    FactoryBot.create(:saved_property, user: user, property: saved_sale_property)
+    FactoryBot.create(:saved_property, user: user, property: saved_rent_property)
+
+    get admin_seller_path(user)
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("Saved properties")
+    expect(response.body).to include("Saved Sale Home")
+    expect(response.body).to include("Saved Rental Home")
+    expect(response.body).not_to include("Not Saved Home")
+
+    row_ids = parsed_html.css('[data-testid^="admin-user-saved-property-row-"]').map { |row| row["data-testid"] }
+    expect(row_ids).to include("admin-user-saved-property-row-#{saved_sale_property.id}")
+    expect(row_ids).to include("admin-user-saved-property-row-#{saved_rent_property.id}")
+    expect(row_ids).not_to include("admin-user-saved-property-row-#{unsaved_property.id}")
+
+    sale_badge = parsed_html.at_css(%([data-testid="admin-user-saved-property-sale-status-badge-#{saved_sale_property.id}"]))
+    rent_badge = parsed_html.at_css(%([data-testid="admin-user-saved-property-sale-status-badge-#{saved_rent_property.id}"]))
+
+    expect(sale_badge).to be_present
+    expect(sale_badge.text.strip).to eq("For Sale")
+    expect(rent_badge).to be_present
+    expect(rent_badge.text.strip).to eq("For Rent")
+  end
+
   it "excludes registered users who do not own any properties" do
     seller = FactoryBot.create(:user, first_name: "Taylor", last_name: "Stone", email: "taylor.stone@example.com")
     nonseller = FactoryBot.create(:user, first_name: "Alex", last_name: "Cole", email: "alex.cole@example.com")

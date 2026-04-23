@@ -981,6 +981,8 @@ de:
           listings_title: Inserate und Status
           no_properties: Dieser Verkäufer hat noch keine Inserate erstellt.
           recent_booking_activity_title: Letzte Buchungsaktivität
+          saved_properties_title: Gespeicherte Immobilien
+          no_saved_properties: Dieser Verkäufer hat noch keine Immobilien gespeichert.
           no_activity: Auf den Objekten dieses Verkäufers gibt es noch keine Terminaktivität.
       notification_logs:
         title: Benachrichtigungsprotokoll

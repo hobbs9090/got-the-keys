@@ -985,6 +985,8 @@ fr:
           listings_title: Annonces et statuts
           no_properties: Ce vendeur n'a pas encore cree d'annonces.
           recent_booking_activity_title: Activite recente des reservations
+          saved_properties_title: Biens sauvegardes
+          no_saved_properties: Ce vendeur n'a pas encore sauvegarde de biens.
           no_activity: Aucune activite de rendez-vous sur les biens de ce vendeur
             pour le moment.
       notification_logs:
