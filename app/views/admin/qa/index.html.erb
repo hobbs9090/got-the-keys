@@ -93,17 +93,6 @@
 
 <section class="admin-grid">
   <article class="admin-panel">
-    <h2><%= t("ui.admin.qa.training_title") %></h2>
-    <ol class="timeline">
-      <% @training_journeys.each do |journey| %>
-        <li><p><%= journey %></p></li>
-      <% end %>
-    </ol>
-  </article>
-</section>
-
-<section class="admin-grid">
-  <article class="admin-panel">
     <h2><%= t("ui.admin.qa.selector_contract_registry") %></h2>
     <% @selector_groups.each do |surface, selectors| %>
       <p><strong><%= admin_selector_surface_label(selectors.first) %></strong></p>

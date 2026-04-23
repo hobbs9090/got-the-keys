@@ -117,29 +117,6 @@
   <% end %>
 </section>
 
-<%= render "shared/modal",
-           id: "disable-admin-two-factor-mode-modal",
-           title: t("ui.admin.qa.admin_two_factor.title"),
-           size: "small" do %>
-  <div class="admin-two-factor-mode-panel__disable-controls">
-    <div class="callout warning admin-two-factor-mode-panel__warning" data-testid="admin-two-factor-warning-callout">
-      <p><strong><%= t("ui.admin.qa.admin_two_factor.warning_title") %>:</strong> <%= t("ui.admin.qa.admin_two_factor.warning_body") %></p>
-    </div>
-
-    <%= form_with url: admin_security_path, method: :patch, class: "stacked-form", local: true do %>
-      <%= hidden_field_tag "booking_configuration[admin_two_factor_mode]", "disabled" %>
-      <%= label_tag :confirm_disable_admin_two_factor, t("ui.admin.qa.admin_two_factor.confirmation_label", phrase: admin_two_factor_disable_confirmation_phrase) %>
-      <%= text_field_tag :confirm_disable_admin_two_factor, nil, placeholder: admin_two_factor_disable_confirmation_phrase, required: true, pattern: admin_two_factor_disable_confirmation_phrase %>
-      <p class="help-text"><%= t("ui.admin.qa.admin_two_factor.confirmation_help") %></p>
-
-      <div class="form-actions">
-        <button type="button" class="button hollow secondary" data-modal-close><%= t("ui.common.cancel", default: "Cancel") %></button>
-        <%= submit_tag t("ui.admin.qa.admin_two_factor.save"), class: "button alert" %>
-      </div>
-    <% end %>
-  </div>
-<% end %>
-
 <section class="admin-panel" data-testid="admin-security-activity-panel">
   <h2><%= t("ui.admin.security.activity_title") %></h2>
 

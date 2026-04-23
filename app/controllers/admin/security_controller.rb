@@ -148,7 +148,6 @@ class Admin::SecurityController < Admin::BaseController
     @pending_otp_secret = current_admin.two_factor_enrolled? ? nil : session[:admin_pending_otp_secret].presence
     @fresh_backup_codes = Array(flash[:admin_security_backup_codes])
     @security_audit_logs = current_admin.audit_logs.where(action: SECURITY_AUDIT_ACTIONS).recent_first.limit(8)
-    @last_admin_two_factor_mode_change = AuditLog.recent_first.find_by(action: "admin_two_factor_mode_changed")
   end
 
   def verify_pending_otp(code, secret)

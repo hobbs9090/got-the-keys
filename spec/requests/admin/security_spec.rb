@@ -12,12 +12,13 @@ RSpec.describe "Admin security" do
     Nokogiri::HTML.parse(response.body)
   end
 
-  it "does not show the admin 2FA mode controls card on the security page" do
+  it "shows personal 2FA status without the dead global-mode modal" do
     get admin_security_path
 
     expect(response).to have_http_status(:ok)
+    expect(response.body).to include(%(data-testid="admin-security-status-panel"))
     expect(response.body).not_to include(%(data-testid="admin-two-factor-mode-controls"))
-    expect(response.body).to include(%(id="disable-admin-two-factor-mode-modal"))
+    expect(response.body).not_to include(%(id="disable-admin-two-factor-mode-modal"))
   end
 
   it "updates the admin 2FA mode to optional and audits the change" do

@@ -10,21 +10,6 @@
   </div>
 </section>
 
-<section class="admin-grid">
-  <article class="admin-panel">
-    <h2><%= t("ui.admin.demo_data.diagnostics_title") %></h2>
-    <dl class="detail-list">
-      <% @diagnostics.each do |label, value| %>
-        <div>
-          <dt><%= admin_demo_label(label) %></dt>
-          <dd><%= value.is_a?(Time) ? formatted_date_time(value) : value %></dd>
-        </div>
-      <% end %>
-    </dl>
-  </article>
-
-</section>
-
 <section class="admin-panel admin-demo-danger-zone" data-testid="scenario-seed-reset-panel">
   <div class="admin-demo-danger-zone__header">
     <p class="admin-demo-danger-zone__eyebrow"><%= t("ui.admin.demo_data.seed_resets.eyebrow") %></p>
@@ -218,22 +203,3 @@
   <% end %>
 </section>
 
-<section class="admin-section">
-  <div class="section-heading">
-    <div>
-      <p class="section-heading__eyebrow"><%= t("ui.admin.demo_data.eyebrow") %></p>
-      <h2><%= t("ui.admin.demo_data.last_demo_action_title") %></h2>
-    </div>
-  </div>
-</section>
-
-<section class="admin-grid">
-  <article class="admin-panel">
-    <% if @latest_run.present? %>
-      <p><strong><%= admin_demo_action_label(@latest_run.action_type) %></strong> <%= t("ui.admin.dashboard.on") %> <%= formatted_date_time(@latest_run.created_at) %></p>
-      <pre class="code-block"><%= JSON.pretty_generate(@latest_run.summary_data || {}) %></pre>
-    <% else %>
-      <p class="empty-copy"><%= t("ui.admin.demo_data.no_actions") %></p>
-    <% end %>
-  </article>
-</section>

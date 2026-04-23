@@ -22,6 +22,8 @@ RSpec.describe "Admin demo scenarios" do
     expect(response.body).not_to include("Import scenario")
     expect(response.body).not_to include("Export current data")
     expect(response.body).not_to include("Scenario family")
+    expect(response.body).not_to include(I18n.t("ui.admin.demo_data.diagnostics_title"))
+    expect(response.body).not_to include(I18n.t("ui.admin.demo_data.last_demo_action_title"))
 
     seed_reset_panel = parsed_html.at_css('[data-testid="scenario-seed-reset-panel"]')
     expect(seed_reset_panel).to be_present

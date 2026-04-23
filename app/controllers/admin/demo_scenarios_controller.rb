@@ -107,8 +107,6 @@ class Admin::DemoScenariosController < Admin::BaseController
 
   def load_dashboard_state(form_values: nil)
     @baseline_scenario = @scenario_loader.preview("baseline")
-    @latest_run = DemoScenarioRun.recent_first.first
-    @diagnostics = diagnostics_payload
     @performance_seed_form = PERFORMANCE_SEED_DEFAULTS.merge(form_values || {})
   end
 
@@ -123,20 +121,6 @@ class Admin::DemoScenariosController < Admin::BaseController
   def uploaded_yaml_source
     upload = params.dig(:demo_import, :scenario_file)
     upload&.read
-  end
-
-  def diagnostics_payload
-    {
-      active_scenario: booking_configuration.active_demo_scenario_key,
-      property_count: Property.count,
-      user_count: User.count,
-      appointment_count: Appointment.count,
-      enquiry_count: Enquiry.count,
-      notification_count: NotificationLog.count,
-      last_demo_action: DemoScenarioRun.recent_first.first&.created_at,
-      mail_delivery_mode: ActionMailer::Base.delivery_method.to_s,
-      job_adapter: ActiveJob::Base.queue_adapter.class.name.demodulize.underscore
-    }
   end
 
   def performance_seed_form_values
