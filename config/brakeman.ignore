@@ -1,38 +1,38 @@
 {
   "ignored_warnings": [
     {
-      "fingerprint": "1173a87e7c51ea87fe322b9cda8ef615a0bcf88c95b9841c930e0c38fa9a1bdd",
+      "fingerprint": "affacb0df5be47c6fc2c10a214e96fd62bfeba9c38358689fc67c75edfd36b35",
       "warning_type": "SQL Injection",
       "message": "Possible SQL injection",
       "file": "app/services/admin/customer_directory.rb",
-      "line": 127,
+      "line": 135,
       "confidence": "High",
       "note": "False positive: the CASE expression only interpolates quoted sale_status constants and fixed column names."
     },
     {
-      "fingerprint": "553a299a0a686987f3b03f86488409b807c98d6e47ea3c35e9b720f0db734c46",
+      "fingerprint": "0361e1bc80fd02b0572fa5fcd85d13d34c4dabcd2b9e7df0c9d3ab97887e957e",
       "warning_type": "SQL Injection",
       "message": "Possible SQL injection",
       "file": "app/services/admin/customer_directory.rb",
-      "line": 164,
+      "line": 155,
       "confidence": "Medium",
       "note": "False positive: the SELECT list is assembled from fixed SQL fragments and hardcoded column references."
     },
     {
-      "fingerprint": "9c0ea29a4f957d69028202fb8ba5341314b080bfea93683202c8de9df66caabc",
+      "fingerprint": "ce2eb9ff2381e4255175978b3b2fdb634b5a994417008c2ff660a1fda04e28dd",
       "warning_type": "SQL Injection",
       "message": "Possible SQL injection",
       "file": "app/services/admin/customer_directory.rb",
-      "line": 76,
+      "line": 84,
       "confidence": "Medium",
       "note": "False positive: the SELECT list is assembled from fixed SQL fragments and hardcoded column references."
     },
     {
-      "fingerprint": "e9f35dabb875d9986ded4193e337afb438fe6a16b308b94d4a6bc87364d5001e",
+      "fingerprint": "4b6aebc41dfb7002cc56124b04430541bfd8c6cc6851645680e0b579d0b20cbd",
       "warning_type": "SQL Injection",
       "message": "Possible SQL injection",
       "file": "app/services/admin/customer_directory.rb",
-      "line": 141,
+      "line": 179,
       "confidence": "Medium",
       "note": "False positive: the SELECT list is assembled from fixed SQL fragments and hardcoded column references."
     }

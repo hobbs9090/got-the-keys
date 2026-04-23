@@ -27,3 +27,17 @@ if ! bin/pre_push_rspec; then
   echo "pre-push: RSpec failed. Push cancelled." >&2
   exit 1
 fi
+
+echo "pre-push: running Brakeman..."
+
+if ! bundle exec brakeman --no-pager -q; then
+  echo "pre-push: Brakeman failed. Push cancelled." >&2
+  exit 1
+fi
+
+echo "pre-push: running bundler-audit..."
+
+if ! bundle exec bundler-audit update && bundle exec bundler-audit check; then
+  echo "pre-push: bundler-audit failed. Push cancelled." >&2
+  exit 1
+fi
