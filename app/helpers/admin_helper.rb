@@ -163,6 +163,10 @@ module AdminHelper
     ].compact
   end
 
+  def admin_customer_display_email(email)
+    email.to_s.sub(/\A(?:tenant|buyer|seller|landlord)\./i, "")
+  end
+
   private
 
   def customer_badge(show, key, css_class)

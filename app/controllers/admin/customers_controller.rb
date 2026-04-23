@@ -5,7 +5,7 @@ class Admin::CustomersController < Admin::BaseController
   end
 
   def show
-    @customer = directory.grouped_customers.find_by!("email_key = ?", params[:id].to_s.downcase)
+    @customer = directory.find_customer!(params[:id])
     @appointments = directory.customer_appointments(@customer).limit(10)
   end
 

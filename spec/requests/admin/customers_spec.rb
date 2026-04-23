@@ -337,6 +337,31 @@ RSpec.describe "Admin customers", type: :request do
     expect(bookings_link).to be_present
   end
 
+  it "shows a customer profile page for rental applicants without bookings" do
+    property = FactoryBot.create(:property, :for_rent, address_line_1: "27 Willow Court")
+    rental_application = FactoryBot.create(
+      :rental_application,
+      property:,
+      applicant_name: "Ravi Patel",
+      applicant_email: "tenant.ravi.patel@example.com",
+      applicant_phone: "07700 905777",
+      status: "received"
+    )
+
+    get admin_customer_path(rental_application.applicant_email)
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("Customer Ravi Patel")
+    expect(response.body).to include("Recent bookings")
+
+    document = parsed_html
+    details = document.css(".detail-list dd").map { |node| node.text.squish }
+
+    expect(document.css(".section-heading > div > p").last.text).to eq("ravi.patel@example.com")
+    expect(details).to include("ravi.patel@example.com")
+    expect(details).not_to include("tenant.ravi.patel@example.com")
+  end
+
   it "shows role badges for sellers, landlords, buyers with offers, and tenants with approved rental applications" do
     seller = FactoryBot.create(
       :user,

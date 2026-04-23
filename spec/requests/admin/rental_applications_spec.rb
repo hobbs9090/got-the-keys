@@ -1,4 +1,5 @@
 require "rails_helper"
+require "nokogiri"
 
 RSpec.describe "Admin rental applications", type: :request do
   let(:admin) { FactoryBot.create(:admin, email: "lettings-admin@gotthekeys.com", password: "secret123", password_confirmation: "secret123") }
@@ -16,6 +17,16 @@ RSpec.describe "Admin rental applications", type: :request do
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Rental applications board")
     expect(response.body).to include(%(data-testid="rental-applications-column-received"))
+
+    document = Nokogiri::HTML.parse(response.body)
+    applicant_link = document.at_css(%(a[href="#{admin_customer_path(application.applicant_email.downcase)}"]))
+    details_link = document.at_css(%([data-testid="admin-rental-application-open-#{application.id}"]))
+
+    expect(applicant_link).to be_present
+    expect(applicant_link.text.strip).to eq(application.applicant_name)
+    expect(details_link).to be_present
+    expect(details_link["href"]).to eq(admin_rental_path(application))
+    expect(details_link.text.strip).to eq("Details")
   end
 
   it "updates a rental application and syncs progression" do

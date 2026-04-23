@@ -30,7 +30,7 @@
         <article class="admin-list__item" data-testid="admin-customer-row-<%= customer.email_key.parameterize %>">
           <div>
             <%= link_to customer.customer_name.presence || customer.customer_email, admin_customer_path(customer.email_key) %>
-            <p><%= customer.customer_email %> · <%= customer.customer_phone.presence || t("ui.admin.appointments.show.not_supplied") %></p>
+            <p><%= admin_customer_display_email(customer.customer_email) %> · <%= customer.customer_phone.presence || t("ui.admin.appointments.show.not_supplied") %></p>
             <% badges = admin_customer_badges(customer) %>
             <% if badges.any? %>
               <div class="admin-customer-badges">

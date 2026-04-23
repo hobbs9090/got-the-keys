@@ -4,8 +4,8 @@
   <div class="section-heading">
     <div>
       <p class="section-heading__eyebrow"><%= t("ui.admin.customers.show.eyebrow") %></p>
-      <h1><%= @customer.customer_name.presence || @customer.customer_email %></h1>
-      <p><%= @customer.customer_email %></p>
+      <h1><%= @customer.customer_name.presence || admin_customer_display_email(@customer.customer_email) %></h1>
+      <p><%= admin_customer_display_email(@customer.customer_email) %></p>
     </div>
 
     <div class="section-heading__actions">
@@ -21,7 +21,7 @@
     <dl class="detail-list">
       <div>
         <dt><%= t("ui.common.email_address") %></dt>
-        <dd><%= @customer.customer_email %></dd>
+        <dd><%= admin_customer_display_email(@customer.customer_email) %></dd>
       </div>
       <div>
         <dt><%= t("ui.common.phone_number") %></dt>

@@ -28,6 +28,12 @@ class Admin::CustomerDirectory
     apply_search(scope)
   end
 
+  def find_customer!(email_key)
+    normalized_email_key = email_key.to_s.downcase
+    grouped_customers.detect { |customer| customer.email_key == normalized_email_key } ||
+      raise(ActiveRecord::RecordNotFound, "Couldn't find customer with email key #{normalized_email_key.inspect}")
+  end
+
   def customer_appointments(customer)
     Appointment.includes(:property)
       .where(
@@ -65,7 +71,7 @@ class Admin::CustomerDirectory
       registered_user_entries.to_sql,
       property_owner_role_entries.to_sql,
       active_offer_buyer_entries.to_sql,
-      approved_rental_tenant_entries.to_sql
+      rental_application_entries.to_sql
     ].join(" UNION ALL ")
   end
 
@@ -165,10 +171,9 @@ class Admin::CustomerDirectory
       .group(email_group_sql("offers.buyer_email"))
   end
 
-  def approved_rental_tenant_entries
+  def rental_application_entries
     RentalApplication
       .joins(user_join("rental_applications.applicant_email", "rental_applications.applicant_name", "rental_applications.applicant_phone"))
-      .where(status: "approved")
       .where.not(applicant_email: [nil, ""])
       .select(
         "#{email_key_sql('rental_applications.applicant_email')} AS email_key, " \
@@ -184,7 +189,7 @@ class Admin::CustomerDirectory
         "0 AS registered_user, " \
         "0 AS seller, " \
         "0 AS landlord, " \
-        "1 AS tenant, " \
+        "MAX(CASE WHEN rental_applications.status = #{quoted('approved')} THEN 1 ELSE 0 END) AS tenant, " \
         "0 AS buyer"
       )
       .group(email_group_sql("rental_applications.applicant_email"))
