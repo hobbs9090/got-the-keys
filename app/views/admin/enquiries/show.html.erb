@@ -24,7 +24,7 @@
       </div>
       <div>
         <dt><%= t("ui.admin.enquiries.show.property") %></dt>
-        <dd><%= @enquiry.property.address_line_1 %></dd>
+        <dd><%= link_to @enquiry.property.address_line_1, admin_property_path(@enquiry.property) %></dd>
       </div>
       <div>
         <dt><%= t("ui.admin.enquiries.show.status") %></dt>

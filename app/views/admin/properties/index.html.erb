@@ -31,15 +31,25 @@
 
 <section class="admin-panel">
   <% if @properties.any? %>
-    <div class="property-grid">
+    <div class="property-grid property-grid--catalogue">
       <% @properties.each do |property| %>
         <article class="<%= property_card_classes(property) %>" data-testid="admin-property-card-<%= property.id %>">
+          <div class="property-card__media" data-testid="admin-property-media-<%= property.id %>">
+            <%= small_image_for(property) %>
+            <div class="property-card__badges">
+              <span class="<%= property_sale_status_badge_class(property.sale_status) %>"><%= translated_sale_status(property.sale_status) %></span>
+              <% unless property.listing_state == "published" %>
+                <span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span>
+              <% end %>
+            </div>
+          </div>
           <div class="property-card__body">
-            <p class="property-card__eyebrow"><%= property.seller_display_name %></p>
-            <h3><%= property.address_line_1 %></h3>
+            <div class="property-card__header">
+              <p class="property-card__eyebrow"><%= property.seller_display_name %></p>
+              <h3><%= property.address_line_1 %></h3>
+            </div>
             <p><%= property.headline %></p>
             <p><%= format_price(property) %> · <%= format_bedrooms(property) %></p>
-            <p><span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span></p>
           </div>
           <footer class="property-card__footer">
             <span><%= property.listing_completeness_percentage %>% complete · <%= translate_count("ui.admin.properties.index.appointment_count", property.appointments.size) %></span>

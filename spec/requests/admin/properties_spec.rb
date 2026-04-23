@@ -14,7 +14,9 @@ RSpec.describe "Admin properties", type: :request do
   end
 
   it "shows a property search form on the index" do
-    FactoryBot.create_list(:property, 2)
+    property_with_photo = FactoryBot.create(:property)
+    FactoryBot.create(:photo, property: property_with_photo, primary: true, image_filename: "properties/admin-index-home.webp")
+    property_without_photo = FactoryBot.create(:property)
 
     get admin_properties_path
 
@@ -40,6 +42,16 @@ RSpec.describe "Admin properties", type: :request do
     count_label = parsed_html.at_css('[data-testid="admin-properties-count"]')
     expect(count_label).to be_present
     expect(count_label.text.strip).to eq("2 properties total")
+
+    grid = parsed_html.at_css(".property-grid.property-grid--catalogue")
+    image = parsed_html.at_css(%([data-testid="admin-property-media-#{property_with_photo.id}"] img))
+    fallback_image = parsed_html.at_css(%([data-testid="admin-property-media-#{property_without_photo.id}"] img))
+    media_badges = parsed_html.at_css(%([data-testid="admin-property-media-#{property_with_photo.id}"] .property-card__badges))
+    expect(grid).to be_present
+    expect(image).to be_present
+    expect(image["src"]).to include("admin-index-home.webp")
+    expect(fallback_image).to be_present
+    expect(media_badges).to be_present
   end
 
   it "filters properties by address details using the public catalogue query semantics" do
@@ -204,9 +216,12 @@ RSpec.describe "Admin properties", type: :request do
 
     page = Nokogiri::HTML(response.body)
     download_link = page.at_css(%(a[href="#{download_property_property_document_path(property, document)}"]))
+    hero_image = page.at_css(%([data-testid="admin-property-hero-media"] img))
 
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Listing readiness")
+    expect(hero_image).to be_present
+    expect(hero_image["src"]).to include("admin-shot.jpg")
     expect(response.body).to include(%(data-testid="admin-property-photo-thumbnail-))
     expect(response.body).to include("Ground floor")
     expect(response.body).to include("Admin brochure")
@@ -241,6 +256,18 @@ RSpec.describe "Admin properties", type: :request do
     expect(badge).to be_present
     expect(badge.text.strip).to eq("For Rent")
     expect(badge["class"]).to include("badge--success")
+  end
+
+  it "shows the property image on the admin edit page" do
+    FactoryBot.create(:photo, property:, primary: true, image_filename: "admin-edit-shot.jpg")
+
+    get edit_admin_property_path(property)
+
+    expect(response).to have_http_status(:ok)
+
+    hero_image = parsed_html.at_css(%([data-testid="admin-property-edit-hero-media"] img))
+    expect(hero_image).to be_present
+    expect(hero_image["src"]).to include("admin-edit-shot.jpg")
   end
 
   it "lets admins move a listing through moderation states" do

@@ -18,6 +18,15 @@
 <section class="admin-grid admin-grid--split">
   <article class="admin-panel">
     <h2><%= t("ui.admin.appointments.show.summary_title") %></h2>
+    <div class="admin-property-summary-card">
+      <div class="property-hero__media property-hero__media--ratio-3-2 admin-property-summary-card__media" data-testid="admin-appointment-summary-media">
+        <%= medium_image_for(@appointment.property) %>
+      </div>
+      <div>
+        <strong><%= link_to @appointment.property.address_line_1, admin_property_path(@appointment.property) %></strong>
+        <p><%= @appointment.property.location_line %></p>
+      </div>
+    </div>
     <dl class="detail-list">
       <div>
         <dt><%= t("ui.common.property") %></dt>

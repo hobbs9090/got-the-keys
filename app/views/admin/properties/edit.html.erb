@@ -9,6 +9,12 @@
   </div>
 
   <article class="admin-panel">
+    <div class="property-hero__media property-hero__media--ratio-3-2" data-testid="admin-property-edit-hero-media">
+      <%= medium_image_for(@property) %>
+    </div>
+  </article>
+
+  <article class="admin-panel">
     <%= render "properties/form", form_model: [:admin, @property], cancel_path: admin_property_path(@property), allow_destroy: false, show_seller_workspace_panel: true %>
   </article>
 </section>

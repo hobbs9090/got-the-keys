@@ -19,6 +19,13 @@
 
 <section class="admin-grid">
   <article class="admin-panel">
+    <h2><%= t("ui.admin.properties.show.photos_title") %></h2>
+    <div class="property-hero__media property-hero__media--ratio-3-2" data-testid="admin-property-hero-media">
+      <%= medium_image_for(@property) %>
+    </div>
+  </article>
+
+  <article class="admin-panel">
     <h2><%= t("ui.admin.properties.show.summary_title") %></h2>
     <p><strong><%= @property.headline %></strong></p>
     <p><%= @property.property_description %></p>

@@ -85,5 +85,6 @@ RSpec.describe "Admin enquiries", type: :request do
 
     expect(response).to have_http_status(:ok)
     expect(response.body).to include(%(data-testid="lead-activity-timeline"))
+    expect(response.body).to include(%(href="#{admin_property_path(property)}"))
   end
 end

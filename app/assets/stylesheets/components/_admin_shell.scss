@@ -388,6 +388,18 @@
   margin-bottom: 0;
 }
 
+.admin-property-summary-card {
+  align-items: start;
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: minmax(9rem, 12rem) minmax(0, 1fr);
+  margin-bottom: 1rem;
+}
+
+.admin-property-summary-card__media {
+  width: 100%;
+}
+
 .admin-bookings-row__pill,
 .admin-bookings-row__action.button {
   align-items: center;

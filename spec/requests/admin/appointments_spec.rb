@@ -124,6 +124,7 @@ RSpec.describe "Admin appointments" do
       scheduled_at: slot,
       status: "pending"
     )
+    FactoryBot.create(:photo, property: property, primary: true, image_filename: "properties/admin-appointment-summary-thumb.webp")
 
     get admin_appointment_path(appointment)
 
@@ -132,6 +133,10 @@ RSpec.describe "Admin appointments" do
     expect(response.body).to include("Zusammenfassung")
     expect(response.body).to include("Kundenhistorie")
     expect(response.body).to include(%(data-testid="admin-appointment-header-actions"))
+
+    thumbnail = Nokogiri::HTML.parse(response.body).at_css(%([data-testid="admin-appointment-summary-media"] .property-hero__image))
+    expect(thumbnail).to be_present
+    expect(thumbnail["src"]).to include("admin-appointment-summary-thumb.webp")
   end
 
   it "filters the bookings desk by status and customer email" do
