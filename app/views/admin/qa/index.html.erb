@@ -94,13 +94,17 @@
 <section class="admin-grid">
   <article class="admin-panel">
     <h2><%= t("ui.admin.qa.selector_contract_registry") %></h2>
-    <% @selector_groups.each do |surface, selectors| %>
-      <p><strong><%= admin_selector_surface_label(selectors.first) %></strong></p>
-      <ul class="detail-inline-list">
-        <% selectors.each do |entry| %>
-          <li><code><%= entry[:selector] %></code>: <%= admin_selector_purpose_label(entry) %></li>
-        <% end %>
-      </ul>
-    <% end %>
+    <div class="qa-selector-registry">
+      <% @selector_groups.each do |surface, selectors| %>
+        <section class="qa-selector-registry__group" aria-label="<%= admin_selector_surface_label(selectors.first) %>">
+          <h3 class="qa-selector-registry__title"><%= admin_selector_surface_label(selectors.first) %></h3>
+          <ul class="detail-inline-list qa-selector-registry__list">
+            <% selectors.each do |entry| %>
+              <li><code><%= entry[:selector] %></code>: <%= admin_selector_purpose_label(entry) %></li>
+            <% end %>
+          </ul>
+        </section>
+      <% end %>
+    </div>
   </article>
 </section>

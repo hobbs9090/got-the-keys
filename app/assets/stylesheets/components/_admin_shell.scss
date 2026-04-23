@@ -346,6 +346,26 @@
   width: 100%;
 }
 
+.qa-selector-registry {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.qa-selector-registry__group {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.qa-selector-registry__title {
+  font-size: 1rem;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.qa-selector-registry__list {
+  margin: 0;
+}
+
 .admin-bookings-row__actions {
   gap: 0.45rem;
 }

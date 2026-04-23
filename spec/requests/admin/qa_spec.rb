@@ -78,6 +78,14 @@ RSpec.describe "Admin QA guide" do
     expect(response.body).to include("Holly Wade (English) - holly.wade@example.com / secret")
     expect(response.body).to include("Nina Hughes (English) - nina.hughes@example.com / secret")
     expect(response.body).not_to include(I18n.t("ui.admin.qa.training_title"))
+
+    document = Nokogiri::HTML.parse(response.body)
+    selector_registry = document.at_css(".qa-selector-registry")
+    selector_group_titles = selector_registry.css(".qa-selector-registry__group .qa-selector-registry__title").map { |node| node.text.strip }
+
+    expect(selector_group_titles).not_to be_empty
+    expect(selector_group_titles.uniq.size).to eq(selector_group_titles.size)
+    expect(selector_registry.at_css(".qa-selector-registry__group .qa-selector-registry__list li")).to be_present
   end
 
   it "keeps the admin 2FA mode controls off the QA guide" do
