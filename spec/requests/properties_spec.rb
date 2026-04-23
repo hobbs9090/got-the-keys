@@ -983,6 +983,9 @@ describe "Properties" do
       expect(rows.map { |row| row.at_css("strong")&.text&.strip }).to eq(
         ["Earlier Visit Property", "Later Visit Property"]
       )
+      first_property_link = rows.first.at_css("strong a")
+      expect(first_property_link).to be_present
+      expect(first_property_link["href"]).to eq(property_path(earlier_property))
     end
 
     it "includes bookings that match the signed-in user's name and phone when the stored email is outdated" do

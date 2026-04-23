@@ -48,7 +48,7 @@
                     <div class="property-workspace-card__appointment property-workspace-card__appointment--customer" data-testid="customer-booking-row">
                       <div class="property-workspace-bookings__details">
                         <span class="<%= property_sale_status_badge_class(appointment.property.sale_status) %>" data-testid="customer-booking-sale-status-<%= appointment.id %>"><%= translated_sale_status(appointment.property.sale_status) %></span>
-                        <strong><%= appointment.property.address_line_1 %></strong>
+                        <strong><%= link_to appointment.property.address_line_1, property_path(appointment.property) %></strong>
                         <p><%= formatted_date_time(appointment.scheduled_at) %></p>
                         <p><%= appointment.property.location_line %></p>
                       </div>
