@@ -156,8 +156,8 @@ module AdminHelper
 
   def admin_customer_badges(customer)
     [
-      customer_badge(customer.seller.to_i.positive?, :seller, "badge--success"),
-      customer_badge(customer.landlord.to_i.positive?, :landlord, "badge--accent"),
+      customer_property_badge(customer.sale_properties_count.to_i, :sale, "badge--accent"),
+      customer_property_badge(customer.rent_properties_count.to_i, :rent, "badge--success"),
       customer_badge(customer.tenant.to_i.positive?, :tenant, "badge--warning"),
       customer_badge(customer.buyer.to_i.positive?, :buyer, "badge--muted")
     ].compact
@@ -171,6 +171,16 @@ module AdminHelper
     {
       key: key,
       label: t("ui.admin.customers.index.badges.#{key}"),
+      css_class: css_class
+    }
+  end
+
+  def customer_property_badge(count, key, css_class)
+    return unless count.positive?
+
+    {
+      key: "#{key}_count",
+      label: t("ui.admin.users.index.#{key}_count_badge", count: count),
       css_class: css_class
     }
   end

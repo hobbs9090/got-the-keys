@@ -77,10 +77,13 @@ RSpec.describe "Admin customers", type: :request do
 
     document = parsed_html
     row = document.at_css('[data-testid="admin-customer-row-alex-buyer-example-com"]')
+    customer_link = row.at_css('a[href="/admin/customers/alex.buyer@example.com"]')
     bookings_link = document.at_css('[data-testid="admin-customer-view-bookings-alex-buyer-example-com"]')
 
     expect(row).to be_present
     expect(row.text).to include("Alex Buyer", "alex.buyer@example.com", "2 bookings")
+    expect(customer_link).to be_present
+    expect(customer_link.text.strip).to eq("Alex Buyer")
     expect(bookings_link).to be_present
     expect(bookings_link["href"]).to eq(admin_appointments_path(view: "agenda", customer_email: "alex.buyer@example.com"))
   end
@@ -221,7 +224,7 @@ RSpec.describe "Admin customers", type: :request do
 
     expect(buyer_row.text).to include("Jamie Buyer", "jamie.buyer@example.com", "0 bookings", "Registered")
     expect(seller_row.text).to include("Sage Seller", "sage.seller@example.com", "0 bookings", "Registered")
-    expect(document.at_css('[data-testid="admin-customer-badge-sage-seller-example-com-seller"]')).to be_present
+    expect(document.at_css('[data-testid="admin-customer-badge-sage-seller-example-com-sale_count"]').text.strip).to eq("1 For Sale")
   end
 
   it "renders registered timestamps using the user's timezone-aware created_at" do
@@ -409,13 +412,15 @@ RSpec.describe "Admin customers", type: :request do
 
     document = parsed_html
 
-    expect(document.at_css('[data-testid="admin-customer-badge-sky-seller-example-com-seller"]')).to be_present
-    expect(document.at_css('[data-testid="admin-customer-badge-lane-landlord-example-com-landlord"]')).to be_present
+    expect(document.at_css('[data-testid="admin-customer-badge-sky-seller-example-com-sale_count"]')).to be_present
+    expect(document.at_css('[data-testid="admin-customer-badge-lane-landlord-example-com-rent_count"]')).to be_present
     expect(document.at_css('[data-testid="admin-customer-badge-blair-buyer-example-com-buyer"]')).to be_present
     expect(document.at_css('[data-testid="admin-customer-badge-toni-tenant-example-com-tenant"]')).to be_present
-    expect(document.at_css('[data-testid="admin-customer-badge-drew-dual-example-com-seller"]')).to be_present
-    expect(document.at_css('[data-testid="admin-customer-badge-drew-dual-example-com-landlord"]')).to be_present
     expect(document.at_css('[data-testid="admin-customer-badge-drew-dual-example-com-buyer"]')).to be_present
+    expect(document.at_css('[data-testid="admin-customer-badge-sky-seller-example-com-seller"]')).not_to be_present
+    expect(document.at_css('[data-testid="admin-customer-badge-lane-landlord-example-com-landlord"]')).not_to be_present
+    expect(document.at_css('[data-testid="admin-customer-badge-drew-dual-example-com-sale_count"]').text.strip).to eq("1 For Sale")
+    expect(document.at_css('[data-testid="admin-customer-badge-drew-dual-example-com-rent_count"]').text.strip).to eq("1 For Rent")
   end
 
   it "does not show the tenant badge for rental interest without an approved application" do

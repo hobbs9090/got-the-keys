@@ -12,6 +12,8 @@ class Admin::CustomerDirectory
         "MAX(customer_name) AS customer_name, " \
         "MAX(customer_phone) AS customer_phone, " \
         "SUM(appointments_count) AS appointments_count, " \
+        "MAX(sale_properties_count) AS sale_properties_count, " \
+        "MAX(rent_properties_count) AS rent_properties_count, " \
         "MAX(latest_appointment_at) AS latest_appointment_at, " \
         "MAX(registered_at) AS registered_at, " \
         "MAX(sort_at) AS sort_at, " \
@@ -78,6 +80,8 @@ class Admin::CustomerDirectory
         "MAX(COALESCE(NULLIF(TRIM(COALESCE(users.first_name, '') || ' ' || COALESCE(users.last_name, '')), ''), customer_name)) AS customer_name, " \
         "MAX(COALESCE(users.mobile_number, customer_phone)) AS customer_phone, " \
         "COUNT(*) AS appointments_count, " \
+        "0 AS sale_properties_count, " \
+        "0 AS rent_properties_count, " \
         "MAX(scheduled_at) AS latest_appointment_at, " \
         "NULL AS registered_at, " \
         "MAX(scheduled_at) AS sort_at, " \
@@ -99,6 +103,8 @@ class Admin::CustomerDirectory
         "NULLIF(TRIM(COALESCE(users.first_name, '') || ' ' || COALESCE(users.last_name, '')), '') AS customer_name, " \
         "users.mobile_number AS customer_phone, " \
         "0 AS appointments_count, " \
+        "0 AS sale_properties_count, " \
+        "0 AS rent_properties_count, " \
         "NULL AS latest_appointment_at, " \
         "users.created_at AS registered_at, " \
         "users.created_at AS sort_at, " \
@@ -120,6 +126,8 @@ class Admin::CustomerDirectory
         "NULLIF(TRIM(COALESCE(users.first_name, '') || ' ' || COALESCE(users.last_name, '')), '') AS customer_name, " \
         "users.mobile_number AS customer_phone, " \
         "0 AS appointments_count, " \
+        "SUM(CASE WHEN properties.sale_status = #{quoted(Property::SALE_STATUSES[:for_sale])} THEN 1 ELSE 0 END) AS sale_properties_count, " \
+        "SUM(CASE WHEN properties.sale_status = #{quoted(Property::SALE_STATUSES[:for_rent])} THEN 1 ELSE 0 END) AS rent_properties_count, " \
         "NULL AS latest_appointment_at, " \
         "NULL AS registered_at, " \
         "MAX(properties.updated_at) AS sort_at, " \
@@ -143,6 +151,8 @@ class Admin::CustomerDirectory
         "MAX(COALESCE(NULLIF(TRIM(COALESCE(users.first_name, '') || ' ' || COALESCE(users.last_name, '')), ''), buyer_name)) AS customer_name, " \
         "MAX(COALESCE(users.mobile_number, buyer_phone)) AS customer_phone, " \
         "0 AS appointments_count, " \
+        "0 AS sale_properties_count, " \
+        "0 AS rent_properties_count, " \
         "NULL AS latest_appointment_at, " \
         "NULL AS registered_at, " \
         "MAX(offers.created_at) AS sort_at, " \
@@ -166,6 +176,8 @@ class Admin::CustomerDirectory
         "MAX(COALESCE(NULLIF(TRIM(COALESCE(users.first_name, '') || ' ' || COALESCE(users.last_name, '')), ''), applicant_name)) AS customer_name, " \
         "MAX(COALESCE(users.mobile_number, applicant_phone)) AS customer_phone, " \
         "0 AS appointments_count, " \
+        "0 AS sale_properties_count, " \
+        "0 AS rent_properties_count, " \
         "NULL AS latest_appointment_at, " \
         "NULL AS registered_at, " \
         "MAX(rental_applications.created_at) AS sort_at, " \
