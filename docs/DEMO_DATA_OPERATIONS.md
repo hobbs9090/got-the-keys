@@ -51,18 +51,22 @@ The active scenario indicator is also part of the selector contract:
 
 ## Use The Admin Demo-Data Tools
 
-The admin demo-data area is the main trainer surface for:
+The admin demo-data area (`/admin/demo-data`) is the main trainer surface for:
 
 - previewing the baseline dataset
 - restoring the baseline dataset
 - checking trainer notes
 - reviewing expected assertions
 - confirming the typed reset gate
+- exporting a snapshot of the current dataset
+- importing a previously exported YAML pack
+- reviewing recent activity (last 10 seed resets, imports, exports, and performance data loads)
 
 Important behavior:
 
 - resets are intentionally gated to avoid accidental destructive changes
 - the dataset swap is meant to replace the current seeded records, not merge casually with them
+- the recent activity panel is a read-only log; it does not replace the active scenario indicator on `/admin/qa`
 
 ## Restore Baseline Between Exercises
 
@@ -77,13 +81,27 @@ Preferred reset workflow:
 
 ## Export The Current Dataset
 
+From the admin UI:
+
+1. Open `/admin/demo-data`.
+2. Click **Export current data** in the page header.
+3. A YAML file downloads immediately.
+
 From the command line:
 
 ```bash
 bin/rails runner 'puts DemoData::ScenarioLoader.new.export' > db/demo_scenarios/my_training_pack.yml
 ```
 
-Use this when you have shaped a useful workshop state and want to turn it into a reusable pack.
+Use either approach when you have shaped a useful workshop state and want to turn it into a reusable pack.
+
+## Import A Dataset
+
+From the admin UI:
+
+1. Open `/admin/demo-data`.
+2. Click **Import scenario** in the page header.
+3. Paste or upload a YAML payload, preview it, then apply.
 
 ## Validate A Demo Dataset
 

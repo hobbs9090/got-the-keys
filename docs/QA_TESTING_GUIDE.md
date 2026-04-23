@@ -41,8 +41,8 @@ Admin:
 - `/admin`
 - `/admin/appointments`
 - `/admin/properties`
-- `/admin/demo-data`
-- `/admin/qa`
+- `/admin/demo-data` — seed resets, export/import, performance data, recent activity log
+- `/admin/qa` — runtime diagnostics, seeded credentials, selector contract registry
 
 ## Stable Selectors
 
