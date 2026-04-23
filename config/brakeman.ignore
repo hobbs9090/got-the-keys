@@ -1,0 +1,41 @@
+{
+  "ignored_warnings": [
+    {
+      "fingerprint": "1173a87e7c51ea87fe322b9cda8ef615a0bcf88c95b9841c930e0c38fa9a1bdd",
+      "warning_type": "SQL Injection",
+      "message": "Possible SQL injection",
+      "file": "app/services/admin/customer_directory.rb",
+      "line": 127,
+      "confidence": "High",
+      "note": "False positive: the CASE expression only interpolates quoted sale_status constants and fixed column names."
+    },
+    {
+      "fingerprint": "553a299a0a686987f3b03f86488409b807c98d6e47ea3c35e9b720f0db734c46",
+      "warning_type": "SQL Injection",
+      "message": "Possible SQL injection",
+      "file": "app/services/admin/customer_directory.rb",
+      "line": 164,
+      "confidence": "Medium",
+      "note": "False positive: the SELECT list is assembled from fixed SQL fragments and hardcoded column references."
+    },
+    {
+      "fingerprint": "9c0ea29a4f957d69028202fb8ba5341314b080bfea93683202c8de9df66caabc",
+      "warning_type": "SQL Injection",
+      "message": "Possible SQL injection",
+      "file": "app/services/admin/customer_directory.rb",
+      "line": 76,
+      "confidence": "Medium",
+      "note": "False positive: the SELECT list is assembled from fixed SQL fragments and hardcoded column references."
+    },
+    {
+      "fingerprint": "e9f35dabb875d9986ded4193e337afb438fe6a16b308b94d4a6bc87364d5001e",
+      "warning_type": "SQL Injection",
+      "message": "Possible SQL injection",
+      "file": "app/services/admin/customer_directory.rb",
+      "line": 141,
+      "confidence": "Medium",
+      "note": "False positive: the SELECT list is assembled from fixed SQL fragments and hardcoded column references."
+    }
+  ],
+  "brakeman_version": "8.0.4"
+}
