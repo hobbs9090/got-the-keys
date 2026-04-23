@@ -981,6 +981,9 @@ it:
           recent_booking_activity_title: Attivita recenti di prenotazione
           saved_properties_title: Immobili salvati
           no_saved_properties: Questo venditore non ha ancora salvato immobili.
+          saved_searches_title: Ricerche salvate
+          no_saved_searches: Questo venditore non ha ancora salvato ricerche.
+          saved_search_meta: "Salvata %{time} · Lingua: %{language_name}"
           no_activity: Nessuna attivita di appuntamento sugli immobili di questo venditore.
       notification_logs:
         title: Registro notifiche

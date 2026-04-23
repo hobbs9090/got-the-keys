@@ -969,6 +969,9 @@ zh:
           recent_booking_activity_title: 最近预约活动
           saved_properties_title: 已保存房源
           no_saved_properties: 这位卖家还没有保存任何房源。
+          saved_searches_title: 已保存搜索
+          no_saved_searches: 这位卖家还没有保存任何搜索。
+          saved_search_meta: "保存于%{time} · 语言：%{language_name}"
           no_activity: 该卖家的房源暂时没有预约活动。
       notification_logs:
         title: 通知日志

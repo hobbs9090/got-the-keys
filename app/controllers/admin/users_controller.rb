@@ -10,6 +10,7 @@ class Admin::UsersController < Admin::BaseController
     @properties = @user.properties.order(updated_at: :desc)
     @appointments = Appointment.joins(:property).where(properties: { user_id: @user.id }).recent_first.limit(20)
     @saved_properties = @user.saved_properties.includes(property: :photos).order(updated_at: :desc)
+    @saved_searches = @user.saved_searches.order(created_at: :desc)
   end
 
   private

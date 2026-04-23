@@ -983,6 +983,9 @@ de:
           recent_booking_activity_title: Letzte Buchungsaktivität
           saved_properties_title: Gespeicherte Immobilien
           no_saved_properties: Dieser Verkäufer hat noch keine Immobilien gespeichert.
+          saved_searches_title: Gespeicherte Suchen
+          no_saved_searches: Dieser Verkäufer hat noch keine Suchen gespeichert.
+          saved_search_meta: "Gespeichert %{time} · Sprache: %{language_name}"
           no_activity: Auf den Objekten dieses Verkäufers gibt es noch keine Terminaktivität.
       notification_logs:
         title: Benachrichtigungsprotokoll

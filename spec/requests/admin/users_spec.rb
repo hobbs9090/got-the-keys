@@ -223,6 +223,51 @@ RSpec.describe "Admin users", type: :request do
     expect(rent_badge.text.strip).to eq("For Rent")
   end
 
+  it "lists all of the seller's saved searches on the profile page" do
+    user = FactoryBot.create(:user, first_name: "Taylor", last_name: "Stone", email: "taylor.stone@example.com")
+    FactoryBot.create(:property, user: user, address_line_1: "Owned Home")
+    FactoryBot.create(:property, :for_rent, town_city: "Berlin", bedrooms: 2, address_line_1: "Riverside Court", property_description: "Bright Riverside apartment")
+    matching_search = SavedSearch.create!(
+      user: user,
+      email: user.email,
+      locale: "de",
+      alerts_enabled: true,
+      search_query: "Riverside",
+      sale_status: "For Rent",
+      town_city: "Berlin",
+      min_bedrooms: 2
+    )
+    second_search = SavedSearch.create!(
+      user: user,
+      email: user.email,
+      locale: "en",
+      alerts_enabled: false,
+      max_price: 750000
+    )
+
+    get admin_seller_path(user)
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("Saved searches")
+    expect(response.body).to include("Riverside")
+    expect(response.body).to include("Berlin")
+    expect(response.body).to include("2+ bedrooms")
+    expect(response.body).to include("For Rent")
+    expect(response.body).to include("Up to")
+    expect(response.body).to include("Deutsch")
+    expect(response.body).to include("Alerts on")
+    expect(response.body).to include("Alerts off")
+
+    row_ids = parsed_html.css('[data-testid^="admin-user-saved-search-row-"]').map { |row| row["data-testid"] }
+    expect(row_ids).to include("admin-user-saved-search-row-#{matching_search.id}")
+    expect(row_ids).to include("admin-user-saved-search-row-#{second_search.id}")
+
+    matches_link = parsed_html.at_css(%([data-testid="admin-user-saved-search-matches-#{matching_search.id}"]))
+    expect(matches_link).to be_present
+    expect(matches_link["href"]).to eq(admin_properties_path(q: "Riverside", sale_status: "For Rent", town_city: "Berlin", min_bedrooms: "2"))
+    expect(matches_link.text).to include("View")
+  end
+
   it "excludes registered users who do not own any properties" do
     seller = FactoryBot.create(:user, first_name: "Taylor", last_name: "Stone", email: "taylor.stone@example.com")
     nonseller = FactoryBot.create(:user, first_name: "Alex", last_name: "Cole", email: "alex.cole@example.com")

@@ -1274,6 +1274,9 @@ en:
           recent_booking_activity_title: "Recent booking activity"
           saved_properties_title: "Saved properties"
           no_saved_properties: "This seller has not saved any properties yet."
+          saved_searches_title: "Saved searches"
+          no_saved_searches: "This seller has not saved any searches yet."
+          saved_search_meta: "Saved %{time} · Language: %{language_name}"
           no_activity: "No appointment activity on this seller's properties yet."
       customers:
         index:

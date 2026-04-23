@@ -92,3 +92,41 @@
     <p class="empty-copy"><%= t("ui.admin.users.show.no_saved_properties") %></p>
   <% end %>
 </section>
+
+<section class="admin-panel">
+  <h2><%= t("ui.admin.users.show.saved_searches_title") %></h2>
+  <% if @saved_searches.any? %>
+    <div class="property-workspace__grid property-saved-searches-grid">
+      <% @saved_searches.each do |search| %>
+        <% chip_labels = property_filter_chip_labels(search.filter_params) %>
+        <% matches_count = search.matching_properties_count %>
+        <article class="site-card property-saved-search-card" data-testid="admin-user-saved-search-row-<%= search.id %>">
+          <div class="property-saved-search-card__main">
+            <div class="property-saved-search-card__chips">
+              <% if chip_labels.any? %>
+                <% chip_labels.each do |label| %>
+                  <span class="badge badge--neutral"><%= label %></span>
+                <% end %>
+              <% else %>
+                <span class="badge badge--neutral"><%= t("ui.properties.filters.all_listings") %></span>
+              <% end %>
+            </div>
+
+            <p class="property-saved-search-card__meta">
+              <span><%= t("ui.admin.users.show.saved_search_meta", time: formatted_date_time(search.created_at), language_name: language_label(search.locale)) %></span>
+              <span class="<%= search.alerts_enabled? ? "badge badge--accent" : "badge badge--muted" %>">
+                <%= search.alerts_enabled? ? t("ui.properties.catalogue.saved_search.alerts_on") : t("ui.properties.catalogue.saved_search.alerts_off") %>
+              </span>
+            </p>
+          </div>
+
+          <div class="property-saved-search-card__actions">
+            <%= link_to translate_count("ui.properties.catalogue.saved_search.view_matches", matches_count), admin_properties_path(search.admin_filter_params), class: "button primary hollow", data: { testid: "admin-user-saved-search-matches-#{search.id}" } %>
+          </div>
+        </article>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="empty-copy"><%= t("ui.admin.users.show.no_saved_searches") %></p>
+  <% end %>
+</section>
