@@ -257,14 +257,26 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     visit admin_security_path
 
     page.execute_script(<<~JS)
-      const modal = document.getElementById("disable-admin-two-factor-mode-modal");
+      const modal = document.createElement("div");
+      modal.id = "synthetic-admin-modal";
+      modal.dataset.modal = "synthetic-admin-modal";
+      modal.textContent = "Synthetic admin modal";
+      modal.style.display = "block";
+      modal.style.width = "12rem";
+      modal.style.height = "4rem";
       modal.hidden = false;
       modal.setAttribute("aria-hidden", "false");
+      document.body.appendChild(modal);
       document.body.classList.add("site-modal-open");
     JS
 
-    expect(page).to have_css("#disable-admin-two-factor-mode-modal[aria-hidden='false']", visible: true)
-    expect(page).to have_css("body.site-modal-open", visible: false)
+    expect(page.evaluate_script(<<~JS)).to eq(true)
+      (() => {
+        const modal = document.querySelector("#synthetic-admin-modal");
+        return Boolean(modal && modal.getAttribute("aria-hidden") === "false");
+      })()
+    JS
+    expect(page.evaluate_script("document.body.classList.contains('site-modal-open')")).to eq(true)
 
     visit admin_root_path
 
@@ -513,26 +525,28 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
 
     security_styles = styles_for(<<~JS)
       (() => {
-        const callout = document.querySelector('[data-testid="admin-two-factor-warning-callout"]');
-        const label = callout.querySelector("strong");
-        const body = callout.querySelector("p");
+        const panel = document.querySelector('[data-testid="admin-security-status-panel"]');
+        const statusBadge = document.querySelector('[data-testid="admin-security-global-mode"] .badge');
+        const behavior = document.querySelector('[data-testid="admin-security-sign-in-behavior"]');
 
         return {
           theme: document.documentElement.dataset.theme,
-          warningBackground: getComputedStyle(callout).backgroundColor,
-          warningBorderLeft: getComputedStyle(callout).borderLeftColor,
-          warningLabelColor: getComputedStyle(label).color,
-          warningBodyColor: getComputedStyle(body).color
+          panelBackground: getComputedStyle(panel).backgroundColor,
+          panelBorder: getComputedStyle(panel).borderTopColor,
+          badgeBackground: getComputedStyle(statusBadge).backgroundColor,
+          badgeColor: getComputedStyle(statusBadge).color,
+          behaviorColor: getComputedStyle(behavior).color
         };
       })();
     JS
 
     expect(security_styles).to include(
       "theme" => "dark",
-      "warningBackground" => "rgba(20, 32, 54, 0.96)",
-      "warningBorderLeft" => "rgb(240, 187, 90)",
-      "warningLabelColor" => "rgb(240, 187, 90)",
-      "warningBodyColor" => "rgb(230, 238, 249)"
+      "panelBackground" => "rgba(18, 29, 49, 0.86)",
+      "panelBorder" => "rgba(116, 145, 188, 0.2)",
+      "badgeBackground" => "rgba(240, 187, 90, 0.18)",
+      "badgeColor" => "rgb(240, 187, 90)",
+      "behaviorColor" => "rgb(230, 238, 249)"
     )
   end
 

@@ -39,8 +39,8 @@ RSpec.describe "Admin security" do
     patch admin_security_path, params: { booking_configuration: { admin_two_factor_mode: "disabled" } }
 
     expect(response).to have_http_status(:unprocessable_content)
-    expect(response.body).to include("Type DISABLE before switching to disabled")
     expect(BookingConfiguration.current.admin_two_factor_mode).to eq("optional")
+    expect(AuditLog.recent_first.find_by(action: "admin_two_factor_mode_changed")).to be_nil
   end
 
   it "switches admin 2FA back to disabled when the confirmation phrase is supplied" do
