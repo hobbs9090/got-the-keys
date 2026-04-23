@@ -108,6 +108,7 @@ class Admin::DemoScenariosController < Admin::BaseController
   def load_dashboard_state(form_values: nil)
     @baseline_scenario = @scenario_loader.preview("baseline")
     @performance_seed_form = PERFORMANCE_SEED_DEFAULTS.merge(form_values || {})
+    @scenario_runs = DemoScenarioRun.recent_first.limit(10)
   end
 
   def load_scenario_loader

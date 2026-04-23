@@ -7,6 +7,10 @@
       <h1><%= t("ui.admin.demo_data.title") %></h1>
       <p><%= t("ui.admin.demo_data.baseline_only_body", default: "The admin reset flow is currently limited to the baseline demo dataset so QA always has one predictable starting point.") %></p>
     </div>
+    <div class="section-heading__actions admin-dashboard__quick-links">
+      <%= link_to t("ui.admin.demo_data.export_current_data"), export_admin_demo_scenarios_path, class: "button secondary small admin-dashboard__quick-link" %>
+      <%= link_to t("ui.admin.demo_data.import_scenario"), import_admin_demo_scenarios_path, class: "button secondary small admin-dashboard__quick-link" %>
+    </div>
   </div>
 </section>
 
@@ -88,12 +92,12 @@
                        data: { testid: "performance-seed-ai-mode" } %>
       </div>
       <% ai_mode_is_off = @performance_seed_form.fetch(:ai_mode).to_s == "off" %>
-      <div style="grid-column: 1 / -1; display: grid; gap: 1rem;">
-        <div style="color: var(--color-muted); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.82rem;">
+      <div class="admin-perf-seed__ai-section">
+        <div class="admin-perf-seed__ai-label">
           <%= t("ui.admin.demo_data.performance_seed.fields.ai_mode") %> dependent settings
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem;">
+        <div class="admin-perf-seed__ai-fields">
           <div>
             <%= label_tag "performance_seed_batch_size", t("ui.admin.demo_data.performance_seed.fields.batch_size") %>
             <%= number_field_tag "performance_seed[batch_size]", @performance_seed_form.fetch(:batch_size), min: 1, step: 1, required: true, disabled: ai_mode_is_off, data: { testid: "performance-seed-batch-size" } %>
@@ -200,6 +204,27 @@
     <div class="admin-filter-form__actions">
       <%= button_tag t("ui.admin.demo_data.performance_seed.submit"), class: "button primary", data: { testid: "performance-seed-submit" } %>
     </div>
+  <% end %>
+</section>
+
+<section class="admin-panel" data-testid="scenario-run-history-panel">
+  <h2><%= t("ui.admin.demo_data.run_history_title", default: "Recent activity") %></h2>
+  <% if @scenario_runs.empty? %>
+    <p class="quiet"><%= t("ui.admin.demo_data.no_actions") %></p>
+  <% else %>
+    <ol class="timeline" data-testid="scenario-run-history-list">
+      <% @scenario_runs.each do |run| %>
+        <li>
+          <p><strong><%= admin_demo_action_label(run.action_type) %></strong></p>
+          <% if run.scenario_key.present? %>
+            <p><%= run.scenario_key %> &mdash; <%= run.initiated_by_email %></p>
+          <% else %>
+            <p><%= run.initiated_by_email %></p>
+          <% end %>
+          <p><%= formatted_date_time(run.created_at) %></p>
+        </li>
+      <% end %>
+    </ol>
   <% end %>
 </section>
 

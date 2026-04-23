@@ -625,6 +625,27 @@
   margin-bottom: 0;
 }
 
+.admin-perf-seed__ai-section {
+  display: grid;
+  gap: 1rem;
+  grid-column: 1 / -1;
+}
+
+.admin-perf-seed__ai-label {
+  color: var(--color-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.admin-perf-seed__ai-fields {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+
 @media (max-width: $layout-tablet-breakpoint) {
   .admin-layout {
     grid-template-columns: 1fr;
