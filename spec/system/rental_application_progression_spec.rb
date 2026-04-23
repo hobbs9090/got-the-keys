@@ -41,7 +41,7 @@ RSpec.describe "Rental application progression", type: :system do
     application = RentalApplication.order(:created_at).last
 
     sign_in_as(admin)
-    click_link "Ravi Patel"
+    click_link "Details"
     select I18n.t("ui.rental_applications.statuses.approved"), from: "rental_application_status"
     click_button "Save application"
 

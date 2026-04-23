@@ -40,7 +40,7 @@ RSpec.describe "Offer progression", type: :system do
     offer = Offer.order(:created_at).last
 
     sign_in_as(admin)
-    click_link "Nina Hughes"
+    click_link "Details"
     select I18n.t("ui.offers.statuses.accepted"), from: "offer_status"
     fill_in "offer_internal_notes", with: "Seller accepted headline amount."
     click_button "Save offer"
