@@ -60,7 +60,7 @@
     </dl>
 
     <div class="admin-inline-actions">
-      <%= button_to t("ui.admin.appointments.confirm"), transition_admin_appointment_path(@appointment, status: "confirmed"), method: :patch, class: "button success hollow" unless @appointment.status.in?(%w[confirmed completed]) %>
+      <%= button_to t("ui.admin.appointments.confirm"), transition_admin_appointment_path(@appointment, status: "confirmed"), method: :patch, class: "button success hollow" if @appointment.confirmable_by_admin? %>
       <%= button_to t("ui.admin.appointments.show.actions.complete"), transition_admin_appointment_path(@appointment, status: "completed"), method: :patch, class: "button primary hollow" unless @appointment.status == "completed" %>
       <%= button_to t("ui.admin.appointments.show.actions.no_show"), transition_admin_appointment_path(@appointment, status: "no_show"), method: :patch, class: "button warning hollow" unless @appointment.status == "no_show" %>
       <%= button_to t("ui.admin.appointments.cancel"), transition_admin_appointment_path(@appointment, status: "cancelled"), method: :patch, class: "button alert hollow" unless @appointment.status == "cancelled" %>

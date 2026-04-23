@@ -15,7 +15,7 @@ qa:
   quick_reset: true
 booking_configuration:
   slot_duration_minutes: 60
-  lead_time_hours: 4
+  lead_time_hours: 0
   buffer_minutes: 15
   office_opens_at: "09:00"
   office_closes_at: "18:00"
@@ -1418,28 +1418,28 @@ property_documents:
     position: 1
 availability_windows:
   - property_key: sevenoaks_family_home
-    starts_at: "open+6d 09:00"
-    ends_at: "open+6d 17:00"
+    starts_at: "open+0d 09:00"
+    ends_at: "open+0d 13:00"
     kind: open
-    label: Wednesday published slots
+    label: Today launch block
   - property_key: sevenoaks_family_home
-    starts_at: "open+6d 12:00"
-    ends_at: "open+6d 13:00"
+    starts_at: "open+0d 12:00"
+    ends_at: "open+0d 13:00"
     kind: blackout
     label: Lunch blackout
   - property_key: tunbridge_garden_flat
-    starts_at: "open+7d 10:00"
-    ends_at: "open+7d 16:00"
+    starts_at: "open+0d 09:00"
+    ends_at: "open+0d 12:00"
     kind: open
-    label: Thursday open house
+    label: Today buyer slots
   - property_key: croydon_rental_loft
-    starts_at: "open+8d 09:30"
-    ends_at: "open+8d 15:30"
+    starts_at: "open+1d 09:30"
+    ends_at: "open+1d 15:30"
     kind: open
-    label: Friday lettings viewings
+    label: Tomorrow lettings viewings
 availability_window_batches:
   - property_key_prefixes: [baseline_sale, baseline_rental]
-    start_day_offset: 11
+    start_day_offset: 0
     start_time: "09:00"
     duration_minutes: 360
     cadence_days: 1
@@ -1452,20 +1452,20 @@ appointments:
     customer_name: Holly Mercer
     customer_email: holly.mercer@example.com
     customer_phone: "07700 900111"
-    requested_time: "open+6d 09:00"
-    scheduled_at: "open+6d 09:00"
+    requested_time: "open+0d 09:00"
+    scheduled_at: "open+0d 09:00"
     duration_minutes: 60
-    status: pending
+    status: confirmed
     notes: We are relocating for work and would like to ask about parking.
   - property_key: sevenoaks_family_home
     assigned_admin_email: steven@gotthekeys.uk
     customer_name: Daniel Porter
     customer_email: daniel.porter@example.com
     customer_phone: "07700 900222"
-    requested_time: "open+6d 10:00"
-    scheduled_at: "open+6d 10:00"
+    requested_time: "open+0d 10:00"
+    scheduled_at: "open+0d 10:00"
     duration_minutes: 60
-    status: confirmed
+    status: pending
     notes: Coming with my partner and a mortgage adviser.
     internal_notes: Confirmed by phone and keen on school catchment details.
   - property_key: tunbridge_garden_flat
@@ -1473,30 +1473,30 @@ appointments:
     customer_name: Jasmine Boyd
     customer_email: jasmine.boyd@example.com
     customer_phone: "07700 900333"
-    requested_time: "open+7d 11:00"
-    scheduled_at: "open+8d 14:00"
+    requested_time: "open+0d 09:00"
+    scheduled_at: "open+0d 09:00"
     duration_minutes: 60
-    status: rescheduled
-    notes: Afternoon is easier if possible.
-    internal_notes: Requested move after train cancellation.
+    status: confirmed
+    notes: We can make the first slot today if parking is straightforward.
+    internal_notes: Confirmed by email for the opening slot.
   - property_key: guildford_townhouse
     assigned_admin_email: steven@gotthekeys.uk
     customer_name: Marcus Lee
     customer_email: marcus.lee@example.com
     customer_phone: "07700 900444"
-    requested_time: "open+9d 15:00"
-    scheduled_at: "open+9d 15:00"
+    requested_time: "open+1d 11:00"
+    scheduled_at: "open+2d 11:30"
     duration_minutes: 60
-    status: cancelled
-    notes: Please cancel if the property is no longer available.
-    internal_notes: Cancelled by customer after receiving another offer acceptance.
+    status: rescheduled
+    notes: Afternoon is easier if possible.
+    internal_notes: Requested move after train cancellation.
   - property_key: croydon_rental_loft
     assigned_admin_email: steven@gotthekeys.uk
     customer_name: Aisha Rahman
     customer_email: aisha.rahman@example.com
     customer_phone: "07700 900555"
-    requested_time: "open-4d 10:00"
-    scheduled_at: "open-4d 10:00"
+    requested_time: "open-1d 10:00"
+    scheduled_at: "open-1d 10:00"
     duration_minutes: 60
     status: completed
     visit_outcome: feedback_requested
@@ -1510,24 +1510,49 @@ appointments:
     requested_time: "open-1d 13:00"
     scheduled_at: "open-1d 13:00"
     duration_minutes: 60
-    status: no_show
+    status: completed
+    visit_outcome: attended
     notes: Please call if I am delayed.
-    internal_notes: Did not arrive and could not be reached after two calls.
+    internal_notes: Attended on time and asked for application guidance.
+  - property_key: sevenoaks_family_home
+    assigned_admin_email: steven@gotthekeys.uk
+    customer_name: Priya Nair
+    customer_email: priya.nair@example.com
+    customer_phone: "07700 900777"
+    requested_time: "open-2d 11:00"
+    scheduled_at: "open-2d 11:00"
+    duration_minutes: 60
+    status: completed
+    visit_outcome: feedback_requested
+    notes: We are comparing this with a house nearby and want to revisit schools.
+    internal_notes: Strong interest and likely second viewing request.
+  - property_key: tunbridge_garden_flat
+    assigned_admin_email: steven@gotthekeys.uk
+    customer_name: Owen Clark
+    customer_email: owen.clark@example.com
+    customer_phone: "07700 900888"
+    requested_time: "open-3d 14:00"
+    scheduled_at: "open-3d 14:00"
+    duration_minutes: 60
+    status: completed
+    visit_outcome: attended
+    notes: Keen to understand service charges and lease length.
+    internal_notes: Completed viewing with follow-up brochure sent afterwards.
 appointment_batches:
   - property_key_prefixes: [baseline_sale]
     count: 14
     assigned_admin_email: steven@gotthekeys.uk
     status_cycle: [pending, confirmed, rescheduled, completed, cancelled]
-    start_day_offset: 8
+    start_day_offset: 0
     start_time: "09:00"
-    cadence_hours: 2
+    cadence_hours: 1
   - property_key_prefixes: [baseline_rental]
     count: 20
     assigned_admin_email: steven@gotthekeys.uk
     status_cycle: [pending, confirmed, completed, no_show]
-    start_day_offset: 9
+    start_day_offset: 0
     start_time: "09:30"
-    cadence_hours: 2
+    cadence_hours: 1
 enquiries:
   - property_key: sevenoaks_family_home
     assigned_admin_email: steven@gotthekeys.uk

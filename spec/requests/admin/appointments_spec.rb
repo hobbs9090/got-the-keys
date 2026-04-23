@@ -284,6 +284,44 @@ RSpec.describe "Admin appointments" do
     expect(response.body).not_to include(transition_admin_appointment_path(appointment, status: "confirmed"))
   end
 
+  it "does not show a confirm action for past bookings or no-show bookings" do
+    past_appointment = FactoryBot.create(
+      :appointment,
+      :pending,
+      property:,
+      customer_name: "Past Pending",
+      customer_email: "past.pending@example.com",
+      customer_phone: "07700 930101",
+      requested_time: booking_time(2026, 3, 31, 11, 0),
+      scheduled_at: booking_time(2026, 3, 31, 11, 0),
+      duration_minutes: 60,
+      skip_slot_validation: true
+    )
+    no_show_appointment = FactoryBot.create(
+      :appointment,
+      property:,
+      customer_name: "No Show Viewer",
+      customer_email: "no.show@example.com",
+      customer_phone: "07700 930102",
+      requested_time: booking_time(2026, 3, 31, 13, 0),
+      scheduled_at: booking_time(2026, 3, 31, 13, 0),
+      duration_minutes: 60,
+      status: "no_show",
+      skip_slot_validation: true
+    )
+
+    get admin_bookings_path, params: { view: "agenda" }
+
+    expect(response.body).not_to include(%(data-testid="admin-appointment-confirm-#{past_appointment.id}"))
+    expect(response.body).not_to include(%(data-testid="admin-appointment-confirm-#{no_show_appointment.id}"))
+
+    get admin_appointment_path(past_appointment)
+    expect(response.body).not_to include(transition_admin_appointment_path(past_appointment, status: "confirmed"))
+
+    get admin_appointment_path(no_show_appointment)
+    expect(response.body).not_to include(transition_admin_appointment_path(no_show_appointment, status: "confirmed"))
+  end
+
   it "shows the registered user's current email on the admin appointment detail page" do
     user = FactoryBot.create(
       :user,

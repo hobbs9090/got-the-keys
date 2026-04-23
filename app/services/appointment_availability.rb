@@ -22,7 +22,7 @@ class AppointmentAvailability
 
     date_range(booking_window_days).each do |date|
       windows_for(date).each do |window_start, window_end|
-        cursor = aligned_slot_start([window_start, from].max)
+        cursor = initial_slot_cursor(window_start, window_end)
 
         while (cursor + slot_duration) <= window_end
           slot_end = cursor + slot_duration
@@ -79,6 +79,26 @@ class AppointmentAvailability
     aligned_timestamp = remainder.zero? ? timestamp : timestamp + (interval_seconds - remainder)
 
     Time.zone.at(aligned_timestamp)
+  end
+
+  def floored_slot_start(value)
+    interval_seconds = slot_interval.to_i
+    timestamp = value.to_i
+    floored_timestamp = timestamp - (timestamp % interval_seconds)
+
+    Time.zone.at(floored_timestamp)
+  end
+
+  def initial_slot_cursor(window_start, window_end)
+    default_cursor = aligned_slot_start([window_start, from].max)
+    return default_cursor unless configuration.lead_time_hours.zero?
+
+    current_slot_start = [window_start, floored_slot_start(from)].max
+    current_slot_end = current_slot_start + slot_duration
+
+    return current_slot_start if from < current_slot_end && current_slot_end <= window_end
+
+    default_cursor
   end
 
   def minimum_bookable_time

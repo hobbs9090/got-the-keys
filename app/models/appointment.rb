@@ -79,6 +79,13 @@ class Appointment < ApplicationRecord
     appointment_events.order(:occurred_at, :created_at)
   end
 
+  def confirmable_by_admin?
+    return false if status.in?(%w[confirmed completed no_show])
+    return false if scheduled_at.present? && end_at < Time.current
+
+    true
+  end
+
   def manageable_by_customer?
     status.in?(CUSTOMER_SELF_SERVICE_STATUSES) && !self_service_expired?
   end

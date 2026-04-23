@@ -21,7 +21,7 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(previews.map { |scenario| scenario[:key] }).to eq(["baseline"])
     expect(baseline[:property_count]).to eq(100)
     expect(baseline[:availability_window_count]).to eq(100)
-    expect(baseline[:appointment_count]).to eq(40)
+    expect(baseline[:appointment_count]).to eq(42)
     expect(baseline[:enquiry_count]).to eq(40)
     expect(baseline[:offer_count]).to eq(10)
     expect(baseline[:rental_application_count]).to eq(14)
@@ -53,7 +53,7 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(FloorPlan.count).to eq(2)
     expect(PropertyDocument.count).to eq(2)
     expect(AvailabilityWindow.count).to eq(100)
-    expect(Appointment.count).to eq(40)
+    expect(Appointment.count).to eq(42)
     expect(Enquiry.count).to eq(40)
     expect(Offer.count).to eq(10)
     expect(RentalApplication.count).to eq(14)
@@ -102,6 +102,7 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(Property.find_by!(address_line_1: "Flat 3, 44 Mount Ephraim").available_from).to eq(Date.new(2026, 5, 1))
     expect(Property.find_by!(address_line_1: "Apartment 11, 9 Park Lane").available_from).to eq(Date.new(2026, 4, 25))
     expect(RentalApplication.minimum(:move_in_date)).to be >= Date.new(2026, 4, 15)
+    expect(BookingConfiguration.current.lead_time_hours).to eq(0)
 
     seeded_houses = Property.where(property_type: "House")
     family_houses = seeded_houses.where(bedrooms: 3..5)
@@ -132,6 +133,17 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(AvailabilityWindow.pluck(:ends_at).map(&:to_date).map(&:cwday)).to all(satisfy { |day| (1..6).cover?(day) })
     expect(Appointment.pluck(:requested_time).map(&:to_date).map(&:cwday)).to all(satisfy { |day| (1..6).cover?(day) })
     expect(Appointment.pluck(:scheduled_at).map(&:to_date).map(&:cwday)).to all(satisfy { |day| (1..6).cover?(day) })
+
+    current_appointments = Appointment.where(status: %w[pending confirmed rescheduled]).where(scheduled_at: Time.current...(Time.current + 1.hour))
+    completed_appointments = Appointment.where(status: "completed").where("scheduled_at < ?", Time.current)
+    upcoming_appointments = Appointment.where(status: %w[pending confirmed rescheduled]).order(:scheduled_at)
+    next_three_open_days = [Date.new(2026, 4, 1), Date.new(2026, 4, 2), Date.new(2026, 4, 3)]
+
+    expect(current_appointments.count).to be >= 2
+    expect(completed_appointments.count).to be >= 4
+    expect(upcoming_appointments.limit(12).pluck(:scheduled_at).map(&:to_date).uniq).to all(be_in(next_three_open_days))
+    expect(upcoming_appointments.where("scheduled_at < ?", Time.zone.local(2026, 4, 3, 13, 0)).count).to be >= 8
+    expect(AvailabilityWindow.where("starts_at <= ?", Time.zone.local(2026, 4, 3, 23, 59, 59)).count).to be >= 4
   end
 
   it "exports the current dataset as YAML" do

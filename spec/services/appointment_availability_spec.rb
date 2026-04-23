@@ -65,6 +65,23 @@ RSpec.describe AppointmentAvailability do
     expect(slots.first.starts_at).to eq(booking_time(2026, 4, 1, 10, 0))
   end
 
+  it "includes the currently running slot when zero lead time is configured" do
+    configuration.update!(lead_time_hours: 0)
+
+    slots = described_class.new(
+      property: property,
+      configuration: configuration,
+      from: booking_time(2026, 4, 1, 9, 15)
+    ).next_slots(limit: 2, days_ahead: 0)
+
+    expect(slots.map(&:starts_at)).to eq(
+      [
+        booking_time(2026, 4, 1, 9, 0),
+        booking_time(2026, 4, 1, 10, 0)
+      ]
+    )
+  end
+
   it "uses the configured booking window by default" do
     configuration.update!(booking_window_days: 14)
 

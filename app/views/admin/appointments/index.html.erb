@@ -90,7 +90,7 @@
                   <span class="badge badge--neutral admin-bookings-row__pill"><%= appointment.visit_outcome.to_s.humanize %></span>
                 <% end %>
                 <%= link_to t("ui.admin.appointments.index.details"), admin_appointment_path(appointment), class: "button primary hollow admin-bookings-row__action", data: { testid: "admin-appointment-details-link-#{appointment.id}" } %>
-                <%= button_to t("ui.admin.appointments.confirm"), transition_admin_appointment_path(appointment, status: "confirmed"), method: :patch, class: "button success hollow admin-bookings-row__action", form: { data: { testid: "admin-appointment-confirm-#{appointment.id}" } } unless appointment.status.in?(%w[confirmed completed]) %>
+                <%= button_to t("ui.admin.appointments.confirm"), transition_admin_appointment_path(appointment, status: "confirmed"), method: :patch, class: "button success hollow admin-bookings-row__action", form: { data: { testid: "admin-appointment-confirm-#{appointment.id}" } } if appointment.confirmable_by_admin? %>
                 <%= button_to t("ui.admin.appointments.cancel"), transition_admin_appointment_path(appointment, status: "cancelled"), method: :patch, class: "button alert hollow admin-bookings-row__action", form: { data: { testid: "admin-appointment-cancel-#{appointment.id}" } } unless appointment.status == "cancelled" %>
               </div>
             </div>
