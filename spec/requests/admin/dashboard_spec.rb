@@ -51,10 +51,34 @@ RSpec.describe "Admin dashboard", type: :request do
     get admin_root_path
     expect(response).to have_http_status(:ok)
 
-    expect(Rails.cache).to receive(:fetch).with("admin/dashboard/metrics", expires_in: 5.minutes).and_call_original
+    expect(Rails.cache).to receive(:fetch).with(
+      array_including("admin/dashboard/metrics"),
+      expires_in: 5.minutes
+    ).and_call_original
 
     get admin_root_path
     expect(response).to have_http_status(:ok)
+  end
+
+  it "refreshes the cached property total when properties change" do
+    cache_store = ActiveSupport::Cache::MemoryStore.new
+    allow(Rails).to receive(:cache).and_return(cache_store)
+
+    get admin_root_path
+    expect(response).to have_http_status(:ok)
+
+    first_document = Nokogiri::HTML.parse(response.body)
+    first_properties_card = first_document.at_css('[data-testid="admin-status-card-properties"] .admin-dashboard__status-value')
+    expect(first_properties_card.text.strip).to eq("0")
+
+    FactoryBot.create(:property)
+
+    get admin_root_path
+    expect(response).to have_http_status(:ok)
+
+    second_document = Nokogiri::HTML.parse(response.body)
+    second_properties_card = second_document.at_css('[data-testid="admin-status-card-properties"] .admin-dashboard__status-value')
+    expect(second_properties_card.text.strip).to eq("1")
   end
 
   it "uses compact status pills in the recent activity table" do
