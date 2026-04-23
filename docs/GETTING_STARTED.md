@@ -27,6 +27,11 @@ Helpful tooling:
 - `rbenv`, `asdf`, `mise`, or similar for Ruby version management
 - a local mail viewer if you want to inspect file-delivered mail in non-SMTP setups
 
+Hosted email note:
+
+- staging and production use SMTP when configured
+- otherwise they fall back to the admin mail preview at `/admin/letter_opener`
+
 ## First Boot
 
 From the repo root:

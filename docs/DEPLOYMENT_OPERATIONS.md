@@ -138,6 +138,9 @@ After a release:
 2. Check admin sign-in.
 3. Confirm the build/version info appears in admin or QA diagnostics.
 4. Verify the active scenario if the environment depends on seeded training data.
+5. Confirm email delivery mode for the stage:
+   - with SMTP secrets present, staging and production use SMTP
+   - without SMTP, staging and production fall back to the admin mail preview at `/admin/letter_opener`
 
 ## Read Next
 

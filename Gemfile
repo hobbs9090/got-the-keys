@@ -53,6 +53,7 @@ group :test do
 end
 
 group :staging, :production do
+  gem 'letter_opener_web', '~> 3.0'
   gem 'passenger', '~> 6.1'
   gem 'pg', '~> 1.5'
   gem 'solid_cache'

@@ -136,6 +136,13 @@ jobs:
           DATABASE_PORT: ${{ vars.DATABASE_PORT }}
           DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          SMTP_ADDRESS: ${{ secrets.SMTP_ADDRESS }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_DOMAIN: ${{ secrets.SMTP_DOMAIN }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_AUTHENTICATION: ${{ vars.SMTP_AUTHENTICATION }}
+          SMTP_STARTTLS_AUTO: ${{ vars.SMTP_STARTTLS_AUTO }}
         run: bin/deploy_staging
 
       - name: Health check staging deployment

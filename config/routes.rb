@@ -2,6 +2,12 @@ GotTheKeys::Application.routes.draw do
   get "/up", to: "health#show"
   get "/robots.txt", to: "robots#show"
 
+  if defined?(LetterOpenerWeb) && (Rails.env.staging? || Rails.env.production?)
+    authenticate :admin do
+      mount LetterOpenerWeb::Engine, at: "/admin/letter_opener"
+    end
+  end
+
   root 'welcome#index'
 
   devise_for :users, path_names: {sign_up: "register"}, controllers: { passwords: "users/passwords" }

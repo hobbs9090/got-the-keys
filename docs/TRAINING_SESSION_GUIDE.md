@@ -32,7 +32,7 @@ Trainer checklist:
 4. Check the selector registry at `/admin/qa`.
 5. Verify baseline credentials still work.
 6. Decide whether attendees will write against local, staging, or a shared workshop environment.
-7. If using email-related flows, confirm whether SMTP or file delivery is active.
+7. If using email-related flows, confirm whether SMTP or the `/admin/letter_opener` fallback is active.
 
 Recommended pre-session command flow:
 

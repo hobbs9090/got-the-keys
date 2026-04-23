@@ -38,8 +38,7 @@ GotTheKeys::Application.configure do
       enable_starttls_auto: ENV.fetch('SMTP_STARTTLS_AUTO', 'true') == 'true'
     }.compact
   else
-    config.action_mailer.delivery_method = :file
-    config.action_mailer.file_settings = { location: Rails.root.join('tmp', 'mails') }
+    config.action_mailer.delivery_method = :letter_opener_web
   end
   config.i18n.fallbacks = true
   config.active_support.report_deprecations = false

@@ -52,6 +52,13 @@ Mail variables when SMTP is enabled:
 - `SMTP_AUTHENTICATION`
 - `SMTP_STARTTLS_AUTO`
 
+Mail delivery fallback:
+
+- `staging` and `production` use SMTP when `SMTP_ADDRESS` is present
+- otherwise they fall back to `letter_opener_web`
+- previewed emails are stored under `storage/letter_opener`
+- admins can inspect fallback mail at `/admin/letter_opener`
+
 ## SEO Indexing Defaults
 
 Public-page indexing defaults are defined in the Rails environment configs:
