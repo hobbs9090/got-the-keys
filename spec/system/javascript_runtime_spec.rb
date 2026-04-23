@@ -250,6 +250,29 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     expect(page).to have_no_css(".cookie-banner", wait: 5)
   end
 
+  it "clears admin modal overlay state when navigating away from the security page", js: true do
+    admin = FactoryBot.create(:admin, email: "overlay-admin@example.com", password: "changeme", password_confirmation: "changeme")
+    sign_in_as_admin(admin)
+
+    visit admin_security_path
+
+    page.execute_script(<<~JS)
+      const modal = document.getElementById("disable-admin-two-factor-mode-modal");
+      modal.hidden = false;
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("site-modal-open");
+    JS
+
+    expect(page).to have_css("#disable-admin-two-factor-mode-modal[aria-hidden='false']", visible: true)
+    expect(page).to have_css("body.site-modal-open", visible: false)
+
+    visit admin_root_path
+
+    expect(page).to have_current_path(admin_root_path, wait: 5)
+    expect(page).to have_no_css("body.site-modal-open", visible: false)
+    expect(page).to have_no_css('[data-modal][aria-hidden="false"]', visible: false)
+  end
+
   it "toggles the furnishing field based on the selected sale status" do
     admin = FactoryBot.create(:admin, email: "listing-admin@example.com", password: "changeme", password_confirmation: "changeme")
     owner = FactoryBot.create(:user)
