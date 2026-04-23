@@ -140,10 +140,15 @@ jobs:
 
       - name: Health check staging deployment
         env:
+          HEALTHCHECK_HOST: ${{ env.APP_HOST }}
           HEALTHCHECK_URL: https://${{ env.APP_HOST }}/up
         run: |
           for attempt in $(seq 1 12); do
-            status=$(curl --silent --show-error --output /tmp/staging-health.txt --write-out "%{http_code}" "$HEALTHCHECK_URL" || true)
+            status=$(curl --silent --show-error --output /tmp/staging-health.txt --write-out "%{http_code}" \
+              --connect-timeout 5 \
+              --max-time 15 \
+              --resolve "${HEALTHCHECK_HOST}:443:127.0.0.1" \
+              "$HEALTHCHECK_URL" || true)
             body=$(cat /tmp/staging-health.txt 2>/dev/null || true)
 
             if [ "$status" = "200" ] && [ "$body" = "OK" ]; then
