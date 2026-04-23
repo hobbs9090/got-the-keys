@@ -1240,7 +1240,7 @@ en:
           heading: "Edit property"
       users:
         index:
-          title: "Sellers"
+          title: "Sellers and Landlords"
           eyebrow: "Customer and seller management"
           count_label:
             one: "1 seller total"

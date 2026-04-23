@@ -18,10 +18,13 @@
           <% offers.each do |offer| %>
             <div class="admin-list__item">
               <div>
-                <%= link_to offer.buyer_name, admin_sale_path(offer) %>
+                <%= link_to offer.buyer_name, admin_customer_path(offer.buyer_email.to_s.downcase) %>
                 <p><%= offer.property.address_line_1 %> · <%= number_to_currency(offer.amount, unit: "£", precision: 0) %></p>
+                <div class="admin-board-card__footer">
+                  <span class="<%= offer_status_badge_class(offer.status) %>"><%= offer.status.humanize %></span>
+                  <%= link_to t("ui.admin.common.details", default: "Details"), admin_sale_path(offer), class: "button primary hollow", data: { testid: "admin-offer-open-#{offer.id}" } %>
+                </div>
               </div>
-              <span class="<%= offer_status_badge_class(offer.status) %>"><%= offer.status.humanize %></span>
             </div>
           <% end %>
         </div>

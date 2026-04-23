@@ -20,10 +20,10 @@
               <div>
                 <%= link_to application.applicant_name, admin_customer_path(application.applicant_email.to_s.downcase) %>
                 <p><%= application.property.address_line_1 %> · <%= t("ui.admin.rental_applications.index.move_in", date: application.move_in_date) %></p>
-              </div>
-              <div class="admin-inline-actions">
-                <span class="<%= rental_application_status_badge_class(application.status) %>"><%= t("ui.rental_applications.statuses.#{application.status}", default: application.status.humanize) %></span>
-                <%= link_to t("ui.admin.common.details", default: "Details"), admin_rental_path(application), class: "button primary hollow", data: { testid: "admin-rental-application-open-#{application.id}" } %>
+                <div class="admin-board-card__footer">
+                  <span class="<%= rental_application_status_badge_class(application.status) %>"><%= t("ui.rental_applications.statuses.#{application.status}", default: application.status.humanize) %></span>
+                  <%= link_to t("ui.admin.common.details", default: "Details"), admin_rental_path(application), class: "button primary hollow", data: { testid: "admin-rental-application-open-#{application.id}" } %>
+                </div>
               </div>
             </div>
           <% end %>

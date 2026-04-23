@@ -337,6 +337,15 @@
   border-bottom: 0;
 }
 
+.admin-board-card__footer {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+  margin-top: 0.65rem;
+  width: 100%;
+}
+
 .admin-bookings-row__actions {
   gap: 0.45rem;
 }
