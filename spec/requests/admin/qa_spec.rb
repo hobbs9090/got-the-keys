@@ -72,6 +72,9 @@ RSpec.describe "Admin QA guide" do
     expect(response.body).not_to include("Happy path")
     expect(response.body).not_to include("Known credentials")
     expect(response.body).not_to include(%(data-testid="qa-credentials"))
+    expect(response.body).to include("Hans Schmidt (Deutsch) - hans.schmidt@example.com / secret")
+    expect(response.body).to include("Holly Wade (English) - holly.wade@example.com / secret")
+    expect(response.body).to include("Nina Hughes (English) - nina.hughes@example.com / secret")
   end
 
   it "keeps the admin 2FA mode controls off the QA guide" do

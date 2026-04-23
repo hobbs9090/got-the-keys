@@ -87,10 +87,11 @@ Baseline credentials after seeding:
   - `kate@gotthekeys.uk` / `********`
   - `inarra@gotthekeys.uk` / `********`
 - Seller examples:
-  - `charlotte.hughes@example.com` / `********`
-  - `daniel.mercer@example.com` / `********`
-  - `matthew.wells@example.com` / `********`
-  - `lucy.mcclure@example.com` / `********`
+  - English: `amelia.hart@example.com` / `********` (`en`)
+  - German: `hans.schmidt@example.com` / `********` (`de`)
+  - French: `jean.dupont@example.com` / `********` (`fr`)
+  - Italian: `mario.rossi@example.com` / `********` (`it`)
+  - Chinese: `wei.zhang@example.com` / `********` (`zh`)
 - Buyer examples:
   - `nina.hughes@example.com` / `********`
   - `alex.cole@example.com` / `********`

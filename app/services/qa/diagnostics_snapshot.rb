@@ -38,13 +38,15 @@ module Qa
     def seeded_personas
       admins = credential_lines(Array(active_scenario_payload[:admins]))
       users = Array(active_scenario_payload[:users])
-      seller_emails = Array(active_scenario_payload[:properties]).filter_map { |entry| entry[:owner_email] }.uniq
-      sellers, buyers = users.partition { |entry| seller_emails.include?(entry[:email]) }
+      persisted_users = seeded_users_by_email(users)
+      sellers, buyers = users.partition do |entry|
+        persisted_users.fetch(normalized_email(entry[:email]), nil)&.properties_count.to_i.positive?
+      end
 
       {
         admins: admins,
-        sellers: credential_lines(sellers),
-        buyers: credential_lines(buyers)
+        sellers: user_credential_lines(sellers, persisted_users),
+        buyers: user_credential_lines(buyers, persisted_users)
       }
     end
 
@@ -56,6 +58,38 @@ module Qa
 
         password.present? ? "#{email} / #{password}" : email
       end
+    end
+
+    def user_credential_lines(entries, persisted_users)
+      entries.filter_map do |entry|
+        email = entry[:email].to_s.strip
+        password = entry[:password].to_s.strip
+        next if email.blank?
+
+        persisted_user = persisted_users.fetch(normalized_email(email), nil)
+        first_name = persisted_user&.first_name.presence || entry[:first_name].to_s.strip
+        last_name = persisted_user&.last_name.presence || entry[:last_name].to_s.strip
+        language = persisted_user&.language.presence || entry[:language].to_s.strip
+        full_name = [first_name, last_name].reject(&:blank?).join(" ")
+        language_label = language.present? ? I18n.t("languages.names.#{language}", default: language) : nil
+
+        summary = [full_name.presence, language_label.present? && "(#{language_label})"].compact.join(" ")
+        credential = password.present? ? "#{email} / #{password}" : email
+
+        [summary.presence, credential].compact.join(" - ")
+      end
+    end
+
+    def seeded_users_by_email(entries)
+      emails = entries.filter_map do |entry|
+        normalized_email(entry[:email]).presence
+      end
+
+      User.where("lower(email) IN (?)", emails).index_by { |user| normalized_email(user.email) }
+    end
+
+    def normalized_email(email)
+      email.to_s.strip.downcase
     end
   end
 end

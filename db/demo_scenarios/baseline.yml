@@ -6,7 +6,7 @@ qa:
   intended_journey: Baseline end-to-end walkthrough covering catalogue browse, booking, admin confirmation, and seller visibility.
   complexity: foundational
   risk_type: workflow
-  locale_coverage: [en]
+  locale_coverage: [en, de, fr, it, zh]
   trainer_notes:
     - Use this as the default onboarding pack for new testers and browser agents.
   expected_assertions:
@@ -34,34 +34,34 @@ admins:
     password_confirmation: secret
     language: en
 users:
-  - first_name: Charlotte
-    last_name: Hughes
+  - first_name: Hans
+    last_name: Schmidt
     mobile_number: "07700 900101"
-    email: charlotte.hughes@example.com
+    email: hans.schmidt@example.com
     password: secret
     password_confirmation: secret
-    language: en
-  - first_name: Daniel
-    last_name: Mercer
+    language: de
+  - first_name: Jean
+    last_name: Dupont
     mobile_number: "07700 900102"
-    email: daniel.mercer@example.com
+    email: jean.dupont@example.com
     password: secret
     password_confirmation: secret
-    language: en
-  - first_name: Matthew
-    last_name: Wells
+    language: fr
+  - first_name: Mario
+    last_name: Rossi
     mobile_number: "07700 900103"
-    email: matthew.wells@example.com
+    email: mario.rossi@example.com
     password: secret
     password_confirmation: secret
-    language: en
-  - first_name: Lucy
-    last_name: McClure
+    language: it
+  - first_name: Wei
+    last_name: Zhang
     mobile_number: "07700 900104"
-    email: lucy.mcclure@example.com
+    email: wei.zhang@example.com
     password: secret
     password_confirmation: secret
-    language: en
+    language: zh
   - first_name: Nina
     last_name: Hughes
     mobile_number: "07700 900105"
@@ -680,7 +680,7 @@ users:
     language: en
 properties:
   - key: sevenoaks_family_home
-    owner_email: charlotte.hughes@example.com
+    owner_email: hans.schmidt@example.com
     address_line_1: 18 Cedar Road
     address_line_2: Riverhead
     town_city: Sevenoaks
@@ -705,7 +705,7 @@ properties:
     floor_area_sq_ft: 1890
     pets_allowed: true
   - key: tunbridge_garden_flat
-    owner_email: daniel.mercer@example.com
+    owner_email: jean.dupont@example.com
     address_line_1: Flat 3, 44 Mount Ephraim
     address_line_2: ""
     town_city: Tunbridge Wells
@@ -731,7 +731,7 @@ properties:
     service_charge_amount: 2400
     lease_length_years: 112
   - key: guildford_townhouse
-    owner_email: matthew.wells@example.com
+    owner_email: mario.rossi@example.com
     address_line_1: 72 Quarry Street
     address_line_2: ""
     town_city: Guildford
@@ -753,7 +753,7 @@ properties:
     outdoor_space: Courtyard
     floor_area_sq_ft: 1360
   - key: croydon_rental_loft
-    owner_email: lucy.mcclure@example.com
+    owner_email: wei.zhang@example.com
     address_line_1: Apartment 11, 9 Park Lane
     address_line_2: ""
     town_city: Croydon

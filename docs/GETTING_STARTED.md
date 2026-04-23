@@ -67,8 +67,8 @@ After `bin/rails db:seed`:
   - `kate@gotthekeys.uk` / `********`
   - `inarra@gotthekeys.uk` / `********`
 - Seller examples:
-  - `charlotte.hughes@example.com` / `********`
-  - `daniel.mercer@example.com` / `********`
+  - `hans.schmidt@example.com` / `********`
+  - `jean.dupont@example.com` / `********`
 
 ## Common Local Commands
 

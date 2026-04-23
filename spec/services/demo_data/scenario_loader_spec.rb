@@ -57,13 +57,13 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(Enquiry.count).to eq(40)
     expect(Offer.count).to eq(10)
     expect(RentalApplication.count).to eq(14)
-    expect(User.pluck(:language).uniq).to eq(["en"])
+    expect(User.pluck(:language).uniq).to match_array(%w[de en fr it zh])
     expect(User.order(:email).pluck(:email)).to include(
       "alex.cole@example.com",
-      "charlotte.hughes@example.com",
-      "daniel.mercer@example.com",
-      "lucy.mcclure@example.com",
-      "matthew.wells@example.com",
+      "hans.schmidt@example.com",
+      "jean.dupont@example.com",
+      "wei.zhang@example.com",
+      "mario.rossi@example.com",
       "nina.hughes@example.com",
       "amelia.hart@example.com",
       "holly.wade@example.com",
