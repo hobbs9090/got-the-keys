@@ -28,15 +28,52 @@
     </dl>
   </article>
 
+</section>
+
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <h2><%= t("ui.admin.users.show.selling_section_title") %></h2>
+    </div>
+  </div>
+
   <article class="admin-panel">
-    <h2><%= t("ui.admin.users.show.recent_booking_activity_title") %></h2>
+    <h3><%= t("ui.admin.users.show.listings_title") %></h3>
+    <% if @properties.any? %>
+      <div class="admin-list">
+        <% @properties.each do |property| %>
+          <div class="admin-list__item" data-testid="admin-user-property-row-<%= property.id %>">
+            <div class="admin-asset-item">
+              <%= property_thumbnail_for(property) %>
+              <div>
+                <%= link_to property.address_line_1, admin_property_path(property) %>
+                <p><%= property.location_line %></p>
+              </div>
+            </div>
+            <div class="admin-inline-actions">
+              <span class="<%= property_sale_status_badge_class(property.sale_status) %>" data-testid="admin-user-property-sale-status-badge-<%= property.id %>"><%= translated_sale_status(property.sale_status) %></span>
+              <span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="empty-copy"><%= t("ui.admin.users.show.no_properties") %></p>
+    <% end %>
+  </article>
+
+  <article class="admin-panel">
+    <h3><%= t("ui.admin.users.show.recent_booking_activity_title") %></h3>
     <% if @appointments.any? %>
       <div class="admin-list">
         <% @appointments.each do |appointment| %>
           <div class="admin-list__item">
-            <div>
-              <%= link_to appointment.public_reference, admin_appointment_path(appointment) %>
-              <p><%= appointment.property.address_line_1 %> · <%= appointment.customer_name %></p>
+            <div class="admin-asset-item">
+              <%= property_thumbnail_for(appointment.property) %>
+              <div>
+                <%= link_to appointment.public_reference, admin_appointment_path(appointment) %>
+                <p><%= appointment.property.address_line_1 %> · <%= appointment.customer_name %></p>
+              </div>
             </div>
             <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
           </div>
@@ -48,85 +85,74 @@
   </article>
 </section>
 
-<section class="admin-panel">
-  <h2><%= t("ui.admin.users.show.listings_title") %></h2>
-  <% if @properties.any? %>
-    <div class="admin-list">
-      <% @properties.each do |property| %>
-        <div class="admin-list__item" data-testid="admin-user-property-row-<%= property.id %>">
-          <div>
-            <%= link_to property.address_line_1, admin_property_path(property) %>
-            <p><%= property.location_line %></p>
-          </div>
-          <div class="admin-inline-actions">
-            <span class="<%= property_sale_status_badge_class(property.sale_status) %>" data-testid="admin-user-property-sale-status-badge-<%= property.id %>"><%= translated_sale_status(property.sale_status) %></span>
-            <span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span>
-          </div>
-        </div>
-      <% end %>
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <h2><%= t("ui.admin.users.show.interest_section_title") %></h2>
     </div>
-  <% else %>
-    <p class="empty-copy"><%= t("ui.admin.users.show.no_properties") %></p>
-  <% end %>
-</section>
+  </div>
 
-<section class="admin-panel">
-  <h2><%= t("ui.admin.users.show.saved_properties_title") %></h2>
-  <% if @saved_properties.any? %>
-    <div class="admin-list">
-      <% @saved_properties.each do |saved_property| %>
-        <% property = saved_property.property %>
-        <div class="admin-list__item" data-testid="admin-user-saved-property-row-<%= property.id %>">
-          <div>
-            <%= link_to property.address_line_1, admin_property_path(property) %>
-            <p><%= property.location_line %></p>
+  <article class="admin-panel">
+    <h3><%= t("ui.admin.users.show.saved_properties_title") %></h3>
+    <% if @saved_properties.any? %>
+      <div class="admin-list">
+        <% @saved_properties.each do |saved_property| %>
+          <% property = saved_property.property %>
+          <div class="admin-list__item" data-testid="admin-user-saved-property-row-<%= property.id %>">
+            <div class="admin-asset-item">
+              <%= property_thumbnail_for(property) %>
+              <div>
+                <%= link_to property.address_line_1, admin_property_path(property) %>
+                <p><%= property.location_line %></p>
+              </div>
+            </div>
+            <div class="admin-inline-actions">
+              <span class="<%= property_sale_status_badge_class(property.sale_status) %>" data-testid="admin-user-saved-property-sale-status-badge-<%= property.id %>"><%= translated_sale_status(property.sale_status) %></span>
+              <span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span>
+            </div>
           </div>
-          <div class="admin-inline-actions">
-            <span class="<%= property_sale_status_badge_class(property.sale_status) %>" data-testid="admin-user-saved-property-sale-status-badge-<%= property.id %>"><%= translated_sale_status(property.sale_status) %></span>
-            <span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span>
-          </div>
-        </div>
-      <% end %>
-    </div>
-  <% else %>
-    <p class="empty-copy"><%= t("ui.admin.users.show.no_saved_properties") %></p>
-  <% end %>
-</section>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="empty-copy"><%= t("ui.admin.users.show.no_saved_properties") %></p>
+    <% end %>
+  </article>
 
-<section class="admin-panel">
-  <h2><%= t("ui.admin.users.show.saved_searches_title") %></h2>
-  <% if @saved_searches.any? %>
-    <div class="property-workspace__grid property-saved-searches-grid">
-      <% @saved_searches.each do |search| %>
-        <% chip_labels = property_filter_chip_labels(search.filter_params) %>
-        <% matches_count = search.matching_properties_count %>
-        <article class="site-card property-saved-search-card" data-testid="admin-user-saved-search-row-<%= search.id %>">
-          <div class="property-saved-search-card__main">
-            <div class="property-saved-search-card__chips">
-              <% if chip_labels.any? %>
-                <% chip_labels.each do |label| %>
-                  <span class="badge badge--neutral"><%= label %></span>
+  <article class="admin-panel">
+    <h3><%= t("ui.admin.users.show.saved_searches_title") %></h3>
+    <% if @saved_searches.any? %>
+      <div class="property-workspace__grid property-saved-searches-grid">
+        <% @saved_searches.each do |search| %>
+          <% chip_labels = property_filter_chip_labels(search.filter_params) %>
+          <% matches_count = search.matching_properties_count %>
+          <article class="site-card property-saved-search-card" data-testid="admin-user-saved-search-row-<%= search.id %>">
+            <div class="property-saved-search-card__main">
+              <div class="property-saved-search-card__chips">
+                <% if chip_labels.any? %>
+                  <% chip_labels.each do |label| %>
+                    <span class="badge badge--neutral"><%= label %></span>
+                  <% end %>
+                <% else %>
+                  <span class="badge badge--neutral"><%= t("ui.properties.filters.all_listings") %></span>
                 <% end %>
-              <% else %>
-                <span class="badge badge--neutral"><%= t("ui.properties.filters.all_listings") %></span>
-              <% end %>
+              </div>
+
+              <p class="property-saved-search-card__meta">
+                <span><%= t("ui.admin.users.show.saved_search_meta", time: formatted_date_time(search.created_at), language_name: language_label(search.locale)) %></span>
+                <span class="<%= search.alerts_enabled? ? "badge badge--accent" : "badge badge--muted" %>">
+                  <%= search.alerts_enabled? ? t("ui.properties.catalogue.saved_search.alerts_on") : t("ui.properties.catalogue.saved_search.alerts_off") %>
+                </span>
+              </p>
             </div>
 
-            <p class="property-saved-search-card__meta">
-              <span><%= t("ui.admin.users.show.saved_search_meta", time: formatted_date_time(search.created_at), language_name: language_label(search.locale)) %></span>
-              <span class="<%= search.alerts_enabled? ? "badge badge--accent" : "badge badge--muted" %>">
-                <%= search.alerts_enabled? ? t("ui.properties.catalogue.saved_search.alerts_on") : t("ui.properties.catalogue.saved_search.alerts_off") %>
-              </span>
-            </p>
-          </div>
-
-          <div class="property-saved-search-card__actions">
-            <%= link_to translate_count("ui.properties.catalogue.saved_search.view_matches", matches_count), admin_properties_path(search.admin_filter_params), class: "button primary hollow", data: { testid: "admin-user-saved-search-matches-#{search.id}" } %>
-          </div>
-        </article>
-      <% end %>
-    </div>
-  <% else %>
-    <p class="empty-copy"><%= t("ui.admin.users.show.no_saved_searches") %></p>
-  <% end %>
+            <div class="property-saved-search-card__actions">
+              <%= link_to translate_count("ui.properties.catalogue.saved_search.view_matches", matches_count), admin_properties_path(search.admin_filter_params), class: "button primary hollow", data: { testid: "admin-user-saved-search-matches-#{search.id}" } %>
+            </div>
+          </article>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="empty-copy"><%= t("ui.admin.users.show.no_saved_searches") %></p>
+    <% end %>
+  </article>
 </section>

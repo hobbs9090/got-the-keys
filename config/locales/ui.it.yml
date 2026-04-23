@@ -971,6 +971,8 @@ it:
           title: Venditore %{name}
           eyebrow: Profilo venditore
           account_details_title: Dettagli account
+          selling_section_title: Vendita / Affitto
+          interest_section_title: Osservati / Ricercati
           mobile: Cellulare
           properties: Immobili
           listing_count:

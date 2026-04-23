@@ -162,6 +162,7 @@ RSpec.describe "Admin users", type: :request do
     published_property = FactoryBot.create(:property, user: user, address_line_1: "Cedar View", listing_state: "published")
     draft_property = FactoryBot.create(:property, :draft, :for_rent, user: user, address_line_1: "Maple House")
     other_user_property = FactoryBot.create(:property, address_line_1: "Someone Else's Home")
+    FactoryBot.create(:photo, property: published_property, primary: true, image_filename: "properties/admin-user-property-thumb.webp")
 
     get admin_seller_path(user)
 
@@ -181,6 +182,7 @@ RSpec.describe "Admin users", type: :request do
 
     sale_badge = parsed_html.at_css(%([data-testid="admin-user-property-sale-status-badge-#{published_property.id}"]))
     rent_badge = parsed_html.at_css(%([data-testid="admin-user-property-sale-status-badge-#{draft_property.id}"]))
+    listing_thumbnail = parsed_html.at_css(%([data-testid="admin-user-property-row-#{published_property.id}"] img.admin-asset-item__thumbnail))
 
     expect(sale_badge).to be_present
     expect(sale_badge.text.strip).to eq("For Sale")
@@ -189,6 +191,8 @@ RSpec.describe "Admin users", type: :request do
     expect(rent_badge).to be_present
     expect(rent_badge.text.strip).to eq("For Rent")
     expect(rent_badge["class"]).to include("badge--success")
+    expect(listing_thumbnail).to be_present
+    expect(listing_thumbnail["src"]).to include("admin-user-property-thumb.webp")
   end
 
   it "lists all of the seller's saved properties on the profile page" do
@@ -197,6 +201,7 @@ RSpec.describe "Admin users", type: :request do
     saved_sale_property = FactoryBot.create(:property, address_line_1: "Saved Sale Home", listing_state: "published")
     saved_rent_property = FactoryBot.create(:property, :for_rent, :draft, address_line_1: "Saved Rental Home")
     unsaved_property = FactoryBot.create(:property, address_line_1: "Not Saved Home")
+    FactoryBot.create(:photo, property: saved_sale_property, primary: true, image_filename: "properties/admin-user-saved-property-thumb.webp")
 
     FactoryBot.create(:saved_property, user: user, property: saved_sale_property)
     FactoryBot.create(:saved_property, user: user, property: saved_rent_property)
@@ -216,11 +221,31 @@ RSpec.describe "Admin users", type: :request do
 
     sale_badge = parsed_html.at_css(%([data-testid="admin-user-saved-property-sale-status-badge-#{saved_sale_property.id}"]))
     rent_badge = parsed_html.at_css(%([data-testid="admin-user-saved-property-sale-status-badge-#{saved_rent_property.id}"]))
+    saved_thumbnail = parsed_html.at_css(%([data-testid="admin-user-saved-property-row-#{saved_sale_property.id}"] img.admin-asset-item__thumbnail))
 
     expect(sale_badge).to be_present
     expect(sale_badge.text.strip).to eq("For Sale")
     expect(rent_badge).to be_present
     expect(rent_badge.text.strip).to eq("For Rent")
+    expect(saved_thumbnail).to be_present
+    expect(saved_thumbnail["src"]).to include("admin-user-saved-property-thumb.webp")
+  end
+
+  it "shows property thumbnails in the recent booking activity list" do
+    user = FactoryBot.create(:user, first_name: "Taylor", last_name: "Stone", email: "taylor.stone@example.com")
+    property = FactoryBot.create(:property, user: user, address_line_1: "Cedar View")
+    slot = next_booking_slot(hour: 11)
+    appointment = FactoryBot.create(:appointment, property:, customer_name: "Alex Viewer", requested_time: slot, scheduled_at: slot)
+    FactoryBot.create(:photo, property: property, primary: true, image_filename: "properties/admin-user-booking-thumb.webp")
+
+    get admin_seller_path(user)
+
+    expect(response).to have_http_status(:ok)
+
+    booking_thumbnail = parsed_html.at_css(".admin-list__item img.admin-asset-item__thumbnail")
+    expect(response.body).to include(appointment.public_reference)
+    expect(booking_thumbnail).to be_present
+    expect(booking_thumbnail["src"]).to include("admin-user-booking-thumb.webp")
   end
 
   it "lists all of the seller's saved searches on the profile page" do

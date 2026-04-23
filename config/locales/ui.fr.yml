@@ -977,6 +977,8 @@ fr:
           title: Vendeur %{name}
           eyebrow: Profil vendeur
           account_details_title: Details du compte
+          selling_section_title: Vente / Location
+          interest_section_title: Suivi / Recherche
           mobile: Mobile
           properties: Biens
           listing_count:

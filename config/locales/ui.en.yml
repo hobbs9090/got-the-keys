@@ -1264,6 +1264,8 @@ en:
           title: "Seller %{name}"
           eyebrow: "Seller profile"
           account_details_title: "Account details"
+          selling_section_title: "Selling / Renting"
+          interest_section_title: "Watching / Looking"
           mobile: "Mobile"
           properties: "Properties"
           listing_count:

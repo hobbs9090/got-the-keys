@@ -973,6 +973,8 @@ de:
           title: Verkäufer %{name}
           eyebrow: Verkäuferprofil
           account_details_title: Kontodetails
+          selling_section_title: Verkaufen / Vermieten
+          interest_section_title: Beobachten / Suchen
           mobile: Mobil
           properties: Objekte
           listing_count:

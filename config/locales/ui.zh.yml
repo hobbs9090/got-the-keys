@@ -959,6 +959,8 @@ zh:
           title: 卖家 %{name}
           eyebrow: 卖家资料
           account_details_title: 账户详情
+          selling_section_title: 在售 / 在租
+          interest_section_title: 关注 / 搜索
           mobile: 手机
           properties: 房源
           listing_count:

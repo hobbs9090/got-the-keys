@@ -37,6 +37,16 @@ module PropertiesHelper
     end
   end
 
+  def property_thumbnail_for(property)
+    image_name = property.hero_image_name
+
+    if image_name.blank?
+      property_image_small(class_name: "admin-asset-item__thumbnail")
+    else
+      listing_image_tag(image_name, class_name: "admin-asset-item__thumbnail", alt: property.headline, loading: "lazy", fetchpriority: "low")
+    end
+  end
+
   def format_bedrooms(property)
     if property.bedrooms == 0
       content_tag(:span, t(:studio_flat))
