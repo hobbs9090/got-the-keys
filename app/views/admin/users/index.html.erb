@@ -32,7 +32,7 @@
         <div class="admin-list__item" data-testid="admin-user-row-<%= user.id %>">
           <div>
             <%= link_to user.full_name.presence || user.email, admin_seller_path(user) %>
-            <p><%= user.email %> · <%= translate_count("ui.admin.users.index.property_count", user.properties.count) %></p>
+            <p><%= user.email %></p>
             <div class="admin-customer-badges">
               <% if sale_count.positive? %>
                 <span class="badge badge--accent" data-testid="admin-user-sale-count-<%= user.id %>"><%= t("ui.admin.users.index.sale_count_badge", count: sale_count) %></span>

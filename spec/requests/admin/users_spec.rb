@@ -41,11 +41,14 @@ RSpec.describe "Admin users", type: :request do
 
     sale_badge = parsed_html.at_css(%([data-testid="admin-user-sale-count-#{first_seller.id}"]))
     rent_badge = parsed_html.at_css(%([data-testid="admin-user-rent-count-#{first_seller.id}"]))
+    seller_row = parsed_html.at_css(%([data-testid="admin-user-row-#{first_seller.id}"]))
 
     expect(sale_badge).to be_present
     expect(sale_badge.text.strip).to eq("1 For Sale")
     expect(rent_badge).to be_present
     expect(rent_badge.text.strip).to eq("1 For Rent")
+    expect(seller_row.text).to include(first_seller.email)
+    expect(seller_row.text).not_to include("2 properties")
   end
 
   it "filters sellers by full name" do
