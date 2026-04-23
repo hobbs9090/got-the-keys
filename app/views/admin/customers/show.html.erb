@@ -60,10 +60,15 @@
         <% @appointments.each do |appointment| %>
           <div class="admin-list__item">
             <div>
-              <%= link_to appointment.public_reference, admin_appointment_path(appointment) %>
-              <p><%= appointment.property.address_line_1 %> · <%= formatted_date_time(appointment.scheduled_at) %></p>
+              <strong><%= link_to appointment.public_reference, admin_appointment_path(appointment) %></strong>
+              <p><%= link_to appointment.property.address_line_1, admin_property_path(appointment.property) %></p>
+              <p><%= t("ui.common.requested_slot") %>: <%= formatted_date_time(appointment.requested_time) %></p>
+              <p><%= t("ui.common.current_slot") %>: <%= formatted_date_time(appointment.scheduled_at) %></p>
             </div>
-            <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+            <div class="admin-inline-actions">
+              <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
+              <%= link_to t("ui.admin.appointments.index.details"), admin_appointment_path(appointment), class: "button primary hollow" %>
+            </div>
           </div>
         <% end %>
       </div>

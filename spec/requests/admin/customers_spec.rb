@@ -331,10 +331,16 @@ RSpec.describe "Admin customers", type: :request do
     expect(response.body).to include("Recent bookings")
     expect(response.body).to include(appointment.public_reference)
     expect(response.body).to include("48 Mount Place")
+    expect(response.body).to include("Requested slot")
+    expect(response.body).to include("Current slot")
 
     document = parsed_html
     bookings_link = document.at_css(%(a[href="#{admin_appointments_path(view: "agenda", customer_email: user.email)}"]))
+    property_link = document.at_css(%(a[href="#{admin_property_path(property)}"]))
+    appointment_link = document.at_css(%(a[href="#{admin_appointment_path(appointment)}"]))
     expect(bookings_link).to be_present
+    expect(property_link).to be_present
+    expect(appointment_link).to be_present
   end
 
   it "shows a customer profile page for rental applicants without bookings" do
