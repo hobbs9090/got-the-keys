@@ -16,6 +16,31 @@ zh:
           update: Update
   ui:
     admin:
+      appointments:
+        details: Details
+      customers:
+        index:
+          badges:
+            buyer: Buyer
+            landlord: Landlord
+            registered_user: Registered user
+            seller: Seller
+            tenant: Tenant
+          registered_on: Registered %{time}
+        show:
+          account_details_title: Account details
+          back: Back
+          booking_count: Bookings
+          eyebrow: Customer profile
+          latest_booking: Latest booking
+          no_bookings: No bookings found for this customer.
+          recent_bookings_title: Recent bookings
+          registered_on: Registered on
+          title: Customer %{name}
+          view_bookings: View bookings
+      dashboard:
+        metrics:
+          offers: Offers
       demo_data:
         actions:
           populate: Appended performance data
@@ -55,6 +80,7 @@ zh:
             ai_mode: AI enrichment mode must be Off, Auto, or On.
             integer: "%{field} must be a whole number."
             integer_minimum: "%{field} must be %{minimum} or greater."
+            model: AI model must be one of the supported dropdown options.
             required: "%{field} cannot be blank."
       flash:
         populated_performance_demo_data: Added %{users} users and %{properties} properties for performance testing.
@@ -70,6 +96,14 @@ zh:
           sellers_label: Sellers
         version_box:
           commit_badge: Commit %{sha}
+      users:
+        index:
+          rent_count_badge:
+            one: 1 For Rent
+            other: "%{count} For Rent"
+          sale_count_badge:
+            one: 1 For Sale
+            other: "%{count} For Sale"
     properties:
       show:
         booking_sign_in_body: Sign in or create an account to request a viewing and pick from the published time slots for this home.
@@ -77,5 +111,58 @@ zh:
         enquiry_body_guest: Sign in or create an account to ask for brochure information, a landlord or seller callback, or clarification before you pick a viewing slot.
         offer_body_guest: Sign in or create an account to register your buying position and submit an offer.
         rental_application_body_guest: Sign in or create an account to share your intended move-in timing and affordability notes with the lettings team.
+    seo:
+      defaults:
+        admin: Manage property listings, customers, enquiries, bookings, and operations in the GotTheKeys admin area.
+        public: Browse property listings, save searches, and book viewings with GotTheKeys.
+      descriptions:
+        about_us:
+          index: Learn how GotTheKeys helps sellers and searchers with clearer property listings, simpler booking, and better control.
+        blog:
+          index: Read GotTheKeys articles on property listings, enquiries, and practical ways to improve marketing performance.
+        contact_us:
+          index: Contact the GotTheKeys team for help with listings, viewings, and general property platform questions.
+        cookie_policy:
+          index: See how GotTheKeys uses cookies to support sign-in, preferences, and essential site features.
+        for_rent:
+          index: Explore homes to rent, check listing details, and book viewings through GotTheKeys.
+        for_sale:
+          index: Browse homes for sale, compare listing details, and book viewings directly through GotTheKeys.
+        how_it_works:
+          index: See how GotTheKeys helps market homes, handle enquiries, and make viewings easier to manage.
+        legal:
+          index: Read the key legal terms, responsibilities, and platform conditions that apply when using GotTheKeys.
+        properties:
+          index: Browse the full GotTheKeys property catalogue, refine by location and price, and save searches for later.
+          show: View property details, photos, documents, and viewing options on GotTheKeys.
+        searches:
+          index: Search property listings by area, price, and bedrooms, then save your filters or book a viewing online.
+        welcome:
+          index: Discover modern property listings, live viewing availability, and a clearer way to browse homes with GotTheKeys.
+      titles:
+        about_us:
+          index: About Us | GotTheKeys
+        admin:
+          default: Admin | GotTheKeys
+        blog:
+          index: Blog | GotTheKeys
+        contact_us:
+          index: Contact Us | GotTheKeys
+        cookie_policy:
+          index: Cookie Policy | GotTheKeys
+        for_rent:
+          index: For Rent
+        for_sale:
+          index: For Sale
+        how_it_works:
+          index: How It Works | GotTheKeys
+        legal:
+          index: Legal | GotTheKeys
+        properties:
+          index: Property Listings | GotTheKeys
+        searches:
+          index: Search
+        welcome:
+          index: GotTheKeys
     site_footer:
       build_badge: Commit %{sha}

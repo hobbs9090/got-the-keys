@@ -17,6 +17,10 @@ RSpec.describe "Public content pages", type: :request do
     parsed_html.at_css(%(input##{field_id}))&.[](attribute)
   end
 
+  def hint_attribute(field_id, attribute)
+    parsed_html.at_css(%(##{field_id}_listing_type_hint))&.[](attribute)
+  end
+
   pages = [
     { description: "search", path: "/searches", text: "Search listings and booking availability together" },
     { description: "legal", path: "/legal", text: "A plain-English summary of the key terms and responsibilities that apply when you use the site." },
@@ -106,24 +110,42 @@ RSpec.describe "Public content pages", type: :request do
     expect(label_text("max_price")).to eq(I18n.t("ui.properties.filters.max_price"))
     expect(input_placeholder("min_price")).to eq("250,000")
     expect(input_placeholder("max_price")).to eq("1,000,000")
+    expect(input_attribute("min_price", "disabled")).to eq("disabled")
+    expect(input_attribute("max_price", "disabled")).to eq("disabled")
+    expect(input_attribute("min_price", "aria-describedby")).to eq("min_price_listing_type_hint")
+    expect(input_attribute("max_price", "aria-describedby")).to eq("max_price_listing_type_hint")
+    expect(hint_attribute("min_price", "title")).to eq(I18n.t("ui.properties.filters.price_requires_listing_type"))
+    expect(hint_attribute("max_price", "title")).to eq(I18n.t("ui.properties.filters.price_requires_listing_type"))
 
     get searches_path, params: { sale_status: Property::SALE_STATUSES[:for_rent] }
     expect(label_text("min_price")).to eq(I18n.t("ui.properties.filters.min_monthly_rental"))
     expect(label_text("max_price")).to eq(I18n.t("ui.properties.filters.max_monthly_rental"))
     expect(input_placeholder("min_price")).to eq("1,500")
     expect(input_placeholder("max_price")).to eq("10,000")
+    expect(input_attribute("min_price", "disabled")).to be_nil
+    expect(input_attribute("max_price", "disabled")).to be_nil
+    expect(hint_attribute("min_price", "hidden")).not_to be_nil
+    expect(hint_attribute("max_price", "hidden")).not_to be_nil
 
     get for_sale_index_path
     expect(label_text("min_price")).to eq(I18n.t("ui.properties.filters.min_price"))
     expect(label_text("max_price")).to eq(I18n.t("ui.properties.filters.max_price"))
     expect(input_placeholder("min_price")).to eq("250,000")
     expect(input_placeholder("max_price")).to eq("1,000,000")
+    expect(input_attribute("min_price", "disabled")).to be_nil
+    expect(input_attribute("max_price", "disabled")).to be_nil
+    expect(parsed_html.at_css("#min_price_listing_type_hint")).to be_nil
+    expect(parsed_html.at_css("#max_price_listing_type_hint")).to be_nil
 
     get for_rent_index_path
     expect(label_text("min_price")).to eq(I18n.t("ui.properties.filters.min_monthly_rental"))
     expect(label_text("max_price")).to eq(I18n.t("ui.properties.filters.max_monthly_rental"))
     expect(input_placeholder("min_price")).to eq("1,500")
     expect(input_placeholder("max_price")).to eq("10,000")
+    expect(input_attribute("min_price", "disabled")).to be_nil
+    expect(input_attribute("max_price", "disabled")).to be_nil
+    expect(parsed_html.at_css("#min_price_listing_type_hint")).to be_nil
+    expect(parsed_html.at_css("#max_price_listing_type_hint")).to be_nil
   end
 
   it "adds search form validation attributes for query and price inputs" do
@@ -139,5 +161,7 @@ RSpec.describe "Public content pages", type: :request do
 
     expect(parsed_html.at_css("input#saved_search_email")).to be_nil
     expect(parsed_html.at_css('[data-testid="saved-search-panel"] a[href*="sign_in"]')).to be_present
+    expect(input_attribute("min_price", "disabled")).to eq("disabled")
+    expect(input_attribute("max_price", "disabled")).to eq("disabled")
   end
 end

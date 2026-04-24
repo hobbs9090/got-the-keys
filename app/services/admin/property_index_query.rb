@@ -23,7 +23,9 @@ class Admin::PropertyIndexQuery
   end
 
   def public_catalogue_filters
-    filters.slice(:q, :sale_status, :town_city, :min_bedrooms, :min_price, :max_price, :sort)
+    filters.slice(:q, :sale_status, :town_city, :min_bedrooms, :min_price, :max_price, :sort).tap do |catalogue_filters|
+      catalogue_filters.except!(:min_price, :max_price) if catalogue_filters[:sale_status].blank?
+    end
   end
 
   def normalize_params(params)

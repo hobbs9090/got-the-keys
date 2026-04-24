@@ -186,6 +186,7 @@ zh:
         min_bedrooms: 最少卧室
         min_price: 最低价格
         max_price: 最高价格
+        price_requires_listing_type: 请先选择房源类型，再输入价格范围。
         min_monthly_rental: 最低月租
         max_monthly_rental: 最高月租
         sort: 排序
@@ -492,11 +493,12 @@ zh:
       greeting: "%{name}，你好："
       updated_html: 你关于 <strong>%{address}</strong> 的看房预约已更新。
       reference: 编号：%{reference}
-      status: 状态：%{status}
+      status_html: 状态：<strong>%{status}</strong>
       requested_slot: 申请时段：%{time}
       current_slot: 当前时段：%{time}
       notes: 你的备注：%{notes}
-      revisit: 你可以随时使用预约成功后发送的安全链接再次查看此预约。
+      revisit_html: 你可以随时使用此安全预约链接再次查看此预约：%{link}
+      revisit_link: 查看或管理你的预约
       thanks_html: 谢谢，<br>GotTheKeys
     admin:
       layout:

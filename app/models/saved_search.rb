@@ -21,6 +21,7 @@ class SavedSearch < ApplicationRecord
 
   before_validation :apply_defaults
   before_validation :sync_email_from_user
+  before_validation :clear_price_filters_without_listing_type
 
   def filter_params
     {
@@ -50,6 +51,13 @@ class SavedSearch < ApplicationRecord
 
   def sync_email_from_user
     self.email = user.email if user.present?
+  end
+
+  def clear_price_filters_without_listing_type
+    return if sale_status.present?
+
+    self.min_price = nil
+    self.max_price = nil
   end
 
   def price_bounds_make_sense

@@ -201,6 +201,7 @@ it:
         min_bedrooms: Camere minime
         min_price: Prezzo minimo
         max_price: Prezzo massimo
+        price_requires_listing_type: Scegli un tipo di annuncio prima di inserire una fascia di prezzo.
         min_monthly_rental: Affitto mensile minimo
         max_monthly_rental: Affitto mensile massimo
         sort: Ordina
@@ -531,12 +532,12 @@ it:
       greeting: Ciao %{name},
       updated_html: La tua visita per <strong>%{address}</strong> e stata aggiornata.
       reference: 'Riferimento: %{reference}'
-      status: 'Stato: %{status}'
+      status_html: 'Stato: <strong>%{status}</strong>'
       requested_slot: 'Fascia richiesta: %{time}'
       current_slot: 'Fascia attuale: %{time}'
       notes: 'Le tue note: %{notes}'
-      revisit: Puoi rivedere l'appuntamento in qualsiasi momento usando il link sicuro
-        inviato dopo la prenotazione.
+      revisit_html: "Puoi rivedere l'appuntamento in qualsiasi momento usando questo link sicuro: %{link}"
+      revisit_link: Visualizza o gestisci l'appuntamento
       thanks_html: Grazie,<br>GotTheKeys
     admin:
       customers:

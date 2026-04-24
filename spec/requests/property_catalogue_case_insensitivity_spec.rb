@@ -100,5 +100,26 @@ RSpec.describe "Property catalogue search (case-insensitive)", type: :request do
     expect(response.body).to include(for_sale_match.address_line_1)
     expect(response.body).not_to include(for_sale_other.address_line_1)
   end
-end
 
+  it "ignores price filters on dual sale and rental search pages until listing type is selected" do
+    for_sale_match.update!(asking_price: 500_000)
+    for_rent_match.update!(asking_price: 2_000)
+
+    get searches_path, params: { min_price: "600,000" }
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include(for_sale_match.address_line_1)
+    expect(response.body).to include(for_rent_match.address_line_1)
+    expect(response.body).not_to include(%(value="600,000"))
+
+    get searches_path, params: {
+      sale_status: Property::SALE_STATUSES[:for_sale],
+      min_price: "600,000"
+    }
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).not_to include(for_sale_match.address_line_1)
+    expect(response.body).not_to include(for_rent_match.address_line_1)
+    expect(response.body).to include(%(value="600,000"))
+  end
+end

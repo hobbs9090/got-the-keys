@@ -12,6 +12,7 @@ class PropertyCatalogueQuery
 
   def call
     filters = params.slice(*FILTER_KEYS).merge(default_filters.slice(*FILTER_KEYS)).symbolize_keys
+    filters = remove_price_filters_without_listing_type(filters)
     scope = relation.scoping { relation.model.filter(filters) }
     properties = scope.preload(:photos, :property_documents).page(page)
 
@@ -47,5 +48,11 @@ class PropertyCatalogueQuery
 
   def normalize_price_filter(value)
     value.to_s.gsub(/[,\s]/, "").presence
+  end
+
+  def remove_price_filters_without_listing_type(filters)
+    return filters if filters[:sale_status].present?
+
+    filters.except(:min_price, :max_price)
   end
 end

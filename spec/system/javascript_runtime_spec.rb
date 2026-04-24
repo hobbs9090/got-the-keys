@@ -52,6 +52,8 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       const maxLabel = document.querySelector("label[for='max_price']");
       const minInput = document.querySelector("[data-property-search-min-price-input]");
       const maxInput = document.querySelector("[data-property-search-max-price-input]");
+      const minHint = document.getElementById("min_price_listing_type_hint");
+      const maxHint = document.getElementById("max_price_listing_type_hint");
 
       if (!select || !minLabel || !maxLabel || !minInput || !maxInput) {
         done(null);
@@ -65,7 +67,11 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
           minLabel: minLabel.textContent.trim(),
           maxLabel: maxLabel.textContent.trim(),
           minPlaceholder: minInput.getAttribute("placeholder"),
-          maxPlaceholder: maxInput.getAttribute("placeholder")
+          maxPlaceholder: maxInput.getAttribute("placeholder"),
+          minDisabled: minInput.disabled,
+          maxDisabled: maxInput.disabled,
+          minHintHidden: minHint?.hidden,
+          maxHintHidden: maxHint?.hidden
         });
         return;
       }
@@ -82,7 +88,11 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
             minLabel: minLabel.textContent.trim(),
             maxLabel: maxLabel.textContent.trim(),
             minPlaceholder: minInput.getAttribute("placeholder"),
-            maxPlaceholder: maxInput.getAttribute("placeholder")
+            maxPlaceholder: maxInput.getAttribute("placeholder"),
+            minDisabled: minInput.disabled,
+            maxDisabled: maxInput.disabled,
+            minHintHidden: minHint?.hidden,
+            maxHintHidden: maxHint?.hidden
           });
         });
       });
@@ -357,6 +367,10 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     expect(page).to have_css("label[for='max_price']", text: "Max price")
     expect(page).to have_css("input[data-property-search-min-price-input][placeholder='250,000']")
     expect(page).to have_css("input[data-property-search-max-price-input][placeholder='1,000,000']")
+    expect(page).to have_field("min_price", disabled: true)
+    expect(page).to have_field("max_price", disabled: true)
+    expect(page).to have_css("#min_price_listing_type_hint:not([hidden])")
+    expect(page).to have_css("#max_price_listing_type_hint:not([hidden])")
 
     rental_state = update_shared_search_filter_state("For Rent")
 
@@ -365,7 +379,11 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       "minLabel" => "Min monthly rental",
       "maxLabel" => "Max monthly rental",
       "minPlaceholder" => "1,500",
-      "maxPlaceholder" => "10,000"
+      "maxPlaceholder" => "10,000",
+      "minDisabled" => false,
+      "maxDisabled" => false,
+      "minHintHidden" => true,
+      "maxHintHidden" => true
     )
 
     sale_state = update_shared_search_filter_state("For Sale")
@@ -375,7 +393,11 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       "minLabel" => "Min price",
       "maxLabel" => "Max price",
       "minPlaceholder" => "250,000",
-      "maxPlaceholder" => "1,000,000"
+      "maxPlaceholder" => "1,000,000",
+      "minDisabled" => false,
+      "maxDisabled" => false,
+      "minHintHidden" => true,
+      "maxHintHidden" => true
     )
   end
 

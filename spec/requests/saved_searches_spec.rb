@@ -64,6 +64,31 @@ RSpec.describe "Saved searches", type: :request do
     expect(matching_property).to be_present
   end
 
+  it "drops price filters when a saved search has no listing type" do
+    sign_in user
+
+    expect do
+      post saved_searches_path, params: {
+        saved_search: {
+          locale: "en",
+          search_query: "family home",
+          town_city: "Sevenoaks",
+          min_price: "600,000",
+          max_price: "700,000",
+          alerts_enabled: "1",
+          catalogue_scope: "searches"
+        }
+      }
+    end.to change(SavedSearch, :count).by(1)
+
+    saved = SavedSearch.last
+
+    expect(saved.sale_status).to be_blank
+    expect(saved.min_price).to be_nil
+    expect(saved.max_price).to be_nil
+    expect(response).to redirect_to(searches_path(q: "family home", town_city: "Sevenoaks"))
+  end
+
   it "stores the current catalogue filters for a signed-in admin mapped to a user email" do
     sign_in admin
 

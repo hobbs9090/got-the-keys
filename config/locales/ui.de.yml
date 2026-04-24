@@ -201,6 +201,7 @@ de:
         min_bedrooms: Min. Schlafzimmer
         min_price: Mindestpreis
         max_price: Höchstpreis
+        price_requires_listing_type: Wählen Sie einen Angebotstyp aus, bevor Sie eine Preisspanne eingeben.
         min_monthly_rental: Mindestmiete pro Monat
         max_monthly_rental: Höchstmiete pro Monat
         sort: Sortierung
@@ -533,12 +534,12 @@ de:
       greeting: Hallo %{name},
       updated_html: Ihre Besichtigung für <strong>%{address}</strong> wurde aktualisiert.
       reference: 'Referenz: %{reference}'
-      status: 'Status: %{status}'
+      status_html: 'Status: <strong>%{status}</strong>'
       requested_slot: 'Gewünschter Termin: %{time}'
       current_slot: 'Aktueller Termin: %{time}'
       notes: 'Ihre Notizen: %{notes}'
-      revisit: Sie können den Termin jederzeit über den sicheren Link erneut aufrufen,
-        den Sie nach der Buchung erhalten haben.
+      revisit_html: 'Sie können den Termin jederzeit über diesen sicheren Terminlink erneut aufrufen: %{link}'
+      revisit_link: Termin anzeigen oder verwalten
       thanks_html: Vielen Dank,<br>GotTheKeys
     admin:
       customers:

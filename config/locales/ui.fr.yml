@@ -204,6 +204,7 @@ fr:
         min_bedrooms: Chambres min.
         min_price: Prix min.
         max_price: Prix max.
+        price_requires_listing_type: Choisissez un type d'annonce avant de saisir une fourchette de prix.
         min_monthly_rental: Loyer mensuel min.
         max_monthly_rental: Loyer mensuel max.
         sort: Tri
@@ -537,12 +538,12 @@ fr:
       greeting: Bonjour %{name},
       updated_html: Votre visite pour <strong>%{address}</strong> a ete mise a jour.
       reference: 'Reference : %{reference}'
-      status: 'Statut : %{status}'
+      status_html: 'Statut : <strong>%{status}</strong>'
       requested_slot: 'Creneau demande : %{time}'
       current_slot: 'Creneau actuel : %{time}'
       notes: 'Vos notes : %{notes}'
-      revisit: Vous pouvez revoir ce rendez-vous a tout moment en utilisant le lien
-        securise envoye apres la reservation.
+      revisit_html: 'Vous pouvez revoir ce rendez-vous a tout moment en utilisant ce lien securise : %{link}'
+      revisit_link: Voir ou gerer votre rendez-vous
       thanks_html: Merci,<br>GotTheKeys
     admin:
       customers:
