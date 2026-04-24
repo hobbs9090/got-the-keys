@@ -116,6 +116,7 @@ Operational notes:
 
 - This action appends data. It does not reset the database first.
 - Re-running the performance seeder is supported. Generated seller emails stay unique across repeated runs.
+- AI batch size and model are disabled in the admin form while AI mode is `Off`.
 - For the fastest large dataset generation, keep AI mode set to `Off`.
 
 There is also a CLI entry point for the same underlying generator:

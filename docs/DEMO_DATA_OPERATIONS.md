@@ -58,6 +58,7 @@ The admin demo-data area (`/admin/demo-data`) is the main trainer surface for:
 - checking trainer notes
 - reviewing expected assertions
 - confirming the typed reset gate
+- appending performance test users and properties
 - exporting a snapshot of the current dataset
 - importing a previously exported YAML pack
 - reviewing recent activity (last 10 seed resets, imports, exports, and performance data loads)
@@ -66,7 +67,24 @@ Important behavior:
 
 - resets are intentionally gated to avoid accidental destructive changes
 - the dataset swap is meant to replace the current seeded records, not merge casually with them
+- the performance seed action appends data and does not reset the database first
+- AI-dependent performance seed fields are disabled when AI mode is `Off`; the admin JavaScript bundle owns that toggle behavior
 - the recent activity panel is a read-only log; it does not replace the active scenario indicator on `/admin/qa`
+
+## Append Performance Test Data
+
+Use the `Append performance test data` panel on `/admin/demo-data` when you want larger read-heavy datasets without replacing the baseline first.
+
+Parameters:
+
+- `Users to add`
+- `Properties to add`
+- `Generated user password`
+- `AI enrichment mode`
+- `AI batch size`
+- `AI model`
+
+`AI batch size` and `AI model` are only editable when AI mode is `Auto` or `On`. Keep AI mode `Off` for the fastest local-only run.
 
 ## Restore Baseline Between Exercises
 

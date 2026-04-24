@@ -26,10 +26,10 @@ That dual purpose is intentional. The public site, seller tools, and admin works
 Public visitors can:
 
 - browse the homepage and featured listings
-- search and filter the catalogue
+- search and filter the catalogue, with price filters scoped to a selected sale or rental listing type on combined search pages
 - open sale and rental property pages
 - request a viewing
-- send an enquiry
+- send an enquiry, with signed-in contact details pre-filled where available
 - submit an offer on sale listings
 - submit a rental application on rental listings
 - use secure self-service links for booked appointments
@@ -46,7 +46,7 @@ Admins can:
 
 - sign in to a protected workspace
 - manage appointments and status changes
-- review properties and sellers
+- review properties and sellers, including direct links from property booking history to booking records and customer profiles
 - use booking configuration controls
 - inspect notification logs
 - preview and reset demo scenarios

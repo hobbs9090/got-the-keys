@@ -56,9 +56,7 @@ The booking domain centers on:
 - `BookingConfiguration`
 - `NotificationLog`
 
-For the deeper booking map, read:
-
-- [Booking domain architecture](BOOKING_ARCHITECTURE.md)
+The booking rules, self-service behavior, and notification flow are summarized here rather than split into a separate deep-dive document.
 
 ## Service Layer Shape
 
@@ -78,9 +76,7 @@ Background work currently stays conservative.
 - The current shared-host posture relies on `:async` where appropriate.
 - This is intentionally not treated as a durable worker platform.
 
-For the explicit rules, read:
-
-- [Background job policy](BACKGROUND_JOB_POLICY.md)
+The practical rule is simple: background jobs are useful boundaries here, but the current shared-host posture does not treat `:async` as a durable queue backend.
 
 ## Frontend Runtime
 
@@ -95,8 +91,9 @@ It boots:
 
 - native validation localization
 - property listing helpers
-- property search filter label switching on public pages
+- property search filter label switching and sale/rental price-field gating on public pages
 - pagination, modal, theme, and admin utility helpers through layout-specific bundles
+- admin demo-data performance seed field toggles through `admin_bundle.js`
 
 The styling layer is split between:
 

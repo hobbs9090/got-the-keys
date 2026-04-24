@@ -113,11 +113,20 @@ jobs:
             tmp/allure-report
           if-no-files-found: warn
 
+      - name: Build GitHub Pages report site
+        if: ${{ always() && steps.allure_report.outputs.present == 'true' }}
+        env:
+          RSPEC_REPORT_JSON: tmp/rspec-report.json
+          RSPEC_REPORT_MARKDOWN: tmp/rspec-report.md
+          ALLURE_REPORT_DIR: tmp/allure-report
+          PAGES_OUTPUT_DIR: tmp/ci-report-site
+        run: ruby .github/scripts/build_rspec_pages_site.rb
+
       - name: Upload GitHub Pages artifact
         if: ${{ success() && steps.pages_config.outcome == 'success' && steps.allure_report.outputs.present == 'true' && github.event_name == 'push' && github.ref_name == 'main' }}
         uses: actions/upload-pages-artifact@v4
         with:
-          path: tmp/allure-report
+          path: tmp/ci-report-site
 
   security:
     runs-on: ubuntu-latest

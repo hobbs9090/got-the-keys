@@ -24,8 +24,6 @@ Use this page as the front door for the project documentation.
 
 ## Related Deep Dives
 
-- [Background job policy](BACKGROUND_JOB_POLICY.md)
-- [Booking architecture](BOOKING_ARCHITECTURE.md)
 - [Surface inventory](SURFACE_INVENTORY.md)
 
 ## Compatibility Pointers

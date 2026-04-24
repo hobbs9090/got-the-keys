@@ -84,11 +84,12 @@ Read [Demo data operations](DEMO_DATA_OPERATIONS.md) for seeding, preview, reset
 Public journeys:
 
 1. Browse from homepage to catalogue to property detail.
-2. Submit a viewing request from a property with available slots.
-3. Verify the appointment confirmation page and status timeline.
-4. Submit an enquiry that uses only one contact method.
-5. Submit an offer on a sale listing.
-6. Submit a rental application on a rental listing.
+2. On `/searches`, verify price filters are disabled until a sale or rental listing type is selected.
+3. Submit a viewing request from a property with available slots.
+4. Verify the appointment confirmation page and status timeline.
+5. Submit an enquiry that uses only one contact method, and verify signed-in users get pre-filled contact details.
+6. Submit an offer on a sale listing.
+7. Submit a rental application on a rental listing.
 
 Admin journeys:
 
@@ -96,7 +97,9 @@ Admin journeys:
 2. Confirm a pending appointment.
 3. Attempt a conflicting reschedule in a dense scenario.
 4. Inspect notification logs after a booking change.
-5. Preview and restore the baseline dataset from demo-data tools.
+5. Open a property booking history row and verify the booking reference and customer name go to their separate admin pages.
+6. Preview and restore the baseline dataset from demo-data tools.
+7. Toggle the demo-data performance seed AI mode and verify AI-dependent fields enable and disable from the bundled admin runtime.
 
 ## Playwright Training Material
 
@@ -110,6 +113,7 @@ Why this app is useful for Playwright:
 Suggested Playwright exercises:
 
 - homepage to catalogue navigation
+- listing-type gated price filters on `/searches`
 - property-card scan and drill-down
 - public appointment booking happy path
 - admin login and appointment confirmation

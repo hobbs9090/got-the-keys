@@ -11,15 +11,15 @@ Framework-owned endpoints such as Active Storage, Action Mailbox, and Turbo nati
 - `/`
   Homepage and product positioning.
 - `/for_sale`
-  Sale catalogue with scoped filters.
+  Sale catalogue with scoped filters. Price filters are available immediately because the listing type is fixed.
 - `/for_rent`
-  Rental catalogue with scoped filters.
+  Rental catalogue with scoped filters. Price filters are available immediately because the listing type is fixed.
 - `/searches`
-  Combined search surface across listing scopes.
+  Combined search surface across listing scopes. Minimum and maximum price fields require a selected listing type and show inline help while disabled.
 - `/properties/*`
-  Seller listing CRUD plus public property detail pages, listing-readiness workspace, marketing asset management for photos/floor plans/documents, saved-search capture, and public brochure downloads.
+  Seller listing CRUD plus public property detail pages, listing-readiness workspace, marketing asset management for photos/floor plans/documents, saved-search capture, public brochure downloads, and the combined catalogue filter form.
 - `/properties/:property_id/enquiries/new`
-  Public property-enquiry capture path for brochure requests, general questions, valuation enquiries, and letting follow-up.
+  Public property-enquiry capture path for brochure requests, general questions, valuation enquiries, and letting follow-up. Signed-in visitors receive pre-filled contact details.
 - `/properties/:property_id/appointments/new`
   Public appointment request entry point.
 - `/properties/:property_id/offers/new`
@@ -82,7 +82,7 @@ Framework-owned endpoints such as Active Storage, Action Mailbox, and Turbo nati
 - `/admin/booking_configuration`
   Booking rules and lead-time configuration.
 - `/admin/properties`
-  Admin property review, listing-readiness moderation, lifecycle transitions, documents, and property activity timeline.
+  Admin property review, listing-readiness moderation, lifecycle transitions, documents, property booking history, and property activity timeline. Booking history rows link separately to the booking reference and the customer profile.
 - `/admin/users`
   Admin seller directory.
 - `/admin/notification_logs`
@@ -91,7 +91,7 @@ Framework-owned endpoints such as Active Storage, Action Mailbox, and Turbo nati
 ## Training And Demo Surfaces
 
 - `/admin/demo-data`
-  Scenario operations console with quick resets, metadata-rich previews, import/export, and reset diagnostics.
+  Scenario operations console with quick resets, metadata-rich previews, import/export, performance data append controls, and reset diagnostics.
 - `/admin/qa`
   QA guide, release metadata, selector contract registry, scenario families, and seeded-persona diagnostics.
 - `/coffee`

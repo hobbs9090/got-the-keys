@@ -49,6 +49,8 @@ The catalogue supports:
 - sort options
 - saved-search capture
 
+On combined sale/rental search surfaces, such as `/properties` and `/searches`, choose a listing type before entering a minimum or maximum price. The price fields are disabled until the listing type is known because sale prices and monthly rents use different scales. The sale-only and rent-only catalogues already know their listing type, so their price filters are available immediately.
+
 The shared search form is deliberately conventional: server-rendered filters, paginated results, and stable listing cards.
 
 ## 3. Open A Property Detail Page
@@ -81,6 +83,8 @@ After submission, the app creates a `pending` appointment and shows a secure app
 - timeline history
 - the secure self-service tokenized link context
 
+Appointment status emails include the secure appointment link so the customer can return to the same tokenized page later.
+
 ## 5. Send An Enquiry
 
 If a visitor needs details before booking:
@@ -89,6 +93,8 @@ If a visitor needs details before booking:
 2. Choose the enquiry action.
 3. Add a name, a message, and at least one contact method.
 4. Submit the form.
+
+For signed-in users, the enquiry form pre-fills name, email, and phone from the account profile. Those fields remain editable so a user can correct details before submitting.
 
 That lead appears in the admin workspace and, when email is present, also supports acknowledgement flows.
 
@@ -157,6 +163,7 @@ High-level admin tasks:
 
 - manage bookings and appointment transitions
 - review properties and sellers
+- use property booking history links to open the exact booking reference or the customer profile
 - inspect notification logs
 - adjust booking rules
 - preview or reset demo scenarios

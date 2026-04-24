@@ -127,9 +127,7 @@ Important rule:
 
 - do not treat `:async` as a durable queue backend
 
-Read:
-
-- [Background job policy](BACKGROUND_JOB_POLICY.md)
+Keep long-running or must-not-lose work out of the `:async` assumption unless the deployment has a durable worker backend.
 
 ## Screenshot Tooling
 
