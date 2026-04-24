@@ -99,9 +99,9 @@ export const teardownAdminDemoPerformanceSeedForms = () => {
     if (!state) return;
 
     state.aiModeSelect.removeEventListener("change", state.changeHandler);
+    state.aiModeSelect.removeEventListener("input", state.changeHandler);
     state.batchSizeInput.removeEventListener("input", state.persistHandler);
     state.modelInput.removeEventListener("input", state.persistHandler);
     demoPerformanceSeedFormState.delete(form);
   });
 };
-

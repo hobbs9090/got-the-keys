@@ -62,4 +62,23 @@ RSpec.describe "Admin demo scenarios", type: :system do
     expect(metrics.fetch("buttonWidth")).to be < metrics.fetch("fieldWidth") - 40
     expect(metrics.fetch("buttonHeight")).to be < 48
   end
+
+  it "toggles AI-dependent performance seed fields from the admin bundle", js: true do
+    admin = FactoryBot.create(:admin, email: "demo-ai-admin@example.com", password: "changeme", password_confirmation: "changeme")
+
+    sign_in_as(email: admin.email, password: "changeme")
+
+    expect(page).to have_field("performance_seed[batch_size]", disabled: true)
+    expect(page).to have_field("performance_seed[model]", disabled: true)
+
+    select "Auto", from: "performance_seed_ai_mode"
+
+    expect(page).to have_field("performance_seed[batch_size]", disabled: false)
+    expect(page).to have_field("performance_seed[model]", disabled: false)
+
+    select "Off", from: "performance_seed_ai_mode"
+
+    expect(page).to have_field("performance_seed[batch_size]", disabled: true)
+    expect(page).to have_field("performance_seed[model]", disabled: true)
+  end
 end

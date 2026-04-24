@@ -48,6 +48,7 @@ RSpec.describe "Admin demo scenarios" do
     expect(parsed_html.at_css('[data-testid="performance-seed-password"]')["value"]).to eq("secret")
     expect(parsed_html.at_css('[data-testid="performance-seed-batch-size"]')["value"]).to eq(DemoData::Populator::DEFAULT_BATCH_SIZE.to_s)
     expect(parsed_html.at_css('[data-testid="performance-seed-model"] option[selected]')["value"]).to eq(DemoData::OpenaiEnrichmentModels::DEFAULT)
+    expect(response.body).not_to include("gotthekeys-admin-performance-seed-form")
   end
 
   it "restores the baseline scenario when the typed gate phrase is correct" do
