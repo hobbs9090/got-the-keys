@@ -259,4 +259,4 @@ jobs:
             -H "Authorization: Bearer ${GH_TOKEN}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/hobbs9090/rails_got_the_keys_acceptance/dispatches \
-            -d '{"event_type":"production_acceptance","client_payload":{"base_url":"https://${{ env.APP_HOST }}/"}}'
+            -d '{"event_type":"production_acceptance","client_payload":{"environment":"production","base_url":"https://${{ env.APP_HOST }}/","app_repository":"${{ github.repository }}","app_sha":"${{ steps.deploy_meta.outputs.sha }}","app_short_sha":"${{ steps.deploy_meta.outputs.short_sha }}","deploy_run_url":"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"}}}'
