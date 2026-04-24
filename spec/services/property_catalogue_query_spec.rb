@@ -47,6 +47,7 @@ RSpec.describe PropertyCatalogueQuery do
     result = described_class.new(
       params: {
         q: "harbour",
+        sale_status: Property::SALE_STATUSES[:for_sale],
         min_bedrooms: "3",
         min_price: "500,000",
         max_price: "800,000",
@@ -57,6 +58,7 @@ RSpec.describe PropertyCatalogueQuery do
 
     expect(result.filters).to include(
       q: "harbour",
+      sale_status: Property::SALE_STATUSES[:for_sale],
       min_bedrooms: "3",
       min_price: "500000",
       max_price: "800000",

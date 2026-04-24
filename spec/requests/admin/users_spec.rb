@@ -267,6 +267,7 @@ RSpec.describe "Admin users", type: :request do
       email: user.email,
       locale: "en",
       alerts_enabled: false,
+      sale_status: "For Sale",
       max_price: 750000
     )
 
