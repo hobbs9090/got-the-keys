@@ -11,6 +11,24 @@ RSpec.describe "Enquiries", type: :request do
       expect(response.body).to include("Ask about 41 Oakfield Road")
       expect(response.body).to include(%(data-testid="property-enquiry-form"))
     end
+
+    it "prefills contact details for signed-in users" do
+      user = FactoryBot.create(
+        :user,
+        first_name: "Riya",
+        last_name: "Patel",
+        email: "riya.patel@example.com",
+        mobile_number: "07700 930111"
+      )
+      sign_in(user)
+
+      get new_property_enquiry_path(property)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(%(value="Riya Patel"))
+      expect(response.body).to include(%(value="riya.patel@example.com"))
+      expect(response.body).to include(%(value="07700 930111"))
+    end
   end
 
   describe "POST /properties/:property_id/enquiries" do

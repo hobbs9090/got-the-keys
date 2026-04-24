@@ -5,7 +5,7 @@ class EnquiriesController < ApplicationController
   before_action :ensure_property_is_visible!
 
   def new
-    @enquiry = @property.enquiries.new(source_type: params[:source_type].presence || "general_enquiry")
+    @enquiry = @property.enquiries.new(prefilled_enquiry_attributes)
   end
 
   def create
@@ -22,6 +22,15 @@ class EnquiriesController < ApplicationController
 
   def enquiry_params
     params.require(:enquiry).permit(:customer_name, :customer_email, :customer_phone, :source_type, :message)
+  end
+
+  def prefilled_enquiry_attributes
+    {
+      source_type: params[:source_type].presence || "general_enquiry",
+      customer_name: current_user&.full_name,
+      customer_email: current_user&.email,
+      customer_phone: current_user&.mobile_number
+    }.compact
   end
 
   def ensure_property_is_visible!

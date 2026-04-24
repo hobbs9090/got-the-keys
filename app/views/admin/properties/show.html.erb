@@ -168,7 +168,8 @@
       <% @appointments.each do |appointment| %>
         <div class="admin-list__item">
           <div>
-            <%= link_to appointment.customer_name, admin_appointment_path(appointment) %>
+            <strong><%= link_to appointment.public_reference, admin_appointment_path(appointment), data: { testid: "admin-property-booking-link-#{appointment.id}" } %></strong>
+            <p><%= link_to appointment.customer_name, admin_customer_path(appointment.display_customer_email.downcase), data: { testid: "admin-property-booking-customer-link-#{appointment.id}" } %></p>
             <p><%= appointment.display_customer_email %> · <%= formatted_date_time(appointment.scheduled_at) %></p>
           </div>
           <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>

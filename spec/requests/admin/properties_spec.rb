@@ -210,12 +210,20 @@ RSpec.describe "Admin properties", type: :request do
     FactoryBot.create(:photo, property:, primary: true, image_filename: "admin-shot.jpg")
     FactoryBot.create(:floor_plan, property:, label: "Ground floor")
     document = FactoryBot.create(:property_document, property:, title: "Admin brochure", file_name: "admin-brochure.pdf")
+    appointment = FactoryBot.create(
+      :appointment,
+      property:,
+      customer_name: "Nina Hughes",
+      customer_email: "nina.hughes@example.com"
+    )
     AuditLogger.log!(auditable: property, property:, admin:, action: "listing_state_changed", message: "Listing moved to review pending.")
 
     get admin_property_path(property)
 
     page = Nokogiri::HTML(response.body)
     download_link = page.at_css(%(a[href="#{download_property_property_document_path(property, document)}"]))
+    booking_link = page.at_css(%(a[data-testid="admin-property-booking-link-#{appointment.id}"]))
+    customer_link = page.at_css(%(a[data-testid="admin-property-booking-customer-link-#{appointment.id}"]))
     hero_image = page.at_css(%([data-testid="admin-property-hero-media"] img))
 
     expect(response).to have_http_status(:ok)
@@ -234,6 +242,12 @@ RSpec.describe "Admin properties", type: :request do
     expect(download_link).to be_present
     expect(download_link["data-turbo"]).to eq("false")
     expect(download_link["download"]).to eq("admin-brochure.pdf")
+    expect(booking_link).to be_present
+    expect(booking_link["href"]).to eq(admin_appointment_path(appointment))
+    expect(booking_link.text.strip).to eq(appointment.public_reference)
+    expect(customer_link).to be_present
+    expect(customer_link["href"]).to eq(admin_customer_path("nina.hughes@example.com"))
+    expect(customer_link.text.strip).to eq("Nina Hughes")
   end
 
   it "shows a clear sale status badge at the top of the admin detail page" do
