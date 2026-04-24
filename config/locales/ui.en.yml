@@ -800,11 +800,12 @@ en:
       greeting: "Hello %{name},"
       updated_html: "Your viewing for <strong>%{address}</strong> has been updated."
       reference: "Reference: %{reference}"
-      status: "Status: %{status}"
+      status_html: "Status: <strong>%{status}</strong>"
       requested_slot: "Requested slot: %{time}"
       current_slot: "Current slot: %{time}"
       notes: "Your notes: %{notes}"
-      revisit: "You can revisit the appointment at any time using the secure appointment link sent after booking."
+      revisit_html: "You can revisit the appointment at any time using this secure appointment link: %{link}"
+      revisit_link: "View or manage your appointment"
       thanks_html: "Thank you,<br>GotTheKeys"
 
     admin:

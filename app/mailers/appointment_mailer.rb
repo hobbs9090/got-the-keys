@@ -3,6 +3,7 @@ class AppointmentMailer < ApplicationMailer
     @appointment = params.fetch(:appointment)
     @event_type = params.fetch(:event_type)
     @property = @appointment.property
+    @appointment_url = appointment_url(@appointment, token: @appointment.access_token)
     attach_calendar_event
 
     mail(

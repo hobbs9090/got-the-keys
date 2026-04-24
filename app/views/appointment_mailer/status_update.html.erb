@@ -4,7 +4,7 @@
 
 <ul>
   <li><%= t("ui.appointment_mailer.reference", reference: @appointment.public_reference) %></li>
-  <li><%= t("ui.appointment_mailer.status", status: @appointment.display_status) %></li>
+  <li><%= t("ui.appointment_mailer.status_html", status: @appointment.display_status) %></li>
   <li><%= t("ui.appointment_mailer.requested_slot", time: l(@appointment.requested_time, format: :long)) %></li>
   <li><%= t("ui.appointment_mailer.current_slot", time: l(@appointment.scheduled_at, format: :long)) %></li>
 </ul>
@@ -13,6 +13,8 @@
   <p><%= t("ui.appointment_mailer.notes", notes: @appointment.notes) %></p>
 <% end %>
 
-<p><%= t("ui.appointment_mailer.revisit") %></p>
+<p>
+  <%= t("ui.appointment_mailer.revisit_html", link: link_to(t("ui.appointment_mailer.revisit_link"), @appointment_url)) %>
+</p>
 
 <p><%= t("ui.appointment_mailer.thanks_html") %></p>

@@ -49,8 +49,14 @@ RSpec.describe AppointmentNotifier do
       "appointment_reference" => appointment.public_reference,
       "property_id" => property.id
     )
-    expect(ActionMailer::Base.deliveries.last.subject).to eq(log.subject)
-    expect(ActionMailer::Base.deliveries.last.attachments.first.filename).to end_with(".ics")
+
+    delivered_mail = ActionMailer::Base.deliveries.last
+    delivered_body = delivered_mail.body.encoded
+
+    expect(delivered_mail.subject).to eq(log.subject)
+    expect(delivered_mail.attachments.first.filename).to end_with(".ics")
+    expect(delivered_body).to include("View or manage your appointment")
+    expect(delivered_body).to include("token=#{appointment.access_token}")
   end
 
   it "supports reminder notifications" do
