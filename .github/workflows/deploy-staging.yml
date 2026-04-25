@@ -173,20 +173,25 @@ jobs:
       - name: Dispatch staging acceptance
         env:
           GH_TOKEN: ${{ secrets.ACCEPTANCE_REPO_DISPATCH_TOKEN }}
+          ACCEPTANCE_EVENT_TYPE: staging_acceptance
+          ACCEPTANCE_ENVIRONMENT: staging
+          ACCEPTANCE_BASE_URL: https://stevenhobbs.co.uk/
           APP_REPOSITORY: ${{ github.repository }}
           APP_SHA: ${{ steps.deploy_meta.outputs.sha }}
           APP_SHORT_SHA: ${{ steps.deploy_meta.outputs.short_sha }}
           DEPLOY_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
-          payload="$(jq -n \
-            --arg event_type "staging_acceptance" \
-            --arg environment "staging" \
-            --arg base_url "https://stevenhobbs.co.uk/" \
-            --arg app_repository "$APP_REPOSITORY" \
-            --arg app_sha "$APP_SHA" \
-            --arg app_short_sha "$APP_SHORT_SHA" \
-            --arg deploy_run_url "$DEPLOY_RUN_URL" \
-            '{event_type: $event_type, client_payload: {environment: $environment, base_url: $base_url, app_repository: $app_repository, app_sha: $app_sha, app_short_sha: $app_short_sha, deploy_run_url: $deploy_run_url}}')"
+          payload="$(ruby -rjson -e 'puts JSON.generate(
+            event_type: ENV.fetch("ACCEPTANCE_EVENT_TYPE"),
+            client_payload: {
+              environment: ENV.fetch("ACCEPTANCE_ENVIRONMENT"),
+              base_url: ENV.fetch("ACCEPTANCE_BASE_URL"),
+              app_repository: ENV.fetch("APP_REPOSITORY"),
+              app_sha: ENV.fetch("APP_SHA"),
+              app_short_sha: ENV.fetch("APP_SHORT_SHA"),
+              deploy_run_url: ENV.fetch("DEPLOY_RUN_URL")
+            }
+          )')"
 
           curl --fail-with-body --silent --show-error \
             -X POST \
