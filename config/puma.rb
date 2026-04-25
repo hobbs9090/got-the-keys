@@ -6,7 +6,7 @@ threads min_threads_count, max_threads_count
 port ENV.fetch("PORT", 3000)
 environment ENV.fetch("RAILS_ENV", "development")
 
-workers Integer(ENV.fetch("WEB_CONCURRENCY", 1))
+workers Integer(ENV.fetch("WEB_CONCURRENCY", 0))
 
 preload_app!
 
