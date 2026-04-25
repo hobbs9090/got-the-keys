@@ -252,11 +252,26 @@ jobs:
       - name: Dispatch production acceptance
         env:
           GH_TOKEN: ${{ secrets.ACCEPTANCE_REPO_DISPATCH_TOKEN }}
+          APP_REPOSITORY: ${{ github.repository }}
+          APP_SHA: ${{ steps.deploy_meta.outputs.sha }}
+          APP_SHORT_SHA: ${{ steps.deploy_meta.outputs.short_sha }}
+          DEPLOY_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
+          payload="$(jq -n \
+            --arg event_type "production_acceptance" \
+            --arg environment "production" \
+            --arg base_url "https://${APP_HOST}/" \
+            --arg app_repository "$APP_REPOSITORY" \
+            --arg app_sha "$APP_SHA" \
+            --arg app_short_sha "$APP_SHORT_SHA" \
+            --arg deploy_run_url "$DEPLOY_RUN_URL" \
+            '{event_type: $event_type, client_payload: {environment: $environment, base_url: $base_url, app_repository: $app_repository, app_sha: $app_sha, app_short_sha: $app_short_sha, deploy_run_url: $deploy_run_url}}')"
+
           curl --fail-with-body --silent --show-error \
             -X POST \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Content-Type: application/json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/hobbs9090/rails_got_the_keys_acceptance/dispatches \
-            -d '{"event_type":"production_acceptance","client_payload":{"environment":"production","base_url":"https://${{ env.APP_HOST }}/","app_repository":"${{ github.repository }}","app_sha":"${{ steps.deploy_meta.outputs.sha }}","app_short_sha":"${{ steps.deploy_meta.outputs.short_sha }}","deploy_run_url":"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"}}}'
+            --data "$payload"
