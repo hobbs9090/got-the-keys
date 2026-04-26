@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_23_051100) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_26_120100) do
   create_table "admins", force: :cascade do |t|
     t.integer "consumed_timestep"
     t.datetime "created_at", precision: nil
@@ -21,6 +21,24 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_23_051100) do
     t.boolean "otp_required_for_login", default: false, null: false
     t.string "otp_secret"
     t.datetime "updated_at", precision: nil
+  end
+
+  create_table "api_refresh_tokens", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "device_id", null: false
+    t.string "device_name"
+    t.datetime "expires_at", null: false
+    t.string "ip_address"
+    t.datetime "last_used_at"
+    t.datetime "revoked_at"
+    t.string "token_digest", null: false
+    t.datetime "updated_at", null: false
+    t.string "user_agent"
+    t.integer "user_id", null: false
+    t.index ["expires_at"], name: "index_api_refresh_tokens_on_expires_at"
+    t.index ["token_digest"], name: "index_api_refresh_tokens_on_token_digest", unique: true
+    t.index ["user_id", "device_id"], name: "index_api_refresh_tokens_on_user_id_and_device_id"
+    t.index ["user_id"], name: "index_api_refresh_tokens_on_user_id"
   end
 
   create_table "appointment_events", force: :cascade do |t|
@@ -498,6 +516,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_23_051100) do
     t.string "encrypted_password", default: "", null: false
     t.integer "failed_attempts", default: 0
     t.string "first_name"
+    t.string "jti", null: false
     t.string "language"
     t.string "last_name"
     t.datetime "last_sign_in_at", precision: nil
@@ -514,6 +533,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_23_051100) do
     t.datetime "updated_at", precision: nil
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["jti"], name: "index_users_on_jti", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -526,6 +546,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_23_051100) do
     t.index ["property_id"], name: "index_viewing_times_on_property_id"
   end
 
+  add_foreign_key "api_refresh_tokens", "users"
   add_foreign_key "appointment_events", "admins"
   add_foreign_key "appointment_events", "appointments"
   add_foreign_key "appointments", "admins"

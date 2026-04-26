@@ -1,13 +1,17 @@
 class User < ApplicationRecord
+  include Devise::JWT::RevocationStrategies::JTIMatcher
+
   PHONE_FORMAT = /\A\+?[0-9().\-\s]{7,20}\z/.freeze
 
   has_many :properties, dependent: :destroy
   has_many :saved_properties, dependent: :destroy
   has_many :saved_listings, through: :saved_properties, source: :property
   has_many :saved_searches, dependent: :destroy
+  has_many :api_refresh_tokens, dependent: :destroy
 
   after_initialize :set_defaults, if: :new_record?
   before_validation :strip_form_fields
+  before_create :set_initial_jti
   after_update_commit :sync_associated_email_records, if: :saved_change_to_email?
 
   validates :first_name, :last_name, presence: true
@@ -19,7 +23,8 @@ class User < ApplicationRecord
   validates :language, inclusion: { in: AppSettings.available_languages }, allow_blank: true
 
   devise :database_authenticatable, :lockable, :registerable,
-         :recoverable, :rememberable, :timeoutable, :trackable, :validatable
+         :recoverable, :rememberable, :timeoutable, :trackable, :validatable,
+         :jwt_authenticatable, jwt_revocation_strategy: self
 
   class << self
     def user_count
@@ -43,10 +48,28 @@ class User < ApplicationRecord
     end
   end
 
+  # JWT payload customization. Adds aud/iat in addition to the default sub/jti/exp.
+  def jwt_payload
+    {
+      "aud" => "ios",
+      "iat" => Time.current.to_i
+    }
+  end
+
+  # Rotate the JTI, invalidating every outstanding access token issued for this
+  # user. Used by Api::V1::Auth::SessionsController#destroy.
+  def rotate_jwt_jti!
+    update_columns(jti: SecureRandom.uuid, updated_at: Time.current)
+  end
+
   private
 
   def set_defaults
     self.language ||= I18n.default_locale.to_s
+  end
+
+  def set_initial_jti
+    self.jti ||= SecureRandom.uuid
   end
 
   def strip_form_fields

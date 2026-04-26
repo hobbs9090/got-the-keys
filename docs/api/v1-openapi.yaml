@@ -1,0 +1,1172 @@
+openapi: 3.1.0
+info:
+  title: GotTheKeys JSON API
+  version: "1.0.0"
+  summary: Buyer/renter API for GotTheKeys, consumed first by the iOS app.
+  description: |
+    See `docs/api/v1-spec.md` for the design rationale. All endpoints under
+    `/api/v1`. Authentication is JWT bearer; most endpoints require a token,
+    catalogue + reference endpoints are public.
+  contact:
+    name: GotTheKeys
+servers:
+  - url: https://gotthekeys.example.com
+    description: Production
+  - url: http://localhost:3000
+    description: Local development
+
+tags:
+  - name: Auth
+  - name: Profile
+  - name: Catalogue
+  - name: Saved
+  - name: Enquiries
+  - name: Appointments
+  - name: Offers
+  - name: RentalApplications
+  - name: Reference
+
+security:
+  - bearerAuth: []
+
+paths:
+  # =========================================================================
+  # Auth
+  # =========================================================================
+  /api/v1/auth/register:
+    post:
+      tags: [Auth]
+      summary: Register a new buyer/renter account
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/RegisterRequest" }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AuthResponse" }
+        "422":
+          $ref: "#/components/responses/ValidationFailed"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+
+  /api/v1/auth/login:
+    post:
+      tags: [Auth]
+      summary: Exchange credentials for a token pair
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/LoginRequest" }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AuthResponse" }
+        "401": { $ref: "#/components/responses/Unauthenticated" }
+        "423": { $ref: "#/components/responses/Locked" }
+        "429": { $ref: "#/components/responses/RateLimited" }
+
+  /api/v1/auth/logout:
+    delete:
+      tags: [Auth]
+      summary: Revoke the current refresh token and rotate the access JTI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refresh_token: { type: string }
+              required: [refresh_token]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  logged_out: { type: boolean }
+        "401": { $ref: "#/components/responses/Unauthenticated" }
+
+  /api/v1/auth/refresh:
+    post:
+      tags: [Auth]
+      summary: Rotate refresh token; issue new access + refresh
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/RefreshRequest" }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/RefreshResponse" }
+        "401":
+          description: Refresh token invalid or reused
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+
+  /api/v1/auth/password:
+    post:
+      tags: [Auth]
+      summary: Request a password-reset email (paranoid 202 always)
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email: { type: string, format: email }
+              required: [email]
+      responses:
+        "202":
+          description: Accepted — email sent if address is registered
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accepted: { type: boolean }
+                  message:  { type: string }
+    patch:
+      tags: [Auth]
+      summary: Complete password reset using emailed token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reset_password_token: { type: string }
+                password:             { type: string, minLength: 8 }
+                password_confirmation:{ type: string }
+              required: [reset_password_token, password, password_confirmation]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:    { $ref: "#/components/schemas/User" }
+                  message: { type: string }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+
+  # =========================================================================
+  # Profile
+  # =========================================================================
+  /api/v1/me:
+    get:
+      tags: [Profile]
+      summary: Current authenticated user
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user: { $ref: "#/components/schemas/User" }
+        "401": { $ref: "#/components/responses/Unauthenticated" }
+    patch:
+      tags: [Profile]
+      summary: Update profile fields
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:    { type: string }
+                last_name:     { type: string }
+                mobile_number: { type: string }
+                language:      { type: string }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user: { $ref: "#/components/schemas/User" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+    delete:
+      tags: [Profile]
+      summary: Soft-delete the current account (anonymizes PII, revokes all tokens)
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  deleted: { type: boolean }
+        "401": { $ref: "#/components/responses/Unauthenticated" }
+
+  # =========================================================================
+  # Catalogue
+  # =========================================================================
+  /api/v1/properties:
+    get:
+      tags: [Catalogue]
+      summary: List published properties
+      security: []
+      parameters:
+        - { in: query, name: q,             schema: { type: string } }
+        - { in: query, name: sale_status,   schema: { type: string, enum: [for_sale, for_rent] } }
+        - { in: query, name: town_city,     schema: { type: string } }
+        - { in: query, name: min_bedrooms,  schema: { type: integer } }
+        - { in: query, name: min_price,     schema: { type: integer, description: "in pence" } }
+        - { in: query, name: max_price,     schema: { type: integer, description: "in pence" } }
+        - { in: query, name: property_type, schema: { type: string, enum: [House, Flat] } }
+        - { in: query, name: featured,      schema: { type: boolean } }
+        - { in: query, name: sort,          schema: { type: string, enum: [recommended, newest, price_asc, price_desc] } }
+        - { in: query, name: page,          schema: { type: integer, minimum: 1 } }
+        - { in: query, name: per_page,      schema: { type: integer, minimum: 1, maximum: 50 } }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PropertyCollection" }
+
+  /api/v1/properties/{id}:
+    get:
+      tags: [Catalogue]
+      summary: Property detail
+      security: []
+      parameters:
+        - { in: path, name: id, required: true, schema: { type: integer } }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PropertyDetail" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "410": { $ref: "#/components/responses/Gone" }
+
+  /api/v1/properties/{id}/availability:
+    get:
+      tags: [Catalogue]
+      summary: Next bookable slots for a property
+      security: []
+      parameters:
+        - { in: path,  name: id,    required: true, schema: { type: integer } }
+        - { in: query, name: from,  schema: { type: string, format: date-time }, description: "Start of search window (ISO 8601). Defaults to now." }
+        - { in: query, name: days,  schema: { type: integer, minimum: 1 }, description: "Extend the search window by this many days." }
+        - { in: query, name: limit, schema: { type: integer, minimum: 1, default: 12 }, description: "Max slots to return." }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Availability" }
+
+  /api/v1/properties/{property_id}/documents/{id}/download:
+    get:
+      tags: [Catalogue]
+      summary: Download a property document (binary stream, Content-Disposition attachment)
+      security: []
+      parameters:
+        - { in: path, name: property_id, required: true, schema: { type: integer } }
+        - { in: path, name: id,          required: true, schema: { type: integer } }
+      responses:
+        "200":
+          description: Binary file content
+          headers:
+            Content-Disposition:
+              schema: { type: string, example: 'attachment; filename="epc.pdf"' }
+            Content-Type:
+              schema: { type: string, example: "application/pdf" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  # =========================================================================
+  # Saved properties / searches
+  # =========================================================================
+  /api/v1/saved_properties:
+    get:
+      tags: [Saved]
+      summary: List saved properties (each item includes a `saved_at` timestamp)
+      parameters:
+        - { in: query, name: page,     schema: { type: integer } }
+        - { in: query, name: per_page, schema: { type: integer } }
+      responses:
+        "200":
+          description: OK — PropertySummary items with an extra `saved_at` field
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PropertyCollection" }
+    post:
+      tags: [Saved]
+      summary: Save a property (idempotent find-or-create)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                property_id: { type: integer }
+              required: [property_id]
+      responses:
+        "201":
+          description: Saved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:          { type: integer }
+                  property_id: { type: integer }
+                  saved_at:    { type: string, format: date-time }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "422": { $ref: "#/components/responses/ValidationFailed", description: "Also returned when trying to save your own listing." }
+
+  /api/v1/saved_properties/{property_id}:
+    delete:
+      tags: [Saved]
+      summary: Unsave a property
+      parameters:
+        - { in: path, name: property_id, required: true, schema: { type: integer } }
+      responses:
+        "204": { description: No Content }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /api/v1/saved_searches:
+    get:
+      tags: [Saved]
+      summary: List saved searches
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items: { $ref: "#/components/schemas/SavedSearch" }
+    post:
+      tags: [Saved]
+      summary: Create a saved search
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/SavedSearchInput" }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/SavedSearch" }
+
+  /api/v1/saved_searches/{id}:
+    parameters:
+      - { in: path, name: id, required: true, schema: { type: integer } }
+    patch:
+      tags: [Saved]
+      summary: Update a saved search
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/SavedSearchInput" }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/SavedSearch" }
+    delete:
+      tags: [Saved]
+      summary: Delete a saved search
+      responses:
+        "204": { description: No Content }
+
+  # =========================================================================
+  # Enquiries
+  # =========================================================================
+  /api/v1/properties/{property_id}/enquiries:
+    post:
+      tags: [Enquiries]
+      summary: Submit an enquiry on a property
+      parameters:
+        - { in: path, name: property_id, required: true, schema: { type: integer } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:     { type: string, minLength: 20, maxLength: 3000 }
+                source_type: { type: string, enum: [general_enquiry, brochure_request, valuation_request, letting_enquiry] }
+              required: [message]
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Enquiry" }
+
+  # =========================================================================
+  # Appointments
+  # =========================================================================
+  /api/v1/properties/{property_id}/appointments:
+    post:
+      tags: [Appointments]
+      summary: Book a viewing
+      parameters:
+        - { in: path, name: property_id, required: true, schema: { type: integer } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                scheduled_at:     { type: string, format: date-time }
+                duration_minutes: { type: integer, enum: [30, 45, 60] }
+                notes:            { type: string }
+              required: [scheduled_at]
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Appointment" }
+        "409": { $ref: "#/components/responses/Conflict" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+
+  /api/v1/appointments:
+    get:
+      tags: [Appointments]
+      summary: Current user's appointments
+      parameters:
+        - { in: query, name: status, schema: { type: string } }
+        - { in: query, name: page,   schema: { type: integer } }
+        - { in: query, name: per_page, schema: { type: integer } }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items: { $ref: "#/components/schemas/Appointment" }
+                  meta:  { $ref: "#/components/schemas/PaginationMeta" }
+                  links: { $ref: "#/components/schemas/PaginationLinks" }
+
+  /api/v1/appointments/{public_reference}:
+    parameters:
+      - { in: path, name: public_reference, required: true, schema: { type: string } }
+    get:
+      tags: [Appointments]
+      summary: Show one appointment
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Appointment" }
+
+  /api/v1/appointments/{public_reference}/reschedule:
+    parameters:
+      - { in: path, name: public_reference, required: true, schema: { type: string } }
+    patch:
+      tags: [Appointments]
+      summary: Self-service reschedule
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                scheduled_at: { type: string, format: date-time }
+              required: [scheduled_at]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Appointment" }
+        "409": { $ref: "#/components/responses/Conflict" }
+
+  /api/v1/appointments/{public_reference}/cancel:
+    parameters:
+      - { in: path, name: public_reference, required: true, schema: { type: string } }
+    patch:
+      tags: [Appointments]
+      summary: Self-service cancel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason: { type: string }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Appointment" }
+        "409": { $ref: "#/components/responses/Conflict" }
+
+  # =========================================================================
+  # Offers
+  # =========================================================================
+  /api/v1/properties/{property_id}/offers:
+    post:
+      tags: [Offers]
+      summary: Submit an offer (sale listings only)
+      parameters:
+        - { in: path, name: property_id, required: true, schema: { type: integer } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount_pence:   { type: integer, minimum: 1 }
+                chain_position: { type: string }
+                notes:          { type: string }
+              required: [amount_pence]
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Offer" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+
+  /api/v1/offers:
+    get:
+      tags: [Offers]
+      summary: Current user's offers
+      parameters:
+        - { in: query, name: status,   schema: { type: string, enum: [received, accepted, rejected, withdrawn, completed] } }
+        - { in: query, name: page,     schema: { type: integer } }
+        - { in: query, name: per_page, schema: { type: integer } }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items: { $ref: "#/components/schemas/Offer" }
+                  meta:  { $ref: "#/components/schemas/PaginationMeta" }
+                  links: { $ref: "#/components/schemas/PaginationLinks" }
+
+  /api/v1/offers/{public_reference}:
+    parameters:
+      - { in: path, name: public_reference, required: true, schema: { type: string } }
+    get:
+      tags: [Offers]
+      summary: Show an offer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Offer" }
+
+  /api/v1/offers/{public_reference}/withdraw:
+    parameters:
+      - { in: path, name: public_reference, required: true, schema: { type: string } }
+    patch:
+      tags: [Offers]
+      summary: Withdraw an offer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Offer" }
+        "409": { $ref: "#/components/responses/Conflict" }
+
+  # =========================================================================
+  # Rental applications
+  # =========================================================================
+  /api/v1/properties/{property_id}/rental_applications:
+    post:
+      tags: [RentalApplications]
+      summary: Apply to rent (rental listings only)
+      parameters:
+        - { in: path, name: property_id, required: true, schema: { type: integer } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                move_in_date:        { type: string, format: date }
+                guarantor_available: { type: boolean }
+                guarantor_required:  { type: boolean }
+                affordability_notes: { type: string }
+                notes:               { type: string }
+              required: [move_in_date]
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/RentalApplication" }
+
+  /api/v1/rental_applications:
+    get:
+      tags: [RentalApplications]
+      summary: Current user's rental applications
+      parameters:
+        - { in: query, name: status,   schema: { type: string, enum: [received, referencing, approved, rejected, withdrawn] } }
+        - { in: query, name: page,     schema: { type: integer } }
+        - { in: query, name: per_page, schema: { type: integer } }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items: { $ref: "#/components/schemas/RentalApplication" }
+                  meta:  { $ref: "#/components/schemas/PaginationMeta" }
+                  links: { $ref: "#/components/schemas/PaginationLinks" }
+
+  /api/v1/rental_applications/{public_reference}:
+    parameters:
+      - { in: path, name: public_reference, required: true, schema: { type: string } }
+    get:
+      tags: [RentalApplications]
+      summary: Show a rental application
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/RentalApplication" }
+
+  /api/v1/rental_applications/{public_reference}/withdraw:
+    parameters:
+      - { in: path, name: public_reference, required: true, schema: { type: string } }
+    patch:
+      tags: [RentalApplications]
+      summary: Withdraw application
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/RentalApplication" }
+        "409": { $ref: "#/components/responses/Conflict" }
+
+  # =========================================================================
+  # Reference
+  # =========================================================================
+  /api/v1/reference/property_types:
+    get:
+      tags: [Reference]
+      summary: Allowed property_type values
+      security: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items: { type: string }
+
+  /api/v1/reference/sale_statuses:
+    get:
+      tags: [Reference]
+      summary: API sale_status values + labels
+      security: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value: { type: string }
+                        label: { type: string }
+
+  /api/v1/reference/sort_options:
+    get:
+      tags: [Reference]
+      summary: API sort enum + labels
+      security: []
+      responses:
+        "200": { description: OK }
+
+  /api/v1/reference/languages:
+    get:
+      tags: [Reference]
+      summary: Supported language codes
+      security: []
+      responses:
+        "200": { description: OK }
+
+  /api/v1/reference/booking_window:
+    get:
+      tags: [Reference]
+      summary: Booking configuration (slot duration, lead time, office hours, etc.)
+      security: []
+      responses:
+        "200":
+          description: OK
+          headers:
+            ETag:          { schema: { type: string } }
+            Cache-Control: { schema: { type: string, example: "public, max-age=300" } }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  slot_duration_minutes:    { type: integer }
+                  booking_window_days:      { type: integer }
+                  lead_time_hours:          { type: integer }
+                  buffer_minutes:           { type: integer }
+                  office_opens_at:          { type: string, example: "09:00" }
+                  office_closes_at:         { type: string, example: "18:00" }
+                  open_weekdays:            { type: array, items: { type: integer }, description: "ISO weekday numbers: 1=Mon, 7=Sun" }
+                  supported_slot_durations: { type: array, items: { type: integer } }
+        "304": { description: Not Modified }
+
+# ===========================================================================
+# Components
+# ===========================================================================
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+    Unauthenticated:
+      description: Authentication required or token invalid
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+    Forbidden:
+      description: Authenticated but not authorised
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+    Gone:
+      description: Resource has been withdrawn
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+    Conflict:
+      description: Conflict with current state
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+    ValidationFailed:
+      description: Validation error
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+    Locked:
+      description: Account temporarily locked
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+    RateLimited:
+      description: Rate limit exceeded
+      headers:
+        Retry-After:
+          schema: { type: integer, description: "Seconds until next attempt" }
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:    { type: string }
+            message: { type: string }
+            request_id: { type: string }
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  field:   { type: string }
+                  code:    { type: string }
+                  message: { type: string }
+
+    RegisterRequest:
+      type: object
+      properties:
+        email:            { type: string, format: email }
+        password:         { type: string, minLength: 8 }
+        first_name:       { type: string }
+        last_name:        { type: string }
+        mobile_number:    { type: string }
+        language:         { type: string }
+        terms_of_service: { type: boolean }
+        device_id:        { type: string }
+        device_name:      { type: string }
+      required: [email, password, first_name, last_name, mobile_number, terms_of_service, device_id]
+
+    LoginRequest:
+      type: object
+      properties:
+        email:       { type: string, format: email }
+        password:    { type: string }
+        device_id:   { type: string }
+        device_name: { type: string }
+      required: [email, password, device_id]
+
+    RefreshRequest:
+      type: object
+      properties:
+        refresh_token: { type: string }
+        device_id:     { type: string }
+      required: [refresh_token, device_id]
+
+    AuthResponse:
+      type: object
+      properties:
+        user:          { $ref: "#/components/schemas/User" }
+        access_token:  { type: string }
+        refresh_token: { type: string }
+        token_type:    { type: string, example: "Bearer" }
+        expires_in:    { type: integer, description: "Access token lifetime in seconds (900)" }
+
+    RefreshResponse:
+      type: object
+      properties:
+        access_token:  { type: string }
+        refresh_token: { type: string }
+        token_type:    { type: string, example: "Bearer" }
+        expires_in:    { type: integer, description: "Access token lifetime in seconds (900)" }
+
+    User:
+      type: object
+      properties:
+        id:                     { type: integer }
+        email:                  { type: string, format: email }
+        first_name:             { type: string }
+        last_name:              { type: string }
+        full_name:              { type: string }
+        mobile_number:          { type: string }
+        language:               { type: string }
+        saved_properties_count: { type: integer }
+        properties_count:       { type: integer }
+        created_at:             { type: string, format: date-time }
+
+    PropertySummary:
+      type: object
+      properties:
+        id:                  { type: integer }
+        listing_state:       { type: string }
+        sale_status:         { type: string, enum: [for_sale, for_rent] }
+        property_type:       { type: string }
+        tagline:             { type: string }
+        bedrooms:            { type: integer }
+        bathrooms:           { type: integer }
+        asking_price_pence:  { type: integer }
+        asking_price_display:{ type: string }
+        currency:            { type: string }
+        featured:            { type: boolean }
+        primary_photo:
+          type: object
+          nullable: true
+          properties:
+            url:     { type: string }
+            caption: { type: string, nullable: true }
+        saved_by_me:         { type: boolean, nullable: true }
+        next_available_slot: { type: string, format: date-time, nullable: true }
+        url:                 { type: string }
+        address:             { $ref: "#/components/schemas/Address" }
+
+    PropertyDetail:
+      allOf:
+        - { $ref: "#/components/schemas/PropertySummary" }
+        - type: object
+          properties:
+            description:                 { type: string }
+            tenure:                      { type: string, nullable: true }
+            floor_area_sq_ft:            { type: integer, nullable: true }
+            year_built:                  { type: integer, nullable: true }
+            refurbished_year:            { type: integer, nullable: true }
+            council_tax_band:            { type: string, nullable: true }
+            pets_allowed:                { type: boolean, nullable: true }
+            parking:                     { type: string, nullable: true }
+            outdoor_space:               { type: string, nullable: true }
+            furnishing:                  { type: string, nullable: true }
+            deposit_amount_pence:        { type: integer, nullable: true }
+            service_charge_amount_pence: { type: integer, nullable: true }
+            lease_length_years:          { type: integer, nullable: true }
+            available_from:              { type: string, format: date, nullable: true }
+            published_at:                { type: string, format: date-time, nullable: true }
+            photos:
+              type: array
+              items: { $ref: "#/components/schemas/Photo" }
+            floor_plans:
+              type: array
+              items: { $ref: "#/components/schemas/FloorPlan" }
+            documents:
+              type: array
+              items: { $ref: "#/components/schemas/Document" }
+            viewing_times:
+              type: array
+              items: { $ref: "#/components/schemas/ViewingTime" }
+            seller:
+              type: object
+              nullable: true
+              properties:
+                id:         { type: integer }
+                full_name:  { type: string }
+                first_name: { type: string }
+
+    PropertyCollection:
+      type: object
+      properties:
+        data:
+          type: array
+          items: { $ref: "#/components/schemas/PropertySummary" }
+        meta:  { $ref: "#/components/schemas/PaginationMeta" }
+        links: { $ref: "#/components/schemas/PaginationLinks" }
+
+    Address:
+      type: object
+      properties:
+        line_1:    { type: string }
+        line_2:    { type: string, nullable: true }
+        town_city: { type: string }
+        county:    { type: string }
+        postcode:  { type: string }
+        country:   { type: string }
+
+    Photo:
+      type: object
+      properties:
+        id:       { type: integer }
+        url:      { type: string }
+        caption:  { type: string, nullable: true }
+        primary:  { type: boolean }
+        position: { type: integer }
+
+    FloorPlan:
+      type: object
+      properties:
+        id:       { type: integer }
+        url:      { type: string }
+        label:    { type: string, nullable: true }
+        position: { type: integer }
+
+    Document:
+      type: object
+      properties:
+        id:           { type: integer }
+        title:        { type: string }
+        category:     { type: string }
+        category_label:{ type: string }
+        visibility:   { type: string }
+        position:     { type: integer }
+        download_url: { type: string }
+        is_pdf:       { type: boolean }
+
+    ViewingTime:
+      type: object
+      properties:
+        id:         { type: integer }
+        start_time: { type: string, format: date-time }
+        end_time:   { type: string, format: date-time }
+
+    Availability:
+      type: object
+      properties:
+        slots:
+          type: array
+          items:
+            type: object
+            properties:
+              starts_at:     { type: string, format: date-time }
+              ends_at:       { type: string, format: date-time }
+              group_viewing: { type: boolean }
+        configuration:
+          type: object
+          properties:
+            slot_duration_minutes: { type: integer }
+            lead_time_hours:       { type: integer }
+            booking_window_days:   { type: integer }
+
+    SavedSearch:
+      type: object
+      properties:
+        id:              { type: integer }
+        search_query:    { type: string, nullable: true }
+        sale_status:     { type: string, nullable: true, enum: [for_sale, for_rent] }
+        town_city:       { type: string, nullable: true }
+        min_bedrooms:    { type: integer, nullable: true }
+        min_price_pence: { type: integer, nullable: true }
+        max_price_pence: { type: integer, nullable: true }
+        sort:            { type: string, nullable: true, enum: [recommended, newest, price_asc, price_desc] }
+        alerts_enabled:  { type: boolean }
+        matching_count:  { type: integer }
+        created_at:      { type: string, format: date-time }
+
+    SavedSearchInput:
+      type: object
+      properties:
+        search_query:    { type: string }
+        sale_status:     { type: string, enum: [for_sale, for_rent] }
+        town_city:       { type: string }
+        min_bedrooms:    { type: integer }
+        min_price_pence: { type: integer }
+        max_price_pence: { type: integer }
+        sort:            { type: string, enum: [recommended, newest, price_asc, price_desc] }
+        alerts_enabled:  { type: boolean }
+
+    Enquiry:
+      type: object
+      properties:
+        lead_reference: { type: string }
+        property:       { $ref: "#/components/schemas/PropertySummary" }
+        message:        { type: string }
+        source_type:    { type: string }
+        status:         { type: string }
+        contacted_at:   { type: string, format: date-time, nullable: true }
+        created_at:     { type: string, format: date-time }
+
+    Appointment:
+      type: object
+      properties:
+        public_reference:  { type: string }
+        property:          { $ref: "#/components/schemas/PropertySummary" }
+        scheduled_at:      { type: string, format: date-time }
+        ends_at:           { type: string, format: date-time }
+        duration_minutes:  { type: integer }
+        status:            { type: string, enum: [pending, confirmed, rescheduled, cancelled, completed, no_show] }
+        visit_outcome:     { type: string, nullable: true }
+        notes:             { type: string, nullable: true }
+        self_service:
+          type: object
+          properties:
+            can_reschedule: { type: boolean }
+            can_cancel:     { type: boolean }
+            expires_at:     { type: string, format: date-time, nullable: true }
+        created_at:        { type: string, format: date-time }
+        updated_at:        { type: string, format: date-time }
+
+    Offer:
+      type: object
+      properties:
+        public_reference: { type: string }
+        property:         { $ref: "#/components/schemas/PropertySummary" }
+        amount_pence:     { type: integer }
+        amount_display:   { type: string }
+        chain_position:   { type: string, nullable: true }
+        status:           { type: string, enum: [received, accepted, rejected, withdrawn, completed] }
+        decision_made_at: { type: string, format: date-time, nullable: true }
+        notes:            { type: string, nullable: true }
+        withdrawable:     { type: boolean }
+        created_at:       { type: string, format: date-time }
+        timeline:
+          type: array
+          items: { $ref: "#/components/schemas/TimelineEvent" }
+
+    RentalApplication:
+      type: object
+      properties:
+        public_reference:    { type: string }
+        property:            { $ref: "#/components/schemas/PropertySummary" }
+        move_in_date:        { type: string, format: date }
+        guarantor_available: { type: boolean, nullable: true }
+        guarantor_required:  { type: boolean, nullable: true }
+        affordability_notes: { type: string, nullable: true }
+        status:              { type: string, enum: [received, referencing, approved, rejected, withdrawn] }
+        decision_made_at:    { type: string, format: date-time, nullable: true }
+        notes:               { type: string, nullable: true }
+        withdrawable:        { type: boolean }
+        created_at:          { type: string, format: date-time }
+        timeline:
+          type: array
+          items: { $ref: "#/components/schemas/TimelineEvent" }
+
+    TimelineEvent:
+      type: object
+      properties:
+        event_type:  { type: string }
+        from_status: { type: string, nullable: true }
+        to_status:   { type: string, nullable: true }
+        message:     { type: string, nullable: true }
+        occurred_at: { type: string, format: date-time }
+
+    PaginationMeta:
+      type: object
+      properties:
+        page:        { type: integer }
+        per_page:    { type: integer }
+        total_pages: { type: integer }
+        total_count: { type: integer }
+
+    PaginationLinks:
+      type: object
+      properties:
+        self: { type: string, nullable: true }
+        next: { type: string, nullable: true }
+        prev: { type: string, nullable: true }

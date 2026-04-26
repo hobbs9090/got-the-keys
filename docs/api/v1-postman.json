@@ -1,0 +1,809 @@
+{
+  "info": {
+    "name": "GotTheKeys API v1",
+    "_postman_id": "9b2f6a1e-0001-4f7e-8f8b-gotthekeys-api-v1",
+    "description": "Buyer/renter API for GotTheKeys. See docs/api/v1-spec.md.\n\nSet `base_url` (e.g. http://localhost:3000) and use the Auth → Login request to populate `access_token` and `refresh_token`.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "access_token",
+      "value": ""
+    },
+    {
+      "key": "refresh_token",
+      "value": ""
+    },
+    {
+      "key": "device_id",
+      "value": "postman-device-001"
+    },
+    {
+      "key": "property_id",
+      "value": "1"
+    },
+    {
+      "key": "appointment_ref",
+      "value": ""
+    },
+    {
+      "key": "offer_ref",
+      "value": ""
+    },
+    {
+      "key": "application_ref",
+      "value": ""
+    },
+    {
+      "key": "document_id",
+      "value": "1"
+    },
+    {
+      "key": "saved_search_id",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"buyer@example.com\",\n  \"password\": \"correcthorsebatterystaple\",\n  \"first_name\": \"Sam\",\n  \"last_name\": \"Buyer\",\n  \"mobile_number\": \"+447700900123\",\n  \"language\": \"en\",\n  \"terms_of_service\": true,\n  \"device_id\": \"{{device_id}}\",\n  \"device_name\": \"Sam's iPhone\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const body = pm.response.json();",
+                  "if (body.access_token)  pm.collectionVariables.set('access_token',  body.access_token);",
+                  "if (body.refresh_token) pm.collectionVariables.set('refresh_token', body.refresh_token);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"buyer@example.com\",\n  \"password\": \"correcthorsebatterystaple\",\n  \"device_id\": \"{{device_id}}\",\n  \"device_name\": \"Sam's iPhone\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const body = pm.response.json();",
+                  "if (body.access_token)  pm.collectionVariables.set('access_token',  body.access_token);",
+                  "if (body.refresh_token) pm.collectionVariables.set('refresh_token', body.refresh_token);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Refresh",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/auth/refresh",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh_token\": \"{{refresh_token}}\",\n  \"device_id\": \"{{device_id}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const body = pm.response.json();",
+                  "if (body.access_token)  pm.collectionVariables.set('access_token',  body.access_token);",
+                  "if (body.refresh_token) pm.collectionVariables.set('refresh_token', body.refresh_token);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/auth/logout",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"refresh_token\": \"{{refresh_token}}\" }"
+            }
+          }
+        },
+        {
+          "name": "Request password reset",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/auth/password",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"email\": \"buyer@example.com\" }"
+            }
+          }
+        },
+        {
+          "name": "Complete password reset",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/auth/password",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reset_password_token\": \"paste-token-from-email\",\n  \"password\": \"newpassword123\",\n  \"password_confirmation\": \"newpassword123\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "Get me",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/me"
+          }
+        },
+        {
+          "name": "Update me",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/me",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"first_name\": \"Sam\", \"language\": \"en\" }"
+            }
+          }
+        },
+        {
+          "name": "Delete me",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/me"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Catalogue",
+      "item": [
+        {
+          "name": "List properties",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v1/properties?per_page=12&sort=newest",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "properties"
+              ],
+              "query": [
+                {
+                  "key": "per_page",
+                  "value": "12"
+                },
+                {
+                  "key": "sort",
+                  "value": "newest"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Show property",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/api/v1/properties/{{property_id}}"
+          }
+        },
+        {
+          "name": "Property availability",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v1/properties/{{property_id}}/availability?days=14",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "properties",
+                "{{property_id}}",
+                "availability"
+              ],
+              "query": [
+                {
+                  "key": "days",
+                  "value": "14"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Download property document",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/api/v1/properties/{{property_id}}/documents/{{document_id}}/download"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Saved",
+      "item": [
+        {
+          "name": "List saved properties",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/saved_properties"
+          }
+        },
+        {
+          "name": "Save property",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/saved_properties",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"property_id\": {{property_id}} }"
+            }
+          }
+        },
+        {
+          "name": "Unsave property",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/saved_properties/{{property_id}}"
+          }
+        },
+        {
+          "name": "List saved searches",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/saved_searches"
+          }
+        },
+        {
+          "name": "Create saved search",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/saved_searches",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"search_query\": \"garden\",\n  \"sale_status\": \"for_sale\",\n  \"town_city\": \"Sevenoaks\",\n  \"min_bedrooms\": 2,\n  \"min_price_pence\": 30000000,\n  \"max_price_pence\": 70000000,\n  \"sort\": \"price_asc\",\n  \"alerts_enabled\": true\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const body = pm.response.json();",
+                  "if (body.id) pm.collectionVariables.set('saved_search_id', body.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update saved search",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/saved_searches/{{saved_search_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"alerts_enabled\": false, \"sort\": \"newest\" }"
+            }
+          }
+        },
+        {
+          "name": "Delete saved search",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/saved_searches/{{saved_search_id}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Enquiries",
+      "item": [
+        {
+          "name": "Submit enquiry",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/properties/{{property_id}}/enquiries",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"message\": \"Could you confirm whether the garden is south-facing?\", \"source_type\": \"general_enquiry\" }"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Appointments",
+      "item": [
+        {
+          "name": "Book viewing",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/properties/{{property_id}}/appointments",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"scheduled_at\": \"2026-05-04T18:00:00Z\", \"duration_minutes\": 30, \"notes\": \"Please buzz the side gate.\" }"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const body = pm.response.json();",
+                  "if (body.public_reference) pm.collectionVariables.set('appointment_ref', body.public_reference);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "List appointments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/appointments"
+          }
+        },
+        {
+          "name": "Show appointment",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/appointments/{{appointment_ref}}"
+          }
+        },
+        {
+          "name": "Reschedule appointment",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/appointments/{{appointment_ref}}/reschedule",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"scheduled_at\": \"2026-05-05T10:00:00Z\" }"
+            }
+          }
+        },
+        {
+          "name": "Cancel appointment",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/appointments/{{appointment_ref}}/cancel",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"reason\": \"Plans changed.\" }"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Offers",
+      "item": [
+        {
+          "name": "Submit offer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/properties/{{property_id}}/offers",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"amount_pence\": 47500000, \"chain_position\": \"first_time_buyer\", \"notes\": \"Subject to mortgage approval.\" }"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const body = pm.response.json();",
+                  "if (body.public_reference) pm.collectionVariables.set('offer_ref', body.public_reference);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "List offers",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/offers"
+          }
+        },
+        {
+          "name": "Show offer",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/offers/{{offer_ref}}"
+          }
+        },
+        {
+          "name": "Withdraw offer",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/offers/{{offer_ref}}/withdraw",
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Rental Applications",
+      "item": [
+        {
+          "name": "Submit application",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/properties/{{property_id}}/rental_applications",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"move_in_date\": \"2026-06-01\", \"guarantor_available\": true, \"affordability_notes\": \"Salary £55k, 12 months in role.\" }"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const body = pm.response.json();",
+                  "if (body.public_reference) pm.collectionVariables.set('application_ref', body.public_reference);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "List applications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/rental_applications"
+          }
+        },
+        {
+          "name": "Show application",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/rental_applications/{{application_ref}}"
+          }
+        },
+        {
+          "name": "Withdraw application",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/v1/rental_applications/{{application_ref}}/withdraw",
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reference",
+      "item": [
+        {
+          "name": "Property types",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/api/v1/reference/property_types"
+          }
+        },
+        {
+          "name": "Sale statuses",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/api/v1/reference/sale_statuses"
+          }
+        },
+        {
+          "name": "Sort options",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/api/v1/reference/sort_options"
+          }
+        },
+        {
+          "name": "Languages",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/api/v1/reference/languages"
+          }
+        },
+        {
+          "name": "Booking window",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/api/v1/reference/booking_window"
+          }
+        }
+      ]
+    }
+  ]
+}

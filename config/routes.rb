@@ -122,4 +122,85 @@ GotTheKeys::Application.routes.draw do
   resources :blog, only: [:index]
   get '/baits', to: redirect('/blog', status: 302)
 
+  # ============================================================
+  # JSON API — buyer/renter v1. See docs/api/v1-spec.md.
+  # ============================================================
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      # Auth
+      scope :auth do
+        post   "register",     to: "auth/registrations#create"
+        post   "login",        to: "auth/sessions#create"
+        delete "logout",       to: "auth/sessions#destroy"
+        post   "refresh",      to: "auth/refreshes#create"
+        post   "password",     to: "auth/passwords#create"
+        patch  "password",     to: "auth/passwords#update"
+      end
+
+      # Profile
+      get    "me", to: "me#show"
+      patch  "me", to: "me#update"
+      delete "me", to: "me#destroy"
+
+      # Catalogue
+      resources :properties, only: [:index, :show] do
+        member do
+          get :availability
+        end
+        resources :enquiries,            only: [:create], module: :properties
+        resources :appointments,         only: [:create], module: :properties
+        resources :offers,               only: [:create], module: :properties
+        resources :rental_applications,  only: [:create], module: :properties
+        resources :documents,            only: [], module: :properties do
+          get :download, on: :member
+        end
+      end
+
+      # Saved properties / searches
+      resources :saved_properties, only: [:index, :create] do
+        delete "/", action: :destroy, on: :collection, defaults: {}
+      end
+      delete "saved_properties/:property_id", to: "saved_properties#destroy"
+
+      resources :saved_searches, only: [:index, :create, :update, :destroy]
+
+      # Transactional resources keyed by public_reference
+      resources :appointments,
+                only: [:index, :show],
+                param: :public_reference,
+                constraints: { public_reference: /[^\/]+/ } do
+        member do
+          patch :reschedule
+          patch :cancel
+        end
+      end
+
+      resources :offers,
+                only: [:index, :show],
+                param: :public_reference,
+                constraints: { public_reference: /[^\/]+/ } do
+        member do
+          patch :withdraw
+        end
+      end
+
+      resources :rental_applications,
+                only: [:index, :show],
+                param: :public_reference,
+                constraints: { public_reference: /[^\/]+/ } do
+        member do
+          patch :withdraw
+        end
+      end
+
+      # Reference data
+      scope :reference, controller: "reference" do
+        get "property_types", action: :property_types
+        get "sale_statuses",  action: :sale_statuses
+        get "sort_options",   action: :sort_options
+        get "languages",      action: :languages
+        get "booking_window", action: :booking_window
+      end
+    end
+  end
 end

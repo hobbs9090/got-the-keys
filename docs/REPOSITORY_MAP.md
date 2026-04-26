@@ -25,6 +25,12 @@ The main Rails application.
   Public and signed-in server-rendered endpoints.
 - `app/controllers/admin/`
   The protected admin workspace.
+- `app/controllers/api/v1/`
+  JSON API endpoints for buyer/renter clients.
+- `app/controllers/concerns/api/v1/`
+  Shared API authentication, localization, pagination, and error handling.
+- `app/serializers/api/v1/`
+  JSON response builders for API resources.
 - `app/views/`
   Public, seller, Devise, and admin templates.
 - `app/services/`
@@ -71,6 +77,7 @@ Focused project documentation.
 - QA/training guides
 - deployment and environment notes
 - architecture references
+- API contracts under `docs/api/`, including the Markdown spec, OpenAPI YAML, and Postman collection
 
 ## `lib/`
 
@@ -103,6 +110,8 @@ Test coverage by layer.
 
 - `spec/requests/`
   Request/HTML contract coverage.
+- `spec/requests/api/v1/`
+  JSON API request coverage.
 - `spec/system/`
   Browser journeys.
 - `spec/models/`, `spec/services/`, `spec/jobs/`, `spec/helpers/`

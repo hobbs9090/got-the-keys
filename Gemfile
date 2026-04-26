@@ -11,9 +11,12 @@ gem 'jsbundling-rails'
 gem 'turbo-rails'
 gem 'jbuilder', '~> 2.14'
 gem 'devise', '~> 5.0'
+gem 'devise-jwt', '~> 0.12'
 gem 'devise-two-factor', '~> 6.4'
 gem 'rack-attack', '~> 6.7'
+gem 'rack-cors', '~> 2.0'
 gem 'kaminari', '~> 1.2'
+gem 'jsonapi-serializer', '~> 2.2'
 gem 'openai', '~> 0.56.0'
 gem 'rqrcode', '~> 3.0'
 
@@ -29,6 +32,7 @@ group :development, :test do
   gem 'factory_bot_rails', '~> 6.5'
   gem 'faker', '~> 3.6'
   gem 'sqlite3', '~> 2.1'
+  gem 'rswag-specs', '~> 2.13'
 end
 
 group :development do
@@ -43,6 +47,8 @@ group :development do
   gem 'letter_opener', '~> 1.10'
   gem 'ruby-lsp', require: false
   gem 'ruby-lsp-rails', require: false
+  gem 'rswag-api', '~> 2.13', require: false
+  gem 'rswag-ui', '~> 2.13', require: false
 end
 
 group :test do

@@ -18,6 +18,9 @@ Use this page as the front door for the project documentation.
 
 - [Architecture overview](ARCHITECTURE_OVERVIEW.md)
 - [Repository map](REPOSITORY_MAP.md)
+- [API v1 specification](api/v1-spec.md)
+- [API v1 OpenAPI contract](api/v1-openapi.yaml)
+- [API v1 Postman collection](api/v1-postman.json)
 - [Deployment operations](DEPLOYMENT_OPERATIONS.md)
 - [Environment notes](ENVIRONMENT_NOTES.md)
 - [Server maintenance checklist](SERVER_MAINTENANCE_CHECKLIST.md)
