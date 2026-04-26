@@ -152,7 +152,7 @@ def description_for(property_type:, sale_status:, area:, bedrooms:, features:)
       "The home is set on a made-up residential address convenient for #{nearby.first} and #{nearby.last}, and should suit buyers who want practical space with a polished finish."
   else
     "A well-kept #{bedroom_label} #{property_type.downcase} in #{area.fetch(:town_city)} offering #{features[0]}, #{features[1]}, and #{features[2]}. " \
-      "It is handy for #{nearby.first} and #{nearby.last}, making it a strong rental option for tenants who want a straightforward move into the Sevenoaks and Westerham area."
+      "Its position near #{nearby.first} and #{nearby.last} suits tenants who want a straightforward move into the Sevenoaks and Westerham area."
   end
 end
 

@@ -391,11 +391,11 @@ module DemoData
       if sale_status == 'For Sale'
         "#{article_for(property_type)} #{property_type} in #{area.fetch(:town_city)} offering #{bedroom_label}, #{features[0]}, and #{features[1]}. " \
           "Well placed for #{nearby.first} and #{nearby.last}, the home should appeal to buyers who want comfort, practicality, and an easy day-to-day setting. " \
-          "#{features[2].capitalize} helps round out a believable long-term family or downsizer move."
+          "#{features[2].capitalize} helps round out a practical long-term family or downsizer move."
       else
         "#{article_for(property_type)} #{property_type} in #{area.fetch(:town_city)} with #{bedroom_label}, #{features[0]}, and #{features[1]}. " \
-          "It is handy for #{nearby.first} and #{nearby.last}, making it a strong rental option for tenants who want a straightforward commute and local convenience. " \
-          "#{features[2].capitalize} gives the layout some extra everyday appeal."
+          "Its position near #{nearby.first} and #{nearby.last} suits tenants who want useful transport links and everyday services close by. " \
+          "#{features[2].capitalize} adds practical day-to-day flexibility to the layout."
       end
     end
 

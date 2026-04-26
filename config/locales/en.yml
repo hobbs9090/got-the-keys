@@ -429,7 +429,7 @@ en:
 # Contact Us
   contact_us:
     title: "Contact Us"
-    get_in_touch: "Get in Touch!"
+    get_in_touch: "Get in touch"
     paragraph_1: "We'd love to hear from you. Send a general enquiry if you want help with listings, pricing, accounts, or viewings, and our team will keep an eye on it "
     all_day: "all day"
     hero_badge: "Contact options"
@@ -456,7 +456,7 @@ en:
     jane_smith: "Jane Smith"
     your_email: "Your Email"
     jane_smith_email: "jane.smith@smithco.com"
-    whats_up: "What's up"
+    whats_up: "Your message"
     message_placeholder: "Tell us what you need help with, and include any property, booking, or account details that will help us route your enquiry."
     form_note: "General enquiries are the best route if you're not sure who to contact."
     directory_title: "Or email a specific person"
@@ -484,10 +484,10 @@ en:
   blog:
     title: "Blog"
     blog_post_title: "Five Small Listing Improvements That Generate Better Enquiries"
-    blog_post_header: "Written by The GotTheKeys Team on March 18, 2015."
+    blog_post_header: "Written by The GotTheKeys Team on March 18, 2026."
     written_by: "Written by "
     john_smith: "The GotTheKeys Team"
-    blog_date: " on March 18, 2015."
+    blog_date: " on March 18, 2026."
     paragraph_1: "The fastest way to improve a property listing is usually not a full redesign. Better lead photos, a realistic headline price, and a clearer opening paragraph can change how seriously buyers treat the advert."
     paragraph_2: "Start with the basics: bright photography, room descriptions that mention function as well as size, and a summary of the features people actually search for, such as parking, garden space, schools, or transport links."
     paragraph_3: "Pricing matters just as much as presentation. An over-optimistic figure may win clicks for a day or two, but it often reduces trust once comparable homes make the difference obvious. Sellers tend to get stronger conversations when the price is supported by local evidence and the condition of the property."

@@ -154,10 +154,10 @@ en:
           form_intro: "Use the form below to tell us who you are and where we should send account and viewing updates."
           read_more: "Read more"
           why_so_much: "Why do you need to know so much about me?"
-          paragraph_1: "By you doing some of the work we keep the costs down"
+          paragraph_1: "By having you do some of the work, we keep the costs down."
           paragraph_2: "Part of that is you managing the viewings at times that suit you. You manage this via the website and email. No more waiting on agents to return calls, or missed opportunities for a viewing."
           paragraph_3: "In order to do this we need to be sure we have your correct email and contact details. This is why we ask you for so much information and require you to confirm your correct email by clicking a link on the email we send you."
-          paragraph_4: "Remember, we're different from any other estate agents. There is no contract to sign and you can delete your account at any time by clicking the big red Delete button and puff...it's gone. We remove you from our database immediately. It's that simple. How refreshing."
+          paragraph_4: "Remember, we're different from any other estate agents. There is no contract to sign and you can delete your account at any time by clicking the big red Delete button and poof...it's gone. We remove you from our database immediately. It's that simple. How refreshing."
         binding:
           title: 'Binding'
           submit: 'Binding'

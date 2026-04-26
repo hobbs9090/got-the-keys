@@ -826,7 +826,7 @@ property_batches:
         bedrooms: 6
         bathrooms: 3
         listing_tagline: Detached house near Sevenoaks station with loft room for flexible use
-        property_description: A detached house in Sevenoaks offering 6 bedrooms, a loft room for flexible use, and a contemporary shaker-style kitchen. Well placed for Sevenoaks station and Knole Park, the home should appeal to buyers who want comfort, practicality, and an easy day-to-day setting. A landscaped rear garden helps round out a believable long-term family or downsizer move.
+        property_description: A detached house in Sevenoaks offering 6 bedrooms, a loft room for flexible use, and a contemporary shaker-style kitchen. Well placed for Sevenoaks station and Knole Park, the home should appeal to buyers who want comfort, practicality, and an easy day-to-day setting. A landscaped rear garden helps round out a practical long-term family or downsizer move.
   - key_prefix: baseline_rental
     count: 59
     owner_emails:

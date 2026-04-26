@@ -27,7 +27,7 @@ RSpec.describe "Public content pages", type: :request do
     { description: "cookie policy", path: "/cookie_policy", text: "This site uses essential cookies to keep sign-in, forms, and language preferences working." },
     { description: "how it works", path: "/how_it_works", text: "How to market your home with more clarity and less fluff" },
     { description: "about us", path: "/about_us", text: "We built the service for owners who want clearer costs, better control, and a more direct route to serious enquiries." },
-    { description: "contact us", path: "/contact_us", text: "Get in Touch!" },
+    { description: "contact us", path: "/contact_us", text: "Get in touch" },
     { description: "blog", path: "/blog", text: "Five Small Listing Improvements That Generate Better Enquiries" },
     { description: "for sale", path: "/for_sale", text: "Homes available to buy" },
     { description: "for rent", path: "/for_rent", text: "Homes available to rent" }
