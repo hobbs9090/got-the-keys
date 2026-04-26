@@ -33,7 +33,7 @@ RSpec.describe "Public appointment booking", type: :system, js: true do
     visit for_sale_index_path
 
     expect(page).to have_text("88 Harbour View")
-    expect(page).to have_link("Sign in to book a viewing", href: new_user_session_path(return_to: property_path(property, anchor: "booking-panel")))
+    expect(page).to have_no_link("Sign in to book a viewing", href: new_user_session_path(return_to: property_path(property, anchor: "booking-panel")))
 
     click_link "88 Harbour View"
 

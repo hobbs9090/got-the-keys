@@ -220,7 +220,7 @@ de:
           price_high: 'Preis: absteigend'
           bedrooms_high: Schlafzimmer zuerst
       card:
-        next_slot: 'Nächster Termin: %{time}'
+        next_slot: 'Nächster Besichtigungstermin: %{time}'
         no_slots: Keine kommenden öffentlichen Termine veröffentlicht
         available_now: Sofort verfügbar
         available_from: Verfügbar ab %{date}

@@ -293,7 +293,7 @@ en:
         available_from: "Available from %{date}"
         area: "Area"
         floor_area: "%{area} sq ft"
-        next_slot: "Next slot: %{time}"
+        next_slot: "Next viewing slot: %{time}"
         no_slots: "No upcoming public slots published"
       empty:
         eyebrow: "No matches"

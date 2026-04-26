@@ -205,7 +205,7 @@ zh:
           price_high: 价格：从高到低
           bedrooms_high: 卧室优先
       card:
-        next_slot: 下一时段：%{time}
+        next_slot: 下一看房时段：%{time}
         no_slots: 暂无即将开放的公开看房时段
         available_now: 现可入住
         available_from: "%{date} 起可入住"

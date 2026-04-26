@@ -220,7 +220,7 @@ it:
           price_high: 'Prezzo: dal piu alto al piu basso'
           bedrooms_high: Camere prima
       card:
-        next_slot: 'Prossima fascia: %{time}'
+        next_slot: 'Prossima fascia di visita: %{time}'
         no_slots: Nessuna fascia pubblica imminente pubblicata
         available_now: Disponibile ora
         available_from: Disponibile dal %{date}

@@ -223,7 +223,7 @@ fr:
           price_high: 'Prix : du plus haut au plus bas'
           bedrooms_high: Chambres d'abord
       card:
-        next_slot: 'Prochain creneau : %{time}'
+        next_slot: 'Prochain creneau de visite : %{time}'
         no_slots: Aucun creneau public a venir publie
         available_now: Disponible maintenant
         available_from: Disponible a partir du %{date}

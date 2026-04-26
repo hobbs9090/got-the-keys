@@ -84,11 +84,6 @@
 
           <div class="property-card__actions">
             <%= link_to t("ui.common.view_property"), property_path(property), class: "button primary hollow", data: { testid: "property-card-view-#{property.id}" } %>
-            <% if user_signed_in? %>
-              <%= link_to t("ui.common.book_a_viewing"), new_property_appointment_path(property), class: "button primary", data: { testid: "book-viewing-link-#{property.id}" } %>
-            <% else %>
-              <%= link_to t("ui.properties.show.booking_sign_in_cta", default: "Sign in to book a viewing"), new_user_session_path(return_to: property_path(property, anchor: "booking-panel")), class: "button primary", data: { testid: "book-viewing-sign-in-link-#{property.id}" } %>
-            <% end %>
           </div>
         </footer>
       </article>
