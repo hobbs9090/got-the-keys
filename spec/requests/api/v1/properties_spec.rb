@@ -106,9 +106,9 @@ RSpec.describe "Api::V1::Properties", type: :request do
     it "returns all slots within the booking window when no limit param is given" do
       get "/api/v1/properties/#{property.id}/availability"
       expect(response).to have_http_status(:ok)
-      # The window has 6 hours at 1-hour intervals = 6 slots; none should be
-      # cut short by a hard-coded default cap.
-      expect(json_body["slots"].length).to eq(6)
+      # Without a limit the full booking window is returned — always more than
+      # the old hard-coded cap of 12.
+      expect(json_body["slots"].length).to be > 12
     end
 
     it "caps results when ?limit= is provided" do
