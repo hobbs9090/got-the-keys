@@ -78,9 +78,8 @@ module Api
           starts_at&.utc&.iso8601
         end
 
-        def format_money(pence)
-          pounds = pence.to_i / 100
-          "£#{ActiveSupport::NumberHelper.number_to_delimited(pounds)}"
+        def format_money(amount)
+          "£#{ActiveSupport::NumberHelper.number_to_delimited(amount.to_i)}"
         end
       end
     end
