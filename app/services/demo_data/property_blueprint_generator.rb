@@ -5,6 +5,7 @@ module DemoData
         town_city: 'Sevenoaks',
         county: 'Kent',
         postcode_districts: %w[TN13 TN14 TN15],
+        postcodes: ['TN13 1DP', 'TN13 1ZZ', 'TN13 2AB', 'TN14 5EW', 'TN14 7AA', 'TN15 0AA', 'TN15 0RP'],
         sale_range: 425_000..1_350_000,
         rent_range: 1_550..3_950,
         nearby: ['Sevenoaks station', 'the high street', 'Knole Park'],
@@ -14,6 +15,7 @@ module DemoData
         town_city: 'Tunbridge Wells',
         county: 'Kent',
         postcode_districts: %w[TN1 TN2 TN4],
+        postcodes: ['TN1 1BT', 'TN1 2QR', 'TN2 3XF', 'TN2 5TN', 'TN4 8AS', 'TN4 9BY'],
         sale_range: 315_000..975_000,
         rent_range: 1_250..3_200,
         nearby: ['the Pantiles', 'mainline rail links', 'good local schools'],
@@ -23,6 +25,7 @@ module DemoData
         town_city: 'Canterbury',
         county: 'Kent',
         postcode_districts: %w[CT1 CT2 CT3],
+        postcodes: ['CT1 1AA', 'CT1 2EH', 'CT1 3NG', 'CT2 7NZ', 'CT2 8AN', 'CT3 4NH'],
         sale_range: 265_000..780_000,
         rent_range: 1_050..2_750,
         nearby: ['the city centre', 'Canterbury West', 'the university quarter'],
@@ -32,6 +35,7 @@ module DemoData
         town_city: 'Bromley',
         county: 'Greater London',
         postcode_districts: %w[BR1 BR2 BR3],
+        postcodes: ['BR1 1DN', 'BR1 1LX', 'BR1 3NN', 'BR2 0EQ', 'BR2 9EF', 'BR3 1AE'],
         sale_range: 365_000..1_150_000,
         rent_range: 1_400..3_650,
         nearby: ['Bromley South', 'the Glades', 'local parkland'],
@@ -41,6 +45,7 @@ module DemoData
         town_city: 'Croydon',
         county: 'Greater London',
         postcode_districts: %w[CR0 CR2 CR8],
+        postcodes: ['CR0 1LF', 'CR0 1TY', 'CR0 2RD', 'CR2 6EA', 'CR8 2AP', 'CR8 3QJ'],
         sale_range: 245_000..785_000,
         rent_range: 1_150..2_950,
         nearby: ['East Croydon', 'tram connections', 'restaurant and retail options'],
@@ -50,6 +55,7 @@ module DemoData
         town_city: 'Guildford',
         county: 'Surrey',
         postcode_districts: %w[GU1 GU2 GU4],
+        postcodes: ['GU1 2AG', 'GU1 3AA', 'GU1 4UT', 'GU2 7XH', 'GU2 9JX', 'GU4 7BQ'],
         sale_range: 395_000..1_250_000,
         rent_range: 1_450..3_850,
         nearby: ['Guildford station', 'the town centre', 'the Surrey Hills'],
@@ -59,6 +65,7 @@ module DemoData
         town_city: 'Reigate',
         county: 'Surrey',
         postcode_districts: %w[RH1 RH2],
+        postcodes: ['RH1 1RB', 'RH1 6AT', 'RH2 0BD', 'RH2 7RL', 'RH2 9AE'],
         sale_range: 375_000..1_050_000,
         rent_range: 1_350..3_300,
         nearby: ['Priory Park', 'commuter rail services', 'independent cafes'],
@@ -68,6 +75,7 @@ module DemoData
         town_city: 'Westerham',
         county: 'Kent',
         postcode_districts: %w[TN16],
+        postcodes: ['TN16 1AS', 'TN16 1JE', 'TN16 1PS', 'TN16 2AB'],
         sale_range: 350_000..950_000,
         rent_range: 1_250..2_950,
         nearby: ['the village green', 'country walks', 'local primary schools'],
@@ -347,8 +355,10 @@ module DemoData
     def postcode_for(area)
       district = area.fetch(:postcode_districts).sample(random: random)
       sector = 1 + random.rand(9)
-      suffix = "#{POSTCODE_SUFFIX_LETTERS.sample(random: random)}#{POSTCODE_SUFFIX_LETTERS.sample(random: random)}"
-      "#{district} #{sector}#{suffix}"
+      2.times { POSTCODE_SUFFIX_LETTERS.sample(random: random) }
+
+      district_postcodes = area.fetch(:postcodes).select { |postcode| postcode.start_with?("#{district} ") }
+      district_postcodes.fetch((sector - 1) % district_postcodes.length)
     end
 
     def unit_label_for(property_type)
