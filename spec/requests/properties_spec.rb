@@ -346,10 +346,26 @@ describe "Properties" do
       booking_sign_in_link = document.at_css(%([data-testid="book-viewing-sign-in-link"]))
       enquiry_link = document.at_css(%([data-testid="open-enquiry-form"]))
       offer_link = document.at_css(%([data-testid="open-offer-form"]))
+      location_map = document.at_css(%([data-testid="property-location-map"]))
+      map_frame = location_map&.at_css("iframe")
+      apple_maps_link = location_map&.at_css('a[href^="https://maps.apple.com/"]')
       sign_in_return_path = new_user_session_path(return_to: property_path(property, anchor: "booking-panel"))
+      expected_map_query = ERB::Util.url_encode([
+        property.address_line_1,
+        property.address_line_2,
+        property.town_city,
+        property.county,
+        property.postcode,
+        property.country
+      ].reject(&:blank?).join(", "))
 
       expect(response).to have_http_status(:ok)
       expect(showcase.at_css(".property-hero__media--ratio-3-2")).to be_present
+      expect(location_map).to be_present
+      expect(map_frame["src"]).to include("maps.google.co.uk/maps?q=#{expected_map_query}")
+      expect(map_frame["loading"]).to eq("lazy")
+      expect(map_frame["tabindex"]).to eq("-1")
+      expect(apple_maps_link["href"]).to eq("https://maps.apple.com/?q=#{expected_map_query}")
       expect(booking_panel).to be_present
       expect(booking_shortcut_form).not_to be_present
       expect(booking_form).not_to be_present

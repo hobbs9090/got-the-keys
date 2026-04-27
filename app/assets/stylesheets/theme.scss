@@ -3023,6 +3023,22 @@ form[data-testid="lead-inbox-filters"] .form-actions .button,
   margin: 0;
 }
 
+.property-location-map {
+  gap: 0.9rem;
+}
+
+.property-location-map__frame {
+  border-radius: calc(var(--radius-md) - 2px);
+  line-height: 0;
+  overflow: hidden;
+}
+
+.property-location-map__frame iframe {
+  border: 0;
+  display: block;
+  width: 100%;
+}
+
 .property-layout {
   align-items: start;
   grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.85fr);
