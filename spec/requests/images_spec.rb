@@ -26,4 +26,18 @@ RSpec.describe "Images", type: :request do
 
     expect(response).to have_http_status(:not_found)
   end
+
+  it "returns 404 for a path that escapes the upload root" do
+    photo = create(:photo, property:, image_filename: "/uploads/property_photos/#{property.id}/123/front.jpeg")
+
+    # Manipulate image_filename at the model level to simulate a traversal attempt.
+    # The confinement guard should reject the resolved path.
+    allow_any_instance_of(Photo).to receive(:image_filename).and_return(
+      "/uploads/property_photos/../../etc/passwd"
+    )
+
+    get photo_image_path(photo)
+
+    expect(response).to have_http_status(:not_found)
+  end
 end

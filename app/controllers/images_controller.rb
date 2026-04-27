@@ -26,8 +26,11 @@ class ImagesController < ActionController::Base
 
     target = (w = bucket_width) ? resized_path(photo.id, source, w) : source
 
+    # Verify the resolved path stays within the upload root before serving.
+    return head :not_found unless confined_to_upload_root?(target)
+
     response.set_header("Cache-Control", "public, max-age=#{MAX_AGE}, immutable")
-    send_file target, type: mime_for(source), disposition: :inline
+    send_file target.to_s, type: mime_for(source), disposition: :inline
   rescue ActiveRecord::RecordNotFound
     head :not_found
   end
@@ -67,6 +70,12 @@ class ImagesController < ActionController::Base
     Rails.logger.error("[ImagesController] resize failed photo=#{photo_id} w=#{width}: #{e.message}")
     File.delete("#{cache}.tmp.#{Process.pid}") rescue nil
     source
+  end
+
+  def confined_to_upload_root?(path)
+    path.to_s.start_with?(upload_root.realpath.to_s)
+  rescue Errno::ENOENT
+    false
   end
 
   def cache_dir
