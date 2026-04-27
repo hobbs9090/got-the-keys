@@ -503,6 +503,7 @@ DEPENDENCIES
   kaminari (~> 1.2)
   letter_opener (~> 1.10)
   letter_opener_web (~> 3.0)
+  mini_magick (~> 5.0)
   nokogiri (~> 1.16)
   openai (~> 0.56.0)
   passenger (~> 6.1)

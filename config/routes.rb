@@ -1,6 +1,7 @@
 GotTheKeys::Application.routes.draw do
   get "/up", to: "health#show"
   get "/robots.txt", to: "robots#show"
+  get "/img/:id", to: "images#show", as: :photo_image
 
   if defined?(LetterOpenerWeb) && (Rails.env.staging? || Rails.env.production?)
     authenticate :admin do

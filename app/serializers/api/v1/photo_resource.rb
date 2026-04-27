@@ -15,7 +15,7 @@ module Api
         def url_for_photo(photo, host:)
           filename = photo.image_filename.to_s
           if filename.start_with?(Photo::UPLOADED_IMAGE_PREFIX)
-            "#{host}#{filename}"
+            "#{host}/img/#{photo.id}"
           else
             "#{host}#{ActionController::Base.helpers.asset_path(filename)}"
           end
