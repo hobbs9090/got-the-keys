@@ -16,6 +16,20 @@ RSpec.describe AppointmentAvailability do
     travel_to(Time.zone.local(2026, 3, 30, 8, 0)) { example.run }
   end
 
+  describe "limit behaviour" do
+    it "returns all available slots when no limit is given" do
+      unlimited = described_class.new(property: property, configuration: configuration).next_slots
+      # Default config opens Mon–Fri 9–17 for 21 days; without a cap we get every
+      # slot in the booking window (well above the old hard-coded default of 12).
+      expect(unlimited.length).to be > 12
+    end
+
+    it "caps results when an explicit limit is given" do
+      slots = described_class.new(property: property, configuration: configuration).next_slots(limit: 3)
+      expect(slots.length).to eq(3)
+    end
+  end
+
   it "returns slots from explicit open windows on otherwise closed days" do
     FactoryBot.create(
       :availability_window,

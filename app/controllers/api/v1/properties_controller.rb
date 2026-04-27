@@ -60,9 +60,10 @@ module Api
         days = params[:days].to_i
         days = nil if days <= 0
 
+        limit = params[:limit].to_i.positive? ? params[:limit].to_i : nil
+
         availability = AppointmentAvailability.new(property: property, from: from)
-        slots = availability.next_slots(limit: params[:limit].to_i.positive? ? params[:limit].to_i : 12,
-                                        days_ahead: days)
+        slots = availability.next_slots(limit: limit, days_ahead: days)
         config = BookingConfiguration.current
 
         render json: {

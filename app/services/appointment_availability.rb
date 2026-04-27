@@ -16,7 +16,12 @@ class AppointmentAvailability
     @preloaded_blocking_appointments = blocking_appointments
   end
 
-  def next_slots(limit: 8, days_ahead: nil, excluding_appointment: nil)
+  # Returns available slots within the booking window.
+  #
+  # +limit+: maximum number of slots to return. +nil+ means no cap — return
+  # every available slot across the full window. Pass an integer to get a
+  # quick-look subset (e.g. the AvailabilityStrip on the detail page uses 8).
+  def next_slots(limit: nil, days_ahead: nil, excluding_appointment: nil)
     slots = []
     booking_window_days = days_ahead.nil? ? configuration.booking_window_days : days_ahead
 
@@ -29,7 +34,7 @@ class AppointmentAvailability
 
           if slot_available?(cursor, duration_minutes: configuration.slot_duration_minutes, excluding_appointment:)
             slots << Slot.new(starts_at: cursor, ends_at: slot_end, group_viewing: group_viewing_window?(cursor, slot_end))
-            return slots if slots.length >= limit
+            return slots if limit && slots.length >= limit
           end
 
           cursor += slot_interval
