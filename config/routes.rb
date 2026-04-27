@@ -164,6 +164,8 @@ GotTheKeys::Application.routes.draw do
 
       resources :saved_searches, only: [:index, :create, :update, :destroy]
 
+      resources :enquiries, only: [:index]
+
       # Transactional resources keyed by public_reference
       resources :appointments,
                 only: [:index, :show],
