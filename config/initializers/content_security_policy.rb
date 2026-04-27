@@ -5,6 +5,7 @@ Rails.application.config.content_security_policy do |policy|
   policy.object_src  :none
   policy.script_src  :self
   policy.style_src   :self, "https://fonts.googleapis.com"
+  policy.frame_src   :self, "https://maps.google.co.uk", "https://maps.google.com", "https://www.google.com"
   policy.base_uri    :self
   policy.frame_ancestors :self
   policy.form_action :self

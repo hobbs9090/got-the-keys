@@ -20,6 +20,7 @@ RSpec.describe "Modal components" do
     expect(document.css("iframe").map { |frame| frame["title"] }).to all(eq(I18n.t("contact_us.where_we_are")))
     expect(document.css("iframe").map { |frame| frame["tabindex"] }).to all(eq("-1"))
     expect(document.css("iframe").map { |frame| frame["loading"] }).to all(eq("lazy"))
+    expect(response.headers["Content-Security-Policy"]).to include("frame-src 'self' https://maps.google.co.uk https://maps.google.com https://www.google.com")
   end
 
   it "uses the shared modal contract on the registration page" do

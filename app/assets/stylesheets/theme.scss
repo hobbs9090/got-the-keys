@@ -1753,6 +1753,7 @@ html[data-theme="dark"] {
 }
 
 .contact-form-card {
+  align-items: start;
   background:
     radial-gradient(circle at top left, rgba(20, 87, 214, 0.16), transparent 32%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(243, 248, 255, 0.96));
@@ -1805,6 +1806,7 @@ html[data-theme="dark"] {
 }
 
 .contact-form {
+  align-self: start;
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(20, 37, 63, 0.08);
   border-radius: var(--radius-lg);
