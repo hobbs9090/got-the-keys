@@ -1,6 +1,16 @@
 {
   "ignored_warnings": [
     {
+      "fingerprint": "7b7380bcfdf2791ca9cc8b62a86c09c9fec1b840ebbb8b5faea03a21d9949ad6",
+      "warning_type": "File Access",
+      "check_name": "SendFile",
+      "message": "Model attribute used in file name",
+      "file": "app/controllers/images_controller.rb",
+      "line": 33,
+      "confidence": "Weak",
+      "note": "False positive: source_path validates the UPLOADED_IMAGE_PREFIX and confined_to_upload_root? verifies the resolved path stays within upload_root via realpath before send_file is called."
+    },
+    {
       "fingerprint": "affacb0df5be47c6fc2c10a214e96fd62bfeba9c38358689fc67c75edfd36b35",
       "warning_type": "SQL Injection",
       "message": "Possible SQL injection",
