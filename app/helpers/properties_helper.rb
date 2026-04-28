@@ -92,9 +92,9 @@ module PropertiesHelper
   def property_sale_status_badge_class(status)
     case status
     when Property::SALE_STATUSES[:for_sale]
-      "badge badge--accent"
+      "badge badge--accent badge--sale-status badge--sale-status-sale"
     when Property::SALE_STATUSES[:for_rent]
-      "badge badge--success"
+      "badge badge--success badge--sale-status badge--sale-status-rent"
     else
       "badge"
     end

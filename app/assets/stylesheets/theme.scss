@@ -4029,13 +4029,32 @@ form[data-testid="lead-inbox-filters"] .form-actions .button,
 .badge {
   background: var(--color-primary-soft);
   border-radius: 999px;
+  align-items: center;
   color: var(--color-primary-strong);
   display: inline-flex;
   font-size: 0.8rem;
   font-weight: 800;
+  gap: 0.38rem;
   letter-spacing: 0.06em;
   padding: 0.45rem 0.8rem;
   text-transform: uppercase;
+}
+
+.badge--sale-status::before {
+  background: currentColor;
+  content: "";
+  display: inline-block;
+  flex: 0 0 auto;
+  height: 0.82em;
+  width: 0.82em;
+}
+
+.badge--sale-status-sale::before {
+  mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.5 2.5A1.5 1.5 0 0 1 3 1h4.9c.4 0 .78.16 1.06.44l5.6 5.6a1.5 1.5 0 0 1 0 2.12l-5.4 5.4a1.5 1.5 0 0 1-2.12 0l-5.6-5.6A1.5 1.5 0 0 1 1 7.9V3c0-.28.22-.5.5-.5Zm3 3A1.5 1.5 0 1 0 4.5 2a1.5 1.5 0 0 0 0 3.5Z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.badge--sale-status-rent::before {
+  mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.8 1a4.8 4.8 0 1 0 3.74 7.8l1.13 1.13V12h2.06v2.06H16v1.44c0 .28-.22.5-.5.5h-2.98a.5.5 0 0 1-.35-.15L8.95 12.6l-1.08-1.08A4.8 4.8 0 0 0 6.8 1Zm0 2.05a1.45 1.45 0 1 1 0 2.9 1.45 1.45 0 0 1 0-2.9Z'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
 .badge--success {

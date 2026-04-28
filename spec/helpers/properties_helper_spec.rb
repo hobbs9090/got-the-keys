@@ -99,8 +99,8 @@ RSpec.describe PropertiesHelper, type: :helper do
 
   describe "#property_sale_status_badge_class" do
     it "maps sale statuses to the shared property badge styles" do
-      expect(helper.property_sale_status_badge_class(Property::SALE_STATUSES[:for_sale])).to eq("badge badge--accent")
-      expect(helper.property_sale_status_badge_class(Property::SALE_STATUSES[:for_rent])).to eq("badge badge--success")
+      expect(helper.property_sale_status_badge_class(Property::SALE_STATUSES[:for_sale])).to eq("badge badge--accent badge--sale-status badge--sale-status-sale")
+      expect(helper.property_sale_status_badge_class(Property::SALE_STATUSES[:for_rent])).to eq("badge badge--success badge--sale-status badge--sale-status-rent")
     end
   end
 
