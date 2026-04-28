@@ -73,6 +73,16 @@ RSpec.describe "Public content pages", type: :request do
     expect(response.body).to include(I18n.t("about_us.hero_title"))
   end
 
+  it "keeps the how it works publishing checklist in the main content column" do
+    get "/how_it_works"
+
+    document = parsed_html
+
+    expect(response).to have_http_status(:ok)
+    expect(document.at_css(".how-marketing-main > .how-checklist-card")).to be_present
+    expect(document.at_css(".how-marketing-sidebar .how-checklist-card")).not_to be_present
+  end
+
   it "uses the shared top and bottom pagination layout on the public listing pages" do
     user = FactoryBot.create(:user)
 
