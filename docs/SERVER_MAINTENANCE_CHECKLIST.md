@@ -48,13 +48,30 @@ It is intentionally practical rather than exhaustive. The goal is to catch the c
 
 Production and staging automation should be checked for:
 
-- deploy SSH and database secrets
+- shared deploy secrets:
+  - `DEPLOY_USER`
+  - `DEPLOY_REPO_URL`
+  - `DEPLOY_HOST_KEY` when pinned host keys are used
+  - `ACCEPTANCE_REPO_DISPATCH_TOKEN`
+- staging deploy secrets:
+  - `STAGING_DEPLOY_HOST`
+  - `STAGING_DEPLOY_TO`
+  - `STAGING_DEPLOY_MIRROR_URL`
+  - `STAGING_APP_HOST`
+- production deploy secrets:
+  - `PRODUCTION_DEPLOY_HOST`
+  - `PRODUCTION_DEPLOY_TO`
+  - `PRODUCTION_DEPLOY_MIRROR_URL`
+  - `PRODUCTION_APP_HOST`
+  - `DEVISE_SECRET_KEY`
+- environment URL variables:
+  - `STAGING_APP_HOST`
+  - `PRODUCTION_APP_HOST`
+- database secrets where the target host does not rely on local defaults
 - mailer secrets where SMTP is enabled
 - `PUBLIC_INDEXING_ENABLED`
-- `APP_HOST`
-- `ACCEPTANCE_REPO_DISPATCH_TOKEN`
 
-That last token matters because both deploy workflows dispatch acceptance checks after deploy.
+The acceptance dispatch token matters because both deploy workflows dispatch acceptance checks after deploy.
 
 ### Acceptance coverage expectations
 
