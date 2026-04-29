@@ -48,12 +48,12 @@ jobs:
     env:
       BUNDLE_PATH: vendor/bundle
       BUNDLE_WITHOUT: "doc staging test"
-      DEPLOY_USER: ${{ vars.DEPLOY_USER }}
-      DEPLOY_HOST: ${{ vars.PRODUCTION_DEPLOY_HOST }}
-      DEPLOY_TO: ${{ github.event_name == 'workflow_dispatch' && inputs.deploy_to || vars.PRODUCTION_DEPLOY_TO }}
-      DEPLOY_REPO_URL: ${{ vars.DEPLOY_REPO_URL }}
-      DEPLOY_MIRROR_URL: ${{ vars.DEPLOY_MIRROR_URL }}
-      APP_HOST: ${{ github.event_name == 'workflow_dispatch' && inputs.app_host || vars.PRODUCTION_APP_HOST }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+      DEPLOY_HOST: ${{ secrets.PRODUCTION_DEPLOY_HOST }}
+      DEPLOY_TO: ${{ github.event_name == 'workflow_dispatch' && inputs.deploy_to || secrets.PRODUCTION_DEPLOY_TO }}
+      DEPLOY_REPO_URL: ${{ secrets.DEPLOY_REPO_URL }}
+      DEPLOY_MIRROR_URL: ${{ secrets.PRODUCTION_DEPLOY_MIRROR_URL }}
+      APP_HOST: ${{ github.event_name == 'workflow_dispatch' && inputs.app_host || secrets.PRODUCTION_APP_HOST }}
 
     steps:
       - name: Checkout requested ref
