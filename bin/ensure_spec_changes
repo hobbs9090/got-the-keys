@@ -111,6 +111,17 @@ def git_stdout(*args)
   nil
 end
 
+def git_commit_exists?(sha)
+  return true if sha.to_s.empty?
+
+  _stdout, _stderr, status = Open3.capture3('git', 'cat-file', '-e', "#{sha}^{commit}")
+  status.success?
+end
+
+def range_available?(range)
+  git_commit_exists?(range.head_sha) && (range.diff_mode == :single_commit || git_commit_exists?(range.base_sha))
+end
+
 def local_range_from_git
   head_sha = git_stdout('rev-parse', 'HEAD')&.strip
   return Ci::ChangeRange.new(base_sha: nil, head_sha: nil, diff_mode: :single_commit) if head_sha.to_s.empty?
@@ -133,6 +144,11 @@ range = Ci::ChangeRange.from_github(env: ENV, payload: payload)
 unless range.complete?
   range = local_range_from_git
   puts 'Using local git history for spec coverage guard.'
+end
+
+unless range_available?(range)
+  range = local_range_from_git
+  puts 'Using local git history for spec coverage guard because the event range is unavailable.'
 end
 
 changed_files = git_changed_files(range)
