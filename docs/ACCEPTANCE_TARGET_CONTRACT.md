@@ -29,9 +29,9 @@ The default seed path is:
 
 The baseline scenario currently defines:
 
-- primary admin credential: `steven@gotthekeys.uk / ********`
-- secondary admin credential: `kate@gotthekeys.uk / ********`
-- additional admin credential: `inarra@gotthekeys.uk / ********`
+- primary admin credential: `******** / ********`
+- secondary admin credential: `******** / ********`
+- additional admin credential: `******** / ********`
 - active scenario name: `Baseline`
 
 ## Deterministic Property Identity

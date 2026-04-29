@@ -25,7 +25,7 @@ runtime_env = {
   "SMTP_STARTTLS_AUTO" => ENV["SMTP_STARTTLS_AUTO"]
 }.reject { |_key, value| value.nil? || value.empty? }
 
-server ENV.fetch("DEPLOY_HOST", "192.168.2.204"),
+server ENV.fetch("DEPLOY_HOST"),
        user: ENV.fetch("DEPLOY_USER", "deploy"),
        roles: %w[app db web]
 

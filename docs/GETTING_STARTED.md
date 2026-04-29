@@ -68,12 +68,12 @@ npm run watch:js
 After `bin/rails db:seed`:
 
 - Admins:
-  - `steven@gotthekeys.uk` / `********`
-  - `kate@gotthekeys.uk` / `********`
-  - `inarra@gotthekeys.uk` / `********`
+  - `********` / `********`
+  - `********` / `********`
+  - `********` / `********`
 - Seller examples:
-  - `hans.schmidt@example.com` / `********`
-  - `jean.dupont@example.com` / `********`
+  - `********` / `********`
+  - `********` / `********`
 
 ## Common Local Commands
 

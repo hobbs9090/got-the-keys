@@ -11,12 +11,10 @@ on:
       app_host:
         description: Public hostname for the production app
         required: true
-        default: gotthekeys.uk
         type: string
       deploy_to:
         description: Capistrano deploy root on the Linux host
         required: true
-        default: /var/www/gotthekeys-production
         type: string
   workflow_run:
     workflows: ["Deploy Staging"]
@@ -45,16 +43,17 @@ jobs:
     timeout-minutes: 30
     environment:
       name: production
-      url: ${{ format('https://{0}', github.event_name == 'workflow_dispatch' && inputs.app_host || 'gotthekeys.uk') }}
+      url: ${{ format('https://{0}', github.event_name == 'workflow_dispatch' && inputs.app_host || vars.PRODUCTION_APP_HOST) }}
 
     env:
       BUNDLE_PATH: vendor/bundle
       BUNDLE_WITHOUT: "doc staging test"
-      DEPLOY_USER: steven
-      DEPLOY_HOST: 127.0.0.1
-      DEPLOY_TO: ${{ github.event_name == 'workflow_dispatch' && inputs.deploy_to || '/var/www/gotthekeys-production' }}
-      DEPLOY_REPO_URL: /home/steven/git/rails_got_the_keys.git
-      APP_HOST: ${{ github.event_name == 'workflow_dispatch' && inputs.app_host || 'gotthekeys.uk' }}
+      DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+      DEPLOY_HOST: ${{ vars.PRODUCTION_DEPLOY_HOST }}
+      DEPLOY_TO: ${{ github.event_name == 'workflow_dispatch' && inputs.deploy_to || vars.PRODUCTION_DEPLOY_TO }}
+      DEPLOY_REPO_URL: ${{ vars.DEPLOY_REPO_URL }}
+      DEPLOY_MIRROR_URL: ${{ vars.DEPLOY_MIRROR_URL }}
+      APP_HOST: ${{ github.event_name == 'workflow_dispatch' && inputs.app_host || vars.PRODUCTION_APP_HOST }}
 
     steps:
       - name: Checkout requested ref

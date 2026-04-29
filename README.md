@@ -83,19 +83,19 @@ bundle exec rspec
 Baseline credentials after seeding:
 
 - Admins:
-  - `steven@gotthekeys.uk` / `********`
-  - `kate@gotthekeys.uk` / `********`
-  - `inarra@gotthekeys.uk` / `********`
+  - `********` / `********`
+  - `********` / `********`
+  - `********` / `********`
 - Seller examples:
-  - English: `amelia.hart@example.com` / `********` (`en`)
-  - German: `hans.schmidt@example.com` / `********` (`de`)
-  - French: `jean.dupont@example.com` / `********` (`fr`)
-  - Italian: `mario.rossi@example.com` / `********` (`it`)
-  - Chinese: `wei.zhang@example.com` / `********` (`zh`)
+  - English: `********` / `********` (`en`)
+  - German: `********` / `********` (`de`)
+  - French: `********` / `********` (`fr`)
+  - Italian: `********` / `********` (`it`)
+  - Chinese: `********` / `********` (`zh`)
 - Buyer examples:
-  - `nina.hughes@example.com` / `********`
-  - `alex.cole@example.com` / `********`
-  - `sam.turner@example.com` / `********`
+  - `********` / `********`
+  - `********` / `********`
+  - `********` / `********`
 
 ## Performance Seed Data
 

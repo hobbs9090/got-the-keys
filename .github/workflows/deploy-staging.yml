@@ -35,16 +35,17 @@ jobs:
     timeout-minutes: 30
     environment:
       name: staging
-      url: https://stevenhobbs.co.uk
+      url: ${{ format('https://{0}', vars.STAGING_APP_HOST) }}
 
     env:
       BUNDLE_PATH: vendor/bundle
       BUNDLE_WITHOUT: "doc production test"
-      DEPLOY_USER: steven
-      DEPLOY_HOST: 192.168.2.204
-      DEPLOY_TO: /var/www/gotthekeys-staging
-      DEPLOY_REPO_URL: /home/steven/git/rails_got_the_keys.git
-      APP_HOST: stevenhobbs.co.uk
+      DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+      DEPLOY_HOST: ${{ vars.STAGING_DEPLOY_HOST }}
+      DEPLOY_TO: ${{ vars.STAGING_DEPLOY_TO }}
+      DEPLOY_REPO_URL: ${{ vars.DEPLOY_REPO_URL }}
+      DEPLOY_MIRROR_URL: ${{ vars.DEPLOY_MIRROR_URL }}
+      APP_HOST: ${{ vars.STAGING_APP_HOST }}
 
     steps:
       - name: Checkout requested ref
@@ -175,7 +176,7 @@ jobs:
           GH_TOKEN: ${{ secrets.ACCEPTANCE_REPO_DISPATCH_TOKEN }}
           ACCEPTANCE_EVENT_TYPE: staging_acceptance
           ACCEPTANCE_ENVIRONMENT: staging
-          ACCEPTANCE_BASE_URL: https://stevenhobbs.co.uk/
+          ACCEPTANCE_BASE_URL: ${{ format('https://{0}/', env.APP_HOST) }}
           APP_REPOSITORY: ${{ github.repository }}
           APP_SHA: ${{ steps.deploy_meta.outputs.sha }}
           APP_SHORT_SHA: ${{ steps.deploy_meta.outputs.short_sha }}

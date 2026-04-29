@@ -20,17 +20,17 @@ runtime_env = {
   "SMTP_STARTTLS_AUTO" => ENV["SMTP_STARTTLS_AUTO"]
 }.reject { |_key, value| value.nil? || value.empty? }
 
-server ENV.fetch("DEPLOY_HOST", "192.168.2.204"),
+server ENV.fetch("DEPLOY_HOST"),
        user: ENV.fetch("DEPLOY_USER", ENV.fetch("USER", "deploy")),
        roles: %w[app db web]
 
-set :deploy_to, ENV.fetch("DEPLOY_TO", "/var/www/gotthekeys-staging")
+set :deploy_to, ENV.fetch("DEPLOY_TO")
 set :rails_env, "staging"
 set :reset_db_on_deploy, true
 set :bundle_without, %w[development test doc production].join(' ')
 set :default_env, {
   "PATH" => "$HOME/.local/bin:$HOME/.rbenv/bin:$HOME/.rbenv/shims:/usr/local/bin:/usr/bin:/bin",
-  "APP_HOST" => ENV.fetch("APP_HOST", "stevenhobbs.co.uk"),
+  "APP_HOST" => ENV.fetch("APP_HOST"),
   "APP_DEPLOY_TARGET" => ENV.fetch("APP_DEPLOY_TARGET", "staging host"),
   "RAILS_SERVE_STATIC_FILES" => "1",
   "SECRET_KEY_BASE_DUMMY" => "1"

@@ -32,14 +32,14 @@ Current deploy stages target the Linux host shape described by:
 Typical stage defaults:
 
 - `staging`
-  - host `192.168.2.204`
-  - deploy root `/var/www/gotthekeys-staging`
-  - `APP_HOST=stevenhobbs.co.uk`
+  - host `********`
+  - deploy root `********`
+  - `APP_HOST=********`
   - `PUBLIC_INDEXING_ENABLED=false` by default
   - automatically runs `db:reset` after publish so the staging database is cleared and reseeded on every deploy
 - `production`
   - same overall host path
-  - `APP_HOST=gotthekeys.uk` by default
+  - `APP_HOST=********` by default
   - `PUBLIC_INDEXING_ENABLED=true` by default
   - `DEPLOY_TO` must be set
 
@@ -81,10 +81,10 @@ If that staging deploy completes successfully, the production deploy workflow no
 Common overrides:
 
 ```bash
-DEPLOY_USER=steven \
-DEPLOY_HOST=192.168.2.204 \
-DEPLOY_TO=/var/www/gotthekeys-staging \
-APP_HOST=stevenhobbs.co.uk \
+DEPLOY_USER=******** \
+DEPLOY_HOST=******** \
+DEPLOY_TO=******** \
+APP_HOST=******** \
 PUBLIC_INDEXING_ENABLED=false \
 bin/deploy_staging
 ```
@@ -92,8 +92,8 @@ bin/deploy_staging
 ## Recommended Production Deploy
 
 ```bash
-DEPLOY_TO=/var/www/gotthekeys-production \
-APP_HOST=gotthekeys.uk \
+DEPLOY_TO=******** \
+APP_HOST=******** \
 PUBLIC_INDEXING_ENABLED=true \
 bin/deploy_production
 ```
