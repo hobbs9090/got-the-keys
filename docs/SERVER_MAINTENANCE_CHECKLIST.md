@@ -11,7 +11,7 @@ It is intentionally practical rather than exhaustive. The goal is to catch the c
 ### Staging
 
 1. Confirm the latest `Deploy Staging` workflow completed successfully.
-2. Confirm the matching `staging_acceptance` run completed successfully in `rails_got_the_keys_acceptance`.
+2. Confirm the matching `staging_acceptance` run completed successfully in `got-the-keys-acceptance`.
 3. Open the homepage, catalogue, one property page, and `/admin/qa`.
 4. Confirm the build/version details shown in QA match the deployed commit.
 5. Confirm staging still has `PUBLIC_INDEXING_ENABLED=false`.
@@ -19,7 +19,7 @@ It is intentionally practical rather than exhaustive. The goal is to catch the c
 ### Production
 
 1. Confirm the latest `Deploy Production` workflow completed successfully.
-2. Confirm the matching `production_acceptance` run completed successfully in `rails_got_the_keys_acceptance`.
+2. Confirm the matching `production_acceptance` run completed successfully in `got-the-keys-acceptance`.
 3. Open the homepage, catalogue, one property page, and a footer page such as `/legal`.
 4. Confirm the site is serving the expected hostname and TLS certificate.
 5. Confirm the production footer or QA/build metadata reflects the deployed commit.

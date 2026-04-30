@@ -533,22 +533,22 @@ Use the following prompt when implementing this later:
 Refresh the README and documentation for GotTheKeys so the project reads like a complete, well-structured training package.
 
 Context:
-- Repo: /Users/steven/Source/GitHub/rails_got_the_keys
+- Repo: /Users/steven/Source/GitHub/got-the-keys
 - Current README is carrying too much product, setup, architecture, and QA material in one file
 - The app is both:
   - a believable small property sales/rentals website
   - a deterministic QA training harness
 - Existing useful docs include:
-  - /Users/steven/Source/GitHub/rails_got_the_keys/docs/NIRVANA_DEPLOYMENT.md
-  - /Users/steven/Source/GitHub/rails_got_the_keys/docs/SYNOLOGY_CONTAINER_DEPLOYMENT.md
-  - /Users/steven/Source/GitHub/rails_got_the_keys/README.md
-  - /Users/steven/Source/GitHub/rails_got_the_keys/docs/QA_TRAINING.md
-  - /Users/steven/Source/GitHub/rails_got_the_keys/docs/BOOKING_ARCHITECTURE.md
-  - /Users/steven/Source/GitHub/rails_got_the_keys/docs/SURFACE_INVENTORY.md
-  - /Users/steven/Source/GitHub/rails_got_the_keys/docs/BACKGROUND_JOB_POLICY.md
-  - /Users/steven/Source/GitHub/rails_got_the_keys/config/deploy.rb
-  - /Users/steven/Source/GitHub/rails_got_the_keys/config/deploy/
-  - /Users/steven/Source/GitHub/rails_got_the_keys/lib/capistrano/
+  - /Users/steven/Source/GitHub/got-the-keys/docs/NIRVANA_DEPLOYMENT.md
+  - /Users/steven/Source/GitHub/got-the-keys/docs/SYNOLOGY_CONTAINER_DEPLOYMENT.md
+  - /Users/steven/Source/GitHub/got-the-keys/README.md
+  - /Users/steven/Source/GitHub/got-the-keys/docs/QA_TRAINING.md
+  - /Users/steven/Source/GitHub/got-the-keys/docs/BOOKING_ARCHITECTURE.md
+  - /Users/steven/Source/GitHub/got-the-keys/docs/SURFACE_INVENTORY.md
+  - /Users/steven/Source/GitHub/got-the-keys/docs/BACKGROUND_JOB_POLICY.md
+  - /Users/steven/Source/GitHub/got-the-keys/config/deploy.rb
+  - /Users/steven/Source/GitHub/got-the-keys/config/deploy/
+  - /Users/steven/Source/GitHub/got-the-keys/lib/capistrano/
 
 Goal:
 Create a complete documentation refresh that:
@@ -561,7 +561,7 @@ Create a complete documentation refresh that:
 - includes clear documentation for file structure, deployment, and Capistrano/release flows
 
 Requirements:
-1. Rewrite /Users/steven/Source/GitHub/rails_got_the_keys/README.md
+1. Rewrite /Users/steven/Source/GitHub/got-the-keys/README.md
    - Keep it concise and scannable
    - Make the dual purpose of the app explicit
    - Keep screenshots near the top
@@ -609,9 +609,9 @@ Requirements:
    - Make the repo map useful to new contributors
    - Document the supported deployment story, including Apache + Passenger, Linux, and Capistrano-based release flow
    - Explain where deployment config lives:
-     - /Users/steven/Source/GitHub/rails_got_the_keys/config/deploy.rb
-     - /Users/steven/Source/GitHub/rails_got_the_keys/config/deploy/
-     - /Users/steven/Source/GitHub/rails_got_the_keys/lib/capistrano/
+     - /Users/steven/Source/GitHub/got-the-keys/config/deploy.rb
+     - /Users/steven/Source/GitHub/got-the-keys/config/deploy/
+     - /Users/steven/Source/GitHub/got-the-keys/lib/capistrano/
    - Mention asset build/precompile expectations, version/build metadata, and any environment/database differences that matter
 
 Implementation expectations:

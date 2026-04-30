@@ -1,8 +1,8 @@
 # Acceptance Target Contract
 
-This document defines the current external acceptance-testing contract for `rails_got_the_keys`.
+This document defines the current external acceptance-testing contract for `got-the-keys`.
 
-It is intended for the companion repository `rails_got_the_keys_acceptance`, which tests the Rails app from the outside in `local` and `staging` modes.
+It is intended for the companion repository `got-the-keys-acceptance`, which tests the Rails app from the outside in `local` and `staging` modes.
 
 ## Stable Routes
 

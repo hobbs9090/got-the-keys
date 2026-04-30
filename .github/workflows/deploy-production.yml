@@ -277,5 +277,5 @@ jobs:
             -H "Authorization: Bearer ${GH_TOKEN}" \
             -H "Content-Type: application/json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            https://api.github.com/repos/hobbs9090/rails_got_the_keys_acceptance/dispatches \
+            https://api.github.com/repos/hobbs9090/got-the-keys-acceptance/dispatches \
             --data "$payload"

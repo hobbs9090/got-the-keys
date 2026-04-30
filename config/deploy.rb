@@ -8,7 +8,7 @@ lock '3.20.0'
 
 # Application config
 set :application, 'got_the_keys'
-set :repo_url, ENV.fetch('DEPLOY_REPO_URL', 'git@github.com:hobbs9090/rails_got_the_keys.git')
+set :repo_url, ENV.fetch('DEPLOY_REPO_URL', 'git@github.com:hobbs9090/got-the-keys.git')
 set :branch, ENV.fetch('DEPLOY_BRANCH', 'main')
 set :ssh_options, forward_agent: true
 

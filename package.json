@@ -1,5 +1,5 @@
 {
-  "name": "rails_got_the_keys",
+  "name": "got-the-keys",
   "private": true,
   "scripts": {
     "build": "npm run build:css && npm run build:js",
