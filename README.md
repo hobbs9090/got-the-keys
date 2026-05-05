@@ -54,6 +54,7 @@ To also auto-rebuild JavaScript while developing, add a `js` line to `Procfile.d
 
 Open:
 
+- Staging site: [https://staging.gotthekeys.uk](https://staging.gotthekeys.uk)
 - Public site: [https://gotthekeys.uk](https://gotthekeys.uk)
 - Admin sign-in: [http://gotthekeys.uk/admins/sign_in](http://gotthekeys.uk/admins/sign_in)
 - QA guide in-app: [http://gotthekeys.uk/admin/qa](http://gotthekeys.uk/admin/qa)

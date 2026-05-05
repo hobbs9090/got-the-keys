@@ -12,7 +12,7 @@ It is intentionally practical rather than exhaustive. The goal is to catch the c
 
 1. Confirm the latest `Deploy Staging` workflow completed successfully.
 2. Confirm the matching `staging_acceptance` run completed successfully in `got-the-keys-acceptance`.
-3. Open the homepage, catalogue, one property page, and `/admin/qa`.
+3. Open the homepage, catalogue, one property page, and `/admin/qa` on `https://staging.gotthekeys.uk`.
 4. Confirm the build/version details shown in QA match the deployed commit.
 5. Confirm staging still has `PUBLIC_INDEXING_ENABLED=false`.
 
@@ -57,7 +57,7 @@ Production and staging automation should be checked for:
   - `STAGING_DEPLOY_HOST`
   - `STAGING_DEPLOY_TO`
   - `STAGING_DEPLOY_MIRROR_URL`
-  - `STAGING_APP_HOST`
+  - `STAGING_APP_HOST=staging.gotthekeys.uk`
 - production deploy secrets:
   - `PRODUCTION_DEPLOY_HOST`
   - `PRODUCTION_DEPLOY_TO`
@@ -65,7 +65,7 @@ Production and staging automation should be checked for:
   - `PRODUCTION_APP_HOST`
   - `DEVISE_SECRET_KEY`
 - environment URL variables:
-  - `STAGING_APP_HOST`
+  - `STAGING_APP_HOST=staging.gotthekeys.uk`
   - `PRODUCTION_APP_HOST`
 - database secrets where the target host does not rely on local defaults
 - mailer secrets where SMTP is enabled
@@ -105,6 +105,7 @@ df -h
 free -h
 systemctl status apache2
 passenger-status
+openssl s_client -connect staging.gotthekeys.uk:443 -servername staging.gotthekeys.uk </dev/null 2>/dev/null | openssl x509 -noout -dates
 openssl s_client -connect gotthekeys.uk:443 -servername gotthekeys.uk </dev/null 2>/dev/null | openssl x509 -noout -dates
 ```
 

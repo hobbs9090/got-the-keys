@@ -62,6 +62,11 @@ Mail delivery fallback:
 - previewed emails are stored under `storage/letter_opener`
 - admins can inspect fallback mail at `/admin/letter_opener`
 
+Canonical hosted app hosts:
+
+- staging: `staging.gotthekeys.uk`
+- production: `gotthekeys.uk`
+
 ## Deploy Automation Settings
 
 GitHub Actions deployment settings are split between secrets and variables.
@@ -69,12 +74,12 @@ GitHub Actions deployment settings are split between secrets and variables.
 Repository secrets hold the actual deployment coordinates:
 
 - shared: `DEPLOY_USER`, `DEPLOY_REPO_URL`, optional `DEPLOY_HOST_KEY`, `ACCEPTANCE_REPO_DISPATCH_TOKEN`
-- staging: `STAGING_DEPLOY_HOST`, `STAGING_DEPLOY_TO`, `STAGING_DEPLOY_MIRROR_URL`, `STAGING_APP_HOST`
+- staging: `STAGING_DEPLOY_HOST`, `STAGING_DEPLOY_TO`, `STAGING_DEPLOY_MIRROR_URL`, `STAGING_APP_HOST=staging.gotthekeys.uk`
 - production: `PRODUCTION_DEPLOY_HOST`, `PRODUCTION_DEPLOY_TO`, `PRODUCTION_DEPLOY_MIRROR_URL`, `PRODUCTION_APP_HOST`, `DEVISE_SECRET_KEY`
 
 Repository variables hold only the GitHub environment URL hostnames:
 
-- `STAGING_APP_HOST`
+- `STAGING_APP_HOST=staging.gotthekeys.uk`
 - `PRODUCTION_APP_HOST`
 
 The workflow deploy steps use the secret-backed values. The variables exist so GitHub can display environment URLs without putting host/path/user details into the public repo.

@@ -116,6 +116,7 @@ The external harness may safely assert:
 
 `staging`:
 
+- base URL: `https://staging.gotthekeys.uk/`
 - should be deterministic enough for post-deploy acceptance verification
 - should preserve the baseline property identity and admin access contract
 - should avoid destructive or write-heavy performance tests in routine CI
