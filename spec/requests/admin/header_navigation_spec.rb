@@ -39,7 +39,7 @@ RSpec.describe "Admin header navigation" do
   end
 
   it "keeps the admin layout action as view site" do
-    get admin_enquiries_path
+    get admin_leads_path
 
     expect(response).to have_http_status(:ok)
 
@@ -48,9 +48,9 @@ RSpec.describe "Admin header navigation" do
     expect(response.body).to match(%r{/assets/admin-[^"]+\.css})
     expect(response.body).to match(%r{/assets/admin-[^"]+\.js})
     expect(response.body).not_to match(%r{/assets/public-[^"]+\.css})
-    expect(parsed_html.at_css('meta[name="description"]')["content"]).to include("Manage property listings, customers, enquiries, bookings, and operations")
+    expect(parsed_html.at_css('meta[name="description"]')["content"]).to include("Manage property listings, customers, leads, bookings, and operations")
     expect(parsed_html.at_css('meta[name="robots"]')["content"]).to eq("noindex, nofollow")
-    expect(parsed_html.at_css('link[rel="canonical"]')["href"]).to eq(admin_enquiries_url)
+    expect(parsed_html.at_css('link[rel="canonical"]')["href"]).to eq(admin_leads_url)
     expect(parsed_html.at_css('link[rel="stylesheet"][href*="/assets/admin-"]')).to be_present
     expect(parsed_html.at_css('link[rel="preconnect"][href="https://fonts.googleapis.com"]')).to be_present
     expect(parsed_html.at_css('link[rel="preconnect"][href="https://fonts.gstatic.com"][crossorigin]')).to be_present
@@ -98,10 +98,10 @@ RSpec.describe "Admin header navigation" do
     expect(button_group.css("a.button").map { |link| link.text.strip }).to eq(["View site", "Sign out"])
     expect(button_group.css("a.button").map { |link| link["href"] }).to eq([root_path, destroy_admin_session_path])
 
-    lead_link = parsed_html.at_css('[data-testid="admin-enquiries-link"]')
+    lead_link = parsed_html.at_css('[data-testid="admin-leads-link"]')
     expect(lead_link).to be_present
     expect(lead_link.text.strip).to eq(I18n.t("ui.admin.navigation.leads"))
-    expect(lead_link["href"]).to eq(admin_enquiries_path)
+    expect(lead_link["href"]).to eq(admin_leads_path)
     expect(lead_link["aria-current"]).to eq("page")
 
     offers_link = parsed_html.at_css('[data-testid="admin-offers-link"]')
@@ -155,6 +155,28 @@ RSpec.describe "Admin header navigation" do
     expect(sign_out_link).to be_present
     expect(sign_out_link.text.strip).to eq("Sign out")
     expect(sign_out_link["href"]).to eq(destroy_admin_session_path)
+  end
+
+  it "keeps audited sidebar test ids aligned with destination headings" do
+    expected = {
+      "admin-leads-link" => { href: admin_leads_path, h1: "Lead inbox" },
+      "admin-booking-rules-link" => { href: admin_booking_rules_path, h1: "Booking Rules" }
+    }
+
+    get admin_root_path
+
+    expected.each do |testid, expectation|
+      link = parsed_html.at_css(%([data-testid="#{testid}"]))
+
+      expect(link).to be_present
+      expect(link["href"]).to eq(expectation.fetch(:href))
+
+      get link["href"]
+
+      destination = parsed_html.at_css("h1")
+      expect(destination).to be_present
+      expect(destination.text.strip).to eq(expectation.fetch(:h1))
+    end
   end
 
   it "keeps the admin top bar free of the active demo scenario label" do

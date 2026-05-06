@@ -5,7 +5,7 @@ class Admin::BookingConfigurationsController < Admin::BaseController
 
   def update
     if booking_configuration.update(booking_configuration_params)
-      redirect_to admin_booking_configuration_path, notice: t("ui.admin.flash.booking_rules_updated")
+      redirect_to admin_booking_rules_path, notice: t("ui.admin.flash.booking_rules_updated")
     else
       @booking_configuration = booking_configuration
       render :show, status: :unprocessable_entity

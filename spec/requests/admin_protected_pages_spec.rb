@@ -43,9 +43,9 @@ RSpec.describe "Admin-protected pages", type: :request do
     end
   end
 
-  describe "GET /admin/enquiries" do
+  describe "GET /admin/leads" do
     it "redirects guests to the admin sign-in page" do
-      get admin_enquiries_path
+      get admin_leads_path
 
       expect(response).to redirect_to(new_admin_session_path)
     end
@@ -54,7 +54,7 @@ RSpec.describe "Admin-protected pages", type: :request do
       sign_in admin
       FactoryBot.create(:enquiry, customer_name: "Inbox Lead")
 
-      get admin_enquiries_path
+      get admin_leads_path
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include("Lead inbox")

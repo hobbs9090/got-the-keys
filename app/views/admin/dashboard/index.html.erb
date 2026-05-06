@@ -67,7 +67,7 @@
         <% @recent_enquiries.each do |enquiry| %>
           <div class="admin-list__item">
             <div>
-              <%= link_to enquiry.customer_name, admin_enquiry_path(enquiry) %>
+              <%= link_to enquiry.customer_name, admin_lead_path(enquiry) %>
               <p><%= enquiry.property.address_line_1 %> · <%= enquiry_source_label(enquiry.source_type) %></p>
             </div>
             <span class="<%= enquiry_status_badge_class(enquiry.status) %>"><%= enquiry.display_status %></span>

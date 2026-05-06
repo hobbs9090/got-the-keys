@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Admin enquiries", type: :request do
-  let(:admin) { FactoryBot.create(:admin, email: "leads-admin@gotthekeys.com", password: "secret123", password_confirmation: "secret123") }
+  let(:admin) { FactoryBot.create(:admin, email: "leads-admin@gotthekeys.com", password: "secret12345", password_confirmation: "secret12345") }
   let(:property) { FactoryBot.create(:property, address_line_1: "7 Oakbank Avenue") }
 
   before do
@@ -12,7 +12,7 @@ RSpec.describe "Admin enquiries", type: :request do
     matching = FactoryBot.create(:enquiry, :contacted, property:, admin:, customer_name: "Priya Shah")
     FactoryBot.create(:enquiry, property:, customer_name: "Hidden Lead")
 
-    get admin_enquiries_path, params: { status: "contacted", admin_id: admin.id }
+    get admin_leads_path, params: { status: "contacted", admin_id: admin.id }
 
     expect(response).to have_http_status(:ok)
     expect(response.body).to include(matching.customer_name)
@@ -40,7 +40,7 @@ RSpec.describe "Admin enquiries", type: :request do
       message: "Completely different lead"
     )
 
-    get admin_enquiries_path, params: {
+    get admin_leads_path, params: {
       status: "contacted",
       admin_id: admin.id,
       q: "pRiYa sHaH"
@@ -50,7 +50,7 @@ RSpec.describe "Admin enquiries", type: :request do
     expect(response.body).to include(matching.customer_name)
     expect(response.body).not_to include("Hidden Lead")
 
-    get admin_enquiries_path, params: {
+    get admin_leads_path, params: {
       status: "contacted",
       admin_id: admin.id,
       q: "hArBoUr"
@@ -63,7 +63,7 @@ RSpec.describe "Admin enquiries", type: :request do
   it "updates assignment, status, and notes" do
     enquiry = FactoryBot.create(:enquiry, property:, customer_name: "Mina Khan")
 
-    patch admin_enquiry_path(enquiry), params: {
+    patch admin_lead_path(enquiry), params: {
       enquiry: {
         admin_id: admin.id,
         status: "qualified",
@@ -71,7 +71,7 @@ RSpec.describe "Admin enquiries", type: :request do
       }
     }
 
-    expect(response).to redirect_to(admin_enquiry_path(enquiry))
+    expect(response).to redirect_to(admin_lead_path(enquiry))
     expect(enquiry.reload.status).to eq("qualified")
     expect(enquiry.admin).to eq(admin)
     expect(enquiry.internal_notes).to include("Strong lead")
@@ -81,10 +81,16 @@ RSpec.describe "Admin enquiries", type: :request do
   it "shows the lead activity timeline" do
     enquiry = FactoryBot.create(:enquiry, property:, customer_name: "Mina Khan")
 
-    get admin_enquiry_path(enquiry)
+    get admin_lead_path(enquiry)
 
     expect(response).to have_http_status(:ok)
     expect(response.body).to include(%(data-testid="lead-activity-timeline"))
     expect(response.body).to include(%(href="#{admin_property_path(property)}"))
+  end
+
+  it "redirects the old enquiries route to Leads" do
+    get "/admin/enquiries"
+
+    expect(response).to redirect_to(admin_leads_path)
   end
 end

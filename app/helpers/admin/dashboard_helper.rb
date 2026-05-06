@@ -14,7 +14,7 @@ module Admin::DashboardHelper
     when :customers
       admin_customers_path
     when :open_leads
-      admin_enquiries_path
+      admin_leads_path
     else
       admin_root_path
     end

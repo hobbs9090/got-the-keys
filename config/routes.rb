@@ -20,7 +20,7 @@ GotTheKeys::Application.routes.draw do
 
     resource :dashboard, only: :show, controller: :dashboard
     get :bookings, to: 'appointments#index'
-    resource :booking_configuration, only: [:show, :update]
+    resource :booking_rules, only: [:show, :update], controller: :booking_configurations
     resource :qa, only: :show, controller: :qa
     resource :security, only: [:show, :update], controller: :security do
       post :enroll
@@ -34,7 +34,7 @@ GotTheKeys::Application.routes.draw do
     end
     resources :sales, only: [:index, :show, :update], controller: :offers
     resources :rentals, only: [:index, :show, :update], controller: :rental_applications
-    resources :enquiries, only: [:index, :show, :update]
+    resources :leads, only: [:index, :show, :update], controller: :enquiries
     resources :properties, only: [:index, :show, :edit, :update] do
       patch :transition, on: :member
     end
@@ -62,6 +62,15 @@ GotTheKeys::Application.routes.draw do
     get "rental_applications/:id", to: redirect { |params, _req| "/admin/rentals/#{params[:id]}" }
     patch "rental_applications/:id", to: redirect("/admin/rentals/%{id}")
     put "rental_applications/:id", to: redirect("/admin/rentals/%{id}")
+
+    get "enquiries", to: redirect("/admin/leads")
+    get "enquiries/:id", to: redirect { |params, _req| "/admin/leads/#{params[:id]}" }
+    patch "enquiries/:id", to: redirect("/admin/leads/%{id}", status: 307)
+    put "enquiries/:id", to: redirect("/admin/leads/%{id}", status: 307)
+
+    get "booking_configuration", to: redirect("/admin/booking_rules")
+    patch "booking_configuration", to: redirect("/admin/booking_rules", status: 307)
+    put "booking_configuration", to: redirect("/admin/booking_rules", status: 307)
   end
 
   resources :members, only: [:index]

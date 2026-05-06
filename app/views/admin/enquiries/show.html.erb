@@ -8,7 +8,7 @@
     </div>
 
     <div class="section-heading__actions">
-      <%= link_to t("ui.admin.enquiries.show.back"), admin_enquiries_path, class: "button hollow secondary" %>
+      <%= link_to t("ui.admin.enquiries.show.back"), admin_leads_path, class: "button hollow secondary" %>
       <%= link_to t("ui.admin.enquiries.show.view_property"), admin_property_path(@enquiry.property), class: "button hollow primary" %>
     </div>
   </div>
@@ -70,7 +70,7 @@
 <section class="admin-panel">
   <h2><%= t("ui.admin.enquiries.show.manage_title") %></h2>
 
-  <%= form_with model: [:admin, @enquiry], data: { testid: "lead-management-form" } do |f| %>
+  <%= form_with model: @enquiry, url: admin_lead_path(@enquiry), data: { testid: "lead-management-form" } do |f| %>
     <%= render "shared/errors", object: @enquiry %>
 
     <div class="form-grid">

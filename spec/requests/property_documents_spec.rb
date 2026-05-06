@@ -24,7 +24,7 @@ RSpec.describe "Property documents", type: :request do
   end
 
   it "allows staff signed in as admin to open the document workspace without a seller session" do
-    admin = FactoryBot.create(:admin, email: "docs-admin@example.com", password: "secret123", password_confirmation: "secret123")
+    admin = FactoryBot.create(:admin, email: "docs-admin@example.com", password: "secret12345", password_confirmation: "secret12345")
     sign_in admin
 
     get property_property_documents_path(property)

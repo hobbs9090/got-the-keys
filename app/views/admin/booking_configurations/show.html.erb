@@ -11,7 +11,7 @@
   <article class="admin-panel">
     <%= render "shared/errors", object: @booking_configuration %>
 
-    <%= form_with model: [:admin, @booking_configuration], url: admin_booking_configuration_path, class: "stacked-form", data: { testid: "booking-configuration-form" } do |f| %>
+    <%= form_with model: @booking_configuration, url: admin_booking_rules_path, class: "stacked-form", data: { testid: "booking-rules-form" } do |f| %>
       <div class="form-grid">
         <div>
           <%= f.label :slot_duration_minutes, t("ui.admin.booking_configuration.slot_duration_minutes"), **form_label_options(@booking_configuration, :slot_duration_minutes) %>

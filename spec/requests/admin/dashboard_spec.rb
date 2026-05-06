@@ -34,7 +34,7 @@ RSpec.describe "Admin dashboard", type: :request do
     expect(document.at_css('[data-testid="admin-status-card-link-pending_actions"]')["href"]).to eq(admin_appointments_path(view: "agenda", queue: "pending_action"))
     expect(document.at_css('[data-testid="admin-status-card-link-offers"]')["href"]).to eq(admin_sales_path)
     expect(document.at_css('[data-testid="admin-status-card-link-customers"]')["href"]).to eq(admin_customers_path)
-    expect(document.at_css('[data-testid="admin-status-card-link-open_leads"]')["href"]).to eq(admin_enquiries_path)
+    expect(document.at_css('[data-testid="admin-status-card-link-open_leads"]')["href"]).to eq(admin_leads_path)
 
     expect(quick_links.map { |link| link.text.strip }).to eq(["All bookings", "Pending action", "This week"])
     expect(quick_links.first["class"]).to include("button")

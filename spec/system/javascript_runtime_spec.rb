@@ -485,7 +485,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
 
     enable_theme_preference("dark")
     sign_in_as_admin(admin)
-    boot_runtime(admin_enquiries_path)
+    boot_runtime(admin_leads_path)
 
     enquiry_styles = styles_for(<<~JS)
       (() => {

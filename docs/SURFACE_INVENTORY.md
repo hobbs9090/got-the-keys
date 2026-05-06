@@ -73,13 +73,13 @@ Framework-owned endpoints such as Active Storage, Action Mailbox, and Turbo nati
   Admin dashboard landing page.
 - `/admin/bookings`
   Core bookings desk.
-- `/admin/enquiries`
+- `/admin/leads`
   Admin lead inbox with filters, assignment, spam flags, and qualification workflow.
 - `/admin/offers`
   Admin sales-progression board and offer decision workflow.
 - `/admin/rental_applications`
   Admin lettings-progression board and rental-application decision workflow.
-- `/admin/booking_configuration`
+- `/admin/booking_rules`
   Booking rules and lead-time configuration.
 - `/admin/properties`
   Admin property review, listing-readiness moderation, lifecycle transitions, documents, property booking history, and property activity timeline. Booking history rows link separately to the booking reference and the customer profile.

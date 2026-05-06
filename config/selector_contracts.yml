@@ -63,9 +63,9 @@ selectors:
     surface: Admin rental applications board
     selector: data-testid="rental-applications-column-{status}"
     purpose: Individual status column on the rental applications kanban board.
-  - key: booking_configuration_form
+  - key: booking_rules_form
     surface: Admin booking rules
-    selector: data-testid="booking-configuration-form"
+    selector: data-testid="booking-rules-form"
     purpose: Booking rules form shell for asserting and updating scheduling parameters.
   - key: notification_log_row
     surface: Admin notification logs

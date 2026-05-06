@@ -17,7 +17,7 @@
           <% if log.appointment.present? %>
             <p><%= link_to log.appointment.public_reference, admin_appointment_path(log.appointment) %></p>
           <% elsif log.enquiry.present? %>
-            <p><%= link_to log.enquiry.lead_reference, admin_enquiry_path(log.enquiry) %></p>
+            <p><%= link_to log.enquiry.lead_reference, admin_lead_path(log.enquiry) %></p>
           <% end %>
         </div>
         <div class="admin-log-status">

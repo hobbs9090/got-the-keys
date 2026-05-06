@@ -21,7 +21,7 @@ class Admin::EnquiriesController < Admin::BaseController
         action: "enquiry_updated",
         message: enquiry_audit_message
       )
-      redirect_to admin_enquiry_path(@enquiry), notice: "Lead updated."
+      redirect_to admin_lead_path(@enquiry), notice: "Lead updated."
     else
       @admins = Admin.order(:email)
       @activity_logs = @enquiry.audit_logs.recent_first

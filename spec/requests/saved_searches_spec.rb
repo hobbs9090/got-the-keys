@@ -13,7 +13,7 @@ RSpec.describe "Saved searches", type: :request do
 
   let(:user) { FactoryBot.create(:user) }
   let(:admin_user) { FactoryBot.create(:user, email: "admin-saved-search@example.com") }
-  let(:admin) { FactoryBot.create(:admin, email: admin_user.email, password: "secret123", password_confirmation: "secret123") }
+  let(:admin) { FactoryBot.create(:admin, email: admin_user.email, password: "secret12345", password_confirmation: "secret12345") }
 
   it "redirects guests to sign in" do
     expect do
@@ -146,7 +146,7 @@ RSpec.describe "Saved searches", type: :request do
   end
 
   it "creates a saved-search user record for admins without a matching user account" do
-    unmapped_admin = FactoryBot.create(:admin, email: "orphan-admin@example.com", password: "secret123", password_confirmation: "secret123")
+    unmapped_admin = FactoryBot.create(:admin, email: "orphan-admin@example.com", password: "secret12345", password_confirmation: "secret12345")
     sign_in unmapped_admin
 
     expect do
@@ -197,7 +197,7 @@ RSpec.describe "Saved searches", type: :request do
   end
 
   it "responds with Turbo Stream when removing from the admin saved filters panel" do
-    turbo_admin = FactoryBot.create(:admin, email: "turbo-saved-search-admin@example.com", password: "secret123", password_confirmation: "secret123")
+    turbo_admin = FactoryBot.create(:admin, email: "turbo-saved-search-admin@example.com", password: "secret12345", password_confirmation: "secret12345")
     sign_in turbo_admin
     owner_user = FactoryBot.create(:user, email: turbo_admin.email)
     search_to_remove = FactoryBot.create(:saved_search, user: owner_user, town_city: "Sevenoaks")
@@ -219,7 +219,7 @@ RSpec.describe "Saved searches", type: :request do
   end
 
   it "removes the whole saved filters panel via Turbo Stream when the last filter is deleted from admin" do
-    turbo_admin = FactoryBot.create(:admin, email: "turbo-saved-search-last@example.com", password: "secret123", password_confirmation: "secret123")
+    turbo_admin = FactoryBot.create(:admin, email: "turbo-saved-search-last@example.com", password: "secret12345", password_confirmation: "secret12345")
     sign_in turbo_admin
     owner_user = FactoryBot.create(:user, email: turbo_admin.email)
     search = FactoryBot.create(:saved_search, user: owner_user)

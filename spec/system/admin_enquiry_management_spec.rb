@@ -2,12 +2,12 @@ require "rails_helper"
 
 RSpec.describe "Admin enquiry management", type: :system do
   def sign_in_as(admin)
-    visit admin_enquiries_path
+    visit admin_leads_path
 
     fill_in "admin_email", with: admin.email
     fill_in "admin_password", with: "changeme123"
     click_button "Sign in"
-    visit admin_enquiries_path
+    visit admin_leads_path
   end
 
   it "lets an admin triage a new lead from the inbox" do

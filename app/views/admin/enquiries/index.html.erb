@@ -10,7 +10,7 @@
 </section>
 
 <section class="admin-panel">
-  <%= form_with url: admin_enquiries_path, method: :get, local: true, class: "form-grid", data: { testid: "lead-inbox-filters" } do |f| %>
+  <%= form_with url: admin_leads_path, method: :get, local: true, class: "form-grid", data: { testid: "lead-inbox-filters" } do |f| %>
     <div>
       <%= f.label :status, t("ui.admin.enquiries.index.filters.status") %>
       <%= f.select :status, [[t("ui.admin.enquiries.index.filters.all"), nil]] + Enquiry::STATUSES.map { |status| [t("ui.enquiries.statuses.#{status}", default: status.humanize), status] }, { selected: @filters[:status] }, data: { testid: "lead-filter-status" } %>
@@ -33,7 +33,7 @@
     </div>
     <div class="form-actions">
       <%= f.button t("ui.admin.enquiries.index.filters.apply"), type: :submit, class: "button primary" %>
-      <%= link_to t("ui.admin.enquiries.index.filters.clear"), admin_enquiries_path, class: "button hollow secondary" %>
+      <%= link_to t("ui.admin.enquiries.index.filters.clear"), admin_leads_path, class: "button hollow secondary" %>
     </div>
   <% end %>
 </section>
@@ -44,7 +44,7 @@
       <% @enquiries.each do |enquiry| %>
         <article class="admin-list__item" data-testid="lead-row-<%= enquiry.id %>">
           <div>
-            <strong><%= link_to enquiry.customer_name, admin_enquiry_path(enquiry) %></strong>
+            <strong><%= link_to enquiry.customer_name, admin_lead_path(enquiry) %></strong>
             <p><%= enquiry.property.address_line_1 %> · <%= enquiry.customer_email.presence || enquiry.customer_phone %></p>
             <p><%= enquiry.lead_reference %> · <%= enquiry_source_label(enquiry.source_type) %></p>
             <% if enquiry.spam? %>

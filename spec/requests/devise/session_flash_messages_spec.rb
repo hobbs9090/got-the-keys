@@ -32,7 +32,7 @@ RSpec.describe "Devise session flash messages" do
   it "always redirects admins to the admin dashboard after sign-in" do
     admin = FactoryBot.create(:admin, email: "stored-admin@gotthekeys.com", password: "changeme123", password_confirmation: "changeme123")
 
-    get admin_enquiries_path
+    get admin_leads_path
     expect(response).to redirect_to(new_admin_session_path)
 
     post admin_session_path, params: { admin: { email: admin.email, password: "changeme123" } }

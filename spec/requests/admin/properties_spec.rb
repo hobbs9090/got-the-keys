@@ -2,7 +2,7 @@ require "rails_helper"
 require "nokogiri"
 
 RSpec.describe "Admin properties", type: :request do
-  let(:admin) { FactoryBot.create(:admin, email: "property-admin@gotthekeys.com", password: "secret123", password_confirmation: "secret123") }
+  let(:admin) { FactoryBot.create(:admin, email: "property-admin@gotthekeys.com", password: "secret12345", password_confirmation: "secret12345") }
   let(:property) { FactoryBot.create(:property, :review_pending) }
 
   before do

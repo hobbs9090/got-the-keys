@@ -2,7 +2,7 @@ require "rails_helper"
 require "nokogiri"
 
 RSpec.describe "Admin offers", type: :request do
-  let(:admin) { FactoryBot.create(:admin, email: "offers-admin@gotthekeys.com", password: "secret123", password_confirmation: "secret123") }
+  let(:admin) { FactoryBot.create(:admin, email: "offers-admin@gotthekeys.com", password: "secret12345", password_confirmation: "secret12345") }
   let(:offer) { FactoryBot.create(:offer, amount: 615_000) }
 
   before do

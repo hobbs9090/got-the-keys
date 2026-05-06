@@ -88,11 +88,11 @@ en:
           default: "Admin | GotTheKeys"
       defaults:
         public: "Browse property listings, save searches, and book viewings with GotTheKeys."
-        admin: "Manage property listings, customers, enquiries, bookings, and operations in the GotTheKeys admin area."
+        admin: "Manage property listings, customers, leads, bookings, and operations in the GotTheKeys admin area."
       descriptions:
         admin:
           sessions:
-            new: "Sign in to the GotTheKeys admin workspace for staff operations, QA checks, listings, enquiries, and bookings."
+            new: "Sign in to the GotTheKeys admin workspace for staff operations, QA checks, listings, leads, and bookings."
         devise:
           confirmations:
             new: "Request a fresh GotTheKeys confirmation email for your account."
@@ -1387,8 +1387,8 @@ en:
           skipped: "Skipped"
           failed: "Failed"
       booking_configuration:
-        title: "Booking rules"
-        eyebrow: "Booking configuration"
+        title: "Booking Rules"
+        eyebrow: "Booking Rules"
         slot_duration_minutes: "Booking duration (minutes)"
         booking_window_days: "Booking window length (days)"
         lead_time_hours: "Lead time (hours)"
