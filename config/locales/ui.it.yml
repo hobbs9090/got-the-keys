@@ -198,6 +198,7 @@ it:
         query_label: Area, CAP o parola chiave
         query_placeholder: Prova Sevenoaks, TN13 o garden
         any_town: Qualsiasi citta
+        unknown_town: "Citta sconosciuta: %{town}"
         min_bedrooms: Camere minime
         min_price: Prezzo minimo
         max_price: Prezzo massimo

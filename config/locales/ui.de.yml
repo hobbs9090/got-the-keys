@@ -198,6 +198,7 @@ de:
         query_label: Gebiet, Postleitzahl oder Stichwort
         query_placeholder: Versuchen Sie Sevenoaks, TN13 oder garden
         any_town: Beliebiger Ort
+        unknown_town: "Unbekannter Ort: %{town}"
         min_bedrooms: Min. Schlafzimmer
         min_price: Mindestpreis
         max_price: Höchstpreis

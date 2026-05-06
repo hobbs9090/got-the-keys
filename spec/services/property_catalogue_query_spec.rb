@@ -62,10 +62,28 @@ RSpec.describe PropertyCatalogueQuery do
       min_bedrooms: "3",
       min_price: "500000",
       max_price: "800000",
-      town_city: "sevenoaks",
+      town_city: "Sevenoaks",
       sort: "price_high"
     )
     expect(result.properties.to_a.first(2)).to eq([higher_price, lower_price])
     expect(result.total_count).to eq(2)
+  end
+
+  it "accepts town as a canonical alias for town_city" do
+    match = FactoryBot.create(:property, address_line_1: "Alias Cottage", town_city: "Sevenoaks", bedrooms: 2)
+    FactoryBot.create(:property, address_line_1: "Other Cottage", town_city: "Guildford", bedrooms: 2)
+
+    result = described_class.new(params: { town: "sevenoaks", min_bedrooms: "2" }).call
+
+    expect(result.filters).to include(town_city: "Sevenoaks", min_bedrooms: "2")
+    expect(result.scope.to_a).to contain_exactly(match)
+  end
+
+  it "rejects unknown towns instead of dropping the filter silently" do
+    FactoryBot.create(:property, town_city: "Sevenoaks")
+
+    expect do
+      described_class.new(params: { town: "Atlantis" }).call
+    end.to raise_error(described_class::UnknownTown) { |error| expect(error.town).to eq("Atlantis") }
   end
 end

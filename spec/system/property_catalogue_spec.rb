@@ -82,6 +82,8 @@ RSpec.describe "Property catalogue", type: :system do
   end
 
   it "links save filter to sign-in for guests on the for-rent catalogue" do
+    create_property(user: FactoryBot.create(:user), sale_status: Property::SALE_STATUSES[:for_rent], address_line_1: "Rent Save Link", town_city: "Sevenoaks")
+
     visit for_rent_index_path(town_city: "Sevenoaks")
 
     link = page.find('[data-testid="save-property-filters-sign-in"]')
@@ -89,6 +91,8 @@ RSpec.describe "Property catalogue", type: :system do
   end
 
   it "links save filter to sign-in for guests on the for-sale catalogue" do
+    create_property(user: FactoryBot.create(:user), sale_status: Property::SALE_STATUSES[:for_sale], address_line_1: "Sale Save Link", town_city: "Guildford")
+
     visit for_sale_index_path(town_city: "Guildford")
 
     link = page.find('[data-testid="save-property-filters-sign-in"]')
@@ -96,6 +100,8 @@ RSpec.describe "Property catalogue", type: :system do
   end
 
   it "links save filter to sign-in for guests on the search page" do
+    create_property(user: FactoryBot.create(:user), sale_status: Property::SALE_STATUSES[:for_sale], address_line_1: "Search Save Link", town_city: "Sevenoaks")
+
     visit searches_path(town_city: "Sevenoaks")
 
     link = page.find('[data-testid="save-property-filters-sign-in"]')
@@ -148,8 +154,40 @@ RSpec.describe "Property catalogue", type: :system do
     expect(SavedSearch.last.search_query).to eq("Hillcrest")
   end
 
+  it "lets a signed-in visitor save a town alias filter from the search page", js: true do
+    owner = FactoryBot.create(:user)
+    searcher = FactoryBot.create(:user, email: "search-town-save-filter@example.com", password: "changeme", password_confirmation: "changeme")
+    create_property(
+      user: owner,
+      sale_status: Property::SALE_STATUSES[:for_sale],
+      address_line_1: "Knole View",
+      town_city: "Sevenoaks",
+      bedrooms: 2
+    )
+    create_property(
+      user: owner,
+      sale_status: Property::SALE_STATUSES[:for_sale],
+      address_line_1: "Other View",
+      town_city: "Guildford",
+      bedrooms: 2
+    )
+
+    sign_in_as(searcher)
+    visit searches_path(town: "Sevenoaks", min_bedrooms: 2)
+
+    expect(page).to have_css('[data-testid="property-card"]', count: 1)
+    expect(page).to have_select("town_city", selected: "Sevenoaks")
+
+    find('[data-testid="save-property-filters"]').click
+
+    expect(page).to have_text("Saved search created")
+    expect(SavedSearch.last.town_city).to eq("Sevenoaks")
+    expect(SavedSearch.last.min_bedrooms).to eq(2)
+  end
+
   it "shows the saved searches band with an empty state when signed in and none are saved yet" do
     user = FactoryBot.create(:user, email: "empty-searches@example.com", password: "changeme", password_confirmation: "changeme")
+    create_property(user: FactoryBot.create(:user), sale_status: Property::SALE_STATUSES[:for_sale], address_line_1: "Empty State Link", town_city: "Westerham")
 
     sign_in_as(user)
 

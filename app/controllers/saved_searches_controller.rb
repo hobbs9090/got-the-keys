@@ -5,8 +5,8 @@ class SavedSearchesController < ApplicationController
 
   def create
     form = saved_search_form_params
-    @saved_search = saved_search_owner.saved_searches.build(form.except(:catalogue_scope))
     redirect_scope = catalogue_scope_from_saved_search_form
+    @saved_search = saved_search_owner.saved_searches.build(saved_search_attributes_from(form, redirect_scope))
 
     if @saved_search.save
       matches = @saved_search.matching_properties_count
@@ -79,8 +79,65 @@ class SavedSearchesController < ApplicationController
 
   def saved_search_form_params
     params.require(:saved_search).permit(
-      :locale, :sale_status, :search_query, :town_city, :min_bedrooms,
+      :locale, :sale_status, :search_query, :town, :town_city, :min_bedrooms,
       :min_price, :max_price, :sort, :alerts_enabled, :catalogue_scope
     )
+  end
+
+  def saved_search_attributes_from(form, scope)
+    filters = parsed_catalogue_filters_for(form, scope)
+
+    {
+      locale: form[:locale],
+      sale_status: filters[:sale_status],
+      search_query: filters[:q],
+      town_city: filters[:town_city],
+      min_bedrooms: filters[:min_bedrooms],
+      min_price: filters[:min_price],
+      max_price: filters[:max_price],
+      sort: filters[:sort],
+      alerts_enabled: form[:alerts_enabled]
+    }
+  end
+
+  def parsed_catalogue_filters_for(form, scope)
+    raw_filters = {
+      q: form[:search_query],
+      sale_status: form[:sale_status],
+      town: form[:town],
+      town_city: form[:town_city],
+      min_bedrooms: form[:min_bedrooms],
+      min_price: form[:min_price],
+      max_price: form[:max_price],
+      sort: form[:sort]
+    }
+
+    PropertyCatalogueQuery.new(
+      params: raw_filters,
+      town_scope: town_scope_for_saved_search(scope),
+      default_filters: default_filters_for_saved_search(scope)
+    ).call.filters
+  end
+
+  def default_filters_for_saved_search(scope)
+    case scope.to_s
+    when "for_rent"
+      { sale_status: Property::SALE_STATUSES[:for_rent] }
+    when "for_sale"
+      { sale_status: Property::SALE_STATUSES[:for_sale] }
+    else
+      {}
+    end
+  end
+
+  def town_scope_for_saved_search(scope)
+    case scope.to_s
+    when "for_rent"
+      Property.for_rent
+    when "for_sale"
+      Property.for_sale
+    else
+      Property.publicly_visible
+    end
   end
 end

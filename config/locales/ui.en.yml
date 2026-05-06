@@ -281,6 +281,7 @@ en:
         query_label: "Area, postcode or keyword"
         query_placeholder: "Try Sevenoaks, TN13 or garden"
         any_town: "Any town"
+        unknown_town: "Unknown town: %{town}"
         min_bedrooms: "Min bedrooms"
         min_price: "Min price"
         max_price: "Max price"

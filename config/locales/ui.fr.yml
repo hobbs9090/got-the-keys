@@ -201,6 +201,7 @@ fr:
         query_label: Zone, code postal ou mot-cle
         query_placeholder: Essayez Sevenoaks, TN13 ou garden
         any_town: Toutes les villes
+        unknown_town: "Ville inconnue : %{town}"
         min_bedrooms: Chambres min.
         min_price: Prix min.
         max_price: Prix max.

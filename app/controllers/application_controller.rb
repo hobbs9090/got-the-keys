@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :persist_pending_saved_property_request
   rescue_from ActionController::InvalidAuthenticityToken, with: :log_invalid_authenticity_token
+  rescue_from PropertyCatalogueQuery::UnknownTown, with: :render_unknown_catalogue_town
 
   helper AppVersionHelper
   helper_method :available_languages, :booking_configuration, :chinese_locale?,
@@ -158,5 +159,9 @@ class ApplicationController < ActionController::Base
       "user_agent=#{request.user_agent.inspect} filtered_params=#{request.filtered_parameters.except('authenticity_token').inspect}"
     )
     raise exception
+  end
+
+  def render_unknown_catalogue_town(error)
+    render plain: t("ui.properties.filters.unknown_town", town: error.town), status: :unprocessable_entity
   end
 end

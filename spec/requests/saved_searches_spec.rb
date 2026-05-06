@@ -89,6 +89,28 @@ RSpec.describe "Saved searches", type: :request do
     expect(response).to redirect_to(searches_path(q: "family home", town_city: "Sevenoaks"))
   end
 
+  it "normalizes the town alias through the catalogue parser when saving filters" do
+    sign_in user
+
+    expect do
+      post saved_searches_path, params: {
+        saved_search: {
+          locale: "en",
+          search_query: "family home",
+          town: "sevenoaks",
+          min_bedrooms: 3,
+          alerts_enabled: "1",
+          catalogue_scope: "searches"
+        }
+      }
+    end.to change(SavedSearch, :count).by(1)
+
+    saved = SavedSearch.last
+    expect(saved.town_city).to eq("Sevenoaks")
+    expect(saved.min_bedrooms).to eq(3)
+    expect(response).to redirect_to(searches_path(q: "family home", town_city: "Sevenoaks", min_bedrooms: 3))
+  end
+
   it "stores the current catalogue filters for a signed-in admin mapped to a user email" do
     sign_in admin
 
@@ -214,6 +236,7 @@ RSpec.describe "Saved searches", type: :request do
 
   it "redirects to the for-rent catalogue after create when catalogue_scope is for_rent" do
     sign_in user
+    FactoryBot.create(:property, :for_rent, town_city: "Sevenoaks")
 
     expect do
       post saved_searches_path, params: {
@@ -247,6 +270,7 @@ RSpec.describe "Saved searches", type: :request do
 
   it "redirects to the for-sale catalogue after create when catalogue_scope is for_sale" do
     sign_in user
+    FactoryBot.create(:property, town_city: "Guildford")
 
     expect do
       post saved_searches_path, params: {
@@ -280,6 +304,7 @@ RSpec.describe "Saved searches", type: :request do
 
   it "redirects to the search page after create when catalogue_scope is searches" do
     sign_in user
+    FactoryBot.create(:property, town_city: "Reigate")
 
     expect do
       post saved_searches_path, params: {
@@ -325,6 +350,8 @@ RSpec.describe "Saved searches", type: :request do
   end
 
   it "returns a guest to the filtered catalogue after registration" do
+    FactoryBot.create(:property, town_city: "Tunbridge Wells", bedrooms: 2)
+
     get properties_path(town_city: "Tunbridge Wells", min_bedrooms: 2)
 
     email = "new-catalogue-user-#{SecureRandom.hex(4)}@example.com"

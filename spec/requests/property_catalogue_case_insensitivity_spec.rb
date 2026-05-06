@@ -101,6 +101,31 @@ RSpec.describe "Property catalogue search (case-insensitive)", type: :request do
     expect(response.body).not_to include(for_sale_other.address_line_1)
   end
 
+  it "applies the town alias on search pages and selects the canonical town in the form" do
+    for_sale_match.update!(bedrooms: 2)
+    for_rent_match.update!(bedrooms: 1)
+    for_sale_other.update!(bedrooms: 2)
+
+    get searches_path, params: { town: "Sevenoaks", min_bedrooms: 2 }
+
+    expect(response).to have_http_status(:ok)
+    document = Nokogiri::HTML.parse(response.body)
+    expect(document.css('[data-testid="property-card"]').count).to eq(1)
+    expect(response.body).to include(for_sale_match.address_line_1)
+    expect(response.body).not_to include(for_rent_match.address_line_1)
+    expect(response.body).not_to include(for_sale_other.address_line_1)
+
+    town_select = document.at_css('[data-testid="property-filter-town-city"]')
+    expect(town_select.at_css('option[selected][value="Sevenoaks"]')).to be_present
+  end
+
+  it "rejects unknown towns on public catalogue requests" do
+    get searches_path, params: { town: "Atlantis", min_bedrooms: 2 }
+
+    expect(response).to have_http_status(:unprocessable_content)
+    expect(response.body).to eq("Unknown town: Atlantis")
+  end
+
   it "ignores price filters on dual sale and rental search pages until listing type is selected" do
     for_sale_match.update!(asking_price: 500_000)
     for_rent_match.update!(asking_price: 2_000)

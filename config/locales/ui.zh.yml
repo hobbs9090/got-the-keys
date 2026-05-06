@@ -183,6 +183,7 @@ zh:
         query_label: 区域、邮编或关键词
         query_placeholder: 例如 Sevenoaks、TN13 或 garden
         any_town: 不限城镇
+        unknown_town: "未知城镇：%{town}"
         min_bedrooms: 最少卧室
         min_price: 最低价格
         max_price: 最高价格

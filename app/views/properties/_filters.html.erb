@@ -2,6 +2,7 @@
 <% current_sale_status = selected_sale_status.presence_in(Property::SALE_STATUS) %>
 <% price_requires_sale_status = show_status_select %>
 <% price_filters_disabled = price_requires_sale_status && current_sale_status.blank? %>
+<% selected_town_city = @filters&.fetch(:town_city, nil).presence || params[:town_city].presence || params[:town].presence %>
 <%= form_with url: url, method: :get, class: "property-filters", local: true, data: { testid: "property-filter-form", property_search_filters: true } do %>
   <% if show_status_select %>
     <% listing_type_blank_label = local_assigns.fetch(:listing_type_blank_label, t("ui.properties.filters.all_listings")) %>
@@ -26,7 +27,7 @@
 
   <div>
     <%= label_tag :town_city, t("ui.common.town") %>
-    <%= select_tag :town_city, options_for_select(@available_towns, params[:town_city]), include_blank: t("ui.properties.filters.any_town"), data: { testid: "property-filter-town-city" } %>
+    <%= select_tag :town_city, options_for_select(@available_towns, selected_town_city), include_blank: t("ui.properties.filters.any_town"), data: { testid: "property-filter-town-city" } %>
   </div>
 
   <div>

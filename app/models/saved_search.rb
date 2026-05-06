@@ -40,7 +40,7 @@ class SavedSearch < ApplicationRecord
   end
 
   def matching_properties_count
-    PropertyCatalogueQuery.new(params: filter_params).call.total_count
+    PropertyCatalogueQuery.new(params: filter_params, validate_town: false).call.total_count
   end
 
   private
