@@ -1,0 +1,8 @@
+<%= form.hidden_field attribute, value: email %>
+<div class="readonly-account-field" data-testid="<%= testid %>">
+  <strong><%= email %></strong>
+  <p>
+    <%= t("ui.forms.account_email_hint", email: email) %>
+    <%= link_to t("ui.forms.change_in_profile"), edit_user_registration_path %>
+  </p>
+</div>

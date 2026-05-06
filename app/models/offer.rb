@@ -1,4 +1,6 @@
 class Offer < ApplicationRecord
+  include PhoneNumberNormalizable
+
   STATUSES = %w[received accepted rejected withdrawn completed].freeze
   PHONE_FORMAT = /\A\+?[0-9().\-\s]{7,20}\z/.freeze
 
@@ -13,6 +15,7 @@ class Offer < ApplicationRecord
   end
 
   before_validation :apply_defaults
+  normalizes_phone_number :buyer_phone
 
   validates :public_reference, :buyer_name, :buyer_email, :buyer_phone, :amount, :status, presence: true
   validates :buyer_email, format: { with: URI::MailTo::EMAIL_REGEXP }

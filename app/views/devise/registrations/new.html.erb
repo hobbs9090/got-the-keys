@@ -63,12 +63,25 @@
         <div class="form-grid__full auth-form__stack auth-form__password-fields">
           <div>
             <%= f.label :password, nil, **form_label_options(resource, :password) %>
-            <%= f.password_field :password, required: true, minlength: 6, autocomplete: "new-password", data: { testid: "registration-password" }, **form_control_options(resource, :password) %>
+            <%= f.password_field :password,
+                                 required: true,
+                                 minlength: 10,
+                                 autocomplete: "new-password",
+                                 data: {
+                                   testid: "registration-password",
+                                   password_strength_input: true,
+                                   password_strength_labels: t("devise.views.registrations.new.password_strength_labels").to_json
+                                 },
+                                 **form_control_options(resource, :password) %>
+            <div class="password-strength" data-testid="registration-password-strength">
+              <meter id="registration-password-strength-meter" min="0" max="4" low="2" high="3" optimum="4" value="0" data-password-strength-meter="user_password"></meter>
+              <span data-password-strength-label="user_password"></span>
+            </div>
             <%= field_error_messages(resource, :password) %>
           </div>
           <div>
             <%= f.label :password_confirmation, nil, **form_label_options(resource, :password_confirmation) %>
-            <%= f.password_field :password_confirmation, required: true, minlength: 6, autocomplete: "new-password", data: { testid: "registration-password-confirmation" }, **form_control_options(resource, :password_confirmation) %>
+            <%= f.password_field :password_confirmation, required: true, minlength: 10, autocomplete: "new-password", data: { testid: "registration-password-confirmation" }, **form_control_options(resource, :password_confirmation) %>
             <%= field_error_messages(resource, :password_confirmation) %>
           </div>
         </div>

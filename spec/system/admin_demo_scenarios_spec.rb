@@ -12,9 +12,9 @@ RSpec.describe "Admin demo scenarios", type: :system do
 
   it "restores the baseline scenario from the admin area with the typed gate" do
     BookingConfiguration.current.update!(active_demo_scenario_key: "baseline")
-    admin = FactoryBot.create(:admin, email: "steven@gotthekeys.uk", password: "changeme", password_confirmation: "changeme")
+    admin = FactoryBot.create(:admin, email: "steven@gotthekeys.uk", password: "changeme123", password_confirmation: "changeme123")
 
-    sign_in_as(email: admin.email, password: "changeme")
+    sign_in_as(email: admin.email, password: "changeme123")
 
     expect(page).to have_text("Demo data management")
     expect(page).to have_css('[data-testid="scenario-seed-reset-panel"]')
@@ -33,9 +33,9 @@ RSpec.describe "Admin demo scenarios", type: :system do
   end
 
   it "keeps the restore baseline action at the standard button width", js: true do
-    admin = FactoryBot.create(:admin, email: "demo-sizing-admin@example.com", password: "changeme", password_confirmation: "changeme")
+    admin = FactoryBot.create(:admin, email: "demo-sizing-admin@example.com", password: "changeme123", password_confirmation: "changeme123")
 
-    sign_in_as(email: admin.email, password: "changeme")
+    sign_in_as(email: admin.email, password: "changeme123")
 
     metrics = page.evaluate_script(<<~JS)
       (() => {
@@ -64,9 +64,9 @@ RSpec.describe "Admin demo scenarios", type: :system do
   end
 
   it "toggles AI-dependent performance seed fields from the admin bundle", js: true do
-    admin = FactoryBot.create(:admin, email: "demo-ai-admin@example.com", password: "changeme", password_confirmation: "changeme")
+    admin = FactoryBot.create(:admin, email: "demo-ai-admin@example.com", password: "changeme123", password_confirmation: "changeme123")
 
-    sign_in_as(email: admin.email, password: "changeme")
+    sign_in_as(email: admin.email, password: "changeme123")
 
     expect(page).to have_field("performance_seed[batch_size]", disabled: true)
     expect(page).to have_field("performance_seed[model]", disabled: true)

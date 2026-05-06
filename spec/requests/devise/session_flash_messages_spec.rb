@@ -15,9 +15,9 @@ RSpec.describe "Devise session flash messages" do
   end
 
   it "shows an admin-specific sign-in notice" do
-    admin = FactoryBot.create(:admin, email: "flash-admin@gotthekeys.com", password: "changeme", password_confirmation: "changeme")
+    admin = FactoryBot.create(:admin, email: "flash-admin@gotthekeys.com", password: "changeme123", password_confirmation: "changeme123")
 
-    post admin_session_path, params: { admin: { email: admin.email, password: "changeme" } }
+    post admin_session_path, params: { admin: { email: admin.email, password: "changeme123" } }
 
     expect(response).to redirect_to(admin_root_path)
 
@@ -30,20 +30,20 @@ RSpec.describe "Devise session flash messages" do
   end
 
   it "always redirects admins to the admin dashboard after sign-in" do
-    admin = FactoryBot.create(:admin, email: "stored-admin@gotthekeys.com", password: "changeme", password_confirmation: "changeme")
+    admin = FactoryBot.create(:admin, email: "stored-admin@gotthekeys.com", password: "changeme123", password_confirmation: "changeme123")
 
     get admin_enquiries_path
     expect(response).to redirect_to(new_admin_session_path)
 
-    post admin_session_path, params: { admin: { email: admin.email, password: "changeme" } }
+    post admin_session_path, params: { admin: { email: admin.email, password: "changeme123" } }
 
     expect(response).to redirect_to(admin_root_path)
   end
 
   it "keeps the generic member sign-in notice" do
-    user = FactoryBot.create(:user, email: "flash-user@example.com", password: "changeme", password_confirmation: "changeme")
+    user = FactoryBot.create(:user, email: "flash-user@example.com", password: "changeme123", password_confirmation: "changeme123")
 
-    post user_session_path, params: { user: { email: user.email, password: "changeme" } }
+    post user_session_path, params: { user: { email: user.email, password: "changeme123" } }
 
     expect(response).to redirect_to(root_path)
 

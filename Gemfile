@@ -69,3 +69,5 @@ end
 gem "image_processing", "~> 1.14"
 gem "mini_magick", "~> 5.0"
 gem "prawn", "~> 2.5"
+
+gem "phony", "~> 3.0"

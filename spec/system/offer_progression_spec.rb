@@ -4,7 +4,7 @@ RSpec.describe "Offer progression", type: :system do
   def sign_in_as_user(user)
     visit new_user_session_path
     fill_in "user_email", with: user.email
-    fill_in "user_password", with: "changeme"
+    fill_in "user_password", with: "changeme123"
     click_button "Sign in"
   end
 
@@ -12,15 +12,15 @@ RSpec.describe "Offer progression", type: :system do
     visit admin_sales_path
 
     fill_in "admin_email", with: admin.email
-    fill_in "admin_password", with: "changeme"
+    fill_in "admin_password", with: "changeme123"
     click_button "Sign in"
     visit admin_sales_path
   end
 
   it "lets a buyer submit an offer and an admin accept it" do
     property = FactoryBot.create(:property, address_line_1: "19 Willow Road")
-    admin = FactoryBot.create(:admin, email: "offers-board@gotthekeys.com", password: "changeme", password_confirmation: "changeme")
-    buyer = FactoryBot.create(:user, email: "offer-buyer@example.com", password: "changeme", password_confirmation: "changeme")
+    admin = FactoryBot.create(:admin, email: "offers-board@gotthekeys.com", password: "changeme123", password_confirmation: "changeme123")
+    buyer = FactoryBot.create(:user, email: "offer-buyer@example.com", password: "changeme123", password_confirmation: "changeme123")
 
     sign_in_as_user(buyer)
 
@@ -29,7 +29,7 @@ RSpec.describe "Offer progression", type: :system do
 
     within('[data-testid="property-offer-form"]') do
       fill_in "offer_buyer_name", with: "Nina Hughes"
-      fill_in "offer_buyer_email", with: "nina.hughes@example.com"
+      expect(page).to have_css('[data-testid="offer-buyer-email-display"]', text: buyer.email)
       fill_in "offer_buyer_phone", with: "07700 905555"
       fill_in "offer_amount", with: "620000"
       fill_in "offer_chain_position", with: "Cash buyer"

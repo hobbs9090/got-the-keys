@@ -105,7 +105,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     expect(page).to have_css(%([data-testid="theme-option-#{value}"].is-active[aria-pressed="true"]), visible: :all, wait: 5)
   end
 
-  def sign_in_as_user(user, password: "changeme")
+  def sign_in_as_user(user, password: "changeme123")
     visit new_user_session_path
 
     fill_in "user_email", with: user.email
@@ -113,7 +113,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
     click_button "Sign in"
   end
 
-  def sign_in_as_admin(admin, password: "changeme")
+  def sign_in_as_admin(admin, password: "changeme123")
     visit new_admin_session_path
 
     fill_in "admin_email", with: admin.email
@@ -261,7 +261,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
   end
 
   it "clears admin modal overlay state when navigating away from the security page", js: true do
-    admin = FactoryBot.create(:admin, email: "overlay-admin@example.com", password: "changeme", password_confirmation: "changeme")
+    admin = FactoryBot.create(:admin, email: "overlay-admin@example.com", password: "changeme123", password_confirmation: "changeme123")
     sign_in_as_admin(admin)
 
     visit admin_security_path
@@ -296,7 +296,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
   end
 
   it "toggles the furnishing field based on the selected sale status" do
-    admin = FactoryBot.create(:admin, email: "listing-admin@example.com", password: "changeme", password_confirmation: "changeme")
+    admin = FactoryBot.create(:admin, email: "listing-admin@example.com", password: "changeme123", password_confirmation: "changeme123")
     owner = FactoryBot.create(:user)
     property = FactoryBot.create(
       :property,
@@ -445,7 +445,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
   end
 
   it "persists the theme preference across public and admin pages" do
-    admin = FactoryBot.create(:admin, email: "theme-admin@example.com", password: "changeme", password_confirmation: "changeme")
+    admin = FactoryBot.create(:admin, email: "theme-admin@example.com", password: "changeme123", password_confirmation: "changeme123")
 
     visit root_path
     dismiss_cookie_banner
@@ -481,7 +481,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
   end
 
   it "uses dark theme surfaces across admin runtime pages" do
-    admin = FactoryBot.create(:admin, email: "checkbox-admin@example.com", password: "changeme", password_confirmation: "changeme")
+    admin = FactoryBot.create(:admin, email: "checkbox-admin@example.com", password: "changeme123", password_confirmation: "changeme123")
 
     enable_theme_preference("dark")
     sign_in_as_admin(admin)
@@ -573,7 +573,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
   end
 
   it "keeps admin user search placeholders lighter in light mode" do
-    admin = FactoryBot.create(:admin, email: "users-search-admin-light@example.com", password: "changeme", password_confirmation: "changeme")
+    admin = FactoryBot.create(:admin, email: "users-search-admin-light@example.com", password: "changeme123", password_confirmation: "changeme123")
 
     enable_theme_preference("light")
     sign_in_as_admin(admin)
@@ -780,7 +780,7 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
   end
 
   it "keeps signed-in dark mode form surfaces readable" do
-    user = FactoryBot.create(:user, email: "dark-form-controls@example.com", password: "changeme", password_confirmation: "changeme")
+    user = FactoryBot.create(:user, email: "dark-form-controls@example.com", password: "changeme123", password_confirmation: "changeme123")
 
     enable_theme_preference("dark")
     sign_in_as_user(user)

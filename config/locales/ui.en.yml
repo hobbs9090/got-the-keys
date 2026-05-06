@@ -844,6 +844,11 @@ en:
       range_overflow: "Please enter a value less than or equal to %{max}."
       step: "Please enter a valid value."
       phone_number: "must be a valid phone number"
+      phone_number_hint: "Use a UK phone number starting 0... or +44, with spaces or hyphens if you like."
+
+    forms:
+      account_email_hint: "Linked to your %{email} account."
+      change_in_profile: "Change in Profile"
 
     appointment_mailer:
       subject: "GotTheKeys viewing %{action}: %{reference}"

@@ -1,4 +1,6 @@
 class Enquiry < ApplicationRecord
+  include PhoneNumberNormalizable
+
   STATUSES = %w[new contacted qualified unqualified archived].freeze
   SOURCE_TYPES = %w[
     general_enquiry
@@ -27,6 +29,7 @@ class Enquiry < ApplicationRecord
   has_many :audit_logs, as: :auditable, dependent: :destroy
 
   before_validation :apply_defaults
+  normalizes_phone_number :customer_phone
   before_validation :flag_suspected_spam
 
   validates :lead_reference, :status, :source_type, :customer_name, :message, presence: true

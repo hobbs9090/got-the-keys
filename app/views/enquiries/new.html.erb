@@ -22,12 +22,16 @@
         </div>
         <div>
           <%= f.label :customer_phone, t("ui.common.phone_number"), **form_label_options(@enquiry, :customer_phone) %>
-          <%= f.telephone_field :customer_phone, data: { testid: "enquiry-customer-phone" }, **form_control_options(@enquiry, :customer_phone) %>
+          <%= f.telephone_field :customer_phone,
+                                pattern: uk_phone_pattern,
+                                data: { testid: "enquiry-customer-phone", validation_pattern_message: t("ui.validation.phone_number_hint") },
+                                **form_control_options(@enquiry, :customer_phone) %>
+          <p class="form-hint"><%= t("ui.validation.phone_number_hint") %></p>
           <%= field_error_messages(@enquiry, :customer_phone) %>
         </div>
         <div>
           <%= f.label :source_type, t("ui.enquiries.fields.source_type"), **form_label_options(@enquiry, :source_type) %>
-          <%= f.select :source_type, Enquiry::SOURCE_TYPES.map { |source| [enquiry_source_label(source), source] }, {}, form_control_options(@enquiry, :source_type, data: { testid: "enquiry-source-type" }) %>
+          <%= f.select :source_type, public_enquiry_source_options(@property), {}, form_control_options(@enquiry, :source_type, data: { testid: "enquiry-source-type" }) %>
           <%= field_error_messages(@enquiry, :source_type) %>
         </div>
         <div class="form-grid__full">

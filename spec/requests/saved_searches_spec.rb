@@ -342,7 +342,7 @@ RSpec.describe "Saved searches", type: :request do
     post user_session_path, params: {
       user: {
         email: user.email,
-        password: "changeme"
+        password: "changeme123"
       }
     }
 
@@ -363,8 +363,8 @@ RSpec.describe "Saved searches", type: :request do
           last_name: "Rivera",
           mobile_number: "07595123456",
           email:,
-          password: "changeme",
-          password_confirmation: "changeme",
+          password: "changeme123",
+          password_confirmation: "changeme123",
           language: "en",
           terms_of_service: "1"
         }

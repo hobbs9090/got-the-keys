@@ -2,7 +2,7 @@ require "rails_helper"
 require "nokogiri"
 
 RSpec.describe "Admin notification logs" do
-  let(:admin) { FactoryBot.create(:admin, email: "notif-logs-admin@gotthekeys.com", password: "changeme", password_confirmation: "changeme") }
+  let(:admin) { FactoryBot.create(:admin, email: "notif-logs-admin@gotthekeys.com", password: "changeme123", password_confirmation: "changeme123") }
   let(:property) { FactoryBot.create(:property) }
 
   before do

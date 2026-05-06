@@ -152,17 +152,24 @@
 
           <div>
             <%= f.label :customer_email, t("ui.common.email_address"), **form_label_options(@appointment, :customer_email) %>
-            <%= f.email_field :customer_email,
-                              required: true,
-                              autocomplete: "email",
-                              readonly: user_signed_in?,
-                              **form_control_options(@appointment, :customer_email) %>
+            <%= render "shared/account_email_display",
+                       form: f,
+                       attribute: :customer_email,
+                       email: current_user.email,
+                       testid: "appointment-customer-email-display" %>
             <%= field_error_messages(@appointment, :customer_email) %>
           </div>
 
           <div>
             <%= f.label :customer_phone, t("ui.common.phone_number"), **form_label_options(@appointment, :customer_phone) %>
-            <%= f.telephone_field :customer_phone, required: true, autocomplete: "tel", maxlength: 20, **form_control_options(@appointment, :customer_phone) %>
+            <%= f.telephone_field :customer_phone,
+                                  required: true,
+                                  autocomplete: "tel",
+                                  maxlength: 20,
+                                  pattern: uk_phone_pattern,
+                                  data: { validation_pattern_message: t("ui.validation.phone_number_hint") },
+                                  **form_control_options(@appointment, :customer_phone) %>
+            <p class="form-hint"><%= t("ui.validation.phone_number_hint") %></p>
             <%= field_error_messages(@appointment, :customer_phone) %>
           </div>
 

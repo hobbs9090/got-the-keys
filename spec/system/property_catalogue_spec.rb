@@ -8,7 +8,7 @@ RSpec.describe "Property catalogue", type: :system do
   def sign_in_as(user)
     visit new_user_session_path
     fill_in "user_email", with: user.email
-    fill_in "user_password", with: "changeme"
+    fill_in "user_password", with: "changeme123"
     click_button "Sign in"
   end
 
@@ -55,7 +55,7 @@ RSpec.describe "Property catalogue", type: :system do
   end
 
   it "shows save filter on the for-rent catalogue for a signed-in user" do
-    user = FactoryBot.create(:user, email: "renter-filters@example.com", password: "changeme", password_confirmation: "changeme")
+    user = FactoryBot.create(:user, email: "renter-filters@example.com", password: "changeme123", password_confirmation: "changeme123")
 
     sign_in_as(user)
     visit for_rent_index_path
@@ -64,7 +64,7 @@ RSpec.describe "Property catalogue", type: :system do
   end
 
   it "shows save filter on the for-sale catalogue for a signed-in user" do
-    user = FactoryBot.create(:user, email: "buyer-filters@example.com", password: "changeme", password_confirmation: "changeme")
+    user = FactoryBot.create(:user, email: "buyer-filters@example.com", password: "changeme123", password_confirmation: "changeme123")
 
     sign_in_as(user)
     visit for_sale_index_path
@@ -73,7 +73,7 @@ RSpec.describe "Property catalogue", type: :system do
   end
 
   it "shows save filter on the search page for a signed-in user" do
-    user = FactoryBot.create(:user, email: "search-filters@example.com", password: "changeme", password_confirmation: "changeme")
+    user = FactoryBot.create(:user, email: "search-filters@example.com", password: "changeme123", password_confirmation: "changeme123")
 
     sign_in_as(user)
     visit searches_path
@@ -110,7 +110,7 @@ RSpec.describe "Property catalogue", type: :system do
 
   it "lets a signed-in visitor save filters from the for-rent catalogue via the filter form", js: true do
     owner = FactoryBot.create(:user)
-    renter = FactoryBot.create(:user, email: "renter-save-filter@example.com", password: "changeme", password_confirmation: "changeme")
+    renter = FactoryBot.create(:user, email: "renter-save-filter@example.com", password: "changeme123", password_confirmation: "changeme123")
     create_property(
       user: owner,
       sale_status: Property::SALE_STATUSES[:for_rent],
@@ -133,7 +133,7 @@ RSpec.describe "Property catalogue", type: :system do
 
   it "lets a signed-in visitor save filters from the search page and returns to search results", js: true do
     owner = FactoryBot.create(:user)
-    searcher = FactoryBot.create(:user, email: "search-save-filter@example.com", password: "changeme", password_confirmation: "changeme")
+    searcher = FactoryBot.create(:user, email: "search-save-filter@example.com", password: "changeme123", password_confirmation: "changeme123")
     create_property(
       user: owner,
       sale_status: Property::SALE_STATUSES[:for_sale],
@@ -156,7 +156,7 @@ RSpec.describe "Property catalogue", type: :system do
 
   it "lets a signed-in visitor save a town alias filter from the search page", js: true do
     owner = FactoryBot.create(:user)
-    searcher = FactoryBot.create(:user, email: "search-town-save-filter@example.com", password: "changeme", password_confirmation: "changeme")
+    searcher = FactoryBot.create(:user, email: "search-town-save-filter@example.com", password: "changeme123", password_confirmation: "changeme123")
     create_property(
       user: owner,
       sale_status: Property::SALE_STATUSES[:for_sale],
@@ -186,7 +186,7 @@ RSpec.describe "Property catalogue", type: :system do
   end
 
   it "shows the saved searches band with an empty state when signed in and none are saved yet" do
-    user = FactoryBot.create(:user, email: "empty-searches@example.com", password: "changeme", password_confirmation: "changeme")
+    user = FactoryBot.create(:user, email: "empty-searches@example.com", password: "changeme123", password_confirmation: "changeme123")
     create_property(user: FactoryBot.create(:user), sale_status: Property::SALE_STATUSES[:for_sale], address_line_1: "Empty State Link", town_city: "Westerham")
 
     sign_in_as(user)
@@ -200,7 +200,7 @@ RSpec.describe "Property catalogue", type: :system do
 
   it "lets a signed-in visitor save the current search and lists it on the catalogue" do
     owner = FactoryBot.create(:user)
-    buyer = FactoryBot.create(:user, email: "buyer@example.com", password: "changeme", password_confirmation: "changeme")
+    buyer = FactoryBot.create(:user, email: "buyer@example.com", password: "changeme123", password_confirmation: "changeme123")
     create_property(user: owner, sale_status: Property::SALE_STATUSES[:for_sale], address_line_1: "The Mead", bedrooms: 4)
 
     sign_in_as(buyer)

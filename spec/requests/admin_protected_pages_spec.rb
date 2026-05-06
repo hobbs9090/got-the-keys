@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Admin-protected pages", type: :request do
-  let(:admin) { FactoryBot.create(:admin, email: "protected-admin@gotthekeys.com", password: "changeme", password_confirmation: "changeme") }
+  let(:admin) { FactoryBot.create(:admin, email: "protected-admin@gotthekeys.com", password: "changeme123", password_confirmation: "changeme123") }
   let(:user) { FactoryBot.create(:user, first_name: "Taylor", last_name: "Stone", email: "taylor.stone@example.com") }
 
   describe "GET /members" do

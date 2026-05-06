@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Admin QA guide" do
-  let(:admin) { FactoryBot.create(:admin, email: "qa-admin@gotthekeys.com", password: "changeme", password_confirmation: "changeme") }
+  let(:admin) { FactoryBot.create(:admin, email: "qa-admin@gotthekeys.com", password: "changeme123", password_confirmation: "changeme123") }
   let(:version_config) { Rails.configuration.x.got_the_keys }
 
   around do |example|

@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Public appointment booking", type: :system, js: true do
   include ActiveSupport::Testing::TimeHelpers
+  include Warden::Test::Helpers
 
   def dismiss_cookie_banner
     return unless page.has_button?("Reject non-essential", wait: 1)
@@ -10,13 +11,12 @@ RSpec.describe "Public appointment booking", type: :system, js: true do
     expect(page).to have_no_css(".cookie-banner", wait: 5)
   end
 
-  def sign_in_as_user(user, password: "changeme")
-    visit new_user_session_path
-
-    fill_in "user_email", with: user.email
-    fill_in "user_password", with: password
-    click_button "Sign in"
+  def sign_in_as_user(user, password: "changeme123")
+    expect(user.valid_password?(password)).to be(true)
+    login_as(user, scope: :user)
   end
+
+  after { Warden.test_reset! }
 
   around do |example|
     travel_to(Time.zone.local(2026, 4, 6, 8, 0)) { example.run }
@@ -71,7 +71,8 @@ RSpec.describe "Public appointment booking", type: :system, js: true do
     end
 
     expect(page).to have_field("appointment_customer_name", with: "Nina Hughes")
-    expect(page).to have_field("appointment_customer_email", with: "nina.hughes@example.com", readonly: true)
+    expect(page).to have_css('[data-testid="appointment-customer-email-display"]', text: "nina.hughes@example.com")
+    expect(page).to have_field("appointment_customer_email", type: "hidden", with: "nina.hughes@example.com", visible: false)
     expect(page).to have_field("appointment_customer_phone", with: "07700 930005")
   end
 end

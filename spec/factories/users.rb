@@ -6,8 +6,8 @@ FactoryBot.define do
     language { 'en' }
     terms_of_service { '1' }
     sequence(:email) { |n| "user#{n}@example.com" }
-    password { 'changeme' }
-    password_confirmation { 'changeme' }
+    password { 'changeme123' }
+    password_confirmation { 'changeme123' }
     admin_provisioned { false }
 
     trait :admin_provisioned do

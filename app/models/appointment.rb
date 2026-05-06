@@ -1,4 +1,6 @@
 class Appointment < ApplicationRecord
+  include PhoneNumberNormalizable
+
   STATUSES = %w[pending confirmed rescheduled cancelled completed no_show].freeze
   ACTIVE_STATUSES = %w[pending confirmed rescheduled].freeze
   VISIT_OUTCOMES = %w[attended feedback_requested feedback_received].freeze
@@ -25,6 +27,7 @@ class Appointment < ApplicationRecord
   has_many :notification_logs, dependent: :destroy
 
   before_validation :apply_defaults
+  normalizes_phone_number :customer_phone
   before_validation :synchronize_requested_and_scheduled_times
 
   validates :customer_name, :customer_email, :customer_phone, :requested_time, :scheduled_at, :duration_minutes, :status, :public_reference,

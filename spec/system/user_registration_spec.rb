@@ -8,7 +8,7 @@ RSpec.describe "User registration", type: :system, js: true do
     expect(page).to have_no_css(".cookie-banner", wait: 5)
   end
 
-  def sign_in_as_user(user, password: "changeme")
+  def sign_in_as_user(user, password: "changeme123")
     visit new_user_session_path
 
     fill_in "user_email", with: user.email
@@ -28,8 +28,8 @@ RSpec.describe "User registration", type: :system, js: true do
     fill_in "user_mobile_number", with: "07595 123456"
     fill_in "user_email", with: unique_email
     select "English", from: "user_language"
-    fill_in "user_password", with: "changeme"
-    fill_in "user_password_confirmation", with: "changeme"
+    fill_in "user_password", with: "changeme123"
+    fill_in "user_password_confirmation", with: "changeme123"
     check "user_terms_of_service"
 
     click_button "Register"
@@ -43,7 +43,7 @@ RSpec.describe "User registration", type: :system, js: true do
   end
 
   it "uses a checkbox-gated modal to confirm account deletion" do
-    user = FactoryBot.create(:user, password: "changeme", password_confirmation: "changeme")
+    user = FactoryBot.create(:user, password: "changeme123", password_confirmation: "changeme123")
 
     sign_in_as_user(user)
     dismiss_cookie_banner

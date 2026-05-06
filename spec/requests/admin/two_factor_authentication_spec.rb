@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Admin two-factor authentication", type: :request do
   include ActiveSupport::Testing::TimeHelpers
 
-  let(:password) { "changeme" }
+  let(:password) { "changeme123" }
   let(:admin) { FactoryBot.create(:admin, email: "two-factor-admin@gotthekeys.com", password:, password_confirmation: password) }
 
   around do |example|

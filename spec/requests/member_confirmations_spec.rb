@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Member confirmations" do
-  let(:user) { FactoryBot.create(:user, email: "nina.hughes@example.com", password: "changeme", password_confirmation: "changeme") }
+  let(:user) { FactoryBot.create(:user, email: "nina.hughes@example.com") }
 
   before do
     sign_in user
@@ -29,6 +29,7 @@ RSpec.describe "Member confirmations" do
     follow_redirect!
 
     expect(response.body).to include(offer.public_reference)
+    expect(Nokogiri::HTML(response.body).at_css("h1").text.strip).to eq("Offer #{offer.public_reference}")
     expect(response.body).to include("Offer summary")
     expect(response.body).to include("£620,000")
   end
@@ -54,6 +55,7 @@ RSpec.describe "Member confirmations" do
     follow_redirect!
 
     expect(response.body).to include(enquiry.lead_reference)
+    expect(Nokogiri::HTML(response.body).at_css("h1").text.strip).to eq("Enquiry #{enquiry.lead_reference}")
     expect(response.body).to include("Enquiry summary")
     expect(response.body).to include("Brochure request")
   end
@@ -80,6 +82,7 @@ RSpec.describe "Member confirmations" do
     follow_redirect!
 
     expect(response.body).to include(application.public_reference)
+    expect(Nokogiri::HTML(response.body).at_css("h1").text.strip).to eq("Rental application #{application.public_reference}")
     expect(response.body).to include("Application summary")
     expect(response.body).to include("Permanent employment")
   end

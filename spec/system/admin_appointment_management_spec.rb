@@ -15,13 +15,13 @@ RSpec.describe "Admin appointment management", type: :system do
     visit admin_bookings_path
 
     fill_in "admin_email", with: admin.email
-    fill_in "admin_password", with: "changeme"
+    fill_in "admin_password", with: "changeme123"
     click_button "Sign in"
     visit admin_bookings_path
   end
 
   it "lets an admin sign in and confirm a pending appointment from the bookings desk" do
-    admin = FactoryBot.create(:admin, email: "bookings-admin@gotthekeys.com", password: "changeme", password_confirmation: "changeme")
+    admin = FactoryBot.create(:admin, email: "bookings-admin@gotthekeys.com", password: "changeme123", password_confirmation: "changeme123")
     user = FactoryBot.create(:user)
     property = FactoryBot.create(:property, user:, address_line_1: "22 Cedar Close")
     slot = next_booking_slot(hour: 14)
@@ -51,7 +51,7 @@ RSpec.describe "Admin appointment management", type: :system do
   end
 
   it "lets an admin reschedule an appointment from the edit screen" do
-    admin = FactoryBot.create(:admin, email: "reschedule-admin@gotthekeys.com", password: "changeme", password_confirmation: "changeme")
+    admin = FactoryBot.create(:admin, email: "reschedule-admin@gotthekeys.com", password: "changeme123", password_confirmation: "changeme123")
     user = FactoryBot.create(:user)
     property = FactoryBot.create(:property, user:, address_line_1: "31 Albion Mews")
     FactoryBot.create(

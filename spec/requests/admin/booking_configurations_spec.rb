@@ -2,7 +2,7 @@ require "rails_helper"
 require "nokogiri"
 
 RSpec.describe "Admin booking configuration" do
-  let(:admin) { FactoryBot.create(:admin, email: "booking-rules-admin@gotthekeys.com", password: "changeme", password_confirmation: "changeme") }
+  let(:admin) { FactoryBot.create(:admin, email: "booking-rules-admin@gotthekeys.com", password: "changeme123", password_confirmation: "changeme123") }
 
   before do
     sign_in admin

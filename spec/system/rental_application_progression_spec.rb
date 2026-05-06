@@ -4,7 +4,7 @@ RSpec.describe "Rental application progression", type: :system do
   def sign_in_as_user(user)
     visit new_user_session_path
     fill_in "user_email", with: user.email
-    fill_in "user_password", with: "changeme"
+    fill_in "user_password", with: "changeme123"
     click_button "Sign in"
   end
 
@@ -12,15 +12,15 @@ RSpec.describe "Rental application progression", type: :system do
     visit admin_rentals_path
 
     fill_in "admin_email", with: admin.email
-    fill_in "admin_password", with: "changeme"
+    fill_in "admin_password", with: "changeme123"
     click_button "Sign in"
     visit admin_rentals_path
   end
 
   it "lets an applicant submit and an admin approve a rental application" do
     property = FactoryBot.create(:property, :for_rent, address_line_1: "4 Station Court")
-    admin = FactoryBot.create(:admin, email: "lettings-board@gotthekeys.com", password: "changeme", password_confirmation: "changeme")
-    applicant = FactoryBot.create(:user, email: "rental-applicant@example.com", password: "changeme", password_confirmation: "changeme")
+    admin = FactoryBot.create(:admin, email: "lettings-board@gotthekeys.com", password: "changeme123", password_confirmation: "changeme123")
+    applicant = FactoryBot.create(:user, email: "rental-applicant@example.com", password: "changeme123", password_confirmation: "changeme123")
 
     sign_in_as_user(applicant)
 
@@ -29,7 +29,7 @@ RSpec.describe "Rental application progression", type: :system do
 
     within('[data-testid="property-rental-application-form"]') do
       fill_in "rental_application_applicant_name", with: "Ravi Patel"
-      fill_in "rental_application_applicant_email", with: "ravi.patel@example.com"
+      expect(page).to have_css('[data-testid="rental-applicant-email-display"]', text: applicant.email)
       fill_in "rental_application_applicant_phone", with: "07700 905777"
       fill_in "rental_application_move_in_date", with: (Date.current + 21.days).iso8601
       check "rental_application_guarantor_required"

@@ -8,12 +8,12 @@ RSpec.describe "Flash dismissal", type: :system, js: true do
   end
 
   it "auto-dismisses the admin sign-in notice after a short delay" do
-    admin = FactoryBot.create(:admin, email: "dismiss-admin@gotthekeys.com", password: "changeme", password_confirmation: "changeme")
+    admin = FactoryBot.create(:admin, email: "dismiss-admin@gotthekeys.com", password: "changeme123", password_confirmation: "changeme123")
 
     visit new_admin_session_path
 
     fill_in "admin_email", with: admin.email
-    fill_in "admin_password", with: "changeme"
+    fill_in "admin_password", with: "changeme123"
     click_button "Sign in"
 
     expect(page).to have_css('[data-testid="flash-notice"]', text: "Signed in successfully as Admin.")
@@ -21,12 +21,12 @@ RSpec.describe "Flash dismissal", type: :system, js: true do
   end
 
   it "shows the timeout alert without rendering the raw timedout flag" do
-    user = FactoryBot.create(:user, email: "timeout-flash-user@example.com", password: "changeme", password_confirmation: "changeme")
+    user = FactoryBot.create(:user, email: "timeout-flash-user@example.com", password: "changeme123", password_confirmation: "changeme123")
 
     visit new_user_session_path
 
     fill_in "user_email", with: user.email
-    fill_in "user_password", with: "changeme"
+    fill_in "user_password", with: "changeme123"
     click_button "Sign in"
 
     expect(page).to have_current_path(root_path, ignore_query: false)

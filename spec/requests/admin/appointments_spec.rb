@@ -2,7 +2,7 @@ require "rails_helper"
 require "nokogiri"
 
 RSpec.describe "Admin appointments" do
-  let(:admin) { FactoryBot.create(:admin, email: "steven@gotthekeys.uk", password: "changeme", password_confirmation: "changeme") }
+  let(:admin) { FactoryBot.create(:admin, email: "steven@gotthekeys.uk", password: "changeme123", password_confirmation: "changeme123") }
   let(:user) { FactoryBot.create(:user) }
   let(:property) { FactoryBot.create(:property, user:, address_line_1: "9 Park Lane") }
 

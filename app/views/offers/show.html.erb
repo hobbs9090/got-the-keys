@@ -3,7 +3,7 @@
 <section class="page-hero">
   <div>
     <p class="page-hero__eyebrow"><%= t("ui.offers.show.eyebrow") %></p>
-    <h1><%= @offer.public_reference %></h1>
+    <h1><%= t("ui.offers.show.title", reference: @offer.public_reference) %></h1>
     <p><%= t("ui.offers.show.hero_body") %></p>
   </div>
 

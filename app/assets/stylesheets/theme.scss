@@ -557,6 +557,55 @@ pre code {
   animation: none;
 }
 
+:root {
+  --site-header-height: 5rem;
+}
+
+[id] {
+  scroll-margin-top: var(--site-header-height, 5rem);
+}
+
+.readonly-account-field {
+  background: var(--color-neutral-soft);
+  border: 1px solid var(--color-panel-border);
+  border-radius: 0.5rem;
+  color: var(--color-body);
+  cursor: default;
+  padding: 0.75rem 0.9rem;
+}
+
+.readonly-account-field strong {
+  color: var(--color-heading);
+  display: block;
+  line-height: 1.35;
+}
+
+.readonly-account-field p,
+.form-hint {
+  color: var(--color-muted);
+  font-size: 0.88rem;
+  margin: 0.35rem 0 0;
+}
+
+.password-strength {
+  align-items: center;
+  display: grid;
+  gap: 0.4rem;
+  grid-template-columns: minmax(8rem, 1fr) auto;
+  margin-top: 0.45rem;
+}
+
+.password-strength meter {
+  height: 0.55rem;
+  width: 100%;
+}
+
+.password-strength span {
+  color: var(--color-muted);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
 .site-brand__eyebrow,
 .page-hero__eyebrow,
 .section-heading__eyebrow,

@@ -145,7 +145,7 @@ RSpec.describe "Saved properties", type: :request do
       post user_session_path, params: {
         user: {
           email: user.email,
-          password: "changeme"
+          password: "changeme123"
         },
         return_to: property_path(property),
         save_property_id: property.id
@@ -168,8 +168,8 @@ RSpec.describe "Saved properties", type: :request do
           language: "en",
           terms_of_service: "1",
           email: "new-saved-property-user@example.com",
-          password: "changeme",
-          password_confirmation: "changeme"
+          password: "changeme123",
+          password_confirmation: "changeme123"
         },
         return_to: property_path(property),
         save_property_id: property.id
@@ -201,8 +201,8 @@ RSpec.describe "Saved properties", type: :request do
           language: "en",
           terms_of_service: "1",
           email: "session-saved-property-user@example.com",
-          password: "changeme",
-          password_confirmation: "changeme"
+          password: "changeme123",
+          password_confirmation: "changeme123"
         },
         return_to: return_to_value,
         save_property_id: save_property_id_value

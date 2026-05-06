@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Admin security", type: :system do
   include ActiveSupport::Testing::TimeHelpers
 
-  let(:password) { "changeme" }
+  let(:password) { "changeme123" }
 
   around do |example|
     travel_to(Time.zone.local(2026, 4, 6, 10, 0)) { example.run }

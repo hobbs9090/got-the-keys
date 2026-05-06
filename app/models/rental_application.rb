@@ -1,4 +1,6 @@
 class RentalApplication < ApplicationRecord
+  include PhoneNumberNormalizable
+
   STATUSES = %w[received referencing approved rejected withdrawn].freeze
   PHONE_FORMAT = /\A\+?[0-9().\-\s]{7,20}\z/.freeze
 
@@ -9,6 +11,7 @@ class RentalApplication < ApplicationRecord
   has_many :audit_logs, as: :auditable, dependent: :destroy
 
   before_validation :apply_defaults
+  normalizes_phone_number :applicant_phone
 
   validates :public_reference, :applicant_name, :applicant_email, :applicant_phone, :move_in_date, :status, presence: true
   validates :applicant_email, format: { with: URI::MailTo::EMAIL_REGEXP }

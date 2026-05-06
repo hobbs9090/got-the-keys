@@ -121,6 +121,21 @@ module ApplicationHelper
     I18n.t("ui.enquiries.source_types.#{source_type}", default: source_type.to_s.tr("_", " ").humanize)
   end
 
+  def public_enquiry_source_options(property)
+    source_types =
+      if property.sale_status == Property::SALE_STATUSES[:for_rent]
+        %w[general_enquiry letting_enquiry application_question]
+      else
+        %w[general_enquiry brochure_request offer_enquiry]
+      end
+
+    source_types.map { |source| [enquiry_source_label(source), source] }
+  end
+
+  def uk_phone_pattern
+    "(?:\\+44|0)[0-9\\s().-]{9,18}"
+  end
+
   def offer_status_badge_class(status)
     {
       "received" => "badge badge--warning",

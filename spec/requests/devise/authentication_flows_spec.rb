@@ -22,16 +22,16 @@ RSpec.describe "Devise authentication flows", type: :request do
       language: "en",
       terms_of_service: "1",
       email: "jamie.rivera@example.com",
-      password: "changeme",
-      password_confirmation: "changeme"
+      password: "changeme123",
+      password_confirmation: "changeme123"
     }.merge(overrides)
   end
 
   describe "sign in" do
     it "signs a user in with valid credentials and shows the standard notice" do
-      user = FactoryBot.create(:user, email: "auth-flow-user@example.com", password: "changeme", password_confirmation: "changeme")
+      user = FactoryBot.create(:user, email: "auth-flow-user@example.com", password: "changeme123", password_confirmation: "changeme123")
 
-      post user_session_path, params: { user: { email: user.email, password: "changeme" } }
+      post user_session_path, params: { user: { email: user.email, password: "changeme123" } }
 
       expect(response).to redirect_to(root_path)
 
@@ -42,7 +42,7 @@ RSpec.describe "Devise authentication flows", type: :request do
     end
 
     it "re-renders the form when the credentials are invalid" do
-      user = FactoryBot.create(:user, email: "auth-flow-invalid@example.com", password: "changeme", password_confirmation: "changeme")
+      user = FactoryBot.create(:user, email: "auth-flow-invalid@example.com", password: "changeme123", password_confirmation: "changeme123")
 
       post user_session_path, params: { user: { email: user.email, password: "wrongpass" } }
 
@@ -51,10 +51,10 @@ RSpec.describe "Devise authentication flows", type: :request do
     end
 
     it "blocks a locked user from signing in" do
-      user = FactoryBot.create(:user, email: "auth-flow-locked@example.com", password: "changeme", password_confirmation: "changeme")
+      user = FactoryBot.create(:user, email: "auth-flow-locked@example.com", password: "changeme123", password_confirmation: "changeme123")
       user.lock_access!
 
-      post user_session_path, params: { user: { email: user.email, password: "changeme" } }
+      post user_session_path, params: { user: { email: user.email, password: "changeme123" } }
 
       expect(response).not_to be_redirect
       expect(response.body).to include(I18n.t("devise.failure.invalid", authentication_keys: "Email"))
@@ -120,7 +120,7 @@ RSpec.describe "Devise authentication flows", type: :request do
     end
 
     it "updates the password from a valid reset token and accepts the new password" do
-      user = FactoryBot.create(:user, email: "auth-flow-reset-update@example.com", password: "changeme", password_confirmation: "changeme")
+      user = FactoryBot.create(:user, email: "auth-flow-reset-update@example.com", password: "changeme123", password_confirmation: "changeme123")
       raw_token = user.send_reset_password_instructions
 
       put user_password_path, params: {
@@ -133,7 +133,7 @@ RSpec.describe "Devise authentication flows", type: :request do
 
       expect(response).to redirect_to(new_user_session_path)
       expect(user.reload.valid_password?("newpassword")).to be(true)
-      expect(user.valid_password?("changeme")).to be(false)
+      expect(user.valid_password?("changeme123")).to be(false)
 
       follow_redirect!
 
@@ -170,7 +170,7 @@ RSpec.describe "Devise authentication flows", type: :request do
     end
 
     it "unlocks the account from a valid token and allows sign in again" do
-      user = FactoryBot.create(:user, email: "auth-flow-unlock-complete@example.com", password: "changeme", password_confirmation: "changeme")
+      user = FactoryBot.create(:user, email: "auth-flow-unlock-complete@example.com", password: "changeme123", password_confirmation: "changeme123")
       user.lock_access!
       raw_token = user.send_unlock_instructions
 
@@ -185,7 +185,7 @@ RSpec.describe "Devise authentication flows", type: :request do
       expect(flash_text).to include(I18n.t("devise.unlocks.unlocked"))
 
       delete destroy_user_session_path
-      post user_session_path, params: { user: { email: user.email, password: "changeme" } }
+      post user_session_path, params: { user: { email: user.email, password: "changeme123" } }
 
       expect(response).to redirect_to(root_path)
     end

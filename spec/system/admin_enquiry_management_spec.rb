@@ -5,13 +5,13 @@ RSpec.describe "Admin enquiry management", type: :system do
     visit admin_enquiries_path
 
     fill_in "admin_email", with: admin.email
-    fill_in "admin_password", with: "changeme"
+    fill_in "admin_password", with: "changeme123"
     click_button "Sign in"
     visit admin_enquiries_path
   end
 
   it "lets an admin triage a new lead from the inbox" do
-    admin = FactoryBot.create(:admin, email: "triage-admin@gotthekeys.com", password: "changeme", password_confirmation: "changeme")
+    admin = FactoryBot.create(:admin, email: "triage-admin@gotthekeys.com", password: "changeme123", password_confirmation: "changeme123")
     enquiry = FactoryBot.create(:enquiry, customer_name: "Ravi Patel")
 
     sign_in_as(admin)

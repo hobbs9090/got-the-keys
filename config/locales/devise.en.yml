@@ -163,6 +163,12 @@ en:
           paragraph_2: "Sellers can manage listings and viewing availability. Buyers and renters can save searches, book viewings, and keep their enquiry details consistent."
           paragraph_3: "We ask for contact details so viewing updates, offer responses, and account notices reach the right person."
           paragraph_4: "You can update your details later and delete your account if you no longer need GotTheKeys."
+          password_strength_labels:
+            - "Password strength"
+            - "Weak"
+            - "Fair"
+            - "Good"
+            - "Strong"
         binding:
           title: 'Binding'
           submit: 'Binding'

@@ -168,7 +168,7 @@ RSpec.describe "Header account details", type: :request do
   end
 
   it "shows a compact admin header on the homepage" do
-    admin = FactoryBot.create(:admin, email: "header-admin@gotthekeys.com", password: "changeme", password_confirmation: "changeme")
+    admin = FactoryBot.create(:admin, email: "header-admin@gotthekeys.com", password: "changeme123", password_confirmation: "changeme123")
 
     sign_in admin
     get root_path

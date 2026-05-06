@@ -4,13 +4,13 @@ RSpec.describe "Property enquiry flow", type: :system do
   def sign_in_as(user)
     visit new_user_session_path
     fill_in "user_email", with: user.email
-    fill_in "user_password", with: "changeme"
+    fill_in "user_password", with: "changeme123"
     click_button "Sign in"
   end
 
   it "lets a signed-in visitor send a property enquiry without booking a viewing" do
     property = FactoryBot.create(:property, address_line_1: "26 Hillside Walk")
-    user = FactoryBot.create(:user, email: "enquiry-user@example.com", password: "changeme", password_confirmation: "changeme")
+    user = FactoryBot.create(:user, email: "enquiry-user@example.com", password: "changeme123", password_confirmation: "changeme123")
 
     sign_in_as(user)
 
@@ -34,8 +34,9 @@ RSpec.describe "Property enquiry flow", type: :system do
 
     enquiry = Enquiry.order(:created_at).last
 
-    expect(page).to have_current_path(property_path(property))
+    expect(page).to have_current_path(enquiry_path(enquiry.lead_reference))
     expect(page).to have_text("Thanks. Your enquiry has been sent to the team.")
+    expect(page).to have_text(enquiry.lead_reference)
     expect(enquiry.lead_reference).to be_present
     expect(enquiry.source_type).to eq("brochure_request")
   end
