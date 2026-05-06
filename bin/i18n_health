@@ -10,13 +10,14 @@ interpolations = health.inconsistent_interpolations
 
 has_missing = missing.values.any?(&:any?)
 has_interpolation_errors = interpolations.values.any?(&:any?)
+has_generated_fallbacks = synced.values.any?(&:any?)
 
-if synced.values.any?(&:any?)
-  puts "Updated generated locale fallbacks:"
+if has_generated_fallbacks
+  warn "Generated locale fallbacks were written. Add real translations instead:"
   synced.each do |locale, keys|
     next if keys.empty?
 
-    puts "#{locale}: #{keys.length} fallback keys"
+    warn "#{locale}: #{keys.length} fallback keys"
   end
 end
 
@@ -45,7 +46,7 @@ if has_interpolation_errors
   end
 end
 
-if has_missing || has_interpolation_errors
+if has_generated_fallbacks || has_missing || has_interpolation_errors
   exit 1
 end
 

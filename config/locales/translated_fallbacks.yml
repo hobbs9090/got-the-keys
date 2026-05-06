@@ -1,0 +1,1719 @@
+---
+de:
+  activerecord:
+    attributes:
+      property:
+        address_line_1: Adresszeile 1
+        asking_price: Angebotspreis
+        bedrooms: Schlafzimmer
+        country: Land
+        county: Grafschaft
+        postcode: Postleitzahl
+        property_description: Immobilienbeschreibung
+        sale_status: Angebotsart
+        town_city: Ort oder Stadt
+      user:
+        email: E-Mail
+        first_name: Vorname
+        last_name: Nachname
+        mobile_number: Mobilnummer
+        password: Passwort
+        terms_of_service: Nutzungsbedingungen
+    models:
+      property: Immobilie
+      user: Benutzer
+  bedroom: Schlafzimmer
+  bedrooms: Schlafzimmer
+  blog:
+    back_to_blog: Zurueck zum Blog
+    blog_date: " am 18. Maerz 2026."
+    john_smith: Das GotTheKeys-Team
+    read_full_post: Vollstaendigen Beitrag lesen
+    written_by: 'Geschrieben von '
+    posts:
+      five_small_listing_improvements:
+        title: Fuenf kleine Verbesserungen an Inseraten, die bessere Anfragen erzeugen
+        category: Lead-Qualitaet
+        byline: Geschrieben vom GotTheKeys-Team am 18. Maerz 2026.
+        read_time: 5 Min. Lesezeit
+        excerpt: Bessere Anfragen entstehen meist durch klarere Erwartungen, nicht durch lauteres Marketing. Diese fuenf kleinen Verbesserungen helfen einem Inserat, die Fragen ernsthafter Kaeufer und Mieter zu beantworten.
+        paragraphs:
+        - Der schnellste Weg, ein Immobilieninserat zu verbessern, ist meist kein komplettes Redesign. Bessere Leitfotos, ein realistischer Einstiegspreis und ein klarerer erster Absatz koennen veraendern, wie ernst Kaeufer das Inserat nehmen.
+        - Beginnen Sie mit den Grundlagen: helle Fotos, Raumtexte, die neben der Groesse auch die Nutzung beschreiben, und eine Zusammenfassung der Merkmale, nach denen Menschen wirklich suchen, etwa Parken, Garten, Schulen oder Verkehrsanbindung.
+        - Das Leitbild verdient besondere Aufmerksamkeit. Es sollte zeigen, wodurch die Immobilie am leichtesten im Kopf bleibt, nicht einfach das zuerst hochgeladene Foto. Bei manchen Haeusern ist das die Kueche oder der Garten, bei anderen die Fassade, der Ausblick oder ein ruhiger Wohnbereich.
+        - Der erste Absatz sollte nuetzlich sein. Sagen Sie, was die Immobilie ist, fuer wen sie passen duerfte, in welchem Zustand sie ist und ob es vor einer Besichtigung etwas Praktisches zu wissen gibt. Das leistet mehr als eine lange Liste von Adjektiven.
+        - Die Preisgestaltung ist genauso wichtig wie die Praesentation. Ein zu optimistischer Preis bringt vielleicht ein oder zwei Tage Klicks, schwacht aber oft das Vertrauen, sobald vergleichbare Objekte den Unterschied sichtbar machen.
+        - Auch Dokumente beeinflussen die Anfragequalitaet. Ein Grundriss, eine Broschuere oder klare Angaben zu Laufzeit, Council Tax, Parkplatz und Eigentumsform koennen unnoetige Rueckfragen vor der ersten Besichtigung vermeiden.
+        - ? Machen Sie zum Schluss den naechsten Schritt einfach. Wenn Kaeufer oder Mieter schnell Grundriss, Preis und Besichtigungsweg verstehen, erfuellt das Inserat seinen Zweck
+          : Es macht aus Neugier eine nuetzliche Anfrage.
+        takeaways:
+        - Beginnen Sie mit besseren Fotos und einem staerkeren ersten Absatz.
+        - Stuetzen Sie den Preis mit lokalen Vergleichsdaten, damit das Inserat schnell Vertrauen gewinnt.
+        - Machen Sie Broschueren, Grundrisse und Buchungsaktionen leicht auffindbar.
+      quick_follow_up:
+        title: Warum schnelle Rueckmeldung noch immer entscheidet, ob ernsthafte Kaeufer dranbleiben
+        category: Reaktionszeit
+        byline: Geschrieben vom GotTheKeys-Team am 21. Maerz 2026.
+        read_time: 4 Min. Lesezeit
+        excerpt: Die erste hilfreiche Antwort ist wichtiger als die perfekte Antwort. Kaeufer und Mieter lesen Reaktionsfaehigkeit als Signal dafuer, wie sich der restliche Prozess anfuehlen wird.
+        paragraphs:
+        - Eine ernsthafte Anfrage kommt oft mit Schwung. Der Interessent hat mehrere Objekte verglichen, die Karte geprueft, die Fotos zweimal angesehen und entschieden, dass dieses Objekt ein Gespraech wert ist. Eine langsame Antwort unterbricht diesen Schwung.
+        - Schnelle Rueckmeldung bedeutet nicht, innerhalb von Minuten eine vollstaendige Antwort zu liefern. Es bedeutet, die Anfrage zu bestaetigen, zu zeigen, dass sie eine reale Person erreicht hat, und klar zu sagen, was als Naechstes passiert.
+        - Diese kurze Bestaetigung ist besonders wichtig, wenn es um Verfuegbarkeit, Angebote, Dokumente oder Zugang geht. Ohne sie sucht der Interessent meist weiter, und das naechste reaktionsschnelle Inserat bleibt im Kopf.
+        - Gute Rueckmeldung schuetzt auch den Verkaeufer. Eine einfache Antwortvorlage kann Wunschtermine, Kauf- oder Mietposition, Finanzierung und Ausschlusskriterien erfassen, bevor ein Termin bestaetigt wird.
+        - Die staerksten Teams trennen Tempo von Hektik. Sie antworten schnell, improvisieren aber nicht jede Antwort. Sie halten haeufige Details bereit, aktualisieren das Inserat bei wiederholten Fragen und fuehren qualifizierte Interessenten zum naechsten Schritt.
+        - In der Praxis ist der erste Arbeitstag entscheidend. Eine hilfreiche Antwort am selben Tag laesst die Immobilie aktiv, betreut und vertrauenswuerdig wirken. Eine spaete Antwort laesst selbst ein starkes Inserat vernachlaessigt erscheinen.
+        takeaways:
+        - Bestaetigen Sie Anfragen schnell, auch wenn die vollstaendige Antwort spaeter folgt.
+        - Nutzen Sie wiederholte Fragen, um das Inserat selbst zu verbessern.
+        - Behandeln Sie Reaktionszeit als Teil der Vertrauensbewertung.
+      brochure_floor_plan:
+        title: Broschuere, Grundriss oder beides? Meistens lautet die Antwort ja
+        category: Marketingmaterial
+        byline: Geschrieben vom GotTheKeys-Team am 25. Maerz 2026.
+        read_time: 4 Min. Lesezeit
+        excerpt: Ein Inserat, das die offensichtlichen Fragen beantwortet, bevor sie gestellt werden, verwandelt Aufmerksamkeit eher in eine nuetzliche Anfrage.
+        paragraphs:
+        - Broschueren und Grundrisse erfuellen unterschiedliche Aufgaben. Eine Broschuere verpackt die Geschichte der Immobilie; ein Grundriss erklaert, wie die Raeume wirklich funktionieren. Die meisten ernsthaften Interessenten wollen beides sehen, bevor sie Zeit fuer eine Besichtigung einplanen.
+        - Die Broschuere ist nuetzlich, weil sie dem Inserat eine teilbare Form gibt. Sie kann die wichtigsten Merkmale zusammenfassen, die besten Bilder in Reihenfolge zeigen und Kontaktdaten in einem Format liefern, das sich leicht mit Partnern, Eltern, Beratern oder Kollegen teilen laesst.
+        - Der Grundriss beantwortet eine leisere, aber praktischere Frage: Passt mein Leben hier hinein? Raumgroessen zaehlen, aber auch Wege, Stauraum, Badposition, Gartenzugang und ob ein Raum realistisch Arbeit, Kinder, Gaeste oder Haustiere aufnehmen kann.
+        - Wenn eines dieser Materialien fehlt, stellen Interessenten haeufig dieselben Fragen. Das verlangsamt den Anfragefluss und kann das Inserat weniger vollstaendig wirken lassen als nahe Alternativen.
+        - Es gibt Ausnahmen. Ein sehr fruehes Inserat kann live gehen, bevor alle Materialien fertig sind, und eine einfache Mietwohnung braucht vielleicht keine aufwendige Broschuere. Trotzdem sollte die Seite sagen, was jetzt verfuegbar ist und was folgt.
+        - Am besten sind Dokumente deutlich sichtbar, ohne die Seite zu beherrschen. Platzieren Sie sie nahe bei Kerndaten und Besichtigungsaktionen, beschriften Sie sie klar und halten Sie die Dateien aktuell, wenn Preis, Verfuegbarkeit oder Fakten sich aendern.
+        takeaways:
+        - Nutzen Sie Broschueren fuer die Objektgeschichte und Grundrisse fuer die praktische Passform.
+        - Fehlende Materialien erzeugen wiederholte Fragen und weniger Sicherheit.
+        - Beschriften Sie Dokumente klar und halten Sie sie mit dem Live-Inserat synchron.
+      first_three_viewing_questions:
+        title: Ein Inserat sollte die ersten drei Besichtigungsfragen beantworten, bevor der Kalender ueberhaupt aufgeht
+        category: Besichtigungsvorbereitung
+        byline: Geschrieben vom GotTheKeys-Team am 28. Maerz 2026.
+        read_time: 5 Min. Lesezeit
+        excerpt: Klare Hinweise zu Zustand, Grundrissbesonderheiten und juengsten Aenderungen helfen Interessenten, besser vorbereitet zu erscheinen und unnoetige Ausfaelle zu vermeiden.
+        paragraphs:
+        - Eine Besichtigung beginnt, bevor jemand die Haustuer erreicht. Wenn Kaeufer oder Mieter nach einem Termin fragen, bilden sie bereits Erwartungen zu Zustand, Grundriss, Lage und dazu, ob sich der Weg lohnt.
+        - Die erste Frage betrifft meist die Passform. Passt der Grundriss zum Alltag? Ein gutes Inserat macht den Raumfluss mit Fotos, Grundriss und Text klar, der erklaert, wie die Hauptbereiche zusammenhaengen.
+        - Die zweite Frage betrifft den Zustand. Interessenten brauchen nicht jedes Detail vorab, aber sie brauchen ein faires Bild davon, was fertig ist, was kuerzlich geaendert wurde und was Aufmerksamkeit braucht. Ehrliche Zustandshinweise reduzieren Ueberraschungen und schaffen Vertrauen.
+        - Die dritte Frage betrifft Reibung. Ist Parken einfach? Ist der Zugang schwierig? Sind Haustiere moeglich? Gibt es eine Kette? Gibt es Nebenkosten, Einschraenkungen oder zeitliche Vorgaben? Diese praktischen Details koennen entscheiden, ob eine Besichtigung sinnvoll ist.
+        - Wenn das Inserat diese Fragen frueh beantwortet, wird der Kalender sauberer. Wer bucht, versteht besser, was er sieht, kommt mit besseren Fragen und entscheidet danach schneller.
+        - Das bedeutet nicht, defensiv zu schreiben. Es bedeutet, vermeidbare Unsicherheit zu entfernen. Eine klare Objektseite gibt ernsthaften Interessenten genug Vertrauen zum Handeln und allen anderen genug Information, um sich selbst auszusortieren.
+        takeaways:
+        - Erklaeren Sie Grundriss, Zustand und praktische Reibung vor der Buchung.
+        - Nutzen Sie ehrliche Hinweise, um vermeidbare Ueberraschungen zu verhindern.
+        - Besser vorbereitete Interessenten erleichtern und beschleunigen die Nachfassung.
+  devise:
+    failure:
+      admin_otp_attempt_missing: Geben Sie Ihren Verifizierungscode oder einen Backup-Code ein, um die Anmeldung abzuschliessen.
+    mailer:
+      confirmation_instructions:
+        subject: Bestaetigungsanleitung
+        welcome: 'Willkommen '
+        paragraph_1: 'Sie koennen Ihr Konto ueber den folgenden Link bestaetigen:'
+        confirm_my_account: Mein Konto bestaetigen
+      reset_password_instructions:
+        subject: Anleitung zum Zuruecksetzen des Passworts
+        hello: Hallo
+        paragraph_1: Jemand hat einen Link zum Aendern Ihres Passworts angefordert. Das koennen Sie ueber den folgenden Link tun.
+        paragraph_2: Wenn Sie dies nicht angefordert haben, ignorieren Sie diese E-Mail bitte.
+        paragraph_3: Ihr Passwort wird erst geaendert, wenn Sie den Link oben aufrufen und ein neues Passwort festlegen.
+        change_my_password: Mein Passwort aendern
+      unlock_instructions:
+        subject: Anleitung zum Entsperren
+        hello: 'Hallo '
+        paragraph_1: Ihr Konto wurde wegen zu vieler erfolgloser Anmeldeversuche gesperrt.
+        paragraph_2: Klicken Sie auf den folgenden Link, um Ihr Konto zu entsperren.
+        unlock_my_account: Mein Konto entsperren
+    navigation:
+      change_password: Passwort aendern
+      change_registration: Registrierung aendern
+      sign_in: Anmelden
+      sign_out: Abmelden
+      sign_up: Registrieren
+    omniauth_callbacks:
+      success: Erfolgreich ueber %{kind} autorisiert.
+      failure: Autorisierung ueber %{kind} fehlgeschlagen, weil "%{reason}".
+    views:
+      commons:
+        sidebar:
+          title: Bedienfeld
+      passwords:
+        edit:
+          cancel_my_account: Mein Konto loeschen
+        new:
+          meta_description: Fordern Sie einen sicheren Link zum Zuruecksetzen Ihres GotTheKeys-Passworts an.
+      registrations:
+        binding:
+          title: Verknuepfung
+          submit: Verknuepfen
+        edit:
+          change_pass_tip: Leer lassen, wenn Sie nichts aendern moechten.
+          password: Passwort aendern
+          submit: Absenden
+        new:
+          meta_description: Erstellen Sie ein GotTheKeys-Konto, um Suchen zu speichern, Besichtigungen zu buchen, Angebote abzugeben oder Inserate zu verwalten.
+      sessions:
+        admin:
+          meta_description: Melden Sie sich im GotTheKeys-Adminbereich fuer Betrieb, QA-Pruefungen, Inserate, Anfragen und Buchungen an.
+        new:
+          meta_description: Melden Sie sich bei Ihrem GotTheKeys-Konto an, um gespeicherte Objekte, Besichtigungen, Angebote und Inseratsaktivitaeten zu verwalten.
+          otp_attempt: Verifizierungscode oder Backup-Code
+          otp_attempt_hint: Geben Sie einen Authenticator-Code oder einen Ihrer Backup-Codes ein.
+      unlocks:
+        new:
+          meta_description: Fordern Sie Anweisungen zum Entsperren Ihres GotTheKeys-Kontos nach zu vielen erfolglosen Anmeldeversuchen an.
+  errors:
+    could_not_be_saved: konnte nicht gespeichert werden
+    error: Fehler
+    messages:
+      already_confirmed: wurde bereits bestaetigt, bitte versuchen Sie sich anzumelden
+      expired: ist abgelaufen, bitte fordern Sie einen neuen an
+      not_found: wurde nicht gefunden
+      not_locked: war nicht gesperrt
+      not_saved:
+        one: '1 Fehler hat verhindert, dass %{resource} gespeichert wurde:'
+        other: "%{count} Fehler haben verhindert, dass %{resource} gespeichert wurde:"
+    oops: Hoppla
+    please_correct_the_following: Bitte korrigieren Sie Folgendes
+    the: Der
+  estate_future: " ist der Immobilienmakler der Zukunft. Warum eine Gebuehr von 10.000 Pfund zahlen, um ein typisches Londoner Zuhause zu verkaufen! Wir konnten das nicht verstehen. Deshalb haben wir GotTheKeys.com erstellt, damit Sie Timothy von Foxtons jetzt sagen koennen, dass er sich verpissen soll!"
+  floor_plans:
+    add_floor_plans_for: Grundrisse hinzufuegen fuer
+    floor_plans_for: Grundrisse fuer
+    heading: Grundrisse
+    title: Grundrisse
+  gotthekeys:
+    got: got
+    gotthekeys: GotTheKeys
+    keys: keys
+    the: the
+  helpers:
+    label:
+      property:
+        address_line_1: Adresszeile 1
+        address_line_2: Adresszeile 2
+        are_you_sure: Sind Sie sicher?
+        asking_price: Angebotspreis
+        bedrooms: Schlafzimmer
+        cancel: Abbrechen
+        country: Land
+        county: Grafschaft
+        delete_property: Immobilie loeschen
+        image_file_name: Bilddateiname
+        postcode: Postleitzahl
+        property_description: Immobilienbeschreibung
+        sale_status: Angebotsart
+        town_city: Ort oder Stadt
+        update_property: Immobilie aktualisieren
+      user:
+        remember_me: Angemeldet bleiben
+  legal:
+    testing_harness_title: 'Testhinweis:'
+    testing_harness_body: GotTheKeys ist ein QA-Testsystem, das sich als Immobilienseite tarnt. Die Inserate, Personas und Workflows sind fuer Schulung, Tests und Demonstration gedacht, nicht fuer echte Maklerauftraege.
+  location:
+    heading: Standort
+    location_details_for: Standortdetails fuer
+    title: Standort
+  members:
+    member_username: Benutzername des Mitglieds
+    num: Anzahl der Immobilien
+    properties_for_rent: Immobilien zur Miete
+    properties_for_sale: Immobilien zum Verkauf
+    sale_or_rental: Mitglieder mit Immobilien zum Verkauf oder zur Miete
+    title: Mitglieder
+    total: Gesamt
+    total_rental_value: Gesamtmietwert
+    total_selling_value: Gesamtverkaufswert
+  menu:
+    account_details: Kontodaten
+    add_property: Immobilie hinzufuegen
+    administration: Verwaltung
+    appointments: Termine
+    description: Beschreibung
+    edit_details: Details bearbeiten
+    floor_plans: Grundrisse
+    language_preference: Spracheinstellung
+    location: Standort
+    logged_in_as: Angemeldet als
+    logged_in_as_admin: Angemeldet als Administrator
+    logout: Abmelden
+    manage_account: Konto verwalten
+    my_property_details: Meine Immobiliendaten
+    photos: Fotos
+    register: Registrieren
+    sign_in: Anmelden
+    user_profile: Benutzerprofil
+    viewing_times: Besichtigungszeiten
+    welcome: Willkommen
+  need_help: Brauchen Sie Hilfe bei der Eigentumsuebertragung?
+  not_authorised: SIE SIND NICHT BERECHTIGT, DIESE SEITE ZU BEARBEITEN
+  photos:
+    add_photos_of: Fotos hinzufuegen von
+    heading: Fotos
+    photos_of: Fotos von
+    title: Fotos
+  preferred_list: Fragen Sie uns nach unserer bevorzugten Liste von Anwaelten, Gutachtern und Hypothekenvermittlern.
+  properties:
+    add_property_details: Immobiliendaten hinzufuegen
+    bedroom: Schlafzimmer
+    edit_property_details_for: 'Immobiliendaten bearbeiten fuer '
+  read_more: Mehr lesen
+  side:
+    section: Abschnitt
+  successfully_created: Immobilie erfolgreich erstellt!
+  successfully_deleted: Immobilie erfolgreich geloescht!
+  successfully_updated: Immobilie erfolgreich aktualisiert!
+  total: Gesamt
+  ui:
+    admin:
+      appointments:
+        bookings_count:
+          one: 1 Buchung
+          other: "%{display_count} Buchungen"
+        details: Details
+        eyebrow: Buchungsverwaltung nur fuer Admins
+        filters:
+          all_properties: Alle Immobilien
+          all_statuses: Alle Status
+          anchor_date: Referenzdatum
+          anyone: Alle
+          assigned_admin: Zugewiesener Admin
+          customer_email: Kunden-E-Mail
+          customer_email_placeholder: kunde@example.com
+        hero_body: Pruefen Sie kommende Buchungen, filtern Sie nach Immobilie oder Status und bearbeiten Sie Anfragen, die eine Admin-Entscheidung brauchen.
+        title: Buchungsdesk
+        views:
+          agenda: Agenda
+          day: Tag
+          month: Monat
+          week: Woche
+      customers:
+        index:
+          badges:
+            buyer: Kaeufer
+            landlord: Vermieter
+            registered_user: Registrierter Benutzer
+            seller: Verkaeufer
+            tenant: Mieter
+          registered_on: Registriert %{time}
+        show:
+          account_details_title: Kontodaten
+          back: Zurueck
+          booking_count: Buchungen
+          eyebrow: Kundenprofil
+          latest_booking: Neueste Buchung
+          no_bookings: Fuer diesen Kunden wurden keine Buchungen gefunden.
+          recent_bookings_title: Letzte Buchungen
+          registered_on: Registriert am
+          title: Kunde %{name}
+          view_bookings: Buchungen ansehen
+      dashboard:
+        metrics:
+          offers: Angebote
+      demo_data:
+        actions:
+          populate: Leistungsdaten hinzugefuegt
+        performance_seed:
+          ai_modes:
+            auto: Automatisch
+            'off': Aus
+            'on': Ein
+          description: Nutzen Sie dies, um viele generierte Verkaeufer und Immobilien hinzuzufuegen, ohne den Basisdatensatz zurueckzusetzen.
+          eyebrow: Leistungsdaten
+          field_help:
+            ai_mode: Aus ueberspringt OpenAI, Automatisch aktiviert es nur bei vorhandenem API-Schluessel, und Ein erfordert es.
+            batch_size: Wie viele Immobilienentwuerfe pro KI-Anreicherungsbatch gesendet werden.
+            model: Das OpenAI-Modell, das bei KI-Anreicherung verwendet wird.
+            password: Jedes generierte Verkaeuferkonto verwendet dieses Passwort.
+            property_count: Erstellt diese Anzahl zusaetzlicher Immobilien und verteilt sie auf die generierten Verkaeufer.
+            user_count: Erstellt diese Anzahl zusaetzlicher Verkaeuferkonten.
+          fields:
+            ai_mode: KI-Anreicherungsmodus
+            batch_size: KI-Batchgroesse
+            model: KI-Modell
+            password: Passwort fuer generierte Benutzer
+            property_count: Immobilien hinzufuegen
+            user_count: Benutzer hinzufuegen
+          instructions:
+          - Diese Aktion fuegt Demo-Benutzer und Immobilien zur aktuellen Datenbank hinzu. Sie setzt das Basisszenario nicht zuerst zurueck.
+          - Legen Sie die genaue Anzahl von Benutzern und Immobilien fest, die Sie hinzufuegen moechten. Die Benutzeranzahl akzeptiert jede positive Zahl.
+          - Das eingegebene Passwort wird auf jedes generierte Verkaeuferkonto angewendet.
+          - Fuer den schnellsten grossen Lauf lassen Sie den KI-Modus auf Aus. Automatisch und Ein koennen je nach Serverkonfiguration OpenAI aufrufen.
+          - KI-Modus Ein erfordert, dass OPENAI_API_KEY auf dem Server konfiguriert ist. Batchgroesse und Modell betreffen nur KI-angereicherte Laeufe.
+          instructions_title: Anleitung
+          parameters_title: Parameter
+          password_summary: Verwendet das Passwort, das beim Start des Jobs eingegeben wurde.
+          submit: Leistungsdaten hinzufuegen
+          title: Performance-Testdaten anhaengen
+          validation:
+            ai_mode: KI-Anreicherungsmodus muss Aus, Automatisch oder Ein sein.
+            integer: "%{field} muss eine ganze Zahl sein."
+            integer_minimum: "%{field} muss mindestens %{minimum} sein."
+            model: KI-Modell muss eine der unterstuetzten Dropdown-Optionen sein.
+            required: "%{field} darf nicht leer sein."
+      flash:
+        populated_performance_demo_data: "%{users} Benutzer und %{properties} Immobilien fuer Performance-Tests hinzugefuegt."
+      layout:
+        active_demo_scenario: Aktives Demo-Szenario
+        sidebar_eyebrow: Admin-Arbeitsbereich
+        title: Admin | %{app_name}
+        view_site: Website ansehen
+      properties:
+        index:
+          search:
+            all_statuses: Alle Status
+            status: Status
+      qa:
+        available_scenarios_title: Verfuegbare Szenarien
+        seeded_personas:
+          admins_label: Admins
+          buyers_label: Kaeufer
+          sellers_label: Verkaeufer
+        selectors:
+          active_demo_scenario: '`data-testid="active-demo-scenario"` in der Admin-Oberflaeche'
+          admin_appointment_row: '`data-testid="admin-appointment-row"` in Agenda-Zeilen'
+          appointment_form: '`data-testid="appointment-form"` im oeffentlichen Buchungsformular'
+          book_viewing_cta: '`data-testid="book-viewing-cta"` auf der Buchungs-CTA der Immobilie'
+          property_card: '`data-testid="property-card"` auf Inseratskarten'
+        selectors_title: Automatisierungsfreundliche Selektoren
+        version_box:
+          commit_badge: Commit %{sha}
+      users:
+        index:
+          rent_count_badge:
+            one: 1 zu vermieten
+            other: "%{count} zu vermieten"
+          sale_count_badge:
+            one: 1 zu verkaufen
+            other: "%{count} zu verkaufen"
+    properties:
+      show:
+        booking_sign_in_body: Melden Sie sich an oder erstellen Sie ein Konto, um eine Besichtigung anzufragen und aus den veroeffentlichten Zeitfenstern fuer dieses Objekt zu waehlen.
+        booking_sign_in_cta: Anmelden, um eine Besichtigung zu buchen
+        enquiry_body_guest: Melden Sie sich an oder erstellen Sie ein Konto, um Broschuereninformationen, einen Rueckruf des Vermieters oder Verkaeufers oder Klaerung vor der Terminwahl anzufragen.
+        offer_body_guest: Melden Sie sich an oder erstellen Sie ein Konto, um Ihre Kaufposition zu registrieren und ein Angebot abzugeben.
+        rental_application_body_guest: Melden Sie sich an oder erstellen Sie ein Konto, um dem Vermietungsteam Ihren gewuenschten Einzugstermin und Angaben zur Leistbarkeit mitzuteilen.
+    seo:
+      defaults:
+        admin: Verwalten Sie Inserate, Kunden, Anfragen, Buchungen und Ablaeufe im GotTheKeys-Adminbereich.
+        public: Durchsuchen Sie Immobilien, speichern Sie Suchen und buchen Sie Besichtigungen mit GotTheKeys.
+      descriptions:
+        about_us:
+          index: Erfahren Sie, wie GotTheKeys Verkaeufern und Suchenden mit klareren Inseraten, einfacherer Buchung und besserer Kontrolle hilft.
+        admin:
+          sessions:
+            new: Melden Sie sich im GotTheKeys-Adminbereich fuer Betrieb, QA-Pruefungen, Inserate, Anfragen und Buchungen an.
+        blog:
+          index: Lesen Sie GotTheKeys-Artikel ueber Inserate, Anfragen und praktische Wege zur besseren Vermarktung.
+        contact_us:
+          index: Kontaktieren Sie das GotTheKeys-Team fuer Hilfe bei Inseraten, Besichtigungen und allgemeinen Plattformfragen.
+        cookie_policy:
+          index: Erfahren Sie, wie GotTheKeys Cookies fuer Anmeldung, Praeferenzen und wichtige Websitefunktionen nutzt.
+        devise:
+          confirmations:
+            new: Fordern Sie eine neue GotTheKeys-Bestaetigungs-E-Mail fuer Ihr Konto an.
+          passwords:
+            new: Fordern Sie einen sicheren Link zum Zuruecksetzen Ihres GotTheKeys-Passworts an.
+          registrations:
+            new: Erstellen Sie ein GotTheKeys-Konto, um Suchen zu speichern, Besichtigungen zu buchen, Angebote abzugeben oder Inserate zu verwalten.
+          sessions:
+            new: Melden Sie sich bei Ihrem GotTheKeys-Konto an, um gespeicherte Objekte, Besichtigungen, Angebote und Inseratsaktivitaeten zu verwalten.
+          unlocks:
+            new: Fordern Sie Anweisungen zum Entsperren Ihres GotTheKeys-Kontos nach zu vielen erfolglosen Anmeldeversuchen an.
+        for_rent:
+          index: Entdecken Sie Mietobjekte, pruefen Sie Inseratsdetails und buchen Sie Besichtigungen ueber GotTheKeys.
+        for_sale:
+          index: Durchsuchen Sie Haeuser zum Kauf, vergleichen Sie Inseratsdetails und buchen Sie Besichtigungen direkt ueber GotTheKeys.
+        how_it_works:
+          index: Sehen Sie, wie GotTheKeys hilft, Immobilien zu vermarkten, Anfragen zu bearbeiten und Besichtigungen einfacher zu verwalten.
+        legal:
+          index: Lesen Sie die wichtigsten rechtlichen Bedingungen, Verantwortlichkeiten und Plattformregeln fuer die Nutzung von GotTheKeys.
+        properties:
+          index: Durchsuchen Sie den vollstaendigen GotTheKeys-Immobilienkatalog, filtern Sie nach Ort und Preis und speichern Sie Suchen.
+          show: Sehen Sie Immobiliendetails, Fotos, Dokumente und Besichtigungsoptionen auf GotTheKeys.
+        searches:
+          index: Suchen Sie Immobilien nach Gebiet, Preis und Schlafzimmern, speichern Sie Filter oder buchen Sie online eine Besichtigung.
+        welcome:
+          index: Entdecken Sie moderne Immobilieninserate, Live-Besichtigungsverfuegbarkeit und eine klarere Art, Haeuser mit GotTheKeys zu durchsuchen.
+      titles:
+        about_us:
+          index: Ueber uns | GotTheKeys
+        admin:
+          default: Admin | GotTheKeys
+        blog:
+          index: Blog | GotTheKeys
+        contact_us:
+          index: Kontakt | GotTheKeys
+        cookie_policy:
+          index: Cookie-Richtlinie | GotTheKeys
+        for_rent:
+          index: Zu vermieten
+        for_sale:
+          index: Zum Verkauf
+        how_it_works:
+          index: So funktioniert es | GotTheKeys
+        legal:
+          index: Rechtliches | GotTheKeys
+        properties:
+          index: Immobilienangebote | GotTheKeys
+        searches:
+          index: Suche
+        welcome:
+          index: GotTheKeys
+    site_footer:
+      build_badge: Commit %{sha}
+  under_construction: Im Bau
+  user:
+    ago: vor
+    appointments: Termine
+    email: E-Mail
+    member_since: Mitglied seit
+    mobile: Mobile
+    name: Name
+    no_appointments: Keine Termine
+    property: Eigentum
+    property_details: Details zur Immobilie
+    user_details_for: Benutzerdetails für
+  viewing_times:
+    add_viewing_times_for: Sehzeiten hinzufügen für
+    heading: Betrachtungszeiten
+    title: Betrachtungszeiten
+    viewing_times_for: Besichtigungszeiten für
+  welcome:
+    tool_tip: Markteinblick
+    tool_tip_content: Erfahren Sie, welche Einblicke in die Preisgestaltung und Präsentation den Eigentümern dabei helfen, einen stärkeren Eintrag zu starten.
+    welcome_message: Verkaufen oder vermieten mit mehr Kontrolle
+fr:
+  activerecord:
+    attributes:
+      property:
+        address_line_1: Ligne d'adresse 1
+        asking_price: Prix demande
+        bedrooms: Chambres
+        country: Pays
+        county: Comte
+        postcode: Code postal
+        property_description: Description du bien
+        sale_status: Type d'annonce
+        town_city: Ville
+      user:
+        email: E-mail
+        first_name: Prenom
+        last_name: Nom
+        mobile_number: Numero mobile
+        password: Mot de passe
+        terms_of_service: Conditions d'utilisation
+    models:
+      property: Bien
+      user: Utilisateur
+  bedroom: chambre
+  bedrooms: Chambres
+  blog:
+    back_to_blog: Retour au blog
+    blog_date: " le 18 mars 2026."
+    john_smith: L'equipe GotTheKeys
+    read_full_post: Lire l'article complet
+    written_by: 'Ecrit par '
+    posts:
+      five_small_listing_improvements:
+        title: Cinq petites ameliorations d'annonce qui generent de meilleures demandes
+        category: Qualite des prospects
+        byline: Ecrit par l'equipe GotTheKeys le 18 mars 2026.
+        read_time: 5 min de lecture
+        excerpt: Les meilleures demandes viennent souvent d'attentes plus claires, pas d'un marketing plus bruyant. Ces cinq petites ameliorations aident une annonce a repondre aux questions que les acheteurs et locataires serieux se posent deja.
+        paragraphs:
+        - Le moyen le plus rapide d'ameliorer une annonce immobiliere n'est generalement pas une refonte complete. De meilleures photos principales, un prix d'appel realiste et un premier paragraphe plus clair peuvent changer le serieux avec lequel les acheteurs regardent l'annonce.
+        - Commencez par les bases: des photos lumineuses, des descriptions de pieces qui parlent de l'usage autant que de la taille, et un resume des criteres vraiment recherches, comme le stationnement, le jardin, les ecoles ou les transports.
+        - L'image principale merite une attention particuliere. Elle doit montrer ce qui rend le bien facile a retenir, pas simplement la premiere photo telechargee. Pour certains biens, c'est la cuisine ou le jardin ; pour d'autres, la facade, la vue ou un sejour calme.
+        - Le premier paragraphe doit etre utile. Dites ce qu'est le bien, a qui il peut convenir, dans quel etat il se trouve et s'il y a quelque chose de pratique a savoir avant de reserver une visite.
+        - Le prix compte autant que la presentation. Un chiffre trop optimiste peut apporter des clics pendant un jour ou deux, mais il reduit souvent la confiance quand les biens comparables rendent l'ecart evident.
+        - Les documents changent aussi la qualite des demandes. Un plan, une brochure ou une note claire sur le bail, la council tax, le parking et le statut d'occupation peuvent eviter des allers-retours inutiles avant la premiere visite.
+        - ? Enfin, facilitez l'etape suivante. Si un acheteur ou un locataire comprend vite l'agencement, le prix et la facon d'organiser une visite, l'annonce fait son travail
+          : transformer la curiosite en demande utile.
+        takeaways:
+        - Commencez par de meilleures photos et un premier paragraphe plus fort.
+        - Appuyez le prix sur des donnees locales pour gagner vite la confiance.
+        - Rendez les brochures, plans et actions de reservation faciles a trouver.
+      quick_follow_up:
+        title: Pourquoi une reponse rapide decide encore si les acheteurs serieux restent engages
+        category: Temps de reponse
+        byline: Ecrit par l'equipe GotTheKeys le 21 mars 2026.
+        read_time: 4 min de lecture
+        excerpt: La premiere reponse utile compte plus que la reponse parfaite. Les acheteurs et locataires voient la reactivite comme un indice de la suite du processus.
+        paragraphs:
+        - Une demande serieuse arrive souvent avec de l'elan. La personne a compare plusieurs biens, verifie la carte, regarde les photos deux fois et decide que celui-ci merite une conversation. Une reponse lente casse ce rythme.
+        - Repondre vite ne veut pas dire donner une reponse complete en quelques minutes. Cela veut dire accuser reception, confirmer que la demande est arrivee a une vraie personne et donner une attente claire pour la suite.
+        - Cette courte confirmation est particulierement importante pour la disponibilite, les offres, les documents ou l'acces. Sans elle, le visiteur continue souvent a chercher, et l'annonce suivante qui repond vite devient celle dont il se souvient.
+        - Un bon suivi protege aussi le vendeur. Un modele simple peut recueillir les creneaux souhaites, la situation d'achat ou de location, le financement et les points bloquants avant de confirmer une visite.
+        - Les meilleures equipes separent vitesse et precipitation. Elles repondent vite, mais n'improvisent pas chaque reponse. Elles gardent les details frequents a portee de main, mettent l'annonce a jour quand les questions se repetent et guident les contacts qualifies vers l'etape suivante.
+        - En pratique, le premier jour ouvrable est la fenetre critique. Une reponse utile le meme jour donne l'impression d'un bien actif, suivi et digne de confiance. Une reponse tardive donne meme a une bonne annonce un air neglige.
+        takeaways:
+        - Accusez reception rapidement, meme si la reponse complete vient plus tard.
+        - Utilisez les questions repetees pour ameliorer l'annonce elle-meme.
+        - Traitez le temps de reponse comme une partie de l'evaluation de confiance.
+      brochure_floor_plan:
+        title: Brochure, plan ou les deux ? La reponse est generalement oui
+        category: Supports marketing
+        byline: Ecrit par l'equipe GotTheKeys le 25 mars 2026.
+        read_time: 4 min de lecture
+        excerpt: Une annonce qui repond aux questions evidentes avant que le visiteur les pose transforme plus facilement l'attention en demande utile.
+        paragraphs:
+        - Les brochures et les plans ne font pas le meme travail. Une brochure raconte l'histoire du bien ; un plan explique comment les pieces fonctionnent vraiment. La plupart des visiteurs serieux veulent les deux avant de reserver une visite.
+        - La brochure est utile parce qu'elle donne a l'annonce une forme facile a partager. Elle resume les points forts, montre les meilleures images dans le bon ordre et fournit les coordonnees dans un format simple a transmettre.
+        - Le plan repond a une question plus discrete mais tres pratique: ma vie peut-elle tenir ici ? Les surfaces comptent, mais aussi la circulation, le rangement, la position de la salle de bains, l'acces au jardin et la possibilite d'accueillir travail, enfants, invites ou animaux.
+        - Quand l'un de ces supports manque, les visiteurs posent souvent les memes questions. Cela ralentit les demandes et peut rendre l'annonce moins complete que les alternatives voisines.
+        - Il existe des exceptions. Une annonce tres precoce peut etre publiee avant que tous les supports soient prets, et un bien locatif simple n'a pas toujours besoin d'une brochure tres polie. Meme alors, la page doit dire ce qui est disponible maintenant et ce qui suivra.
+        - La meilleure approche consiste a rendre les documents visibles sans les laisser dominer la page. Placez-les pres des details essentiels et des actions de visite, nommez-les clairement et gardez-les a jour lorsque le prix, la disponibilite ou les faits changent.
+        takeaways:
+        - Utilisez les brochures pour l'histoire du bien et les plans pour l'adaptation pratique.
+        - Les supports manquants creent des questions repetees et moins de confiance.
+        - Nommez clairement les documents et gardez-les alignes avec l'annonce en ligne.
+      first_three_viewing_questions:
+        title: Une annonce devrait repondre aux trois premieres questions de visite avant meme l'ouverture du calendrier
+        category: Preparation des visites
+        byline: Ecrit par l'equipe GotTheKeys le 28 mars 2026.
+        read_time: 5 min de lecture
+        excerpt: Des notes claires sur l'etat, les particularites du plan et les changements recents aident les visiteurs a arriver mieux prepares et reduisent les absences evitables.
+        paragraphs:
+        - Une visite commence avant que quelqu'un arrive devant la porte. Au moment ou un acheteur ou locataire demande un creneau, il se fait deja une idee de l'etat, du plan, de l'emplacement et de l'interet du deplacement.
+        - La premiere question porte souvent sur l'adaptation. Le plan convient-il au quotidien ? Une bonne annonce rend le flux des pieces clair avec des photos, un plan et un texte qui explique comment les espaces principaux se relient.
+        - La deuxieme question porte sur l'etat. Les visiteurs n'ont pas besoin de chaque detail a l'avance, mais ils ont besoin d'une idee juste de ce qui est pret, de ce qui a change recemment et de ce qui peut demander de l'attention.
+        - La troisieme question concerne les frictions. Le stationnement est-il simple ? L'acces est-il delicat ? Les animaux sont-ils envisages ? Y a-t-il une chaine, des charges, des restrictions ou des contraintes de calendrier ?
+        - Quand l'annonce repond tot a ces questions, le calendrier devient plus propre. Les personnes qui reservent comprennent mieux ce qu'elles vont voir, arrivent avec de meilleures questions et decident plus vite ensuite.
+        - Cela ne veut pas dire rediger une annonce defensive. Cela veut dire retirer l'incertitude evitable. Une page claire donne aux visiteurs serieux assez de confiance pour agir et aux autres assez d'information pour se retirer d'eux-memes.
+        takeaways:
+        - Expliquez le plan, l'etat et les frictions pratiques avant la reservation.
+        - Utilisez des notes honnetes pour eviter les surprises evitables en visite.
+        - Des visiteurs mieux prepares rendent le suivi plus simple et plus rapide.
+  devise:
+    failure:
+      admin_otp_attempt_missing: Saisissez votre code de verification ou un code de secours pour terminer la connexion.
+    mailer:
+      confirmation_instructions:
+        subject: Instructions de confirmation
+        welcome: 'Bienvenue '
+        paragraph_1: 'Vous pouvez confirmer votre compte avec le lien ci-dessous :'
+        confirm_my_account: Confirmer mon compte
+      reset_password_instructions:
+        subject: Instructions de reinitialisation du mot de passe
+        hello: Bonjour
+        paragraph_1: Quelqu'un a demande un lien pour modifier votre mot de passe. Vous pouvez le faire avec le lien ci-dessous.
+        paragraph_2: Si vous n'avez pas fait cette demande, ignorez cet e-mail.
+        paragraph_3: Votre mot de passe ne changera pas tant que vous n'aurez pas ouvert le lien ci-dessus et cree un nouveau mot de passe.
+        change_my_password: Modifier mon mot de passe
+      unlock_instructions:
+        subject: Instructions de deverrouillage
+        hello: 'Bonjour '
+        paragraph_1: Votre compte a ete verrouille apres un nombre excessif de tentatives de connexion infructueuses.
+        paragraph_2: Cliquez sur le lien ci-dessous pour deverrouiller votre compte.
+        unlock_my_account: Deverrouiller mon compte
+    navigation:
+      change_password: Modifier le mot de passe
+      change_registration: Modifier l'inscription
+      sign_in: Se connecter
+      sign_out: Se deconnecter
+      sign_up: S'inscrire
+    omniauth_callbacks:
+      success: Autorisation reussie avec le compte %{kind}.
+      failure: Impossible d'autoriser via %{kind} car "%{reason}".
+    views:
+      commons:
+        sidebar:
+          title: Panneau d'operation
+      passwords:
+        edit:
+          cancel_my_account: Supprimer mon compte
+        new:
+          meta_description: Demandez un lien securise pour reinitialiser le mot de passe de votre compte GotTheKeys.
+      registrations:
+        binding:
+          title: Liaison
+          submit: Lier
+        edit:
+          change_pass_tip: Laissez vide si vous ne voulez pas le modifier.
+          password: Modifier le mot de passe
+          submit: Envoyer
+        new:
+          meta_description: Creez un compte GotTheKeys pour enregistrer des recherches, reserver des visites, soumettre des offres ou gerer des annonces.
+      sessions:
+        admin:
+          meta_description: Connectez-vous a l'espace admin GotTheKeys pour les operations, les controles QA, les annonces, les demandes et les reservations.
+        new:
+          meta_description: Connectez-vous a votre compte GotTheKeys pour gerer vos biens enregistres, visites, offres et activites d'annonce.
+          otp_attempt: Code de verification ou code de secours
+          otp_attempt_hint: Saisissez un code d'authentification ou l'un de vos codes de secours.
+      unlocks:
+        new:
+          meta_description: Demandez les instructions de deverrouillage de votre compte GotTheKeys apres trop de tentatives de connexion infructueuses.
+  errors:
+    could_not_be_saved: n'a pas pu etre enregistre
+    error: erreur
+    messages:
+      already_confirmed: a deja ete confirme, veuillez essayer de vous connecter
+      expired: a expire, veuillez en demander un nouveau
+      not_found: introuvable
+      not_locked: n'etait pas verrouille
+      not_saved:
+        one: '1 erreur a empeche l''enregistrement de %{resource} :'
+        other: "%{count} erreurs ont empeche l'enregistrement de %{resource} :"
+    oops: Oups
+    please_correct_the_following: Veuillez corriger ce qui suit
+    the: Le
+  estate_future: " est l'agent immobilier du futur. Pourquoi payer 10 000 livres pour vendre une maison londonienne typique ! Nous ne comprenions pas. C'est pourquoi nous avons cree GotTheKeys.com, pour que vous puissiez maintenant dire a Timothy de Foxtons d'aller se faire foutre !"
+  floor_plans:
+    add_floor_plans_for: Ajouter des plans pour
+    floor_plans_for: Plans pour
+    heading: Plans
+    title: Plans
+  gotthekeys:
+    got: got
+    gotthekeys: GotTheKeys
+    keys: keys
+    the: the
+  helpers:
+    label:
+      property:
+        address_line_1: Ligne d'adresse 1
+        address_line_2: Ligne d'adresse 2
+        are_you_sure: Etes-vous sur ?
+        asking_price: Prix demande
+        bedrooms: Chambres
+        cancel: Annuler
+        country: Pays
+        county: Comte
+        delete_property: Supprimer le bien
+        image_file_name: Nom du fichier image
+        postcode: Code postal
+        property_description: Description du bien
+        sale_status: Type d'annonce
+        town_city: Ville
+        update_property: Mettre a jour le bien
+      user:
+        remember_me: Se souvenir de moi
+  legal:
+    testing_harness_title: 'Mention de test :'
+    testing_harness_body: GotTheKeys est un harnais de test QA qui se fait passer pour un site immobilier. Les annonces, personas et workflows sont concus pour la formation, les tests et la demonstration, pas pour un mandat immobilier reel.
+  location:
+    heading: Emplacement
+    location_details_for: Details d'emplacement pour
+    title: Emplacement
+  members:
+    member_username: Nom d'utilisateur du membre
+    num: Nombre de biens
+    properties_for_rent: Biens a louer
+    properties_for_sale: Biens a vendre
+    sale_or_rental: Membres avec biens a vendre ou a louer
+    title: Membres
+    total: Total
+    total_rental_value: Valeur locative totale
+    total_selling_value: Valeur de vente totale
+  menu:
+    account_details: Details du compte
+    add_property: Ajouter un bien
+    administration: Administration
+    appointments: Rendez-vous
+    description: Description
+    edit_details: Modifier les details
+    floor_plans: Plans
+    language_preference: Preference de langue
+    location: Emplacement
+    logged_in_as: Connecte en tant que
+    logged_in_as_admin: Connecte en tant qu'administrateur
+    logout: Deconnexion
+    manage_account: Gerer le compte
+    my_property_details: Details de mon bien
+    photos: Photos
+    register: S'inscrire
+    sign_in: Se connecter
+    user_profile: Profil utilisateur
+    viewing_times: Creneaux de visite
+    welcome: Bienvenue
+  need_help: Besoin d'aide pour la transaction immobiliere ?
+  not_authorised: VOUS N'ETES PAS AUTORISE A MODIFIER CETTE PAGE
+  photos:
+    add_photos_of: Ajouter des photos de
+    heading: Photos
+    photos_of: Photos de
+    title: Photos
+  preferred_list: Demandez-nous notre liste preferee de solicitors, experts et courtiers en pret immobilier.
+  properties:
+    add_property_details: Ajouter les details du bien
+    bedroom: chambre
+    edit_property_details_for: 'Modifier les details du bien pour '
+  read_more: Lire la suite
+  side:
+    section: Section
+  successfully_created: Bien cree avec succes !
+  successfully_deleted: Bien supprime avec succes !
+  successfully_updated: Bien mis a jour avec succes !
+  total: Total
+  ui:
+    admin:
+      appointments:
+        bookings_count:
+          one: 1 réservation
+          other: Réservations %{display_count}
+        details: Détails
+        eyebrow: Gestion des réservations réservée à l'administrateur
+        filters:
+          all_properties: Toutes les propriétés
+          all_statuses: Tous les statuts
+          anchor_date: Date d'ancrage
+          anyone: N'importe qui
+          assigned_admin: Administrateur désigné
+          customer_email: E-mail du client
+          customer_email_placeholder: customer@example.com
+        hero_body: Passez en revue les réservations à venir, filtrez par propriété ou statut et prenez des mesures sur les demandes qui nécessitent une décision administrative.
+        title: Bureau des réservations
+        views:
+          agenda: Ordre du jour
+          day: Jour
+          month: Mois
+          week: Semaine
+      customers:
+        index:
+          badges:
+            buyer: Acheteur
+            landlord: Propriétaire
+            registered_user: Utilisateur enregistré
+            seller: Vendeur
+            tenant: Locataire
+          registered_on: Enregistré %{time}
+        show:
+          account_details_title: Détails du compte
+          back: Dos
+          booking_count: Réservations
+          eyebrow: Profil client
+          latest_booking: Dernière réservation
+          no_bookings: Aucune réservation trouvée pour ce client.
+          recent_bookings_title: Réservations récentes
+          registered_on: Inscrit le
+          title: Client %{name}
+          view_bookings: Voir les réservations
+      dashboard:
+        metrics:
+          offers: Offres
+      demo_data:
+        actions:
+          populate: Données de performances annexées
+        performance_seed:
+          ai_modes:
+            auto: Auto
+            'off': Désactivé
+            'on': Sur
+          description: Utilisez-le pour ajouter un grand volume de vendeurs et de propriétés générés sans réinitialiser l'ensemble de données de référence.
+          eyebrow: Données de performances
+          field_help:
+            ai_mode: Off ignore OpenAI, Auto l'active uniquement lorsqu'une clé API est présente et On l'exige.
+            batch_size: Combien de plans de propriété envoyer par lot d’enrichissement de l’IA.
+            model: Le modèle OpenAI à utiliser lors de l'exécution de l'enrichissement de l'IA.
+            password: Chaque compte vendeur généré utilise ce mot de passe.
+            property_count: Crée autant de propriétés supplémentaires et répartit la propriété entre les vendeurs générés.
+            user_count: Crée autant de comptes vendeur supplémentaires.
+          fields:
+            ai_mode: Mode d'enrichissement de l'IA
+            batch_size: Taille du lot IA
+            model: Modèle d'IA
+            password: Mot de passe utilisateur généré
+            property_count: Propriétés à ajouter
+            user_count: Utilisateurs à ajouter
+          instructions:
+          - Cette action ajoute des utilisateurs et des propriétés de démonstration à la base de données actuelle. Il ne réinitialise pas d’abord le scénario de référence.
+          - Définissez le nombre exact d’utilisateurs et de propriétés que vous souhaitez ajouter. Le nombre d'utilisateurs accepte tout nombre positif, vous pouvez donc évoluer en fonction de l'exécution des performances que vous planifiez.
+          - Le mot de passe que vous saisissez sera appliqué à chaque compte vendeur généré.
+          - Pour une grande course la plus rapide, laissez le mode AI réglé sur Désactivé. Auto et On peuvent appeler OpenAI en fonction de la configuration du serveur.
+          - Le mode AI activé nécessite que OPENAI_API_KEY soit configuré sur le serveur. La taille et le modèle du lot n’affectent que les exécutions enrichies en IA.
+          instructions_title: Instructions
+          parameters_title: Paramètres
+          password_summary: Utilise le mot de passe saisi lors de l'exécution du travail.
+          submit: Ajouter des données de performances
+          title: Ajouter des données de test de performances
+          validation:
+            ai_mode: Le mode d’enrichissement AI doit être Désactivé, Auto ou Activé.
+            integer: "%{field} doit être un nombre entier."
+            integer_minimum: "%{field} doit être %{minimum} ou supérieur."
+            model: Le modèle IA doit être l’une des options déroulantes prises en charge.
+            required: "%{field} ne peut pas être vide."
+      flash:
+        populated_performance_demo_data: Ajout des utilisateurs %{users} et des propriétés %{properties} pour les tests de performances.
+      layout:
+        active_demo_scenario: Scénario de démonstration actif
+        sidebar_eyebrow: Espace de travail administrateur
+        title: Administrateur | %{app_name}
+        view_site: Voir le site
+      properties:
+        index:
+          search:
+            all_statuses: Tous les statuts
+            status: Statut
+      qa:
+        available_scenarios_title: Scénarios disponibles
+        seeded_personas:
+          admins_label: Administrateurs
+          buyers_label: Acheteurs
+          sellers_label: Vendeurs
+        selectors:
+          active_demo_scenario: '`data-testid="active-demo-scenario"` sur le shell d''administration'
+          admin_appointment_row: '`data-testid="admin-appointment-row"` sur les lignes de l''agenda'
+          appointment_form: '`data-testid="appointment-form"` sur le formulaire de réservation public'
+          book_viewing_cta: '`data-testid="book-viewing-cta"` sur le CTA de réservation d''établissement'
+          property_card: '`data-testid="property-card"` sur les fiches de référencement'
+        selectors_title: Sélecteurs adaptés à l'automatisation
+        version_box:
+          commit_badge: Commit %{sha}
+      users:
+        index:
+          rent_count_badge:
+            one: 1 à louer
+            other: "%{count} à louer"
+          sale_count_badge:
+            one: 1 à vendre
+            other: "%{count} À Vendre"
+    properties:
+      show:
+        booking_sign_in_body: Connectez-vous ou créez un compte pour demander une visite et choisir parmi les plages horaires publiées pour cette maison.
+        booking_sign_in_cta: Connectez-vous pour réserver une visite
+        enquiry_body_guest: Connectez-vous ou créez un compte pour demander des informations sur la brochure, un rappel du propriétaire ou du vendeur, ou des éclaircissements avant de choisir un créneau de visite.
+        offer_body_guest: Connectez-vous ou créez un compte pour enregistrer votre position d'achat et soumettre une offre.
+        rental_application_body_guest: Connectez-vous ou créez un compte pour partager votre calendrier d'emménagement prévu et vos notes d'abordabilité avec l'équipe de location.
+    seo:
+      defaults:
+        admin: Gérez les listes de propriétés, les clients, les demandes de renseignements, les réservations et les opérations dans la zone d'administration GotTheKeys.
+        public: Parcourez les listes de propriétés, enregistrez les recherches et réservez des visites avec GotTheKeys.
+      descriptions:
+        about_us:
+          index: Découvrez comment GotTheKeys aide les vendeurs et les chercheurs avec des listes de propriétés plus claires, une réservation plus simple et un meilleur contrôle.
+        admin:
+          sessions:
+            new: Connectez-vous à l'espace de travail d'administration GotTheKeys pour les opérations du personnel, les contrôles d'assurance qualité, les annonces, les demandes de renseignements et les réservations.
+        blog:
+          index: Lisez les articles GotTheKeys sur les listes de propriétés, les demandes de renseignements et les moyens pratiques d'améliorer les performances marketing.
+        contact_us:
+          index: Contactez l'équipe GotTheKeys pour obtenir de l'aide concernant les annonces, les visites et les questions générales sur la plateforme immobilière.
+        cookie_policy:
+          index: Découvrez comment GotTheKeys utilise les cookies pour prendre en charge la connexion, les préférences et les fonctionnalités essentielles du site.
+        devise:
+          confirmations:
+            new: Demandez un nouvel e-mail de confirmation GotTheKeys pour votre compte.
+          passwords:
+            new: Demandez un lien sécurisé de réinitialisation du mot de passe GotTheKeys pour votre compte.
+          registrations:
+            new: Créez un compte GotTheKeys pour enregistrer des recherches, réserver des visites, soumettre des offres ou gérer des annonces immobilières.
+          sessions:
+            new: Connectez-vous à votre compte GotTheKeys pour gérer les maisons enregistrées, les visites, les offres et l'activité des annonces.
+          unlocks:
+            new: Demandez les instructions de déverrouillage du compte GotTheKeys après trop de tentatives de connexion infructueuses.
+        for_rent:
+          index: Explorez les maisons à louer, vérifiez les détails de l'annonce et réservez des visites via GotTheKeys.
+        for_sale:
+          index: Parcourez les maisons à vendre, comparez les détails des annonces et réservez des visites directement via GotTheKeys.
+        how_it_works:
+          index: Découvrez comment GotTheKeys aide à commercialiser des maisons, à gérer les demandes et à faciliter la gestion des visites.
+        legal:
+          index: Lisez les principaux termes juridiques, responsabilités et conditions de plate-forme qui s'appliquent lors de l'utilisation de GotTheKeys.
+        properties:
+          index: Parcourez le catalogue complet de propriétés GotTheKeys, affinez par emplacement et par prix, et enregistrez les recherches pour plus tard.
+          show: Affichez les détails de la propriété, les photos, les documents et les options d'affichage sur GotTheKeys.
+        searches:
+          index: Recherchez des annonces immobilières par zone, prix et chambres, puis enregistrez vos filtres ou réservez une visite en ligne.
+        welcome:
+          index: Découvrez des listes de propriétés modernes, la disponibilité de visualisation en direct et un moyen plus clair de parcourir les maisons avec GotTheKeys.
+      titles:
+        about_us:
+          index: À propos de nous | J'ai les clés
+        admin:
+          default: Administrateur | J'ai les clés
+        blog:
+          index: Blogue | J'ai les clés
+        contact_us:
+          index: Contactez-nous | J'ai les clés
+        cookie_policy:
+          index: Politique en matière de cookies | J'ai les clés
+        for_rent:
+          index: À louer
+        for_sale:
+          index: À vendre
+        how_it_works:
+          index: Comment ça marche | J'ai les clés
+        legal:
+          index: Juridique | J'ai les clés
+        properties:
+          index: Annonces de propriétés | J'ai les clés
+        searches:
+          index: Recherche
+        welcome:
+          index: GotTheKeys
+    site_footer:
+      build_badge: Commit %{sha}
+  under_construction: En cours de construction
+  user:
+    ago: il y a
+    appointments: Rendez-vous
+    email: E-mail
+    member_since: Membre depuis
+    mobile: Mobile
+    name: Nom
+    no_appointments: Pas de rendez-vous
+    property: Propriété
+    property_details: Détails de la propriété
+    user_details_for: Détails de l'utilisateur pour
+  viewing_times:
+    add_viewing_times_for: Ajouter des heures de visionnage pour
+    heading: Horaires de visionnage
+    title: Horaires de visionnage
+    viewing_times_for: Horaires de visionnage pour
+  welcome:
+    tool_tip: Aperçu du marché
+    tool_tip_content: Découvrez le type d'informations sur les prix et la présentation qui aident les propriétaires à lancer une annonce plus solide.
+    welcome_message: Vendez ou louez avec plus de contrôle
+it:
+  activerecord:
+    attributes:
+      property:
+        address_line_1: Indirizzo Linea 1
+        asking_price: Prezzo richiesto
+        bedrooms: Camere da letto
+        country: Paese
+        county: Contea
+        postcode: Codice postale
+        property_description: Descrizione della proprietà
+        sale_status: Stato della vendita
+        town_city: Città o città
+      user:
+        email: E-mail
+        first_name: Nome di battesimo
+        last_name: Cognome
+        mobile_number: Numero di cellulare
+        password: Password
+        terms_of_service: Termini di servizio
+    models:
+      property: Proprietà
+      user: Utente
+  bedroom: camera da letto
+  bedrooms: Camere da letto
+  blog:
+    back_to_blog: Torniamo al blog
+    blog_date: il 18 marzo 2026.
+    john_smith: Il team di GotTheKeys
+    posts:
+      brochure_floor_plan:
+        byline: Scritto dal team GotTheKeys il 25 marzo 2026.
+        category: Risorse di marketing
+        excerpt: Un elenco che risponde alle domande ovvie prima che lo spettatore le ponga ha maggiori probabilità di trasformare l'attenzione in una domanda utile.
+        paragraphs:
+        - Brochure e planimetrie svolgono compiti diversi. Una brochure racchiude la storia dell'immobile; una planimetria spiega come funzionano effettivamente le stanze. Gli spettatori più seri li vogliono entrambi prima di dedicare tempo alla visione.
+        - La brochure è utile perché dà all'elenco una forma portatile. Può riassumere le caratteristiche principali, mostrare le migliori immagini in ordine e fornire i dettagli di contatto in un formato facile da condividere con un partner, un genitore, un consulente o un collega.
+        - 'La planimetria risponde a una domanda più tranquilla ma più pratica: la mia vita può adattarsi qui? Le dimensioni delle stanze contano, ma lo sono anche la circolazione, lo stoccaggio, la posizione del bagno, l’accesso al giardino e se uno spazio può realisticamente supportare il lavoro, i bambini, gli ospiti o gli animali domestici.'
+        - Quando manca una delle risorse, gli spettatori tendono a porre ripetutamente le stesse domande. Ciò rallenta il flusso delle richieste e può far sembrare l'elenco meno completo rispetto alle alternative vicine.
+        - Ci sono delle eccezioni. Un annuncio molto presto potrebbe essere pubblicato prima che tutte le risorse siano pronte e una semplice proprietà in affitto potrebbe non aver bisogno di una brochure raffinata. Anche allora, la pagina dovrebbe dire cosa è disponibile adesso e cosa seguirà.
+        - L'approccio migliore è rendere i documenti evidenti senza lasciare che dominino la pagina. Mettili vicino ai dettagli principali e alle azioni di visualizzazione, etichettali in modo chiaro e mantieni i file aggiornati quando cambiano prezzo, disponibilità o fatti.
+        read_time: 4 minuti di lettura
+        takeaways:
+        - Utilizza le brochure per la storia della proprietà e le planimetrie per una soluzione pratica.
+        - Le risorse mancanti creano domande ripetute e una fiducia più debole.
+        - Etichetta i documenti in modo chiaro e mantienili allineati con l'elenco attivo.
+        title: Brochure, planimetria o entrambi? La risposta è solitamente sì
+      first_three_viewing_questions:
+        byline: Scritto dal team GotTheKeys il 28 marzo 2026.
+        category: Visualizzazione della preparazione
+        excerpt: Note chiare su condizioni, peculiarità del layout e modifiche recenti aiutano gli spettatori ad arrivare più preparati e a ridurre le mancate presentazioni evitabili.
+        paragraphs:
+        - La visione inizia prima che qualcuno raggiunga la porta d'ingresso. Nel momento in cui un acquirente o un inquilino chiede uno spazio, si stanno già formando aspettative su condizioni, disposizione, posizione e se la proprietà vale il viaggio.
+        - La prima domanda di solito riguarda l'idoneità. Il layout si adatta alla vita quotidiana dello spettatore? Un buon elenco dovrebbe rendere chiaro il flusso della stanza con foto, una planimetria e un testo che spieghi come si collegano gli spazi principali.
+        - La seconda domanda riguarda la condizione. Gli spettatori non hanno bisogno di ogni dettaglio in anticipo, ma hanno bisogno di avere un'idea chiara di ciò che è pronto, di ciò che è cambiato di recente e di ciò che potrebbe richiedere attenzione. Note sulle condizioni oneste riducono le sorprese e creano fiducia.
+        - La terza domanda riguarda l’attrito. Parcheggiare è semplice? L'accesso è scomodo? Gli animali domestici sono considerati? C'è una catena? Ci sono costi di servizio, restrizioni o vincoli temporali? Questi dettagli pratici possono decidere se vale la pena vederlo.
+        - Quando l'elenco risponde in anticipo a queste domande, il diario diventa più pulito. Le persone che prenotano hanno maggiori probabilità di capire ciò che vedono, di arrivare con domande migliori e di prendere decisioni più rapide in seguito.
+        - Ciò non significa scrivere un elenco difensivo. Significa rimuovere l’incertezza evitabile. Una pagina delle proprietà chiara dà agli spettatori seri la sicurezza sufficiente per agire e fornisce a tutti gli altri informazioni sufficienti per autoselezionarsi.
+        read_time: 5 minuti di lettura
+        takeaways:
+        - Spiegare la disposizione, le condizioni e gli attriti pratici prima della fase di prenotazione.
+        - Usa note oneste per evitare sorprese evitabili nella visione.
+        - Gli spettatori più preparati rendono il follow-up più semplice e veloce.
+        title: Un elenco dovrebbe rispondere alle prime tre domande di visualizzazione prima ancora che il diario si apra
+      five_small_listing_improvements:
+        byline: Scritto dal team GotTheKeys il 18 marzo 2026.
+        category: Qualità del piombo
+        excerpt: Le richieste migliori di solito provengono da aspettative più chiare, non da un marketing più forte. Questi cinque piccoli miglioramenti aiutano un annuncio a rispondere alle domande che già si pongono acquirenti e inquilini seri.
+        paragraphs:
+        - Il modo più veloce per migliorare l'elenco di una proprietà solitamente non è una riprogettazione completa. Migliori foto principali, un prezzo realistico nel titolo e un paragrafo di apertura più chiaro possono cambiare la serietà con cui gli acquirenti trattano l'annuncio.
+        - 'Inizia dalle nozioni di base: fotografie brillanti, descrizioni delle stanze che menzionano la funzione e le dimensioni e un riepilogo delle caratteristiche che le persone effettivamente cercano, come parcheggio, spazio giardino, scuole o collegamenti di trasporto.'
+        - L'immagine principale merita un'attenzione particolare. Dovrebbe mostrare ciò che rende la proprietà più facile da ricordare, non semplicemente la prima fotografia caricata. Per alcune case si tratta della cucina o del giardino; per altri è l'esterno, la vista o uno spazio abitativo tranquillo.
+        - Il paragrafo di apertura dovrebbe svolgere un lavoro utile. Spiega di cosa si tratta la proprietà, a chi potrebbe essere adatta, in quali condizioni si trova e se c'è qualcosa di pratico da sapere prima di prenotare una visita. Questo fa più di un lungo elenco di aggettivi.
+        - Il prezzo conta tanto quanto la presentazione. Una cifra eccessivamente ottimistica può far guadagnare clic per un giorno o due, ma spesso riduce la fiducia una volta che case comparabili rendono evidente la differenza. I venditori tendono ad avere conversazioni più forti quando il prezzo è supportato da prove locali e dalle condizioni della proprietà.
+        - I documenti cambiano anche la qualità della richiesta. Una planimetria, una brochure o una nota chiara sulla durata del contratto di locazione, sulla fascia fiscale comunale, sul parcheggio e sul possesso possono prevenire evitabili avanti e indietro prima che venga organizzata la prima visita.
+        - 'Infine, semplifica il passaggio successivo. Se un acquirente o un inquilino riesce a comprendere rapidamente la disposizione, il prezzo richiesto e come organizzare una visita, l''annuncio fa il suo lavoro: trasformare la curiosità in una domanda utile.'
+        read_time: 5 minuti di lettura
+        takeaways:
+        - Inizia con una fotografia più nitida e un paragrafo di apertura più forte.
+        - Prezzo con prove locali in modo che l'annuncio guadagni rapidamente fiducia.
+        - Rendi facili da trovare brochure, planimetrie e azioni di prenotazione.
+        title: Cinque piccoli miglioramenti agli elenchi che generano richieste migliori
+      quick_follow_up:
+        byline: Scritto dal team GotTheKeys il 21 marzo 2026.
+        category: Tempo di risposta
+        excerpt: La prima risposta utile conta più della risposta perfetta. Acquirenti e inquilini interpretano la reattività come un segnale di come si sentirà il resto del processo.
+        paragraphs:
+        - Un'indagine seria spesso arriva con slancio. Lo spettatore ha confrontato diverse case, controllato la mappa, guardato le foto due volte e ha deciso che vale la pena parlare di questa. Una risposta lenta rompe quel ritmo.
+        - Un follow-up rapido non significa necessariamente una risposta completa in pochi minuti. Significa riconoscere la domanda, confermare che la richiesta ha raggiunto una persona reale e dare allo spettatore una chiara aspettativa per ciò che accadrà dopo.
+        - Questo piccolo riconoscimento è particolarmente importante quando la domanda riguarda disponibilità, offerte, documenti o accesso. Senza di esso, lo spettatore di solito continuerà a navigare e il successivo elenco reattivo potrebbe diventare quello che ricorda.
+        - Un buon follow-up protegge anche il venditore. Un semplice modello di risposta può catturare finestre di visualizzazione preferite, posizione di acquisto o affitto, stato finanziario ed eventuali interruzioni dell'affare prima che uno slot venga confermato. Ciò rende più semplice stabilire la priorità a ogni visualizzazione.
+        - Le squadre più forti separano la velocità dalla fretta. Rispondono velocemente, ma non improvvisano ogni risposta. Tengono i dettagli comuni a portata di mano, aggiornano l'elenco quando compaiono domande ripetute e indirizzano gli spettatori qualificati al passaggio successivo.
+        - In pratica, il primo giorno lavorativo è la finestra critica. Una risposta utile in giornata fa sentire la struttura attiva, gestita e affidabile. Una risposta tardiva fa sì che anche un elenco forte sembri trascurato.
+        read_time: 4 minuti di lettura
+        takeaways:
+        - Rispondi rapidamente alle domande, anche quando la risposta completa segue più tardi.
+        - Utilizza domande ripetute per migliorare l'elenco stesso.
+        - Considera il tempo di risposta come parte della valutazione della fiducia dello spettatore.
+        title: Perché un follow-up rapido decide comunque se gli acquirenti seri rimangono coinvolti
+    read_full_post: Leggi l'articolo completo
+    written_by: Scritto da
+  devise:
+    failure:
+      admin_otp_attempt_missing: Inserisci il tuo codice di verifica o un codice di backup per completare l'accesso.
+    mailer:
+      confirmation_instructions:
+        confirm_my_account: Conferma il mio account
+        paragraph_1: 'Puoi confermare il tuo account tramite il link sottostante:'
+        subject: Istruzioni per la conferma
+        welcome: Benvenuto
+      reset_password_instructions:
+        change_my_password: Cambia la mia password
+        hello: Ciao
+        paragraph_1: Qualcuno ha richiesto un collegamento per modificare la tua password e puoi farlo tramite il collegamento sottostante.
+        paragraph_2: Se non hai richiesto questo, ignora questa email.
+        paragraph_3: La tua password non cambierà finché non accederai al link qui sopra e ne creerai una nuova.
+        subject: Istruzioni per reimpostare la password
+      unlock_instructions:
+        hello: Ciao
+        paragraph_1: Il tuo account è stato bloccato a causa di un numero eccessivo di tentativi di accesso non riusciti.
+        paragraph_2: Fai clic sul collegamento in basso per sbloccare il tuo account
+        subject: Istruzioni per sbloccare
+        unlock_my_account: Sblocca il mio account
+    navigation:
+      change_password: Cambiare la password
+      change_registration: Cambia registrazione
+      sign_in: Registrazione
+      sign_out: disconnessione
+      sign_up: Iscrizione
+    omniauth_callbacks:
+      failure: Impossibile autorizzarti da %{kind} perché "%{reason}".
+      success: Autorizzato con successo dall'account %{kind}.
+    views:
+      commons:
+        sidebar:
+          title: Pannello operativo
+      passwords:
+        edit:
+          cancel_my_account: Cancella il mio account
+        new:
+          meta_description: Richiedi un collegamento sicuro per la reimpostazione della password GotTheKeys per il tuo account.
+      registrations:
+        binding:
+          submit: Legame
+          title: Legame
+        edit:
+          change_pass_tip: Se non vuoi cambiare, lascia vuoto
+          password: Cambiare la password
+          submit: Invia
+        new:
+          meta_description: Crea un account GotTheKeys per salvare ricerche, visualizzazioni di libri, inviare offerte o gestire elenchi di proprietà.
+      sessions:
+        admin:
+          meta_description: Accedi all'area di lavoro di amministrazione di GotTheKeys per le operazioni del personale, i controlli di qualità, gli elenchi, le richieste e le prenotazioni.
+        new:
+          meta_description: Accedi al tuo account GotTheKeys per gestire le case salvate, le visite, le offerte e l'attività degli annunci.
+          otp_attempt: Codice di verifica o codice di backup
+          otp_attempt_hint: Inserisci un codice di autenticazione o uno dei tuoi codici di backup.
+      unlocks:
+        new:
+          meta_description: Richiedi le istruzioni per lo sblocco dell'account GotTheKeys dopo troppi tentativi di accesso non riusciti.
+  errors:
+    could_not_be_saved: non è stato possibile salvare
+    error: errore
+    messages:
+      already_confirmed: era già confermato, prova ad accedere
+      expired: è scaduto, richiedine uno nuovo
+      not_found: non trovato
+      not_locked: non era chiuso a chiave
+      not_saved:
+        one: '1 errore ha impedito il salvataggio di questo %{resource}:'
+        other: 'Gli errori %{count} hanno impedito il salvataggio di questo %{resource}:'
+    oops: Ops
+    please_correct_the_following: Si prega di correggere quanto segue
+    the: IL
+  estate_future: è l'agente immobiliare del futuro. Perché pagare una commissione di £ 10.000 per vendere una tipica casa londinese! Non siamo riusciti a capirlo. Ecco perché abbiamo creato GotTheKeys.com, così ora puoi dire a Timothy di Foxtons di andare a farsi fottere!
+  floor_plans:
+    add_floor_plans_for: Aggiungi planimetrie per
+    floor_plans_for: Planimetrie per
+    heading: Planimetrie
+    title: Planimetrie
+  gotthekeys:
+    got: avuto
+    gotthekeys: GotTheKeys
+    keys: chiavi
+    the: IL
+  helpers:
+    label:
+      property:
+        address_line_1: Indirizzo Linea 1
+        address_line_2: Riga indirizzo 2
+        are_you_sure: Sei sicuro?
+        asking_price: Prezzo richiesto
+        bedrooms: Camere da letto
+        cancel: Cancellare
+        country: Paese
+        county: Contea
+        delete_property: Elimina proprietà
+        image_file_name: Nome del file immagine
+        postcode: Codice postale
+        property_description: Descrizione della proprietà
+        sale_status: Stato della vendita
+        town_city: Città o città
+        update_property: Aggiorna proprietà
+      user:
+        remember_me: Ricordati di me
+  legal:
+    testing_harness_body: GotTheKeys è un sistema di test QA mascherato da sito di proprietà. Gli elenchi, i personaggi e i flussi di lavoro sono progettati per la formazione, i test e la dimostrazione piuttosto che per l'istruzione delle agenzie immobiliari.
+    testing_harness_title: 'Informativa sui test:'
+  location:
+    heading: Posizione
+    location_details_for: Dettagli sulla posizione per
+    title: Posizione
+  members:
+    member_username: Nome utente membro
+    num: Numero di proprietà
+    properties_for_rent: Immobili in affitto
+    properties_for_sale: Immobili in vendita
+    sale_or_rental: Membri con immobili in vendita o in affitto
+    title: Membri
+    total: Totale
+    total_rental_value: Valore locativo totale
+    total_selling_value: Valore di vendita totale
+  menu:
+    account_details: Dettagli dell'account
+    add_property: Aggiungi proprietà
+    administration: Amministrazione
+    appointments: Appuntamenti
+    description: Descrizione
+    edit_details: Modifica dettagli
+    floor_plans: Planimetrie
+    language_preference: Preferenza della lingua
+    location: Posizione
+    logged_in_as: Effettuato l'accesso come
+    logged_in_as_admin: Effettuato l'accesso come amministratore
+    logout: Esci
+    manage_account: Gestisci conto
+    my_property_details: I dettagli della mia proprietà
+    photos: Foto
+    register: Registro
+    sign_in: Registrazione
+    user_profile: Profilo utente
+    viewing_times: Tempi di visualizzazione
+    welcome: Benvenuto
+  need_help: Hai bisogno di aiuto con il trasporto?
+  not_authorised: NON SEI AUTORIZZATO A MODIFICARE LA PAGINA
+  photos:
+    add_photos_of: Aggiungi foto di
+    heading: Foto
+    photos_of: Foto di
+    title: Foto
+  preferred_list: Chiedici informazioni sul nostro elenco preferito di avvocati, geometri e intermediari ipotecari.
+  properties:
+    add_property_details: Aggiungi dettagli sulla proprietà
+    bedroom: camera da letto
+    edit_property_details_for: Modifica i dettagli della proprietà per
+  read_more: Per saperne di più
+  side:
+    section: Sezione
+  successfully_created: Immobile creato con successo!
+  successfully_deleted: Proprietà eliminata con successo!
+  successfully_updated: Proprietà aggiornata con successo!
+  total: Totale
+  ui:
+    admin:
+      appointments:
+        bookings_count:
+          one: 1 prenotazione
+          other: Prenotazioni %{display_count}
+        details: Dettagli
+        eyebrow: Gestione delle prenotazioni riservata esclusivamente all'amministratore
+        filters:
+          all_properties: Tutte le proprietà
+          all_statuses: Tutti gli stati
+          anchor_date: Data di ancoraggio
+          anyone: Chiunque
+          assigned_admin: Amministratore assegnato
+          customer_email: E-mail del cliente
+          customer_email_placeholder: customer@example.com
+        hero_body: Controlla le prossime prenotazioni, filtra per proprietà o stato e intervieni sulle richieste che richiedono una decisione da parte dell'amministratore.
+        title: Banco prenotazioni
+        views:
+          agenda: ordine del giorno
+          day: Giorno
+          month: Mese
+          week: Settimana
+      customers:
+        index:
+          badges:
+            buyer: Acquirente
+            landlord: Proprietario
+            registered_user: Utente registrato
+            seller: Venditore
+            tenant: Inquilino
+          registered_on: Registrato %{time}
+        show:
+          account_details_title: Dettagli del conto
+          back: Indietro
+          booking_count: Prenotazioni
+          eyebrow: Profilo del cliente
+          latest_booking: Ultima prenotazione
+          no_bookings: Nessuna prenotazione trovata per questo cliente.
+          recent_bookings_title: Prenotazioni recenti
+          registered_on: Registrato il
+          title: Cliente %{name}
+          view_bookings: Visualizza le prenotazioni
+      dashboard:
+        metrics:
+          offers: Offerte
+      demo_data:
+        actions:
+          populate: Dati sulle prestazioni aggiunti
+        performance_seed:
+          ai_modes:
+            auto: Auto
+            'off': Spento
+            'on': SU
+          description: Utilizzalo per aggiungere un grande volume di venditori e proprietà generati senza reimpostare il set di dati di base.
+          eyebrow: Dati sulle prestazioni
+          field_help:
+            ai_mode: Off ignora OpenAI, Auto lo abilita solo quando è presente una chiave API e On lo richiede.
+            batch_size: Quanti progetti di proprietà inviare per lotto di arricchimento IA.
+            model: Il modello OpenAI da utilizzare quando viene eseguito l'arricchimento dell'intelligenza artificiale.
+            password: Ogni account venditore generato utilizza questa password.
+            property_count: Crea così tante proprietà aggiuntive e distribuisce la proprietà tra i venditori generati.
+            user_count: Crea questo numero di account venditore aggiuntivi.
+          fields:
+            ai_mode: Modalità di arricchimento IA
+            batch_size: Dimensioni del batch AI
+            model: Modello di intelligenza artificiale
+            password: Password utente generata
+            property_count: Proprietà da aggiungere
+            user_count: Utenti da aggiungere
+          instructions:
+          - Questa azione aggiunge utenti e proprietà demo al database corrente. Non reimposta prima lo scenario di base.
+          - Imposta il numero esatto di utenti e proprietà che desideri aggiungere. Il conteggio degli utenti accetta qualsiasi numero positivo, quindi puoi ridimensionarlo per corrispondere al rendimento che stai pianificando.
+          - La password inserita verrà applicata a ogni account venditore generato.
+          - Per la corsa più veloce e ampia, mantieni la modalità AI impostata su Disattivata. Auto e On possono chiamare OpenAI a seconda della configurazione del server.
+          - La modalità AI attivata richiede la configurazione di OPENAI_API_KEY sul server. Le dimensioni e il modello del batch influiscono solo sulle esecuzioni arricchite con intelligenza artificiale.
+          instructions_title: Istruzioni
+          parameters_title: Parametri
+          password_summary: Utilizza la password immessa durante l'esecuzione del lavoro.
+          submit: Aggiungi dati sulle prestazioni
+          title: Aggiungi i dati del test delle prestazioni
+          validation:
+            ai_mode: La modalità di arricchimento AI deve essere disattivata, automatica o attivata.
+            integer: "%{field} deve essere un numero intero."
+            integer_minimum: "%{field} deve essere %{minimum} o successivo."
+            model: Il modello AI deve essere una delle opzioni a discesa supportate.
+            required: "%{field} non può essere vuoto."
+      flash:
+        populated_performance_demo_data: Aggiunti utenti %{users} e proprietà %{properties} per test delle prestazioni.
+      layout:
+        active_demo_scenario: Scenario dimostrativo attivo
+        sidebar_eyebrow: Area di lavoro amministrativa
+        title: Amministratore | %{app_name}
+        view_site: Visualizza il sito
+      properties:
+        index:
+          search:
+            all_statuses: Tutti gli stati
+            status: Stato
+      qa:
+        available_scenarios_title: Scenari disponibili
+        seeded_personas:
+          admins_label: Amministratori
+          buyers_label: Acquirenti
+          sellers_label: Venditori
+        selectors:
+          active_demo_scenario: '`data-testid="active-demo-scenario"` sulla shell di amministrazione'
+          admin_appointment_row: '`data-testid="admin-appointment-row"` nelle righe dell''agenda'
+          appointment_form: '`data-testid="appointment-form"` sul modulo di prenotazione pubblico'
+          book_viewing_cta: '`data-testid="book-viewing-cta"` sul CTA di prenotazione della proprietà'
+          property_card: '`data-testid="property-card"` sull''elenco delle carte'
+        selectors_title: Selettori facili da automatizzare
+        version_box:
+          commit_badge: Commit %{sha}
+      users:
+        index:
+          rent_count_badge:
+            one: 1 In affitto
+            other: "%{count} In affitto"
+          sale_count_badge:
+            one: 1 In vendita
+            other: "%{count} In vendita"
+    properties:
+      show:
+        booking_sign_in_body: Accedi o crea un account per richiedere una visita e scegli tra le fasce orarie pubblicate per questa casa.
+        booking_sign_in_cta: Accedi per prenotare una visita
+        enquiry_body_guest: Accedi o crea un account per chiedere informazioni sulla brochure, essere richiamato dal proprietario o dal venditore o chiarimenti prima di scegliere uno spazio di visualizzazione.
+        offer_body_guest: Accedi o crea un account per registrare la tua posizione di acquisto e inviare un'offerta.
+        rental_application_body_guest: Accedi o crea un account per condividere i tempi di trasloco previsti e le note sull'accessibilità con il team di locazione.
+    seo:
+      defaults:
+        admin: Gestisci annunci immobiliari, clienti, richieste, prenotazioni e operazioni nell'area di amministrazione di GotTheKeys.
+        public: Sfoglia elenchi di proprietà, salva ricerche e visualizzazioni di libri con GotTheKeys.
+      descriptions:
+        about_us:
+          index: Scopri come GotTheKeys aiuta venditori e utenti che effettuano ricerche con elenchi di proprietà più chiari, prenotazioni più semplici e un migliore controllo.
+        admin:
+          sessions:
+            new: Accedi all'area di lavoro di amministrazione di GotTheKeys per le operazioni del personale, i controlli di qualità, gli elenchi, le richieste e le prenotazioni.
+        blog:
+          index: Leggi gli articoli di GotTheKeys su elenchi di proprietà, richieste e modi pratici per migliorare le prestazioni di marketing.
+        contact_us:
+          index: Contatta il team GotTheKeys per assistenza con inserzioni, visite e domande generali sulla piattaforma immobiliare.
+        cookie_policy:
+          index: Scopri come GotTheKeys utilizza i cookie per supportare l'accesso, le preferenze e le funzionalità essenziali del sito.
+        devise:
+          confirmations:
+            new: Richiedi una nuova email di conferma GotTheKeys per il tuo account.
+          passwords:
+            new: Richiedi un collegamento sicuro per la reimpostazione della password GotTheKeys per il tuo account.
+          registrations:
+            new: Crea un account GotTheKeys per salvare ricerche, visualizzazioni di libri, inviare offerte o gestire elenchi di proprietà.
+          sessions:
+            new: Accedi al tuo account GotTheKeys per gestire le case salvate, le visite, le offerte e l'attività degli annunci.
+          unlocks:
+            new: Richiedi le istruzioni per lo sblocco dell'account GotTheKeys dopo troppi tentativi di accesso non riusciti.
+        for_rent:
+          index: Esplora le case in affitto, controlla i dettagli dell'annuncio e prenota le visite tramite GotTheKeys.
+        for_sale:
+          index: Sfoglia le case in vendita, confronta i dettagli degli annunci e prenota le visite direttamente tramite GotTheKeys.
+        how_it_works:
+          index: Scopri come GotTheKeys aiuta a commercializzare case, gestire le richieste e semplificare la gestione delle visite.
+        legal:
+          index: Leggi i principali termini legali, responsabilità e condizioni della piattaforma applicabili quando si utilizza GotTheKeys.
+        properties:
+          index: Sfoglia il catalogo completo delle proprietà GotTheKeys, perfeziona per posizione e prezzo e salva le ricerche per consultarle in seguito.
+          show: Visualizza i dettagli della proprietà, le foto, i documenti e le opzioni di visualizzazione su GotTheKeys.
+        searches:
+          index: Cerca annunci immobiliari per zona, prezzo e camere da letto, quindi salva i filtri o prenota una visita online.
+        welcome:
+          index: Scopri annunci immobiliari moderni, disponibilità di visualizzazione in tempo reale e un modo più chiaro per sfogliare le case con GotTheKeys.
+      titles:
+        about_us:
+          index: Chi siamo | Ho Le Chiavi
+        admin:
+          default: Amministratore | Ho Le Chiavi
+        blog:
+          index: Blog | Ho Le Chiavi
+        contact_us:
+          index: Contattaci | Ho Le Chiavi
+        cookie_policy:
+          index: Politica sui cookie | Ho Le Chiavi
+        for_rent:
+          index: In affitto
+        for_sale:
+          index: In vendita
+        how_it_works:
+          index: Come funziona | Ho Le Chiavi
+        legal:
+          index: Legale | Ho Le Chiavi
+        properties:
+          index: Annunci immobiliari | Ho Le Chiavi
+        searches:
+          index: Ricerca
+        welcome:
+          index: GotTheKeys
+    site_footer:
+      build_badge: Commit %{sha}
+  under_construction: In costruzione
+  user:
+    ago: fa
+    appointments: Appuntamenti
+    email: E-mail
+    member_since: Membro da allora
+    mobile: Mobile
+    name: Nome
+    no_appointments: Nessun appuntamento
+    property: Proprietà
+    property_details: Dettagli della proprietà
+    user_details_for: Dettagli utente per
+  viewing_times:
+    add_viewing_times_for: Aggiungi tempi di visualizzazione per
+    heading: Tempi di visualizzazione
+    title: Tempi di visualizzazione
+    viewing_times_for: Tempi di visualizzazione per
+  welcome:
+    tool_tip: Approfondimento del mercato
+    tool_tip_content: Scopri il tipo di informazioni dettagliate su prezzi e presentazione che aiutano i proprietari a lanciare un annuncio più forte.
+    welcome_message: Vendi o affitta con maggiore controllo
+zh:
+  blog:
+    back_to_blog: 返回博客
+    posts:
+      brochure_floor_plan:
+        byline: 由 GotTheKeys 团队于 2026 年 3 月 25 日撰写。
+        category: 营销资产
+        excerpt: 在观众提出问题之前回答明显问题的列表更有可能将注意力转化为有用的询问。
+        paragraphs:
+        - 宣传册和平面图有不同的作用。一本小册子讲述了该房产的故事；平面图解释了房间的实际运作方式。大多数认真的观众在投入时间观看之前都希望两者兼而有之。
+        - 这本小册子很有用，因为它使清单具有便携性。它可以总结主要功能，按顺序显示最佳图像，并以易于与合作伙伴、家长、顾问或同事共享的格式提供联系方式详细信息。
+        - 平面图回答了一个更安静但更实际的问题：我的生活适合这里吗？房间大小很重要，但流通、存储、浴室位置、花园通道以及空间是否能够真正支持工作、儿童、客人或宠物也很重要。
+        - 当其中任何一个资产缺失时，观众往往会反复问同样的问题。这会减慢查询流程，并可能使列表感觉不如附近的替代品完整。
+        - 但也有例外。很早的上市可能会在所有资产准备就绪之前上线，而简单的出租物业可能不需要精美的小册子。即使如此，该页面也应该说明现在可用的内容以及后续可用的内容。
+        - 最好的方法是使文档显而易见，但不要让它们占据页面的主导地位。将它们放在核心细节和查看操作附近，清楚地标记它们，并在价格、可用性或事实发生变化时保持文件最新。
+        read_time: 4 分钟阅读
+        takeaways:
+        - 使用有关房产故事和平面图的小册子以实现实用。
+        - 资产缺失会造成反复的问题和信心的削弱。
+        - 清楚地标记文档并使其与实时列表保持一致。
+        title: 宣传册、平面图，还是两者兼而有之？答案通常是肯定的
+      first_three_viewing_questions:
+        byline: 由 GotTheKeys 团队于 2026 年 3 月 28 日撰写。
+        category: 观看准备
+        excerpt: 关于状况、布局怪异和最近变化的清晰注释有助于观众更好地做好准备并减少可避免的缺席。
+        paragraphs:
+        - 在任何人到达前门之前，观看就开始了。当买家或租户要求租用时，他们已经对房产的状况、布局、位置以及房产是否值得一游形成了期望。
+        - 第一个问题通常是关于适合度。布局是否适合观看者的日常生活？一个好的清单应该通过照片、平面图和解释主要空间如何连接的副本来清晰地显示房间的流动。
+        - 第二个问题是关于条件。观众不需要预先了解所有细节，但他们确实需要了解哪些内容已准备就绪、哪些内容最近发生了变化以及哪些内容可能需要注意。诚实的状况说明可以减少意外并建立信任。
+        - 第三个问题是关于摩擦力。停车简单吗？访问很麻烦吗？是否考虑宠物？有链子吗？是否有服务费、限制或时间限制？这些实用的细节可以决定观看是否值得。
+        - 当列表尽早回答这些问题时，日记就会变得更清晰。预订的人更有可能理解他们所看到的内容，提出更好的问题，并在事后更快地做出决定。
+        - 这并不意味着要写一份防御性清单。这意味着消除可避免的不确定性。清晰的属性页面可以让严肃的观众有足够的信心采取行动，并为其他人提供足够的信息来自我选择。
+        read_time: 5 分钟阅读
+        takeaways:
+        - 在预订步骤之前解释布局、条件和实际摩擦。
+        - 使用诚实的笔记来防止本可以避免的观看意外。
+        - 准备更充分的观众可以更轻松、更快速地跟进。
+        title: 列表应该在日记打开之前回答前三个观看问题
+      five_small_listing_improvements:
+        byline: 由 GotTheKeys 团队于 2026 年 3 月 18 日撰写。
+        category: 铅质量
+        excerpt: 更好的询问通常来自更清晰的期望，而不是更大声的营销。这五项小改进有助于房源回答认真的买家和租户已经存在的问题。
+        paragraphs:
+        - 改进房产列表的最快方法通常不是完全重新设计。更好的引导照片、现实的标题价格和更清晰的开头段落可以改变买家对待广告的认真程度。
+        - 从基础知识开始：明亮的摄影、提及功能和大小的房间描述，以及人们实际搜索的功能的摘要，例如停车场、花园空间、学校或交通连接。
+        - 主要图像值得特别关注。它应该显示让房产最容易记住的东西，而不仅仅是上传的第一张照片。对于一些家庭来说，这是厨房或花园；对于一些家庭来说，则是厨房或花园。对另一些人来说，则是外观、景观或平静的生活空间。
+        - 开头段落应该起到有用的作用。说明该房产是什么、它可能适合谁、它的状况如何，以及在预订看房之前是否有任何实用的信息需要了解。这不仅仅是一长串形容词。
+        - 定价和展示一样重要。过于乐观的数字可能会赢得一两天的点击量，但一旦可比房屋的差异变得明显，它通常会降低信任度。当价格得到当地证据和房产状况的支持时，卖家往往会得到更强有力的对话。
+        - 文件也会改变查询质量。平面图、小册子或有关租赁期限、市政税范围、停车位和使用权的明确说明可以在安排第一次看房之前避免本可避免的反复。
+        - 最后，让下一步变得简单。如果买家或租户能够快速了解​​布局、要价以及如何安排看房，那么该列表就发挥了作用：将好奇心转化为有用的询问。
+        read_time: 5 分钟阅读
+        takeaways:
+        - 以更清晰的摄影和更有力的开头段落开头。
+        - 价格具有当地证据，因此列表很快就能赢得信任。
+        - 使小册子、平面图和预订操作易于查找。
+        title: 五项小的列表改进可产生更好的查询
+      quick_follow_up:
+        byline: 由 GotTheKeys 团队于 2026 年 3 月 21 日撰写。
+        category: 响应时间
+        excerpt: 第一个有用的回复比完美的回复更重要。买家和租户将响应度视为剩余流程感受的信号。
+        paragraphs:
+        - 严肃的询问往往会带着动力而来。观看者比较了几处房屋，检查了地图，看了两遍照片，并认为这一处值得讨论。缓慢的回复打破了这种节奏。
+        - 快速跟进并不一定意味着在几分钟内得到完整的答案。这意味着确认询问，确认请求已到达真人，并让观看者对接下来发生的事情有一个明确的预期。
+        - 当问题涉及可用性、报价、文件或访问权限时，这一小小的确认尤其重要。如果没有它，浏览者通常会继续浏览，下一个响应列表可能会成为他们记住的列表。
+        - 良好的跟进也可以保护卖家。一个简单的响应模板可以捕获首选的查看窗口、购买或租赁位置、财务状况以及确认插槽之前的任何破坏交易的因素。这使得每次观看都更容易确定优先顺序。
+        - 最强大的团队将速度与仓促分开。他们回复很快，但不会即兴回答每个问题。他们将常见的详细信息放在手边，在出现重复问题时更新列表，并将合格的查看者引导至下一步。
+        - 实际上，第一个工作日是关键窗口。当天有效的回复会让酒店感觉活跃、管理良好且值得信赖。即使是一个很强大的列表，如果反应迟到也会让人感到被忽视。
+        read_time: 4 分钟阅读
+        takeaways:
+        - 快速确认询问，即使稍后会有完整答案。
+        - 使用重复的问题来改进列表本身。
+        - 将响应时间视为观看者信任评估的一部分。
+        title: 为什么快速跟进仍然决定认真的买家是否保持参与
+    read_full_post: 阅读全文
+  devise:
+    registrations:
+      reasons:
+        inactive: 不活跃的
+        locked: 锁定
+        unconfirmed: 未证实
+    sessions:
+      admin:
+        signed_in: 以管理员身份成功登录。
+    views:
+      passwords:
+        new:
+          meta_description: 为您的帐户请求安全的 GotTheKeys 密码重置链接。
+      registrations:
+        edit:
+          are_you_sure: 你确定吗？
+          update: 更新
+        new:
+          meta_description: 创建 GotTheKeys 帐户以保存搜索、预订查看、提交报价或管理房产列表。
+      sessions:
+        admin:
+          meta_description: 登录 GotTheKeys 管理工作区进行员工操作、质量检查、列表、查询和预订。
+        new:
+          meta_description: 登录您的 GotTheKeys 帐户来管理已保存的房屋、查看、报价和列表活动。
+      unlocks:
+        new:
+          meta_description: 在多次登录尝试失败后请求 GotTheKeys 帐户解锁说明。
+  legal:
+    testing_harness_body: GotTheKeys 是一个伪装成房地产网站的 QA 测试工具。列表、角色和工作流程是为培训、测试和演示而设计的，而不是为现场房地产代理指导而设计的。
+    testing_harness_title: 测试披露：
+  ui:
+    admin:
+      appointments:
+        details: 细节
+      customers:
+        index:
+          badges:
+            buyer: 买方
+            landlord: 房东
+            registered_user: 注册用户
+            seller: 卖方
+            tenant: 租户
+          registered_on: 已注册%{time}
+        show:
+          account_details_title: 账户详情
+          back: 后退
+          booking_count: 预订
+          eyebrow: 客户简介
+          latest_booking: 最新预订
+          no_bookings: 没有找到该客户的预订。
+          recent_bookings_title: 最近的预订
+          registered_on: 注册于
+          title: 客户%{name}
+          view_bookings: 查看预订
+      dashboard:
+        metrics:
+          offers: 优惠
+      demo_data:
+        actions:
+          populate: 附加性能数据
+        performance_seed:
+          ai_modes:
+            auto: 汽车
+            'off': 离开
+            'on': 在
+          description: 使用此功能可以附加大量生成的卖家和属性，而无需重置基线数据集。
+          eyebrow: 性能数据
+          field_help:
+            ai_mode: "“关闭”会跳过 OpenAI，“自动”仅在存在 API 密钥时启用它，而“打开”则需要它。"
+            batch_size: 每个 AI 浓缩批次要发送多少个属性蓝图。
+            model: AI 丰富运行时要使用的 OpenAI 模型。
+            password: 每个生成的卖家帐户都使用此密码。
+            property_count: 创建这么多额外的财产并在生成的卖家之间分配所有权。
+            user_count: 创建这么多额外的卖家帐户。
+          fields:
+            ai_mode: AI丰富模式
+            batch_size: AI批量大小
+            model: 人工智能模型
+            password: 生成的用户密码
+            property_count: 要添加的属性
+            user_count: 要添加的用户
+          instructions:
+          - 此操作将演示用户和属性附加到当前数据库。它不会首先重置基线场景。
+          - 设置您要添加的确切用户和属性计数。用户计数接受任何正数，因此您可以进行扩展以匹配您计划的性能运行。
+          - 您输入的密码将应用于每个生成的卖家帐户。
+          - 为了获得最快的大型运行，请将 AI 模式设置为“关闭”。 Auto 和 On 可能会根据服务器配置调用 OpenAI。
+          - AI 模式开启需要在服务器上配置 OPENAI_API_KEY。批次大小和模型仅影响 AI 丰富的运行。
+          instructions_title: 指示
+          parameters_title: 参数
+          password_summary: 使用运行作业时输入的密码。
+          submit: 添加性能数据
+          title: 附加性能测试数据
+          validation:
+            ai_mode: AI 丰富模式必须为“关闭”、“自动”或“打开”。
+            integer: "%{field} 必须是整数。"
+            integer_minimum: "%{field} 必须是 %{minimum} 或更高。"
+            model: AI 模型必须是支持的下拉选项之一。
+            required: "%{field} 不能为空。"
+      flash:
+        populated_performance_demo_data: 添加了 %{users} 用户和 %{properties} 属性以进行性能测试。
+      properties:
+        index:
+          search:
+            all_statuses: 所有状态
+            status: 地位
+      qa:
+        seeded_personas:
+          admins_label: 管理员
+          buyers_label: 买家
+          sellers_label: 卖家
+        version_box:
+          commit_badge: Commit %{sha}
+      users:
+        index:
+          rent_count_badge:
+            one: 1 出租
+            other: "%{count} 出租"
+          sale_count_badge:
+            one: 1 出售
+            other: "%{count} 出售"
+    properties:
+      show:
+        booking_sign_in_body: 登录或创建帐户以请求查看并从已发布的时间段中选择该房屋。
+        booking_sign_in_cta: 登录以预订观看
+        enquiry_body_guest: 在您选择观看时段之前，请登录或创建帐户以索取宣传册信息、房东或卖家回电或说明。
+        offer_body_guest: 登录或创建帐户以注册您的购买头寸并提交报价。
+        rental_application_body_guest: 登录或创建一个帐户，与租赁团队分享您的预计入住时间和负担能力说明。
+    seo:
+      defaults:
+        admin: 在 GotTheKeys 管理区域中管理房产列表、客户、查询、预订和操作。
+        public: 使用 GotTheKeys 浏览房产列表、保存搜索并预订查看。
+      descriptions:
+        about_us:
+          index: 了解 GotTheKeys 如何帮助卖家和搜索者提供更清晰的房产列表、更简单的预订和更好的控制。
+        admin:
+          sessions:
+            new: 登录 GotTheKeys 管理工作区进行员工操作、质量检查、列表、查询和预订。
+        blog:
+          index: 阅读 GotTheKeys 有关房产列表、查询和提高营销绩效的实用方法的文章。
+        contact_us:
+          index: 请联系 GotTheKeys 团队，获取有关列表、查看和一般房地产平台问题的帮助。
+        cookie_policy:
+          index: 了解 GotTheKeys 如何使用 cookie 来支持登录、首选项和基本网站功能。
+        devise:
+          confirmations:
+            new: 为您的帐户请求新的 GotTheKeys 确认电子邮件。
+          passwords:
+            new: 为您的帐户请求安全的 GotTheKeys 密码重置链接。
+          registrations:
+            new: 创建 GotTheKeys 帐户以保存搜索、预订查看、提交报价或管理房产列表。
+          sessions:
+            new: 登录您的 GotTheKeys 帐户来管理已保存的房屋、查看、报价和列表活动。
+          unlocks:
+            new: 在多次登录尝试失败后请求 GotTheKeys 帐户解锁说明。
+        for_rent:
+          index: 通过 GotTheKeys 探索出租房屋、查看房源详细信息并预订看房。
+        for_sale:
+          index: 直接通过 GotTheKeys 浏览待售房屋、比较列表详细信息以及预订查看。
+        how_it_works:
+          index: 了解 GotTheKeys 如何帮助营销房屋、处理查询并使看房管理变得更容易。
+        legal:
+          index: 阅读使用 GotTheKeys 时适用的关键法律条款、责任和平台条件。
+        properties:
+          index: 浏览完整的 GotTheKeys 房产目录，按位置和价格进行细化，并保存搜索以供日后使用。
+          show: 在 GotTheKeys 上查看房产详细信息、照片、文档和查看选项。
+        searches:
+          index: 按面积、价格和卧室搜索房产清单，然后保存您的筛选条件或在线预订查看。
+        welcome:
+          index: 通过 GotTheKeys 发现现代房产列表、实时查看房源以及更清晰的房屋浏览方式。
+      titles:
+        about_us:
+          index: 关于我们 | GotTheKeys
+        admin:
+          default: 管理员 |拿到钥匙
+        blog:
+          index: 博客 |拿到钥匙
+        contact_us:
+          index: 联系我们 |拿到钥匙
+        cookie_policy:
+          index: Cookie 政策 |拿到钥匙
+        for_rent:
+          index: 出租
+        for_sale:
+          index: 出售
+        how_it_works:
+          index: 它是如何运作的 |拿到钥匙
+        legal:
+          index: 法律 |拿到钥匙
+        properties:
+          index: 物业列表 |拿到钥匙
+        searches:
+          index: 搜索
+        welcome:
+          index: GotTheKeys
+    site_footer:
+      build_badge: Commit %{sha}
