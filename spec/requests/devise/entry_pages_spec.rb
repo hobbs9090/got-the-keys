@@ -44,6 +44,8 @@ RSpec.describe "Devise entry pages", type: :request do
     expect(password_fields.css('input[type="password"]').count).to eq(2)
     expect(response.body).not_to include("marketing-wordmark--hero")
     expect(response.body).to include("Register")
+    expect(response.body).to include("Create your GotTheKeys account")
+    expect(response.body).not_to include("Create your seller account")
     expect(response.body).to include("English")
     expect(response.body).to include("Deutsch")
     expect(response.body).to include("Français")
@@ -83,17 +85,29 @@ RSpec.describe "Devise entry pages", type: :request do
     expect(document.at_css(%([data-testid="registration-email"]))).to be_present
     expect(document.at_css(%([data-testid="registration-password"]))).to be_present
     expect(document.at_css(%([data-testid="registration-password-confirmation"]))).to be_present
-    expect(document.at_css(%([data-testid="registration-terms"]))).to be_present
+    terms_checkbox = document.at_css(%([data-testid="registration-terms"]))
+    terms_link = document.at_css(%(label[for="user_terms_of_service"] a[href="/legal#terms-of-service"]))
+
+    expect(terms_checkbox).to be_present
+    expect(terms_link).to be_present
+    expect(terms_link.text).to eq("Terms of Service")
     expect(document.at_css(%([data-testid="registration-submit"]))).to be_present
   end
 
   it "renders the admin sign-in page" do
     get new_admin_session_path
+    document = Nokogiri::HTML.parse(response.body)
 
     expect(response).to have_http_status(:ok)
     expect_shared_auth_card_layout
     expect(response.body).not_to include("marketing-wordmark--hero")
     expect(response.body).to include("Sign in as Administrator")
+    expect(response.body).to include("Manage the GotTheKeys workspace")
+    expect(response.body).to include("Use your administrator credentials.")
+    expect(response.body).to include("Use your administrator email address and password to continue.")
+    expect(document.at_css(%(label[for="admin_email"])).text.squish).to eq("Email")
+    expect(response.body).not_to include("seller dashboard")
+    expect(response.body).not_to include("Use the links below if you need to reset your password")
     expect(response.body).not_to include("Verification code or backup code")
   end
 
@@ -127,7 +141,7 @@ RSpec.describe "Devise entry pages", type: :request do
       },
       {
         path: new_admin_session_path,
-        keys: ["devise.views.links.sign_in_as_admin", "helpers.label.admin.password", "devise.views.sessions.new.form_intro"]
+        keys: ["devise.views.links.sign_in_as_admin", "helpers.label.admin.password", "devise.views.sessions.admin.form_intro"]
       },
       {
         path: new_user_password_path,

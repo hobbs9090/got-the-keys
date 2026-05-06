@@ -74,7 +74,12 @@
         <div class="form-grid__full auth-form__checkbox">
           <%= f.check_box :terms_of_service, data: { testid: "registration-terms" } %>
           <div>
-            <%= f.label :terms_of_service, nil, class: "checkbox-label" %>
+            <%= tag.label for: "user_terms_of_service", class: "checkbox-label" do %>
+              <%= t(
+                    "devise.views.registrations.new.terms_html",
+                    terms: link_to(t("devise.views.registrations.new.terms_link_text"), legal_index_path(anchor: "terms-of-service"))
+                  ) %>
+            <% end %>
             <%= field_error_messages(resource, :terms_of_service) %>
           </div>
         </div>

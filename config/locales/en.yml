@@ -123,7 +123,7 @@ en:
         terms_of_service: "Terms of Service"
         remember_me: "Remember me"
       admin:
-        email: "Username"
+        email: "Email"
         password: "Password"
         password_confirmation: "Password confirmation"
         remember_me: "Remember me"
@@ -195,6 +195,8 @@ en:
     title: "Legal"
     header: "Legal"
     blurb: "A plain-English summary of the key terms and responsibilities that apply when you use the site."
+    testing_harness_title: "Testing disclosure:"
+    testing_harness_body: "GotTheKeys is a QA testing harness masquerading as a property site. The listings, personas, and workflows are designed for training, testing, and demonstration rather than live estate agency instruction."
     paragraph_1: "The information on GotTheKeys is provided to help market property and support communication between owners, buyers, tenants, and administrators. It is intended as a practical service, not as legal, tax, mortgage, or conveyancing advice."
     paragraph_2: "If you create an account or publish a listing, you are responsible for making sure the details you submit are accurate, up to date, and lawful to publish. That includes pricing, photographs, descriptions, availability, and any statements about the condition of the property."
     paragraph_3: "We aim to keep the site available and the information presented clearly, but we cannot promise uninterrupted service or guarantee that every search result, enquiry, or message will be received instantly. Planned maintenance, browser differences, and third-party network issues can affect availability."

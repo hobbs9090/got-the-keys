@@ -123,6 +123,9 @@ de:
         update_property: Update Property
       user:
         remember_me: Remember me
+  legal:
+    testing_harness_body: GotTheKeys is a QA testing harness masquerading as a property site. The listings, personas, and workflows are designed for training, testing, and demonstration rather than live estate agency instruction.
+    testing_harness_title: 'Testing disclosure:'
   location:
     heading: Location
     location_details_for: Location Details for

@@ -73,6 +73,14 @@ RSpec.describe "Public content pages", type: :request do
     expect(response.body).to include(I18n.t("about_us.hero_title"))
   end
 
+  it "exposes a stable terms anchor on the legal page" do
+    get "/legal"
+
+    expect(response).to have_http_status(:ok)
+    expect(parsed_html.at_css("#terms-of-service")).to be_present
+    expect(response.body).to include("GotTheKeys is a QA testing harness masquerading as a property site.")
+  end
+
   it "renders a non-placeholder contact location that matches the map postcode" do
     get "/contact_us"
 

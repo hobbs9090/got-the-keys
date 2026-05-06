@@ -149,19 +149,30 @@ en:
         new:
           title: 'Registration'
           submit: 'Registration'
-          hero_title: "Create your seller account"
+          hero_title: "Create your GotTheKeys account"
           setup_badge: "Account setup"
-          form_intro: "Use the form below to tell us who you are and where we should send account and viewing updates."
+          form_intro: "Use the form below to tell us who you are and where we should send account, saved-search, and viewing updates."
           read_more: "Read more"
-          why_so_much: "Why do you need to know so much about me?"
-          paragraph_1: "By having you do some of the work, we keep the costs down."
-          paragraph_2: "Part of that is you managing the viewings at times that suit you. You manage this via the website and email. No more waiting on agents to return calls, or missed opportunities for a viewing."
-          paragraph_3: "In order to do this we need to be sure we have your correct email and contact details. This is why we ask you for so much information and require you to confirm your correct email by clicking a link on the email we send you."
-          paragraph_4: "Remember, we're different from any other estate agents. There is no contract to sign and you can delete your account at any time by clicking the big red Delete button and poof...it's gone. We remove you from our database immediately. It's that simple. How refreshing."
+          terms_link_text: "Terms of Service"
+          terms_html: "I agree to the %{terms}"
+          why_so_much: "Why do you need these details?"
+          paragraph_1: "Your account keeps saved homes, viewing requests, offers, and listing activity in one place."
+          paragraph_2: "Sellers can manage listings and viewing availability. Buyers and renters can save searches, book viewings, and keep their enquiry details consistent."
+          paragraph_3: "We ask for contact details so viewing updates, offer responses, and account notices reach the right person."
+          paragraph_4: "You can update your details later and delete your account if you no longer need GotTheKeys."
         binding:
           title: 'Binding'
           submit: 'Binding'
       sessions:
+        admin:
+          hero_badge: "Admin access"
+          hero_title: "Manage the GotTheKeys workspace"
+          hero_intro: "Sign in to triage enquiries, manage listings, review bookings, and keep the QA environment moving."
+          paragraph_1: "The admin area is for staff operations, seeded-data checks, diagnostics, and customer workflow support."
+          paragraph_2: "Use your administrator credentials. Member accounts should use the public member sign-in instead."
+          form_badge: "Staff sign-in"
+          form_intro: "Use your administrator email address and password to continue."
+          support_note: "If you need admin access or recovery help, contact the site owner rather than using public account recovery."
         new:
           title: 'Sign in'
           submit: 'Sign in'

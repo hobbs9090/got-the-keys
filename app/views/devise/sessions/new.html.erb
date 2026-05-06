@@ -1,5 +1,7 @@
 <% admin_sign_in = request.fullpath.match?(/^\/admins/) %>
-<% session_title = admin_sign_in ? t('devise.views.links.sign_in_as_admin') : t('devise.views.sessions.new.title') %>
+<% session_copy_key = admin_sign_in ? "devise.views.sessions.admin" : "devise.views.sessions.new" %>
+<% session_copy = ->(key) { t("#{session_copy_key}.#{key}", default: t("devise.views.sessions.new.#{key}")) } %>
+<% session_title = admin_sign_in ? t('devise.views.links.sign_in_as_admin') : session_copy.call("title") %>
 <% admin_two_factor_challenge = admin_sign_in && @admin_two_factor_challenge_token.present? %>
 <%
   admin_otp_prompt =
@@ -15,13 +17,13 @@
 
 <section class="auth-shell auth-shell--signin">
   <aside class="site-card auth-panel auth-panel--signin">
-    <p class="section-heading__eyebrow"><%= t('devise.views.sessions.new.hero_badge') %></p>
-    <h1><%= t('devise.views.sessions.new.hero_title') %></h1>
-    <p class="auth-panel__lead"><%= t('devise.views.sessions.new.hero_intro') %></p>
-    <p><%= t('devise.views.sessions.new.paragraph_1') %></p>
+    <p class="section-heading__eyebrow"><%= session_copy.call("hero_badge") %></p>
+    <h1><%= session_copy.call("hero_title") %></h1>
+    <p class="auth-panel__lead"><%= session_copy.call("hero_intro") %></p>
+    <p><%= session_copy.call("paragraph_1") %></p>
 
     <div class="auth-panel__callout">
-      <p><%= t('devise.views.sessions.new.paragraph_2') %></p>
+      <p><%= session_copy.call("paragraph_2") %></p>
       <% if devise_mapping.registerable? %>
         <%= link_to t('devise.views.sessions.new.create_account'), new_registration_path(resource_name, return_to: pending_return_to_path, save_property_id: pending_save_property_id), class: "button secondary hollow" %>
       <% else %>
@@ -33,13 +35,13 @@
   <section class="site-card auth-form-card auth-form-card--signin">
     <div class="auth-form-card__header">
       <div>
-        <p class="section-heading__eyebrow"><%= t('devise.views.sessions.new.form_badge') %></p>
+        <p class="section-heading__eyebrow"><%= session_copy.call("form_badge") %></p>
         <h2 class="auth-form-card__title"><%= session_title %></h2>
       </div>
       <% if admin_two_factor_challenge %>
         <p class="auth-form-card__intro"><%= t("devise.views.sessions.new.admin_two_factor_challenge_hint", default: "Password verified. Enter your code to continue.") %></p>
       <% else %>
-        <p class="auth-form-card__intro"><%= t('devise.views.sessions.new.form_intro') %></p>
+        <p class="auth-form-card__intro"><%= session_copy.call("form_intro") %></p>
       <% end %>
     </div>
 
@@ -93,7 +95,7 @@
       </div>
 
       <div class="form-actions auth-form__actions">
-        <p class="auth-form__note"><%= t('devise.views.sessions.new.support_note') %></p>
+        <p class="auth-form__note"><%= session_copy.call("support_note") %></p>
         <%= f.submit t('devise.views.sessions.new.submit'), class: "button primary large auth-form__submit", data: { testid: "sign-in-submit" } %>
       </div>
     <% end %>
