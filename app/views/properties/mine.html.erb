@@ -1,23 +1,81 @@
 <% title t("ui.properties.mine.title") %>
 
 <section class="property-workspace">
-  <h1 class="visually-hidden"><%= t("ui.properties.mine.title") %></h1>
-  <section class="site-card property-workspace-section <%= "property-workspace-section--empty-listings" if @properties.blank? %>" data-testid="owner-listings-section">
-    <p class="section-heading__eyebrow"><%= t("ui.properties.mine.list_eyebrow") %></p>
-    <h2><%= t("ui.properties.mine.list_title") %></h2>
-    <p><%= t("ui.properties.mine.list_blurb") %></p>
+  <header class="section-heading">
+    <p class="section-heading__eyebrow"><%= t("ui.properties.mine.eyebrow") %></p>
+    <h1><%= t("ui.properties.mine.title") %></h1>
+    <p><%= t("ui.properties.mine.body") %></p>
+  </header>
 
-    <% if @properties.blank? %>
-      <h3 class="property-workspace-section__empty-title" data-testid="owner-listings-empty"><%= t("ui.properties.mine.empty_title") %></h3>
-      <p><%= t("ui.properties.mine.empty_body") %></p>
-      <div class="property-workspace-section__actions">
-        <%= link_to t("ui.site_header.add_property"), new_property_path, class: "button primary" %>
-      </div>
+  <section class="site-card property-workspace-section" data-testid="saved-homes-section">
+      <p class="section-heading__eyebrow"><%= t("ui.properties.mine.saved_homes_eyebrow") %></p>
+      <h2><%= t("ui.properties.mine.saved_homes_title") %></h2>
+      <p><%= t("ui.properties.mine.saved_homes_blurb") %></p>
+
+      <% if @saved_properties.any? %>
+        <div class="property-workspace__grid">
+          <% @saved_properties.each do |property| %>
+          <article id="<%= dom_id(property, :saved_property_card) %>" class="site-card property-workspace-card" data-testid="saved-property-card">
+            <div class="property-workspace-card__media">
+              <%= small_image_for(property) %>
+            </div>
+
+            <div class="property-workspace-card__content">
+              <div class="property-workspace-card__badges">
+                <span class="<%= property_sale_status_badge_class(property.sale_status) %>"><%= translated_sale_status(property.sale_status) %></span>
+                <% unless property.listing_state == "published" %>
+                  <span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span>
+                <% end %>
+              </div>
+
+              <div>
+                <h2><%= link_to property.address_line_1, property_path(property) %></h2>
+                <p><%= property.headline %></p>
+              </div>
+
+              <dl class="property-workspace-card__meta">
+                <div>
+                  <dt><%= t("ui.properties.mine.stats.location") %></dt>
+                  <dd><%= property.location_line %></dd>
+                </div>
+                <div>
+                  <dt><%= t("ui.properties.mine.stats.price") %></dt>
+                  <dd><%= format_price(property) %></dd>
+                </div>
+                <div>
+                  <dt><%= t("ui.properties.mine.stats.last_saved") %></dt>
+                  <dd><%= formatted_date_time(property.updated_at) %></dd>
+                </div>
+                <div>
+                  <dt><%= t("ui.properties.mine.stats.status") %></dt>
+                  <dd><%= translated_listing_state(property.listing_state) %></dd>
+                </div>
+              </dl>
+
+              <div class="property-workspace-card__actions">
+                <%= link_to t("ui.properties.mine.open_details"), property_path(property), class: "button primary" %>
+                <%= button_to t("ui.saved_properties.saved_button"), property_saved_property_path(property), method: :delete, class: "button primary hollow", form: { data: { turbo_stream: true } } %>
+              </div>
+            </div>
+            </article>
+          <% end %>
+        </div>
+      <% else %>
+        <h3 class="property-workspace-section__empty-title" data-testid="saved-homes-empty"><%= t("ui.properties.mine.saved_homes_empty_title") %></h3>
+        <p class="empty-copy"><%= t("ui.properties.mine.saved_homes_empty") %></p>
+      <% end %>
+    </section>
+
+  <section class="site-card property-workspace-section" id="saved-searches" data-testid="workspace-saved-searches">
+    <p class="section-heading__eyebrow"><%= t("ui.properties.mine.saved_searches_eyebrow") %></p>
+    <h2><%= t("ui.properties.mine.saved_searches_title") %></h2>
+    <p><%= t("ui.properties.mine.saved_searches_blurb") %></p>
+
+    <% if @saved_searches.blank? %>
+      <h3 class="property-workspace-section__empty-title" data-testid="saved-searches-empty"><%= t("ui.properties.mine.saved_searches_empty_title") %></h3>
+      <p class="empty-copy"><%= t("ui.properties.mine.saved_searches_empty") %></p>
     <% else %>
-      <div class="property-workspace-section__actions">
-        <%= link_to t("ui.site_header.add_property"), new_property_path, class: "button primary" %>
-      </div>
-      <%= render "properties/owner_properties_section" %>
+      <%= render "properties/saved_searches_cards", saved_searches: @saved_searches %>
     <% end %>
   </section>
 
@@ -165,76 +223,22 @@
     <% end %>
   </section>
 
-  <section class="site-card property-workspace-section" data-testid="saved-homes-section">
-      <p class="section-heading__eyebrow"><%= t("ui.properties.mine.saved_homes_eyebrow") %></p>
-      <h2><%= t("ui.properties.mine.saved_homes_title") %></h2>
-      <p><%= t("ui.properties.mine.saved_homes_blurb") %></p>
+  <details class="site-card property-workspace-section <%= "property-workspace-section--empty-listings" if @properties.blank? %>" data-testid="owner-listings-section">
+    <summary><%= t("ui.properties.mine.listing_disclosure_summary") %></summary>
+    <p class="section-heading__eyebrow"><%= t("ui.properties.mine.list_eyebrow") %></p>
+    <h2><%= t("ui.properties.mine.list_title") %></h2>
+    <p><%= t("ui.properties.mine.list_blurb") %></p>
 
-      <% if @saved_properties.any? %>
-        <div class="property-workspace__grid">
-          <% @saved_properties.each do |property| %>
-          <article id="<%= dom_id(property, :saved_property_card) %>" class="site-card property-workspace-card" data-testid="saved-property-card">
-            <div class="property-workspace-card__media">
-              <%= small_image_for(property) %>
-            </div>
-
-            <div class="property-workspace-card__content">
-              <div class="property-workspace-card__badges">
-                <span class="<%= property_sale_status_badge_class(property.sale_status) %>"><%= translated_sale_status(property.sale_status) %></span>
-                <% unless property.listing_state == "published" %>
-                  <span class="<%= listing_state_badge_class(property.listing_state) %>"><%= translated_listing_state(property.listing_state) %></span>
-                <% end %>
-              </div>
-
-              <div>
-                <h2><%= link_to property.address_line_1, property_path(property) %></h2>
-                <p><%= property.headline %></p>
-              </div>
-
-              <dl class="property-workspace-card__meta">
-                <div>
-                  <dt><%= t("ui.properties.mine.stats.location") %></dt>
-                  <dd><%= property.location_line %></dd>
-                </div>
-                <div>
-                  <dt><%= t("ui.properties.mine.stats.price") %></dt>
-                  <dd><%= format_price(property) %></dd>
-                </div>
-                <div>
-                  <dt><%= t("ui.properties.mine.stats.last_saved") %></dt>
-                  <dd><%= formatted_date_time(property.updated_at) %></dd>
-                </div>
-                <div>
-                  <dt><%= t("ui.properties.mine.stats.status") %></dt>
-                  <dd><%= translated_listing_state(property.listing_state) %></dd>
-                </div>
-              </dl>
-
-              <div class="property-workspace-card__actions">
-                <%= link_to t("ui.properties.mine.open_details"), property_path(property), class: "button primary" %>
-                <%= button_to t("ui.saved_properties.saved_button"), property_saved_property_path(property), method: :delete, class: "button primary hollow", form: { data: { turbo_stream: true } } %>
-              </div>
-            </div>
-            </article>
-          <% end %>
-        </div>
-      <% else %>
-        <h3 class="property-workspace-section__empty-title" data-testid="saved-homes-empty"><%= t("ui.properties.mine.saved_homes_empty_title") %></h3>
-        <p class="empty-copy"><%= t("ui.properties.mine.saved_homes_empty") %></p>
-      <% end %>
-    </section>
-
-  <section class="site-card property-workspace-section" id="saved-searches" data-testid="workspace-saved-searches">
-    <p class="section-heading__eyebrow"><%= t("ui.properties.mine.saved_searches_eyebrow") %></p>
-    <h2><%= t("ui.properties.mine.saved_searches_title") %></h2>
-    <p><%= t("ui.properties.mine.saved_searches_blurb") %></p>
-
-    <% if @saved_searches.blank? %>
-      <h3 class="property-workspace-section__empty-title" data-testid="saved-searches-empty"><%= t("ui.properties.mine.saved_searches_empty_title") %></h3>
-      <p class="empty-copy"><%= t("ui.properties.mine.saved_searches_empty") %></p>
+    <% if @properties.blank? %>
+      <h3 class="property-workspace-section__empty-title" data-testid="owner-listings-empty"><%= t("ui.properties.mine.empty_title") %></h3>
+      <p><%= t("ui.properties.mine.empty_body") %></p>
     <% else %>
-      <%= render "properties/saved_searches_cards", saved_searches: @saved_searches %>
+      <%= render "properties/owner_properties_section" %>
     <% end %>
-  </section>
+
+    <div class="property-workspace-section__actions">
+      <%= link_to t("ui.site_header.add_property"), new_property_path, class: "button primary" %>
+    </div>
+  </details>
 
 </section>

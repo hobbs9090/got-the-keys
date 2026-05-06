@@ -629,13 +629,13 @@ describe "Properties" do
   end
 
   describe "GET /properties/mine" do
-    it "requires a signed-in seller" do
+    it "requires a signed-in member" do
       get mine_properties_path
 
       expect(response).to redirect_to(new_user_session_path)
     end
 
-    it "shows the signed-in seller their saved and in-progress listings only" do
+    it "shows the signed-in member their saved and in-progress listings only" do
       sign_in user
       draft_property = FactoryBot.create(:property, :draft, user:, address_line_1: "Draft Mews")
       review_property = FactoryBot.create(:property, :review_pending, user:, address_line_1: "Review Cottage")
@@ -658,7 +658,7 @@ describe "Properties" do
       expect(response.body).not_to include(I18n.t("ui.properties.listing_states.published"))
       expect(response.body).to include(property_path(draft_property))
       expect(response.body).to include(edit_property_path(draft_property))
-      expect(document.at_css("h1")&.text&.strip).to eq(I18n.t("ui.properties.mine.title", default: "My listings"))
+      expect(document.at_css("h1")&.text&.strip).to eq("Your account")
     end
 
     it "shows upcoming, previous, and cancelled appointments for the seller's properties" do
@@ -714,6 +714,7 @@ describe "Properties" do
       expect(response.body).to include("Remove from saved list")
       expect(saved_cards.count).to eq(1)
       expect(owner_cards.count).to be >= 1
+      expect(response.body.index("Saved homes")).to be < response.body.index("Your listings")
     end
 
     it "includes a saved searches workspace panel" do
