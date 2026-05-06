@@ -90,6 +90,20 @@ en:
         public: "Browse property listings, save searches, and book viewings with GotTheKeys."
         admin: "Manage property listings, customers, enquiries, bookings, and operations in the GotTheKeys admin area."
       descriptions:
+        admin:
+          sessions:
+            new: "Sign in to the GotTheKeys admin workspace for staff operations, QA checks, listings, enquiries, and bookings."
+        devise:
+          confirmations:
+            new: "Request a fresh GotTheKeys confirmation email for your account."
+          passwords:
+            new: "Request a secure GotTheKeys password reset link for your account."
+          registrations:
+            new: "Create a GotTheKeys account to save searches, book viewings, submit offers, or manage property listings."
+          sessions:
+            new: "Sign in to your GotTheKeys account to manage saved homes, viewings, offers, and listing activity."
+          unlocks:
+            new: "Request GotTheKeys account unlock instructions after too many unsuccessful sign-in attempts."
         welcome:
           index: "Discover modern property listings, live viewing availability, and a clearer way to browse homes with GotTheKeys."
         searches:

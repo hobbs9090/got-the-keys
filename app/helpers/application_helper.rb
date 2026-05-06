@@ -1,4 +1,28 @@
 module ApplicationHelper
+  AUTH_META_CONTROLLERS = %w[
+    admin/sessions
+    devise/confirmations
+    devise/passwords
+    devise/registrations
+    devise/sessions
+    devise/unlocks
+    users/passwords
+  ].freeze
+  CATALOGUE_META_CONTROLLERS = %w[
+    for_rent
+    for_sale
+    properties
+    searches
+  ].freeze
+  CATALOGUE_CANONICAL_QUERY_KEYS = %w[
+    q
+    sale_status
+    min_price
+    max_price
+    minimum_bedrooms
+    town_city
+  ].freeze
+
   IMAGE_INTRINSIC_DIMENSIONS = {
     "gotthekeys-wordmark-green.svg" => [1600, 360],
     "gotthekeys-wordmark-green-dark.svg" => [1600, 360],
@@ -68,7 +92,8 @@ module ApplicationHelper
     return if request.blank?
 
     query = canonical_query_parameters.to_query
-    query.present? ? "#{request.base_url}#{request.path}?#{query}" : "#{request.base_url}#{request.path}"
+    path = canonical_request_path
+    query.present? ? "#{request.base_url}#{path}?#{query}" : "#{request.base_url}#{path}"
   end
 
   def appointment_status_badge_class(status)
@@ -438,7 +463,8 @@ module ApplicationHelper
   end
 
   def default_meta_robots_content
-    return "noindex, nofollow" if admin_namespace?
+    return "noindex, nofollow" if admin_namespace? || auth_meta_page?
+    return "noindex, follow" if paginated_catalogue_page?
     return "index, follow" if public_indexing_enabled?
 
     "noindex, nofollow"
@@ -454,15 +480,25 @@ module ApplicationHelper
   def canonical_query_parameters
     return {} if request.blank?
 
-    request.query_parameters.slice(
-      "q",
-      "sale_status",
-      "min_price",
-      "max_price",
-      "minimum_bedrooms",
-      "town_city",
-      "page"
-    ).reject { |_key, value| value.blank? }
+    request.query_parameters.slice(*CATALOGUE_CANONICAL_QUERY_KEYS).reject { |_key, value| value.blank? }
+  end
+
+  def canonical_request_path
+    return properties_path if catalogue_index_page? && controller_path == "searches"
+
+    request.path
+  end
+
+  def auth_meta_page?
+    AUTH_META_CONTROLLERS.include?(controller_path)
+  end
+
+  def catalogue_index_page?
+    CATALOGUE_META_CONTROLLERS.include?(controller_path) && action_name == "index"
+  end
+
+  def paginated_catalogue_page?
+    catalogue_index_page? && request.present? && request.query_parameters["page"].to_i > 1
   end
 
   def boolean_config_value(value)

@@ -116,6 +116,7 @@ en:
           request_new_link: "Request a fresh reset link"
         new:
           title: 'Forgot Password'
+          meta_description: "Request a secure GotTheKeys password reset link for your account."
           submit: 'Send reset message'
           hero_badge: "Password recovery"
           hero_title: "Reset your password"
@@ -148,6 +149,7 @@ en:
           cancel_action: "Delete this account"
         new:
           title: 'Registration'
+          meta_description: "Create a GotTheKeys account to save searches, book viewings, submit offers, or manage property listings."
           submit: 'Registration'
           hero_title: "Create your GotTheKeys account"
           setup_badge: "Account setup"
@@ -165,6 +167,7 @@ en:
           submit: 'Binding'
       sessions:
         admin:
+          meta_description: "Sign in to the GotTheKeys admin workspace for staff operations, QA checks, listings, enquiries, and bookings."
           hero_badge: "Admin access"
           hero_title: "Manage the GotTheKeys workspace"
           hero_intro: "Sign in to triage enquiries, manage listings, review bookings, and keep the QA environment moving."
@@ -175,6 +178,7 @@ en:
           support_note: "If you need admin access or recovery help, contact the site owner rather than using public account recovery."
         new:
           title: 'Sign in'
+          meta_description: "Sign in to your GotTheKeys account to manage saved homes, viewings, offers, and listing activity."
           submit: 'Sign in'
           remember_me: 'Remember me'
           otp_attempt: "Verification code or backup code"
@@ -191,6 +195,7 @@ en:
       unlocks:
         new:
           title: 'Resend unlock instructions'
+          meta_description: "Request GotTheKeys account unlock instructions after too many unsuccessful sign-in attempts."
           submit: 'Unlock message retransmission'
           hero_badge: "Account unlock"
           hero_title: "Unlock your account"

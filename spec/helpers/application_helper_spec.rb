@@ -74,6 +74,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       ENV.delete("PUBLIC_INDEXING_ENABLED")
       ENV.delete("ALLOW_INDEXING")
       allow(helper).to receive(:controller_path).and_return("welcome")
+      allow(helper).to receive(:action_name).and_return("index")
     end
 
     it "uses the environment-configured default for public pages" do
@@ -93,6 +94,56 @@ RSpec.describe ApplicationHelper, type: :helper do
       allow(helper).to receive(:controller_path).and_return("admin/properties")
 
       expect(helper.page_meta_robots).to eq("noindex, nofollow")
+    end
+
+    it "keeps auth entry pages noindex even when public indexing is enabled" do
+      seo_config.public_indexing_enabled = true
+      allow(helper).to receive(:controller_path).and_return("devise/sessions")
+      allow(helper).to receive(:action_name).and_return("new")
+
+      expect(helper.page_meta_robots).to eq("noindex, nofollow")
+    end
+
+    it "sets paginated catalogue pages to noindex follow" do
+      allow(helper).to receive(:controller_path).and_return("properties")
+      allow(helper).to receive(:action_name).and_return("index")
+      allow(helper).to receive(:request).and_return(
+        instance_double(ActionDispatch::Request, query_parameters: { "page" => "2" })
+      )
+
+      expect(helper.page_meta_robots).to eq("noindex, follow")
+    end
+  end
+
+  describe "#page_canonical_url" do
+    it "canonicalises search result pages to the property catalogue without pagination" do
+      allow(helper).to receive(:controller_path).and_return("searches")
+      allow(helper).to receive(:action_name).and_return("index")
+      allow(helper).to receive(:request).and_return(
+        instance_double(
+          ActionDispatch::Request,
+          base_url: "https://staging.gotthekeys.uk",
+          path: "/searches",
+          query_parameters: { "q" => "Sevenoaks", "page" => "3", "utm_source" => "newsletter" }
+        )
+      )
+
+      expect(helper.page_canonical_url).to eq("https://staging.gotthekeys.uk/properties?q=Sevenoaks")
+    end
+
+    it "removes pagination from canonical catalogue URLs" do
+      allow(helper).to receive(:controller_path).and_return("properties")
+      allow(helper).to receive(:action_name).and_return("index")
+      allow(helper).to receive(:request).and_return(
+        instance_double(
+          ActionDispatch::Request,
+          base_url: "https://staging.gotthekeys.uk",
+          path: "/properties",
+          query_parameters: { "page" => "9", "town_city" => "Westerham" }
+        )
+      )
+
+      expect(helper.page_canonical_url).to eq("https://staging.gotthekeys.uk/properties?town_city=Westerham")
     end
   end
 

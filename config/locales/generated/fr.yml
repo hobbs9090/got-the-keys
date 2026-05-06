@@ -66,6 +66,8 @@ fr:
       passwords:
         edit:
           cancel_my_account: Cancel my account
+        new:
+          meta_description: Request a secure GotTheKeys password reset link for your account.
       registrations:
         binding:
           submit: Binding
@@ -74,10 +76,18 @@ fr:
           change_pass_tip: If you do not want to change, leave blank
           password: Change Password
           submit: Submit
-      sessions:
         new:
+          meta_description: Create a GotTheKeys account to save searches, book viewings, submit offers, or manage property listings.
+      sessions:
+        admin:
+          meta_description: Sign in to the GotTheKeys admin workspace for staff operations, QA checks, listings, enquiries, and bookings.
+        new:
+          meta_description: Sign in to your GotTheKeys account to manage saved homes, viewings, offers, and listing activity.
           otp_attempt: Verification code or backup code
           otp_attempt_hint: Enter an authenticator code or one of your backup codes.
+      unlocks:
+        new:
+          meta_description: Request GotTheKeys account unlock instructions after too many unsuccessful sign-in attempts.
   errors:
     could_not_be_saved: could not be saved
     error: error
@@ -316,12 +326,26 @@ fr:
       descriptions:
         about_us:
           index: Learn how GotTheKeys helps sellers and searchers with clearer property listings, simpler booking, and better control.
+        admin:
+          sessions:
+            new: Sign in to the GotTheKeys admin workspace for staff operations, QA checks, listings, enquiries, and bookings.
         blog:
           index: Read GotTheKeys articles on property listings, enquiries, and practical ways to improve marketing performance.
         contact_us:
           index: Contact the GotTheKeys team for help with listings, viewings, and general property platform questions.
         cookie_policy:
           index: See how GotTheKeys uses cookies to support sign-in, preferences, and essential site features.
+        devise:
+          confirmations:
+            new: Request a fresh GotTheKeys confirmation email for your account.
+          passwords:
+            new: Request a secure GotTheKeys password reset link for your account.
+          registrations:
+            new: Create a GotTheKeys account to save searches, book viewings, submit offers, or manage property listings.
+          sessions:
+            new: Sign in to your GotTheKeys account to manage saved homes, viewings, offers, and listing activity.
+          unlocks:
+            new: Request GotTheKeys account unlock instructions after too many unsuccessful sign-in attempts.
         for_rent:
           index: Explore homes to rent, check listing details, and book viewings through GotTheKeys.
         for_sale:
