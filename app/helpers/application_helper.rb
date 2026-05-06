@@ -19,7 +19,9 @@ module ApplicationHelper
     sale_status
     min_price
     max_price
+    min_bedrooms
     minimum_bedrooms
+    town
     town_city
   ].freeze
 

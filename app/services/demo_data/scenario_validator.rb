@@ -187,10 +187,12 @@ module DemoData
 
     def normalize_admins(admins)
       admins.map do |admin|
+        password = demo_password(admin.fetch(:password, "secret1234"))
+
         {
           email: admin.fetch(:email),
-          password: admin.fetch(:password, "secret"),
-          password_confirmation: admin.fetch(:password_confirmation, admin.fetch(:password, "secret")),
+          password:,
+          password_confirmation: demo_password(admin.fetch(:password_confirmation, password)),
           language: admin.fetch(:language, "en")
         }
       end
@@ -198,17 +200,27 @@ module DemoData
 
     def normalize_users(users)
       users.map do |user|
+        password = demo_password(user.fetch(:password, "secret1234"))
+
         {
           first_name: user.fetch(:first_name),
           last_name: user.fetch(:last_name),
           mobile_number: user.fetch(:mobile_number),
           email: user.fetch(:email),
-          password: user.fetch(:password, "secret"),
-          password_confirmation: user.fetch(:password_confirmation, user.fetch(:password, "secret")),
+          password:,
+          password_confirmation: demo_password(user.fetch(:password_confirmation, password)),
           language: user.fetch(:language, "en"),
           terms_of_service: true
         }
       end
+    end
+
+    def demo_password(value)
+      password = value.to_s
+      minimum = Devise.password_length.min
+      return password if password.length >= minimum
+
+      "#{password}#{'0' * (minimum - password.length)}"
     end
 
     def normalize_properties(properties)

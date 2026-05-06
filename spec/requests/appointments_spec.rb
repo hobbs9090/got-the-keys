@@ -47,13 +47,14 @@ RSpec.describe "Appointments" do
 
       expect(response).to have_http_status(:ok)
       document = Nokogiri::HTML.parse(response.body)
-      email_input = document.at_css('input[name="appointment[customer_email]"]')
+      email_display = document.at_css('[data-testid="appointment-customer-email-display"]')
+      email_input = document.at_css('input[type="hidden"][name="appointment[customer_email]"]')
 
       expect(response.body).to include(%(value="#{ERB::Util.html_escape(user.full_name)}"))
-      expect(response.body).to include(%(value="#{ERB::Util.html_escape(user.email)}"))
       expect(response.body).to include(%(value="#{ERB::Util.html_escape(user.mobile_number)}"))
+      expect(email_display.text).to include(user.email)
       expect(email_input).to be_present
-      expect(email_input["readonly"]).to eq("readonly")
+      expect(email_input["value"]).to eq(user.email)
     end
 
     it "prevents owners from accessing the booking panel redirect" do
@@ -231,9 +232,9 @@ RSpec.describe "Appointments" do
       token = appointment.access_token
       sign_in(user)
 
-      get appointment_path(appointment, token:)
+      get appointment_path(appointment, token:, source: "email")
 
-      expect(response).to redirect_to(appointment_path(appointment))
+      expect(response).to redirect_to("#{appointment_path(appointment)}?source=email")
       expect(response).to have_http_status(:see_other)
     end
 

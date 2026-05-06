@@ -31,10 +31,13 @@ RSpec.describe "Rental applications", type: :request do
 
     document = Nokogiri::HTML.parse(response.body)
     expect(document.at_css('[data-testid="rental-applicant-name"]')["value"]).to eq("Zoe Bates")
-    expect(document.at_css('[data-testid="rental-applicant-email"]')["value"]).to eq("zoe.bates@example.com")
+    email_display = document.at_css('[data-testid="rental-applicant-email-display"]')
+    email_input = document.at_css('input[type="hidden"][name="rental_application[applicant_email]"]')
+
+    expect(email_display.text).to include("zoe.bates@example.com")
+    expect(email_input["value"]).to eq("zoe.bates@example.com")
     expect(document.at_css('[data-testid="rental-applicant-phone"]')["value"]).to eq("07700 930099")
     expect(document.at_css('[data-testid="rental-move-in-date"]')["value"]).to be_nil
-    expect(document.at_css('[data-testid="rental-applicant-email"]')["readonly"]).to eq("readonly")
   end
 
   it "ignores a tampered applicant email for signed-in users" do
@@ -73,7 +76,7 @@ RSpec.describe "Rental applications", type: :request do
       }
     end.to change(RentalApplication, :count).by(1)
 
-    expect(response).to redirect_to(property_path(property))
+    expect(response).to redirect_to(rental_application_path(RentalApplication.last.public_reference))
     expect(RentalApplication.last.status).to eq("received")
   end
 

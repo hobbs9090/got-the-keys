@@ -45,7 +45,7 @@ RSpec.describe "Admin demo scenarios" do
     expect(performance_form).to be_present
     expect(parsed_html.at_css('[data-testid="performance-seed-user-count"]')["value"]).to eq(DemoData::Populator::DEFAULT_USER_COUNT.to_s)
     expect(parsed_html.at_css('[data-testid="performance-seed-property-count"]')["value"]).to eq(DemoData::Populator::DEFAULT_PROPERTY_COUNT.to_s)
-    expect(parsed_html.at_css('[data-testid="performance-seed-password"]')["value"]).to eq("secret")
+    expect(parsed_html.at_css('[data-testid="performance-seed-password"]')["value"]).to eq("secret1234")
     expect(parsed_html.at_css('[data-testid="performance-seed-batch-size"]')["value"]).to eq(DemoData::Populator::DEFAULT_BATCH_SIZE.to_s)
     expect(parsed_html.at_css('[data-testid="performance-seed-model"] option[selected]')["value"]).to eq(DemoData::OpenaiEnrichmentModels::DEFAULT)
     expect(response.body).not_to include("gotthekeys-admin-performance-seed-form")
@@ -95,7 +95,7 @@ RSpec.describe "Admin demo scenarios" do
       performance_seed: {
         user_count: "0",
         property_count: "5",
-        password: "secret",
+        password: "secret1234",
         ai_mode: "off",
         batch_size: "2",
         model: "gpt-5.4-mini"

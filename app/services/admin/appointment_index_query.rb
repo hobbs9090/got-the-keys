@@ -48,7 +48,7 @@ class Admin::AppointmentIndexQuery
     scope.where(
       "lower(customer_email) = :email OR (customer_phone = :phone AND lower(customer_name) = :name)",
       email: matched_user.email.downcase,
-      phone: matched_user.mobile_number,
+      phone: PhoneNumberNormalizable.normalize_phone_number(matched_user.mobile_number),
       name: matched_user.full_name.downcase
     )
   end

@@ -237,7 +237,7 @@ class PropertiesController < ApplicationController
 
     if user.full_name.present? && user.mobile_number.present?
       params[:customer_name] = user.full_name.downcase
-      params[:customer_phone] = user.mobile_number
+      params[:customer_phone] = PhoneNumberNormalizable.normalize_phone_number(user.mobile_number)
     end
 
     params

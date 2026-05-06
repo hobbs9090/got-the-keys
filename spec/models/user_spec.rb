@@ -87,16 +87,16 @@ describe "A user" do
     expect(user.errors[:password].first).to eq("can't be blank")
   end
 
-  it "must have a password of minimum 6 characters" do
-    user = User.new(user_attributes(password: 'X' * 5, password_confirmation: 'X' * 5))
+  it "must have a password of minimum 10 characters" do
+    user = User.new(user_attributes(password: 'X' * 9, password_confirmation: 'X' * 9))
 
     expect(user.valid?).to be false
     expect(user.errors[:password].any?).to be true
-    expect(user.errors[:password].first).to eq("is too short (minimum is 6 characters)")
+    expect(user.errors[:password].first).to eq("is too short (minimum is 10 characters)")
   end
 
-  it "can have 6 character password" do
-    user = User.new(user_attributes(password: 'X' * 6, password_confirmation: 'X' * 6))
+  it "can have a 10 character password" do
+    user = User.new(user_attributes(password: 'X' * 10, password_confirmation: 'X' * 10))
 
     expect(user.valid?).to be true
     expect(user.errors[:password].any?).to be false

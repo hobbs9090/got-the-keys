@@ -5,7 +5,7 @@ class Admin::DemoScenariosController < Admin::BaseController
   PERFORMANCE_SEED_DEFAULTS = {
     user_count: DemoData::Populator::DEFAULT_USER_COUNT,
     property_count: DemoData::Populator::DEFAULT_PROPERTY_COUNT,
-    password: "secret",
+    password: "secret1234",
     ai_mode: "off",
     batch_size: DemoData::Populator::DEFAULT_BATCH_SIZE,
     model: DemoData::OpenaiEnrichmentModels::DEFAULT

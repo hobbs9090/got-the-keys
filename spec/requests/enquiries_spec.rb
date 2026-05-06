@@ -46,7 +46,7 @@ RSpec.describe "Enquiries", type: :request do
       end.to change(Enquiry, :count).by(1)
         .and have_enqueued_job(EnquiryNotificationJob)
 
-      expect(response).to redirect_to(property_path(property))
+      expect(response).to redirect_to(enquiry_path(Enquiry.last.lead_reference))
       expect(Enquiry.last.status).to eq("new")
     end
   end

@@ -39,7 +39,7 @@ class Admin::CustomerDirectory
       .where(
         "lower(customer_email) = :email OR (customer_phone = :phone AND lower(customer_name) = :name)",
         email: customer.customer_email.to_s.downcase,
-        phone: customer.customer_phone.to_s,
+        phone: PhoneNumberNormalizable.normalize_phone_number(customer.customer_phone),
         name: customer.customer_name.to_s.downcase
       )
       .recent_first
@@ -215,8 +215,22 @@ class Admin::CustomerDirectory
           #{phone_sql} IS NOT NULL
           AND #{phone_sql} != ''
           AND LOWER(NULLIF(TRIM(COALESCE(users.first_name, '') || ' ' || COALESCE(users.last_name, '')), '')) = LOWER(#{name_sql})
-          AND users.mobile_number = #{phone_sql}
+          AND #{normalized_phone_sql('users.mobile_number')} = #{normalized_phone_sql(phone_sql)}
         )
+    SQL
+  end
+
+  def normalized_phone_sql(source)
+    digits = [" ", "-", "(", ")", ".", "+"].reduce("COALESCE(#{source}, '')") do |sql, character|
+      "REPLACE(#{sql}, #{quoted(character)}, '')"
+    end
+
+    <<~SQL.squish
+      CASE
+        WHEN #{digits} = '' THEN ''
+        WHEN #{digits} LIKE '0%' THEN '+44' || SUBSTR(#{digits}, 2)
+        ELSE '+' || #{digits}
+      END
     SQL
   end
 

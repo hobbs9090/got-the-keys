@@ -106,7 +106,7 @@ RSpec.describe DemoData::ScenarioValidator do
       open_weekdays: [1, 2, 3, 4, 5]
     )
     expect(normalized[:admins]).to include(
-      include(email: "admin@example.com", password_confirmation: "secret", language: "en")
+      include(email: "admin@example.com", password_confirmation: "secret0000", language: "en")
     )
     expect(normalized[:users]).to include(
       include(email: "owner@example.com", terms_of_service: true, language: "en")

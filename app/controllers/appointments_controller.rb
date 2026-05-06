@@ -87,7 +87,7 @@ class AppointmentsController < ApplicationController
   def authorize_public_access!
     return if current_admin.present?
     if appointment_owner_signed_in?
-      return redirect_to url_for(params.permit!.except(:token)), status: :see_other if request.get? && params[:token].present?
+      return redirect_to tokenless_current_url, status: :see_other if request.get? && params[:token].present?
 
       return
     end
@@ -105,6 +105,11 @@ class AppointmentsController < ApplicationController
     return if @appointment.manageable_by_customer?
 
     redirect_to appointment_path(@appointment, appointment_magic_link_params), alert: t("ui.appointments.self_service.flash.expired")
+  end
+
+  def tokenless_current_url
+    query = request.query_parameters.except("token").to_query
+    query.present? ? "#{request.path}?#{query}" : request.path
   end
 
   def guard_customer_self_service_mutation!

@@ -40,12 +40,14 @@ RSpec.describe "SEO meta tags", type: :request do
   end
 
   it "removes pagination from property catalogue canonicals" do
-    get properties_path(town_city: "Westerham", page: 9)
+    FactoryBot.create(:property, town_city: "Westerham")
+
+    get properties_path(town: "Westerham", page: 9)
 
     expect(response).to have_http_status(:ok)
     expect(document.at_css('meta[name="robots"]')["content"]).to eq("noindex, follow")
     expect(document.at_css('link[rel="canonical"]')["href"]).to eq(
-      properties_url(town_city: "Westerham")
+      properties_url(town: "Westerham")
     )
   end
 end

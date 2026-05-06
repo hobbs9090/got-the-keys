@@ -22,6 +22,6 @@ RSpec.describe Enquiry do
   it "generates a lead reference automatically" do
     enquiry = FactoryBot.create(:enquiry)
 
-    expect(enquiry.lead_reference).to match(/\ALEAD-[A-Z0-9]{7}\z/)
+    expect(enquiry.lead_reference).to match(/\AGTK-ENQ-[A-Z0-9]{8}\z/)
   end
 end

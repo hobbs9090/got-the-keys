@@ -67,7 +67,7 @@ module DemoData
     def initialize(
       user_count: DEFAULT_USER_COUNT,
       property_count: DEFAULT_PROPERTY_COUNT,
-      password: 'secret',
+      password: 'secret1234',
       users: nil,
       ai_mode: :auto,
       batch_size: DEFAULT_BATCH_SIZE,

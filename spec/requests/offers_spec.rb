@@ -43,7 +43,7 @@ RSpec.describe "Offers", type: :request do
       }
     end.to change(Offer, :count).by(1)
 
-    expect(response).to redirect_to(property_path(property))
+    expect(response).to redirect_to(offer_path(Offer.last.public_reference))
     expect(Offer.last.status).to eq("received")
   end
 
@@ -74,10 +74,13 @@ RSpec.describe "Offers", type: :request do
     document = Nokogiri::HTML.parse(response.body)
 
     expect(document.at_css('[data-testid="offer-buyer-name"]')["value"]).to eq("Naomi Blake")
-    expect(document.at_css('[data-testid="offer-buyer-email"]')["value"]).to eq("naomi@example.com")
+    email_display = document.at_css('[data-testid="offer-buyer-email-display"]')
+    email_input = document.at_css('input[type="hidden"][name="offer[buyer_email]"]')
+
+    expect(email_display.text).to include("naomi@example.com")
+    expect(email_input["value"]).to eq("naomi@example.com")
     expect(document.at_css('[data-testid="offer-buyer-phone"]')["value"]).to eq("07700 905100")
     expect(document.at_css('[data-testid="offer-amount"]')["value"]).to eq(formatted_asking_price)
-    expect(document.at_css('[data-testid="offer-buyer-email"]')["readonly"]).to eq("readonly")
   end
 
   it "ignores a tampered buyer email for signed-in users" do

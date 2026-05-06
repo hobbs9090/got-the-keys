@@ -57,8 +57,8 @@ module DemoData
     def export_admin(admin)
       {
         email: admin.email,
-        password: "secret",
-        password_confirmation: "secret",
+        password: "secret1234",
+        password_confirmation: "secret1234",
         language: admin.language
       }
     end
@@ -69,8 +69,8 @@ module DemoData
         last_name: user.last_name,
         mobile_number: user.mobile_number,
         email: user.email,
-        password: "secret",
-        password_confirmation: "secret",
+        password: "secret1234",
+        password_confirmation: "secret1234",
         language: user.language
       }
     end
