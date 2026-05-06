@@ -99,6 +99,11 @@
   width: 100%;
 }
 
+.blog-feature__image-link,
+.blog-story-card__media a {
+  display: block;
+}
+
 .blog-feature__image {
   aspect-ratio: 16 / 9;
   height: 100%;
@@ -108,6 +113,19 @@
   display: grid;
   gap: 1.25rem;
   padding: 1.6rem;
+}
+
+.blog-feature__body h2 a,
+.blog-story-card__body h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.blog-feature__body h2 a:hover,
+.blog-feature__body h2 a:focus,
+.blog-story-card__body h3 a:hover,
+.blog-story-card__body h3 a:focus {
+  color: var(--color-primary);
 }
 
 .blog-feature__meta,
@@ -233,6 +251,10 @@
   margin: 0;
 }
 
+.blog-read-link {
+  font-weight: 800;
+}
+
 .blog-sidebar {
   align-content: start;
 }
@@ -271,8 +293,78 @@
   margin-bottom: 0;
 }
 
+.blog-post {
+  display: grid;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.blog-post__hero {
+  align-items: center;
+  display: grid;
+  gap: 1.75rem;
+  grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
+}
+
+.blog-post__hero-copy {
+  display: grid;
+  gap: 1rem;
+}
+
+.blog-post__standfirst {
+  font-size: 1.12rem;
+  max-width: 64ch;
+}
+
+.blog-post__hero-media {
+  border-radius: calc(var(--radius-md) - 2px);
+  line-height: 0;
+  overflow: hidden;
+}
+
+.blog-post__image {
+  aspect-ratio: 4 / 3;
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.blog-post__layout {
+  align-items: start;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.72fr);
+}
+
+.blog-post__content {
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: calc(var(--radius-md) - 2px);
+  box-shadow: var(--shadow-sm);
+  padding: clamp(1.35rem, 3vw, 2.2rem);
+}
+
+.blog-post__content p {
+  color: var(--color-text);
+  font-size: 1.05rem;
+  line-height: 1.72;
+  margin: 0;
+}
+
+.blog-post__content p + p {
+  margin-top: 1.25rem;
+}
+
+.blog-post__sidebar {
+  display: grid;
+  gap: 1.25rem;
+}
+
 @media (max-width: $layout-tablet-breakpoint) {
   .blog-hero,
+  .blog-post__hero,
+  .blog-post__layout,
   .blog-layout,
   .blog-feature__content {
     grid-template-columns: 1fr;

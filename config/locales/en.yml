@@ -541,6 +541,78 @@ en:
     cta_body: "If you want better photography, sharper copy, or a cleaner enquiry path, the team can help you tighten the listing without turning it into marketing fluff."
     cta_primary: "Contact the team"
     cta_secondary: "See current listings"
+    read_full_post: "Read the full post"
+    back_to_blog: "Back to the blog"
+    posts:
+      five_small_listing_improvements:
+        category: "Lead quality"
+        title: "Five Small Listing Improvements That Generate Better Enquiries"
+        byline: "Written by The GotTheKeys Team on March 18, 2026."
+        read_time: "5 min read"
+        excerpt: "Better enquiries usually come from clearer expectations, not louder marketing. These five small improvements help a listing answer the questions serious buyers and tenants already have."
+        paragraphs:
+          - "The fastest way to improve a property listing is usually not a full redesign. Better lead photos, a realistic headline price, and a clearer opening paragraph can change how seriously buyers treat the advert."
+          - "Start with the basics: bright photography, room descriptions that mention function as well as size, and a summary of the features people actually search for, such as parking, garden space, schools, or transport links."
+          - "The lead image deserves particular attention. It should show the thing that makes the property easiest to remember, not simply the first photograph uploaded. For some homes that is the kitchen or garden; for others it is the exterior, the view, or a calm living space."
+          - "The opening paragraph should do useful work. Say what the property is, who it is likely to suit, what condition it is in, and whether there is anything practical to know before booking a viewing. That does more than a long list of adjectives."
+          - "Pricing matters just as much as presentation. An over-optimistic figure may win clicks for a day or two, but it often reduces trust once comparable homes make the difference obvious. Sellers tend to get stronger conversations when the price is supported by local evidence and the condition of the property."
+          - "Documents also change enquiry quality. A floor plan, brochure, or clear note on lease length, council tax band, parking, and tenure can prevent avoidable back-and-forth before the first viewing is arranged."
+          - "Finally, make the next step easy. If a buyer or tenant can quickly understand the layout, the asking price, and how to arrange a viewing, the listing does its job: turning curiosity into a useful enquiry."
+        takeaways:
+          - "Lead with sharper photography and a stronger opening paragraph."
+          - "Price with local evidence so the listing earns trust quickly."
+          - "Make brochures, floor plans, and booking actions easy to find."
+      quick_follow_up:
+        category: "Response time"
+        title: "Why quick follow-up still decides whether serious buyers stay engaged"
+        byline: "Written by The GotTheKeys Team on March 21, 2026."
+        read_time: "4 min read"
+        excerpt: "The first useful reply matters more than the perfect reply. Buyers and tenants read responsiveness as a signal for how the rest of the process will feel."
+        paragraphs:
+          - "A serious enquiry often arrives with momentum. The viewer has compared several homes, checked the map, looked at the photos twice, and decided this one is worth a conversation. A slow reply breaks that rhythm."
+          - "Quick follow-up does not have to mean a complete answer within minutes. It means acknowledging the enquiry, confirming that the request has reached a real person, and giving the viewer a clear expectation for what happens next."
+          - "That small acknowledgement is especially important when the question involves availability, offers, documents, or access. Without it, the viewer will usually keep browsing, and the next responsive listing can become the one they remember."
+          - "Good follow-up also protects the seller. A simple response template can capture preferred viewing windows, buying or renting position, finance status, and any deal-breakers before a slot is confirmed. That makes each viewing easier to prioritise."
+          - "The strongest teams separate speed from haste. They reply quickly, but they do not improvise every answer. They keep the common details close at hand, update the listing when repeated questions appear, and move qualified viewers toward the next step."
+          - "In practice, the first working day is the critical window. A helpful same-day response makes the property feel active, managed, and trustworthy. A late response makes even a strong listing feel neglected."
+        takeaways:
+          - "Acknowledge enquiries quickly, even when the full answer follows later."
+          - "Use repeated questions to improve the listing itself."
+          - "Treat response time as part of the viewer's trust assessment."
+      brochure_floor_plan:
+        category: "Marketing assets"
+        title: "Brochure, floor plan, or both? The answer is usually yes"
+        byline: "Written by The GotTheKeys Team on March 25, 2026."
+        read_time: "4 min read"
+        excerpt: "A listing that answers the obvious questions before the viewer asks them is more likely to turn attention into a useful enquiry."
+        paragraphs:
+          - "Brochures and floor plans do different jobs. A brochure packages the story of the property; a floor plan explains how the rooms actually work. Most serious viewers want both before they commit time to a viewing."
+          - "The brochure is useful because it gives the listing a portable shape. It can summarise the key features, show the best images in order, and provide contact details in a format that is easy to share with a partner, parent, adviser, or colleague."
+          - "The floor plan answers a quieter but more practical question: can my life fit here? Room sizes matter, but so do circulation, storage, bathroom position, garden access, and whether a space can realistically support work, children, guests, or pets."
+          - "When either asset is missing, viewers tend to ask the same questions repeatedly. That slows down the enquiry flow and can make the listing feel less complete than nearby alternatives."
+          - "There are exceptions. A very early listing may go live before all assets are ready, and a simple rental property may not need a polished brochure. Even then, the page should say what is available now and what will follow."
+          - "The best approach is to make documents obvious without letting them dominate the page. Put them near the core details and viewing actions, label them plainly, and keep the files current when price, availability, or facts change."
+        takeaways:
+          - "Use brochures for the property story and floor plans for practical fit."
+          - "Missing assets create repeated questions and weaker confidence."
+          - "Label documents clearly and keep them aligned with the live listing."
+      first_three_viewing_questions:
+        category: "Viewing prep"
+        title: "A listing should answer the first three viewing questions before the diary even opens"
+        byline: "Written by The GotTheKeys Team on March 28, 2026."
+        read_time: "5 min read"
+        excerpt: "Clear notes on condition, layout quirks, and recent changes help viewers arrive better prepared and reduce avoidable no-shows."
+        paragraphs:
+          - "A viewing starts before anyone reaches the front door. By the time a buyer or tenant asks for a slot, they are already forming expectations about condition, layout, location, and whether the property is worth the trip."
+          - "The first question is usually about fit. Does the layout suit the viewer's day-to-day life? A good listing should make room flow clear with photos, a floor plan, and copy that explains how the main spaces connect."
+          - "The second question is about condition. Viewers do not need every detail upfront, but they do need a fair sense of what is ready, what has recently changed, and what may need attention. Honest condition notes reduce surprises and build trust."
+          - "The third question is about friction. Is parking simple? Is access awkward? Are pets considered? Is there a chain? Are there service charges, restrictions, or timing constraints? These practical details can decide whether a viewing is worthwhile."
+          - "When the listing answers those questions early, the diary becomes cleaner. People who book are more likely to understand what they are seeing, arrive with better questions, and make faster decisions afterwards."
+          - "That does not mean writing a defensive listing. It means removing avoidable uncertainty. A clear property page gives serious viewers enough confidence to act and gives everyone else enough information to self-select out."
+        takeaways:
+          - "Explain layout, condition, and practical friction before the booking step."
+          - "Use honest notes to prevent avoidable viewing surprises."
+          - "Better-prepared viewers make follow-up easier and faster."
 
 # Properties
   properties:

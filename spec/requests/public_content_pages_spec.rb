@@ -57,12 +57,33 @@ RSpec.describe "Public content pages", type: :request do
 
   it "renders the refreshed blog editorial layout" do
     get "/blog"
+    document = parsed_html
 
     expect(response).to have_http_status(:ok)
     expect(response.body).to include('data-testid="blog-featured-post"')
     expect(response.body).to include(I18n.t("blog.hero_title"))
     expect(response.body.scan('data-testid="blog-story-card"').count).to eq(3)
     expect(response.body).to include(I18n.t("blog.story_3_title"))
+    expect(document.css('a[href^="/blog/"]').map { |link| link["href"] }.uniq.count).to eq(4)
+  end
+
+  it "renders the blog post pages with full article content" do
+    slugs = [
+      "five-small-listing-improvements-that-generate-better-enquiries",
+      "why-quick-follow-up-still-decides-whether-serious-buyers-stay-engaged",
+      "brochure-floor-plan-or-both",
+      "first-three-viewing-questions"
+    ]
+
+    slugs.each do |slug|
+      get blog_path(slug)
+
+      expect(response).to have_http_status(:ok)
+      expect(parsed_html.at_css('[data-testid="blog-post"]')).to be_present
+      expect(parsed_html.css(".blog-post__content p").count).to be >= 6
+      expect(parsed_html.at_css('meta[name="description"]')["content"]).to be_present
+      expect(response.body).to include(I18n.t("blog.back_to_blog"))
+    end
   end
 
   it "renders the refreshed about us company layout" do

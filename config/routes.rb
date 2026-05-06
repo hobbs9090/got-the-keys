@@ -120,7 +120,7 @@ GotTheKeys::Application.routes.draw do
 
   resources :contact_us, only: [:index]
 
-  resources :blog, only: [:index]
+  resources :blog, only: [:index, :show], param: :slug
   get '/baits', to: redirect('/blog', status: 302)
 
   # ============================================================

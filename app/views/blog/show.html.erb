@@ -1,0 +1,49 @@
+<% title "#{@post[:title]} | #{t('blog.title')}" %>
+<% meta_description @post[:excerpt] %>
+
+<article class="blog-post" data-testid="blog-post">
+  <header class="page-hero blog-post__hero">
+    <div class="blog-post__hero-copy">
+      <p class="page-hero__eyebrow"><%= @post[:category] %></p>
+      <h1><%= @post[:title] %></h1>
+      <p class="blog-post__standfirst"><%= @post[:excerpt] %></p>
+      <p class="blog-feature__byline"><%= @post[:byline] %> <span><%= @post[:read_time] %></span></p>
+    </div>
+
+    <div class="blog-post__hero-media">
+      <%= pixel_density_image_tag(@post[:image][0], retina_source: @post[:image][1], class: "blog-post__image", alt: @post[:title]) %>
+    </div>
+  </header>
+
+  <div class="blog-post__layout">
+    <div class="blog-post__content">
+      <% @post[:paragraphs].each do |paragraph| %>
+        <p><%= paragraph %></p>
+      <% end %>
+    </div>
+
+    <aside class="blog-post__sidebar">
+      <% if @post[:takeaways].present? %>
+        <section class="site-card blog-feature__takeaways">
+          <p class="section-heading__eyebrow"><%= t('blog.takeaways_eyebrow') %></p>
+          <h2><%= t('blog.takeaways_title') %></h2>
+          <ul class="blog-takeaway-list no-bullet">
+            <% @post[:takeaways].each do |item| %>
+              <li><%= item %></li>
+            <% end %>
+          </ul>
+        </section>
+      <% end %>
+
+      <section class="site-card blog-sidebar__cta">
+        <p class="section-heading__eyebrow"><%= t('blog.cta_eyebrow') %></p>
+        <h2><%= t('blog.cta_title') %></h2>
+        <p><%= t('blog.cta_body') %></p>
+        <div class="blog-sidebar__actions">
+          <%= link_to t('blog.cta_primary'), contact_us_path, class: "button primary expanded" %>
+          <%= link_to t('blog.back_to_blog'), blog_index_path, class: "button secondary hollow expanded" %>
+        </div>
+      </section>
+    </aside>
+  </div>
+</article>

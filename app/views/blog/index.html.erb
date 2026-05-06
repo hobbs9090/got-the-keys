@@ -1,44 +1,5 @@
 <% title t('blog.title') %>
 <%
-featured_story = {
-  category: t('blog.featured_category'),
-  title: t('blog.blog_post_title'),
-  byline: t('blog.blog_post_header'),
-  read_time: t('blog.read_time'),
-  paragraphs: [
-    t('blog.paragraph_1'),
-    t('blog.paragraph_2'),
-    t('blog.paragraph_3'),
-    t('blog.paragraph_4')
-  ],
-  takeaways: [
-    t('blog.takeaway_1'),
-    t('blog.takeaway_2'),
-    t('blog.takeaway_3')
-  ]
-}
-
-story_cards = [
-  {
-    category: t('blog.story_1_category'),
-    title: t('blog.story_1_title'),
-    excerpt: t('blog.story_1_excerpt'),
-    image: ['hero_5.webp', 'hero_5@2x.webp']
-  },
-  {
-    category: t('blog.story_2_category'),
-    title: t('blog.story_2_title'),
-    excerpt: t('blog.story_2_excerpt'),
-    image: ['welcome_1.webp', nil]
-  },
-  {
-    category: t('blog.story_3_category'),
-    title: t('blog.story_3_title'),
-    excerpt: t('blog.story_3_excerpt'),
-    image: ['hero_3.webp', 'hero_3@2x.webp']
-  }
-]
-
 topic_tags = [
   t('blog.topic_1'),
   t('blog.topic_2'),
@@ -82,30 +43,33 @@ editorial_points = [
   <div class="blog-main">
     <article class="site-card blog-feature" data-testid="blog-featured-post">
       <div class="blog-feature__media">
-        <%= pixel_density_image_tag('hero_4.webp', retina_source: 'hero_4@2x.webp', class: 'blog-feature__image', alt: featured_story[:title]) %>
+        <%= link_to blog_path(@featured_post[:slug]), class: "blog-feature__image-link", aria: { label: @featured_post[:title] } do %>
+          <%= pixel_density_image_tag(@featured_post[:image][0], retina_source: @featured_post[:image][1], class: 'blog-feature__image', alt: @featured_post[:title]) %>
+        <% end %>
       </div>
 
       <div class="blog-feature__body">
         <div class="blog-feature__meta">
-          <span class="badge badge--accent"><%= featured_story[:category] %></span>
-          <span><%= featured_story[:read_time] %></span>
+          <span class="badge badge--accent"><%= @featured_post[:category] %></span>
+          <span><%= @featured_post[:read_time] %></span>
         </div>
 
-        <h2><%= featured_story[:title] %></h2>
-        <p class="blog-feature__byline"><%= featured_story[:byline] %></p>
+        <h2><%= link_to @featured_post[:title], blog_path(@featured_post[:slug]) %></h2>
+        <p class="blog-feature__byline"><%= @featured_post[:byline] %></p>
 
         <div class="blog-feature__content">
           <div class="blog-feature__copy">
-            <% featured_story[:paragraphs].each do |paragraph| %>
+            <% @featured_post[:paragraphs].first(4).each do |paragraph| %>
               <p><%= paragraph %></p>
             <% end %>
+            <p><%= link_to t('blog.read_full_post'), blog_path(@featured_post[:slug]), class: "blog-read-link" %></p>
           </div>
 
           <aside class="blog-feature__takeaways">
             <p class="section-heading__eyebrow"><%= t('blog.takeaways_eyebrow') %></p>
             <h3><%= t('blog.takeaways_title') %></h3>
             <ul class="blog-takeaway-list no-bullet">
-              <% featured_story[:takeaways].each do |item| %>
+              <% @featured_post[:takeaways].each do |item| %>
                 <li><%= item %></li>
               <% end %>
             </ul>
@@ -122,19 +86,22 @@ editorial_points = [
       </header>
 
       <div class="blog-story-grid__cards">
-        <% story_cards.each do |story| %>
+        <% @story_posts.each do |story| %>
           <article class="site-card blog-story-card" data-testid="blog-story-card">
             <div class="blog-story-card__media">
-              <%= pixel_density_image_tag(story[:image][0], retina_source: story[:image][1], class: 'blog-story-card__image', alt: story[:title]) %>
+              <%= link_to blog_path(story[:slug]), aria: { label: story[:title] } do %>
+                <%= pixel_density_image_tag(story[:image][0], retina_source: story[:image][1], class: 'blog-story-card__image', alt: story[:title]) %>
+              <% end %>
             </div>
 
             <div class="blog-story-card__body">
               <div class="blog-story-card__meta">
                 <span class="badge badge--neutral"><%= story[:category] %></span>
-                <span><%= featured_story[:read_time] %></span>
+                <span><%= story[:read_time] %></span>
               </div>
-              <h3><%= story[:title] %></h3>
+              <h3><%= link_to story[:title], blog_path(story[:slug]) %></h3>
               <p><%= story[:excerpt] %></p>
+              <p><%= link_to t('blog.read_full_post'), blog_path(story[:slug]), class: "blog-read-link" %></p>
             </div>
           </article>
         <% end %>
