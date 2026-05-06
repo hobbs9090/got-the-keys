@@ -3097,6 +3097,28 @@ form[data-testid="lead-inbox-filters"] .form-actions .button,
   margin-top: 2rem;
 }
 
+.property-workspace__intro {
+  display: grid;
+  gap: 0.45rem;
+  max-width: 58rem;
+}
+
+.property-workspace__intro h1,
+.property-workspace__intro p {
+  margin: 0;
+}
+
+.property-workspace__intro h1 {
+  font-size: clamp(2.1rem, 3.6vw, 3.6rem);
+  line-height: 1.05;
+}
+
+.property-workspace__intro > :last-child {
+  color: var(--color-muted);
+  font-size: 1.05rem;
+  max-width: 46rem;
+}
+
 .property-workspace__grid {
   display: grid;
   gap: 1.5rem;

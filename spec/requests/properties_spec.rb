@@ -658,6 +658,7 @@ describe "Properties" do
       expect(response.body).not_to include(I18n.t("ui.properties.listing_states.published"))
       expect(response.body).to include(property_path(draft_property))
       expect(response.body).to include(edit_property_path(draft_property))
+      expect(document.at_css(".property-workspace__intro")).to be_present
       expect(document.at_css("h1")&.text&.strip).to eq("Your account")
     end
 
