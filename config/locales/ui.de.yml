@@ -427,7 +427,7 @@ de:
         other: Mietinserate
     search:
       eyebrow: Immobiliensuche
-      hero_title: Inserate und Terminverfügbarkeit gemeinsam durchsuchen
+      hero_title: Kauf- und Mietinserate gemeinsam durchsuchen
       hero_body: Finden Sie realistische Happy Paths, Leerzustände und Paginierungsszenarien
         für QA-Automatisierung.
       results_count:

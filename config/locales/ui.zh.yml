@@ -399,7 +399,7 @@ zh:
         other: 条出租房源
     search:
       eyebrow: 房源搜索
-      hero_title: 同时搜索房源与预约可用性
+      hero_title: 同时搜索出售和出租房源
       hero_body: 为 QA 自动化练习找到真实的顺畅路径、空状态和分页场景。
       results_count:
         one: 条结果

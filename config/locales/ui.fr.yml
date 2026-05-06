@@ -432,7 +432,7 @@ fr:
         other: annonces locatives
     search:
       eyebrow: Recherche immobiliere
-      hero_title: Recherchez les annonces et les disponibilites de visite ensemble
+      hero_title: Recherchez ensemble les annonces a vendre et a louer
       hero_body: Trouvez des parcours heureux realistes, des etats vides et des scenarios
         de pagination pour l'automatisation QA.
       results_count:

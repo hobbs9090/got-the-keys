@@ -428,7 +428,7 @@ it:
         other: annunci in affitto
     search:
       eyebrow: Ricerca immobiliare
-      hero_title: Cerca insieme annunci e disponibilita per le visite
+      hero_title: Cerca insieme annunci in vendita e in affitto
       hero_body: Trova happy path realistici, stati vuoti e scenari di paginazione
         per la pratica di automazione QA.
       results_count:

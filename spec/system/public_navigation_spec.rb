@@ -39,6 +39,6 @@ RSpec.describe "Public navigation", type: :system do
 
     click_link "Search"
     expect(page).to have_title("Search")
-    expect(page).to have_text("Search listings and booking availability together")
+    expect(page).to have_text("Search sale and rental listings together")
   end
 end

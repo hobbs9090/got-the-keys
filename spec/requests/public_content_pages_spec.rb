@@ -22,7 +22,7 @@ RSpec.describe "Public content pages", type: :request do
   end
 
   pages = [
-    { description: "search", path: "/searches", text: "Search listings and booking availability together" },
+    { description: "search", path: "/searches", text: "Search sale and rental listings together" },
     { description: "legal", path: "/legal", text: "A plain-English summary of the key terms and responsibilities that apply when you use the site." },
     { description: "cookie policy", path: "/cookie_policy", text: "This site uses essential cookies to keep sign-in, forms, and language preferences working." },
     { description: "how it works", path: "/how_it_works", text: "How to market your home with more clarity and less fluff" },

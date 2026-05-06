@@ -474,7 +474,7 @@ en:
 
     search:
       eyebrow: "Property search"
-      hero_title: "Search listings and booking availability together"
+      hero_title: "Search sale and rental listings together"
       hero_body: "Find realistic happy paths, empty states, and pagination scenarios for QA automation practice."
       results_count:
         one: "result"
