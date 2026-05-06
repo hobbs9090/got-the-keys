@@ -73,6 +73,17 @@ RSpec.describe "Public content pages", type: :request do
     expect(response.body).to include(I18n.t("about_us.hero_title"))
   end
 
+  it "renders a non-placeholder contact location that matches the map postcode" do
+    get "/contact_us"
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("Sevenoaks and Westerham")
+    expect(response.body).to include("Kent, TN16 1ET")
+    expect(response.body).to include("TN16+1ET")
+    expect(response.body).not_to include("123 Awesome Road")
+    expect(response.body).not_to include("TN16 4AB")
+  end
+
   it "keeps the how it works publishing checklist in the main content column" do
     get "/how_it_works"
 

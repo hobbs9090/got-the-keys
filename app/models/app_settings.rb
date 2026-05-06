@@ -14,7 +14,7 @@ module AppSettings
       name: I18n.t("ui.branch_profile.name"),
       team_label: I18n.t("ui.branch_profile.team_label"),
       phone: "01732 650010",
-      email: "hello@gotthekeys.com",
+      email: "hello@gotthekeys.uk",
       response_time: I18n.t("ui.branch_profile.response_time"),
       hours: I18n.t("ui.branch_profile.hours")
     }

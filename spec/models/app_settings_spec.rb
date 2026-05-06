@@ -28,7 +28,7 @@ RSpec.describe AppSettings do
   it "returns the default branch profile" do
     expect(described_class.primary_branch_profile).to include(
       name: "Sevenoaks and Westerham office",
-      email: "hello@gotthekeys.com"
+      email: "hello@gotthekeys.uk"
     )
   end
 end

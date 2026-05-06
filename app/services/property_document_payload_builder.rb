@@ -204,7 +204,7 @@ class PropertyDocumentPayloadBuilder
       current_y -= 17
     end
     text_at(pdf, "Prepared #{Date.current.strftime('%d %B %Y')}", x, 172, size: 10, color: :muted_text)
-    text_at(pdf, "www.gotthekeys.com",                           x, 156, size: 10, color: :brand_blue, bold: true)
+    text_at(pdf, "www.gotthekeys.uk",                            x, 156, size: 10, color: :brand_blue, bold: true)
   end
 
   def draw_key_facts(pdf, x, y)
@@ -291,8 +291,27 @@ class PropertyDocumentPayloadBuilder
 
     [retina_variant_name(image_name), image_name]
       .compact
-      .map { |name| Rails.root.join("app/assets/images", name) }
+      .flat_map { |name| image_path_candidates(name) }
       .find(&:exist?)
+  end
+
+  def image_path_candidates(image_name)
+    normalized_name = image_name.to_s.delete_prefix("/")
+
+    if normalized_name.start_with?("uploads/")
+      [public_upload_path(normalized_name)].compact
+    else
+      [Rails.root.join("app/assets/images", normalized_name)]
+    end
+  end
+
+  def public_upload_path(normalized_name)
+    root = Rails.env.test? ? Rails.root.join("tmp", "uploads") : Rails.root.join("public", "uploads")
+    relative_upload_path = normalized_name.delete_prefix("uploads/")
+    candidate = root.join(relative_upload_path)
+    return unless candidate.expand_path.to_s.start_with?(root.expand_path.to_s)
+
+    candidate
   end
 
   def retina_variant_name(image_name)

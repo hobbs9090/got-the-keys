@@ -60,10 +60,33 @@ RSpec.describe PropertyDocumentPayloadBuilder do
     expect(text).to include("Guide price")
     expect(text).to include("Updated 2021  |  2150 sq ft")
     expect(text).not_to include("Built 1934")
-    expect(text).to include("01732 650010  |  hello@gotthekeys.com")
+    expect(text).to include("www.gotthekeys.uk")
+    expect(text).to include("01732 650010  |  hello@gotthekeys.uk")
     expect(text).not_to include(AppSettings.primary_branch_profile.fetch(:response_time))
     expect(text).not_to include(I18n.t("ui.branch_profile.team_label"))
     expect(payload).to include("/Subtype /Image")
+  end
+
+  it "embeds uploaded primary photos in generated PDF sheets" do
+    upload_relative_path = "property_photos/#{property.id}/hero.png"
+    upload_path = Rails.root.join("tmp", "uploads", upload_relative_path)
+    FileUtils.mkdir_p(upload_path.dirname)
+    FileUtils.cp(Rails.root.join("public/favicon.png"), upload_path)
+    FactoryBot.create(
+      :photo,
+      property:,
+      image_filename: "/uploads/#{upload_relative_path}",
+      primary: true,
+      position: 1
+    )
+
+    payload = described_class.new(document:, property:).payload
+    text = pdf_text(payload)
+
+    expect(text).not_to include("Image coming soon")
+    expect(payload).to include("/Subtype /Image")
+  ensure
+    FileUtils.rm_f(upload_path) if defined?(upload_path) && upload_path.present?
   end
 
   it "renders a styled placeholder when the property has no hero image" do
