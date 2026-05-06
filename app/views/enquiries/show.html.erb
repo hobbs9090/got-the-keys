@@ -1,0 +1,36 @@
+<% title t("ui.enquiries.show.title", reference: @enquiry.lead_reference) %>
+
+<section class="page-hero">
+  <div>
+    <p class="page-hero__eyebrow"><%= t("ui.enquiries.show.eyebrow") %></p>
+    <h1><%= @enquiry.lead_reference %></h1>
+    <p><%= t("ui.enquiries.show.hero_body") %></p>
+  </div>
+
+  <div class="page-hero__meta">
+    <span class="<%= enquiry_status_badge_class(@enquiry.status) %>"><%= @enquiry.display_status %></span>
+  </div>
+</section>
+
+<section class="property-layout">
+  <%= render "shared/member_confirmation",
+             testid: "enquiry-confirmation",
+             summary_title: t("ui.enquiries.show.summary_title"),
+             note_title: t("ui.enquiries.fields.message"),
+             note: @enquiry.message,
+             rows: [
+               [t("ui.common.property"), link_to(@enquiry.property.address_line_1, property_path(@enquiry.property))],
+               [t("ui.enquiries.fields.source_type"), @enquiry.display_source],
+               [t("ui.common.customer"), safe_join([@enquiry.customer_name, tag.br, @enquiry.customer_email.presence, (@enquiry.customer_phone.present? ? safe_join([tag.br, @enquiry.customer_phone]) : nil)].compact)]
+             ] %>
+
+  <aside class="property-booking-panel">
+    <h2><%= t("ui.enquiries.show.next_steps_title") %></h2>
+    <ul class="detail-inline-list">
+      <li><strong>1.</strong> <%= t("ui.enquiries.next_steps.one") %></li>
+      <li><strong>2.</strong> <%= t("ui.enquiries.next_steps.two") %></li>
+      <li><strong>3.</strong> <%= t("ui.enquiries.next_steps.three") %></li>
+    </ul>
+    <%= link_to t("ui.enquiries.show.back_to_property"), property_path(@enquiry.property), class: "button primary expanded" %>
+  </aside>
+</section>

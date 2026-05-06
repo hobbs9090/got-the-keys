@@ -1,0 +1,53 @@
+<% title t("ui.rental_applications.show.title", reference: @rental_application.public_reference) %>
+
+<section class="page-hero">
+  <div>
+    <p class="page-hero__eyebrow"><%= t("ui.rental_applications.show.eyebrow") %></p>
+    <h1><%= @rental_application.public_reference %></h1>
+    <p><%= t("ui.rental_applications.show.hero_body") %></p>
+  </div>
+
+  <div class="page-hero__meta">
+    <span class="<%= rental_application_status_badge_class(@rental_application.status) %>"><%= t("ui.rental_applications.statuses.#{@rental_application.status}") %></span>
+  </div>
+</section>
+
+<section class="property-layout">
+  <%= render "shared/member_confirmation",
+             testid: "rental-application-confirmation",
+             summary_title: t("ui.rental_applications.show.summary_title"),
+             note_title: t("ui.common.customer_notes"),
+             note: @rental_application.notes,
+             rows: [
+               [t("ui.common.property"), link_to(@rental_application.property.address_line_1, property_path(@rental_application.property))],
+               [t("ui.rental_applications.fields.move_in_date"), l(@rental_application.move_in_date, format: :long)],
+               [t("ui.common.customer"), safe_join([@rental_application.applicant_name, tag.br, @rental_application.applicant_email, (@rental_application.applicant_phone.present? ? safe_join([tag.br, @rental_application.applicant_phone]) : nil)].compact)],
+               [t("ui.rental_applications.fields.affordability_notes"), @rental_application.affordability_notes]
+             ] %>
+
+  <aside class="property-booking-panel">
+    <h2><%= t("ui.rental_applications.show.manage_title") %></h2>
+    <p><%= t("ui.rental_applications.show.manage_body") %></p>
+    <div class="form-actions">
+      <%= link_to t("ui.rental_applications.show.back_to_property"), property_path(@rental_application.property), class: "button primary expanded" %>
+      <% if user_signed_in? && @rental_application.withdrawable? && @rental_application.applicant_email.to_s.casecmp?(current_user.email.to_s) %>
+        <%= button_to t("ui.rental_applications.show.withdraw_application"),
+                      withdraw_property_rental_application_path(@rental_application.property, @rental_application),
+                      method: :patch,
+                      class: "button alert hollow expanded",
+                      data: { turbo: false, testid: "withdraw-rental-application-button" } %>
+      <% end %>
+    </div>
+
+    <h2><%= t("ui.rental_applications.show.timeline_title") %></h2>
+    <ol class="timeline" data-testid="rental-application-timeline">
+      <% @rental_application.timeline.each do |event| %>
+        <li>
+          <strong><%= t("ui.rental_applications.statuses.#{event.event_type}", default: event.event_type.tr("_", " ").humanize) %></strong>
+          <span><%= formatted_date_time(event.occurred_at) %></span>
+          <p><%= event.message %></p>
+        </li>
+      <% end %>
+    </ol>
+  </aside>
+</section>

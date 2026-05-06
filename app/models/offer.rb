@@ -53,7 +53,7 @@ class Offer < ApplicationRecord
 
   def generate_reference
     loop do
-      reference = "OFF-#{SecureRandom.alphanumeric(7).upcase}"
+      reference = "GTK-OFR-#{SecureRandom.alphanumeric(8).upcase}"
       break reference unless self.class.exists?(public_reference: reference)
     end
   end

@@ -42,7 +42,7 @@ class RentalApplication < ApplicationRecord
 
   def generate_reference
     loop do
-      reference = "LET-#{SecureRandom.alphanumeric(7).upcase}"
+      reference = "GTK-RNT-#{SecureRandom.alphanumeric(8).upcase}"
       break reference unless self.class.exists?(public_reference: reference)
     end
   end

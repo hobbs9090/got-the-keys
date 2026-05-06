@@ -1,12 +1,16 @@
 class OffersController < ApplicationController
   include PropertyScoped
 
-  before_action :set_property
+  before_action :set_property, except: :show
+  before_action :set_offer_by_reference, only: :show
   before_action :authenticate_user!, only: :withdraw
-  before_action :ensure_sale_listing!
+  before_action :ensure_sale_listing!, except: :show
   before_action :ensure_current_user_is_not_owner!, only: [:new, :create]
   before_action :set_offer, only: :withdraw
   before_action :ensure_current_user_owns_offer!, only: :withdraw
+
+  def show
+  end
 
   def new
     @offer = @property.offers.new(prefilled_offer_attributes)
@@ -16,7 +20,7 @@ class OffersController < ApplicationController
     @offer = @property.offers.new(offer_params)
 
     if @offer.save
-      redirect_to property_path(@property), notice: t("ui.offers.flash.created")
+      redirect_to offer_path(@offer.public_reference), notice: t("ui.offers.flash.created")
     else
       render :new, status: :unprocessable_entity
     end
@@ -66,6 +70,10 @@ class OffersController < ApplicationController
 
   def set_offer
     @offer = @property.offers.find(params[:id])
+  end
+
+  def set_offer_by_reference
+    @offer = Offer.includes(:property, :offer_events).find_by!(public_reference: params[:public_reference])
   end
 
   def ensure_current_user_owns_offer!

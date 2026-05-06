@@ -1,11 +1,15 @@
 class RentalApplicationsController < ApplicationController
   include PropertyScoped
 
-  before_action :set_property
+  before_action :set_property, except: :show
+  before_action :set_rental_application_by_reference, only: :show
   before_action :authenticate_user!, only: :withdraw
-  before_action :ensure_rental_listing!
+  before_action :ensure_rental_listing!, except: :show
   before_action :set_rental_application, only: :withdraw
   before_action :ensure_current_user_owns_rental_application!, only: :withdraw
+
+  def show
+  end
 
   def new
     @rental_application = @property.rental_applications.new(prefilled_rental_application_attributes)
@@ -15,7 +19,7 @@ class RentalApplicationsController < ApplicationController
     @rental_application = @property.rental_applications.new(rental_application_params)
 
     if @rental_application.save
-      redirect_to property_path(@property), notice: t("ui.rental_applications.flash.created")
+      redirect_to rental_application_path(@rental_application.public_reference), notice: t("ui.rental_applications.flash.created")
     else
       render :new, status: :unprocessable_entity
     end
@@ -58,6 +62,10 @@ class RentalApplicationsController < ApplicationController
 
   def set_rental_application
     @rental_application = @property.rental_applications.find(params[:id])
+  end
+
+  def set_rental_application_by_reference
+    @rental_application = RentalApplication.includes(:property, :rental_application_events).find_by!(public_reference: params[:public_reference])
   end
 
   def ensure_current_user_owns_rental_application!

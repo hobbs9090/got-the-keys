@@ -95,6 +95,9 @@ GotTheKeys::Application.routes.draw do
       patch :cancel_self_service, path: "cancel"
     end
   end
+  resources :offers, only: [:show], param: :public_reference
+  resources :enquiries, only: [:show], param: :lead_reference
+  resources :rental_applications, only: [:show], param: :public_reference
 
   resources :for_sale, only: [:index]
 

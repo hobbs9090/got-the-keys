@@ -1,8 +1,12 @@
 class EnquiriesController < ApplicationController
   include PropertyScoped
 
-  before_action :set_property
-  before_action :ensure_property_is_visible!
+  before_action :set_property, except: :show
+  before_action :set_enquiry_by_reference, only: :show
+  before_action :ensure_property_is_visible!, except: :show
+
+  def show
+  end
 
   def new
     @enquiry = @property.enquiries.new(prefilled_enquiry_attributes)
@@ -12,7 +16,7 @@ class EnquiriesController < ApplicationController
     @enquiry = @property.enquiries.new(enquiry_params)
 
     if @enquiry.save
-      redirect_to property_path(@property), notice: t("ui.enquiries.flash.created")
+      redirect_to enquiry_path(@enquiry.lead_reference), notice: t("ui.enquiries.flash.created")
     else
       render :new, status: :unprocessable_entity
     end
@@ -35,5 +39,9 @@ class EnquiriesController < ApplicationController
 
   def ensure_property_is_visible!
     redirect_to properties_path, alert: t("ui.properties.flash.not_public") unless @property.publicly_visible?
+  end
+
+  def set_enquiry_by_reference
+    @enquiry = Enquiry.includes(:property).find_by!(lead_reference: params[:lead_reference])
   end
 end

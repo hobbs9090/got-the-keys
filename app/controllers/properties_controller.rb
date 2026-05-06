@@ -250,6 +250,33 @@ class PropertiesController < ApplicationController
     @public_documents = @property.public_documents
     @recent_activity = @property.activity_timeline(limit: 8)
     @saved_property = current_user&.saved_properties&.find_by(property: @property)
+    populate_customer_property_state if current_user.present?
+  end
+
+  def populate_customer_property_state
+    @existing_customer_appointment = @property.appointments
+      .where(customer_appointment_match_clause(current_user), **customer_appointment_match_params(current_user))
+      .where(status: %w[pending confirmed rescheduled])
+      .order(:scheduled_at, :id)
+      .first
+
+    return if current_user.email.blank?
+
+    @existing_offer = @property.offers
+      .where("lower(buyer_email) = ?", current_user.email.downcase)
+      .where(status: %w[received accepted])
+      .recent_first
+      .first
+    @existing_enquiry = @property.enquiries
+      .where("lower(customer_email) = ?", current_user.email.downcase)
+      .open_pipeline
+      .recent_first
+      .first
+    @existing_rental_application = @property.rental_applications
+      .where("lower(applicant_email) = ?", current_user.email.downcase)
+      .where(status: %w[received referencing])
+      .recent_first
+      .first
   end
 
   def preselected_slot

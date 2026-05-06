@@ -131,10 +131,18 @@
 
     <% if user_signed_in? %>
       <h2><%= t("ui.common.book_a_viewing") %></h2>
-      <p><%= t("ui.properties.show.booking_body") %></p>
-      <%= render "shared/errors", object: @appointment %>
+      <% if @existing_customer_appointment.present? %>
+        <div class="empty-state property-booking-panel__support-card" data-testid="existing-appointment-panel">
+          <h3><%= t("ui.properties.show.existing_appointment_title") %></h3>
+          <p><%= t("ui.properties.show.existing_appointment_body", time: formatted_date_time(@existing_customer_appointment.scheduled_at), reference: @existing_customer_appointment.public_reference) %></p>
+          <%= link_to t("ui.properties.show.view_existing_appointment"), appointment_path(@existing_customer_appointment), class: "button primary expanded", data: { testid: "view-existing-appointment-link" } %>
+        </div>
+      <% else %>
+        <p><%= t("ui.properties.show.booking_body") %></p>
+        <%= render "shared/errors", object: @appointment %>
+      <% end %>
 
-      <% if @available_slots.any? %>
+      <% if @existing_customer_appointment.blank? && @available_slots.any? %>
         <%= form_with model: [@property, @appointment], local: true, class: "stacked-form", data: { testid: "appointment-form" } do |f| %>
           <div>
             <%= f.label :customer_name, t("ui.common.full_name"), **form_label_options(@appointment, :customer_name) %>
@@ -185,7 +193,7 @@
             <%= f.submit t("ui.appointments.new.submit"), class: "button primary expanded", data: { testid: "book-viewing-cta" } %>
           </div>
         <% end %>
-      <% else %>
+      <% elsif @existing_customer_appointment.blank? %>
         <div class="empty-state">
           <h3><%= t("ui.properties.show.no_slots_title") %></h3>
           <p><%= t("ui.properties.show.no_slots_body") %></p>
@@ -201,21 +209,54 @@
 
     <div class="empty-state property-booking-panel__support-card" data-testid="property-enquiry-panel">
       <h3><%= t("ui.properties.show.enquiry_title") %></h3>
-      <p><%= user_signed_in? ? t("ui.properties.show.enquiry_body") : t("ui.properties.show.enquiry_body_guest", default: "Sign in or create an account to ask for brochure information, a landlord or seller callback, or clarification before you pick a viewing slot.") %></p>
-      <%= link_to t("ui.properties.show.enquiry_cta"), (user_signed_in? ? new_property_enquiry_path(@property) : new_user_session_path(return_to: property_path(@property, anchor: "booking-panel"))), class: "button primary expanded", data: { testid: "open-enquiry-form" } %>
+      <% if @existing_enquiry.present? %>
+        <p><%= t("ui.properties.show.existing_enquiry_body", source: @existing_enquiry.display_source.downcase, reference: @existing_enquiry.lead_reference) %></p>
+        <%= link_to t("ui.properties.show.view_existing_enquiry"), enquiry_path(@existing_enquiry.lead_reference), class: "button primary expanded", data: { testid: "view-existing-enquiry-link" } %>
+      <% else %>
+        <p><%= user_signed_in? ? t("ui.properties.show.enquiry_body") : t("ui.properties.show.enquiry_body_guest", default: "Sign in or create an account to ask for brochure information, a landlord or seller callback, or clarification before you pick a viewing slot.") %></p>
+        <%= link_to t("ui.properties.show.enquiry_cta"), (user_signed_in? ? new_property_enquiry_path(@property) : new_user_session_path(return_to: property_path(@property, anchor: "booking-panel"))), class: "button primary expanded", data: { testid: "open-enquiry-form" } %>
+      <% end %>
     </div>
 
     <% if @property.sale_status == Property::SALE_STATUSES[:for_sale] %>
       <div class="empty-state property-booking-panel__support-card" data-testid="property-offer-panel">
         <h3><%= t("ui.properties.show.offer_title") %></h3>
-        <p><%= user_signed_in? ? t("ui.properties.show.offer_body") : t("ui.properties.show.offer_body_guest", default: "Sign in or create an account to register your buying position and submit an offer.") %></p>
-        <%= link_to t("ui.properties.show.offer_cta"), (user_signed_in? ? new_property_offer_path(@property) : new_user_session_path(return_to: property_path(@property, anchor: "booking-panel"))), class: "button primary expanded", data: { testid: "open-offer-form" } %>
+        <% if @existing_offer.present? %>
+          <p><%= t("ui.properties.show.existing_offer_body", amount: number_to_currency(@existing_offer.amount, unit: "£", precision: 0), reference: @existing_offer.public_reference) %></p>
+          <div class="form-actions">
+            <%= link_to t("ui.properties.show.view_existing_offer"), offer_path(@existing_offer.public_reference), class: "button primary expanded", data: { testid: "view-existing-offer-link" } %>
+            <% if @existing_offer.withdrawable? %>
+              <%= button_to t("ui.properties.show.withdraw_existing_offer"),
+                            withdraw_property_offer_path(@property, @existing_offer),
+                            method: :patch,
+                            class: "button alert hollow expanded",
+                            data: { turbo: false, testid: "withdraw-existing-offer-button" } %>
+            <% end %>
+          </div>
+        <% else %>
+          <p><%= user_signed_in? ? t("ui.properties.show.offer_body") : t("ui.properties.show.offer_body_guest", default: "Sign in or create an account to register your buying position and submit an offer.") %></p>
+          <%= link_to t("ui.properties.show.offer_cta"), (user_signed_in? ? new_property_offer_path(@property) : new_user_session_path(return_to: property_path(@property, anchor: "booking-panel"))), class: "button primary expanded", data: { testid: "open-offer-form" } %>
+        <% end %>
       </div>
     <% elsif @property.sale_status == Property::SALE_STATUSES[:for_rent] %>
       <div class="empty-state property-booking-panel__support-card" data-testid="property-rental-application-panel">
         <h3><%= t("ui.properties.show.rental_application_title") %></h3>
-        <p><%= user_signed_in? ? t("ui.properties.show.rental_application_body") : t("ui.properties.show.rental_application_body_guest", default: "Sign in or create an account to share your intended move-in timing and affordability notes with the lettings team.") %></p>
-        <%= link_to t("ui.properties.show.rental_application_cta"), (user_signed_in? ? new_property_rental_application_path(@property) : new_user_session_path(return_to: property_path(@property, anchor: "booking-panel"))), class: "button primary expanded", data: { testid: "open-rental-application-form" } %>
+        <% if @existing_rental_application.present? %>
+          <p><%= t("ui.properties.show.existing_rental_application_body", reference: @existing_rental_application.public_reference) %></p>
+          <div class="form-actions">
+            <%= link_to t("ui.properties.show.view_existing_rental_application"), rental_application_path(@existing_rental_application.public_reference), class: "button primary expanded", data: { testid: "view-existing-rental-application-link" } %>
+            <% if @existing_rental_application.withdrawable? %>
+              <%= button_to t("ui.properties.show.withdraw_existing_rental_application"),
+                            withdraw_property_rental_application_path(@property, @existing_rental_application),
+                            method: :patch,
+                            class: "button alert hollow expanded",
+                            data: { turbo: false, testid: "withdraw-existing-rental-application-button" } %>
+            <% end %>
+          </div>
+        <% else %>
+          <p><%= user_signed_in? ? t("ui.properties.show.rental_application_body") : t("ui.properties.show.rental_application_body_guest", default: "Sign in or create an account to share your intended move-in timing and affordability notes with the lettings team.") %></p>
+          <%= link_to t("ui.properties.show.rental_application_cta"), (user_signed_in? ? new_property_rental_application_path(@property) : new_user_session_path(return_to: property_path(@property, anchor: "booking-panel"))), class: "button primary expanded", data: { testid: "open-rental-application-form" } %>
+        <% end %>
       </div>
     <% end %>
 

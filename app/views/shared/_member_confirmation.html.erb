@@ -1,0 +1,20 @@
+<article class="property-panel" data-testid="<%= testid %>">
+  <h2><%= summary_title %></h2>
+
+  <dl class="detail-list">
+    <% rows.each do |label, value| %>
+      <% next if value.blank? %>
+      <div>
+        <dt><%= label %></dt>
+        <dd><%= value %></dd>
+      </div>
+    <% end %>
+  </dl>
+
+  <% if note.present? %>
+    <div class="note-card">
+      <h3><%= note_title %></h3>
+      <p><%= note %></p>
+    </div>
+  <% end %>
+</article>

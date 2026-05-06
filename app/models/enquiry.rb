@@ -1,6 +1,13 @@
 class Enquiry < ApplicationRecord
   STATUSES = %w[new contacted qualified unqualified archived].freeze
-  SOURCE_TYPES = %w[general_enquiry brochure_request valuation_request letting_enquiry].freeze
+  SOURCE_TYPES = %w[
+    general_enquiry
+    brochure_request
+    offer_enquiry
+    valuation_request
+    letting_enquiry
+    application_question
+  ].freeze
   PHONE_FORMAT = /\A\+?[0-9().\-\s]{7,20}\z/.freeze
   SPAM_HINTS = [
     /crypto/i,
@@ -69,7 +76,7 @@ class Enquiry < ApplicationRecord
 
   def generate_reference
     loop do
-      reference = "LEAD-#{SecureRandom.alphanumeric(7).upcase}"
+      reference = "GTK-ENQ-#{SecureRandom.alphanumeric(8).upcase}"
       break reference unless self.class.exists?(lead_reference: reference)
     end
   end
