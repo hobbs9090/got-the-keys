@@ -43,13 +43,7 @@
               <% account_summary = header_account_summary %>
               <div class="site-header__actions admin-topbar__session">
                 <div class="site-header__actions-top">
-                  <div class="site-header__account" data-testid="admin-account-summary">
-                    <div class="site-header__account-heading">
-                      <span class="site-header__account-eyebrow"><%= account_summary[:eyebrow] %></span>
-                      <strong class="site-header__account-name"><%= account_summary[:name] %></strong>
-                    </div>
-                    <span class="site-header__account-detail" title="<%= account_summary[:detail] %>"><%= account_summary[:detail] %></span>
-                  </div>
+                  <%= render "layouts/account_summary", account_summary:, testid: "admin-account-summary" %>
 
                   <%= render "layouts/language_dropdown" %>
                   <%= render "layouts/theme_toggle", control_id: "admin_theme_preference" %>

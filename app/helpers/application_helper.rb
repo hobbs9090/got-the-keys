@@ -259,7 +259,7 @@ module ApplicationHelper
     if admin_signed_in?
       {
         eyebrow: t("ui.site_header.account_eyebrow", default: "Signed in"),
-        name: t("ui.site_header.admin_account_name", default: "Administrator"),
+        name: current_admin.display_name,
         detail: current_admin.email
       }
     elsif user_signed_in?

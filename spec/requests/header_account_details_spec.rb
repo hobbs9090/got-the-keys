@@ -187,7 +187,7 @@ RSpec.describe "Header account details", type: :request do
     expect(account_summary).to be_present
     expect(account_summary.at_css(".site-header__account-heading")).to be_present
     expect(account_summary.at_css(".site-header__account-detail")["title"]).to eq(admin.email)
-    expect(account_summary.text).to include("Administrator")
+    expect(account_summary.text).to include("Header Admin")
     expect(account_summary.text).to include(admin.email)
 
     button_group = parsed_html.at_css(".site-header__actions-row .site-header__button-group")

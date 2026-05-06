@@ -8,7 +8,8 @@ class Admin < ApplicationRecord
   validates :language, inclusion: { in: AppSettings.available_languages }
 
   def display_name
-    email
+    local_name = email.to_s.split("@", 2).first.to_s.tr("._-", " ").squish
+    local_name.presence&.titleize || I18n.t("ui.site_header.admin_account_name", default: "Administrator")
   end
 
   def self.two_factor_globally_active?

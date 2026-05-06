@@ -89,7 +89,7 @@ RSpec.describe "Admin header navigation" do
     expect(admin_user).to be_present
     expect(admin_user.at_css(".site-header__account-heading")).to be_present
     expect(admin_user.text).to include("Signed in")
-    expect(admin_user.text).to include("Administrator")
+    expect(admin_user.text).to include("Header Admin")
     expect(admin_user.text).to include(admin.email)
     expect(admin_user.at_css(".site-header__account-detail")["title"]).to eq(admin.email)
 

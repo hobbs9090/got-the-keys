@@ -1,0 +1,10 @@
+<% account_summary = local_assigns.fetch(:account_summary) %>
+<% testid = local_assigns.fetch(:testid, "header-account-summary") %>
+
+<div class="site-header__account" data-testid="<%= testid %>">
+  <div class="site-header__account-heading">
+    <span class="site-header__account-eyebrow"><%= account_summary[:eyebrow] %></span>
+    <strong class="site-header__account-name"><%= account_summary[:name] %></strong>
+  </div>
+  <span class="site-header__account-detail" title="<%= account_summary[:detail] %>"><%= account_summary[:detail] %></span>
+</div>

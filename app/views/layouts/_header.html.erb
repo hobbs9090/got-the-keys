@@ -19,13 +19,7 @@
     <div class="site-header__actions">
       <div class="site-header__actions-top">
         <% if account_summary.present? %>
-          <div class="site-header__account" data-testid="header-account-summary">
-            <div class="site-header__account-heading">
-              <span class="site-header__account-eyebrow"><%= account_summary[:eyebrow] %></span>
-              <strong class="site-header__account-name"><%= account_summary[:name] %></strong>
-            </div>
-            <span class="site-header__account-detail" title="<%= account_summary[:detail] %>"><%= account_summary[:detail] %></span>
-          </div>
+          <%= render "layouts/account_summary", account_summary:, testid: "header-account-summary" %>
         <% end %>
         <%= language_switcher %>
         <%= render "layouts/theme_toggle", control_id: "site_theme_preference" %>
@@ -38,7 +32,7 @@
               <%= link_to t("ui.site_header.admin_dashboard"), admin_dashboard_entry_path, class: "button primary", data: { testid: "admin-bookings-entry-link" } %>
               <%= link_to t("ui.site_header.sign_out"), destroy_admin_session_path, class: "button alert hollow", data: { turbo_method: :delete } %>
             <% else %>
-              <%= link_to t("ui.site_header.my_listings", default: "My listings"), mine_properties_path, class: "button secondary hollow", data: { testid: "my-listings-link" } %>
+              <%= link_to t("ui.site_header.my_listings", default: "Your account"), mine_properties_path, class: "button secondary hollow", data: { testid: "my-listings-link" } %>
               <%= link_to t("ui.site_header.profile"), edit_user_registration_path, class: "button hollow" %>
               <%= link_to t("ui.site_header.sign_out"), destroy_user_session_path, class: "button alert hollow", data: { turbo_method: :delete } %>
             <% end %>
