@@ -88,9 +88,7 @@ RSpec.describe "Admin enquiries", type: :request do
     expect(response.body).to include(%(href="#{admin_property_path(property)}"))
   end
 
-  it "redirects the old enquiries route to Leads" do
-    get "/admin/enquiries"
-
-    expect(response).to redirect_to(admin_leads_path)
+  it "does not keep the old enquiries route" do
+    expect { get "/admin/enquiries" }.to raise_error(ActionController::RoutingError)
   end
 end

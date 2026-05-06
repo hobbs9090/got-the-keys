@@ -63,14 +63,6 @@ GotTheKeys::Application.routes.draw do
     patch "rental_applications/:id", to: redirect("/admin/rentals/%{id}")
     put "rental_applications/:id", to: redirect("/admin/rentals/%{id}")
 
-    get "enquiries", to: redirect("/admin/leads")
-    get "enquiries/:id", to: redirect { |params, _req| "/admin/leads/#{params[:id]}" }
-    patch "enquiries/:id", to: redirect("/admin/leads/%{id}", status: 307)
-    put "enquiries/:id", to: redirect("/admin/leads/%{id}", status: 307)
-
-    get "booking_configuration", to: redirect("/admin/booking_rules")
-    patch "booking_configuration", to: redirect("/admin/booking_rules", status: 307)
-    put "booking_configuration", to: redirect("/admin/booking_rules", status: 307)
   end
 
   resources :members, only: [:index]

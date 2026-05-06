@@ -45,9 +45,7 @@ RSpec.describe "Admin Booking Rules" do
     expect(config.buffer_minutes).to eq(15)
   end
 
-  it "redirects the old booking configuration route to Booking Rules" do
-    get "/admin/booking_configuration"
-
-    expect(response).to redirect_to(admin_booking_rules_path)
+  it "does not keep the old booking configuration route" do
+    expect { get "/admin/booking_configuration" }.to raise_error(ActionController::RoutingError)
   end
 end
