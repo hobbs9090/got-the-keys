@@ -44,20 +44,31 @@ RSpec.describe ReleaseBuildMetadata do
   end
 
   describe ".payload" do
-    it "uses the requested build number when it is newer than the previous build" do
+    it "uses the deployed revision and requested build number when both are present" do
       payload = described_class.payload(
         previous_metadata: { "build_number" => "9" },
         current_revision: "abcdef123456",
-        requested_build_sha: "abc1234",
+        requested_build_sha: "stale12",
         requested_build_number: "42",
         deployed_at: "2026-03-26T09:00:00Z"
       )
 
       expect(payload).to eq(
-        build_sha: "abc1234",
+        build_sha: "abcdef1",
         build_number: "42",
         deployed_at: "2026-03-26T09:00:00Z"
       )
+    end
+
+    it "falls back to the requested build sha when no deployed revision is available" do
+      payload = described_class.payload(
+        previous_metadata: {},
+        current_revision: nil,
+        requested_build_sha: "abc1234",
+        deployed_at: "2026-03-26T09:00:00Z"
+      )
+
+      expect(payload[:build_sha]).to eq("abc1234")
     end
 
     it "increments the previous build number when none is provided" do
@@ -82,6 +93,28 @@ RSpec.describe ReleaseBuildMetadata do
       )
 
       expect(payload[:build_number]).to eq("1")
+    end
+  end
+
+  describe ".configured_build_sha" do
+    it "prefers persisted deploy metadata over an environment value" do
+      expect(
+        described_class.configured_build_sha(
+          build_metadata: { "build_sha" => "fresh12" },
+          env_build_sha: "stale34",
+          current_revision: "local56"
+        )
+      ).to eq("fresh12")
+    end
+
+    it "uses the environment value when no persisted metadata exists" do
+      expect(
+        described_class.configured_build_sha(
+          build_metadata: {},
+          env_build_sha: "env1234",
+          current_revision: "local56"
+        )
+      ).to eq("env1234")
     end
   end
 end

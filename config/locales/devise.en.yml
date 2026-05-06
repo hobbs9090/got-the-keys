@@ -84,6 +84,7 @@ en:
         forget_pass: 'Forgot your password?'
         resend_confirmation: "Didn't receive confirmation instructions?"
         resend_unlock: "Didn't receive unlock instructions?"
+        admin_recovery: "Contact support for admin recovery"
         register: "Register"
         omni_auth: "Use %{provider} sign in"
       confirmations:
@@ -120,7 +121,7 @@ en:
           submit: 'Send reset message'
           hero_badge: "Password recovery"
           hero_title: "Reset your password"
-          hero_intro: "We can send a secure reset link so you can get back into your seller dashboard."
+          hero_intro: "We can send a secure reset link so you can get back into your GotTheKeys account."
           paragraph_1: "Use the email address attached to your account and we will send reset instructions in a few minutes."
           paragraph_2: "If you are still waiting for an older message, request a new one here and use the most recent email you receive."
           form_badge: "Recovery email"
@@ -184,13 +185,13 @@ en:
           otp_attempt: "Verification code or backup code"
           otp_attempt_hint: "Enter an authenticator code or one of your backup codes."
           hero_badge: "Member access"
-          hero_title: "Pick up where you left off"
-          hero_intro: "Sign in to manage your listings, confirm viewings, and keep booking updates moving."
-          paragraph_1: "Your dashboard keeps your property details, viewing times, and booking responses in one place, without the usual back-and-forth."
-          paragraph_2: "New here, or coming back after a while? Create your account first, or use the recovery links below to reset your password and get straight back in."
+          hero_title: "Sign in to save this home"
+          hero_intro: "Save homes, return to your shortlist, and keep viewing or offer updates in one account."
+          paragraph_1: "Your GotTheKeys account keeps saved homes, saved searches, viewings, offers, and account updates in one place."
+          paragraph_2: "New here, or coming back after a while? Create your account first, or use the recovery links below to reset your password and continue."
           create_account: "Create an account"
           form_badge: "Welcome back"
-          form_intro: "Use your email address and password to get back into your seller dashboard."
+          form_intro: "Use your email and password to continue with your GotTheKeys account."
           support_note: "Use the links below if you need to reset your password, unlock your account, or switch to the admin sign-in."
       unlocks:
         new:

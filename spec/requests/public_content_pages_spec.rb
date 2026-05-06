@@ -160,20 +160,20 @@ RSpec.describe "Public content pages", type: :request do
     get searches_path
     expect(label_text("min_price")).to eq(I18n.t("ui.properties.filters.min_price"))
     expect(label_text("max_price")).to eq(I18n.t("ui.properties.filters.max_price"))
-    expect(input_placeholder("min_price")).to eq("250,000")
-    expect(input_placeholder("max_price")).to eq("1,000,000")
+    expect(input_placeholder("min_price")).to be_nil
+    expect(input_placeholder("max_price")).to be_nil
     expect(input_attribute("min_price", "disabled")).to eq("disabled")
     expect(input_attribute("max_price", "disabled")).to eq("disabled")
     expect(input_attribute("min_price", "aria-describedby")).to eq("min_price_listing_type_hint")
     expect(input_attribute("max_price", "aria-describedby")).to eq("max_price_listing_type_hint")
-    expect(hint_attribute("min_price", "title")).to eq(I18n.t("ui.properties.filters.price_requires_listing_type"))
-    expect(hint_attribute("max_price", "title")).to eq(I18n.t("ui.properties.filters.price_requires_listing_type"))
+    expect(parsed_html.at_css("#min_price_listing_type_hint").text.squish).to eq(I18n.t("ui.properties.filters.price_requires_listing_type"))
+    expect(parsed_html.at_css("#max_price_listing_type_hint").text.squish).to eq(I18n.t("ui.properties.filters.price_requires_listing_type"))
 
     get searches_path, params: { sale_status: Property::SALE_STATUSES[:for_rent] }
     expect(label_text("min_price")).to eq(I18n.t("ui.properties.filters.min_monthly_rental"))
     expect(label_text("max_price")).to eq(I18n.t("ui.properties.filters.max_monthly_rental"))
-    expect(input_placeholder("min_price")).to eq("1,500")
-    expect(input_placeholder("max_price")).to eq("10,000")
+    expect(input_placeholder("min_price")).to be_nil
+    expect(input_placeholder("max_price")).to be_nil
     expect(input_attribute("min_price", "disabled")).to be_nil
     expect(input_attribute("max_price", "disabled")).to be_nil
     expect(hint_attribute("min_price", "hidden")).not_to be_nil
@@ -182,8 +182,8 @@ RSpec.describe "Public content pages", type: :request do
     get for_sale_index_path
     expect(label_text("min_price")).to eq(I18n.t("ui.properties.filters.min_price"))
     expect(label_text("max_price")).to eq(I18n.t("ui.properties.filters.max_price"))
-    expect(input_placeholder("min_price")).to eq("250,000")
-    expect(input_placeholder("max_price")).to eq("1,000,000")
+    expect(input_placeholder("min_price")).to be_nil
+    expect(input_placeholder("max_price")).to be_nil
     expect(input_attribute("min_price", "disabled")).to be_nil
     expect(input_attribute("max_price", "disabled")).to be_nil
     expect(parsed_html.at_css("#min_price_listing_type_hint")).to be_nil
@@ -192,12 +192,35 @@ RSpec.describe "Public content pages", type: :request do
     get for_rent_index_path
     expect(label_text("min_price")).to eq(I18n.t("ui.properties.filters.min_monthly_rental"))
     expect(label_text("max_price")).to eq(I18n.t("ui.properties.filters.max_monthly_rental"))
-    expect(input_placeholder("min_price")).to eq("1,500")
-    expect(input_placeholder("max_price")).to eq("10,000")
+    expect(input_placeholder("min_price")).to be_nil
+    expect(input_placeholder("max_price")).to be_nil
     expect(input_attribute("min_price", "disabled")).to be_nil
     expect(input_attribute("max_price", "disabled")).to be_nil
     expect(parsed_html.at_css("#min_price_listing_type_hint")).to be_nil
     expect(parsed_html.at_css("#max_price_listing_type_hint")).to be_nil
+  end
+
+  it "does not render placeholder examples or visible question-mark hints on public price filters" do
+    [
+      searches_path,
+      properties_path,
+      for_sale_index_path,
+      for_rent_index_path
+    ].each do |path|
+      get path
+
+      document = parsed_html
+      min_price = document.at_css("input#min_price")
+      max_price = document.at_css("input#max_price")
+
+      expect(response).to have_http_status(:ok)
+      expect(min_price).to be_present
+      expect(max_price).to be_present
+      expect(min_price["placeholder"]).to be_nil
+      expect(max_price["placeholder"]).to be_nil
+      expect(document.css(".property-filters__hint-trigger")).to be_empty
+      expect(document.css(".property-filters__label-row").map(&:text).join(" ")).not_to include("?")
+    end
   end
 
   it "adds search form validation attributes for query and price inputs" do

@@ -37,7 +37,11 @@ module GotTheKeys
     config.x.got_the_keys.time_zone = app_time_zone
     config.x.got_the_keys.exchange_rate_gbp_to_cny = 9.368
     config.x.got_the_keys.version = semantic_version
-    config.x.got_the_keys.build_sha = ENV["APP_BUILD_SHA"].presence || build_metadata["build_sha"].presence || current_revision
+    config.x.got_the_keys.build_sha = ReleaseBuildMetadata.configured_build_sha(
+      build_metadata: build_metadata,
+      env_build_sha: ENV["APP_BUILD_SHA"],
+      current_revision: current_revision
+    )
     config.x.got_the_keys.local_build = using_runtime_git_revision && ReleaseBuildMetadata.workspace_dirty?(root)
     config.x.got_the_keys.build_number = ENV["APP_BUILD_NUMBER"].presence || build_metadata["build_number"].presence
     config.x.got_the_keys.deployed_at = build_metadata["deployed_at"].presence

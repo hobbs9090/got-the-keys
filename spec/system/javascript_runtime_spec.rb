@@ -365,12 +365,12 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
 
     expect(page).to have_css("label[for='min_price']", text: "Min price")
     expect(page).to have_css("label[for='max_price']", text: "Max price")
-    expect(page).to have_css("input[data-property-search-min-price-input][placeholder='250,000']")
-    expect(page).to have_css("input[data-property-search-max-price-input][placeholder='1,000,000']")
+    expect(page).to have_css("input[data-property-search-min-price-input]:not([placeholder])")
+    expect(page).to have_css("input[data-property-search-max-price-input]:not([placeholder])")
     expect(page).to have_field("min_price", disabled: true)
     expect(page).to have_field("max_price", disabled: true)
-    expect(page).to have_css("#min_price_listing_type_hint:not([hidden])")
-    expect(page).to have_css("#max_price_listing_type_hint:not([hidden])")
+    expect(page).to have_css("#min_price_listing_type_hint.visually-hidden:not([hidden])", text: "Choose a listing type", visible: :all)
+    expect(page).to have_css("#max_price_listing_type_hint.visually-hidden:not([hidden])", text: "Choose a listing type", visible: :all)
 
     rental_state = update_shared_search_filter_state("For Rent")
 
@@ -378,8 +378,8 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       "selectedValue" => "For Rent",
       "minLabel" => "Min monthly rental",
       "maxLabel" => "Max monthly rental",
-      "minPlaceholder" => "1,500",
-      "maxPlaceholder" => "10,000",
+      "minPlaceholder" => nil,
+      "maxPlaceholder" => nil,
       "minDisabled" => false,
       "maxDisabled" => false,
       "minHintHidden" => true,
@@ -392,8 +392,8 @@ RSpec.describe "JavaScript runtime", type: :system, js: true do
       "selectedValue" => "For Sale",
       "minLabel" => "Min price",
       "maxLabel" => "Max price",
-      "minPlaceholder" => "250,000",
-      "maxPlaceholder" => "1,000,000",
+      "minPlaceholder" => nil,
+      "maxPlaceholder" => nil,
       "minDisabled" => false,
       "maxDisabled" => false,
       "minHintHidden" => true,

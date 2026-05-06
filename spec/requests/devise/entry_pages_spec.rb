@@ -55,11 +55,20 @@ RSpec.describe "Devise entry pages", type: :request do
 
   it "renders the member sign-in page" do
     get new_user_session_path
+    document = Nokogiri::HTML.parse(response.body)
 
     expect(response).to have_http_status(:ok)
     expect_shared_auth_card_layout
     expect(response.body).not_to include("marketing-wordmark--hero")
     expect(response.body).to include("Sign in")
+    expect(response.body).to include("Sign in to save this home")
+    expect(response.body).not_to include("Pick up where you left off")
+    expect(response.body).not_to include("manage your listings, confirm viewings")
+    expect(response.body).not_to include("Your dashboard keeps your property details")
+    expect(response.body).not_to include("seller dashboard")
+    expect(document.at_css(%(a[href="#{new_user_password_path}"])).text.squish).to eq("Forgot your password?")
+    expect(document.at_css(%(a[href="#{new_user_unlock_path}"])).text.squish).to eq("Didn't receive unlock instructions?")
+    expect(document.at_css(%(a[href="#{new_admin_session_path}"])).text.squish).to eq("Sign in as administrator?")
   end
 
   it "renders the sign-in form with stable testid anchors" do
@@ -106,9 +115,35 @@ RSpec.describe "Devise entry pages", type: :request do
     expect(response.body).to include("Use your administrator credentials.")
     expect(response.body).to include("Use your administrator email address and password to continue.")
     expect(document.at_css(%(label[for="admin_email"])).text.squish).to eq("Email")
+    auth_links = document.at_css(".auth-form-card__links")
+    expect(auth_links.at_css(%(a[href="#{new_user_session_path}"])).text.squish).to eq("Sign in as member?")
+    expect(auth_links.at_css(%(a[href="#{contact_us_path}"])).text.squish).to eq("Contact support for admin recovery")
     expect(response.body).not_to include("seller dashboard")
     expect(response.body).not_to include("Use the links below if you need to reset your password")
     expect(response.body).not_to include("Verification code or backup code")
+  end
+
+  it "keeps admin sign-in copy and links admin-specific" do
+    get new_admin_session_path
+
+    document = Nokogiri::HTML.parse(response.body)
+    auth_panel = document.at_css(".auth-panel")
+    form_card = document.at_css(".auth-form-card")
+    auth_links = document.at_css(".auth-form-card__links")
+
+    expect(auth_panel.at_css("h1").text.squish).to eq("Manage the GotTheKeys workspace")
+    expect(auth_panel.text.squish).to include("Sign in to triage enquiries, manage listings, review bookings")
+    expect(auth_panel.text.squish).to include("Use your administrator credentials.")
+    expect(form_card.at_css(".auth-form-card__title").text.squish).to eq("Sign in as Administrator")
+    expect(form_card.at_css(".auth-form-card__intro").text.squish).to eq("Use your administrator email address and password to continue.")
+    expect(document.at_css(%(label[for="admin_email"])).text.squish).to eq("Email")
+    expect(document.at_css(%(label[for="admin_email"])).text.squish).not_to eq("Username")
+    expect(auth_links.at_css(%(a[href="#{new_user_session_path}"]))).to be_present
+    expect(auth_links.at_css(%(a[href="#{contact_us_path}"]))).to be_present
+    expect(auth_links.at_css(%(a[href="#{new_admin_session_path}"]))).to be_nil
+    expect(response.body).not_to include("Pick up where you left off")
+    expect(response.body).not_to include("seller dashboard")
+    expect(response.body).not_to include("recovery links below")
   end
 
   it "renders the forgot password page" do

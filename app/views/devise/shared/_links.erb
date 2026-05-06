@@ -26,7 +26,7 @@
 
   <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
       <li>
-        <%= link_to t('devise.views.links.resend_unlock'), new_unlock_path(resource_name) %>
+        <%= link_to t('devise.views.links.resend_unlock'), new_unlock_path(resource_name, pending_saved_property_params) %>
       </li>
   <% end -%>
 
@@ -46,6 +46,9 @@
   <%- if request.fullpath.match(/^\/admins/) -%>
       <li>
         <%= link_to t('devise.views.links.sign_in_as_member'), new_user_session_path %>
+      </li>
+      <li>
+        <%= link_to t('devise.views.links.admin_recovery'), contact_us_path %>
       </li>
   <% end -%>
 

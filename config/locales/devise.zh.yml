@@ -83,6 +83,7 @@ zh:
         forget_pass: '忘记密码?'
         resend_confirmation: "没有收到确认指令？"
         resend_unlock: "没有收到解锁指令？"
+        admin_recovery: "联系支持恢复管理员访问"
         register: "注册"
         omni_auth: "用%{provider}登录"
       confirmations:
@@ -118,7 +119,7 @@ zh:
           submit: '发送重置邮件'
           hero_badge: "密码找回"
           hero_title: "重置您的密码"
-          hero_intro: "我们可以向您发送一个安全的重置链接，帮助您重新进入业主控制面板。"
+          hero_intro: "我们可以向您发送一个安全的重置链接，帮助您重新进入 GotTheKeys 账户。"
           paragraph_1: "请输入与账户关联的邮箱地址，我们会在几分钟内发送重置说明。"
           paragraph_2: "如果您还在等待之前的邮件，也可以在这里重新申请，并以最新收到的邮件为准。"
           form_badge: "重置邮件"
@@ -177,13 +178,13 @@ zh:
           otp_attempt: "验证码或备用代码"
           otp_attempt_hint: "请输入验证器代码或您的备用代码之一。"
           hero_badge: "会员入口"
-          hero_title: "继续您上次的进度"
-          hero_intro: "登录后即可管理房源、确认看房安排，并跟进最新预约动态。"
-          paragraph_1: "您的控制面板会把房源资料、看房时间和预约回复集中在一个地方，减少来回沟通。"
-          paragraph_2: "如果您是第一次使用，先创建账户；如果只是忘记密码，也可以使用下方链接快速重置并重新进入。"
+          hero_title: "登录以收藏这个房源"
+          hero_intro: "收藏房源，返回您的清单，并在同一个账户中跟进看房或报价更新。"
+          paragraph_1: "您的 GotTheKeys 账户会集中保存收藏房源、保存的搜索、看房、报价和账户更新。"
+          paragraph_2: "如果您是第一次使用，先创建账户；如果只是忘记密码，也可以使用下方链接重置密码并继续。"
           create_account: "创建账户"
           form_badge: "欢迎回来"
-          form_intro: "请输入您的电子邮箱和密码，重新进入您的 GotTheKeys 账户。"
+          form_intro: "请输入您的电子邮箱和密码，继续使用您的 GotTheKeys 账户。"
           support_note: "如果您需要重置密码、解锁账户，或切换到管理员登录，请使用下方链接。"
       unlocks:
         new:

@@ -44,7 +44,11 @@ module ReleaseBuildMetadata
   end
 
   def normalize_build_sha(requested_build_sha, current_revision)
-    present_string(requested_build_sha) || short_sha(current_revision)
+    short_sha(current_revision) || present_string(requested_build_sha)
+  end
+
+  def configured_build_sha(build_metadata:, env_build_sha:, current_revision:)
+    build_metadata["build_sha"].presence || present_string(env_build_sha) || current_revision
   end
 
   def short_sha(revision)

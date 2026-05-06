@@ -2,8 +2,6 @@
 <% current_sale_status = selected_sale_status.presence_in(Property::SALE_STATUS) %>
 <% price_requires_sale_status = show_status_select %>
 <% price_filters_disabled = price_requires_sale_status && current_sale_status.blank? %>
-<% current_min_price_placeholder = current_sale_status == Property::SALE_STATUSES[:for_rent] ? "1,500" : "250,000" %>
-<% current_max_price_placeholder = current_sale_status == Property::SALE_STATUSES[:for_rent] ? "10,000" : "1,000,000" %>
 <%= form_with url: url, method: :get, class: "property-filters", local: true, data: { testid: "property-filter-form", property_search_filters: true } do %>
   <% if show_status_select %>
     <% listing_type_blank_label = local_assigns.fetch(:listing_type_blank_label, t("ui.properties.filters.all_listings")) %>
@@ -40,20 +38,20 @@
     <div class="property-filters__label-row">
       <%= label_tag :min_price, property_filter_price_label(:min, current_sale_status), data: { property_search_min_price_label: true, default_label: property_filter_price_label(:min), rental_label: property_filter_price_label(:min, Property::SALE_STATUSES[:for_rent]) } %>
       <% if price_requires_sale_status %>
-        <span id="min_price_listing_type_hint" class="property-filters__hint-trigger" tabindex="0" role="tooltip" title="<%= t("ui.properties.filters.price_requires_listing_type") %>" aria-label="<%= t("ui.properties.filters.price_requires_listing_type") %>" data-tooltip="<%= t("ui.properties.filters.price_requires_listing_type") %>" data-property-search-price-hint <%= "hidden" unless price_filters_disabled %>>?</span>
+        <span id="min_price_listing_type_hint" class="visually-hidden" data-property-search-price-hint <%= "hidden" unless price_filters_disabled %>><%= t("ui.properties.filters.price_requires_listing_type") %></span>
       <% end %>
     </div>
-    <%= text_field_tag :min_price, price_filters_disabled ? nil : params[:min_price], inputmode: "numeric", maxlength: 15, pattern: "[0-9,\\s]*", placeholder: current_min_price_placeholder, disabled: price_filters_disabled, aria: (price_filters_disabled ? { describedby: "min_price_listing_type_hint" } : {}), data: { testid: "property-filter-min-price", property_search_min_price_input: true, property_search_price_requires_sale_status: price_requires_sale_status, default_placeholder: "250,000", rental_placeholder: "1,500", validation_pattern_message: t("ui.validation.number") } %>
+    <%= text_field_tag :min_price, price_filters_disabled ? nil : params[:min_price], inputmode: "numeric", maxlength: 15, pattern: "[0-9,\\s]*", disabled: price_filters_disabled, aria: (price_filters_disabled ? { describedby: "min_price_listing_type_hint" } : {}), data: { testid: "property-filter-min-price", property_search_min_price_input: true, property_search_price_requires_sale_status: price_requires_sale_status, validation_pattern_message: t("ui.validation.number") } %>
   </div>
 
   <div>
     <div class="property-filters__label-row">
       <%= label_tag :max_price, property_filter_price_label(:max, current_sale_status), data: { property_search_max_price_label: true, default_label: property_filter_price_label(:max), rental_label: property_filter_price_label(:max, Property::SALE_STATUSES[:for_rent]) } %>
       <% if price_requires_sale_status %>
-        <span id="max_price_listing_type_hint" class="property-filters__hint-trigger" tabindex="0" role="tooltip" title="<%= t("ui.properties.filters.price_requires_listing_type") %>" aria-label="<%= t("ui.properties.filters.price_requires_listing_type") %>" data-tooltip="<%= t("ui.properties.filters.price_requires_listing_type") %>" data-property-search-price-hint <%= "hidden" unless price_filters_disabled %>>?</span>
+        <span id="max_price_listing_type_hint" class="visually-hidden" data-property-search-price-hint <%= "hidden" unless price_filters_disabled %>><%= t("ui.properties.filters.price_requires_listing_type") %></span>
       <% end %>
     </div>
-    <%= text_field_tag :max_price, price_filters_disabled ? nil : params[:max_price], inputmode: "numeric", maxlength: 15, pattern: "[0-9,\\s]*", placeholder: current_max_price_placeholder, disabled: price_filters_disabled, aria: (price_filters_disabled ? { describedby: "max_price_listing_type_hint" } : {}), data: { testid: "property-filter-max-price", property_search_max_price_input: true, property_search_price_requires_sale_status: price_requires_sale_status, default_placeholder: "1,000,000", rental_placeholder: "10,000", validation_pattern_message: t("ui.validation.number") } %>
+    <%= text_field_tag :max_price, price_filters_disabled ? nil : params[:max_price], inputmode: "numeric", maxlength: 15, pattern: "[0-9,\\s]*", disabled: price_filters_disabled, aria: (price_filters_disabled ? { describedby: "max_price_listing_type_hint" } : {}), data: { testid: "property-filter-max-price", property_search_max_price_input: true, property_search_price_requires_sale_status: price_requires_sale_status, validation_pattern_message: t("ui.validation.number") } %>
   </div>
 
   <div>

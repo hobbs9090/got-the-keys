@@ -20,6 +20,43 @@ RSpec.describe "Saved properties", type: :request do
     expect(sign_in_link["href"]).to include("save_property_id=#{property.id}")
   end
 
+  it "keeps the save-property sign-in page neutral for renters" do
+    get new_user_session_path(return_to: property_path(property), save_property_id: property.id)
+    page = Nokogiri::HTML(response.body)
+
+    expect(response).to have_http_status(:ok)
+    expect(page.at_css(%(label[for="user_email"])).text.squish).to eq("Email")
+    expect(response.body).to include("Sign in to save this home")
+    expect(response.body).to include("Save homes, return to your shortlist")
+    expect(response.body).to include("Use your email and password to continue with your GotTheKeys account.")
+    expect(response.body).not_to include("Pick up where you left off")
+    expect(response.body).not_to include("manage your listings, confirm viewings")
+    expect(response.body).not_to include("Your dashboard keeps your property details")
+    expect(response.body).not_to include("seller dashboard")
+  end
+
+  it "does not show seller-dashboard copy when a renter follows Sign in to save from a listing" do
+    get property_path(property)
+    listing_page = Nokogiri::HTML(response.body)
+    sign_in_href = listing_page.at_css(%([data-testid="save-property-sign-in-link"]))["href"]
+
+    get sign_in_href
+
+    sign_in_page = Nokogiri::HTML(response.body)
+    auth_panel = sign_in_page.at_css(".auth-panel")
+    form_card = sign_in_page.at_css(".auth-form-card")
+
+    expect(response).to have_http_status(:ok)
+    expect(auth_panel.at_css("h1").text.squish).to eq("Sign in to save this home")
+    expect(auth_panel.text.squish).to include("Save homes, return to your shortlist")
+    expect(form_card.at_css(".auth-form-card__intro").text.squish).to eq("Use your email and password to continue with your GotTheKeys account.")
+    expect(sign_in_page.at_css(%(input[name="save_property_id"]))["value"]).to eq(property.id.to_s)
+    expect(sign_in_page.at_css(%(input[name="return_to"]))["value"]).to eq(property_path(property))
+    expect(response.body).not_to include("get back into your seller dashboard")
+    expect(response.body).not_to include("manage your listings, confirm viewings")
+    expect(response.body).not_to include("your seller dashboard")
+  end
+
   it "shows a save button to signed-in visitors" do
     sign_in user
 

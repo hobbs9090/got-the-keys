@@ -9,8 +9,8 @@ const updatePriceLabels = (form) => {
 
   state.minPriceLabel.textContent = useRentalLabels ? state.minPriceLabel.dataset.rentalLabel : state.minPriceLabel.dataset.defaultLabel;
   state.maxPriceLabel.textContent = useRentalLabels ? state.maxPriceLabel.dataset.rentalLabel : state.maxPriceLabel.dataset.defaultLabel;
-  state.minPriceInput.placeholder = useRentalLabels ? state.minPriceInput.dataset.rentalPlaceholder : state.minPriceInput.dataset.defaultPlaceholder;
-  state.maxPriceInput.placeholder = useRentalLabels ? state.maxPriceInput.dataset.rentalPlaceholder : state.maxPriceInput.dataset.defaultPlaceholder;
+  state.minPriceInput.removeAttribute("placeholder");
+  state.maxPriceInput.removeAttribute("placeholder");
   state.minPriceInput.disabled = priceDisabled;
   state.maxPriceInput.disabled = priceDisabled;
   state.priceHints.forEach((hint) => {
