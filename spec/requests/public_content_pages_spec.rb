@@ -109,6 +109,8 @@ RSpec.describe "Public content pages", type: :request do
     expect(response.body).to include("Sevenoaks and Westerham")
     expect(response.body).to include("Kent, TN16 1ET")
     expect(response.body).to include("TN16+1ET")
+    expect(parsed_html.at_css(".contact-map-card__frame--static")).to be_present
+    expect(parsed_html.at_css(".contact-map-card .contact-map-card__frame iframe")).not_to be_present
     expect(response.body).not_to include("123 Awesome Road")
     expect(response.body).not_to include("TN16 4AB")
   end
