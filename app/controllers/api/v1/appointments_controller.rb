@@ -2,6 +2,7 @@ module Api
   module V1
     class AppointmentsController < BaseController
       before_action :load_appointment, only: %i[show reschedule cancel]
+      before_action :guard_self_service_mutation!, only: %i[reschedule cancel]
 
       # GET /api/v1/appointments
       def index
@@ -24,14 +25,6 @@ module Api
 
       # PATCH /api/v1/appointments/:public_reference/reschedule
       def reschedule
-        unless @appointment.manageable_by_customer?
-          return render_error(
-            status: :conflict, code: "conflict",
-            message: I18n.t("api.errors.appointment_self_service_expired",
-                             default: "This appointment can no longer be managed from the app.")
-          )
-        end
-
         new_time = parse_time(params[:scheduled_at])
         if new_time.nil?
           return render_error(
@@ -53,14 +46,6 @@ module Api
 
       # PATCH /api/v1/appointments/:public_reference/cancel
       def cancel
-        unless @appointment.manageable_by_customer?
-          return render_error(
-            status: :conflict, code: "conflict",
-            message: I18n.t("api.errors.appointment_self_service_expired",
-                             default: "This appointment can no longer be managed from the app.")
-          )
-        end
-
         # Cancellation skips slot validation — the appointment is leaving the
         # active set, so AppointmentAvailability shouldn't block it.
         @appointment.skip_slot_validation = true
@@ -112,6 +97,16 @@ module Api
 
       def api_host
         "#{request.protocol}#{request.host_with_port}"
+      end
+
+      def guard_self_service_mutation!
+        return if @appointment.manageable_by_customer?
+
+        render_error(
+          status: :conflict, code: "conflict",
+          message: I18n.t("api.errors.appointment_self_service_expired",
+                           default: "This appointment can no longer be managed from the app.")
+        )
       end
     end
   end

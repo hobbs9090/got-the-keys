@@ -274,5 +274,43 @@ RSpec.describe "Appointments" do
 
       expect(response).to redirect_to(appointment_path(appointment, token: appointment.access_token))
     end
+
+    it "blocks stale reschedule submissions inside the two-hour cutoff" do
+      appointment = FactoryBot.create(
+        :appointment,
+        :confirmed,
+        property:,
+        requested_time: booking_time(2026, 3, 30, 9, 30),
+        scheduled_at: booking_time(2026, 3, 30, 9, 30),
+        skip_slot_validation: true
+      )
+      new_slot = next_booking_slot(hour: 14)
+
+      patch reschedule_self_service_appointment_path(appointment, token: appointment.access_token), params: {
+        appointment: { requested_time: new_slot.iso8601 }
+      }
+
+      expect(response).to redirect_to(appointment_path(appointment, token: appointment.access_token))
+      expect(flash[:alert]).to eq(I18n.t("ui.appointments.self_service.flash.expired"))
+      expect(appointment.reload.scheduled_at).to eq(booking_time(2026, 3, 30, 9, 30))
+      expect(appointment.status).to eq("confirmed")
+    end
+
+    it "blocks stale cancellation submissions inside the two-hour cutoff" do
+      appointment = FactoryBot.create(
+        :appointment,
+        :confirmed,
+        property:,
+        requested_time: booking_time(2026, 3, 30, 9, 30),
+        scheduled_at: booking_time(2026, 3, 30, 9, 30),
+        skip_slot_validation: true
+      )
+
+      patch cancel_self_service_appointment_path(appointment, token: appointment.access_token)
+
+      expect(response).to redirect_to(appointment_path(appointment, token: appointment.access_token))
+      expect(flash[:alert]).to eq(I18n.t("ui.appointments.self_service.flash.expired"))
+      expect(appointment.reload.status).to eq("confirmed")
+    end
   end
 end

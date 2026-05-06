@@ -3,6 +3,10 @@ class Appointment < ApplicationRecord
   ACTIVE_STATUSES = %w[pending confirmed rescheduled].freeze
   VISIT_OUTCOMES = %w[attended feedback_requested feedback_received].freeze
   CUSTOMER_SELF_SERVICE_STATUSES = %w[pending confirmed rescheduled].freeze
+  # Customers can manage a viewing until two hours before it starts. The
+  # deadline is relative to the actual scheduled start, not the calendar day,
+  # so same-day and DST-crossing bookings do not stay editable after the cutoff.
+  CUSTOMER_SELF_SERVICE_CUTOFF = 2.hours
   PHONE_FORMAT = /\A\+?[0-9().\-\s]{7,20}\z/.freeze
   attr_accessor :skip_slot_validation
 
@@ -91,7 +95,7 @@ class Appointment < ApplicationRecord
   end
 
   def self_service_expires_at
-    scheduled_at + 12.hours
+    scheduled_at - CUSTOMER_SELF_SERVICE_CUTOFF
   end
 
   def self_service_expired?

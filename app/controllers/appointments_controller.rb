@@ -6,7 +6,8 @@ class AppointmentsController < ApplicationController
   before_action :prevent_owner_booking!, only: %i[new create]
   before_action :set_appointment, only: %i[show edit_self_service reschedule_self_service cancel_self_service]
   before_action :authorize_public_access!, only: %i[show edit_self_service reschedule_self_service cancel_self_service]
-  before_action :authorize_customer_self_service!, only: %i[edit_self_service reschedule_self_service cancel_self_service]
+  before_action :authorize_customer_self_service!, only: %i[edit_self_service]
+  before_action :guard_customer_self_service_mutation!, only: %i[reschedule_self_service cancel_self_service]
 
   def new
     redirect_to property_path(@property, slot: params[:slot], anchor: "booking-panel")
@@ -94,6 +95,10 @@ class AppointmentsController < ApplicationController
     return if @appointment.manageable_by_customer?
 
     redirect_to appointment_path(@appointment, token: @appointment.access_token), alert: t("ui.appointments.self_service.flash.expired")
+  end
+
+  def guard_customer_self_service_mutation!
+    authorize_customer_self_service!
   end
 
   def preselected_slot

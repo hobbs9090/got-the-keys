@@ -454,7 +454,7 @@ zh:
       self_service:
         title: 管理看房 %{reference}
         eyebrow: 管理你的看房
-        body: 选择一个新时段，或保留当前时段。自助服务会持续开放到预约时间后不久。
+        body: 选择一个新时段，或保留当前时段。自助服务会开放到预约开始前两小时。
         current_slot_html: 当前时段：<strong>%{time}</strong>
         status: 状态
         choose_slot: 选择新的时段

@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe Appointment do
   include ActiveJob::TestHelper
+  include ActiveSupport::Testing::TimeHelpers
 
   let(:user) { FactoryBot.create(:user) }
   let(:admin) { FactoryBot.create(:admin, email: "steven@gotthekeys.uk") }
@@ -141,6 +142,46 @@ RSpec.describe Appointment do
 
     expect(appointment.manageable_by_customer?).to be(true)
     expect(appointment.valid_access_token?(appointment.access_token)).to be(true)
+  end
+
+  it "sets the customer self-service deadline two hours before the scheduled start" do
+    scheduled_at = Time.zone.local(2026, 5, 7, 9, 0)
+    appointment = FactoryBot.build(:appointment, scheduled_at:, requested_time: scheduled_at)
+
+    expect(appointment.self_service_expires_at).to eq(Time.zone.local(2026, 5, 7, 7, 0))
+  end
+
+  it "keeps the two-hour self-service deadline stable across spring DST" do
+    scheduled_at = Time.zone.local(2026, 3, 29, 10, 0)
+    appointment = FactoryBot.build(:appointment, scheduled_at:, requested_time: scheduled_at)
+
+    expect(appointment.self_service_expires_at).to eq(Time.zone.local(2026, 3, 29, 8, 0))
+  end
+
+  it "keeps the two-hour self-service deadline stable across autumn DST" do
+    scheduled_at = Time.zone.local(2026, 10, 25, 10, 0)
+    appointment = FactoryBot.build(:appointment, scheduled_at:, requested_time: scheduled_at)
+
+    expect(appointment.self_service_expires_at).to eq(Time.zone.local(2026, 10, 25, 8, 0))
+  end
+
+  it "closes self-service for same-day bookings already inside the two-hour cutoff" do
+    travel_to(Time.zone.local(2026, 5, 7, 8, 0)) do
+      scheduled_at = Time.zone.local(2026, 5, 7, 9, 30)
+      appointment = FactoryBot.build(:appointment, :confirmed, scheduled_at:, requested_time: scheduled_at)
+
+      expect(appointment.self_service_expires_at).to eq(Time.zone.local(2026, 5, 7, 7, 30))
+      expect(appointment).not_to be_manageable_by_customer
+    end
+  end
+
+  it "allows customer self-service at the exact two-hour cutoff" do
+    travel_to(Time.zone.local(2026, 5, 7, 7, 30)) do
+      scheduled_at = Time.zone.local(2026, 5, 7, 9, 30)
+      appointment = FactoryBot.build(:appointment, :confirmed, scheduled_at:, requested_time: scheduled_at)
+
+      expect(appointment).to be_manageable_by_customer
+    end
   end
 
   it "records events for all changed fields in a single save, not just the first" do

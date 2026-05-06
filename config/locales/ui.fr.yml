@@ -497,7 +497,7 @@ fr:
         title: Gerer la visite %{reference}
         eyebrow: Gerer votre visite
         body: Choisissez un nouveau creneau ou gardez l actuel. Le libre-service reste
-          ouvert jusqu a peu apres l heure reservee.
+          ouvert jusqu a deux heures avant l heure reservee.
         current_slot_html: 'Creneau actuel : <strong>%{time}</strong>'
         status: Statut
         choose_slot: Choisir un nouveau creneau

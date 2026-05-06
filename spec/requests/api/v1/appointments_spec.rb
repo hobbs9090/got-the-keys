@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Api::V1::Appointments", type: :request do
+  include ActiveSupport::Testing::TimeHelpers
+
   let!(:user)     { create(:user) }
   let!(:property) { create(:property, listing_state: "published") }
 
@@ -73,6 +75,24 @@ RSpec.describe "Api::V1::Appointments", type: :request do
       expect(json_body.dig("error", "code")).to eq("conflict")
     end
 
+    it "rejects reschedule inside the two-hour cutoff even with a valid stale link" do
+      travel_to(Time.zone.local(2026, 5, 7, 8, 0)) do
+        appointment = my_appointment(
+          :confirmed,
+          requested_time: Time.zone.local(2026, 5, 7, 9, 30),
+          scheduled_at: Time.zone.local(2026, 5, 7, 9, 30),
+          skip_slot_validation: true
+        )
+
+        patch "/api/v1/appointments/#{appointment.public_reference}/reschedule",
+              params: { scheduled_at: Time.zone.local(2026, 5, 8, 14, 0).iso8601 }.to_json,
+              headers: api_auth_headers(user)
+
+        expect(response).to have_http_status(:conflict)
+        expect(appointment.reload.scheduled_at).to eq(Time.zone.local(2026, 5, 7, 9, 30))
+      end
+    end
+
     it "422s when scheduled_at is missing" do
       appointment = my_appointment(:confirmed)
       patch "/api/v1/appointments/#{appointment.public_reference}/reschedule",
@@ -99,6 +119,24 @@ RSpec.describe "Api::V1::Appointments", type: :request do
             params: {}.to_json,
             headers: api_auth_headers(user)
       expect(response).to have_http_status(:conflict)
+    end
+
+    it "rejects cancellation inside the two-hour cutoff even with a valid stale link" do
+      travel_to(Time.zone.local(2026, 5, 7, 8, 0)) do
+        appointment = my_appointment(
+          :confirmed,
+          requested_time: Time.zone.local(2026, 5, 7, 9, 30),
+          scheduled_at: Time.zone.local(2026, 5, 7, 9, 30),
+          skip_slot_validation: true
+        )
+
+        patch "/api/v1/appointments/#{appointment.public_reference}/cancel",
+              params: {}.to_json,
+              headers: api_auth_headers(user)
+
+        expect(response).to have_http_status(:conflict)
+        expect(appointment.reload.status).to eq("confirmed")
+      end
     end
   end
 end

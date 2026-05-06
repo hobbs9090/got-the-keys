@@ -491,7 +491,7 @@ it:
         title: Gestisci visita %{reference}
         eyebrow: Gestisci la tua visita
         body: Scegli un nuovo slot oppure mantieni quello attuale. Il self-service
-          resta aperto fino a poco dopo l orario prenotato.
+          resta aperto fino a due ore prima dell orario prenotato.
         current_slot_html: 'Slot attuale: <strong>%{time}</strong>'
         status: Stato
         choose_slot: Scegli un nuovo slot

@@ -544,7 +544,7 @@ en:
       self_service:
         title: "Manage viewing %{reference}"
         eyebrow: "Manage your viewing"
-        body: "Choose a new slot or keep the current one. Self-service stays open until shortly after the booked time."
+        body: "Choose a new slot or keep the current one. Self-service stays open until two hours before the booked time."
         current_slot_html: "Current slot: <strong>%{time}</strong>"
         status: "Status"
         choose_slot: "Choose a new slot"

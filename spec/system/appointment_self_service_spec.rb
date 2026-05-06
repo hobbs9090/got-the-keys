@@ -48,4 +48,32 @@ RSpec.describe "Appointment self service", type: :system, js: true do
     expect(page).to have_text("Your viewing has been cancelled.")
     expect(appointment.reload.status).to eq("cancelled")
   end
+
+  it "shows the enforced self-service deadline on the confirmation page" do
+    property = FactoryBot.create(:property, address_line_1: "91 High Street")
+    scheduled_at = Time.zone.local(2026, 4, 6, 11, 0)
+    appointment = FactoryBot.create(
+      :appointment,
+      :confirmed,
+      property:,
+      customer_name: "Noah Bell",
+      customer_email: "noah.bell@example.com",
+      customer_phone: "07700 931101",
+      requested_time: scheduled_at,
+      scheduled_at:,
+      skip_slot_validation: true
+    )
+
+    visit appointment_path(appointment, token: appointment.access_token)
+    dismiss_cookie_banner
+
+    deadline = appointment.self_service_expires_at
+    expect(page).to have_text("You can reschedule or cancel this viewing online until #{I18n.l(deadline, format: :long)} #{deadline.zone}.")
+
+    travel_to(deadline + 1.minute)
+    click_button "Cancel viewing"
+
+    expect(page).to have_text("The self-service window for this viewing has now closed.")
+    expect(appointment.reload.status).to eq("confirmed")
+  end
 end
