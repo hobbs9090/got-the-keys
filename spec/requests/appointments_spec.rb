@@ -102,8 +102,11 @@ RSpec.describe "Appointments" do
       end.to change(Appointment, :count).by(1)
 
       appointment = Appointment.last
+      token = CGI.parse(URI.parse(response.location).query.to_s).fetch("token").first
 
-      expect(response).to redirect_to(appointment_path(appointment, token: appointment.access_token))
+      expect(response).to redirect_to(appointment_path(appointment, token: token))
+      expect(appointment.access_token_digest).to be_present
+      expect(appointment.attributes).not_to have_key("access_token")
       expect(appointment.status).to eq("pending")
     end
 
@@ -140,7 +143,10 @@ RSpec.describe "Appointments" do
         }
       }
 
-      expect(response).to redirect_to(appointment_path(Appointment.last, token: Appointment.last.access_token))
+      appointment = Appointment.last
+      token = CGI.parse(URI.parse(response.location).query.to_s).fetch("token").first
+
+      expect(response).to redirect_to(appointment_path(appointment, token: token))
       expect(Appointment.last.customer_email).to eq(user.email)
     end
 
@@ -202,7 +208,7 @@ RSpec.describe "Appointments" do
   end
 
   describe "GET /appointments/:public_reference" do
-    it "requires the access token for public viewers" do
+    it "shows the page for signed-out visitors with a valid token" do
       slot = next_booking_slot(hour: 11)
       appointment = FactoryBot.create(
         :appointment,
@@ -213,13 +219,60 @@ RSpec.describe "Appointments" do
         requested_time: slot,
         scheduled_at: slot
       )
+      token = appointment.access_token
 
-      get appointment_path(appointment)
-      expect(response).to redirect_to(root_path)
-
-      get appointment_path(appointment, token: appointment.access_token)
+      get appointment_path(appointment, token:)
       expect(response).to have_http_status(:ok)
       expect(response.body).to include(appointment.public_reference)
+    end
+
+    it "drops a valid token from the URL for signed-in appointment customers" do
+      appointment = FactoryBot.create(:appointment, property:, customer_email: user.email)
+      token = appointment.access_token
+      sign_in(user)
+
+      get appointment_path(appointment, token:)
+
+      expect(response).to redirect_to(appointment_path(appointment))
+      expect(response).to have_http_status(:see_other)
+    end
+
+    it "shows the page for signed-in appointment customers without a token" do
+      appointment = FactoryBot.create(:appointment, property:, customer_email: user.email)
+      sign_in(user)
+
+      get appointment_path(appointment)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(appointment.public_reference)
+    end
+
+    it "returns not found for signed-out visitors without a token" do
+      appointment = FactoryBot.create(:appointment, property:)
+
+      get appointment_path(appointment)
+
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it "logs and returns not found for tampered tokens" do
+      appointment = FactoryBot.create(:appointment, property:)
+
+      expect(Rails.logger).to receive(:warn).with(include("[appointment_access_token]", "token_present=true"))
+
+      get appointment_path(appointment, token: "tampered")
+
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it "returns not found for expired tokens" do
+      appointment = FactoryBot.create(:appointment, property:)
+      token = appointment.access_token
+      appointment.update!(access_token_expires_at: 1.minute.ago)
+
+      get appointment_path(appointment, token:)
+
+      expect(response).to have_http_status(:not_found)
     end
   end
 
@@ -236,7 +289,9 @@ RSpec.describe "Appointments" do
         scheduled_at: next_booking_slot(hour: 14)
       )
 
-      get edit_self_service_appointment_path(appointment, token: appointment.access_token)
+      token = appointment.access_token
+
+      get edit_self_service_appointment_path(appointment, token:)
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include("Manage your viewing")
@@ -250,13 +305,14 @@ RSpec.describe "Appointments" do
         requested_time: next_booking_slot(hour: 14),
         scheduled_at: next_booking_slot(hour: 14)
       )
+      token = appointment.access_token
       new_slot = property.next_available_slots(limit: 2, excluding_appointment: appointment).last
 
-      patch reschedule_self_service_appointment_path(appointment, token: appointment.access_token), params: {
+      patch reschedule_self_service_appointment_path(appointment, token: token), params: {
         appointment: { requested_time: new_slot.starts_at.iso8601 }
       }
 
-      expect(response).to redirect_to(appointment_path(appointment, token: appointment.access_token))
+      expect(response).to redirect_to(appointment_path(appointment, token: token))
       expect(appointment.reload.status).to eq("rescheduled")
       expect(appointment.scheduled_at).to eq(new_slot.starts_at)
     end
@@ -269,10 +325,11 @@ RSpec.describe "Appointments" do
         scheduled_at: booking_time(2026, 3, 29, 10, 0),
         skip_slot_validation: true
       )
+      token = appointment.access_token
 
-      get edit_self_service_appointment_path(appointment, token: appointment.access_token)
+      get edit_self_service_appointment_path(appointment, token: token)
 
-      expect(response).to redirect_to(appointment_path(appointment, token: appointment.access_token))
+      expect(response).to redirect_to(appointment_path(appointment, token: token))
     end
 
     it "blocks stale reschedule submissions inside the two-hour cutoff" do
@@ -284,13 +341,14 @@ RSpec.describe "Appointments" do
         scheduled_at: booking_time(2026, 3, 30, 9, 30),
         skip_slot_validation: true
       )
+      token = appointment.access_token
       new_slot = next_booking_slot(hour: 14)
 
-      patch reschedule_self_service_appointment_path(appointment, token: appointment.access_token), params: {
+      patch reschedule_self_service_appointment_path(appointment, token: token), params: {
         appointment: { requested_time: new_slot.iso8601 }
       }
 
-      expect(response).to redirect_to(appointment_path(appointment, token: appointment.access_token))
+      expect(response).to redirect_to(appointment_path(appointment, token: token))
       expect(flash[:alert]).to eq(I18n.t("ui.appointments.self_service.flash.expired"))
       expect(appointment.reload.scheduled_at).to eq(booking_time(2026, 3, 30, 9, 30))
       expect(appointment.status).to eq("confirmed")
@@ -305,10 +363,11 @@ RSpec.describe "Appointments" do
         scheduled_at: booking_time(2026, 3, 30, 9, 30),
         skip_slot_validation: true
       )
+      token = appointment.access_token
 
-      patch cancel_self_service_appointment_path(appointment, token: appointment.access_token)
+      patch cancel_self_service_appointment_path(appointment, token: token)
 
-      expect(response).to redirect_to(appointment_path(appointment, token: appointment.access_token))
+      expect(response).to redirect_to(appointment_path(appointment, token: token))
       expect(flash[:alert]).to eq(I18n.t("ui.appointments.self_service.flash.expired"))
       expect(appointment.reload.status).to eq("confirmed")
     end

@@ -35,8 +35,10 @@ RSpec.describe AppointmentNotifier do
   end
 
   it "delivers the mail and records a sent notification in test" do
+    token = "mail-token"
+
     expect do
-      described_class.new(appointment, event_type: "confirmed").deliver
+      described_class.new(appointment, event_type: "confirmed", access_token: token).deliver
     end.to change(NotificationLog, :count).by(1)
 
     log = NotificationLog.last
@@ -56,7 +58,7 @@ RSpec.describe AppointmentNotifier do
     expect(delivered_mail.subject).to eq(log.subject)
     expect(delivered_mail.attachments.first.filename).to end_with(".ics")
     expect(delivered_body).to include("View or manage your appointment")
-    expect(delivered_body).to include("token=#{appointment.access_token}")
+    expect(delivered_body).to include("token=#{token}")
   end
 
   it "supports reminder notifications" do
@@ -85,7 +87,7 @@ RSpec.describe AppointmentNotifier do
     mailer = double("mailer", status_update: failing_mail)
 
     allow(failing_mail).to receive(:deliver_now).and_raise(RuntimeError, "SMTP timeout")
-    allow(AppointmentMailer).to receive(:with).with(appointment: appointment, event_type: "confirmed").and_return(mailer)
+    allow(AppointmentMailer).to receive(:with).with(appointment: appointment, event_type: "confirmed", access_token: kind_of(String)).and_return(mailer)
 
     expect do
       described_class.new(appointment, event_type: "confirmed").deliver

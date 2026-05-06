@@ -1,5 +1,6 @@
 class AppointmentsController < ApplicationController
   BOOKING_FORM_SLOT_LIMIT = 1000
+  helper_method :appointment_magic_link_params
 
   before_action :set_property, only: %i[new create]
   before_action :require_authenticated_user_for_booking!, only: %i[new create]
@@ -51,7 +52,7 @@ class AppointmentsController < ApplicationController
     end
 
     if @appointment.update(requested_time:, scheduled_at: requested_time, status: "rescheduled")
-      redirect_to appointment_path(@appointment, token: @appointment.access_token), notice: t("ui.appointments.self_service.flash.rescheduled")
+      redirect_to appointment_path(@appointment, appointment_magic_link_params), notice: t("ui.appointments.self_service.flash.rescheduled")
     else
       @available_slots = @appointment.property.next_available_slots(limit: BOOKING_FORM_SLOT_LIMIT, excluding_appointment: @appointment)
       render :edit_self_service, status: :unprocessable_entity
@@ -60,9 +61,9 @@ class AppointmentsController < ApplicationController
 
   def cancel_self_service
     if @appointment.update(status: "cancelled")
-      redirect_to appointment_path(@appointment, token: @appointment.access_token), notice: t("ui.appointments.self_service.flash.cancelled")
+      redirect_to appointment_path(@appointment, appointment_magic_link_params), notice: t("ui.appointments.self_service.flash.cancelled")
     else
-      redirect_to appointment_path(@appointment, token: @appointment.access_token), alert: @appointment.errors.full_messages.to_sentence
+      redirect_to appointment_path(@appointment, appointment_magic_link_params), alert: @appointment.errors.full_messages.to_sentence
     end
   end
 
@@ -85,16 +86,25 @@ class AppointmentsController < ApplicationController
 
   def authorize_public_access!
     return if current_admin.present?
-    return if @appointment.valid_access_token?(params[:token].to_s)
+    if appointment_owner_signed_in?
+      return redirect_to url_for(params.permit!.except(:token)), status: :see_other if request.get? && params[:token].present?
 
-    redirect_to root_path, alert: t("ui.appointments.show.invalid_link_alert")
+      return
+    end
+    if @appointment.valid_access_token?(params[:token].to_s)
+      @appointment_access_token = params[:token].to_s
+      return
+    end
+
+    log_access_token_failure
+    head :not_found
   end
 
   def authorize_customer_self_service!
     return if current_admin.present?
     return if @appointment.manageable_by_customer?
 
-    redirect_to appointment_path(@appointment, token: @appointment.access_token), alert: t("ui.appointments.self_service.flash.expired")
+    redirect_to appointment_path(@appointment, appointment_magic_link_params), alert: t("ui.appointments.self_service.flash.expired")
   end
 
   def guard_customer_self_service_mutation!
@@ -133,4 +143,22 @@ class AppointmentsController < ApplicationController
     redirect_to property_path(@property, anchor: "booking-panel"), alert: t("ui.appointments.new.owner_alert")
   end
 
+  def appointment_owner_signed_in?
+    return false unless current_user.present?
+
+    current_user.email.to_s.casecmp(@appointment.customer_email.to_s).zero? ||
+      @appointment.property.user_id == current_user.id
+  end
+
+  def appointment_magic_link_params
+    @appointment_access_token.present? ? { token: @appointment_access_token } : {}
+  end
+
+  def log_access_token_failure
+    Rails.logger.warn(
+      "[appointment_access_token] invalid request_id=#{request.request_id} " \
+      "reference=#{params[:public_reference] || params[:id]} ip=#{request.remote_ip} " \
+      "user_agent=#{request.user_agent.inspect} token_present=#{params[:token].present?}"
+    )
+  end
 end

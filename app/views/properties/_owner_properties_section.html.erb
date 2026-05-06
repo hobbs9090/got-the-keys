@@ -69,7 +69,7 @@
                         </div>
                         <div class="property-workspace-card__appointment-actions">
                           <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
-                          <%= link_to t("ui.properties.mine.open_details", default: "Open details"), appointment_path(appointment, token: appointment.access_token), class: "button hollow secondary" %>
+                          <%= link_to t("ui.properties.mine.open_details", default: "Open details"), appointment_path(appointment), class: "button hollow secondary" %>
                         </div>
                       </div>
                     <% end %>

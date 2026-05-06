@@ -26,10 +26,13 @@ RSpec.describe Appointment do
         requested_time: next_booking_slot,
         notes: "Please confirm parking arrangements."
       )
-    end.to have_enqueued_job(AppointmentNotificationJob).with(kind_of(Integer), "created")
+    end.to have_enqueued_job(AppointmentNotificationJob).with(kind_of(Integer), "created", kind_of(String))
 
     expect(appointment.public_reference).to start_with("GTK-")
     expect(appointment.access_token).to be_present
+    expect(appointment.access_token.length).to be >= 40
+    expect(appointment.access_token_digest).to eq(described_class.access_token_digest_for(appointment.access_token))
+    expect(appointment.access_token_expires_at).to be_within(1.second).of(Time.current + described_class::ACCESS_TOKEN_TTL)
     expect(appointment.appointment_events.count).to eq(1)
     expect(appointment.appointment_events.first.event_type).to eq("created")
   end
@@ -142,6 +145,14 @@ RSpec.describe Appointment do
 
     expect(appointment.manageable_by_customer?).to be(true)
     expect(appointment.valid_access_token?(appointment.access_token)).to be(true)
+  end
+
+  it "rejects expired customer access tokens" do
+    appointment = FactoryBot.create(:appointment, property:)
+    token = appointment.access_token
+    appointment.update!(access_token_expires_at: 1.minute.ago)
+
+    expect(appointment.valid_access_token?(token)).to be(false)
   end
 
   it "sets the customer self-service deadline two hours before the scheduled start" do

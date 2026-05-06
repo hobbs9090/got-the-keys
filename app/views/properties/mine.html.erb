@@ -55,7 +55,7 @@
                       <div class="property-workspace-card__appointment-actions">
                         <span class="<%= appointment_status_badge_class(appointment.status) %>"><%= appointment.display_status %></span>
                         <%= link_to t("ui.properties.mine.open_details"), property_path(appointment.property), class: "button primary property-workspace-card__appointment-button" %>
-                        <%= link_to t("ui.properties.mine.view_booking"), appointment_path(appointment, token: appointment.access_token), class: "button hollow primary property-workspace-card__appointment-button" %>
+                        <%= link_to t("ui.properties.mine.view_booking"), appointment_path(appointment), class: "button hollow primary property-workspace-card__appointment-button" %>
                       </div>
                     </div>
                   <% end %>

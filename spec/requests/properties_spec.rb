@@ -807,9 +807,10 @@ describe "Properties" do
       expect(response.body).to include(property_path(upcoming_property))
       expect(response.body).to include(property_path(previous_property))
       expect(response.body).to include(property_path(cancelled_property))
-      expect(response.body).to include(appointment_path(upcoming_appointment, token: upcoming_appointment.access_token))
-      expect(response.body).to include(appointment_path(previous_appointment, token: previous_appointment.access_token))
-      expect(response.body).to include(appointment_path(cancelled_appointment, token: cancelled_appointment.access_token))
+      expect(response.body).to include(appointment_path(upcoming_appointment))
+      expect(response.body).to include(appointment_path(previous_appointment))
+      expect(response.body).to include(appointment_path(cancelled_appointment))
+      expect(response.body).not_to include("token=")
       expect(response.body).to include("View booking")
 
       document = Nokogiri::HTML(response.body)
@@ -1028,7 +1029,7 @@ describe "Properties" do
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include("Corrected Email Booking House")
-      expect(response.body).to include(appointment_path(appointment, token: appointment.access_token))
+      expect(response.body).to include(appointment_path(appointment))
     end
 
     it "shows an empty state when the seller has not created any listings yet" do

@@ -20,12 +20,13 @@ RSpec.describe AppointmentNotificationJob do
 
   it "delegates delivery to AppointmentNotifier" do
     notifier = instance_double(AppointmentNotifier, deliver: true)
+    token = "appointment-token"
 
-    allow(AppointmentNotifier).to receive(:new).with(appointment, event_type: "confirmed").and_return(notifier)
+    allow(AppointmentNotifier).to receive(:new).with(appointment, event_type: "confirmed", access_token: token).and_return(notifier)
 
-    described_class.perform_now(appointment.id, "confirmed")
+    described_class.perform_now(appointment.id, "confirmed", token)
 
-    expect(AppointmentNotifier).to have_received(:new).with(appointment, event_type: "confirmed")
+    expect(AppointmentNotifier).to have_received(:new).with(appointment, event_type: "confirmed", access_token: token)
     expect(notifier).to have_received(:deliver)
   end
 

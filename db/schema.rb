@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_26_120100) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_06_195800) do
   create_table "admins", force: :cascade do |t|
     t.integer "consumed_timestep"
     t.datetime "created_at", precision: nil
@@ -58,7 +58,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_26_120100) do
   end
 
   create_table "appointments", force: :cascade do |t|
-    t.string "access_token", null: false
+    t.string "access_token_digest", null: false
+    t.datetime "access_token_expires_at", null: false
     t.integer "admin_id"
     t.datetime "created_at", null: false
     t.string "customer_email", null: false
@@ -75,7 +76,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_26_120100) do
     t.string "status", default: "pending", null: false
     t.datetime "updated_at", null: false
     t.string "visit_outcome"
-    t.index ["access_token"], name: "index_appointments_on_access_token", unique: true
+    t.index ["access_token_digest"], name: "index_appointments_on_access_token_digest", unique: true
+    t.index ["access_token_expires_at"], name: "index_appointments_on_access_token_expires_at"
     t.index ["admin_id"], name: "index_appointments_on_admin_id"
     t.index ["customer_email"], name: "index_appointments_on_customer_email"
     t.index ["property_id"], name: "index_appointments_on_property_id"

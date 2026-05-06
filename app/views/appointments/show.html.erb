@@ -64,8 +64,8 @@
     <% if @appointment.manageable_by_customer? %>
       <p><%= t("ui.appointments.show.manage_body", time: formatted_date_time(@appointment.self_service_expires_at)) %></p>
       <div class="form-actions">
-        <%= link_to t("ui.appointments.show.request_new_time"), edit_self_service_appointment_path(@appointment, token: @appointment.access_token), class: "button primary expanded", data: { testid: "manage-viewing-link" } %>
-        <%= button_to t("ui.appointments.show.cancel_viewing"), cancel_self_service_appointment_path(@appointment, token: @appointment.access_token), method: :patch, class: "button alert hollow expanded", data: { testid: "cancel-viewing-button", turbo: false } %>
+        <%= link_to t("ui.appointments.show.request_new_time"), edit_self_service_appointment_path(@appointment, appointment_magic_link_params), class: "button primary expanded", data: { testid: "manage-viewing-link" } %>
+        <%= button_to t("ui.appointments.show.cancel_viewing"), cancel_self_service_appointment_path(@appointment, appointment_magic_link_params), method: :patch, class: "button alert hollow expanded", data: { testid: "cancel-viewing-button", turbo: false } %>
       </div>
     <% else %>
       <p class="empty-copy"><%= t("ui.appointments.show.self_service_closed") %></p>

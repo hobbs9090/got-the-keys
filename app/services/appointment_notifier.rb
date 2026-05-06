@@ -1,11 +1,12 @@
 class AppointmentNotifier
-  def initialize(appointment, event_type:)
+  def initialize(appointment, event_type:, access_token: nil)
     @appointment = appointment
     @event_type = event_type
+    @access_token = access_token.presence || appointment.issue_access_token!
   end
 
   def deliver
-    mail = AppointmentMailer.with(appointment:, event_type:).status_update
+    mail = appointment_mailer.status_update
     preview = mail.body.encoded.to_s.truncate(750)
 
     if delivery_configured?
@@ -28,7 +29,7 @@ class AppointmentNotifier
 
   private
 
-  attr_reader :appointment, :event_type
+  attr_reader :appointment, :event_type, :access_token
 
   def delivery_configured?
     return true if Rails.env.development? || Rails.env.test?
@@ -40,7 +41,7 @@ class AppointmentNotifier
     NotificationLog.create!(
       appointment:,
       recipient_email: appointment.customer_email,
-      subject: AppointmentMailer.with(appointment:, event_type:).status_update.subject,
+      subject: appointment_mailer.status_update.subject,
       body_preview:,
       event_type:,
       status:,
@@ -50,5 +51,9 @@ class AppointmentNotifier
         property_id: appointment.property_id
       }
     )
+  end
+
+  def appointment_mailer
+    AppointmentMailer.with(appointment:, event_type:, access_token:)
   end
 end

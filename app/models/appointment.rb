@@ -7,6 +7,8 @@ class Appointment < ApplicationRecord
   # deadline is relative to the actual scheduled start, not the calendar day,
   # so same-day and DST-crossing bookings do not stay editable after the cutoff.
   CUSTOMER_SELF_SERVICE_CUTOFF = 2.hours
+  ACCESS_TOKEN_BYTES = 32
+  ACCESS_TOKEN_TTL = 30.days
   PHONE_FORMAT = /\A\+?[0-9().\-\s]{7,20}\z/.freeze
   attr_accessor :skip_slot_validation
 
@@ -25,7 +27,8 @@ class Appointment < ApplicationRecord
   before_validation :apply_defaults
   before_validation :synchronize_requested_and_scheduled_times
 
-  validates :customer_name, :customer_email, :customer_phone, :requested_time, :scheduled_at, :duration_minutes, :status, :public_reference, :access_token, presence: true
+  validates :customer_name, :customer_email, :customer_phone, :requested_time, :scheduled_at, :duration_minutes, :status, :public_reference,
+            :access_token_digest, :access_token_expires_at, presence: true
   validates :customer_name, length: { maximum: 100 }
   validates :customer_email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
   validates :customer_phone, format: { with: PHONE_FORMAT, message: ->(_record, _data) { I18n.t("ui.validation.phone_number") } }, allow_blank: true
@@ -103,9 +106,32 @@ class Appointment < ApplicationRecord
   end
 
   def valid_access_token?(token)
-    token.present? &&
-      token.bytesize == access_token.to_s.bytesize &&
-      ActiveSupport::SecurityUtils.secure_compare(token, access_token.to_s)
+    return false if token.blank? || access_token_expired?
+
+    digest = self.class.access_token_digest_for(token)
+    ActiveSupport::SecurityUtils.secure_compare(digest, access_token_digest.to_s)
+  end
+
+  def access_token
+    @access_token
+  end
+
+  def issue_access_token!(expires_at: self.class.default_access_token_expires_at)
+    assign_new_access_token(expires_at:)
+    save!(validate: false)
+    access_token
+  end
+
+  def access_token_expired?
+    access_token_expires_at.blank? || Time.current > access_token_expires_at
+  end
+
+  def self.access_token_digest_for(token)
+    Digest::SHA256.hexdigest(token.to_s)
+  end
+
+  def self.default_access_token_expires_at
+    Time.current + ACCESS_TOKEN_TTL
   end
 
   def customer_history
@@ -130,7 +156,17 @@ class Appointment < ApplicationRecord
     self.duration_minutes ||= configuration.slot_duration_minutes
     self.status ||= "pending"
     self.public_reference ||= generate_reference
-    self.access_token ||= SecureRandom.hex(16)
+    assign_new_access_token if access_token_digest.blank?
+  end
+
+  def assign_new_access_token(expires_at: self.class.default_access_token_expires_at)
+    self.access_token_expires_at = expires_at
+
+    loop do
+      @access_token = SecureRandom.urlsafe_base64(ACCESS_TOKEN_BYTES)
+      self.access_token_digest = self.class.access_token_digest_for(@access_token)
+      break unless self.class.exists?(access_token_digest:)
+    end
   end
 
   def synchronize_requested_and_scheduled_times
@@ -193,7 +229,7 @@ class Appointment < ApplicationRecord
   end
 
   def send_creation_notification
-    AppointmentNotificationJob.perform_later(id, "created")
+    AppointmentNotificationJob.perform_later(id, "created", access_token)
   end
 
   def record_change_event
