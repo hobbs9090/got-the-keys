@@ -62,6 +62,7 @@ RSpec.describe "Devise entry pages", type: :request do
     expect(response.body).not_to include("marketing-wordmark--hero")
     expect(response.body).to include("Sign in")
     expect(response.body).to include("Sign in to save this home")
+    expect(document.at_css(".auth-panel").text.squish).to include("Sign in to manage your saved homes, viewings, offers, and any listings you're working on.")
     expect(response.body).not_to include("Pick up where you left off")
     expect(response.body).not_to include("manage your listings, confirm viewings")
     expect(response.body).not_to include("Your dashboard keeps your property details")

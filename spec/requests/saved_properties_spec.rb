@@ -28,6 +28,7 @@ RSpec.describe "Saved properties", type: :request do
     expect(page.at_css(%(label[for="user_email"])).text.squish).to eq("Email")
     expect(response.body).to include("Sign in to save this home")
     expect(response.body).to include("Save homes, return to your shortlist")
+    expect(page.at_css(".auth-panel").text.squish).to include("Sign in to manage your saved homes, viewings, offers, and any listings you're working on.")
     expect(response.body).to include("Use your email and password to continue with your GotTheKeys account.")
     expect(response.body).not_to include("Pick up where you left off")
     expect(response.body).not_to include("manage your listings, confirm viewings")

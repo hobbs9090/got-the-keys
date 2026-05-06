@@ -6,9 +6,9 @@ de:
       admin_bookings: Buchungen
       admin_dashboard: Admin-Dashboard
       admin_account_name: Administrator
-      member_account_name: Verkäuferkonto
+      member_account_name: Mitgliedskonto
       sign_out: Abmelden
-      my_listings: Meine Inserate
+      my_listings: Ihr Konto
       add_property: Objekt hinzufügen
       profile: Profil
       register: Registrieren
@@ -291,18 +291,18 @@ de:
         facts_title: Strukturierte Objektdaten
         floor_area_label: Wohnfläche (sq ft)
       mine:
-        title: Meine Inserate
-        eyebrow: Verkäuferbereich
-        body: Öffnen Sie Ihre gespeicherten Inserate, kehren Sie zu Entwürfen zurück
-          und prüfen Sie die bereits erfassten Objektdetails.
+        title: Ihr Konto
+        eyebrow: Konto
+        body: Verwalten Sie gespeicherte Immobilien, Suchen, Besichtigungen, Angebote, Antraege und alle Inserate, an denen Sie arbeiten.
         saved_homes_eyebrow: Ihre Merkliste
         saved_homes_title: Gespeicherte Immobilien
         saved_homes_blurb: Die von Ihnen vorgemerkten Immobilien bleiben hier, damit Sie schnell zu den Details zuruckkehren konnen.
         saved_homes_empty_title: Noch keine gespeicherten Immobilien
         saved_homes_empty: Speichern Sie Immobilien aus dem Katalog, um Ihre Merkliste an einem Ort zu behalten.
-        list_eyebrow: Ihre Einträge
+        list_eyebrow: Verkaufen oder vermieten
         list_title: Ihre Inserate
         list_blurb: Entwürfe und Live-Inserate, an denen Sie arbeiten, werden hier für schnellen Zugriff angezeigt.
+        listing_disclosure_summary: Immobilie verkaufen oder vermieten
         total_label:
           one: "%{display_count} gespeichertes Inserat"
           other: "%{display_count} gespeicherte Inserate"

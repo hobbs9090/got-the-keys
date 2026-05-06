@@ -6,9 +6,9 @@ it:
       admin_bookings: Prenotazioni
       admin_dashboard: Cruscotto
       admin_account_name: Amministratore
-      member_account_name: Account venditore
+      member_account_name: Account membro
       sign_out: Esci
-      my_listings: I miei annunci
+      my_listings: Il tuo account
       add_property: Aggiungi immobile
       profile: Profilo
       register: Registrati
@@ -292,18 +292,18 @@ it:
         facts_title: Dati strutturati dell immobile
         floor_area_label: Superficie (sq ft)
       mine:
-        title: I miei annunci
-        eyebrow: Area venditore
-        body: Apri gli annunci salvati, torna alle bozze e rivedi i dettagli degli
-          immobili che hai gia creato.
+        title: Il tuo account
+        eyebrow: Account
+        body: Gestisci case salvate, ricerche, visite, offerte, domande e qualsiasi annuncio su cui stai lavorando.
         saved_homes_eyebrow: La tua selezione
         saved_homes_title: Case salvate
         saved_homes_blurb: Le case che hai messo tra i preferiti restano qui cosi puoi tornare rapidamente ai dettagli.
         saved_homes_empty_title: Nessuna casa salvata per ora
         saved_homes_empty: Salva case dal catalogo per tenere la tua selezione in un unico posto.
-        list_eyebrow: I tuoi record
+        list_eyebrow: Vendi o affitta
         list_title: I tuoi annunci
         list_blurb: Le bozze e gli annunci online su cui stai lavorando compaiono qui per un accesso rapido.
+        listing_disclosure_summary: Vendi o affitta un immobile
         total_label:
           one: "%{display_count} annuncio salvato"
           other: "%{display_count} annunci salvati"

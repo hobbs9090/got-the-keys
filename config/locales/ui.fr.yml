@@ -6,9 +6,9 @@ fr:
       admin_bookings: Reservations
       admin_dashboard: Tableau de bord
       admin_account_name: Administrateur
-      member_account_name: Compte vendeur
+      member_account_name: Compte membre
       sign_out: Se deconnecter
-      my_listings: Mes annonces
+      my_listings: Votre compte
       add_property: Ajouter un bien
       profile: Profil
       register: S'inscrire
@@ -296,18 +296,18 @@ fr:
         facts_title: Donnees structurees du bien
         floor_area_label: Surface (sq ft)
       mine:
-        title: Mes annonces
-        eyebrow: Espace vendeur
-        body: Ouvrez vos annonces enregistrees, revenez sur vos brouillons et verifiez
-          les details des biens deja saisis.
+        title: Votre compte
+        eyebrow: Compte
+        body: Gere vos logements sauvegardes, recherches, visites, offres, dossiers et annonces en cours.
         saved_homes_eyebrow: Votre selection
         saved_homes_title: Logements sauvegardes
         saved_homes_blurb: Les logements que vous avez mis de cote restent ici pour revenir rapidement aux details.
         saved_homes_empty_title: Aucun logement sauvegarde pour le moment
         saved_homes_empty: Sauvegardez des logements depuis le catalogue pour garder votre selection au meme endroit.
-        list_eyebrow: Vos dossiers
+        list_eyebrow: Vendre ou louer
         list_title: Vos annonces
         list_blurb: Les annonces en brouillon et en ligne sur lesquelles vous travaillez s affichent ici pour un acces rapide.
+        listing_disclosure_summary: Vendre ou louer un bien
         total_label:
           one: "%{display_count} annonce enregistree"
           other: "%{display_count} annonces enregistrees"

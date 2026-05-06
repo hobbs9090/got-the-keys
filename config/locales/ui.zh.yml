@@ -6,9 +6,9 @@ zh:
       admin_dashboard: 仪表盘
       account_eyebrow: 已登录
       admin_account_name: 管理员
-      member_account_name: 业主账户
+      member_account_name: 会员账户
       sign_out: 退出登录
-      my_listings: 我的房源
+      my_listings: 你的账户
       add_property: 添加房源
       profile: 个人资料
       register: 注册
@@ -268,17 +268,18 @@ zh:
         facts_title: 结构化房源信息
         floor_area_label: 面积（平方英尺）
       mine:
-        title: 我的房源
-        eyebrow: 业主工作区
-        body: 打开你已保存的房源，返回草稿，并查看你已经填写过的房源详情。
+        title: 你的账户
+        eyebrow: 账户
+        body: 管理你收藏的房源、保存的搜索、看房、报价、申请，以及你正在处理的房源。
         saved_homes_eyebrow: 你的收藏清单
         saved_homes_title: 已收藏房源
         saved_homes_blurb: 你已收藏的房源会集中显示在这里，方便你快速返回查看详情。
         saved_homes_empty_title: 还没有收藏房源
         saved_homes_empty: 你可以从房源目录收藏房源，将你的清单集中在这里管理。
-        list_eyebrow: 你的记录
+        list_eyebrow: 出售或出租
         list_title: 你的房源
         list_blurb: 你正在处理的草稿和已上线房源会显示在这里，方便你快速返回。
+        listing_disclosure_summary: 出售或出租房源
         total_label:
           one: "%{display_count} 套已保存房源"
           other: "%{display_count} 套已保存房源"

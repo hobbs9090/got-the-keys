@@ -434,7 +434,7 @@ module ApplicationHelper
 
   def header_user_display_name(user)
     names = [user.first_name, user.last_name].filter_map { |value| value.to_s.strip.presence }.map(&:capitalize)
-    names.join(" ").presence || t("ui.site_header.member_account_name", default: "Seller account")
+    names.join(" ").presence || t("ui.site_header.member_account_name", default: "Member account")
   end
 
   private
