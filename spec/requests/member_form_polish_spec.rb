@@ -42,6 +42,20 @@ RSpec.describe "Member form polish" do
     password = document.at_css('input[name="user[password]"]')
 
     expect(password["minlength"]).to eq("6")
+    expect(document.text).to include(I18n.t("devise.views.password_rule_hint"))
     expect(document.at_css('[data-testid="registration-password-strength"]')).to be_present
+  end
+
+  it "explains the password rule on password change forms" do
+    get edit_user_registration_path
+
+    expect(Nokogiri::HTML(response.body).text).to include(I18n.t("devise.views.password_rule_hint"))
+
+    sign_out user
+    reset_token = user.send_reset_password_instructions
+
+    get edit_user_password_path(reset_password_token: reset_token)
+
+    expect(Nokogiri::HTML(response.body).text).to include(I18n.t("devise.views.password_rule_hint"))
   end
 end

@@ -191,8 +191,8 @@ owners =
       last_name: attributes.fetch(:last_name),
       mobile_number: attributes.fetch(:mobile_number),
       language: "en",
-      password: "secret",
-      password_confirmation: "secret",
+      password: "secret1",
+      password_confirmation: "secret1",
       terms_of_service: true
     )
     user.save!

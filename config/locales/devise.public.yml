@@ -1,4 +1,8 @@
 de:
+  errors:
+    messages:
+      letter_number: "muss mindestens einen Buchstaben und eine Zahl enthalten"
+
   helpers:
     label:
       user:
@@ -55,6 +59,7 @@ de:
       unlocked: "Ihr Konto wurde erfolgreich entsperrt. Sie sind jetzt angemeldet."
       send_paranoid_instructions: "Falls Ihr Konto existiert, erhalten Sie in wenigen Minuten eine E-Mail mit Anweisungen zum Entsperren."
     views:
+      password_rule_hint: "Verwenden Sie mindestens 6 Zeichen, darunter mindestens einen Buchstaben und eine Zahl."
       links:
         sign_in: "Anmelden"
         sign_up: "Registrieren"
@@ -92,7 +97,7 @@ de:
           paragraph_2: "Nach dem Speichern funktioniert Ihr altes Passwort sofort nicht mehr. Wenn dieser Link abgelaufen ist, fordern Sie bitte eine neue Reset-E-Mail an."
           form_badge: "Neues Passwort"
           form_intro: "Geben Sie unten Ihr neues Passwort ein und bestätigen Sie es, um die Aktualisierung abzuschließen."
-          support_note: "Verwenden Sie mindestens sechs Zeichen. Falls dieser Link nicht mehr funktioniert, fordern Sie auf der Wiederherstellungsseite einen neuen Link an."
+          support_note: "Verwenden Sie mindestens sechs Zeichen, darunter mindestens einen Buchstaben und eine Zahl. Falls dieser Link nicht mehr funktioniert, fordern Sie auf der Wiederherstellungsseite einen neuen Link an."
           request_new_link: "Neuen Reset-Link anfordern"
         new:
           title: "Passwort vergessen"
@@ -174,6 +179,10 @@ de:
           support_note: "Wenn Sie Ihr Passwort kennen, Ihr Konto aber gesperrt ist, ist diese Entsperr-E-Mail der schnellste Weg zurück."
 
 fr:
+  errors:
+    messages:
+      letter_number: "doit contenir au moins une lettre et un chiffre"
+
   helpers:
     label:
       user:
@@ -230,6 +239,7 @@ fr:
       unlocked: "Votre compte a bien été déverrouillé. Vous êtes maintenant connecté."
       send_paranoid_instructions: "Si votre compte existe, vous recevrez bientôt un e-mail avec les instructions de déverrouillage."
     views:
+      password_rule_hint: "Utilisez au moins 6 caracteres, dont au moins une lettre et un chiffre."
       links:
         sign_in: "Se connecter"
         sign_up: "S'inscrire"
@@ -267,7 +277,7 @@ fr:
           paragraph_2: "Une fois enregistré, l'ancien mot de passe ne fonctionnera plus immédiatement. Si ce lien a expiré, demandez un nouvel e-mail de réinitialisation."
           form_badge: "Nouveau mot de passe"
           form_intro: "Saisissez votre nouveau mot de passe ci-dessous, puis confirmez-le pour terminer la mise à jour."
-          support_note: "Utilisez au moins six caractères. Si ce lien ne fonctionne plus, demandez un nouvel e-mail depuis la page de récupération."
+          support_note: "Utilisez au moins six caracteres, dont au moins une lettre et un chiffre. Si ce lien ne fonctionne plus, demandez un nouvel e-mail depuis la page de recuperation."
           request_new_link: "Demander un nouveau lien"
         new:
           title: "Mot de passe oublié"
@@ -349,6 +359,10 @@ fr:
           support_note: "Si vous vous souvenez de votre mot de passe mais que le compte est verrouillé, cet e-mail est la voie la plus rapide pour revenir."
 
 it:
+  errors:
+    messages:
+      letter_number: "deve includere almeno una lettera e un numero"
+
   helpers:
     label:
       user:
@@ -405,6 +419,7 @@ it:
       unlocked: "Il tuo account è stato sbloccato con successo. Ora hai effettuato l'accesso."
       send_paranoid_instructions: "Se il tuo account esiste, riceverai a breve un'e-mail con le istruzioni per sbloccarlo."
     views:
+      password_rule_hint: "Usa almeno 6 caratteri, includendo almeno una lettera e un numero."
       links:
         sign_in: "Accedi"
         sign_up: "Registrati"
@@ -442,7 +457,7 @@ it:
           paragraph_2: "Una volta salvata, la vecchia password smetterà di funzionare immediatamente. Se questo link è scaduto, richiedi una nuova e-mail di reset."
           form_badge: "Nuova password"
           form_intro: "Inserisci qui sotto la nuova password, poi confermala per completare l'aggiornamento."
-          support_note: "Usa almeno sei caratteri. Se questo link non funziona più, richiedi una nuova e-mail dalla pagina di recupero."
+          support_note: "Usa almeno sei caratteri, includendo almeno una lettera e un numero. Se questo link non funziona piu, richiedi una nuova e-mail dalla pagina di recupero."
           request_new_link: "Richiedi un nuovo link di reset"
         new:
           title: "Password dimenticata"

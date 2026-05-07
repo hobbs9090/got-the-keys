@@ -219,7 +219,7 @@ Revokes the current refresh token (passed in body) *and* updates `users.jti`, in
 
 ```json
 // Request
-{ "reset_password_token": "...", "password": "newpassword", "password_confirmation": "newpassword" }
+{ "reset_password_token": "...", "password": "newpassword1", "password_confirmation": "newpassword1" }
 
 // 200 OK
 { "user": { ...UserResource }, "message": "Password has been updated." }
@@ -568,7 +568,8 @@ Single error envelope across the API:
     "message": "Some fields are invalid.",
     "details": [
       { "field": "email", "code": "taken", "message": "has already been taken" },
-      { "field": "password", "code": "too_short", "message": "is too short (minimum is 8 characters)" }
+      { "field": "password", "code": "too_short", "message": "is too short (minimum is 6 characters)" },
+      { "field": "password", "code": "invalid", "message": "must include at least one letter and one number" }
     ],
     "request_id": "req_01HF..."
   }

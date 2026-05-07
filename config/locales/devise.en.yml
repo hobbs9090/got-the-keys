@@ -3,6 +3,7 @@
 en:
   errors:
     messages:
+      letter_number: "must include at least one letter and one number"
       expired: "has expired, please request a new one"
       not_found: "not found"
       already_confirmed: "was already confirmed, please try signing in"
@@ -72,6 +73,7 @@ en:
         paragraph_2: "Click the link below to unlock your account"
         unlock_my_account: "Unlock my account"
     views:
+      password_rule_hint: "Use at least 6 characters, including at least one letter and one number."
       commons:
         sidebar:
           title: 'Operation panel'
@@ -113,7 +115,7 @@ en:
           paragraph_2: "Once saved, the old password stops working immediately. If this link expires, request a new reset email."
           form_badge: "New password"
           form_intro: "Enter your new password below, then confirm it to finish updating your account."
-          support_note: "Use at least six characters. If this link no longer works, request a fresh reset email from the recovery page."
+          support_note: "Use at least six characters, including at least one letter and one number. If this link no longer works, request a fresh reset email from the recovery page."
           request_new_link: "Request a fresh reset link"
         new:
           title: 'Forgot Password'

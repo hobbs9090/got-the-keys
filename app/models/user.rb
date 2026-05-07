@@ -84,7 +84,7 @@ class User < ApplicationRecord
   def password_includes_letters_and_numbers
     return if password.match?(/[A-Za-z]/) && password.match?(/\d/)
 
-    errors.add(:password, "must include at least one letter and one number")
+    errors.add(:password, :letter_number)
   end
 
   public

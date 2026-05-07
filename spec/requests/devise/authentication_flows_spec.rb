@@ -126,13 +126,13 @@ RSpec.describe "Devise authentication flows", type: :request do
       put user_password_path, params: {
         user: {
           reset_password_token: raw_token,
-          password: "newpassword",
-          password_confirmation: "newpassword"
+          password: "newpassword1",
+          password_confirmation: "newpassword1"
         }
       }
 
       expect(response).to redirect_to(new_user_session_path)
-      expect(user.reload.valid_password?("newpassword")).to be(true)
+      expect(user.reload.valid_password?("newpassword1")).to be(true)
       expect(user.valid_password?("changeme123")).to be(false)
 
       follow_redirect!
@@ -141,7 +141,7 @@ RSpec.describe "Devise authentication flows", type: :request do
       expect(flash_text).to include(I18n.t("devise.passwords.updated_not_active"))
 
       delete destroy_user_session_path
-      post user_session_path, params: { user: { email: user.email, password: "newpassword" } }
+      post user_session_path, params: { user: { email: user.email, password: "newpassword1" } }
 
       expect(response).to redirect_to(root_path)
     end

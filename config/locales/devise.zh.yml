@@ -3,6 +3,7 @@
 zh:
   errors:
     messages:
+      letter_number: "必须至少包含一个字母和一个数字"
       expired: "您已过期，请重新申请"
       not_found: "没有找到"
       already_confirmed: "已经激活，请重新登录."
@@ -71,6 +72,7 @@ zh:
         paragraph_2: "点击下面的链接到您的帐户解锁"
         unlock_my_account: "解开我的帐户"
     views:
+      password_rule_hint: "请至少使用 6 个字符，并至少包含一个字母和一个数字。"
       commons:
         sidebar:
           title: "操作面版"
@@ -112,7 +114,7 @@ zh:
           paragraph_2: "保存后，旧密码会立即失效。如果此链接已过期，请重新申请一封重置邮件。"
           form_badge: "新密码"
           form_intro: "请在下方输入您的新密码，并再次确认以完成更新。"
-          support_note: "请至少使用六码字符。如果此链接已失效，请从找回密码页面重新申请。"
+          support_note: "请至少使用 6 个字符，并至少包含一个字母和一个数字。如果此链接已失效，请从找回密码页面重新申请。"
           request_new_link: "重新申请重置链接"
         new:
           title: '忘记密码'

@@ -231,8 +231,8 @@ RSpec.describe "Saved properties", type: :request do
     put user_password_path, params: {
       user: {
         reset_password_token: raw_token,
-        password: "newpassword",
-        password_confirmation: "newpassword"
+        password: "newpassword1",
+        password_confirmation: "newpassword1"
       },
       return_to: return_to_value,
       save_property_id: save_property_id_value
@@ -253,7 +253,7 @@ RSpec.describe "Saved properties", type: :request do
       post user_session_path, params: {
         user: {
           email: user.email,
-          password: "newpassword"
+          password: "newpassword1"
         },
         return_to: sign_in_return_to,
         save_property_id: sign_in_save_property_id

@@ -33,6 +33,7 @@
         <div>
           <%= f.label :password, t('devise.views.passwords.edit.new_password'), **form_label_options(resource, :password) %>
           <%= f.password_field :password, autofocus: true, required: true, minlength: 6, autocomplete: "new-password", **form_control_options(resource, :password) %>
+          <p class="auth-form__hint"><%= t("devise.views.password_rule_hint") %></p>
           <%= field_error_messages(resource, :password) %>
         </div>
 

@@ -4,7 +4,7 @@ RSpec.describe "POST /api/v1/auth/register", type: :request do
   let(:valid_params) do
     {
       email:            "newbuyer@example.com",
-      password:         "correcthorsebattery",
+      password:         "correcthorsebattery1",
       first_name:       "Sam",
       last_name:        "Buyer",
       mobile_number:    "07595 123456",

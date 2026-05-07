@@ -73,6 +73,7 @@
                                    password_strength_labels: t("devise.views.registrations.new.password_strength_labels").to_json
                                  },
                                  **form_control_options(resource, :password) %>
+            <p class="auth-form__hint"><%= t("devise.views.password_rule_hint") %></p>
             <div class="password-strength" data-testid="registration-password-strength">
               <meter id="registration-password-strength-meter" min="0" max="4" low="2" high="3" optimum="4" value="0" data-password-strength-meter="user_password"></meter>
               <span data-password-strength-label="user_password"></span>

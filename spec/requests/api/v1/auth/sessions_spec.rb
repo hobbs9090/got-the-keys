@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Api::V1::Auth::Sessions", type: :request do
-  let(:password) { "correcthorsebattery" }
+  let(:password) { "correcthorsebattery1" }
   let!(:user)    { create(:user, password: password, password_confirmation: password) }
 
   describe "POST /api/v1/auth/login" do
