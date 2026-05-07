@@ -8,7 +8,7 @@
      data-slot-picker
      data-slot-picker-selected-prefix="<%= summary_prefix %>"
      data-testid="<%= testid %>">
-  <%= hidden_field_tag field_name, current_value, id: field_id, data: { slot_picker_input: true } %>
+  <%= hidden_field_tag field_name, current_value, id: field_id, data: { slot_picker_input: true, testid: "#{testid}-selected-slot" } %>
   <script type="application/json" data-slot-picker-source><%= raw(json_escape(picker_slots.to_json)) %></script>
 
   <div class="appointment-slot-picker__header">
@@ -98,7 +98,7 @@
   <noscript>
     <div>
       <label for="<%= "#{field_id}_fallback" %>"><%= fallback_label %></label>
-      <select name="<%= field_name %>" id="<%= "#{field_id}_fallback" %>">
+      <select name="<%= field_name %>" id="<%= "#{field_id}_fallback" %>" data-testid="<%= "#{testid}-fallback-select" %>">
         <option value=""><%= fallback_prompt %></option>
         <% slots.each do |slot| %>
           <option value="<%= slot.starts_at.iso8601 %>" <%= "selected" if slot.starts_at.iso8601 == current_value %>><%= slot.label %></option>

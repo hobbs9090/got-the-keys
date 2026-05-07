@@ -79,11 +79,11 @@
               <div class="form-grid">
                 <div>
                   <label><%= t("ui.photos.fields.image_filename") %></label>
-                  <input type="text" value="<%= listing_image_filename %>" readonly>
+                  <input type="text" value="<%= listing_image_filename %>" readonly data-testid="property-listing-image-filename">
                 </div>
                 <div>
                   <label><%= t("ui.photos.fields.caption") %></label>
-                  <input type="text" value="<%= t("ui.photos.primary_listing_image", default: "Primary listing image") %>" readonly>
+                  <input type="text" value="<%= t("ui.photos.primary_listing_image", default: "Primary listing image") %>" readonly data-testid="property-listing-image-caption">
                 </div>
               </div>
               <p class="empty-copy"><%= t("ui.photos.listing_image_note", default: "This image is attached to the listing record and can be updated from Edit listing.") %></p>

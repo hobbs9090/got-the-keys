@@ -83,7 +83,7 @@
         </div>
       </div>
 
-      <form class="stacked-form contact-form">
+      <form class="stacked-form contact-form" data-testid="contact-form">
         <div>
           <p class="section-heading__eyebrow"><%= t('contact_us.response_label') %></p>
           <h3><%= t('contact_us.form_surface_title') %></h3>
@@ -91,23 +91,23 @@
         <div class="contact-form__grid">
           <div>
             <label for="yourName"><%= t('contact_us.your_name') %></label>
-            <input type="text" id="yourName" placeholder="<%= t('contact_us.jane_smith') %>">
+            <input type="text" id="yourName" placeholder="<%= t('contact_us.jane_smith') %>" data-testid="contact-your-name">
           </div>
 
           <div>
             <label for="yourEmail"><%= t('contact_us.your_email') %></label>
-            <input type="email" id="yourEmail" placeholder="<%= t('contact_us.jane_smith_email') %>">
+            <input type="email" id="yourEmail" placeholder="<%= t('contact_us.jane_smith_email') %>" data-testid="contact-your-email">
           </div>
         </div>
 
         <div>
           <label for="contactMessage"><%= t('contact_us.whats_up') %></label>
-          <textarea id="contactMessage" rows="6" placeholder="<%= t('contact_us.message_placeholder') %>"></textarea>
+          <textarea id="contactMessage" rows="6" placeholder="<%= t('contact_us.message_placeholder') %>" data-testid="contact-message"></textarea>
         </div>
 
         <div class="form-actions">
           <p class="contact-form__note"><%= t('contact_us.form_note') %></p>
-          <button type="submit" class="button primary"><%= t('button.submit') %></button>
+          <button type="submit" class="button primary" data-testid="contact-submit"><%= t('button.submit') %></button>
         </div>
       </form>
     </section>

@@ -102,14 +102,14 @@
     <p><%= t('devise.views.registrations.edit.danger_body') %></p>
 
     <label class="auth-form__checkbox auth-form__checkbox--compact auth-modal__confirm-check">
-      <input type="checkbox" data-account-delete-checkbox>
+      <input type="checkbox" data-account-delete-checkbox data-testid="delete-account-confirm-checkbox">
       <div>
         <span class="checkbox-label"><%= t("devise.views.registrations.edit.delete_acknowledgement", default: "I understand this permanently deletes my account and cannot be undone.") %></span>
       </div>
     </label>
 
     <div class="form-actions auth-modal__actions">
-      <button type="button" class="button hollow secondary expanded" data-modal-close>
+      <button type="button" class="button hollow secondary expanded" data-modal-close data-testid="delete-account-cancel">
         <%= t("ui.common.cancel", default: "Cancel") %>
       </button>
       <%= button_to t("devise.views.registrations.edit.delete_account", default: "Delete account"),
