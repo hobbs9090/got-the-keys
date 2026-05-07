@@ -3123,9 +3123,25 @@ form[data-testid="lead-inbox-filters"] .form-actions .button,
 }
 
 .property-location-map__frame {
+  background: linear-gradient(145deg, rgba(20, 87, 214, 0.08), var(--color-surface-soft));
+  border: 1px solid var(--color-panel-border);
   border-radius: calc(var(--radius-md) - 2px);
   line-height: 0;
   overflow: hidden;
+}
+
+.property-location-map__placeholder {
+  align-items: center;
+  display: grid;
+  gap: 0.85rem;
+  justify-items: start;
+  line-height: 1.5;
+  min-height: 12rem;
+  padding: 1.25rem;
+}
+
+.property-location-map__placeholder p {
+  margin: 0;
 }
 
 .property-location-map__frame iframe {

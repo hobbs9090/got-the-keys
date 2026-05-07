@@ -230,6 +230,9 @@ zh:
         photo: 照片
         floor_plan: 户型图
         documents_title: 文件与下载
+        map_placeholder: 需要时再加载互动地图。这样你查看房源详情时，页面仍能保持快速。
+        load_map: 加载互动地图
+        open_in_apple_maps: 在 Apple 地图中打开
         enquiry_title: 想先了解细节？
         enquiry_body: 在选择看房时段前，可先索取宣传资料、请求经纪人回电或询问更多信息。
         enquiry_cta: 发送咨询

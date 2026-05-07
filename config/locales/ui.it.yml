@@ -249,6 +249,10 @@ it:
         photo: Foto
         floor_plan: Planimetria
         documents_title: Documenti e download
+        map_placeholder: Carica la mappa interattiva solo quando ti serve. Cosi
+          l annuncio resta veloce mentre controlli i dettagli dell immobile.
+        load_map: Carica mappa interattiva
+        open_in_apple_maps: Apri in Mappe Apple
         enquiry_title: Vuoi prima qualche dettaglio?
         enquiry_body: Chiedi brochure, richiamata del team o chiarimenti prima di
           scegliere uno slot di visita.

@@ -252,6 +252,11 @@ fr:
         photo: Photo
         floor_plan: Plan
         documents_title: Documents et telechargements
+        map_placeholder: Chargez la carte interactive uniquement lorsque vous en
+          avez besoin. L annonce reste ainsi rapide pendant que vous consultez les
+          details du bien.
+        load_map: Charger la carte interactive
+        open_in_apple_maps: Ouvrir dans Apple Plans
         enquiry_title: Besoin de details d'abord ?
         enquiry_body: Demandez la brochure, un rappel de l equipe ou des precisions
           avant de choisir un creneau de visite.

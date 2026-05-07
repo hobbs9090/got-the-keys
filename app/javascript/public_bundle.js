@@ -9,6 +9,7 @@ import { bootOverlayRecovery, teardownOverlayRecovery } from "./overlay_recovery
 import { bootPaginationScroll, teardownPaginationScroll } from "./pagination_scroll";
 import { bootPasswordStrengthMeters, teardownPasswordStrengthMeters } from "./password_strength_meter";
 import { bootPropertyListingForms, teardownPropertyListingForms } from "./property_listing_form";
+import { bootPropertyMaps, teardownPropertyMaps } from "./property_maps";
 import { bootPhotoPrimaryRadios, teardownPhotoPrimaryRadios } from "./photo_primary_radios";
 import { bootPropertySearchFilters, teardownPropertySearchFilters } from "./property_search_filters";
 import { bootPropertyFilterSave, teardownPropertyFilterSave } from "./property_filter_save";
@@ -27,6 +28,7 @@ const bootApplication = () => {
   bootPaginationScroll();
   bootPasswordStrengthMeters();
   bootPropertyListingForms();
+  bootPropertyMaps();
   bootPhotoPrimaryRadios();
   bootPropertySearchFilters();
   bootPropertyFilterSave();
@@ -45,6 +47,7 @@ const teardownApplication = () => {
   teardownPaginationScroll();
   teardownPasswordStrengthMeters();
   teardownPropertyListingForms();
+  teardownPropertyMaps();
   teardownPhotoPrimaryRadios();
   teardownPropertySearchFilters();
   teardownPropertyFilterSave();

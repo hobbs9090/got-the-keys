@@ -347,25 +347,23 @@ describe "Properties" do
       enquiry_link = document.at_css(%([data-testid="open-enquiry-form"]))
       offer_link = document.at_css(%([data-testid="open-offer-form"]))
       location_map = document.at_css(%([data-testid="property-location-map"]))
-      map_frame = location_map&.at_css("iframe")
+      lazy_map_frame = location_map&.at_css(%([data-testid="property-location-map-frame"]))
+      load_map_button = location_map&.at_css(%([data-testid="load-property-map-button"]))
       apple_maps_link = location_map&.at_css('a[href^="https://maps.apple.com/"]')
       sign_in_return_path = new_user_session_path(return_to: property_path(property, anchor: "booking-panel"))
-      expected_map_query = ERB::Util.url_encode([
-        property.address_line_1,
-        property.address_line_2,
-        property.town_city,
-        property.county,
-        property.postcode,
-        property.country
-      ].reject(&:blank?).join(", "))
+      expected_map_query = ERB::Util.url_encode(property.postcode)
 
       expect(response).to have_http_status(:ok)
       expect(showcase.at_css(".property-hero__media--ratio-3-2")).to be_present
       expect(location_map).to be_present
-      expect(map_frame["src"]).to include("maps.google.co.uk/maps?q=#{expected_map_query}")
-      expect(map_frame["loading"]).to eq("lazy")
-      expect(map_frame["tabindex"]).to eq("-1")
+      expect(location_map.at_css("iframe")).not_to be_present
+      expect(lazy_map_frame["data-map-src"]).to include("maps.google.co.uk/maps?q=#{expected_map_query}")
+      expect(lazy_map_frame["data-map-src"]).not_to include(ERB::Util.url_encode(property.address_line_1))
+      expect(lazy_map_frame["data-map-title"]).to include(property.address_line_1)
+      expect(load_map_button).to be_present
+      expect(load_map_button.text.squish).to eq(I18n.t("ui.properties.show.load_map"))
       expect(apple_maps_link["href"]).to eq("https://maps.apple.com/?q=#{expected_map_query}")
+      expect(apple_maps_link.text.squish).to eq(I18n.t("ui.properties.show.open_in_apple_maps"))
       expect(booking_panel).to be_present
       expect(booking_shortcut_form).not_to be_present
       expect(booking_form).not_to be_present

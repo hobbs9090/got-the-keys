@@ -1,7 +1,7 @@
 <% title "#{@property.address_line_1} | #{t('gotthekeys.gotthekeys')}" %>
 <% meta_description "#{@property.headline.presence || @property.property_type} in #{@property.town_city}. #{format_price(@property)}. #{pluralize(@property.bedrooms, 'bedroom')}, #{pluralize(@property.bathrooms, 'bathroom')}." %>
 <% property_map_address = [@property.address_line_1, @property.address_line_2, @property.town_city, @property.county, @property.postcode, @property.country].reject(&:blank?).join(", ") %>
-<% property_map_query = ERB::Util.url_encode(property_map_address) %>
+<% property_map_query = ERB::Util.url_encode(@property.postcode) %>
 
 <section class="property-hero" data-testid="property-showcase">
   <div class="property-hero__content">
@@ -83,11 +83,20 @@
 
     <div class="property-address property-location-map" data-testid="property-location-map">
       <h3><%= t("ui.common.location", default: "Location") %></h3>
-      <div class="property-location-map__frame">
-        <iframe width="100%" height="320" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps?q=<%= property_map_query %>&hl=<%= I18n.locale %>&z=15&output=embed" tabindex="-1" title="<%= t("ui.common.location", default: "Location") %>: <%= @property.address_line_1 %>" loading="lazy"></iframe>
+      <div class="property-location-map__frame"
+           data-lazy-map
+           data-map-src="https://maps.google.co.uk/maps?q=<%= property_map_query %>&hl=<%= I18n.locale %>&z=15&output=embed"
+           data-map-title="<%= t("ui.common.location", default: "Location") %>: <%= @property.address_line_1 %>"
+           data-testid="property-location-map-frame">
+        <div class="property-location-map__placeholder">
+          <p><%= t("ui.properties.show.map_placeholder") %></p>
+          <button type="button" class="button hollow secondary" data-lazy-map-trigger data-testid="load-property-map-button">
+            <%= t("ui.properties.show.load_map") %>
+          </button>
+        </div>
       </div>
       <p>
-        <%= link_to t("ui.properties.show.open_in_apple_maps", default: "Open in Apple Maps"), "https://maps.apple.com/?q=#{property_map_query}", target: "_blank", rel: "noreferrer", class: "button hollow secondary" %>
+        <%= link_to t("ui.properties.show.open_in_apple_maps"), "https://maps.apple.com/?q=#{property_map_query}", target: "_blank", rel: "noreferrer", class: "button hollow secondary" %>
       </p>
     </div>
 

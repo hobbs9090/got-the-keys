@@ -249,6 +249,10 @@ de:
         photo: Foto
         floor_plan: Grundriss
         documents_title: Dokumente und Downloads
+        map_placeholder: Laden Sie die interaktive Karte nur bei Bedarf. So bleibt
+          das Inserat schnell, während Sie die Objektdetails prüfen.
+        load_map: Interaktive Karte laden
+        open_in_apple_maps: In Apple Karten öffnen
         enquiry_title: Erst mehr Details?
         enquiry_body: Fragen Sie nach Exposé-Informationen, einem Rückruf oder weiteren
           Details, bevor Sie einen Besichtigungstermin wählen.
