@@ -67,7 +67,7 @@ RSpec.describe "Admin demo scenarios" do
         performance_seed: {
           user_count: "3",
           property_count: "5",
-          password: "benchmark-secret",
+          password: "benchmark-secret1",
           ai_mode: "off",
           batch_size: "2",
           model: "gpt-5.4-mini"
