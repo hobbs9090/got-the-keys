@@ -159,21 +159,38 @@
 }
 
 .property-saved-search-card__actions {
+  --saved-search-action-height: 3.25rem;
+
   align-items: stretch;
   display: flex;
   flex: 0 0 auto;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 0.55rem;
   justify-content: flex-end;
 
   form {
     align-items: stretch;
+    align-self: stretch;
     display: flex;
+    height: var(--saved-search-action-height);
+    line-height: 0;
     margin: 0;
+    max-height: var(--saved-search-action-height);
+    min-height: 0;
   }
 
   .button {
-    min-height: 3rem;
+    box-sizing: border-box;
+    height: var(--saved-search-action-height);
+    min-height: 0;
+    padding-bottom: 0;
+    padding-top: 0;
+    white-space: nowrap;
+  }
+
+  form .button {
+    height: var(--saved-search-action-height);
+    max-height: var(--saved-search-action-height);
   }
 }
 
@@ -184,6 +201,7 @@
   }
 
   .property-saved-search-card__actions {
+    flex-wrap: wrap;
     justify-content: flex-start;
   }
 }
