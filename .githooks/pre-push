@@ -14,10 +14,22 @@ if [ ! -x "bin/pre_push_rspec" ]; then
   exit 1
 fi
 
+if [ ! -x "bin/i18n_health" ]; then
+  echo "Missing executable helper: bin/i18n_health" >&2
+  exit 1
+fi
+
 echo "pre-push: running spec coverage guard..."
 
 if ! ruby bin/ensure_spec_changes; then
   echo "pre-push: spec coverage guard failed. Push cancelled." >&2
+  exit 1
+fi
+
+echo "pre-push: checking locale health..."
+
+if ! bin/i18n_health; then
+  echo "pre-push: locale health failed. Push cancelled." >&2
   exit 1
 fi
 

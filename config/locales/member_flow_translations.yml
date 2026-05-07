@@ -1,0 +1,255 @@
+de:
+  devise:
+    views:
+      registrations:
+        new:
+          password_strength_labels:
+            - Passwortstärke
+            - Schwach
+            - Mittel
+            - Gut
+            - Stark
+  ui:
+    enquiries:
+      show:
+        back_to_property: Zurück zum Objekt
+        eyebrow: Anfragedetails
+        hero_body: Ihre Anfragereferenz und die übermittelten Angaben werden hier gespeichert, damit Sie sie nennen können, wenn das Team antwortet.
+        next_steps_title: Wie geht es weiter?
+        summary_title: Zusammenfassung der Anfrage
+        title: Anfrage %{reference}
+      source_types:
+        application_question: Frage zur Bewerbung
+        offer_enquiry: Anfrage zum Angebot
+    forms:
+      account_email_hint: Mit Ihrem Konto %{email} verknüpft.
+      change_in_profile: Im Profil ändern
+    offers:
+      show:
+        back_to_property: Zurück zum Objekt
+        eyebrow: Angebotsdetails
+        hero_body: Ihre Angebotsreferenz, Zusammenfassung und Statushistorie bleiben hier sichtbar, während das Team Ihr Angebot prüft.
+        manage_body: Sie können zum Objekt zurückkehren oder dieses Angebot zurückziehen, solange es noch offen ist.
+        manage_title: Angebot verwalten
+        summary_title: Angebotsübersicht
+        timeline_title: Statushistorie
+        title: Angebot %{reference}
+        withdraw_offer: Angebot zurückziehen
+    properties:
+      show:
+        existing_appointment_body: Sie haben eine ausstehende Besichtigung für %{time} - Referenz %{reference}.
+        existing_appointment_title: Besichtigung bereits angefragt
+        existing_enquiry_body: Sie haben eine offene Anfrage (%{source}) - Referenz %{reference}.
+        existing_offer_body: Sie haben ein ausstehendes Angebot über %{amount} für dieses Objekt - Referenz %{reference}.
+        existing_rental_application_body: Sie haben eine ausstehende Mietbewerbung für dieses Objekt - Referenz %{reference}.
+        view_existing_appointment: Besichtigung ansehen
+        view_existing_enquiry: Anfrage ansehen
+        view_existing_offer: Angebot ansehen
+        view_existing_rental_application: Bewerbung ansehen
+        withdraw_existing_offer: Angebot zurückziehen
+        withdraw_existing_rental_application: Bewerbung zurückziehen
+    rental_applications:
+      show:
+        back_to_property: Zurück zum Objekt
+        eyebrow: Details zur Mietbewerbung
+        hero_body: Ihre Bewerbungsreferenz, Zusammenfassung und Statushistorie bleiben hier sichtbar, während das Team Ihre Bewerbung prüft.
+        manage_body: Sie können zum Objekt zurückkehren oder diese Bewerbung zurückziehen, solange sie noch offen ist.
+        manage_title: Bewerbung verwalten
+        summary_title: Bewerbungsübersicht
+        timeline_title: Statushistorie
+        title: Mietbewerbung %{reference}
+        withdraw_application: Bewerbung zurückziehen
+    validation:
+      phone_number_hint: Verwenden Sie eine britische Telefonnummer, die mit 0... oder +44 beginnt; Leerzeichen oder Bindestriche sind möglich.
+
+fr:
+  devise:
+    views:
+      registrations:
+        new:
+          password_strength_labels:
+            - Robustesse du mot de passe
+            - Faible
+            - Moyenne
+            - Bonne
+            - Forte
+  ui:
+    enquiries:
+      show:
+        back_to_property: Retour au bien
+        eyebrow: Détails de la demande
+        hero_body: Votre référence de demande et les informations envoyées sont conservées ici afin que vous puissiez les citer lorsque l’équipe répond.
+        next_steps_title: Et ensuite ?
+        summary_title: Résumé de la demande
+        title: Demande %{reference}
+      source_types:
+        application_question: Question sur le dossier
+        offer_enquiry: Question sur une offre
+    forms:
+      account_email_hint: Lié à votre compte %{email}.
+      change_in_profile: Modifier dans le profil
+    offers:
+      show:
+        back_to_property: Retour au bien
+        eyebrow: Détails de l’offre
+        hero_body: Votre référence d’offre, le résumé et l’historique de statut restent visibles ici pendant que l’équipe l’examine.
+        manage_body: Vous pouvez revenir au bien ou retirer cette offre tant qu’elle est encore ouverte.
+        manage_title: Gérer votre offre
+        summary_title: Résumé de l’offre
+        timeline_title: Historique du statut
+        title: Offre %{reference}
+        withdraw_offer: Retirer l’offre
+    properties:
+      show:
+        existing_appointment_body: Vous avez une visite en attente pour %{time} - référence %{reference}.
+        existing_appointment_title: Visite déjà demandée
+        existing_enquiry_body: Vous avez une demande ouverte (%{source}) - référence %{reference}.
+        existing_offer_body: Vous avez une offre en attente de %{amount} sur ce bien - référence %{reference}.
+        existing_rental_application_body: Vous avez un dossier locatif en attente pour ce bien - référence %{reference}.
+        view_existing_appointment: Voir la visite
+        view_existing_enquiry: Voir la demande
+        view_existing_offer: Voir l’offre
+        view_existing_rental_application: Voir le dossier
+        withdraw_existing_offer: Retirer l’offre
+        withdraw_existing_rental_application: Retirer le dossier
+    rental_applications:
+      show:
+        back_to_property: Retour au bien
+        eyebrow: Détails du dossier locatif
+        hero_body: Votre référence de dossier, le résumé et l’historique de statut restent visibles ici pendant que l’équipe l’examine.
+        manage_body: Vous pouvez revenir au bien ou retirer ce dossier tant qu’il est encore ouvert.
+        manage_title: Gérer votre dossier
+        summary_title: Résumé du dossier
+        timeline_title: Historique du statut
+        title: Dossier locatif %{reference}
+        withdraw_application: Retirer le dossier
+    validation:
+      phone_number_hint: Utilisez un numéro britannique commençant par 0... ou +44, avec des espaces ou des traits d’union si vous le souhaitez.
+
+it:
+  devise:
+    views:
+      registrations:
+        new:
+          password_strength_labels:
+            - Sicurezza della password
+            - Debole
+            - Discreta
+            - Buona
+            - Forte
+  ui:
+    enquiries:
+      show:
+        back_to_property: Torna all’immobile
+        eyebrow: Dettagli richiesta
+        hero_body: Il riferimento della tua richiesta e i dettagli inviati sono salvati qui, così potrai citarli quando il team risponderà.
+        next_steps_title: Cosa succede dopo?
+        summary_title: Riepilogo richiesta
+        title: Richiesta %{reference}
+      source_types:
+        application_question: Domanda sulla candidatura
+        offer_enquiry: Richiesta su un’offerta
+    forms:
+      account_email_hint: Collegato al tuo account %{email}.
+      change_in_profile: Modifica nel profilo
+    offers:
+      show:
+        back_to_property: Torna all’immobile
+        eyebrow: Dettagli offerta
+        hero_body: Il riferimento dell’offerta, il riepilogo e la cronologia dello stato restano visibili qui mentre il team la esamina.
+        manage_body: Puoi tornare all’immobile o ritirare questa offerta finché è ancora aperta.
+        manage_title: Gestisci la tua offerta
+        summary_title: Riepilogo offerta
+        timeline_title: Cronologia stato
+        title: Offerta %{reference}
+        withdraw_offer: Ritira offerta
+    properties:
+      show:
+        existing_appointment_body: Hai una visita in sospeso per %{time} - riferimento %{reference}.
+        existing_appointment_title: Visita già richiesta
+        existing_enquiry_body: Hai una richiesta aperta (%{source}) - riferimento %{reference}.
+        existing_offer_body: Hai un’offerta in sospeso di %{amount} per questo immobile - riferimento %{reference}.
+        existing_rental_application_body: Hai una domanda di affitto in sospeso per questo immobile - riferimento %{reference}.
+        view_existing_appointment: Vedi visita
+        view_existing_enquiry: Vedi richiesta
+        view_existing_offer: Vedi offerta
+        view_existing_rental_application: Vedi domanda
+        withdraw_existing_offer: Ritira offerta
+        withdraw_existing_rental_application: Ritira domanda
+    rental_applications:
+      show:
+        back_to_property: Torna all’immobile
+        eyebrow: Dettagli domanda di affitto
+        hero_body: Il riferimento della domanda, il riepilogo e la cronologia dello stato restano visibili qui mentre il team la esamina.
+        manage_body: Puoi tornare all’immobile o ritirare questa domanda finché è ancora aperta.
+        manage_title: Gestisci la tua domanda
+        summary_title: Riepilogo domanda
+        timeline_title: Cronologia stato
+        title: Domanda di affitto %{reference}
+        withdraw_application: Ritira domanda
+    validation:
+      phone_number_hint: Usa un numero di telefono britannico che inizi con 0... o +44; puoi usare spazi o trattini.
+
+zh:
+  devise:
+    views:
+      registrations:
+        new:
+          password_strength_labels:
+            - 密码强度
+            - 弱
+            - 一般
+            - 良好
+            - 强
+  ui:
+    enquiries:
+      show:
+        back_to_property: 返回房源
+        eyebrow: 咨询详情
+        hero_body: 您的咨询编号和已提交的详情会保存在这里，团队回复时您可以引用这些信息。
+        next_steps_title: 接下来会怎样？
+        summary_title: 咨询摘要
+        title: 咨询 %{reference}
+      source_types:
+        application_question: 申请问题
+        offer_enquiry: 出价咨询
+    forms:
+      account_email_hint: 已关联到您的 %{email} 账户。
+      change_in_profile: 在个人资料中更改
+    offers:
+      show:
+        back_to_property: 返回房源
+        eyebrow: 出价详情
+        hero_body: 在团队审核期间，您的出价编号、摘要和状态时间线会保留在这里。
+        manage_body: 只要该出价仍处于开放状态，您就可以返回房源或撤回此出价。
+        manage_title: 管理您的出价
+        summary_title: 出价摘要
+        timeline_title: 状态时间线
+        title: 出价 %{reference}
+        withdraw_offer: 撤回出价
+    properties:
+      show:
+        existing_appointment_body: 您已有一个待处理的看房预约，时间为 %{time} - 编号 %{reference}。
+        existing_appointment_title: 已请求看房
+        existing_enquiry_body: 您有一个开放的%{source} - 编号 %{reference}。
+        existing_offer_body: 您已为此房源提交待处理出价 %{amount} - 编号 %{reference}。
+        existing_rental_application_body: 您已为此房源提交待处理租房申请 - 编号 %{reference}。
+        view_existing_appointment: 查看预约
+        view_existing_enquiry: 查看咨询
+        view_existing_offer: 查看出价
+        view_existing_rental_application: 查看申请
+        withdraw_existing_offer: 撤回出价
+        withdraw_existing_rental_application: 撤回申请
+    rental_applications:
+      show:
+        back_to_property: 返回房源
+        eyebrow: 租房申请详情
+        hero_body: 在团队审核期间，您的申请编号、摘要和状态时间线会保留在这里。
+        manage_body: 只要该申请仍处于开放状态，您就可以返回房源或撤回此申请。
+        manage_title: 管理您的申请
+        summary_title: 申请摘要
+        timeline_title: 状态时间线
+        title: 租房申请 %{reference}
+        withdraw_application: 撤回申请
+    validation:
+      phone_number_hint: 请使用以 0... 或 +44 开头的英国电话号码，也可以包含空格或连字符。
