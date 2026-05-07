@@ -33,7 +33,7 @@ RSpec.describe "Member form polish" do
     expect(rental_options).to contain_exactly("General enquiry", "Letting enquiry", "Application question")
   end
 
-  it "renders registration password strength feedback and a 10 character minimum" do
+  it "renders registration password strength feedback and a 6 character minimum" do
     sign_out user
 
     get new_user_registration_path
@@ -41,7 +41,7 @@ RSpec.describe "Member form polish" do
     document = Nokogiri::HTML(response.body)
     password = document.at_css('input[name="user[password]"]')
 
-    expect(password["minlength"]).to eq("10")
+    expect(password["minlength"]).to eq("6")
     expect(document.at_css('[data-testid="registration-password-strength"]')).to be_present
   end
 end

@@ -56,13 +56,13 @@
         </div>
         <div class="form-grid__full">
           <%= f.label :password, nil, **form_label_options(resource, :password) %>
-          <%= f.password_field :password, minlength: 10, autocomplete: "new-password", **form_control_options(resource, :password) %>
+          <%= f.password_field :password, minlength: 6, autocomplete: "new-password", **form_control_options(resource, :password) %>
           <p class="auth-form__hint"><%= t('devise.views.registrations.edit.password_hint') %></p>
           <%= field_error_messages(resource, :password) %>
         </div>
         <div class="form-grid__full">
           <%= f.label :password_confirmation, nil, **form_label_options(resource, :password_confirmation) %>
-          <%= f.password_field :password_confirmation, minlength: 10, autocomplete: "new-password", **form_control_options(resource, :password_confirmation) %>
+          <%= f.password_field :password_confirmation, minlength: 6, autocomplete: "new-password", **form_control_options(resource, :password_confirmation) %>
           <%= field_error_messages(resource, :password_confirmation) %>
         </div>
         <div class="form-grid__full">

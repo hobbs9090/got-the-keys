@@ -65,7 +65,7 @@
             <%= f.label :password, nil, **form_label_options(resource, :password) %>
             <%= f.password_field :password,
                                  required: true,
-                                 minlength: 10,
+                                 minlength: 6,
                                  autocomplete: "new-password",
                                  data: {
                                    testid: "registration-password",
@@ -81,7 +81,7 @@
           </div>
           <div>
             <%= f.label :password_confirmation, nil, **form_label_options(resource, :password_confirmation) %>
-            <%= f.password_field :password_confirmation, required: true, minlength: 10, autocomplete: "new-password", data: { testid: "registration-password-confirmation" }, **form_control_options(resource, :password_confirmation) %>
+            <%= f.password_field :password_confirmation, required: true, minlength: 6, autocomplete: "new-password", data: { testid: "registration-password-confirmation" }, **form_control_options(resource, :password_confirmation) %>
             <%= field_error_messages(resource, :password_confirmation) %>
           </div>
         </div>

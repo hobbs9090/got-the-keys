@@ -32,13 +32,13 @@
       <div class="auth-form__stack">
         <div>
           <%= f.label :password, t('devise.views.passwords.edit.new_password'), **form_label_options(resource, :password) %>
-          <%= f.password_field :password, autofocus: true, required: true, minlength: 10, autocomplete: "new-password", **form_control_options(resource, :password) %>
+          <%= f.password_field :password, autofocus: true, required: true, minlength: 6, autocomplete: "new-password", **form_control_options(resource, :password) %>
           <%= field_error_messages(resource, :password) %>
         </div>
 
         <div>
           <%= f.label :password_confirmation, t('devise.views.passwords.edit.confirm_new_password'), **form_label_options(resource, :password_confirmation) %>
-          <%= f.password_field :password_confirmation, required: true, minlength: 10, autocomplete: "new-password", **form_control_options(resource, :password_confirmation) %>
+          <%= f.password_field :password_confirmation, required: true, minlength: 6, autocomplete: "new-password", **form_control_options(resource, :password_confirmation) %>
           <%= field_error_messages(resource, :password_confirmation) %>
         </div>
       </div>

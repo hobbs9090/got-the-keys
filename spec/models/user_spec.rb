@@ -87,19 +87,29 @@ describe "A user" do
     expect(user.errors[:password].first).to eq("can't be blank")
   end
 
-  it "must have a password of minimum 10 characters" do
-    user = User.new(user_attributes(password: 'X' * 9, password_confirmation: 'X' * 9))
+  it "must have a password of minimum 6 characters" do
+    user = User.new(user_attributes(password: 'abc12', password_confirmation: 'abc12'))
 
     expect(user.valid?).to be false
     expect(user.errors[:password].any?).to be true
-    expect(user.errors[:password].first).to eq("is too short (minimum is 10 characters)")
+    expect(user.errors[:password].first).to eq("is too short (minimum is 6 characters)")
   end
 
-  it "can have a 10 character password" do
-    user = User.new(user_attributes(password: 'X' * 10, password_confirmation: 'X' * 10))
+  it "can have a 6 character password with letters and numbers" do
+    user = User.new(user_attributes(password: 'abc123', password_confirmation: 'abc123'))
 
     expect(user.valid?).to be true
     expect(user.errors[:password].any?).to be false
+  end
+
+  it "requires a password to include letters and numbers" do
+    letters_only = User.new(user_attributes(password: 'abcdef', password_confirmation: 'abcdef'))
+    numbers_only = User.new(user_attributes(password: '123456', password_confirmation: '123456'))
+
+    expect(letters_only.valid?).to be false
+    expect(letters_only.errors[:password]).to include("must include at least one letter and one number")
+    expect(numbers_only.valid?).to be false
+    expect(numbers_only.errors[:password]).to include("must include at least one letter and one number")
   end
 
   it "rejects an invalid mobile number" do

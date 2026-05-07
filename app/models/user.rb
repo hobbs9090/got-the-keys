@@ -21,6 +21,7 @@ class User < ApplicationRecord
   validates :mobile_number, format: { with: PHONE_FORMAT, message: ->(_record, _data) { I18n.t("ui.validation.phone_number") } }, allow_blank: true
   validates :language, presence: true
   validates :language, inclusion: { in: AppSettings.available_languages }, allow_blank: true
+  validate :password_includes_letters_and_numbers, if: -> { password.present? }
 
   devise :database_authenticatable, :lockable, :registerable,
          :recoverable, :rememberable, :timeoutable, :trackable, :validatable,
@@ -78,6 +79,12 @@ class User < ApplicationRecord
     self.mobile_number = mobile_number&.strip
     self.email = email.to_s.strip
     self.language = language.to_s.strip
+  end
+
+  def password_includes_letters_and_numbers
+    return if password.match?(/[A-Za-z]/) && password.match?(/\d/)
+
+    errors.add(:password, "must include at least one letter and one number")
   end
 
   public

@@ -5,10 +5,10 @@ const passwordInputs = () => Array.from(document.querySelectorAll("[data-passwor
 const scorePassword = (value) => {
   let score = 0;
 
+  if (value.length >= 6) score += 1;
   if (value.length >= 10) score += 1;
-  if (value.length >= 14) score += 1;
+  if (/[A-Za-z]/.test(value) && /\d/.test(value)) score += 1;
   if (/[a-z]/.test(value) && /[A-Z]/.test(value)) score += 1;
-  if (/\d/.test(value)) score += 1;
   if (/[^A-Za-z0-9]/.test(value)) score += 1;
 
   return Math.min(score, 4);
