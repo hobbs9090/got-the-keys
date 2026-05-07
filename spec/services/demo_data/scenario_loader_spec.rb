@@ -40,6 +40,7 @@ RSpec.describe DemoData::ScenarioLoader do
       "kate@gotthekeys.uk",
       "inarra@gotthekeys.uk"
     ])
+    expect(Admin.find_by!(email: "steven@gotthekeys.uk").valid_password?("secret1234")).to be(true)
     expect(User.count).to eq(92)
     expect(Property.count).to eq(100)
     expect(Property.for_sale.count).to eq(40)
@@ -71,6 +72,7 @@ RSpec.describe DemoData::ScenarioLoader do
       "logan.kemp@example.com",
       "sam.turner@example.com",
     )
+    expect(User.find_by!(email: "nina.hughes@example.com").valid_password?("secret1234")).to be(true)
     expect(User.find_by!(email: "amelia.hart@example.com").slice(:first_name, :last_name)).to eq(
       "first_name" => "Amelia",
       "last_name" => "Hart"
@@ -224,16 +226,16 @@ RSpec.describe DemoData::ScenarioLoader do
         open_weekdays: [1, 2, 3, 4, 5]
       admins:
         - email: admin@example.com
-          password: secret
-          password_confirmation: secret
+          password: secret1234
+          password_confirmation: secret1234
           language: en
       users:
         - first_name: Casey
           last_name: Hart
           mobile_number: "07700 900250"
           email: casey.hart@example.com
-          password: secret
-          password_confirmation: secret
+          password: secret1234
+          password_confirmation: secret1234
           language: en
       properties:
         - key: supplementary_home

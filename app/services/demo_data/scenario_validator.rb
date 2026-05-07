@@ -10,6 +10,7 @@ module DemoData
     REQUIRED_PROPERTY_KEYS = %i[key owner_email address_line_1 town_city county postcode country property_description bedrooms sale_status asking_price].freeze
     REQUIRED_PROPERTY_BATCH_KEYS = %i[key_prefix count owner_emails sale_status].freeze
     REQUIRED_COUNT_BATCH_KEYS = %i[count].freeze
+    DEFAULT_DEMO_PASSWORD = "secret1234".freeze
 
     def initialize(activity_generator: ScenarioActivityGenerator.new)
       @activity_generator = activity_generator
@@ -187,7 +188,7 @@ module DemoData
 
     def normalize_admins(admins)
       admins.map do |admin|
-        password = demo_password(admin.fetch(:password, "secret1234"))
+        password = demo_password(admin.fetch(:password, DEFAULT_DEMO_PASSWORD))
 
         {
           email: admin.fetch(:email),
@@ -200,7 +201,7 @@ module DemoData
 
     def normalize_users(users)
       users.map do |user|
-        password = demo_password(user.fetch(:password, "secret1234"))
+        password = demo_password(user.fetch(:password, DEFAULT_DEMO_PASSWORD))
 
         {
           first_name: user.fetch(:first_name),
@@ -217,10 +218,7 @@ module DemoData
 
     def demo_password(value)
       password = value.to_s
-      minimum = Devise.password_length.min
-      return password if password.length >= minimum
-
-      "#{password}#{'0' * (minimum - password.length)}"
+      password.presence || DEFAULT_DEMO_PASSWORD
     end
 
     def normalize_properties(properties)

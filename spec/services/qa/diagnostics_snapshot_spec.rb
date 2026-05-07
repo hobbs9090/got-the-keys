@@ -12,13 +12,13 @@ RSpec.describe Qa::DiagnosticsSnapshot do
     expect(snapshot[:mail_delivery_mode]).to eq(ActionMailer::Base.delivery_method.to_s)
     expect(snapshot[:job_adapter]).to be_present
     expect(snapshot[:seeded_personas]).to be_a(Hash)
-    expect(snapshot[:seeded_personas][:admins]).to include("steven@gotthekeys.uk / secret", "kate@gotthekeys.uk / secret")
+    expect(snapshot[:seeded_personas][:admins]).to include("steven@gotthekeys.uk / secret1234", "kate@gotthekeys.uk / secret1234")
     expect(snapshot[:seeded_personas][:sellers].size).to eq(88)
     expect(snapshot[:seeded_personas][:buyers].size).to eq(4)
-    expect(snapshot[:seeded_personas][:sellers]).to include("Hans Schmidt (Deutsch) - hans.schmidt@example.com / secret")
-    expect(snapshot[:seeded_personas][:sellers]).to include("Holly Wade (English) - holly.wade@example.com / secret")
-    expect(snapshot[:seeded_personas][:buyers]).to include("Nina Hughes (English) - nina.hughes@example.com / secret")
-    expect(snapshot[:seeded_personas][:buyers]).to include("Alex Cole (English) - alex.cole@example.com / secret")
+    expect(snapshot[:seeded_personas][:sellers]).to include("Hans Schmidt (Deutsch) - hans.schmidt@example.com / secret1234")
+    expect(snapshot[:seeded_personas][:sellers]).to include("Holly Wade (English) - holly.wade@example.com / secret1234")
+    expect(snapshot[:seeded_personas][:buyers]).to include("Nina Hughes (English) - nina.hughes@example.com / secret1234")
+    expect(snapshot[:seeded_personas][:buyers]).to include("Alex Cole (English) - alex.cole@example.com / secret1234")
   end
 
   it "uses the translated label when the active scenario is a curated catalogue key" do
