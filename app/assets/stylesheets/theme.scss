@@ -3196,6 +3196,53 @@ form[data-testid="lead-inbox-filters"] .form-actions .button,
   margin-top: 0.75rem;
 }
 
+.property-workspace-section > summary {
+  align-items: center;
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-primary-soft) 86%, transparent),
+      color-mix(in srgb, var(--color-surface-raised) 98%, transparent)
+    );
+  border: 1px solid color-mix(in srgb, var(--color-primary) 24%, var(--color-panel-border));
+  border-radius: calc(var(--radius-md) - 2px);
+  color: var(--color-primary-strong);
+  cursor: pointer;
+  display: flex;
+  font-weight: 800;
+  gap: 1rem;
+  justify-content: space-between;
+  letter-spacing: 0.01em;
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 1rem 1.15rem;
+}
+
+.property-workspace-section > summary::-webkit-details-marker {
+  display: none;
+}
+
+.property-workspace-section > summary:hover,
+.property-workspace-section > summary:focus-visible {
+  border-color: color-mix(in srgb, var(--color-primary) 42%, var(--color-panel-border));
+  box-shadow: 0 12px 28px rgba(20, 87, 214, 0.12);
+}
+
+.property-workspace-section > summary::after {
+  border-bottom: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  content: "";
+  flex: 0 0 auto;
+  height: 0.55rem;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+  width: 0.55rem;
+}
+
+.property-workspace-section[open] > summary::after {
+  transform: rotate(225deg);
+}
+
 .property-workspace-section__empty-title {
   font-size: 1.65rem;
   line-height: 1.2;
