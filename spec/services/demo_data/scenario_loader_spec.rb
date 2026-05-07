@@ -169,18 +169,30 @@ RSpec.describe DemoData::ScenarioLoader do
     expect(exported).to include("qa:")
   end
 
-  it "clears saved properties and saved searches before removing users and properties during a reset" do
+  it "clears dependent records before removing users and properties during a reset" do
     owner = FactoryBot.create(:user, email: "owner@example.com")
     saver = FactoryBot.create(:user, email: "saver@example.com")
     property = FactoryBot.create(:property, user: owner)
+    FactoryBot.create(:api_refresh_token, user: saver)
     FactoryBot.create(:saved_property, user: saver, property:)
     SavedSearch.create!(user: saver, locale: "en", email: saver.email, alerts_enabled: true, search_query: "Sevenoaks")
+    ViewingTime.create!(
+      property:,
+      start_time: Time.zone.local(2026, 4, 2, 10, 0),
+      end_time: Time.zone.local(2026, 4, 2, 11, 0)
+    )
 
     expect { loader.apply_catalog!(key: "baseline", actor_email: "spec@example.com") }
       .to change(SavedProperty, :count)
       .from(1)
       .to(0)
       .and change(SavedSearch, :count)
+      .from(1)
+      .to(0)
+      .and change(ApiRefreshToken, :count)
+      .from(1)
+      .to(0)
+      .and change(ViewingTime, :count)
       .from(1)
       .to(0)
   end

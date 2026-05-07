@@ -124,6 +124,7 @@ module DemoData
       AppointmentEvent.delete_all
       OfferEvent.delete_all
       RentalApplicationEvent.delete_all
+      ApiRefreshToken.delete_all
       SavedProperty.delete_all
       SavedSearch.delete_all
       Appointment.delete_all
@@ -134,6 +135,7 @@ module DemoData
       Photo.delete_all
       FloorPlan.delete_all
       PropertyDocument.delete_all
+      ViewingTime.delete_all
       AuditLog.delete_all
       Property.delete_all
       User.delete_all
