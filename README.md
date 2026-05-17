@@ -133,6 +133,7 @@ SEED_USERS=500 SEED_PROPERTIES=10000 SEED_AI_MODE=off bundle exec rake db:popula
 - [Getting started](docs/GETTING_STARTED.md)
 - [User manual](docs/USER_MANUAL.md)
 - [QA and testing guide](docs/QA_TESTING_GUIDE.md)
+- [Acceptance target contract](docs/ACCEPTANCE_TARGET_CONTRACT.md)
 - [Training session guide](docs/TRAINING_SESSION_GUIDE.md)
 - [Demo data operations](docs/DEMO_DATA_OPERATIONS.md)
 - [Architecture overview](docs/ARCHITECTURE_OVERVIEW.md)

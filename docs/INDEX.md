@@ -11,6 +11,7 @@ Use this page as the front door for the project documentation.
 ## QA And Training
 
 - [QA and testing guide](QA_TESTING_GUIDE.md)
+- [Acceptance target contract](ACCEPTANCE_TARGET_CONTRACT.md)
 - [Training session guide](TRAINING_SESSION_GUIDE.md)
 - [Demo data operations](DEMO_DATA_OPERATIONS.md)
 

@@ -4,6 +4,15 @@ This document defines the current external acceptance-testing contract for `got-
 
 It is intended for the companion repository `got-the-keys-acceptance`, which tests the Rails app from the outside in `local` and `staging` modes.
 
+## Companion Repository
+
+The external acceptance-test harness is maintained separately from this Rails app:
+
+- GitHub repository: [hobbs9090/got-the-keys-acceptance](https://github.com/hobbs9090/got-the-keys-acceptance)
+- Purpose: Playwright, Lighthouse, and `k6` acceptance checks against local, staging, and production-safe hosted targets.
+- Dispatch source: the `Deploy Staging` and `Deploy Production` workflows in this repo call the acceptance repository through GitHub `repository_dispatch`.
+- Dispatch token: `ACCEPTANCE_REPO_DISPATCH_TOKEN` must be configured as a secret in this app repository with permission to dispatch workflows in the acceptance repository.
+
 ## Stable Routes
 
 Public routes used by the acceptance harness:
