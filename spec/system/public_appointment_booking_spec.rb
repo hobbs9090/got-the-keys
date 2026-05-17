@@ -44,6 +44,26 @@ RSpec.describe "Public appointment booking", type: :system, js: true do
     expect(page).to have_no_css('[data-testid="appointment-form"]')
   end
 
+  it "activates the matching time slot group when a date is selected" do
+    user = FactoryBot.create(:user)
+    property = FactoryBot.create(:property, user:)
+
+    sign_in_as_user(user)
+    visit property_path(property)
+
+    dismiss_cookie_banner
+
+    date_buttons = all("[data-slot-picker-date]")
+    next_date_button = date_buttons.find { |b| !b[:class].to_s.include?("is-selected") }
+    next unless next_date_button
+
+    next_date_key = next_date_button["data-slot-picker-date"]
+    next_date_button.click
+
+    expect(page).to have_css("[data-slot-picker-time-group='#{next_date_key}'].is-active")
+    expect(page).to have_no_css("[data-slot-picker-time-group='#{next_date_key}'][hidden]")
+  end
+
   it "lets a signed-in user prepare a viewing request" do
     user = FactoryBot.create(
       :user,

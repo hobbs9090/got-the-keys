@@ -74,6 +74,9 @@ const bindPicker = (picker) => {
 
       setSelectedDate(picker, button.dataset.slotPickerDate);
       if (!selectedTimeForDay) setSelectedTime(picker, "");
+
+      const activeGroup = picker.querySelector("[data-slot-picker-time-group].is-active");
+      activeGroup?.scrollIntoView({ behavior: "smooth", block: "nearest" });
     };
 
     button.addEventListener("click", handleClick);
