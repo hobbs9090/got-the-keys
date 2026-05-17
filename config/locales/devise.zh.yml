@@ -135,7 +135,7 @@ zh:
           change_pass_tip: "如果你不想改变，留空"
           cancel_my_account: "取消我的帐户"
           hero_badge: "账户设置"
-          hero_title: "更新您的业主资料"
+          hero_title: "更新您的资料"
           hero_intro: "请保持您的联系方式和登录信息为最新状态，以便看房和账户通知能准确送达。"
           paragraph_1: "房源动态、预约确认和账户提醒都会依赖这里的资料。"
           paragraph_2: "当前登录邮箱为 %{email}。只需更新需要修改的内容；如果不想更改密码，可以将新密码留空。"

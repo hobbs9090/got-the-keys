@@ -139,7 +139,7 @@ en:
           are_you_sure: "Are you sure?"
           cancel_my_account: "Cancel my account"
           hero_badge: "Account settings"
-          hero_title: "Update your seller profile"
+          hero_title: "Update your profile"
           hero_intro: "Keep your contact details and login settings current so viewings and account updates reach the right place."
           paragraph_1: "This is the information your dashboard uses when property activity, booking confirmations, and account notices move."
           paragraph_2: "Signed in as %{email}. Update only what needs changing, and leave the new password blank if you want to keep your current one."
