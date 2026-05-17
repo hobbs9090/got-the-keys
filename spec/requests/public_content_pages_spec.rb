@@ -115,6 +115,25 @@ RSpec.describe "Public content pages", type: :request do
     expect(response.body).not_to include("TN16 4AB")
   end
 
+  it "pre-fills the contact form with the signed-in user's name and email" do
+    user = FactoryBot.create(:user, first_name: "Tomas", last_name: "Reed", email: "tomas.reed@example.com")
+    sign_in(user)
+
+    get "/contact_us"
+
+    document = parsed_html
+    expect(document.at_css(%([data-testid="contact-your-name"]))["value"]).to eq("Tomas Reed")
+    expect(document.at_css(%([data-testid="contact-your-email"]))["value"]).to eq("tomas.reed@example.com")
+  end
+
+  it "leaves the contact form blank for guests" do
+    get "/contact_us"
+
+    document = parsed_html
+    expect(document.at_css(%([data-testid="contact-your-name"]))["value"].to_s).to be_empty
+    expect(document.at_css(%([data-testid="contact-your-email"]))["value"].to_s).to be_empty
+  end
+
   it "keeps the how it works publishing checklist in the main content column" do
     get "/how_it_works"
 
