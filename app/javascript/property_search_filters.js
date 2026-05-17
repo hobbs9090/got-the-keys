@@ -28,6 +28,12 @@ const updatePriceLabels = (form) => {
   }
 };
 
+const parsePriceValue = (input) => {
+  const raw = input.value.replace(/[,\s]/g, "");
+  const n = parseInt(raw, 10);
+  return Number.isFinite(n) ? n : null;
+};
+
 const setupPropertySearchFilters = (form) => {
   if (propertySearchFilterState.has(form)) return;
 
@@ -37,6 +43,9 @@ const setupPropertySearchFilters = (form) => {
   const minPriceInput = form.querySelector("[data-property-search-min-price-input]");
   const maxPriceInput = form.querySelector("[data-property-search-max-price-input]");
   const priceHints = Array.from(form.querySelectorAll("[data-property-search-price-hint]"));
+  const priceRangeHint = form.closest("[data-property-search-filters]")
+    ? document.querySelector("[data-property-search-price-range-hint]")
+    : null;
 
   if (!saleStatusSelect || !minPriceLabel || !maxPriceLabel || !minPriceInput || !maxPriceInput) return;
 
@@ -45,6 +54,22 @@ const setupPropertySearchFilters = (form) => {
 
   const changeHandler = () => updatePriceLabels(form);
   saleStatusSelect.addEventListener("change", changeHandler);
+
+  const submitHandler = (event) => {
+    if (!priceRangeHint) return;
+    const min = parsePriceValue(minPriceInput);
+    const max = parsePriceValue(maxPriceInput);
+    if (min !== null && max !== null && min > max) {
+      event.preventDefault();
+      priceRangeHint.hidden = false;
+      minPriceInput.setAttribute("aria-describedby", "price_range_hint");
+      maxPriceInput.setAttribute("aria-describedby", "price_range_hint");
+      priceRangeHint.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    } else {
+      priceRangeHint.hidden = true;
+    }
+  };
+  form.addEventListener("submit", submitHandler);
 
   const state = {
     saleStatusSelect,
@@ -55,7 +80,9 @@ const setupPropertySearchFilters = (form) => {
     priceHints,
     rentalSaleStatusValue,
     priceRequiresSaleStatus: minPriceInput.dataset.propertySearchPriceRequiresSaleStatus === "true",
-    changeHandler
+    changeHandler,
+    submitHandler,
+    priceRangeHint
   };
 
   propertySearchFilterState.set(form, state);
@@ -74,6 +101,7 @@ export const teardownPropertySearchFilters = () => {
     if (!state) return;
 
     state.saleStatusSelect.removeEventListener("change", state.changeHandler);
+    form.removeEventListener("submit", state.submitHandler);
     delete form.dataset.propertySearchFiltersReady;
     propertySearchFilterState.delete(form);
   });

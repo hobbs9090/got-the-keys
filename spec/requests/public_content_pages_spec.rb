@@ -258,4 +258,13 @@ RSpec.describe "Public content pages", type: :request do
     expect(input_attribute("min_price", "disabled")).to eq("disabled")
     expect(input_attribute("max_price", "disabled")).to eq("disabled")
   end
+
+  it "includes a hidden price-range validation hint on catalogue filter forms" do
+    get for_sale_index_path
+
+    hint = parsed_html.at_css(%([data-testid="price-range-hint"]))
+    expect(hint).to be_present
+    expect(hint["hidden"]).not_to be_nil
+    expect(hint.text.strip).to eq(I18n.t("ui.properties.filters.price_range_inverted"))
+  end
 end

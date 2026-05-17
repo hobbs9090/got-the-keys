@@ -55,6 +55,8 @@
     <%= text_field_tag :max_price, price_filters_disabled ? nil : params[:max_price], inputmode: "numeric", maxlength: 15, pattern: "[0-9,\\s]*", disabled: price_filters_disabled, aria: (price_filters_disabled ? { describedby: "max_price_listing_type_hint" } : {}), data: { testid: "property-filter-max-price", property_search_max_price_input: true, property_search_price_requires_sale_status: price_requires_sale_status, validation_pattern_message: t("ui.validation.number") } %>
   </div>
 
+  <p id="price_range_hint" class="help-text" role="alert" hidden data-property-search-price-range-hint data-testid="price-range-hint"><%= t("ui.properties.filters.price_range_inverted") %></p>
+
   <div>
     <%= label_tag :sort, t("ui.properties.filters.sort") %>
     <%= select_tag :sort, options_for_select(property_sort_options, params[:sort].presence || "recommended"), data: { testid: "property-filter-sort" } %>

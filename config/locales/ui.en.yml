@@ -286,6 +286,7 @@ en:
         min_price: "Min price"
         max_price: "Max price"
         price_requires_listing_type: "Choose a listing type before entering a price range."
+        price_range_inverted: "Min price must be less than max price."
         min_monthly_rental: "Min monthly rental"
         max_monthly_rental: "Max monthly rental"
         sort: "Sort"
