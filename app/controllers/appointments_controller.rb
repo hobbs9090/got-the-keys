@@ -96,6 +96,10 @@ class AppointmentsController < ApplicationController
       return
     end
 
+    if params[:token].blank? && !user_signed_in?
+      return redirect_to new_user_session_path(return_to: request.fullpath)
+    end
+
     log_access_token_failure
     head :not_found
   end

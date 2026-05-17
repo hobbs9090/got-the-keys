@@ -248,12 +248,12 @@ RSpec.describe "Appointments" do
       expect(response.body).to include(appointment.public_reference)
     end
 
-    it "returns not found for signed-out visitors without a token" do
+    it "redirects signed-out visitors without a token to sign in" do
       appointment = FactoryBot.create(:appointment, property:)
 
       get appointment_path(appointment)
 
-      expect(response).to have_http_status(:not_found)
+      expect(response).to redirect_to(new_user_session_path(return_to: appointment_path(appointment)))
     end
 
     it "logs and returns not found for tampered tokens" do
