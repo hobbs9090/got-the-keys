@@ -39,6 +39,10 @@ Common runtime variables:
 - `APP_VERSION`
 - `APP_BUILD_SHA`
 - `APP_BUILD_NUMBER`
+- `SENTRY_DSN`
+- `SENTRY_ENVIRONMENT`
+- `SENTRY_RELEASE`
+- `SENTRY_TRACES_SAMPLE_RATE`
 
 Database variables:
 
@@ -66,6 +70,15 @@ Canonical hosted app hosts:
 
 - staging: `staging.gotthekeys.uk`
 - production: `gotthekeys.uk`
+
+Sentry monitoring:
+
+- Sentry is enabled only for `staging` and `production`.
+- `SENTRY_DSN` is required as a staging and production secret before the app sends events.
+- `SENTRY_ENVIRONMENT` is optional; when absent the app uses the deploy target or Rails environment.
+- `SENTRY_RELEASE` is optional; when absent the app reports `got-the-keys@<version>+<build-sha>`.
+- `SENTRY_TRACES_SAMPLE_RATE` is optional and defaults to `0.05`.
+- Sentry sends default PII so request context is useful during incident triage.
 
 ## Deploy Automation Settings
 

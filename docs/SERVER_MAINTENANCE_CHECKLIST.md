@@ -53,6 +53,7 @@ Production and staging automation should be checked for:
   - `DEPLOY_REPO_URL`
   - `DEPLOY_HOST_KEY` when pinned host keys are used
   - `ACCEPTANCE_REPO_DISPATCH_TOKEN`
+  - `SENTRY_DSN` for Sentry monitoring in staging and production
 - staging deploy secrets:
   - `STAGING_DEPLOY_HOST`
   - `STAGING_DEPLOY_TO`
@@ -69,6 +70,7 @@ Production and staging automation should be checked for:
   - `PRODUCTION_APP_HOST`
 - database secrets where the target host does not rely on local defaults
 - mailer secrets where SMTP is enabled
+- Sentry variables where monitoring is enabled: `SENTRY_ENVIRONMENT`, `SENTRY_TRACES_SAMPLE_RATE`
 - `PUBLIC_INDEXING_ENABLED`
 
 The acceptance dispatch token matters because both deploy workflows dispatch acceptance checks after deploy.

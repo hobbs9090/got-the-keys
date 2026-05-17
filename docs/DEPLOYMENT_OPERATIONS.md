@@ -117,6 +117,7 @@ Required repository secrets for both deploy workflows:
 - `DEPLOY_REPO_URL`
 - `DEPLOY_HOST_KEY` when SSH host keys are pinned instead of refreshed with `ssh-keyscan`
 - `ACCEPTANCE_REPO_DISPATCH_TOKEN`
+- `SENTRY_DSN` for Sentry monitoring in staging and production
 
 Required staging repository secrets:
 
@@ -137,6 +138,9 @@ Required repository variables:
 
 - `STAGING_APP_HOST`
 - `PRODUCTION_APP_HOST`
+- `SENTRY_ENVIRONMENT` when the Sentry environment name should differ from the deploy target or Rails environment
+- `SENTRY_RELEASE` when the generated `got-the-keys@<version>+<build-sha>` release name should be overridden
+- `SENTRY_TRACES_SAMPLE_RATE` when the default `0.05` trace sampling rate should be overridden
 
 The staging and production workflows use the secret-backed `APP_HOST` value for the actual deploy and health checks. The same hostname is also stored as a repository variable only so GitHub can render the environment URL without exposing the rest of the deploy coordinates.
 

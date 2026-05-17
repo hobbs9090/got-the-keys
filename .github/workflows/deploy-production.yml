@@ -221,6 +221,10 @@ jobs:
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           SMTP_AUTHENTICATION: ${{ vars.SMTP_AUTHENTICATION }}
           SMTP_STARTTLS_AUTO: ${{ vars.SMTP_STARTTLS_AUTO }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          SENTRY_ENVIRONMENT: ${{ vars.SENTRY_ENVIRONMENT }}
+          SENTRY_RELEASE: ${{ vars.SENTRY_RELEASE }}
+          SENTRY_TRACES_SAMPLE_RATE: ${{ vars.SENTRY_TRACES_SAMPLE_RATE }}
         run: bin/deploy_production
 
       - name: Health check production deployment
