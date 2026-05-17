@@ -1,20 +1,27 @@
+<%# On the sign-in page use only request params so stale session values don't
+    bleed into the Register / Forgot / Unlock links on direct visits. %>
+<% devise_link_params = if controller_name == 'sessions' && !request.fullpath.match?(/^\/admins/)
+                          { return_to: params[:return_to].presence, save_property_id: params[:save_property_id].presence }.compact
+                        else
+                          pending_saved_property_params
+                        end %>
 <ul class="no-bullet">
 
   <%- if controller_name != 'sessions' %>
       <li>
-        <%= link_to t('devise.views.links.sign_in'), new_session_path(resource_name, pending_saved_property_params) %>
+        <%= link_to t('devise.views.links.sign_in'), new_session_path(resource_name, devise_link_params) %>
       </li>
   <% end -%>
 
   <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
       <li>
-        <%= link_to t('devise.views.links.register'), new_registration_path(resource_name, pending_saved_property_params) %>
+        <%= link_to t('devise.views.links.register'), new_registration_path(resource_name, devise_link_params) %>
       </li>
   <% end -%>
 
   <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
       <li>
-        <%= link_to t('devise.views.links.forget_pass'), new_password_path(resource_name, pending_saved_property_params) %>
+        <%= link_to t('devise.views.links.forget_pass'), new_password_path(resource_name, devise_link_params) %>
       </li>
   <% end -%>
 
@@ -26,7 +33,7 @@
 
   <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
       <li>
-        <%= link_to t('devise.views.links.resend_unlock'), new_unlock_path(resource_name, pending_saved_property_params) %>
+        <%= link_to t('devise.views.links.resend_unlock'), new_unlock_path(resource_name, devise_link_params) %>
       </li>
   <% end -%>
 

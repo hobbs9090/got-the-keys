@@ -2,6 +2,7 @@
 <% session_copy_key = admin_sign_in ? "devise.views.sessions.admin" : "devise.views.sessions.new" %>
 <% session_copy = ->(key) { t("#{session_copy_key}.#{key}", default: t("devise.views.sessions.new.#{key}")) } %>
 <% session_title = admin_sign_in ? t('devise.views.links.sign_in_as_admin') : session_copy.call("title") %>
+<% save_property_context = !admin_sign_in && params[:save_property_id].present? %>
 <% admin_two_factor_challenge = admin_sign_in && @admin_two_factor_challenge_token.present? %>
 <%
   admin_otp_prompt =
@@ -19,14 +20,14 @@
 <section class="auth-shell auth-shell--signin">
   <aside class="site-card auth-panel auth-panel--signin">
     <p class="section-heading__eyebrow"><%= session_copy.call("hero_badge") %></p>
-    <h1><%= session_copy.call("hero_title") %></h1>
+    <h1><%= save_property_context ? session_copy.call("hero_title_save_property") : session_copy.call("hero_title") %></h1>
     <p class="auth-panel__lead"><%= session_copy.call("hero_intro") %></p>
     <p><%= session_copy.call("paragraph_1") %></p>
 
     <div class="auth-panel__callout">
       <p><%= session_copy.call("paragraph_2") %></p>
       <% if devise_mapping.registerable? %>
-        <%= link_to t('devise.views.sessions.new.create_account'), new_registration_path(resource_name, return_to: pending_return_to_path, save_property_id: pending_save_property_id), class: "button secondary hollow" %>
+        <%= link_to t('devise.views.sessions.new.create_account'), new_registration_path(resource_name, return_to: params[:return_to].presence, save_property_id: params[:save_property_id].presence), class: "button secondary hollow" %>
       <% else %>
         <%= link_to t('devise.views.links.sign_in_as_member'), new_user_session_path, class: "button secondary hollow" %>
       <% end %>

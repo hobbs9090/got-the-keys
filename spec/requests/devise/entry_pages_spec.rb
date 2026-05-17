@@ -61,7 +61,8 @@ RSpec.describe "Devise entry pages", type: :request do
     expect_shared_auth_card_layout
     expect(response.body).not_to include("marketing-wordmark--hero")
     expect(response.body).to include("Sign in")
-    expect(response.body).to include("Sign in to save this home")
+    expect(document.at_css(".auth-panel h1").text.squish).to eq("Welcome back")
+    expect(response.body).not_to include("Sign in to save this home")
     expect(document.at_css(".auth-panel").text.squish).to include("Sign in to manage your saved homes, viewings, offers, and any listings you're working on.")
     expect(response.body).not_to include("Pick up where you left off")
     expect(response.body).not_to include("manage your listings, confirm viewings")
@@ -70,6 +71,15 @@ RSpec.describe "Devise entry pages", type: :request do
     expect(document.at_css(%(a[href="#{new_user_password_path}"])).text.squish).to eq("Forgot your password?")
     expect(document.at_css(%(a[href="#{new_user_unlock_path}"])).text.squish).to eq("Didn't receive unlock instructions?")
     expect(document.at_css(%(a[href="#{new_admin_session_path}"])).text.squish).to eq("Sign in as administrator?")
+  end
+
+  it "shows property-specific hero copy when a save_property_id is in the request" do
+    property = FactoryBot.create(:property)
+
+    get new_user_session_path(save_property_id: property.id, return_to: property_path(property))
+    document = Nokogiri::HTML.parse(response.body)
+
+    expect(document.at_css(".auth-panel h1").text.squish).to eq("Sign in to save this home")
   end
 
   it "renders the sign-in form with stable testid anchors" do
