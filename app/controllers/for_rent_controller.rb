@@ -1,4 +1,6 @@
 class ForRentController < ApplicationController
+  include CataloguePageBounds
+
   def index
     catalogue = PropertyCatalogueQuery.new(
       params:,
@@ -10,5 +12,7 @@ class ForRentController < ApplicationController
     @properties = catalogue.properties
     @available_towns = catalogue.available_towns
     @total_for_rent = catalogue.total_count
+
+    redirect_if_page_out_of_range!(@properties)
   end
 end

@@ -8,6 +8,15 @@ RSpec.describe "Public listing cards", type: :request do
     FactoryBot.create(:property, :for_rent, user: seller, address_line_1: "Rent CTA Flat")
   end
 
+  it "redirects out-of-range page numbers to the last valid page" do
+    [for_sale_index_path(page: 999), for_rent_index_path(page: 999), searches_path(page: 999)].each do |path|
+      get path
+
+      expect(response).to have_http_status(:moved_permanently), "expected 301 for #{path}"
+      expect(response.location).to include("page=1"), "expected redirect to page=1 for #{path}"
+    end
+  end
+
   it "does not render booking CTAs on public catalogue cards" do
     [root_path, for_sale_index_path, for_rent_index_path, searches_path].each do |path|
       get path
