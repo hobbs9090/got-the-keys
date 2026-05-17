@@ -188,6 +188,7 @@ zh:
         min_price: 最低价格
         max_price: 最高价格
         price_requires_listing_type: 请先选择房源类型，再输入价格范围。
+        price_range_inverted: 最低价格必须低于最高价格。
         min_monthly_rental: 最低月租
         max_monthly_rental: 最高月租
         sort: 排序

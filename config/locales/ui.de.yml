@@ -203,6 +203,7 @@ de:
         min_price: Mindestpreis
         max_price: Höchstpreis
         price_requires_listing_type: Wählen Sie einen Angebotstyp aus, bevor Sie eine Preisspanne eingeben.
+        price_range_inverted: Der Mindestpreis muss kleiner als der Höchstpreis sein.
         min_monthly_rental: Mindestmiete pro Monat
         max_monthly_rental: Höchstmiete pro Monat
         sort: Sortierung

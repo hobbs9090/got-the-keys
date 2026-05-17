@@ -203,6 +203,7 @@ it:
         min_price: Prezzo minimo
         max_price: Prezzo massimo
         price_requires_listing_type: Scegli un tipo di annuncio prima di inserire una fascia di prezzo.
+        price_range_inverted: Il prezzo minimo deve essere inferiore al prezzo massimo.
         min_monthly_rental: Affitto mensile minimo
         max_monthly_rental: Affitto mensile massimo
         sort: Ordina

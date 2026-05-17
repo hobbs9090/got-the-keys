@@ -206,6 +206,7 @@ fr:
         min_price: Prix min.
         max_price: Prix max.
         price_requires_listing_type: Choisissez un type d'annonce avant de saisir une fourchette de prix.
+        price_range_inverted: Le prix minimum doit être inférieur au prix maximum.
         min_monthly_rental: Loyer mensuel min.
         max_monthly_rental: Loyer mensuel max.
         sort: Tri
