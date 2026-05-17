@@ -111,6 +111,7 @@ GotTheKeys::Application.routes.draw do
 
   resources :location, only: [:show]
 
+  get '/users/profile', to: redirect('/users/edit')
   resources :users, only: [:show]
 
   resources :legal, only: [:index]
