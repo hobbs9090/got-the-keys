@@ -1,6 +1,7 @@
 class EnquiriesController < ApplicationController
   include PropertyScoped
 
+  before_action :authenticate_user!, only: :show
   before_action :set_property, except: :show
   before_action :set_enquiry_by_reference, only: :show
   before_action :ensure_property_is_visible!, except: :show

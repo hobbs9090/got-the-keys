@@ -51,6 +51,24 @@ RSpec.describe "Enquiries", type: :request do
     end
   end
 
+  describe "GET /enquiries/:lead_reference" do
+    let(:enquiry) { FactoryBot.create(:enquiry, property:) }
+
+    it "redirects unauthenticated visitors to sign-in" do
+      get enquiry_path(enquiry.lead_reference)
+
+      expect(response).to redirect_to(new_user_session_path)
+    end
+
+    it "renders the enquiry detail page for a signed-in user" do
+      sign_in FactoryBot.create(:user)
+
+      get enquiry_path(enquiry.lead_reference)
+
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
   describe "GET /properties/:id" do
     it "shows recent lead activity to the seller" do
       sign_in property.user
