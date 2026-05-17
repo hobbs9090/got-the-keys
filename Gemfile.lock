@@ -75,7 +75,7 @@ GEM
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
-    addressable (2.8.9)
+    addressable (2.9.0)
       public_suffix (>= 2.0.2, < 8.0)
     airbrussh (1.6.1)
       sshkit (>= 1.6.1, != 1.7.0)
@@ -247,7 +247,7 @@ GEM
       drb (~> 2.0)
       prism (~> 1.5)
     msgpack (1.8.0)
-    net-imap (0.6.3)
+    net-imap (0.6.4)
       date
       net-protocol
     net-pop (0.1.2)
@@ -262,14 +262,14 @@ GEM
       net-protocol
     net-ssh (7.3.2)
     nio4r (2.7.5)
-    nokogiri (1.19.2)
+    nokogiri (1.19.3)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
-    nokogiri (1.19.2-aarch64-linux-gnu)
+    nokogiri (1.19.3-aarch64-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.19.2-arm64-darwin)
+    nokogiri (1.19.3-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.19.2-x86_64-linux-gnu)
+    nokogiri (1.19.3-x86_64-linux-gnu)
       racc (~> 1.4)
     openai (0.56.0)
       base64
