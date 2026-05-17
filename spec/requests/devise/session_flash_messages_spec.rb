@@ -40,6 +40,17 @@ RSpec.describe "Devise session flash messages" do
     expect(response).to redirect_to(admin_root_path)
   end
 
+  it "signs the user out via GET /users/sign_out" do
+    user = FactoryBot.create(:user, email: "signout-user@example.com", password: "changeme123", password_confirmation: "changeme123")
+    sign_in(user)
+
+    get destroy_user_session_path
+
+    expect(response).to redirect_to(root_path)
+    follow_redirect!
+    expect(response.body).not_to include("signout-user@example.com")
+  end
+
   it "keeps the generic member sign-in notice" do
     user = FactoryBot.create(:user, email: "flash-user@example.com", password: "changeme123", password_confirmation: "changeme123")
 
