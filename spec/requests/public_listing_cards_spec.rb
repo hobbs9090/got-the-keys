@@ -17,6 +17,16 @@ RSpec.describe "Public listing cards", type: :request do
     end
   end
 
+  it "preserves filter params across an out-of-range pagination redirect" do
+    FactoryBot.create(:property, user: seller, address_line_1: "Filter Redirect House")
+
+    get for_sale_index_path(page: 999, sort: "newest")
+
+    expect(response).to have_http_status(:moved_permanently)
+    expect(response.location).to include("sort=newest")
+    expect(response.location).to include("page=1")
+  end
+
   it "does not render booking CTAs on public catalogue cards" do
     [root_path, for_sale_index_path, for_rent_index_path, searches_path].each do |path|
       get path
