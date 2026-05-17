@@ -86,6 +86,25 @@ RSpec.describe "Appointments" do
   end
 
   describe "POST /properties/:property_id/appointments" do
+    it "marks the booking panel for autoscroll when submitted without a time slot" do
+      sign_in(user)
+
+      post property_appointments_path(property), params: {
+        appointment: {
+          customer_name: "Nina Hughes",
+          customer_email: "nina.hughes@example.com",
+          customer_phone: "07700 930005",
+          requested_time: "",
+          notes: ""
+        }
+      }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      document = Nokogiri::HTML.parse(response.body)
+      booking_panel = document.at_css(%([data-testid="booking-panel"]))
+      expect(booking_panel["data-autoscroll"]).to eq("true")
+    end
+
     it "creates a pending appointment and redirects to the secure show page" do
       sign_in(user)
       slot = next_booking_slot

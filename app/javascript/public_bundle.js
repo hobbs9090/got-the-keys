@@ -14,10 +14,12 @@ import { bootPhotoPrimaryRadios, teardownPhotoPrimaryRadios } from "./photo_prim
 import { bootPropertySearchFilters, teardownPropertySearchFilters } from "./property_search_filters";
 import { bootPropertyFilterSave, teardownPropertyFilterSave } from "./property_filter_save";
 import { bootAccountDeleteConfirm, teardownAccountDeleteConfirm } from "./account_delete_confirm";
+import { bootAutoscroll } from "./autoscroll";
 import { bootResponsiveTables, teardownResponsiveTables } from "./responsive_tables";
 import { bootThemePreference, teardownThemePreference } from "./theme_preference";
 
 const bootApplication = () => {
+  bootAutoscroll();
   bootThemePreference();
   bootAppointmentSlotPickers();
   bootCarousels();

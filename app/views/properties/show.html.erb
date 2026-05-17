@@ -116,7 +116,7 @@
     <% end %>
   </article>
 
-  <aside class="property-booking-panel" data-testid="booking-panel" id="booking-panel">
+  <aside class="property-booking-panel" data-testid="booking-panel" id="booking-panel"<%= ' data-autoscroll="true"'.html_safe if @appointment&.errors&.any? %>>
     <% if current_user != @property.user %>
       <div class="empty-state property-booking-panel__support-card property-booking-panel__save-card" data-testid="property-save-panel">
         <h3><%= t("ui.saved_properties.panel_title", default: "Save this listing") %></h3>
