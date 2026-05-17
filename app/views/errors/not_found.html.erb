@@ -1,0 +1,16 @@
+<% title t("errors.not_found.title", default: "Page not found") %>
+
+<section class="page-hero">
+  <div>
+    <p class="page-hero__eyebrow"><%= t("errors.not_found.eyebrow", default: "404 error") %></p>
+    <h1><%= t("errors.not_found.heading", default: "We could not find that page.") %></h1>
+    <p><%= t("errors.not_found.body", default: "The address may have changed, or the page may no longer be available.") %></p>
+  </div>
+</section>
+
+<section class="page-section">
+  <div class="button-group">
+    <%= link_to t("errors.not_found.search_cta", default: "Search properties"), properties_path, class: "button primary" %>
+    <%= link_to t("errors.not_found.home_cta", default: "Return home"), root_path, class: "button secondary hollow" %>
+  </div>
+</section>

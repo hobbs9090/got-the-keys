@@ -48,6 +48,7 @@ module GotTheKeys
     config.x.got_the_keys.deploy_target = ENV["APP_DEPLOY_TARGET"].presence
     config.x.got_the_keys.active_job_queue_adapter = ENV["ACTIVE_JOB_QUEUE_ADAPTER"].presence
     config.x.got_the_keys.public_indexing_enabled = false
+    config.exceptions_app = routes
     config.middleware.use StripPassengerHeaders
     config.middleware.use Rack::Attack
 

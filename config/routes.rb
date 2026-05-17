@@ -1,4 +1,5 @@
 GotTheKeys::Application.routes.draw do
+  match "/404", to: "errors#not_found", via: :all
   get "/up", to: "health#show"
   get "/robots.txt", to: "robots#show"
   get "/img/:id", to: "images#show", as: :photo_image
