@@ -114,7 +114,9 @@ de:
           Formularen.
     saved_properties:
       panel_title: Dieses Inserat speichern
+      panel_title_saved: Gespeichert
       panel_body: Merken Sie sich dieses Zuhause, damit Sie ohne erneute Suche wieder darauf zugreifen konnen.
+      panel_body_saved: Diese Immobilie befindet sich in Ihrer Merkliste. Sie konnen sie hier oder in Ihrem Konto jederzeit entfernen.
       panel_body_guest: Merken Sie sich dieses Zuhause, damit Sie ohne erneute Suche wieder darauf zugreifen konnen. Melden Sie sich an oder erstellen Sie ein Konto, um Inserate zu speichern.
       save_button: Objekt speichern
       saved_button: Aus Merkliste entfernen

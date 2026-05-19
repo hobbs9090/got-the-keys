@@ -105,7 +105,9 @@ zh:
         enhancement: 结合 Foundation、Turbo 和传统表单的渐进增强。
     saved_properties:
       panel_title: 保存此房源
+      panel_title_saved: 已保存
       panel_body: 先把这套房源保存起来，之后无需再次搜索即可快速返回。
+      panel_body_saved: 该房源已在您的收藏列表中。您可以随时在此处或账户中将其移除。
       panel_body_guest: 先把这套房源保存起来，之后无需再次搜索即可快速返回。登录或注册账户后即可保存房源。
       save_button: 保存房源
       saved_button: 从已保存列表移除

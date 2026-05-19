@@ -114,7 +114,9 @@ it:
         enhancement: Miglioramento progressivo con Foundation, Turbo e moduli tradizionali.
     saved_properties:
       panel_title: Salva questo annuncio
+      panel_title_saved: Salvato
       panel_body: Tieni questa casa a portata di mano per tornarci senza cercarla di nuovo.
+      panel_body_saved: Questo immobile e nella tua lista dei salvati. Puoi rimuoverlo da qui o dal tuo account in qualsiasi momento.
       panel_body_guest: Tieni questa casa a portata di mano per tornarci senza cercarla di nuovo. Accedi o crea un account per salvare annunci.
       save_button: Salva immobile
       saved_button: Rimuovi dall elenco salvato

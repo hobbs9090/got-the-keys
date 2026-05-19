@@ -116,7 +116,9 @@ fr:
           classiques.
     saved_properties:
       panel_title: Sauvegarder cette annonce
+      panel_title_saved: "Sauvegarde"
       panel_body: Gardez ce logement a portee de main pour y revenir sans refaire de recherche.
+      panel_body_saved: Ce bien est dans vos logements sauvegardes. Vous pouvez le retirer ici ou depuis votre compte a tout moment.
       panel_body_guest: Gardez ce logement a portee de main pour y revenir sans refaire de recherche. Connectez-vous ou creez un compte pour sauvegarder des annonces.
       save_button: Sauvegarder le bien
       saved_button: Retirer de la liste sauvegardee
