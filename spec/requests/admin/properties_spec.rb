@@ -35,9 +35,7 @@ RSpec.describe "Admin properties", type: :request do
     expect(status_select.at_css('option[value=""]')&.text).to eq("All statuses")
     expect(status_select.css("option").map { |option| option["value"] }).to include(*Property::LISTING_STATES)
 
-    clear_link = search_form.at_css('[data-testid="admin-properties-search-clear"]')
-    expect(clear_link).to be_present
-    expect(clear_link["href"]).to eq(admin_properties_path)
+    expect(search_form.at_css('[data-testid="admin-properties-search-clear"]')).to be_nil
 
     count_label = parsed_html.at_css('[data-testid="admin-properties-count"]')
     expect(count_label).to be_present

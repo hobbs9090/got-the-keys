@@ -18,7 +18,7 @@
     </div>
     <div class="admin-filter-form__actions">
       <%= f.button t("ui.admin.users.index.search.submit"), type: :submit, class: "button primary", data: { testid: "admin-users-search-submit" } %>
-      <%= link_to t("ui.admin.users.index.search.clear"), admin_sellers_path, class: "button hollow secondary", data: { testid: "admin-users-search-clear" } %>
+      <%= link_to t("ui.admin.users.index.search.clear"), admin_sellers_path, class: "button hollow secondary", data: { testid: "admin-users-search-clear" } if @query.present? %>
     </div>
   <% end %>
 </section>

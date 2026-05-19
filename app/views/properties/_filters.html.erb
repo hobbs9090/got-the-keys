@@ -62,9 +62,14 @@
     <%= select_tag :sort, options_for_select(property_sort_options, params[:sort].presence || "recommended"), data: { testid: "property-filter-sort" } %>
   </div>
 
+  <%
+    user_set_filters = @filters&.slice(:q, :town_city, :min_bedrooms, :min_price, :max_price) || {}
+    user_set_filters = user_set_filters.merge(sale_status: @filters[:sale_status]) if show_status_select && @filters&.[](:sale_status).present?
+    any_filter_active = user_set_filters.values.any?(&:present?) || (params[:sort].present? && params[:sort] != "recommended")
+  %>
   <div class="property-filters__actions">
     <%= button_tag t("ui.properties.filters.apply"), class: "button primary", data: { testid: "apply-property-filters" } %>
-    <%= link_to t("ui.common.reset"), url, class: "button hollow secondary", data: { testid: "property-filter-reset" } %>
+    <%= link_to t("ui.common.reset"), url, class: "button hollow secondary", data: { testid: "property-filter-reset" } if any_filter_active %>
     <% if user_signed_in? || current_admin.present? %>
       <%= button_tag t("ui.properties.filters.save_filter"),
                      type: "button",

@@ -24,7 +24,7 @@
     </div>
     <div class="admin-filter-form__actions">
       <%= f.button t("ui.admin.properties.index.search.submit"), type: :submit, class: "button primary", data: { testid: "admin-properties-search-submit" } %>
-      <%= link_to t("ui.admin.properties.index.search.clear"), admin_properties_path, class: "button hollow secondary", data: { testid: "admin-properties-search-clear" } %>
+      <%= link_to t("ui.admin.properties.index.search.clear"), admin_properties_path, class: "button hollow secondary", data: { testid: "admin-properties-search-clear" } if @query.present? || @listing_state.present? %>
     </div>
   <% end %>
 </section>

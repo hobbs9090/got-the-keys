@@ -256,6 +256,10 @@ describe "Properties" do
       expect(document.at_css(%([data-testid="property-filter-max-price"]))).to be_present
       expect(document.at_css(%([data-testid="property-filter-sort"]))).to be_present
       expect(document.at_css(%([data-testid="apply-property-filters"]))).to be_present
+      expect(document.at_css(%([data-testid="property-filter-reset"]))).to be_nil
+
+      get properties_path(q: "garden")
+      document = Nokogiri::HTML.parse(response.body)
       expect(document.at_css(%([data-testid="property-filter-reset"]))).to be_present
     end
 

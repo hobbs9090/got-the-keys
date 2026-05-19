@@ -31,9 +31,7 @@ RSpec.describe "Admin users", type: :request do
     expect(search_input).to be_present
     expect(search_input["placeholder"]).to eq("Name, email, or mobile")
 
-    clear_link = search_form.at_css('[data-testid="admin-users-search-clear"]')
-    expect(clear_link).to be_present
-    expect(clear_link["href"]).to eq(admin_sellers_path)
+    expect(search_form.at_css('[data-testid="admin-users-search-clear"]')).to be_nil
 
     count_label = parsed_html.at_css('[data-testid="admin-users-count"]')
     expect(count_label).to be_present
