@@ -185,7 +185,9 @@ en:
 
     saved_properties:
       panel_title: "Save this listing"
+      panel_title_saved: "Saved"
       panel_body: "Keep this home handy so you can come back to it without searching again."
+      panel_body_saved: "This property is in your saved homes. Remove it any time from here or your account."
       panel_body_guest: "Keep this home handy so you can come back to it without searching again. Sign in or create an account to save listings."
       save_button: "Save property"
       saved_button: "Remove from saved list"

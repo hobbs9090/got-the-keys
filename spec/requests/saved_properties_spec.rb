@@ -68,6 +68,7 @@ RSpec.describe "Saved properties", type: :request do
     save_button = page.at_css(%([data-testid="save-property-button"]))
 
     expect(save_panel).to be_present
+    expect(save_panel.at_css("h3").text.squish).to eq(I18n.t("ui.saved_properties.panel_title"))
     expect(save_button).to be_present
     expect(save_button.text).to include("Save property")
     expect(save_button["class"]).to include("button primary expanded")
@@ -103,8 +104,10 @@ RSpec.describe "Saved properties", type: :request do
     get property_path(property)
 
     page = Nokogiri::HTML(response.body)
+    save_panel = page.at_css(%([data-testid="property-save-panel"]))
     unsave_button = page.at_css(%([data-testid="unsave-property-button"]))
 
+    expect(save_panel.at_css("h3").text.squish).to eq(I18n.t("ui.saved_properties.panel_title_saved"))
     expect(unsave_button).to be_present
     expect(unsave_button.text).to include("Remove from saved list")
 

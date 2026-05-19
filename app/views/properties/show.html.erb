@@ -118,16 +118,21 @@
 
   <aside class="property-booking-panel" data-testid="booking-panel" id="booking-panel"<%= ' data-autoscroll="true"'.html_safe if @appointment&.errors&.any? %>>
     <% if current_user != @property.user %>
+      <% property_is_saved = user_signed_in? && @saved_property.present? %>
       <div class="empty-state property-booking-panel__support-card property-booking-panel__save-card" data-testid="property-save-panel">
-        <h3><%= t("ui.saved_properties.panel_title", default: "Save this listing") %></h3>
+        <h3><%= property_is_saved ? t("ui.saved_properties.panel_title_saved") : t("ui.saved_properties.panel_title") %></h3>
         <p>
-          <%= user_signed_in? ?
-                t("ui.saved_properties.panel_body", default: "Keep this home handy so you can come back to it without searching again.") :
-                t("ui.saved_properties.panel_body_guest", default: "Keep this home handy so you can come back to it without searching again. Sign in or create an account to save listings.") %>
+          <% if property_is_saved %>
+            <%= t("ui.saved_properties.panel_body_saved") %>
+          <% elsif user_signed_in? %>
+            <%= t("ui.saved_properties.panel_body") %>
+          <% else %>
+            <%= t("ui.saved_properties.panel_body_guest") %>
+          <% end %>
         </p>
 
         <% if user_signed_in? %>
-          <% if @saved_property.present? %>
+          <% if property_is_saved %>
             <%= button_to t("ui.saved_properties.saved_button", default: "Remove from saved list"), property_saved_property_path(@property), method: :delete, class: "button primary hollow expanded", data: { testid: "unsave-property-button" } %>
           <% else %>
             <%= button_to t("ui.saved_properties.save_button", default: "Save property"), property_saved_property_path(@property), method: :post, class: "button primary expanded", data: { testid: "save-property-button" } %>
