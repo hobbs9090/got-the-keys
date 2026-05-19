@@ -154,27 +154,7 @@ jobs:
       - name: Health check staging deployment
         env:
           HEALTHCHECK_HOST: ${{ env.APP_HOST }}
-          HEALTHCHECK_URL: https://${{ env.APP_HOST }}/up
-        run: |
-          for attempt in $(seq 1 12); do
-            status=$(curl --silent --show-error --output /tmp/staging-health.txt --write-out "%{http_code}" \
-              --connect-timeout 5 \
-              --max-time 15 \
-              --resolve "${HEALTHCHECK_HOST}:443:127.0.0.1" \
-              "$HEALTHCHECK_URL" || true)
-            body=$(cat /tmp/staging-health.txt 2>/dev/null || true)
-
-            if [ "$status" = "200" ] && [ "$body" = "OK" ]; then
-              echo "Staging health check passed on attempt ${attempt}."
-              exit 0
-            fi
-
-            echo "Staging health check attempt ${attempt} failed: status=${status} body=${body}"
-            sleep 5
-          done
-
-          echo "Staging health check failed for ${HEALTHCHECK_URL}" >&2
-          exit 1
+        run: bin/check_public_https_health
 
       - name: Dispatch staging acceptance
         env:

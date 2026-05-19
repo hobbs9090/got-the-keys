@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+HEALTHCHECK_HOST="${HEALTHCHECK_HOST:?HEALTHCHECK_HOST must be set}"
+HEALTHCHECK_PATH="${HEALTHCHECK_PATH:-/up}"
+HEALTHCHECK_URL="${HEALTHCHECK_URL:-https://${HEALTHCHECK_HOST}${HEALTHCHECK_PATH}}"
+HEALTHCHECK_EXPECTED_BODY="${HEALTHCHECK_EXPECTED_BODY:-OK}"
+HEALTHCHECK_ATTEMPTS="${HEALTHCHECK_ATTEMPTS:-12}"
+HEALTHCHECK_SLEEP_SECONDS="${HEALTHCHECK_SLEEP_SECONDS:-5}"
+
+echo "Checking public HTTPS health for ${HEALTHCHECK_URL}"
+
+if command -v dig >/dev/null 2>&1; then
+  echo "Public DNS answers for ${HEALTHCHECK_HOST}:"
+  dig +short A "$HEALTHCHECK_HOST" || true
+  dig +short AAAA "$HEALTHCHECK_HOST" || true
+fi
+
+for attempt in $(seq 1 "$HEALTHCHECK_ATTEMPTS"); do
+  response_file="$(mktemp)"
+  status="$(curl --silent --show-error --location --output "$response_file" --write-out "%{http_code}" \
+    --connect-timeout 5 \
+    --max-time 15 \
+    "$HEALTHCHECK_URL" || true)"
+  body="$(cat "$response_file" 2>/dev/null || true)"
+  rm -f "$response_file"
+
+  if [ "$status" = "200" ] && [ "$body" = "$HEALTHCHECK_EXPECTED_BODY" ]; then
+    echo "Public HTTPS health check passed on attempt ${attempt}."
+    exit 0
+  fi
+
+  echo "Public HTTPS health check attempt ${attempt} failed: status=${status} body=${body}"
+  sleep "$HEALTHCHECK_SLEEP_SECONDS"
+done
+
+echo "Public HTTPS health check failed for ${HEALTHCHECK_URL}" >&2
+exit 1

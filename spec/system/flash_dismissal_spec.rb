@@ -40,4 +40,24 @@ RSpec.describe "Flash dismissal", type: :system, js: true do
     expect(page).to have_no_text("true")
     expect(page).to have_no_css('[data-testid="flash-timedout"]')
   end
+
+  it "renders the timeout alert in the current page language" do
+    user = FactoryBot.create(:user, email: "localized-timeout-flash-user@example.com", password: "changeme123", password_confirmation: "changeme123")
+
+    visit new_language_path(language: "it", return_to: new_user_session_path)
+
+    fill_in "user_email", with: user.email
+    fill_in "user_password", with: "changeme123"
+    click_button "Sign in"
+
+    visit new_language_path(language: "en", return_to: root_path)
+
+    travel 31.minutes
+
+    visit new_property_path
+
+    expect(page).to have_current_path(new_user_session_path, ignore_query: false)
+    expect(page).to have_css('[data-testid="flash-alert"]', text: "Your session expired, please sign in again to continue.")
+    expect(page).to have_no_text("La sessione è scaduta")
+  end
 end

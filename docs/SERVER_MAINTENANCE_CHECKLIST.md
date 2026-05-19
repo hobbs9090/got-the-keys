@@ -23,6 +23,7 @@ It is intentionally practical rather than exhaustive. The goal is to catch the c
 3. Open the homepage, catalogue, one property page, and a footer page such as `/legal`.
 4. Confirm the site is serving the expected hostname and TLS certificate.
 5. Confirm the production footer or QA/build metadata reflects the deployed commit.
+6. Confirm the AWS Lightsail networking/firewall allows public inbound TCP `443` as well as `80`.
 
 ## Weekly
 
@@ -110,7 +111,11 @@ systemctl status apache2
 passenger-status
 openssl s_client -connect staging.gotthekeys.uk:443 -servername staging.gotthekeys.uk </dev/null 2>/dev/null | openssl x509 -noout -dates
 openssl s_client -connect gotthekeys.uk:443 -servername gotthekeys.uk </dev/null 2>/dev/null | openssl x509 -noout -dates
+curl -fsS https://staging.gotthekeys.uk/up
+curl -fsS https://gotthekeys.uk/up
 ```
+
+If `http://gotthekeys.uk` responds but `https://gotthekeys.uk` times out, check the AWS Lightsail instance networking tab first and make sure public inbound TCP `443` is open. If `443` is open but TLS still fails, check Apache is listening on `*:443` and that the production virtual host has an enabled certificate.
 
 If PostgreSQL is remote or managed separately, use the equivalent provider health checks as well.
 

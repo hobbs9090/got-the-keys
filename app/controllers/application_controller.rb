@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :set_user_language
+  before_action :normalize_timeout_flash_locale
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :persist_pending_saved_property_request
   rescue_from ActionController::InvalidAuthenticityToken, with: :log_invalid_authenticity_token
@@ -80,6 +81,12 @@ class ApplicationController < ActionController::Base
   def set_user_language
     preferred_language = current_user&.language || current_admin&.language || session[:language]
     I18n.locale = available_languages.include?(preferred_language.to_s) ? preferred_language : I18n.default_locale
+  end
+
+  def normalize_timeout_flash_locale
+    return unless flash[:timedout]
+
+    flash[:alert] = t("devise.failure.timeout")
   end
 
   def homepage_from_admin_referrer?
