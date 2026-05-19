@@ -69,11 +69,11 @@ RSpec.describe SharedHelper, type: :helper do
     let(:time) { Time.zone.local(2026, 3, 30, 14, 5) }
 
     it "formats times for the shared UI" do
-      expect(helper.format_time(time)).to eq("March 30 2026, 14:05")
+      expect(helper.format_time(time)).to eq("Monday, March 30 2026, 14:05")
     end
 
     it "formats dates for the shared UI" do
-      expect(helper.format_date(time)).to eq("30 March, 2026")
+      expect(helper.format_date(time)).to eq("Monday, 30 March, 2026")
     end
 
     it "formats user names in title case" do

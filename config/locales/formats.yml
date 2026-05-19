@@ -1,59 +1,104 @@
 en:
   date:
+    day_names:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
     formats:
       calendar_day: "%a %d %b"
       calendar_heading: "%A, %d %B %Y"
-      shared_date: "%d %B, %Y"
+      long: "%A, %d %B %Y"
+      shared_date: "%A, %d %B, %Y"
   time:
     formats:
       long: "%A, %d %B %Y at %H:%M"
-      shared_time: "%B %d %Y, %H:%M"
+      shared_time: "%A, %B %d %Y, %H:%M"
       time_only: "%H:%M"
 
 zh:
   date:
+    day_names:
+      - 星期日
+      - 星期一
+      - 星期二
+      - 星期三
+      - 星期四
+      - 星期五
+      - 星期六
     formats:
       calendar_day: "%m月%d日"
       calendar_heading: "%Y年%m月%d日 %A"
-      shared_date: "%Y年%m月%d日"
+      long: "%Y年%m月%d日 %A"
+      shared_date: "%Y年%m月%d日 %A"
   time:
     formats:
-      long: "%Y年%m月%d日 %H:%M"
-      shared_time: "%Y年%m月%d日 %H:%M"
+      long: "%Y年%m月%d日 %A %H:%M"
+      shared_time: "%Y年%m月%d日 %A %H:%M"
       time_only: "%H:%M"
 
 de:
   date:
+    day_names:
+      - Sonntag
+      - Montag
+      - Dienstag
+      - Mittwoch
+      - Donnerstag
+      - Freitag
+      - Samstag
     formats:
       calendar_day: "%d.%m."
       calendar_heading: "%A, %d.%m.%Y"
-      shared_date: "%d.%m.%Y"
+      long: "%A, %d.%m.%Y"
+      shared_date: "%A, %d.%m.%Y"
   time:
     formats:
-      long: "%d.%m.%Y %H:%M"
-      shared_time: "%d.%m.%Y, %H:%M"
+      long: "%A, %d.%m.%Y %H:%M"
+      shared_time: "%A, %d.%m.%Y, %H:%M"
       time_only: "%H:%M"
 
 fr:
   date:
+    day_names:
+      - dimanche
+      - lundi
+      - mardi
+      - mercredi
+      - jeudi
+      - vendredi
+      - samedi
     formats:
       calendar_day: "%d/%m"
       calendar_heading: "%A %d/%m/%Y"
-      shared_date: "%d/%m/%Y"
+      long: "%A %d/%m/%Y"
+      shared_date: "%A %d/%m/%Y"
   time:
     formats:
-      long: "%d/%m/%Y %H:%M"
-      shared_time: "%d/%m/%Y %H:%M"
+      long: "%A %d/%m/%Y %H:%M"
+      shared_time: "%A %d/%m/%Y %H:%M"
       time_only: "%H:%M"
 
 it:
   date:
+    day_names:
+      - domenica
+      - lunedì
+      - martedì
+      - mercoledì
+      - giovedì
+      - venerdì
+      - sabato
     formats:
       calendar_day: "%d/%m"
       calendar_heading: "%A %d/%m/%Y"
-      shared_date: "%d/%m/%Y"
+      long: "%A %d/%m/%Y"
+      shared_date: "%A %d/%m/%Y"
   time:
     formats:
-      long: "%d/%m/%Y %H:%M"
-      shared_time: "%d/%m/%Y %H:%M"
+      long: "%A %d/%m/%Y %H:%M"
+      shared_time: "%A %d/%m/%Y %H:%M"
       time_only: "%H:%M"
