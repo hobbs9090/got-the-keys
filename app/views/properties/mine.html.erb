@@ -223,7 +223,7 @@
     <% end %>
   </section>
 
-  <details class="site-card property-workspace-section <%= "property-workspace-section--empty-listings" if @properties.blank? %>" data-testid="owner-listings-section">
+  <details class="site-card property-workspace-section <%= "property-workspace-section--empty-listings" if @properties.blank? %>" data-testid="owner-listings-section" open>
     <summary><%= t("ui.properties.mine.listing_disclosure_summary") %></summary>
     <p class="section-heading__eyebrow"><%= t("ui.properties.mine.list_eyebrow") %></p>
     <h2><%= t("ui.properties.mine.list_title") %></h2>

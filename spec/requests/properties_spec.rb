@@ -1065,7 +1065,9 @@ describe "Properties" do
       document = Nokogiri::HTML(response.body)
 
       expect(response).to have_http_status(:ok)
-      expect(document.at_css(%([data-testid="owner-listings-section"]))).to be_present
+      listings_section = document.at_css(%([data-testid="owner-listings-section"]))
+      expect(listings_section).to be_present
+      expect(listings_section["open"]).not_to be_nil
       expect(document.at_css(%([data-testid="customer-bookings-section"]))).to be_present
       expect(document.at_css(%([data-testid="customer-offers-section"]))).to be_present
       expect(document.at_css(%([data-testid="customer-rental-applications-section"]))).to be_present
