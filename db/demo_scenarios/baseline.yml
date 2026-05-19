@@ -1462,8 +1462,8 @@ appointments:
     customer_name: Daniel Porter
     customer_email: daniel.porter@example.com
     customer_phone: "07700 900222"
-    requested_time: "open+0d 10:00"
-    scheduled_at: "open+0d 10:00"
+    requested_time: "open+0d 11:00"
+    scheduled_at: "open+0d 11:00"
     duration_minutes: 60
     status: pending
     notes: Coming with my partner and a mortgage adviser.

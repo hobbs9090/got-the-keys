@@ -37,6 +37,7 @@ class Admin::AppointmentsController < Admin::BaseController
       return
     end
 
+    @appointment.skip_slot_validation = true
     if @appointment.update(status: new_status, admin: current_admin)
       redirect_back(
         fallback_location: admin_appointments_path,

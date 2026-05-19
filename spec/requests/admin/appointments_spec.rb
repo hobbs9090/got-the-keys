@@ -71,6 +71,17 @@ RSpec.describe "Admin appointments" do
     expect(appointment.admin).to eq(admin)
   end
 
+  it "allows an admin to confirm an appointment that conflicts with an existing booking" do
+    slot = next_booking_slot
+    FactoryBot.create(:appointment, :confirmed, property:, requested_time: slot, scheduled_at: slot, skip_slot_validation: true)
+    conflicting = FactoryBot.create(:appointment, property:, requested_time: slot, scheduled_at: slot, status: "pending", skip_slot_validation: true)
+
+    patch transition_admin_appointment_path(conflicting, status: "confirmed")
+
+    expect(response).to redirect_to(admin_appointments_path)
+    expect(conflicting.reload.status).to eq("confirmed")
+  end
+
   it "does not allow an admin to mark a future appointment as no show" do
     slot = next_booking_slot(hour: 15)
     appointment = FactoryBot.create(
