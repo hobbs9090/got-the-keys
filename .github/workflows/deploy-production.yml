@@ -39,7 +39,7 @@ jobs:
       - self-hosted
       - Linux
       - X64
-      - nirvana
+      - lightsail-production
     timeout-minutes: 30
     environment:
       name: production
