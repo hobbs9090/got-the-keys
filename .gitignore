@@ -47,6 +47,7 @@ Thumbs.db
 
 # Local deployment environment files
 .env.production
+.claude/
 .vscode/settings.json
 reports/allure-results/
 .vscode/ltex.*
