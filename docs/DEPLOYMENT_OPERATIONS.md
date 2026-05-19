@@ -133,6 +133,7 @@ Required production repository secrets:
 - `PRODUCTION_DEPLOY_MIRROR_URL`
 - `PRODUCTION_APP_HOST`
 - `DEVISE_SECRET_KEY`
+- `SECRET_KEY_BASE`
 
 Required repository variables:
 

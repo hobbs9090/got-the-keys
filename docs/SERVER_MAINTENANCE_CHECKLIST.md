@@ -65,6 +65,7 @@ Production and staging automation should be checked for:
   - `PRODUCTION_DEPLOY_MIRROR_URL`
   - `PRODUCTION_APP_HOST`
   - `DEVISE_SECRET_KEY`
+  - `SECRET_KEY_BASE`
 - environment URL variables:
   - `STAGING_APP_HOST=staging.gotthekeys.uk`
   - `PRODUCTION_APP_HOST`
